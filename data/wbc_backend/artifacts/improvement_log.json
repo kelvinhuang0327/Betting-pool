@@ -1,0 +1,44 @@
+[
+  {
+    "timestamp": "2026-02-27T17:01:24.627523",
+    "features_kept": 26,
+    "features_dropped": 0,
+    "model_status": {
+      "xgboost": "keep",
+      "lightgbm": "keep",
+      "neural_net": "keep",
+      "stacking": "keep"
+    },
+    "new_weights": {
+      "xgboost": 0.4284,
+      "lightgbm": 0.3594,
+      "neural_net": 0.0874,
+      "elo": 0.0438,
+      "poisson": 0.0328,
+      "bayesian": 0.0263,
+      "baseline": 0.0219
+    },
+    "training_metrics": {
+      "xgboost": {
+        "accuracy": 1.0,
+        "logloss": 0.2391,
+        "brier_score": 0.0489
+      },
+      "lightgbm": {
+        "accuracy": 0.9992,
+        "logloss": 0.2638,
+        "brier_score": 0.0583
+      },
+      "neural_net": {
+        "accuracy": 0.5798,
+        "logloss": 0.6718,
+        "brier_score": 0.2396
+      },
+      "stacking": {
+        "accuracy": 1.0,
+        "logloss": 0.2521,
+        "brier_score": 0.0532
+      }
+    }
+  }
+]

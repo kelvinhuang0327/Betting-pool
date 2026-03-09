@@ -1,0 +1,261 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool C  |  Tokyo Dome, Tokyo
+  2026-03-05T12:00:00+09:00
+
+  📡 資料來源 (Data Source): MIXED (Pinnacle 國際盤 + 陣容 Seed)
+  💧 盤口流動性 (Liquidity): HIGH (國際主流盤口水流)
+======================================================================
+
+## Match: Chinese Taipei (TPE) vs Australia (AUS)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    TPE     |    AUS     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    3.33    |    5.78    |     TPE     |
+| 打擊 wRC+          |    102     |     88     |     TPE     |
+| 打線 wOBA          |   0.322    |   0.305    |     TPE     |
+| 守備 DER           |   0.708    |   0.695    |     TPE     |
+| 跑壘 SB%           |    72%     |    72%     |     AUS     |
+| 牛棚 ERA           |    3.45    |    4.85    |     TPE     |
+| 高壓 Clutch wOBA   |   0.310    |   0.295    |     TPE     |
+| Elo Rating         |    1430    |    1380    |     TPE     |
+
+#### 先發投手對決
+
+| 指標           |       Lin Yu-Min       |    Jack O'Loughlin     |
+|----------------|------------------------|------------------------|
+| ERA            |          3.20          |          6.70          |
+| FIP            |          3.35          |          5.85          |
+| WHIP           |          1.18          |          1.65          |
+| K/9            |          9.0           |          6.3           |
+| BB/9           |          2.5           |          3.2           |
+| Stuff+         |          108           |           98           |
+| 均速 (mph)     |          94.5          |          92.5          |
+| 春訓 ERA       |          2.90          |          4.50          |
+| 近3場 ERA      |          3.00          |          6.10          |
+| vs LHB BA      |         0.240          |         0.275          |
+| vs RHB BA      |         0.225          |         0.290          |
+| 高壓 ERA       |          3.50          |          5.80          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool C
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      TPE       |      AUS       |
+|--------|----------------|----------------|
+|  1局   |   SP Yu-Min    | SP O'Loughlin  |
+|  2局   |   SP Yu-Min    | SP O'Loughlin  |
+|  3局   |   SP Yu-Min    | SP O'Loughlin  |
+|  4局   |   PB En-Sih    |   PB Spence    |
+|  5局   |   PB En-Sih    |   PB Spence    |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Huang En-Sih      |      Liam Spence       |
+|--------------|------------------------|------------------------|
+| ERA          |          3.80          |          5.50          |
+| FIP          |          3.95          |          5.30          |
+| Stuff+       |           98           |           88           |
+| 春訓 ERA     |          3.50          |          4.80          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      TPE |      AUS |
+|---------------|----------|----------|
+| elo           |    57.1% |    42.9% |
+| bayesian      |    62.9% |    37.1% |
+| poisson       |    84.0% |    15.9% |
+| gbm           |    75.5% |    24.4% |
+| monte_carlo   |    86.8% |    13.2% |
+|---------------|----------|----------|
+| **Ensemble**  | **77.1%** | **22.9%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Huang En-Sih`
+- piggyback_home: `Liam Spence`
+- piggyback_adjustment: `0.003`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `78`
+- roster_strength_home: `70`
+- rsi_adjustment: `0.0032`
+- chemistry_bonus: `0.0006`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.7967`
+- pre_adjust_home: `0.2033`
+- post_adjust_away: `0.7709`
+- post_adjust_home: `0.2291`
+
+#### 比分預測
+
+| 排名 | 比分 (TPE-AUS) | 機率     |
+|------|----------------------|----------|
+|  1   |         7-3          |     4.2% |
+|  2   |         8-2          |     3.5% |
+|  3   |         5-3          |     3.4% |
+|  4   |         6-3          |     3.4% |
+|  5   |         6-2          |     3.1% |
+
+**最可能比分 (Most Likely Score):** `7-3` (TPE-AUS)
+
+**預測總分:** 10.4 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     89.9% |      10.1% |
+|         7.5 |     80.3% |      19.7% |
+|         8.5 |     70.8% |      29.2% |
+|         9.5 |     58.0% |      42.0% |
+
+**延長賽機率 (Extra Innings):** 9.1%
+
+**爆冷機率 (AUS 獲勝):** 22.9%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ✅ **TPE** @ 1.62 (TSL)
+  - 隱含機率: 61.7% | 模型真實機率: 75.3%
+  - 期望值 (EV): +21.9% → **SECONDARY_VALIDATION_REQUIRED**
+- ❌ **AUS** @ 2.35 (TSL)
+  - 隱含機率: 42.5% | 模型真實機率: 28.6%
+  - 期望值 (EV): -32.8% → **SECONDARY_VALIDATION_REQUIRED**
+
+#### 讓分 Run Line / Spread
+- ✅ **AUS (+1.5)** @ 1.78 (TSL)
+  - 隱含機率: 56.2% | 模型真實機率: 69.5%
+  - 期望值 (EV): +23.7% → **MEDIUM (Market Restricted)**
+- ❌ **TPE (-1.5)** @ 2.10 (TSL)
+  - 隱含機率: 47.6% | 模型真實機率: 33.9%
+  - 期望值 (EV): -28.7% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 8.0** @ 1.95 (TSL)
+  - EV: +27.2% → **MEDIUM (Market Restricted)**
+- ❌ **Under 8.0** @ 1.88 (TSL)
+  - EV: -27.1% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **TPE** @ 1.65 (TSL)
+  - 隱含機率: 60.6% | 模型真實機率: 74.5%
+  - 期望值 (EV): +22.9% → **SECONDARY_VALIDATION_REQUIRED**
+- ❌ **AUS** @ 2.25 (TSL)
+  - 隱含機率: 44.4% | 模型真實機率: 30.1%
+  - 期望值 (EV): -32.4% → **SECONDARY_VALIDATION_REQUIRED**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT TPE_Over 4.5** @ 1.85 (TSL)
+  - EV: +28.3% → **SECONDARY_VALIDATION_REQUIRED**
+- ✅ **TT AUS_Under 3.5** @ 1.95 (TSL)
+  - EV: +25.9% → **STRONG**
+- ❌ **TT AUS_Over 3.5** @ 1.85 (TSL)
+  - EV: -25.5% → **SECONDARY_VALIDATION_REQUIRED**
+- ❌ **TT TPE_Under 4.5** @ 1.95 (TSL)
+  - EV: -30.8% → **SECONDARY_VALIDATION_REQUIRED**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** TT TPE_Over (4.5) @ 1.85 (TSL)
+- True Probability: 69.3%
+- Implied Probability: 54.0%
+- **EV: +28.3%**
+- **Warning**: Edge calculation is extremely high. Secondary validation required.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3325 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 TPE 為優勢方 (77.1%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool C，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: AUS、TPE 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- 💪 **盤口建議 (讓分)**: TPE 具備強大分差優勢 (預計贏 3.6 分)，**讓分盤 (-1.5)** 具備高度穿盤潛力。
+- 🧨 **盤口建議 (大小分)**: 預計總分高達 10.4，且打線擁有卓越的「关键打擊率」(Clutch wOBA 0.324)，強烈建議觀察 **大分 (Over)**。
+- 💰 **價值交易點**: TT AUS_Under 賠率為 1.95，隱含勝率僅 51.3%，但 AI 計算結果為 64.5%，存在 25.9% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool C 階段上限 65 球，Lin Yu-Min 與 Jack O'Loughlin 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Huang En-Sih (ERA 3.80) vs Liam Spence (ERA 5.50) — TPE 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: Chen Chen-Wei (wOBA 0.351, SwStr% vs 98mph+ 34.0%) vs Jake Bowey (wOBA 0.334, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Ku Lin Jui-Yang, Lin Yu-Min, Cheng Tsung-Che, Yu Chang, Hsu Jo-Hsi, Jack O'Loughlin 等 9 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: TPE 高出 50 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      TPE       |      AUS       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       78       |       70       |
+| MLB 球員數        |       4        |       2        |
+| 磨合度 Chemistry  |      0.85      |      0.82      |
+
+**TPE 確認出賽球星**: Ku Lin Jui-Yang, Lin Yu-Min, Cheng Tsung-Che, Yu Chang, Hsu Jo-Hsi
+**TPE 待確認球星**:  Lin An-Ko
+
+**AUS 確認出賽球星**: Jack O'Loughlin, Curtis Mead, Aaron Whitefield, Robbie Glendinning
+**AUS 待確認球星**:  Liam Spence
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 6
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +25.2%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | TT | TPE_Over | 1.85 | +28.3% | 0.50% | $500 |
+| 2 | OU | Over | 1.95 | +27.2% | 0.50% | $500 |
+| 3 | TT | AUS_Under | 1.95 | +25.9% | 1.50% | $1,500 |
+| 4 | RL | AUS | 1.78 | +23.7% | 0.50% | $500 |
+| 5 | F5 | TPE | 1.65 | +22.9% | 0.50% | $500 |
+| 6 | ML | TPE | 1.62 | +21.9% | 0.50% | $500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

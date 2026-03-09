@@ -1,0 +1,270 @@
+{
+  "games": {
+    "A03": {
+      "verified_at": "2026-03-07T22:00:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/colombia-vs-canada-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Julio Teheran",
+        "team": "COL"
+      },
+      "home_sp": {
+        "name": "Michael Soroka",
+        "team": "CAN"
+      }
+    },
+    "A04": {
+      "verified_at": "2026-03-07T00:15:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/news/panama-vs-puerto-rico-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Ariel Jurado",
+        "team": "PAN"
+      },
+      "home_sp": {
+        "name": "Eduardo Rivera",
+        "team": "PUR"
+      }
+    },
+    "A05": {
+      "verified_at": "2026-03-08T16:00:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "away_sp": {
+        "name": "Luis Patiño",
+        "team": "COL"
+      },
+      "home_sp": {
+        "name": "Denny Larrondo",
+        "team": "CUB"
+      }
+    },
+    "A06": {
+      "verified_at": "2026-03-09T05:40:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "away_sp": {
+        "name": "Jaime Barria",
+        "team": "PAN"
+      },
+      "home_sp": {
+        "name": "Jameson Taillon",
+        "team": "CAN"
+      }
+    },
+    "B04": {
+      "verified_at": "2026-03-07T23:30:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/news/usa-vs-great-britain-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Tyler Viza",
+        "team": "GBR"
+      },
+      "home_sp": {
+        "name": "Tarik Skubal",
+        "team": "USA"
+      }
+    },
+    "B05": {
+      "verified_at": "2026-03-09T05:40:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "away_sp": {
+        "name": "Owen Wild",
+        "team": "GBR"
+      },
+      "home_sp": {
+        "name": "Dylan DeLucia",
+        "team": "ITA"
+      }
+    },
+    "B06": {
+      "verified_at": "2026-03-08T16:00:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "away_sp": {
+        "name": "Eric Pardinho",
+        "team": "BRA"
+      },
+      "home_sp": {
+        "name": "Taijuan Walker",
+        "team": "MEX"
+      }
+    },
+    "C02": {
+      "verified_at": "2026-03-05T08:30:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/czechia-vs-korea-in-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Daniel Padysak",
+        "team": "CZE"
+      },
+      "home_sp": {
+        "name": "Hyeong Jun So",
+        "team": "KOR"
+      }
+    },
+    "C04": {
+      "verified_at": "2026-03-06T12:00:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/news/japan-vs-chinese-taipei-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Hao-Chun Cheng",
+        "team": "TPE"
+      },
+      "home_sp": {
+        "name": "Yoshinobu Yamamoto",
+        "team": "JPN"
+      }
+    },
+    "C05": {
+      "verified_at": "2026-03-07T04:00:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/chinese-taipei-vs-czechia-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Chen Zhong-Ao Zhuang",
+        "team": "TPE"
+      },
+      "home_sp": {
+        "name": "Jan Novak",
+        "team": "CZE"
+      }
+    },
+    "C06": {
+      "verified_at": "2026-03-07T08:00:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/korea-vs-japan-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Young Pyo Ko",
+        "team": "KOR"
+      },
+      "home_sp": {
+        "name": "Yusei Kikuchi",
+        "team": "JPN"
+      }
+    },
+    "C07": {
+      "verified_at": "2026-03-08T00:10:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260308&mode=2"
+      ],
+      "away_sp": {
+        "name": "Ruei-Yang Gu Lin",
+        "team": "TPE"
+      },
+      "home_sp": {
+        "name": "Hyun Jin Ryu",
+        "team": "KOR"
+      }
+    },
+    "C08": {
+      "verified_at": "2026-03-08T08:00:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260308&mode=2"
+      ],
+      "away_sp": {
+        "name": "Connor MacDonald",
+        "team": "AUS"
+      },
+      "home_sp": {
+        "name": "Tomoyuki Sugano",
+        "team": "JPN"
+      }
+    },
+    "C09": {
+      "verified_at": "2026-03-09T05:40:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "away_sp": {
+        "name": "Ju-Young Son",
+        "team": "KOR"
+      },
+      "home_sp": {
+        "name": "Lachlan Wells",
+        "team": "AUS"
+      }
+    },
+    "D01": {
+      "verified_at": "2026-03-06T15:00:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/news/netherlands-vs-venezuela-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Antwone Kelly",
+        "team": "NED"
+      },
+      "home_sp": {
+        "name": "Ranger Suarez",
+        "team": "VEN"
+      }
+    },
+    "D05": {
+      "verified_at": "2026-03-08T16:00:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "away_sp": {
+        "name": "Arij Fransen",
+        "team": "NED"
+      },
+      "home_sp": {
+        "name": "Luis Severino",
+        "team": "DOM"
+      }
+    },
+    "D06": {
+      "verified_at": "2026-03-08T16:00:00Z",
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "away_sp": {
+        "name": "Carlos Rodriguez",
+        "team": "NIC"
+      },
+      "home_sp": {
+        "name": "Dean Kremer",
+        "team": "ISR"
+      }
+    },
+    "D03": {
+      "verified_at": "2026-03-07T15:00:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/news/nicaragua-vs-netherlands-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Erasmo Ramírez",
+        "team": "NIC"
+      },
+      "home_sp": {
+        "name": "Jaitoine Kelly",
+        "team": "NED"
+      }
+    },
+    "D04": {
+      "verified_at": "2026-03-07T23:15:00Z",
+      "starter_source_urls": [
+        "https://www.mlb.com/news/israel-vs-venezuela-in-2026-world-baseball-classic"
+      ],
+      "away_sp": {
+        "name": "Ben Simon",
+        "team": "ISR"
+      },
+      "home_sp": {
+        "name": "Enmanuel De Jesus",
+        "team": "VEN"
+      }
+    }
+  }
+}

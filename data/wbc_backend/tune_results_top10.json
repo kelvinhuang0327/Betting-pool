@@ -1,0 +1,212 @@
+[
+  {
+    "games": 2188,
+    "ml_bets": 1462,
+    "ml_roi": 0.005066245706068888,
+    "ml_hit_rate": 0.45622435020519836,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.2472166265630524,
+    "logloss": 0.687577655020155,
+    "min_train_games": 240,
+    "retrain_every": 40,
+    "ev_threshold": 0.03,
+    "lookback": 12,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.0530929946132384
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1377,
+    "ml_roi": 0.0008025235072278232,
+    "ml_hit_rate": 0.4517066085693537,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.2472166265630524,
+    "logloss": 0.687577655020155,
+    "min_train_games": 240,
+    "retrain_every": 40,
+    "ev_threshold": 0.04,
+    "lookback": 12,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.4885006977690343
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1365,
+    "ml_roi": 0.0006613643126046469,
+    "ml_hit_rate": 0.4534798534798535,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24697037722655316,
+    "logloss": 0.6870900613132751,
+    "min_train_games": 240,
+    "retrain_every": 60,
+    "ev_threshold": 0.04,
+    "lookback": 20,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.4966076340453598
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1546,
+    "ml_roi": -0.001292478975457009,
+    "ml_hit_rate": 0.45989650711513586,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24697037722655316,
+    "logloss": 0.6870900613132751,
+    "min_train_games": 240,
+    "retrain_every": 60,
+    "ev_threshold": 0.02,
+    "lookback": 20,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.6791586555809606
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1463,
+    "ml_roi": -0.002133091510793836,
+    "ml_hit_rate": 0.4524948735475051,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24712347579016278,
+    "logloss": 0.687405739041881,
+    "min_train_games": 240,
+    "retrain_every": 20,
+    "ev_threshold": 0.03,
+    "lookback": 12,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.7795541618860007
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1445,
+    "ml_roi": -0.0027743862227263554,
+    "ml_hit_rate": 0.4560553633217993,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24723028639332595,
+    "logloss": 0.687616138929715,
+    "min_train_games": 240,
+    "retrain_every": 40,
+    "ev_threshold": 0.03,
+    "lookback": 8,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.8376307595622967
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1374,
+    "ml_roi": -0.0029858506421387375,
+    "ml_hit_rate": 0.4497816593886463,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24712347579016278,
+    "logloss": 0.687405739041881,
+    "min_train_games": 240,
+    "retrain_every": 20,
+    "ev_threshold": 0.04,
+    "lookback": 12,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.8702565033382088
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1569,
+    "ml_roi": -0.0032467233506400846,
+    "ml_hit_rate": 0.455704270235819,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24699560945151658,
+    "logloss": 0.6871177730297363,
+    "min_train_games": 240,
+    "retrain_every": 60,
+    "ev_threshold": 0.02,
+    "lookback": 15,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.8832198891075365
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1363,
+    "ml_roi": -0.0034301459216604276,
+    "ml_hit_rate": 0.45341159207630227,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24723028639332595,
+    "logloss": 0.687616138929715,
+    "min_train_games": 240,
+    "retrain_every": 40,
+    "ev_threshold": 0.04,
+    "lookback": 8,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -1.9084942719466977
+  },
+  {
+    "games": 2188,
+    "ml_bets": 1392,
+    "ml_roi": -0.0043685536605134485,
+    "ml_hit_rate": 0.4511494252873563,
+    "rl_bets": 0,
+    "rl_roi": 0.0,
+    "ou_bets": 0,
+    "ou_roi": 0.0,
+    "brier": 0.24702912411543154,
+    "logloss": 0.687222628484205,
+    "min_train_games": 240,
+    "retrain_every": 60,
+    "ev_threshold": 0.04,
+    "lookback": 12,
+    "min_confidence": 0.0,
+    "markets": [
+      "ML"
+    ],
+    "score": -2.004847756630948
+  }
+]

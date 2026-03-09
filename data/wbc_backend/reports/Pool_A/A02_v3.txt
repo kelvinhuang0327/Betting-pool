@@ -1,0 +1,264 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool A  |  Estadio Hiram Bithorn, San Juan
+  2026-03-06T19:00:00-04:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Puerto Rico (PUR) vs Colombia (COL)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    PUR     |    COL     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    3.33    |    4.28    |     PUR     |
+| 打擊 wRC+          |    122     |     80     |     PUR     |
+| 打線 wOBA          |   0.345    |   0.290    |     PUR     |
+| 守備 DER           |   0.718    |   0.690    |     PUR     |
+| 跑壘 SB%           |    76%     |    68%     |     PUR     |
+| 牛棚 ERA           |    3.10    |    4.80    |     PUR     |
+| 高壓 Clutch wOBA   |   0.340    |   0.280    |     PUR     |
+| Elo Rating         |    1500    |    1280    |     PUR     |
+
+#### 先發投手對決
+
+| 指標           |     Marcus Stroman     |     Jose Quintana      |
+|----------------|------------------------|------------------------|
+| ERA            |          3.55          |          3.75          |
+| FIP            |          3.70          |          3.90          |
+| WHIP           |          1.22          |          1.25          |
+| K/9            |          7.8           |          7.5           |
+| BB/9           |          2.5           |          2.8           |
+| Stuff+         |          108           |          100           |
+| 均速 (mph)     |          93.0          |          91.5          |
+| 春訓 ERA       |          3.20          |          3.40          |
+| 近3場 ERA      |          3.30          |          3.50          |
+| vs LHB BA      |         0.245          |         0.240          |
+| vs RHB BA      |         0.235          |         0.248          |
+| 高壓 ERA       |          3.60          |          3.90          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool A
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      PUR       |      COL       |
+|--------|----------------|----------------|
+|  1局   |   SP Stroman   |  SP Quintana   |
+|  2局   |   SP Stroman   |  SP Quintana   |
+|  3局   |   SP Stroman   |  SP Quintana   |
+|  4局   |    PB López    |   PB Patiño    |
+|  5局   |    PB López    |   PB Patiño    |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Jorge López       |      Luis Patiño       |
+|--------------|------------------------|------------------------|
+| ERA          |          3.60          |          4.20          |
+| FIP          |          3.50          |          4.10          |
+| Stuff+       |          110           |          108           |
+| 春訓 ERA     |          3.20          |          3.80          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      PUR |      COL |
+|---------------|----------|----------|
+| elo           |    75.5% |    24.4% |
+| bayesian      |    77.6% |    22.4% |
+| poisson       |    83.2% |    16.8% |
+| gbm           |    79.7% |    20.3% |
+| monte_carlo   |    77.3% |    22.7% |
+|---------------|----------|----------|
+| **Ensemble**  | **81.1%** | **18.9%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Jorge López`
+- piggyback_home: `Luis Patiño`
+- piggyback_adjustment: `0.0011`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `88`
+- roster_strength_home: `58`
+- rsi_adjustment: `0.012`
+- chemistry_bonus: `0.002`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.8327`
+- pre_adjust_home: `0.1673`
+- post_adjust_away: `0.8112`
+- post_adjust_home: `0.1888`
+
+#### 比分預測
+
+| 排名 | 比分 (PUR-COL) | 機率     |
+|------|----------------------|----------|
+|  1   |         4-3          |     5.0% |
+|  2   |         4-2          |     5.0% |
+|  3   |         5-3          |     4.5% |
+|  4   |         5-2          |     4.1% |
+|  5   |         5-4          |     3.6% |
+
+**最可能比分 (Most Likely Score):** `4-3` (PUR-COL)
+
+**預測總分:** 8.4 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     72.5% |      27.5% |
+|         7.5 |     57.8% |      42.2% |
+|         8.5 |     46.5% |      53.5% |
+|         9.5 |     32.4% |      67.6% |
+
+**延長賽機率 (Extra Innings):** 10.2%
+
+**爆冷機率 (COL 獲勝):** 18.9%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ✅ **PUR** @ 1.35 (TSL)
+  - 隱含機率: 74.1% | 模型真實機率: 81.1%
+  - 期望值 (EV): +9.5% → **STRONG**
+- ❌ **COL** @ 3.40 (TSL)
+  - 隱含機率: 29.4% | 模型真實機率: 18.9%
+  - 期望值 (EV): -35.8% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **COL (+2.5)** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型真實機率: 66.1%
+  - 期望值 (EV): +25.6% → **MEDIUM (Market Restricted)**
+- ❌ **PUR (-2.5)** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型真實機率: 38.6%
+  - 期望值 (EV): -26.6% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 7.5** @ 1.85 (TSL)
+  - EV: +6.9% → **MEDIUM (Market Restricted)**
+- ❌ **Under 7.5** @ 1.95 (TSL)
+  - EV: -17.7% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **PUR** @ 1.40 (TSL)
+  - 隱含機率: 71.4% | 模型真實機率: 84.6%
+  - 期望值 (EV): +18.5% → **STRONG**
+- ❌ **COL** @ 3.10 (TSL)
+  - 隱含機率: 32.3% | 模型真實機率: 18.7%
+  - 期望值 (EV): -42.1% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ⚠️ **TT PUR_Over 4.5** @ 1.85 (TSL)
+  - EV: +1.1% → **SMALL**
+- ❌ **TT COL_Over 2.5** @ 1.85 (TSL)
+  - EV: -0.5% → **PASS**
+- ❌ **TT COL_Under 2.5** @ 1.95 (TSL)
+  - EV: -9.8% → **PASS**
+- ❌ **TT PUR_Under 4.5** @ 1.95 (TSL)
+  - EV: -11.6% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL COL (2.5) @ 1.90 (TSL)
+- True Probability: 66.1%
+- Implied Probability: 52.6%
+- **EV: +25.6%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.2848 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 PUR 為優勢方 (81.1%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool A，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: COL、PUR 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: COL 陣容完整度僅 58%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 💪 **盤口建議 (讓分)**: PUR 具備強大分差優勢 (預計贏 2.0 分)，**讓分盤 (-1.5)** 具備高度穿盤潛力。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 8.4 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: F5 PUR 賠率為 1.4，隱含勝率僅 71.4%，但 AI 計算結果為 84.6%，存在 18.5% 的期望值邊際 (Edge)。
+- 💰 **價值交易點**: ML PUR 賠率為 1.35，隱含勝率僅 74.1%，但 AI 計算結果為 81.1%，存在 9.5% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool A 階段上限 65 球，Marcus Stroman 與 Jose Quintana 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Jorge López (ERA 3.60) vs Luis Patiño (ERA 4.20) — PUR 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: MJ Melendez (wOBA 0.374, SwStr% vs 98mph+ 34.0%) vs Dayan Frias (wOBA 0.319, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Francisco Lindor, Carlos Correa, Edwin Díaz, Marcus Stroman, Seth Lugo, Jose Quintana 等 7 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: PUR 高出 220 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      PUR       |      COL       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       88       |       58       |
+| MLB 球員數        |       14       |       3        |
+| 磨合度 Chemistry  |      0.85      |      0.75      |
+
+**PUR 確認出賽球星**: Francisco Lindor, Carlos Correa, Edwin Díaz, Marcus Stroman, Seth Lugo
+**PUR 待確認球星**:  Nolan Arenado
+
+**COL 確認出賽球星**: Jose Quintana, Gio Urshela
+**COL 待確認球星**:  Julio Teheran
+
+> ⚠️ **陣容差距**: PUR RSI 高出 30 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +14.6%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | COL | 1.90 | +25.6% | 0.50% | $500 |
+| 2 | F5 | PUR | 1.40 | +18.5% | 1.50% | $1,500 |
+| 3 | ML | PUR | 1.35 | +9.5% | 1.50% | $1,500 |
+| 4 | OU | Over | 1.85 | +6.9% | 0.50% | $500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

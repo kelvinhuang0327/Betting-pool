@@ -1,0 +1,261 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool D  |  LoanDepot Park, Miami
+  2026-03-06T19:00:00-05:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Nicaragua (NIC) vs Dominican Republic (DOM)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    NIC     |    DOM     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    4.25    |    2.90    |     DOM     |
+| 打擊 wRC+          |     70     |    132     |     DOM     |
+| 打線 wOBA          |   0.278    |   0.355    |     DOM     |
+| 守備 DER           |   0.680    |   0.718    |     DOM     |
+| 跑壘 SB%           |    67%     |    80%     |     DOM     |
+| 牛棚 ERA           |    5.00    |    2.80    |     DOM     |
+| 高壓 Clutch wOBA   |   0.268    |   0.350    |     DOM     |
+| Elo Rating         |    1260    |    1560    |     DOM     |
+
+#### 先發投手對決
+
+| 指標           |   Jonathan Loáisiga    |     Framber Valdez     |
+|----------------|------------------------|------------------------|
+| ERA            |          3.50          |          3.00          |
+| FIP            |          3.40          |          3.20          |
+| WHIP           |          1.15          |          1.10          |
+| K/9            |          9.0           |          8.5           |
+| BB/9           |          3.5           |          2.5           |
+| Stuff+         |          115           |          115           |
+| 均速 (mph)     |          97.5          |          94.5          |
+| 春訓 ERA       |          3.00          |          2.60          |
+| 近3場 ERA      |          3.20          |          2.80          |
+| vs LHB BA      |         0.220          |         0.215          |
+| vs RHB BA      |         0.215          |         0.220          |
+| 高壓 ERA       |          3.30          |          2.90          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool D
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      NIC       |      DOM       |
+|--------|----------------|----------------|
+|  1局   |  SP Loáisiga   |   SP Valdez    |
+|  2局   |  SP Loáisiga   |   SP Valdez    |
+|  3局   |  SP Loáisiga   |   SP Valdez    |
+|  4局   |    PB Cruz     |    PB Clase    |
+|  5局   |    PB Cruz     |    PB Clase    |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |   Sandor De La Cruz    |     Emmanuel Clase     |
+|--------------|------------------------|------------------------|
+| ERA          |          5.20          |          2.00          |
+| FIP          |          5.30          |          2.10          |
+| Stuff+       |           80           |          135           |
+| 春訓 ERA     |          4.80          |          1.60          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      NIC |      DOM |
+|---------------|----------|----------|
+| elo           |    15.1% |    84.9% |
+| bayesian      |    15.0% |    85.0% |
+| poisson       |    10.3% |    89.6% |
+| gbm           |    13.4% |    86.6% |
+| monte_carlo   |    18.0% |    82.0% |
+|---------------|----------|----------|
+| **Ensemble**  | **11.4%** | **88.6%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Sandor De La Cruz`
+- piggyback_home: `Emmanuel Clase`
+- piggyback_adjustment: `-0.0057`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `42`
+- roster_strength_home: `94`
+- rsi_adjustment: `-0.0208`
+- chemistry_bonus: `-0.0012`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.0978`
+- pre_adjust_home: `0.9022`
+- post_adjust_away: `0.1143`
+- post_adjust_home: `0.8857`
+
+#### 比分預測
+
+| 排名 | 比分 (NIC-DOM) | 機率     |
+|------|----------------------|----------|
+|  1   |         2-4          |     5.1% |
+|  2   |         2-5          |     5.0% |
+|  3   |         3-4          |     4.8% |
+|  4   |         4-5          |     4.6% |
+|  5   |         3-5          |     4.1% |
+
+**最可能比分 (Most Likely Score):** `2-4` (NIC-DOM)
+
+**預測總分:** 7.9 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     67.7% |      32.3% |
+|         7.5 |     52.0% |      48.0% |
+|         8.5 |     39.8% |      60.2% |
+|         9.5 |     26.6% |      73.4% |
+
+**延長賽機率 (Extra Innings):** 8.3%
+
+**爆冷機率 (NIC 獲勝):** 11.4%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ❌ **DOM** @ 1.10 (TSL)
+  - 隱含機率: 90.9% | 模型真實機率: 88.6%
+  - 期望值 (EV): -2.6% → **PASS**
+- ❌ **NIC** @ 7.00 (TSL)
+  - 隱含機率: 14.3% | 模型真實機率: 11.4%
+  - 期望值 (EV): -20.0% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **DOM (-4.5)** @ 1.95 (TSL)
+  - 隱含機率: 51.3% | 模型真實機率: 67.7%
+  - 期望值 (EV): +32.0% → **MEDIUM (Market Restricted)**
+- ❌ **NIC (+4.5)** @ 1.85 (TSL)
+  - 隱含機率: 54.0% | 模型真實機率: 37.1%
+  - 期望值 (EV): -31.4% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Under 8.5** @ 1.95 (TSL)
+  - EV: +17.4% → **MEDIUM (Market Restricted)**
+- ❌ **Over 8.5** @ 1.85 (TSL)
+  - EV: -24.8% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ❌ **DOM** @ 1.12 (TSL)
+  - 隱含機率: 89.3% | 模型真實機率: 88.2%
+  - 期望值 (EV): -1.2% → **PASS**
+- ❌ **NIC** @ 6.50 (TSL)
+  - 隱含機率: 15.4% | 模型真實機率: 11.8%
+  - 期望值 (EV): -23.4% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT DOM_Under 5.5** @ 1.95 (TSL)
+  - EV: +26.8% → **SECONDARY_VALIDATION_REQUIRED**
+- ✅ **TT NIC_Under 2.5** @ 1.95 (TSL)
+  - EV: +5.7% → **MEDIUM**
+- ❌ **TT NIC_Over 2.5** @ 1.85 (TSL)
+  - EV: -15.3% → **PASS**
+- ❌ **TT DOM_Over 5.5** @ 1.85 (TSL)
+  - EV: -26.4% → **SECONDARY_VALIDATION_REQUIRED**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL DOM (-4.5) @ 1.95 (TSL)
+- True Probability: 67.7%
+- Implied Probability: 51.3%
+- **EV: +32.0%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3370 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 DOM 為優勢方 (88.6%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool D，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: DOM、NIC 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: NIC 陣容完整度僅 42%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 💪 **盤口建議 (讓分)**: DOM 具備強大分差優勢 (預計贏 2.3 分)，**讓分盤 (-1.5)** 具備高度穿盤潛力。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 7.9 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool D 階段上限 65 球，Jonathan Loáisiga 與 Framber Valdez 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Sandor De La Cruz (ERA 5.20) vs Emmanuel Clase (ERA 2.00) — DOM 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: Freddy Zamora (wOBA 0.307, SwStr% vs 98mph+ 34.0%) vs José Ramírez (wOBA 0.384, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Erasmo Ramírez, Jonathan Loáisiga, Juan Soto, Vladimir Guerrero Jr., Rafael Devers, Manny Machado 等 8 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: DOM 高出 300 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      NIC       |      DOM       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       42       |       94       |
+| MLB 球員數        |       2        |       26       |
+| 磨合度 Chemistry  |      0.82      |      0.88      |
+
+**NIC 確認出賽球星**: Erasmo Ramírez, Jonathan Loáisiga
+
+**DOM 確認出賽球星**: Juan Soto, Vladimir Guerrero Jr., Rafael Devers, Manny Machado, Fernando Tatis Jr., Framber Valdez
+**DOM 待確認球星**:  Sandy Alcantara
+
+> ⚠️ **陣容差距**: DOM RSI 高出 52 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 3.00% of bankroll ($2,997)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +15.6%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | DOM | 1.95 | +32.0% | 0.50% | $500 |
+| 2 | TT | DOM_Under | 1.95 | +26.8% | 0.50% | $500 |
+| 3 | OU | Under | 1.95 | +17.4% | 0.50% | $500 |
+| 4 | TT | NIC_Under | 1.95 | +5.7% | 1.50% | $1,497 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

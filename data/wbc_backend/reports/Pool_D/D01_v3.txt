@@ -1,0 +1,260 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool D  |  LoanDepot Park, Miami
+  2026-03-06T12:00:00-05:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Netherlands (NED) vs Venezuela (VEN)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    NED     |    VEN     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    3.40    |    3.05    |     VEN     |
+| 打擊 wRC+          |    105     |    128     |     VEN     |
+| 打線 wOBA          |   0.322    |   0.352    |     VEN     |
+| 守備 DER           |   0.705    |   0.715    |     VEN     |
+| 跑壘 SB%           |    72%     |    78%     |     VEN     |
+| 牛棚 ERA           |    3.50    |    3.00    |     VEN     |
+| 高壓 Clutch wOBA   |   0.315    |   0.345    |     VEN     |
+| Elo Rating         |    1400    |    1540    |     VEN     |
+
+#### 先發投手對決
+
+| 指標           |     Kenley Jansen      |     Luis Castillo      |
+|----------------|------------------------|------------------------|
+| ERA            |          3.30          |          3.10          |
+| FIP            |          3.20          |          3.30          |
+| WHIP           |          1.08          |          1.10          |
+| K/9            |          10.0          |          9.0           |
+| BB/9           |          2.5           |          2.5           |
+| Stuff+         |          118           |          120           |
+| 均速 (mph)     |          93.0          |          97.0          |
+| 春訓 ERA       |          2.90          |          2.80          |
+| 近3場 ERA      |          3.00          |          2.90          |
+| vs LHB BA      |         0.215          |         0.220          |
+| vs RHB BA      |         0.200          |         0.215          |
+| 高壓 ERA       |          3.10          |          3.00          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool D
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      NED       |      VEN       |
+|--------|----------------|----------------|
+|  1局   |   SP Jansen    |  SP Castillo   |
+|  2局   |   SP Jansen    |  SP Castillo   |
+|  3局   |   SP Jansen    |  SP Castillo   |
+|  4局   |   PB Martis    |   PB Pressly   |
+|  5局   |   PB Martis    |   PB Pressly   |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |     Shairon Martis     |      Ryan Pressly      |
+|--------------|------------------------|------------------------|
+| ERA          |          4.20          |          2.80          |
+| FIP          |          4.30          |          2.70          |
+| Stuff+       |           90           |          120           |
+| 春訓 ERA     |          3.80          |          2.40          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      NED |      VEN |
+|---------------|----------|----------|
+| elo           |    30.9% |    69.1% |
+| bayesian      |    37.1% |    62.9% |
+| poisson       |    32.5% |    67.5% |
+| gbm           |    34.2% |    65.8% |
+| monte_carlo   |    37.9% |    62.1% |
+|---------------|----------|----------|
+| **Ensemble**  | **33.4%** | **66.6%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Shairon Martis`
+- piggyback_home: `Ryan Pressly`
+- piggyback_adjustment: `-0.0025`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `72`
+- roster_strength_home: `92`
+- rsi_adjustment: `-0.008`
+- chemistry_bonus: `-0.0012`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.3263`
+- pre_adjust_home: `0.6737`
+- post_adjust_away: `0.3337`
+- post_adjust_home: `0.6663`
+
+#### 比分預測
+
+| 排名 | 比分 (NED-VEN) | 機率     |
+|------|----------------------|----------|
+|  1   |         3-4          |     6.0% |
+|  2   |         3-2          |     5.3% |
+|  3   |         2-3          |     5.0% |
+|  4   |         4-3          |     4.9% |
+|  5   |         1-3          |     4.0% |
+
+**最可能比分 (Most Likely Score):** `3-4` (NED-VEN)
+
+**預測總分:** 7.0 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     54.9% |      45.1% |
+|         7.5 |     36.3% |      63.7% |
+|         8.5 |     27.3% |      72.7% |
+|         9.5 |     17.2% |      82.8% |
+
+**延長賽機率 (Extra Innings):** 13.9%
+
+**爆冷機率 (NED 獲勝):** 33.4%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ⚠️ **NED** @ 3.00 (TSL)
+  - 隱含機率: 33.3% | 模型真實機率: 33.4%
+  - 期望值 (EV): +0.1% → **PASS**
+- ❌ **VEN** @ 1.42 (TSL)
+  - 隱含機率: 70.4% | 模型真實機率: 66.6%
+  - 期望值 (EV): -5.4% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **VEN (-2.5)** @ 1.95 (TSL)
+  - 隱含機率: 51.3% | 模型真實機率: 66.8%
+  - 期望值 (EV): +30.3% → **MEDIUM (Market Restricted)**
+- ❌ **NED (+2.5)** @ 1.85 (TSL)
+  - 隱含機率: 54.0% | 模型真實機率: 38.0%
+  - 期望值 (EV): -29.7% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Under 7.5** @ 1.95 (TSL)
+  - EV: +25.8% → **MEDIUM (Market Restricted)**
+- ❌ **Over 7.5** @ 1.85 (TSL)
+  - EV: -25.5% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ❌ **NED** @ 2.80 (TSL)
+  - 隱含機率: 35.7% | 模型真實機率: 34.4%
+  - 期望值 (EV): -3.8% → **PASS**
+- ❌ **VEN** @ 1.45 (TSL)
+  - 隱含機率: 69.0% | 模型真實機率: 65.6%
+  - 期望值 (EV): -4.8% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT VEN_Under 4.5** @ 1.95 (TSL)
+  - EV: +27.6% → **SECONDARY_VALIDATION_REQUIRED**
+- ✅ **TT NED_Under 3.5** @ 1.95 (TSL)
+  - EV: +27.0% → **SECONDARY_VALIDATION_REQUIRED**
+- ❌ **TT NED_Over 3.5** @ 1.85 (TSL)
+  - EV: -26.6% → **PASS**
+- ❌ **TT VEN_Over 4.5** @ 1.85 (TSL)
+  - EV: -27.2% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL VEN (-2.5) @ 1.95 (TSL)
+- True Probability: 66.8%
+- Implied Probability: 51.3%
+- **EV: +30.3%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3189 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 VEN 為優勢方 (66.6%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool D，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: VEN、NED 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚖️ **盤口建議 (讓分)**: 模擬顯示兩隊分差僅 0.8 分，強隊穿盤 (-1.5) 風險較高，建議優先考慮 **受讓方 (+1.5)**。
+- 🔒 **盤口建議 (大小分)**: 預計總分為 7.0，且雙方先發具備強大的「高壓解危能力」(Avg High-Lev ERA 3.05)，高機率出現 **投手戰 (Under)**。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool D 階段上限 65 球，Kenley Jansen 與 Luis Castillo 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Shairon Martis (ERA 4.20) vs Ryan Pressly (ERA 2.80) — VEN 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: Druw Jones (wOBA 0.351, SwStr% vs 98mph+ 34.0%) vs Gleyber Torres (wOBA 0.381, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Xander Bogaerts, Ozzie Albies, Didi Gregorius, Kenley Jansen, Jonathan Schoop, Ronald Acuña Jr. 等 11 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: VEN 高出 140 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      NED       |      VEN       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       72       |       92       |
+| MLB 球員數        |       10       |       24       |
+| 磨合度 Chemistry  |      0.80      |      0.86      |
+
+**NED 確認出賽球星**: Xander Bogaerts, Ozzie Albies, Didi Gregorius, Kenley Jansen, Jonathan Schoop
+
+**VEN 確認出賽球星**: Ronald Acuña Jr., José Altuve, Luis Arraez, Andrés Giménez, José Ramírez, Miguel Cabrera
+**VEN 待確認球星**:  Luis Castillo
+
+> ⚠️ **陣容差距**: VEN RSI 高出 20 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 2.00% of bankroll ($2,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +27.7%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | VEN | 1.95 | +30.3% | 0.50% | $500 |
+| 2 | TT | VEN_Under | 1.95 | +27.6% | 0.50% | $500 |
+| 3 | TT | NED_Under | 1.95 | +27.0% | 0.50% | $500 |
+| 4 | OU | Under | 1.95 | +25.8% | 0.50% | $500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

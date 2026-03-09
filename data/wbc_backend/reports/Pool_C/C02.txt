@@ -1,0 +1,265 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool C  |  Tokyo Dome, Tokyo
+  2026-03-05T19:00:00+09:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置模擬賽前盤口)
+  💧 盤口流動性 (Liquidity): LOW (尚未開盤)
+======================================================================
+
+## Match: Czech Republic (CZE) vs South Korea (KOR)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    CZE     |    KOR     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    5.00    |    3.10    |     KOR     |
+| 打擊 wRC+          |     72     |    118     |     KOR     |
+| 打線 wOBA          |   0.280    |   0.338    |     KOR     |
+| 守備 DER           |   0.680    |   0.715    |     KOR     |
+| 跑壘 SB%           |    65%     |    75%     |     KOR     |
+| 牛棚 ERA           |    5.50    |    3.10    |     KOR     |
+| 高壓 Clutch wOBA   |   0.270    |   0.330    |     KOR     |
+| Elo Rating         |    1200    |    1510    |     KOR     |
+
+#### 先發投手對決
+
+| 指標           |    Martin Schneider    |       An Woo-Jin       |
+|----------------|------------------------|------------------------|
+| ERA            |          4.50          |          3.10          |
+| FIP            |          4.80          |          3.25          |
+| WHIP           |          1.42          |          1.15          |
+| K/9            |          6.5           |          9.2           |
+| BB/9           |          3.5           |          2.5           |
+| Stuff+         |           85           |          110           |
+| 均速 (mph)     |          90.0          |          95.0          |
+| 春訓 ERA       |          4.00          |          2.70          |
+| 近3場 ERA      |          4.20          |          2.80          |
+| vs LHB BA      |         0.270          |         0.235          |
+| vs RHB BA      |         0.280          |         0.220          |
+| 高壓 ERA       |          5.00          |          3.20          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool C
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      CZE       |      KOR       |
+|--------|----------------|----------------|
+|  1局   |  SP Schneider  |   SP Woo-Jin   |
+|  2局   |  SP Schneider  |   SP Woo-Jin   |
+|  3局   |  SP Schneider  |   SP Woo-Jin   |
+|  4局   |    PB Ondra    |     PB Ryu     |
+|  5局   |    PB Ondra    |     PB Ryu     |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Tomas Ondra       |      Hyun-Jin Ryu      |
+|--------------|------------------------|------------------------|
+| ERA          |          5.80          |          4.20          |
+| FIP          |          5.90          |          4.00          |
+| Stuff+       |           75           |           98           |
+| 春訓 ERA     |          5.20          |          3.80          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      CZE |      KOR |
+|---------------|----------|----------|
+| elo           |    14.4% |    85.6% |
+| bayesian      |    18.1% |    81.9% |
+| poisson       |     9.2% |    90.8% |
+| gbm           |    12.1% |    87.9% |
+| monte_carlo   |     9.2% |    90.8% |
+|---------------|----------|----------|
+| **Ensemble**  | **10.0%** | **90.0%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Tomas Ondra`
+- piggyback_home: `Hyun-Jin Ryu`
+- piggyback_adjustment: `-0.0028`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `45`
+- roster_strength_home: `85`
+- rsi_adjustment: `-0.016`
+- chemistry_bonus: `-0.001`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.0725`
+- pre_adjust_home: `0.9275`
+- post_adjust_away: `0.0996`
+- post_adjust_home: `0.9004`
+
+#### 比分預測
+
+| 排名 | 比分 (CZE-KOR) | 機率     |
+|------|----------------------|----------|
+|  1   |         2-4          |     4.6% |
+|  2   |         2-6          |     4.0% |
+|  3   |         3-6          |     4.0% |
+|  4   |         3-5          |     3.9% |
+|  5   |         2-5          |     3.9% |
+
+**最可能比分 (Most Likely Score):** `2-4` (CZE-KOR)
+
+**預測總分:** 9.3 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     82.9% |      17.1% |
+|         7.5 |     69.6% |      30.4% |
+|         8.5 |     58.2% |      41.8% |
+|         9.5 |     45.3% |      54.7% |
+
+**延長賽機率 (Extra Innings):** 7.4%
+
+**爆冷機率 (CZE 獲勝):** 10.0%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ✅ **KOR** @ 1.25 (TSL)
+  - 隱含機率: 80.0% | 模型真實機率: 90.0%
+  - 期望值 (EV): +12.5% → **STRONG**
+- ❌ **CZE** @ 4.20 (TSL)
+  - 隱含機率: 23.8% | 模型真實機率: 10.4%
+  - 期望值 (EV): -56.2% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **KOR (-2.5)** @ 1.85 (TSL)
+  - 隱含機率: 54.0% | 模型真實機率: 70.2%
+  - 期望值 (EV): +30.0% → **MEDIUM (Market Restricted)**
+- ❌ **CZE (+2.5)** @ 1.95 (TSL)
+  - 隱含機率: 51.3% | 模型真實機率: 34.5%
+  - 期望值 (EV): -32.6% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 8.5** @ 1.85 (TSL)
+  - EV: +7.7% → **MEDIUM (Market Restricted)**
+- ❌ **Under 8.5** @ 1.95 (TSL)
+  - EV: -18.5% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **KOR** @ 1.35 (TSL)
+  - 隱含機率: 74.1% | 模型真實機率: 87.6%
+  - 期望值 (EV): +18.3% → **SECONDARY_VALIDATION_REQUIRED**
+- ❌ **CZE** @ 3.30 (TSL)
+  - 隱含機率: 30.3% | 模型真實機率: 16.3%
+  - 期望值 (EV): -46.2% → **SECONDARY_VALIDATION_REQUIRED**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT KOR_Over 4.5** @ 1.85 (TSL)
+  - EV: +26.9% → **SECONDARY_VALIDATION_REQUIRED**
+- ✅ **TT CZE_Under 2.5** @ 1.95 (TSL)
+  - EV: +3.5% → **MEDIUM**
+- ❌ **TT CZE_Over 2.5** @ 1.85 (TSL)
+  - EV: -13.2% → **PASS**
+- ❌ **TT KOR_Under 4.5** @ 1.95 (TSL)
+  - EV: -29.4% → **SECONDARY_VALIDATION_REQUIRED**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL KOR (-2.5) @ 1.85 (TSL)
+- True Probability: 70.2%
+- Implied Probability: 54.0%
+- **EV: +30.0%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3525 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 KOR 為優勢方 (90.0%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool C，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: KOR、CZE 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: CZE 陣容完整度僅 45%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 🔥 **打線壓制力**: KOR 打線對戰 Martin Schneider 的預期 wOBA 高達 0.384，存在早期爆發可能。
+- 💪 **盤口建議 (讓分)**: KOR 具備強大分差優勢 (預計贏 3.6 分)，**讓分盤 (-1.5)** 具備高度穿盤潛力。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 9.3 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: ML KOR 賠率為 1.25，隱含勝率僅 80.0%，但 AI 計算結果為 90.0%，存在 12.5% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool C 階段上限 65 球，Martin Schneider 與 An Woo-Jin 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Tomas Ondra (ERA 5.80) vs Hyun-Jin Ryu (ERA 4.20) — KOR 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: Matous Bubenik (wOBA 0.309, SwStr% vs 98mph+ 34.0%) vs Park Hae-min (wOBA 0.367, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Martin Schneider, Martin Cervenka, Eric Sogard, Lee Jung-Hoo, Kim Ha-Seong, Go Woo-Suk 等 8 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: KOR 高出 310 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      CZE       |      KOR       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       45       |       85       |
+| MLB 球員數        |       0        |       5        |
+| 磨合度 Chemistry  |      0.78      |      0.83      |
+
+**CZE 確認出賽球星**: Martin Schneider, Martin Cervenka, Eric Sogard
+
+**KOR 確認出賽球星**: Lee Jung-Hoo, Kim Ha-Seong, Go Woo-Suk, Kim Do-yeong, Won Tae-In
+**KOR 待確認球星**:  An Woo-Jin
+
+> ⚠️ **陣容差距**: KOR RSI 高出 40 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 6
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +15.5%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | KOR | 1.85 | +30.0% | 0.50% | $500 |
+| 2 | TT | KOR_Over | 1.85 | +26.9% | 0.50% | $500 |
+| 3 | F5 | KOR | 1.35 | +18.3% | 0.50% | $500 |
+| 4 | ML | KOR | 1.25 | +12.5% | 1.50% | $1,500 |
+| 5 | OU | Over | 1.85 | +7.7% | 0.50% | $500 |
+| 6 | TT | CZE_Under | 1.95 | +3.5% | 0.50% | $500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

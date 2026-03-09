@@ -1,0 +1,19 @@
+{
+    "copyright": "Copyright 2026 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt",
+    "stats": [
+        {
+            "type": {
+                "displayName": "season"
+            },
+            "group": {
+                "displayName": "pitching"
+            },
+            "totalSplits": 0,
+            "exemptions": [],
+            "splits": [],
+            "splitsTiedWithOffset": [],
+            "splitsTiedWithLimit": [],
+            "playerPool": "QUALIFIED"
+        }
+    ]
+}

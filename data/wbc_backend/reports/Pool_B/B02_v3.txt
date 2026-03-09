@@ -1,0 +1,262 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool B  |  Minute Maid Park, Houston
+  2026-03-06T19:00:00-06:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: United States (USA) vs Brazil (BRA)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    USA     |    BRA     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    2.55    |    4.90    |     USA     |
+| 打擊 wRC+          |    135     |     65     |     USA     |
+| 打線 wOBA          |   0.360    |   0.272    |     USA     |
+| 守備 DER           |   0.722    |   0.675    |     USA     |
+| 跑壘 SB%           |    78%     |    65%     |     USA     |
+| 牛棚 ERA           |    2.60    |    5.50    |     USA     |
+| 高壓 Clutch wOBA   |   0.355    |   0.262    |     USA     |
+| Elo Rating         |    1600    |    1180    |     USA     |
+
+#### 先發投手對決
+
+| 指標           |      Tarik Skubal      |     Eric Pardinho      |
+|----------------|------------------------|------------------------|
+| ERA            |          2.50          |          4.30          |
+| FIP            |          2.70          |          4.20          |
+| WHIP           |          0.95          |          1.32          |
+| K/9            |          11.0          |          8.5           |
+| BB/9           |          1.8           |          3.5           |
+| Stuff+         |          130           |          100           |
+| 均速 (mph)     |          96.0          |          94.5          |
+| 春訓 ERA       |          2.10          |          3.80          |
+| 近3場 ERA      |          2.20          |          4.00          |
+| vs LHB BA      |         0.195          |         0.250          |
+| vs RHB BA      |         0.205          |         0.245          |
+| 高壓 ERA       |          2.40          |          4.50          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool B
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      USA       |      BRA       |
+|--------|----------------|----------------|
+|  1局   |   SP Skubal    |  SP Pardinho   |
+|  2局   |   SP Skubal    |  SP Pardinho   |
+|  3局   |   SP Skubal    |  SP Pardinho   |
+|  4局   |   PB Miller    |   PB Vieira    |
+|  5局   |   PB Miller    |   PB Vieira    |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Mason Miller      |     Thyago Vieira      |
+|--------------|------------------------|------------------------|
+| ERA          |          2.20          |          4.00          |
+| FIP          |          2.10          |          4.10          |
+| Stuff+       |          140           |          108           |
+| 春訓 ERA     |          1.90          |          3.60          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      USA |      BRA |
+|---------------|----------|----------|
+| elo           |    90.7% |     9.3% |
+| bayesian      |    91.0% |     9.0% |
+| poisson       |    96.5% |     3.4% |
+| gbm           |    94.0% |     6.0% |
+| monte_carlo   |    90.1% |     9.9% |
+|---------------|----------|----------|
+| **Ensemble**  | **92.8%** | ** 7.2%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Mason Miller`
+- piggyback_home: `Thyago Vieira`
+- piggyback_adjustment: `0.0032`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `96`
+- roster_strength_home: `40`
+- rsi_adjustment: `0.0224`
+- chemistry_bonus: `0.0022`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.9493`
+- pre_adjust_home: `0.0507`
+- post_adjust_away: `0.9276`
+- post_adjust_home: `0.0724`
+
+#### 比分預測
+
+| 排名 | 比分 (USA-BRA) | 機率     |
+|------|----------------------|----------|
+|  1   |         5-3          |     4.4% |
+|  2   |         6-2          |     4.3% |
+|  3   |         4-2          |     4.2% |
+|  4   |         5-2          |     3.8% |
+|  5   |         7-2          |     3.8% |
+
+**最可能比分 (Most Likely Score):** `5-3` (USA-BRA)
+
+**預測總分:** 9.0 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     80.3% |      19.7% |
+|         7.5 |     66.8% |      33.2% |
+|         8.5 |     53.7% |      46.3% |
+|         9.5 |     39.9% |      60.1% |
+
+**延長賽機率 (Extra Innings):** 4.0%
+
+**爆冷機率 (BRA 獲勝):** 7.2%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ⚠️ **USA** @ 1.08 (TSL)
+  - 隱含機率: 92.6% | 模型真實機率: 92.8%
+  - 期望值 (EV): +0.2% → **PASS**
+- ❌ **BRA** @ 8.50 (TSL)
+  - 隱含機率: 11.8% | 模型真實機率: 7.2%
+  - 期望值 (EV): -38.5% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **BRA (+3.5)** @ 1.95 (TSL)
+  - 隱含機率: 51.3% | 模型真實機率: 62.9%
+  - 期望值 (EV): +22.6% → **MEDIUM (Market Restricted)**
+- ❌ **USA (-3.5)** @ 1.85 (TSL)
+  - 隱含機率: 54.0% | 模型真實機率: 40.4%
+  - 期望值 (EV): -25.3% → **PASS**
+
+#### 大小分 Over/Under
+- ⚠️ **Over 8.5** @ 1.90 (TSL)
+  - EV: +2.0% → **SMALL (Market Restricted)**
+- ❌ **Under 8.5** @ 1.90 (TSL)
+  - EV: -12.0% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **USA** @ 1.10 (TSL)
+  - 隱含機率: 90.9% | 模型真實機率: 95.0%
+  - 期望值 (EV): +4.5% → **MEDIUM**
+- ❌ **BRA** @ 7.00 (TSL)
+  - 隱含機率: 14.3% | 模型真實機率: 5.0%
+  - 期望值 (EV): -65.0% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT BRA_Under 2.5** @ 1.95 (TSL)
+  - EV: +10.4% → **STRONG**
+- ✅ **TT USA_Over 5.5** @ 1.85 (TSL)
+  - EV: +5.1% → **MEDIUM**
+- ❌ **TT USA_Under 5.5** @ 1.95 (TSL)
+  - EV: -15.8% → **PASS**
+- ❌ **TT BRA_Over 2.5** @ 1.85 (TSL)
+  - EV: -19.7% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL BRA (3.5) @ 1.95 (TSL)
+- True Probability: 62.9%
+- Implied Probability: 51.3%
+- **EV: +22.6%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.2383 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 USA 為優勢方 (92.8%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool B，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: BRA、USA 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: BRA 陣容完整度僅 40%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 💪 **盤口建議 (讓分)**: USA 具備強大分差優勢 (預計贏 3.6 分)，**讓分盤 (-1.5)** 具備高度穿盤潛力。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 9.0 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: TT BRA_Under 賠率為 1.95，隱含勝率僅 51.3%，但 AI 計算結果為 56.6%，存在 10.4% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool B 階段上限 65 球，Tarik Skubal 與 Eric Pardinho 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Mason Miller (ERA 2.20) vs Thyago Vieira (ERA 4.00) — USA 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: Corbin Carroll (wOBA 0.389, SwStr% vs 98mph+ 34.0%) vs Osvaldo Carvalho (wOBA 0.301, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Aaron Judge, Bryce Harper, Bobby Witt Jr., Gunnar Henderson, Paul Goldschmidt, Tarik Skubal 等 8 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: USA 高出 420 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      USA       |      BRA       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       96       |       40       |
+| MLB 球員數        |       28       |       1        |
+| 磨合度 Chemistry  |      0.86      |      0.75      |
+
+**USA 確認出賽球星**: Aaron Judge, Bryce Harper, Bobby Witt Jr., Gunnar Henderson, Paul Goldschmidt, Tarik Skubal
+**USA 待確認球星**:  Corbin Burnes
+
+**BRA 確認出賽球星**: Eric Pardinho, Thyago Vieira
+
+> ⚠️ **陣容差距**: USA RSI 高出 56 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +9.1%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | BRA | 1.95 | +22.6% | 0.50% | $500 |
+| 2 | TT | BRA_Under | 1.95 | +10.4% | 1.50% | $1,500 |
+| 3 | TT | USA_Over | 1.85 | +5.1% | 0.91% | $910 |
+| 4 | F5 | USA | 1.10 | +4.5% | 1.09% | $1,090 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

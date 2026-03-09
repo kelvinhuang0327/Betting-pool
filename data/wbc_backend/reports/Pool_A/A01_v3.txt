@@ -1,0 +1,265 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool A  |  Estadio Hiram Bithorn, San Juan
+  2026-03-06T12:00:00-04:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Cuba (CUB) vs Panama (PAN)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    CUB     |    PAN     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    3.50    |    4.20    |     CUB     |
+| 打擊 wRC+          |    105     |     85     |     CUB     |
+| 打線 wOBA          |   0.318    |   0.298    |     CUB     |
+| 守備 DER           |   0.705    |   0.698    |     CUB     |
+| 跑壘 SB%           |    74%     |    70%     |     CUB     |
+| 牛棚 ERA           |    3.80    |    4.50    |     CUB     |
+| 高壓 Clutch wOBA   |   0.310    |   0.288    |     CUB     |
+| Elo Rating         |    1400    |    1320    |     CUB     |
+
+#### 先發投手對決
+
+| 指標           |    Raidel Martinez     |      Javy Guerra       |
+|----------------|------------------------|------------------------|
+| ERA            |          3.20          |          3.90          |
+| FIP            |          3.40          |          4.10          |
+| WHIP           |          1.15          |          1.30          |
+| K/9            |          9.5           |          8.0           |
+| BB/9           |          2.5           |          3.0           |
+| Stuff+         |          115           |          100           |
+| 均速 (mph)     |          96.0          |          93.5          |
+| 春訓 ERA       |          3.00          |          3.50          |
+| 近3場 ERA      |          2.90          |          3.60          |
+| vs LHB BA      |         0.228          |         0.252          |
+| vs RHB BA      |         0.215          |         0.245          |
+| 高壓 ERA       |          3.30          |          4.20          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool A
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      CUB       |      PAN       |
+|--------|----------------|----------------|
+|  1局   |  SP Martinez   |   SP Guerra    |
+|  2局   |  SP Martinez   |   SP Guerra    |
+|  3局   |  SP Martinez   |   SP Guerra    |
+|  4局   |    PB López    |   PB Espino    |
+|  5局   |    PB López    |   PB Espino    |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |       Yoan López       |      Paolo Espino      |
+|--------------|------------------------|------------------------|
+| ERA          |          4.50          |          4.80          |
+| FIP          |          4.30          |          4.90          |
+| Stuff+       |           98           |           85           |
+| 春訓 ERA     |          4.00          |          4.30          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      CUB |      PAN |
+|---------------|----------|----------|
+| elo           |    61.3% |    38.7% |
+| bayesian      |    61.9% |    38.1% |
+| poisson       |    71.2% |    28.8% |
+| gbm           |    66.8% |    33.2% |
+| monte_carlo   |    70.4% |    29.6% |
+|---------------|----------|----------|
+| **Ensemble**  | **69.2%** | **30.8%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Yoan López`
+- piggyback_home: `Paolo Espino`
+- piggyback_adjustment: `0.0005`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `72`
+- roster_strength_home: `60`
+- rsi_adjustment: `0.0048`
+- chemistry_bonus: `0.0004`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.7093`
+- pre_adjust_home: `0.2907`
+- post_adjust_away: `0.6921`
+- post_adjust_home: `0.3079`
+
+#### 比分預測
+
+| 排名 | 比分 (CUB-PAN) | 機率     |
+|------|----------------------|----------|
+|  1   |         4-3          |     5.1% |
+|  2   |         3-2          |     4.7% |
+|  3   |         5-3          |     4.6% |
+|  4   |         5-4          |     4.5% |
+|  5   |         4-5          |     4.2% |
+
+**最可能比分 (Most Likely Score):** `4-3` (CUB-PAN)
+
+**預測總分:** 8.2 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     71.3% |      28.7% |
+|         7.5 |     55.7% |      44.3% |
+|         8.5 |     44.2% |      55.8% |
+|         9.5 |     29.5% |      70.5% |
+
+**延長賽機率 (Extra Innings):** 13.1%
+
+**爆冷機率 (PAN 獲勝):** 30.8%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ✅ **CUB** @ 1.62 (TSL)
+  - 隱含機率: 61.7% | 模型真實機率: 69.2%
+  - 期望值 (EV): +12.1% → **STRONG**
+- ❌ **PAN** @ 2.40 (TSL)
+  - 隱含機率: 41.7% | 模型真實機率: 30.8%
+  - 期望值 (EV): -26.1% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **PAN (+1.5)** @ 1.75 (TSL)
+  - 隱含機率: 57.1% | 模型真實機率: 70.7%
+  - 期望值 (EV): +23.7% → **MEDIUM (Market Restricted)**
+- ❌ **CUB (-1.5)** @ 2.10 (TSL)
+  - 隱含機率: 47.6% | 模型真實機率: 33.6%
+  - 期望值 (EV): -29.4% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 7.5** @ 1.85 (TSL)
+  - EV: +3.0% → **MEDIUM (Market Restricted)**
+- ❌ **Under 7.5** @ 1.95 (TSL)
+  - EV: -13.6% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **CUB** @ 1.65 (TSL)
+  - 隱含機率: 60.6% | 模型真實機率: 71.3%
+  - 期望值 (EV): +17.6% → **STRONG**
+- ❌ **PAN** @ 2.30 (TSL)
+  - 隱含機率: 43.5% | 模型真實機率: 30.0%
+  - 期望值 (EV): -31.0% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT PAN_Under 3.5** @ 1.95 (TSL)
+  - EV: +25.9% → **STRONG**
+- ✅ **TT CUB_Over 3.5** @ 1.85 (TSL)
+  - EV: +24.7% → **STRONG**
+- ❌ **TT PAN_Over 3.5** @ 1.85 (TSL)
+  - EV: -25.5% → **PASS**
+- ❌ **TT CUB_Under 3.5** @ 1.95 (TSL)
+  - EV: -27.1% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** TT PAN_Under (3.5) @ 1.95 (TSL)
+- True Probability: 64.5%
+- Implied Probability: 51.3%
+- **EV: +25.9%**
+- Stake: 1.50% of bankroll = **$1,500**
+  (Kelly Full: 0.2721 → Used: 0.0150)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 CUB 為優勢方 (69.2%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool A，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: PAN、CUB 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: PAN 陣容完整度僅 60%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 📊 **盤口建議 (讓分)**: 預計分差落在 1.5 分，讓分盤價值與精準度持平，需注意牛棚最後一局的穩定性。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 8.2 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: TT PAN_Under 賠率為 1.95，隱含勝率僅 51.3%，但 AI 計算結果為 64.5%，存在 25.9% 的期望值邊際 (Edge)。
+- 💰 **價值交易點**: TT CUB_Over 賠率為 1.85，隱含勝率僅 54.0%，但 AI 計算結果為 67.4%，存在 24.7% 的期望值邊際 (Edge)。
+- 💰 **價值交易點**: F5 CUB 賠率為 1.65，隱含勝率僅 60.6%，但 AI 計算結果為 71.3%，存在 17.6% 的期望值邊際 (Edge)。
+- 💰 **價值交易點**: ML CUB 賠率為 1.62，隱含勝率僅 61.7%，但 AI 計算結果為 69.2%，存在 12.1% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool A 階段上限 65 球，Raidel Martinez 與 Javy Guerra 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Yoan López (ERA 4.50) vs Paolo Espino (ERA 4.80) — CUB 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: Yoel Yanqui (wOBA 0.347, SwStr% vs 98mph+ 34.0%) vs Jose Ramos (wOBA 0.327, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Yoán Moncada, Luis Robert, Raidel Martinez, Javy Guerra, Christian Bethancourt，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: CUB 高出 80 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      CUB       |      PAN       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       72       |       60       |
+| MLB 球員數        |       3        |       3        |
+| 磨合度 Chemistry  |      0.80      |      0.78      |
+
+**CUB 確認出賽球星**: Yoán Moncada, Luis Robert, Raidel Martinez
+**CUB 待確認球星**:  Livan Moinelo
+
+**PAN 確認出賽球星**: Javy Guerra, Christian Bethancourt
+**PAN 待確認球星**:  Edmundo Sosa
+
+> ⚠️ **陣容差距**: CUB RSI 高出 12 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +24.1%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | TT | PAN_Under | 1.95 | +25.9% | 1.50% | $1,500 |
+| 2 | TT | CUB_Over | 1.85 | +24.7% | 1.50% | $1,500 |
+| 3 | RL | PAN | 1.75 | +23.7% | 0.50% | $500 |
+| 4 | F5 | CUB | 1.65 | +17.6% | 0.50% | $500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

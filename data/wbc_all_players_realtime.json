@@ -1,0 +1,3799 @@
+[
+    {
+        "team": "Brazil",
+        "team_id": 776,
+        "players": [
+            {
+                "id": 649963,
+                "name": "Bo Takahashi",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 627392,
+                "name": "Daniel Missaki",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 605142,
+                "name": "Dante Bichette Jr.",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 838357,
+                "name": "Enzo Hayashida",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 807344,
+                "name": "Enzo Sawayama",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672078,
+                "name": "Eric Pardinho",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 806889,
+                "name": "Felipe Koragi",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 831113,
+                "name": "Felipe Mizukosi",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 682858,
+                "name": "Gabriel Barbosa",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 693861,
+                "name": "Gabriel Carmo",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 806238,
+                "name": "Gabriel Gomes",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 670622,
+                "name": "Gabriel Maciel",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 622609,
+                "name": "Hector Villarroel",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 627387,
+                "name": "Hugo Kanabushi",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 806891,
+                "name": "Joao Gabriel Marostica",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 828631,
+                "name": "Joseph Contreras",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 553891,
+                "name": "Leonardo Reginatto",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 813429,
+                "name": "Lucas Ramirez",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 624531,
+                "name": "Lucas Rojo",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 683844,
+                "name": "Matheus Silva",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 517209,
+                "name": "Murilo Gouvea",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 627393,
+                "name": "Oscar Nakaoshi",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 831112,
+                "name": "Osvaldo Carvalho",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 600986,
+                "name": "Thyago Vieira",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 547921,
+                "name": "Tiago Da Silva",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 831114,
+                "name": "Tiago Nishiyama",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 838355,
+                "name": "Tomas Lopez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 678685,
+                "name": "Victor Mascai",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 672074,
+                "name": "Vitor Ito",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 836637,
+                "name": "Vitor Takahashi",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Canada",
+        "team_id": 784,
+        "players": [
+            {
+                "id": 647351,
+                "name": "Abraham Toro",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 647228,
+                "name": "Adam Hall",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 671936,
+                "name": "Adam Macko",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683328,
+                "name": "Antoine Jean",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 666310,
+                "name": "Bo Naylor",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 621245,
+                "name": "Brock Dykxhoorn",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 615698,
+                "name": "Cal Quantrill",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672016,
+                "name": "Denzel Clarke",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 666397,
+                "name": "Edouard Julien",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 672021,
+                "name": "Eric Cerantola",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 666301,
+                "name": "Indigo Diaz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 615699,
+                "name": "Jacob Robson",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 572020,
+                "name": "James Paxton",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 592791,
+                "name": "Jameson Taillon",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676724,
+                "name": "Jared Young",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 666364,
+                "name": "Jordan Balazovic",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 647304,
+                "name": "Josh Naylor",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 689414,
+                "name": "Liam Hicks",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 663531,
+                "name": "Logan Allen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 571602,
+                "name": "Matt Davidson",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 683363,
+                "name": "Matt Wilkinson",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 809840,
+                "name": "Micah Ashman",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 647336,
+                "name": "Michael Soroka",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 659418,
+                "name": "Noah Skirrow",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672640,
+                "name": "Otto Lopez",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 683357,
+                "name": "Owen Caissie",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 518418,
+                "name": "Phillippe Aumont",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642239,
+                "name": "Rob Zastryzny",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672012,
+                "name": "Tyler Black",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 641933,
+                "name": "Tyler O'Neill",
+                "position": "OF",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Chinese Taipei",
+        "team_id": 791,
+        "players": [
+            {
+                "id": 838360,
+                "name": "An-Ko Lin",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 800018,
+                "name": "Chen Zhong-Ao Zhuang",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808992,
+                "name": "Chen-Wei Chen",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 830723,
+                "name": "Cheng-Hui Sung",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 808993,
+                "name": "Chieh-Hsien Chen",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 629496,
+                "name": "Chih-Wei Hu",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 692059,
+                "name": "Hao-Chun Cheng",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 701678,
+                "name": "Hao-Yu  Lee",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 830717,
+                "name": "Jo-Hsi Hsu",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838362,
+                "name": "Jun-Wei Zhang",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 809004,
+                "name": "Jyun-Yue Tseng",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 666020,
+                "name": "Kai-Wei Lin",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 611563,
+                "name": "Kuan-Yu Chen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808997,
+                "name": "Kun-Yu Chiang",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 644375,
+                "name": "Kungkuan Giljegiljaw",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 670076,
+                "name": "Lyle Lin",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 809006,
+                "name": "Nien-Ting Wu",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 696040,
+                "name": "Po-Yu Chen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 830716,
+                "name": "Ruei-Yang Gu Lin",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 830725,
+                "name": "Shao-Hung Chiang",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 838361,
+                "name": "Shih-Hsiang Lin",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 656413,
+                "name": "Stuart Fairchild",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 691907,
+                "name": "Tsung-Che Cheng",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 809223,
+                "name": "Tzu-Chen Sha",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 624407,
+                "name": "Tzu-Wei Lin",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 827734,
+                "name": "Wei-En Lin",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838359,
+                "name": "Yi Chang",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 806844,
+                "name": "Yi-Lei Sun",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 644374,
+                "name": "Yu Chang",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 801179,
+                "name": "Yu-Min Lin",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Colombia",
+        "team_id": 792,
+        "players": [
+            {
+                "id": 622426,
+                "name": "Adrian Almeida",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 666123,
+                "name": "Austin Bergner",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683454,
+                "name": "Brayan Buelvas",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 678863,
+                "name": "Carlos Arroyo",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 642751,
+                "name": "Carlos Martínez",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 678962,
+                "name": "Daniel Vellojin",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 672550,
+                "name": "Danis Correa",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 800124,
+                "name": "David Lorduy",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 682679,
+                "name": "Dayan Frias",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 456781,
+                "name": "Donovan Solano",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 666669,
+                "name": "Elkin Alcala",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 627218,
+                "name": "Emerson Martinez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 664375,
+                "name": "Ezequiel Zabaleta",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 570482,
+                "name": "Gio Urshela",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 670871,
+                "name": "Guillo Zuñiga",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672569,
+                "name": "Gustavo Campero",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 623912,
+                "name": "Harold Ramírez",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 667354,
+                "name": "Jesus Marriaga",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 664584,
+                "name": "Jhon Romero",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672478,
+                "name": "Jordan Diaz",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 595751,
+                "name": "Jorge Alfaro",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 500779,
+                "name": "Jose Quintana",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 527054,
+                "name": "Julio Teheran",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672715,
+                "name": "Luis Patiño",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 703197,
+                "name": "Michael Arroyo",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 690345,
+                "name": "Pedro Garcia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 665665,
+                "name": "Reiver Sanmartin",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 471906,
+                "name": "Reynaldo Rodriguez",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 677013,
+                "name": "Rio Gomez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642857,
+                "name": "Yapson Gomez",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Cuba",
+        "team_id": 798,
+        "players": [
+            {
+                "id": 683061,
+                "name": "Alexander Vargas",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 493351,
+                "name": "Alexei Ramirez",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 493319,
+                "name": "Alfredo Despaigne",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 808949,
+                "name": "Andrys Perez",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 673508,
+                "name": "Ariel Martinez",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 807176,
+                "name": "Armando Duenas",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 839102,
+                "name": "Christian Rodriguez",
+                "position": "IF",
+                "stats": []
+            },
+            {
+                "id": 628345,
+                "name": "Darien Núñez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 682644,
+                "name": "Denny Larrondo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 820888,
+                "name": "Emmanuel Chapman",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 628326,
+                "name": "Erisbel Arruebarrena",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 701260,
+                "name": "Frank Alvarez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 814300,
+                "name": "Josimar Cousin",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 678789,
+                "name": "Julio Robaina",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838354,
+                "name": "Leonel Moas Jr.",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 661267,
+                "name": "Livan Moinelo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 673603,
+                "name": "Luis Romero",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 682650,
+                "name": "Malcom Nuñez",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 683427,
+                "name": "Omar Hernandez",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 682640,
+                "name": "Osiel Rodriguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683726,
+                "name": "Pedro Santos",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 673510,
+                "name": "Raidel Martinez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838353,
+                "name": "Randy Martinez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 661270,
+                "name": "Roel Santos",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 684320,
+                "name": "Yariel Rodríguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 691268,
+                "name": "Yiddi Cappe",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 661255,
+                "name": "Yoan López",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 660162,
+                "name": "Yoán Moncada",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 677120,
+                "name": "Yoel Yanqui",
+                "position": "IF",
+                "stats": []
+            },
+            {
+                "id": 698795,
+                "name": "Yoelkis Guibert",
+                "position": "OF",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Czechia",
+        "team_id": 800,
+        "players": [
+            {
+                "id": 807828,
+                "name": "Boris Vecerka",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 804607,
+                "name": "Daniel Padysak",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 693972,
+                "name": "Filip Capka",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 831793,
+                "name": "Filip Kollmann",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 626416,
+                "name": "Jan Novak",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 837160,
+                "name": "Jan Pospisil",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 808951,
+                "name": "Jeff Barto",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 807155,
+                "name": "Lukas Ercoli",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 693978,
+                "name": "Lukas Hlouch",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 803013,
+                "name": "Marek Chlup",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 807163,
+                "name": "Marek Krejcirik",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 608042,
+                "name": "Marek Minarik",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 548431,
+                "name": "Martin Cervenka",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 693975,
+                "name": "Martin Cervinka",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 693973,
+                "name": "Martin Muzik",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 626423,
+                "name": "Martin Schneider",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 693980,
+                "name": "Martin Zelenka",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 828317,
+                "name": "Matous Bubenik",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 838351,
+                "name": "Max Prejda",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 807156,
+                "name": "Michal Kovala",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 831799,
+                "name": "Michal Sindelka",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 807160,
+                "name": "Milan Prokop",
+                "position": "IF",
+                "stats": []
+            },
+            {
+                "id": 693974,
+                "name": "Ondrej Satoria",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838347,
+                "name": "Ondrej Vank",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 689650,
+                "name": "Ryan Johnson",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 679631,
+                "name": "Terrin Vavra",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 667766,
+                "name": "Tomas Duffek",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838345,
+                "name": "Tomas Ondra",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 687781,
+                "name": "Vojtech Mensik",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 679925,
+                "name": "William Escala",
+                "position": "OF",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Dominican Republic",
+        "team_id": 805,
+        "players": [
+            {
+                "id": 682842,
+                "name": "Abner Uribe",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 682663,
+                "name": "Agustín Ramírez",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 656061,
+                "name": "Albert Abreu",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642708,
+                "name": "Amed Rosario",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 669224,
+                "name": "Austin Wells",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 678394,
+                "name": "Brayan Bello",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 666808,
+                "name": "Camilo Doval",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 608032,
+                "name": "Carlos Estévez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 467793,
+                "name": "Carlos Santana",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 650911,
+                "name": "Cristopher Sánchez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642701,
+                "name": "Dennis Santana",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 665660,
+                "name": "Elvis Alvarado",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 544836,
+                "name": "Enny Romero",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 665487,
+                "name": "Fernando Tatis Jr.",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 672695,
+                "name": "Geraldo Perdomo",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 642397,
+                "name": "Gregory Soto",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 623211,
+                "name": "Huascar Brazobán",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 665161,
+                "name": "Jeremy Peña",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 622772,
+                "name": "Jimmy Cordero",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 675848,
+                "name": "Juan Mejia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 665742,
+                "name": "Juan Soto",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 677594,
+                "name": "Julio Rodríguez",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 691406,
+                "name": "Junior Caminero",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 516809,
+                "name": "Junior Lake",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 606466,
+                "name": "Ketel Marte",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 622663,
+                "name": "Luis Severino",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 592518,
+                "name": "Manny Machado",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 592692,
+                "name": "Mel Rojas Jr.",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 631222,
+                "name": "Michael De La Cruz",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 650958,
+                "name": "Michael De León",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 665833,
+                "name": "Oneil Cruz",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 642601,
+                "name": "Oscar De La Cruz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 600474,
+                "name": "Pedro Severino",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 570488,
+                "name": "Phillips Valdez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 650701,
+                "name": "Ricardo Cespedes",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 645261,
+                "name": "Sandy Alcantara",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 622554,
+                "name": "Seranthony Domínguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 593647,
+                "name": "Sócrates Brito",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 665489,
+                "name": "Vladimir Guerrero Jr.",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 593974,
+                "name": "Wandy Peralta",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 593590,
+                "name": "Webster Rivas",
+                "position": "C",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Great Britain",
+        "team_id": 821,
+        "players": [
+            {
+                "id": 668687,
+                "name": "Andre Scrubb",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 681230,
+                "name": "BJ Murray",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 694341,
+                "name": "Brendan Beck",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 681501,
+                "name": "Chavez Fernander",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 687630,
+                "name": "Donovan Benoit",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 592229,
+                "name": "Dylan Covey",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 804541,
+                "name": "Gary Gill Hill",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676942,
+                "name": "Graham Spraker",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 695670,
+                "name": "Harry Ford",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 691588,
+                "name": "Ian Lewis Jr.",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 671155,
+                "name": "Ivan Johnson",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 681252,
+                "name": "Jack Anderson",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808952,
+                "name": "Jack Seppings",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 665862,
+                "name": "Jazz Chisholm Jr.",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 687045,
+                "name": "Justin Wylie",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 677565,
+                "name": "Kristian Robinson",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 665650,
+                "name": "Lucius Fox",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 689288,
+                "name": "Matt Koperniak",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 695680,
+                "name": "Miles Langhorne",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 695402,
+                "name": "Najer Victor",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 681987,
+                "name": "Nate Eaton",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 682187,
+                "name": "Nick Ward",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 657101,
+                "name": "Nick Wells",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 801643,
+                "name": "Owen Wild",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 702465,
+                "name": "Ryan Long",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 572204,
+                "name": "Trayce Thompson",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 663941,
+                "name": "Tristan Beck",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 643588,
+                "name": "Tyler Viza",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 474699,
+                "name": "Vance Worley",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 701796,
+                "name": "Will Cresswell",
+                "position": "C",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Israel",
+        "team_id": 840,
+        "players": [
+            {
+                "id": 808953,
+                "name": "Assaf Lowengart",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 815084,
+                "name": "Ben Simon",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 809780,
+                "name": "Benjamin Rosengard",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 667690,
+                "name": "C.J. Stubbs",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 701557,
+                "name": "Carlos Lequerica",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 810897,
+                "name": "Charlie Beilenson",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 690985,
+                "name": "Colby Halter",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 694249,
+                "name": "Cole Carrigg",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 679946,
+                "name": "Daniel Federman",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 665152,
+                "name": "Dean Kremer",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 596117,
+                "name": "Garrett Stubbs",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 664056,
+                "name": "Harrison Bader",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 694660,
+                "name": "Harrison Cohen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 670288,
+                "name": "Jake Fishman",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 695372,
+                "name": "Jake Gelof",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 802363,
+                "name": "Jordan Geber",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 695256,
+                "name": "Josh Mallitz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 621199,
+                "name": "Matt Bowman",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 670223,
+                "name": "Matt Mervis",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 676661,
+                "name": "Max Lazar",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 702331,
+                "name": "Noah Mendlinger",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 702302,
+                "name": "RJ Schreck",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 641739,
+                "name": "Rob Kaminsky",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 476594,
+                "name": "Robert Stock",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 696492,
+                "name": "Ryan Prager",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 687462,
+                "name": "Spencer Horwitz",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 592454,
+                "name": "Tommy Kahnle",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 804241,
+                "name": "Zach Levenson",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 681671,
+                "name": "Zack Leban",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 592848,
+                "name": "Zack Weiss",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Italy",
+        "team_id": 841,
+        "players": [
+            {
+                "id": 605400,
+                "name": "Aaron Nola",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 493603,
+                "name": "Adam Ottavino",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 689690,
+                "name": "Alek Jacob",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 702652,
+                "name": "Andrew Fischer",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 668144,
+                "name": "Claudio Scotti",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 656186,
+                "name": "Dan Altavilla",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 807276,
+                "name": "Dante Nori",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 686527,
+                "name": "Dominic Canzone",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 690626,
+                "name": "Dylan DeLucia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838341,
+                "name": "Gabriele Quattrini",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838338,
+                "name": "Giaconino Lasaracina",
+                "position": "IF",
+                "stats": []
+            },
+            {
+                "id": 700669,
+                "name": "Gordon Graceffo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 669711,
+                "name": "Greg Weissert",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683490,
+                "name": "J.J. D'Orazio",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 695506,
+                "name": "Jac Caglianone",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 805300,
+                "name": "Jakob Marsee",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 686747,
+                "name": "Joe La Sorsa",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 542932,
+                "name": "Jon Berti",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 693312,
+                "name": "Kyle Nicolas",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 691019,
+                "name": "Kyle Teel",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 670036,
+                "name": "Matt Festa",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 547179,
+                "name": "Michael Lorenzen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 670156,
+                "name": "Miles Mastrobuoni",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 703492,
+                "name": "Nick Morabito",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 676760,
+                "name": "Ron Marinaccio",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 691951,
+                "name": "Sam Aldegheri",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 803011,
+                "name": "Sam Antonacci",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 695336,
+                "name": "Thomas Saggese",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 686469,
+                "name": "Vinnie Pasquantino",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 701305,
+                "name": "Zach Dezenzo",
+                "position": "IF",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Japan",
+        "team_id": 843,
+        "players": [
+            {
+                "id": 684001,
+                "name": "Atsuki Taneichi",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838757,
+                "name": "Chihiro Sumida",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808955,
+                "name": "Hiromi Itoh",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808964,
+                "name": "Hiroto Takahashi",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808958,
+                "name": "Hiroya Miyagi",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838344,
+                "name": "Kaito Kozono",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 672960,
+                "name": "Kazuma Okamoto",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 685547,
+                "name": "Kensuke Kondo",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 838350,
+                "name": "Kenya Wakatsuki",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 838348,
+                "name": "Koki Kitayama",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 807799,
+                "name": "Masataka Yoshida",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 808959,
+                "name": "Munetaka Murakami",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 838349,
+                "name": "Ryuhei Sotani",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 831656,
+                "name": "Seishiro Sakamoto",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 673548,
+                "name": "Seiya Suzuki",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 660271,
+                "name": "Shohei Ohtani",
+                "position": "DH",
+                "stats": []
+            },
+            {
+                "id": 838755,
+                "name": "Shoma Fujihira",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 831674,
+                "name": "Shota Morishita",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 808957,
+                "name": "Shugo Maki",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 683821,
+                "name": "Sosuke Genda",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 611463,
+                "name": "Taisei Makihara",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 808962,
+                "name": "Taisei Ota",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 831664,
+                "name": "Teruaki Sato",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 608372,
+                "name": "Tomoyuki Sugano",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683970,
+                "name": "Ukyo Shuto",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 808967,
+                "name": "Yoshinobu Yamamoto",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 673520,
+                "name": "Yuhei Nakamura",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 838346,
+                "name": "Yuki Matsumoto",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838756,
+                "name": "Yumeto Kanemaru",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 579328,
+                "name": "Yusei Kikuchi",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Mexico",
+        "team_id": 867,
+        "players": [
+            {
+                "id": 672386,
+                "name": "Alejandro Kirk",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 696030,
+                "name": "Alejandro Osuna",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 677950,
+                "name": "Alek Thomas",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 692024,
+                "name": "Alex Carrillo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 694401,
+                "name": "Alexander Armenta",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 656029,
+                "name": "Alexis Wilson",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 662253,
+                "name": "Andrés Muñoz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 657514,
+                "name": "Brennan Bernardino",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 650960,
+                "name": "Daniel Duarte",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 622103,
+                "name": "Gerardo Reyes",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 691858,
+                "name": "Jared Serna",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 680776,
+                "name": "Jarren Duran",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 665871,
+                "name": "Javier Assad",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672911,
+                "name": "Jesus Cruz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 608841,
+                "name": "Joey Meneses",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 687401,
+                "name": "Joey Ortiz",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 666018,
+                "name": "Jonathan Aranda",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 676140,
+                "name": "Julian Ornelas",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 703725,
+                "name": "Luis Gastelum",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 649966,
+                "name": "Luis Urías",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 518435,
+                "name": "Manny Barreda",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 805373,
+                "name": "Nacho Alvarez Jr.",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 693304,
+                "name": "Nick Gonzales",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 668227,
+                "name": "Randy Arozarena",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 676395,
+                "name": "Robert Garcia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 641995,
+                "name": "Roel Ramírez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642133,
+                "name": "Rowdy Tellez",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 696519,
+                "name": "Samy Natera Jr.",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 592836,
+                "name": "Taijuan Walker",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 680767,
+                "name": "Victor Vodnik",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Kingdom of the Netherlands",
+        "team_id": 878,
+        "players": [
+            {
+                "id": 699008,
+                "name": "Antwone Kelly",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 687677,
+                "name": "Arij Fransen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 678882,
+                "name": "Ceddanne Rafaela",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 644433,
+                "name": "Chadwick Tromp",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 806401,
+                "name": "Dayson Croes",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 838330,
+                "name": "Delano Selassa",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 663723,
+                "name": "Derek West",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 544369,
+                "name": "Didi Gregorius",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 702258,
+                "name": "Druw Jones",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 808511,
+                "name": "Dylan Wilson",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 677804,
+                "name": "Eric Mendez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 649955,
+                "name": "Hendrik Clementina",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 823858,
+                "name": "Jaitoine Kelly",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 699228,
+                "name": "Jakey Josepha",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 808378,
+                "name": "Jamdrick Cornelia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 692838,
+                "name": "Jaydenn Estanista",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 543833,
+                "name": "Juan Carlos Sulbaran",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642282,
+                "name": "Juremi Profar",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 838329,
+                "name": "Justin Morales",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 445276,
+                "name": "Kenley Jansen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808721,
+                "name": "Kevin Kelly",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 609044,
+                "name": "Lars Huijer",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 645277,
+                "name": "Ozzie Albies",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 642720,
+                "name": "Ray-Patrick Didder",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 820853,
+                "name": "Ryjeteri Merite",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 463017,
+                "name": "Shairon Martis",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 463748,
+                "name": "Sharlon Schoop",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 806779,
+                "name": "Shawndrick Oduber",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 622464,
+                "name": "Wendell Floranus",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 593428,
+                "name": "Xander Bogaerts",
+                "position": "SS",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Nicaragua",
+        "team_id": 881,
+        "players": [
+            {
+                "id": 679752,
+                "name": "Angel Obando",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 664342,
+                "name": "Benjamin Alegria",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 667351,
+                "name": "Brandon Leyton",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 678897,
+                "name": "Bryan Torres",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 692230,
+                "name": "Carlos Rodriguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 469191,
+                "name": "Carlos Teller",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 689209,
+                "name": "Chase Dawson",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 596144,
+                "name": "Cheslor Cuthbert",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 830698,
+                "name": "Cristhian Sandoval",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 807358,
+                "name": "Danilo Bermudez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 650356,
+                "name": "Dilmer Mejia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808986,
+                "name": "Duque Hebbert",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 692378,
+                "name": "Elian Rayo",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 693721,
+                "name": "Emanuel Trujillo",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 541640,
+                "name": "Erasmo Ramírez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 668965,
+                "name": "Freddy Zamora",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 665998,
+                "name": "Ismael Munguia",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 500724,
+                "name": "JC Ramírez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 669023,
+                "name": "Jeter Downs",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 821829,
+                "name": "Jose Orozco",
+                "position": "IF",
+                "stats": []
+            },
+            {
+                "id": 650375,
+                "name": "Juan Montes",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 830693,
+                "name": "Kenword Burton",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 668901,
+                "name": "Mark Vientos",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 649700,
+                "name": "Melvin Novoa",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 821830,
+                "name": "Omar Mendoza",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 699325,
+                "name": "Oscar Rayo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 608476,
+                "name": "Osman Gutierrez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642574,
+                "name": "Ronald Medrano",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 830696,
+                "name": "Ronald Rivera",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 691602,
+                "name": "Stiven Cruz",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Panama",
+        "team_id": 890,
+        "players": [
+            {
+                "id": 665959,
+                "name": "Abdiel Mendoza",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 593604,
+                "name": "Alberto Baldonado",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642707,
+                "name": "Allen Córdoba",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 642558,
+                "name": "Ariel Jurado",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 542194,
+                "name": "Christian Bethancourt",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 642607,
+                "name": "Dario Agrazal",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 624641,
+                "name": "Edmundo Sosa",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 690961,
+                "name": "Enrique Bradfield Jr.",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 701477,
+                "name": "Erian Rodriguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 650668,
+                "name": "Humberto Mejía",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642545,
+                "name": "Jaime Barria",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 686857,
+                "name": "James Gonzalez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 642770,
+                "name": "Javy Guerra",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 645308,
+                "name": "Jhonny Santos",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 622666,
+                "name": "Johan Camargo",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 660620,
+                "name": "Jonathan Araúz",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 683517,
+                "name": "Jorge Garcia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676609,
+                "name": "José Caballero",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 682947,
+                "name": "Jose Ramos",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 665789,
+                "name": "Kenny Hernandez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 677870,
+                "name": "Leo Jiménez",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 699024,
+                "name": "Leonardo Bernal",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 671106,
+                "name": "Logan Allen",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 514630,
+                "name": "Luis Castillo",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 665804,
+                "name": "Miguel Amaya",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 800550,
+                "name": "Miguel Cienfuegos",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 685777,
+                "name": "Miguel Gomez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 502179,
+                "name": "Paolo Espino",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 514913,
+                "name": "Rubén Tejada",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 605894,
+                "name": "Severino González",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Puerto Rico",
+        "team_id": 897,
+        "players": [
+            {
+                "id": 681938,
+                "name": "Angel Reyes",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 663494,
+                "name": "Bryan Torres",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 666126,
+                "name": "Carlos Cortes",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 543877,
+                "name": "Christian Vázquez",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 687231,
+                "name": "Darell Hernaiz",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 592696,
+                "name": "Eddie Rosario",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 700842,
+                "name": "Eduardo Rivera",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 695490,
+                "name": "Edwin Arroyo",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 621242,
+                "name": "Edwin Díaz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 695684,
+                "name": "Elmer Rodríguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 656896,
+                "name": "Emmanuel Rivera",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 518585,
+                "name": "Fernando Cruz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676082,
+                "name": "Gabriel Rodriguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 671218,
+                "name": "Heliot Ramos",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 605347,
+                "name": "Jorge López",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 592254,
+                "name": "José De León",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 664744,
+                "name": "Jose Espada",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 663558,
+                "name": "Jovani Morán",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 801346,
+                "name": "Luis Hernandez",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 687879,
+                "name": "Luis Quiñones",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676679,
+                "name": "Luis Vázquez",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 669004,
+                "name": "MJ Melendez",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 455117,
+                "name": "Martín Maldonado",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 683090,
+                "name": "Matthew Lugo",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 571448,
+                "name": "Nolan Arenado",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 670103,
+                "name": "Raymond Burgos",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 703106,
+                "name": "Ricardo Velez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 670329,
+                "name": "Rico Garcia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 607625,
+                "name": "Seth Lugo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 650489,
+                "name": "Willi Castro",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 605441,
+                "name": "Yacksel Ríos",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Korea",
+        "team_id": 1171,
+        "players": [
+            {
+                "id": 808971,
+                "name": "Been Gwak",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 823575,
+                "name": "Bo Gyeong Moon",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 823568,
+                "name": "Byeong Hyeon Jo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 641540,
+                "name": "Dane Dunning",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838339,
+                "name": "Do Yeong Kim",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 673526,
+                "name": "Dong Won Park",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 673527,
+                "name": "Hae-Min Park",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 808984,
+                "name": "Hyeong Jun So",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808975,
+                "name": "Hyeseong Kim",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 806806,
+                "name": "Hyun Bin Moon",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 547943,
+                "name": "Hyun Jin Ryu",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838336,
+                "name": "Hyun Min Ahn",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 823570,
+                "name": "Hyung Jun Kim",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 838332,
+                "name": "Ja Wook Koo",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 663330,
+                "name": "Jahmai Jones",
+                "position": "LF",
+                "stats": []
+            },
+            {
+                "id": 823572,
+                "name": "Ju Won Kim",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 838333,
+                "name": "Ju Young Son",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808982,
+                "name": "Jung Hoo Lee",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 628359,
+                "name": "Kyung-Eun Noh",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 823593,
+                "name": "Min Jae Shin",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 676617,
+                "name": "Riley O'Brien",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838334,
+                "name": "Seung Ki Song",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 694376,
+                "name": "Shay Whitcomb",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 823574,
+                "name": "Si Hwan Roh",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 838331,
+                "name": "Woo Joo Jeong",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808970,
+                "name": "Woo-Suk Go",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838863,
+                "name": "Yeong Chan You",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 823561,
+                "name": "Yeong Hyun Park",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 838342,
+                "name": "Young Kyu Kim",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 808978,
+                "name": "Young Pyo Ko",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "International Player Workout",
+        "team_id": 6060,
+        "players": []
+    },
+    {
+        "team": "United States",
+        "team_id": 940,
+        "players": [
+            {
+                "id": 592450,
+                "name": "Aaron Judge",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 608324,
+                "name": "Alex Bregman",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 677951,
+                "name": "Bobby Witt Jr.",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 641745,
+                "name": "Brad Keller",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 668930,
+                "name": "Brice Turang",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 547180,
+                "name": "Bryce Harper",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 621439,
+                "name": "Byron Buxton",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 663728,
+                "name": "Cal Raleigh",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 605280,
+                "name": "Clay Holmes",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 477132,
+                "name": "Clayton Kershaw",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 670280,
+                "name": "David Bednar",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676391,
+                "name": "Ernie Clement",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 642100,
+                "name": "Gabe Speier",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 664076,
+                "name": "Garrett Cleavinger",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676477,
+                "name": "Garrett Whitlock",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 643377,
+                "name": "Griffin Jax",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683002,
+                "name": "Gunnar Henderson",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 656941,
+                "name": "Kyle Schwarber",
+                "position": "DH",
+                "stats": []
+            },
+            {
+                "id": 657277,
+                "name": "Logan Webb",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 695243,
+                "name": "Mason Miller",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 571510,
+                "name": "Matthew Boyd",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 608379,
+                "name": "Michael Wacha",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 690997,
+                "name": "Nolan McLean",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 502671,
+                "name": "Paul Goldschmidt",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 694973,
+                "name": "Paul Skenes",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 691718,
+                "name": "Pete Crow-Armstrong",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 701350,
+                "name": "Roman Anthony",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 642232,
+                "name": "Ryan Yarbrough",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 669373,
+                "name": "Tarik Skubal",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 669257,
+                "name": "Will Smith",
+                "position": "C",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Venezuela",
+        "team_id": 944,
+        "players": [
+            {
+                "id": 665926,
+                "name": "Andrés Giménez",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 600921,
+                "name": "Andrés Machado",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672582,
+                "name": "Angel Zerpa",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683627,
+                "name": "Anthony Molina",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 622608,
+                "name": "Antonio Senzatela",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 664346,
+                "name": "Carlos Guzman",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 682949,
+                "name": "Christian Suarez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 694037,
+                "name": "Daniel Palencia",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 660825,
+                "name": "Eduard Bazardo",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 593958,
+                "name": "Eduardo Rodriguez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 646241,
+                "name": "Enmanuel De Jesus",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 553993,
+                "name": "Eugenio Suárez",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 678662,
+                "name": "Ezequiel Tovar",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 650402,
+                "name": "Gleyber Torres",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 694192,
+                "name": "Jackson Chourio",
+                "position": "CF",
+                "stats": []
+            },
+            {
+                "id": 691594,
+                "name": "Javier Sanoja",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 646242,
+                "name": "Jhonathan Díaz",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 676130,
+                "name": "José Buttó",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 672456,
+                "name": "Keider Montero",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 679883,
+                "name": "Luinder Avila",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 650333,
+                "name": "Luis Arraez",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 672580,
+                "name": "Maikel Garcia",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 624133,
+                "name": "Ranger Suarez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 645307,
+                "name": "Ricardo Sánchez",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 660670,
+                "name": "Ronald Acuña Jr.",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 521692,
+                "name": "Salvador Perez",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 661388,
+                "name": "William Contreras",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 575929,
+                "name": "Willson Contreras",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 677800,
+                "name": "Wilyer Abreu",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 672782,
+                "name": "Yoendrys Gómez",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    },
+    {
+        "team": "Australia",
+        "team_id": 760,
+        "players": [
+            {
+                "id": 664334,
+                "name": "Aaron Whitefield",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 673064,
+                "name": "Alex Hall",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 649144,
+                "name": "Alex Wells",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 678620,
+                "name": "Blake Townsend",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 678521,
+                "name": "Chris Burke",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 807650,
+                "name": "Coen Wynne",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 628015,
+                "name": "Connor MacDonald",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 692707,
+                "name": "Cooper Morgan",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 678554,
+                "name": "Curtis Mead",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 666838,
+                "name": "George Callil",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 672552,
+                "name": "Jack O'Loughlin",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 673062,
+                "name": "Jarryd Dale",
+                "position": "SS",
+                "stats": []
+            },
+            {
+                "id": 626943,
+                "name": "Jon Kennedy",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 681973,
+                "name": "Josh Hendrickson",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 816332,
+                "name": "Kieren Hall",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 673132,
+                "name": "Ky Hampton",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 649143,
+                "name": "Lachlan Wells",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 623921,
+                "name": "Logan Wade",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 828589,
+                "name": "Max Durrington",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 666748,
+                "name": "Mitch Neunborn",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 673134,
+                "name": "Mitchell Edwards",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 678534,
+                "name": "Rixon Wingrove",
+                "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 674671,
+                "name": "Robbie Glendinning",
+                "position": "3B",
+                "stats": []
+            },
+            {
+                "id": 564434,
+                "name": "Robbie Perkins",
+                "position": "C",
+                "stats": []
+            },
+            {
+                "id": 627697,
+                "name": "Sam Holland",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 470491,
+                "name": "Tim Kennelly",
+                "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 573667,
+                "name": "Todd Van Steensel",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 683953,
+                "name": "Travis Bazzana",
+                "position": "2B",
+                "stats": []
+            },
+            {
+                "id": 672531,
+                "name": "Ulrich Bojarski",
+                "position": "RF",
+                "stats": []
+            },
+            {
+                "id": 599683,
+                "name": "Warwick Saupold",
+                "position": "P",
+                "stats": []
+            }
+        ]
+    }
+]

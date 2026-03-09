@@ -1,0 +1,95 @@
+{
+  "model_weights": {
+    "elo": 0.174085,
+    "bayesian": 0.126667,
+    "poisson": 0.272791,
+    "gbm": 0.155083,
+    "monte_carlo": 0.271373
+  },
+  "game_log": [
+    {
+      "game_id": "C03",
+      "actual_winner": "AUS",
+      "actual_score": "5-1",
+      "errors": {
+        "elo": 0.068644,
+        "bayesian": 0.131044,
+        "poisson": 0.047961,
+        "gbm": 0.069696,
+        "monte_carlo": 0.059536
+      },
+      "updated_weights": {
+        "elo": 0.208199,
+        "bayesian": 0.184006,
+        "poisson": 0.233551,
+        "gbm": 0.155239,
+        "monte_carlo": 0.219005
+      }
+    },
+    {
+      "game_id": "C04",
+      "actual_winner": "JPN",
+      "actual_score": "0-13",
+      "errors": {
+        "elo": 0.051076,
+        "bayesian": 0.069169,
+        "poisson": 0.019881,
+        "gbm": 0.038809,
+        "monte_carlo": 0.019044
+      },
+      "updated_weights": {
+        "elo": 0.192741,
+        "bayesian": 0.154054,
+        "poisson": 0.257124,
+        "gbm": 0.153848,
+        "monte_carlo": 0.242233
+      }
+    },
+    {
+      "game_id": "C05",
+      "actual_winner": "TPE",
+      "actual_score": "14-0",
+      "errors": {
+        "elo": 0.0441,
+        "bayesian": 0.061009,
+        "poisson": 0.015129,
+        "gbm": 0.024336,
+        "monte_carlo": 0.005329
+      },
+      "updated_weights": {
+        "elo": 0.174085,
+        "bayesian": 0.126667,
+        "poisson": 0.272791,
+        "gbm": 0.155083,
+        "monte_carlo": 0.271373
+      }
+    }
+  ],
+  "cumulative_error": {
+    "elo": [
+      0.068644,
+      0.051076,
+      0.0441
+    ],
+    "bayesian": [
+      0.131044,
+      0.069169,
+      0.061009
+    ],
+    "poisson": [
+      0.047961,
+      0.019881,
+      0.015129
+    ],
+    "gbm": [
+      0.069696,
+      0.038809,
+      0.024336
+    ],
+    "monte_carlo": [
+      0.059536,
+      0.019044,
+      0.005329
+    ]
+  }
+}

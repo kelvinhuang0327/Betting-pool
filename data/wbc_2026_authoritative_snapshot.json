@@ -1,0 +1,7563 @@
+{
+  "version": 2,
+  "generated_at": "2026-03-09T06:36:56.271921Z",
+  "description": "Authoritative WBC snapshot built from official MLB/WBC schedule and roster sources. Predictions remain blocked until starters and lineups are officially verified per game.",
+  "games": [
+    {
+      "canonical_game_id": "C01",
+      "aliases": [
+        "WBC2026_TPE_AUS_001",
+        "WBC26-TPE-AUS-001",
+        "TPE_AT_AUS"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-05T12:00:00+09:00",
+      "game_time_utc": "2026-03-05T03:00:00Z",
+      "date": "2026-03-05",
+      "home": "AUS",
+      "away": "TPE",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Aaron Whitefield",
+        "Alex Hall",
+        "Alex Wells",
+        "Blake Townsend",
+        "Chris Burke",
+        "Coen Wynne",
+        "Connor MacDonald",
+        "Cooper Morgan",
+        "Curtis Mead",
+        "George Callil",
+        "Jack O'Loughlin",
+        "Jarryd Dale",
+        "Jon Kennedy",
+        "Josh Hendrickson",
+        "Kieren Hall",
+        "Ky Hampton",
+        "Lachlan Wells",
+        "Logan Wade",
+        "Max Durrington",
+        "Mitch Neunborn",
+        "Mitchell Edwards",
+        "Rixon Wingrove",
+        "Robbie Glendinning",
+        "Robbie Perkins",
+        "Sam Holland",
+        "Tim Kennelly",
+        "Todd Van Steensel",
+        "Travis Bazzana",
+        "Ulrich Bojarski",
+        "Warwick Saupold"
+      ],
+      "away_roster": [
+        "An-Ko Lin",
+        "Chen Zhong-Ao Zhuang",
+        "Chen-Wei Chen",
+        "Cheng-Hui Sung",
+        "Chieh-Hsien Chen",
+        "Chih-Wei Hu",
+        "Hao-Chun Cheng",
+        "Hao-Yu  Lee",
+        "Jo-Hsi Hsu",
+        "Jun-Wei Zhang",
+        "Jyun-Yue Tseng",
+        "Kai-Wei Lin",
+        "Kuan-Yu Chen",
+        "Kun-Yu Chiang",
+        "Kungkuan Giljegiljaw",
+        "Lyle Lin",
+        "Nien-Ting Wu",
+        "Po-Yu Chen",
+        "Ruei-Yang Gu Lin",
+        "Shao-Hung Chiang",
+        "Shih-Hsiang Lin",
+        "Stuart Fairchild",
+        "Tsung-Che Cheng",
+        "Tzu-Chen Sha",
+        "Tzu-Wei Lin",
+        "Wei-En Lin",
+        "Yi Chang",
+        "Yi-Lei Sun",
+        "Yu Chang",
+        "Yu-Min Lin"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/791/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Aaron Whitefield",
+          "team": "AUS"
+        },
+        {
+          "name": "Alex Hall",
+          "team": "AUS"
+        },
+        {
+          "name": "Chris Burke",
+          "team": "AUS"
+        },
+        {
+          "name": "Curtis Mead",
+          "team": "AUS"
+        },
+        {
+          "name": "George Callil",
+          "team": "AUS"
+        },
+        {
+          "name": "Jarryd Dale",
+          "team": "AUS"
+        },
+        {
+          "name": "Logan Wade",
+          "team": "AUS"
+        },
+        {
+          "name": "Max Durrington",
+          "team": "AUS"
+        },
+        {
+          "name": "Mitchell Edwards",
+          "team": "AUS"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "An-Ko Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Chen-Wei Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Cheng-Hui Sung",
+          "team": "TPE"
+        },
+        {
+          "name": "Chieh-Hsien Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Hao-Yu  Lee",
+          "team": "TPE"
+        },
+        {
+          "name": "Kun-Yu Chiang",
+          "team": "TPE"
+        },
+        {
+          "name": "Kungkuan Giljegiljaw",
+          "team": "TPE"
+        },
+        {
+          "name": "Lyle Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Nien-Ting Wu",
+          "team": "TPE"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C02",
+      "aliases": [
+        "WBC2026_CZE_KOR_002",
+        "WBC26-CZE-KOR-002",
+        "CZE_AT_KOR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-05T19:00:00+09:00",
+      "game_time_utc": "2026-03-05T10:00:00Z",
+      "date": "2026-03-05",
+      "home": "KOR",
+      "away": "CZE",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Been Gwak",
+        "Bo Gyeong Moon",
+        "Byeong Hyeon Jo",
+        "Dane Dunning",
+        "Do Yeong Kim",
+        "Dong Won Park",
+        "Hae-Min Park",
+        "Hyeong Jun So",
+        "Hyeseong Kim",
+        "Hyun Bin Moon",
+        "Hyun Jin Ryu",
+        "Hyun Min Ahn",
+        "Hyung Jun Kim",
+        "Ja Wook Koo",
+        "Jahmai Jones",
+        "Ju Won Kim",
+        "Ju Young Son",
+        "Jung Hoo Lee",
+        "Kyung-Eun Noh",
+        "Min Jae Shin",
+        "Riley O'Brien",
+        "Seung Ki Song",
+        "Shay Whitcomb",
+        "Si Hwan Roh",
+        "Woo Joo Jeong",
+        "Woo-Suk Go",
+        "Yeong Chan You",
+        "Yeong Hyun Park",
+        "Young Kyu Kim",
+        "Young Pyo Ko"
+      ],
+      "away_roster": [
+        "Boris Vecerka",
+        "Daniel Padysak",
+        "Filip Capka",
+        "Filip Kollmann",
+        "Jan Novak",
+        "Jan Pospisil",
+        "Jeff Barto",
+        "Lukas Ercoli",
+        "Lukas Hlouch",
+        "Marek Chlup",
+        "Marek Krejcirik",
+        "Marek Minarik",
+        "Martin Cervenka",
+        "Martin Cervinka",
+        "Martin Muzik",
+        "Martin Schneider",
+        "Martin Zelenka",
+        "Matous Bubenik",
+        "Max Prejda",
+        "Michal Kovala",
+        "Michal Sindelka",
+        "Milan Prokop",
+        "Ondrej Satoria",
+        "Ondrej Vank",
+        "Ryan Johnson",
+        "Terrin Vavra",
+        "Tomas Duffek",
+        "Tomas Ondra",
+        "Vojtech Mensik",
+        "William Escala"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/1171/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/800/roster?season=2026",
+      "home_sp": {
+        "name": "Hyeong Jun So",
+        "team": "KOR",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Daniel Padysak",
+        "team": "CZE",
+        "era": 5.1,
+        "fip": 5.3,
+        "whip": 1.52,
+        "k_per_9": 5.8,
+        "bb_per_9": 4.0,
+        "stuff_plus": 80,
+        "ip_last_30": 10.0,
+        "era_last_3": 4.8,
+        "spring_era": 4.5,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.28,
+        "vs_right_ba": 0.29,
+        "high_leverage_era": 5.5,
+        "fastball_velo": 88.5,
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Bo Gyeong Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Do Yeong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Dong Won Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hae-Min Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyeseong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Bin Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Min Ahn",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyung Jun Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Ja Wook Koo",
+          "team": "KOR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Jan Pospisil",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Chlup",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Krejcirik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervinka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Muzik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Zelenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Matous Bubenik",
+          "team": "CZE"
+        },
+        {
+          "name": "Max Prejda",
+          "team": "CZE"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/czechia-vs-korea-in-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-05T08:30:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C03",
+      "aliases": [
+        "WBC2026_AUS_CZE_003",
+        "WBC26-AUS-CZE-003",
+        "AUS_AT_CZE"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-06T12:00:00+09:00",
+      "game_time_utc": "2026-03-06T03:00:00Z",
+      "date": "2026-03-06",
+      "home": "CZE",
+      "away": "AUS",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Boris Vecerka",
+        "Daniel Padysak",
+        "Filip Capka",
+        "Filip Kollmann",
+        "Jan Novak",
+        "Jan Pospisil",
+        "Jeff Barto",
+        "Lukas Ercoli",
+        "Lukas Hlouch",
+        "Marek Chlup",
+        "Marek Krejcirik",
+        "Marek Minarik",
+        "Martin Cervenka",
+        "Martin Cervinka",
+        "Martin Muzik",
+        "Martin Schneider",
+        "Martin Zelenka",
+        "Matous Bubenik",
+        "Max Prejda",
+        "Michal Kovala",
+        "Michal Sindelka",
+        "Milan Prokop",
+        "Ondrej Satoria",
+        "Ondrej Vank",
+        "Ryan Johnson",
+        "Terrin Vavra",
+        "Tomas Duffek",
+        "Tomas Ondra",
+        "Vojtech Mensik",
+        "William Escala"
+      ],
+      "away_roster": [
+        "Aaron Whitefield",
+        "Alex Hall",
+        "Alex Wells",
+        "Blake Townsend",
+        "Chris Burke",
+        "Coen Wynne",
+        "Connor MacDonald",
+        "Cooper Morgan",
+        "Curtis Mead",
+        "George Callil",
+        "Jack O'Loughlin",
+        "Jarryd Dale",
+        "Jon Kennedy",
+        "Josh Hendrickson",
+        "Kieren Hall",
+        "Ky Hampton",
+        "Lachlan Wells",
+        "Logan Wade",
+        "Max Durrington",
+        "Mitch Neunborn",
+        "Mitchell Edwards",
+        "Rixon Wingrove",
+        "Robbie Glendinning",
+        "Robbie Perkins",
+        "Sam Holland",
+        "Tim Kennelly",
+        "Todd Van Steensel",
+        "Travis Bazzana",
+        "Ulrich Bojarski",
+        "Warwick Saupold"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/800/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Jan Pospisil",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Chlup",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Krejcirik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervinka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Muzik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Zelenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Matous Bubenik",
+          "team": "CZE"
+        },
+        {
+          "name": "Max Prejda",
+          "team": "CZE"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Aaron Whitefield",
+          "team": "AUS"
+        },
+        {
+          "name": "Alex Hall",
+          "team": "AUS"
+        },
+        {
+          "name": "Chris Burke",
+          "team": "AUS"
+        },
+        {
+          "name": "Curtis Mead",
+          "team": "AUS"
+        },
+        {
+          "name": "George Callil",
+          "team": "AUS"
+        },
+        {
+          "name": "Jarryd Dale",
+          "team": "AUS"
+        },
+        {
+          "name": "Logan Wade",
+          "team": "AUS"
+        },
+        {
+          "name": "Max Durrington",
+          "team": "AUS"
+        },
+        {
+          "name": "Mitchell Edwards",
+          "team": "AUS"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C04",
+      "aliases": [
+        "WBC2026_TPE_JPN_004",
+        "WBC26-TPE-JPN-004",
+        "TPE_AT_JPN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-06T19:00:00+09:00",
+      "game_time_utc": "2026-03-06T10:00:00Z",
+      "date": "2026-03-06",
+      "home": "JPN",
+      "away": "TPE",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Atsuki Taneichi",
+        "Chihiro Sumida",
+        "Hiromi Itoh",
+        "Hiroto Takahashi",
+        "Hiroya Miyagi",
+        "Kaito Kozono",
+        "Kazuma Okamoto",
+        "Kensuke Kondo",
+        "Kenya Wakatsuki",
+        "Koki Kitayama",
+        "Masataka Yoshida",
+        "Munetaka Murakami",
+        "Ryuhei Sotani",
+        "Seishiro Sakamoto",
+        "Seiya Suzuki",
+        "Shohei Ohtani",
+        "Shoma Fujihira",
+        "Shota Morishita",
+        "Shugo Maki",
+        "Sosuke Genda",
+        "Taisei Makihara",
+        "Taisei Ota",
+        "Teruaki Sato",
+        "Tomoyuki Sugano",
+        "Ukyo Shuto",
+        "Yoshinobu Yamamoto",
+        "Yuhei Nakamura",
+        "Yuki Matsumoto",
+        "Yumeto Kanemaru",
+        "Yusei Kikuchi"
+      ],
+      "away_roster": [
+        "An-Ko Lin",
+        "Chen Zhong-Ao Zhuang",
+        "Chen-Wei Chen",
+        "Cheng-Hui Sung",
+        "Chieh-Hsien Chen",
+        "Chih-Wei Hu",
+        "Hao-Chun Cheng",
+        "Hao-Yu  Lee",
+        "Jo-Hsi Hsu",
+        "Jun-Wei Zhang",
+        "Jyun-Yue Tseng",
+        "Kai-Wei Lin",
+        "Kuan-Yu Chen",
+        "Kun-Yu Chiang",
+        "Kungkuan Giljegiljaw",
+        "Lyle Lin",
+        "Nien-Ting Wu",
+        "Po-Yu Chen",
+        "Ruei-Yang Gu Lin",
+        "Shao-Hung Chiang",
+        "Shih-Hsiang Lin",
+        "Stuart Fairchild",
+        "Tsung-Che Cheng",
+        "Tzu-Chen Sha",
+        "Tzu-Wei Lin",
+        "Wei-En Lin",
+        "Yi Chang",
+        "Yi-Lei Sun",
+        "Yu Chang",
+        "Yu-Min Lin"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/843/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/791/roster?season=2026",
+      "home_sp": {
+        "name": "Yoshinobu Yamamoto",
+        "team": "JPN",
+        "era": 3.1,
+        "fip": 3.25,
+        "whip": 1.12,
+        "k_per_9": 10.4,
+        "bb_per_9": 2.1,
+        "stuff_plus": 125,
+        "ip_last_30": 25.0,
+        "era_last_3": 2.9,
+        "spring_era": 2.4,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.22,
+        "vs_right_ba": 0.205,
+        "high_leverage_era": 2.8,
+        "fastball_velo": 96.5,
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Hao-Chun Cheng",
+        "team": "TPE",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Kaito Kozono",
+          "team": "JPN"
+        },
+        {
+          "name": "Kazuma Okamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Kensuke Kondo",
+          "team": "JPN"
+        },
+        {
+          "name": "Kenya Wakatsuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Masataka Yoshida",
+          "team": "JPN"
+        },
+        {
+          "name": "Munetaka Murakami",
+          "team": "JPN"
+        },
+        {
+          "name": "Seishiro Sakamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Seiya Suzuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Shohei Ohtani",
+          "team": "JPN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "An-Ko Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Chen-Wei Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Cheng-Hui Sung",
+          "team": "TPE"
+        },
+        {
+          "name": "Chieh-Hsien Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Hao-Yu  Lee",
+          "team": "TPE"
+        },
+        {
+          "name": "Kun-Yu Chiang",
+          "team": "TPE"
+        },
+        {
+          "name": "Kungkuan Giljegiljaw",
+          "team": "TPE"
+        },
+        {
+          "name": "Lyle Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Nien-Ting Wu",
+          "team": "TPE"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/news/japan-vs-chinese-taipei-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-06T12:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A01",
+      "aliases": [
+        "WBC2026_CUB_PAN_001",
+        "WBC26-CUB-PAN-001",
+        "CUB_AT_PAN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-06T12:00:00-04:00",
+      "game_time_utc": "2026-03-06T16:00:00Z",
+      "date": "2026-03-07",
+      "home": "PAN",
+      "away": "CUB",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Abdiel Mendoza",
+        "Alberto Baldonado",
+        "Allen Córdoba",
+        "Ariel Jurado",
+        "Christian Bethancourt",
+        "Dario Agrazal",
+        "Edmundo Sosa",
+        "Enrique Bradfield Jr.",
+        "Erian Rodriguez",
+        "Humberto Mejía",
+        "Jaime Barria",
+        "James Gonzalez",
+        "Javy Guerra",
+        "Jhonny Santos",
+        "Johan Camargo",
+        "Jonathan Araúz",
+        "Jorge Garcia",
+        "José Caballero",
+        "Jose Ramos",
+        "Kenny Hernandez",
+        "Leo Jiménez",
+        "Leonardo Bernal",
+        "Logan Allen",
+        "Luis Castillo",
+        "Miguel Amaya",
+        "Miguel Cienfuegos",
+        "Miguel Gomez",
+        "Paolo Espino",
+        "Rubén Tejada",
+        "Severino González"
+      ],
+      "away_roster": [
+        "Alexander Vargas",
+        "Alexei Ramirez",
+        "Alfredo Despaigne",
+        "Andrys Perez",
+        "Ariel Martinez",
+        "Armando Duenas",
+        "Christian Rodriguez",
+        "Darien Núñez",
+        "Denny Larrondo",
+        "Emmanuel Chapman",
+        "Erisbel Arruebarrena",
+        "Frank Alvarez",
+        "Josimar Cousin",
+        "Julio Robaina",
+        "Leonel Moas Jr.",
+        "Livan Moinelo",
+        "Luis Romero",
+        "Malcom Nuñez",
+        "Omar Hernandez",
+        "Osiel Rodriguez",
+        "Pedro Santos",
+        "Raidel Martinez",
+        "Randy Martinez",
+        "Roel Santos",
+        "Yariel Rodríguez",
+        "Yiddi Cappe",
+        "Yoan López",
+        "Yoán Moncada",
+        "Yoel Yanqui",
+        "Yoelkis Guibert"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Allen Córdoba",
+          "team": "PAN"
+        },
+        {
+          "name": "Christian Bethancourt",
+          "team": "PAN"
+        },
+        {
+          "name": "Edmundo Sosa",
+          "team": "PAN"
+        },
+        {
+          "name": "Enrique Bradfield Jr.",
+          "team": "PAN"
+        },
+        {
+          "name": "Jhonny Santos",
+          "team": "PAN"
+        },
+        {
+          "name": "Johan Camargo",
+          "team": "PAN"
+        },
+        {
+          "name": "Jonathan Araúz",
+          "team": "PAN"
+        },
+        {
+          "name": "José Caballero",
+          "team": "PAN"
+        },
+        {
+          "name": "Jose Ramos",
+          "team": "PAN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Alexander Vargas",
+          "team": "CUB"
+        },
+        {
+          "name": "Alexei Ramirez",
+          "team": "CUB"
+        },
+        {
+          "name": "Alfredo Despaigne",
+          "team": "CUB"
+        },
+        {
+          "name": "Andrys Perez",
+          "team": "CUB"
+        },
+        {
+          "name": "Ariel Martinez",
+          "team": "CUB"
+        },
+        {
+          "name": "Christian Rodriguez",
+          "team": "CUB"
+        },
+        {
+          "name": "Erisbel Arruebarrena",
+          "team": "CUB"
+        },
+        {
+          "name": "Leonel Moas Jr.",
+          "team": "CUB"
+        },
+        {
+          "name": "Malcom Nuñez",
+          "team": "CUB"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D01",
+      "aliases": [
+        "WBC2026_NED_VEN_001",
+        "WBC26-NED-VEN-001",
+        "NED_AT_VEN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-06T12:00:00-05:00",
+      "game_time_utc": "2026-03-06T17:00:00Z",
+      "date": "2026-03-07",
+      "home": "VEN",
+      "away": "NED",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Andrés Giménez",
+        "Andrés Machado",
+        "Angel Zerpa",
+        "Anthony Molina",
+        "Antonio Senzatela",
+        "Carlos Guzman",
+        "Christian Suarez",
+        "Daniel Palencia",
+        "Eduard Bazardo",
+        "Eduardo Rodriguez",
+        "Enmanuel De Jesus",
+        "Eugenio Suárez",
+        "Ezequiel Tovar",
+        "Gleyber Torres",
+        "Jackson Chourio",
+        "Javier Sanoja",
+        "Jhonathan Díaz",
+        "José Buttó",
+        "Keider Montero",
+        "Luinder Avila",
+        "Luis Arraez",
+        "Maikel Garcia",
+        "Ranger Suarez",
+        "Ricardo Sánchez",
+        "Ronald Acuña Jr.",
+        "Salvador Perez",
+        "William Contreras",
+        "Willson Contreras",
+        "Wilyer Abreu",
+        "Yoendrys Gómez"
+      ],
+      "away_roster": [
+        "Antwone Kelly",
+        "Arij Fransen",
+        "Ceddanne Rafaela",
+        "Chadwick Tromp",
+        "Dayson Croes",
+        "Delano Selassa",
+        "Derek West",
+        "Didi Gregorius",
+        "Druw Jones",
+        "Dylan Wilson",
+        "Eric Mendez",
+        "Hendrik Clementina",
+        "Jaitoine Kelly",
+        "Jakey Josepha",
+        "Jamdrick Cornelia",
+        "Jaydenn Estanista",
+        "Juan Carlos Sulbaran",
+        "Juremi Profar",
+        "Justin Morales",
+        "Kenley Jansen",
+        "Kevin Kelly",
+        "Lars Huijer",
+        "Ozzie Albies",
+        "Ray-Patrick Didder",
+        "Ryjeteri Merite",
+        "Shairon Martis",
+        "Sharlon Schoop",
+        "Shawndrick Oduber",
+        "Wendell Floranus",
+        "Xander Bogaerts"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2026",
+      "home_sp": {
+        "name": "Ranger Suarez",
+        "team": "VEN",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Antwone Kelly",
+        "team": "NED",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Andrés Giménez",
+          "team": "VEN"
+        },
+        {
+          "name": "Eugenio Suárez",
+          "team": "VEN"
+        },
+        {
+          "name": "Ezequiel Tovar",
+          "team": "VEN"
+        },
+        {
+          "name": "Gleyber Torres",
+          "team": "VEN"
+        },
+        {
+          "name": "Jackson Chourio",
+          "team": "VEN"
+        },
+        {
+          "name": "Javier Sanoja",
+          "team": "VEN"
+        },
+        {
+          "name": "Luis Arraez",
+          "team": "VEN"
+        },
+        {
+          "name": "Maikel Garcia",
+          "team": "VEN"
+        },
+        {
+          "name": "Ronald Acuña Jr.",
+          "team": "VEN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Ceddanne Rafaela",
+          "team": "NED"
+        },
+        {
+          "name": "Chadwick Tromp",
+          "team": "NED"
+        },
+        {
+          "name": "Dayson Croes",
+          "team": "NED"
+        },
+        {
+          "name": "Delano Selassa",
+          "team": "NED"
+        },
+        {
+          "name": "Didi Gregorius",
+          "team": "NED"
+        },
+        {
+          "name": "Druw Jones",
+          "team": "NED"
+        },
+        {
+          "name": "Hendrik Clementina",
+          "team": "NED"
+        },
+        {
+          "name": "Jakey Josepha",
+          "team": "NED"
+        },
+        {
+          "name": "Juremi Profar",
+          "team": "NED"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/news/netherlands-vs-venezuela-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-06T15:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B01",
+      "aliases": [
+        "WBC2026_MEX_GBR_001",
+        "WBC26-MEX-GBR-001",
+        "MEX_AT_GBR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-06T12:00:00-06:00",
+      "game_time_utc": "2026-03-06T18:00:00Z",
+      "date": "2026-03-07",
+      "home": "GBR",
+      "away": "MEX",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Andre Scrubb",
+        "BJ Murray",
+        "Brendan Beck",
+        "Chavez Fernander",
+        "Donovan Benoit",
+        "Dylan Covey",
+        "Gary Gill Hill",
+        "Graham Spraker",
+        "Harry Ford",
+        "Ian Lewis Jr.",
+        "Ivan Johnson",
+        "Jack Anderson",
+        "Jack Seppings",
+        "Jazz Chisholm Jr.",
+        "Justin Wylie",
+        "Kristian Robinson",
+        "Lucius Fox",
+        "Matt Koperniak",
+        "Miles Langhorne",
+        "Najer Victor",
+        "Nate Eaton",
+        "Nick Ward",
+        "Nick Wells",
+        "Owen Wild",
+        "Ryan Long",
+        "Trayce Thompson",
+        "Tristan Beck",
+        "Tyler Viza",
+        "Vance Worley",
+        "Will Cresswell"
+      ],
+      "away_roster": [
+        "Alejandro Kirk",
+        "Alejandro Osuna",
+        "Alek Thomas",
+        "Alex Carrillo",
+        "Alexander Armenta",
+        "Alexis Wilson",
+        "Andrés Muñoz",
+        "Brennan Bernardino",
+        "Daniel Duarte",
+        "Gerardo Reyes",
+        "Jared Serna",
+        "Jarren Duran",
+        "Javier Assad",
+        "Jesus Cruz",
+        "Joey Meneses",
+        "Joey Ortiz",
+        "Jonathan Aranda",
+        "Julian Ornelas",
+        "Luis Gastelum",
+        "Luis Urías",
+        "Manny Barreda",
+        "Nacho Alvarez Jr.",
+        "Nick Gonzales",
+        "Randy Arozarena",
+        "Robert Garcia",
+        "Roel Ramírez",
+        "Rowdy Tellez",
+        "Samy Natera Jr.",
+        "Taijuan Walker",
+        "Victor Vodnik"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/821/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "BJ Murray",
+          "team": "GBR"
+        },
+        {
+          "name": "Harry Ford",
+          "team": "GBR"
+        },
+        {
+          "name": "Ian Lewis Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Ivan Johnson",
+          "team": "GBR"
+        },
+        {
+          "name": "Jazz Chisholm Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Justin Wylie",
+          "team": "GBR"
+        },
+        {
+          "name": "Kristian Robinson",
+          "team": "GBR"
+        },
+        {
+          "name": "Lucius Fox",
+          "team": "GBR"
+        },
+        {
+          "name": "Matt Koperniak",
+          "team": "GBR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Alejandro Kirk",
+          "team": "MEX"
+        },
+        {
+          "name": "Alejandro Osuna",
+          "team": "MEX"
+        },
+        {
+          "name": "Alek Thomas",
+          "team": "MEX"
+        },
+        {
+          "name": "Alexis Wilson",
+          "team": "MEX"
+        },
+        {
+          "name": "Jared Serna",
+          "team": "MEX"
+        },
+        {
+          "name": "Jarren Duran",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Meneses",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Ortiz",
+          "team": "MEX"
+        },
+        {
+          "name": "Jonathan Aranda",
+          "team": "MEX"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A02",
+      "aliases": [
+        "WBC2026_PUR_COL_002",
+        "WBC26-PUR-COL-002",
+        "PUR_AT_COL"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-06T19:00:00-04:00",
+      "game_time_utc": "2026-03-06T23:00:00Z",
+      "date": "2026-03-07",
+      "home": "COL",
+      "away": "PUR",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Adrian Almeida",
+        "Austin Bergner",
+        "Brayan Buelvas",
+        "Carlos Arroyo",
+        "Carlos Martínez",
+        "Daniel Vellojin",
+        "Danis Correa",
+        "David Lorduy",
+        "Dayan Frias",
+        "Donovan Solano",
+        "Elkin Alcala",
+        "Emerson Martinez",
+        "Ezequiel Zabaleta",
+        "Gio Urshela",
+        "Guillo Zuñiga",
+        "Gustavo Campero",
+        "Harold Ramírez",
+        "Jesus Marriaga",
+        "Jhon Romero",
+        "Jordan Diaz",
+        "Jorge Alfaro",
+        "Jose Quintana",
+        "Julio Teheran",
+        "Luis Patiño",
+        "Michael Arroyo",
+        "Pedro Garcia",
+        "Reiver Sanmartin",
+        "Reynaldo Rodriguez",
+        "Rio Gomez",
+        "Yapson Gomez"
+      ],
+      "away_roster": [
+        "Angel Reyes",
+        "Bryan Torres",
+        "Carlos Cortes",
+        "Christian Vázquez",
+        "Darell Hernaiz",
+        "Eddie Rosario",
+        "Eduardo Rivera",
+        "Edwin Arroyo",
+        "Edwin Díaz",
+        "Elmer Rodríguez",
+        "Emmanuel Rivera",
+        "Fernando Cruz",
+        "Gabriel Rodriguez",
+        "Heliot Ramos",
+        "Jorge López",
+        "José De León",
+        "Jose Espada",
+        "Jovani Morán",
+        "Luis Hernandez",
+        "Luis Quiñones",
+        "Luis Vázquez",
+        "MJ Melendez",
+        "Martín Maldonado",
+        "Matthew Lugo",
+        "Nolan Arenado",
+        "Raymond Burgos",
+        "Ricardo Velez",
+        "Rico Garcia",
+        "Seth Lugo",
+        "Willi Castro",
+        "Yacksel Ríos"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/897/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Brayan Buelvas",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Arroyo",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Martínez",
+          "team": "COL"
+        },
+        {
+          "name": "Daniel Vellojin",
+          "team": "COL"
+        },
+        {
+          "name": "Dayan Frias",
+          "team": "COL"
+        },
+        {
+          "name": "Donovan Solano",
+          "team": "COL"
+        },
+        {
+          "name": "Gio Urshela",
+          "team": "COL"
+        },
+        {
+          "name": "Gustavo Campero",
+          "team": "COL"
+        },
+        {
+          "name": "Harold Ramírez",
+          "team": "COL"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Bryan Torres",
+          "team": "PUR"
+        },
+        {
+          "name": "Carlos Cortes",
+          "team": "PUR"
+        },
+        {
+          "name": "Christian Vázquez",
+          "team": "PUR"
+        },
+        {
+          "name": "Darell Hernaiz",
+          "team": "PUR"
+        },
+        {
+          "name": "Eddie Rosario",
+          "team": "PUR"
+        },
+        {
+          "name": "Edwin Arroyo",
+          "team": "PUR"
+        },
+        {
+          "name": "Emmanuel Rivera",
+          "team": "PUR"
+        },
+        {
+          "name": "Heliot Ramos",
+          "team": "PUR"
+        },
+        {
+          "name": "Luis Hernandez",
+          "team": "PUR"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D02",
+      "aliases": [
+        "WBC2026_NIC_DOM_002",
+        "WBC26-NIC-DOM-002",
+        "NIC_AT_DOM"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-06T19:00:00-05:00",
+      "game_time_utc": "2026-03-07T00:00:00Z",
+      "date": "2026-03-07",
+      "home": "DOM",
+      "away": "NIC",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Abner Uribe",
+        "Agustín Ramírez",
+        "Albert Abreu",
+        "Amed Rosario",
+        "Austin Wells",
+        "Brayan Bello",
+        "Camilo Doval",
+        "Carlos Estévez",
+        "Carlos Santana",
+        "Cristopher Sánchez",
+        "Dennis Santana",
+        "Elvis Alvarado",
+        "Enny Romero",
+        "Fernando Tatis Jr.",
+        "Geraldo Perdomo",
+        "Gregory Soto",
+        "Huascar Brazobán",
+        "Jeremy Peña",
+        "Jimmy Cordero",
+        "Juan Mejia",
+        "Juan Soto",
+        "Julio Rodríguez",
+        "Junior Caminero",
+        "Junior Lake",
+        "Ketel Marte",
+        "Luis Severino",
+        "Manny Machado",
+        "Mel Rojas Jr.",
+        "Michael De La Cruz",
+        "Michael De León",
+        "Oneil Cruz",
+        "Oscar De La Cruz",
+        "Pedro Severino",
+        "Phillips Valdez",
+        "Ricardo Cespedes",
+        "Sandy Alcantara",
+        "Seranthony Domínguez",
+        "Sócrates Brito",
+        "Vladimir Guerrero Jr.",
+        "Wandy Peralta",
+        "Webster Rivas"
+      ],
+      "away_roster": [
+        "Angel Obando",
+        "Benjamin Alegria",
+        "Brandon Leyton",
+        "Bryan Torres",
+        "Carlos Rodriguez",
+        "Carlos Teller",
+        "Chase Dawson",
+        "Cheslor Cuthbert",
+        "Cristhian Sandoval",
+        "Danilo Bermudez",
+        "Dilmer Mejia",
+        "Duque Hebbert",
+        "Elian Rayo",
+        "Emanuel Trujillo",
+        "Erasmo Ramírez",
+        "Freddy Zamora",
+        "Ismael Munguia",
+        "JC Ramírez",
+        "Jeter Downs",
+        "Jose Orozco",
+        "Juan Montes",
+        "Kenword Burton",
+        "Mark Vientos",
+        "Melvin Novoa",
+        "Omar Mendoza",
+        "Oscar Rayo",
+        "Osman Gutierrez",
+        "Ronald Medrano",
+        "Ronald Rivera",
+        "Stiven Cruz"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/805/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/881/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Agustín Ramírez",
+          "team": "DOM"
+        },
+        {
+          "name": "Amed Rosario",
+          "team": "DOM"
+        },
+        {
+          "name": "Austin Wells",
+          "team": "DOM"
+        },
+        {
+          "name": "Carlos Santana",
+          "team": "DOM"
+        },
+        {
+          "name": "Fernando Tatis Jr.",
+          "team": "DOM"
+        },
+        {
+          "name": "Geraldo Perdomo",
+          "team": "DOM"
+        },
+        {
+          "name": "Jeremy Peña",
+          "team": "DOM"
+        },
+        {
+          "name": "Juan Soto",
+          "team": "DOM"
+        },
+        {
+          "name": "Julio Rodríguez",
+          "team": "DOM"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Benjamin Alegria",
+          "team": "NIC"
+        },
+        {
+          "name": "Brandon Leyton",
+          "team": "NIC"
+        },
+        {
+          "name": "Chase Dawson",
+          "team": "NIC"
+        },
+        {
+          "name": "Cheslor Cuthbert",
+          "team": "NIC"
+        },
+        {
+          "name": "Cristhian Sandoval",
+          "team": "NIC"
+        },
+        {
+          "name": "Elian Rayo",
+          "team": "NIC"
+        },
+        {
+          "name": "Emanuel Trujillo",
+          "team": "NIC"
+        },
+        {
+          "name": "Freddy Zamora",
+          "team": "NIC"
+        },
+        {
+          "name": "Ismael Munguia",
+          "team": "NIC"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B02",
+      "aliases": [
+        "WBC2026_USA_BRA_002",
+        "WBC26-USA-BRA-002",
+        "USA_AT_BRA"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-06T19:00:00-06:00",
+      "game_time_utc": "2026-03-07T01:00:00Z",
+      "date": "2026-03-07",
+      "home": "BRA",
+      "away": "USA",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Bo Takahashi",
+        "Daniel Missaki",
+        "Dante Bichette Jr.",
+        "Enzo Hayashida",
+        "Enzo Sawayama",
+        "Eric Pardinho",
+        "Felipe Koragi",
+        "Felipe Mizukosi",
+        "Gabriel Barbosa",
+        "Gabriel Carmo",
+        "Gabriel Gomes",
+        "Gabriel Maciel",
+        "Hector Villarroel",
+        "Hugo Kanabushi",
+        "Joao Gabriel Marostica",
+        "Joseph Contreras",
+        "Leonardo Reginatto",
+        "Lucas Ramirez",
+        "Lucas Rojo",
+        "Matheus Silva",
+        "Murilo Gouvea",
+        "Oscar Nakaoshi",
+        "Osvaldo Carvalho",
+        "Thyago Vieira",
+        "Tiago Da Silva",
+        "Tiago Nishiyama",
+        "Tomas Lopez",
+        "Victor Mascai",
+        "Vitor Ito",
+        "Vitor Takahashi"
+      ],
+      "away_roster": [
+        "Aaron Judge",
+        "Alex Bregman",
+        "Bobby Witt Jr.",
+        "Brad Keller",
+        "Brice Turang",
+        "Bryce Harper",
+        "Byron Buxton",
+        "Cal Raleigh",
+        "Clay Holmes",
+        "Clayton Kershaw",
+        "David Bednar",
+        "Ernie Clement",
+        "Gabe Speier",
+        "Garrett Cleavinger",
+        "Garrett Whitlock",
+        "Griffin Jax",
+        "Gunnar Henderson",
+        "Kyle Schwarber",
+        "Logan Webb",
+        "Mason Miller",
+        "Matthew Boyd",
+        "Michael Wacha",
+        "Nolan McLean",
+        "Paul Goldschmidt",
+        "Paul Skenes",
+        "Pete Crow-Armstrong",
+        "Roman Anthony",
+        "Ryan Yarbrough",
+        "Tarik Skubal",
+        "Will Smith"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/776/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/940/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Dante Bichette Jr.",
+          "team": "BRA"
+        },
+        {
+          "name": "Enzo Hayashida",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Koragi",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Mizukosi",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Carmo",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Gomes",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Maciel",
+          "team": "BRA"
+        },
+        {
+          "name": "Leonardo Reginatto",
+          "team": "BRA"
+        },
+        {
+          "name": "Lucas Ramirez",
+          "team": "BRA"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Aaron Judge",
+          "team": "USA"
+        },
+        {
+          "name": "Alex Bregman",
+          "team": "USA"
+        },
+        {
+          "name": "Bobby Witt Jr.",
+          "team": "USA"
+        },
+        {
+          "name": "Brice Turang",
+          "team": "USA"
+        },
+        {
+          "name": "Bryce Harper",
+          "team": "USA"
+        },
+        {
+          "name": "Byron Buxton",
+          "team": "USA"
+        },
+        {
+          "name": "Cal Raleigh",
+          "team": "USA"
+        },
+        {
+          "name": "Ernie Clement",
+          "team": "USA"
+        },
+        {
+          "name": "Gunnar Henderson",
+          "team": "USA"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C05",
+      "aliases": [
+        "WBC2026_TPE_CZE_005",
+        "WBC26-TPE-CZE-005",
+        "TPE_AT_CZE"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-07T12:00:00+09:00",
+      "game_time_utc": "2026-03-07T03:00:00Z",
+      "date": "2026-03-07",
+      "home": "CZE",
+      "away": "TPE",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Boris Vecerka",
+        "Daniel Padysak",
+        "Filip Capka",
+        "Filip Kollmann",
+        "Jan Novak",
+        "Jan Pospisil",
+        "Jeff Barto",
+        "Lukas Ercoli",
+        "Lukas Hlouch",
+        "Marek Chlup",
+        "Marek Krejcirik",
+        "Marek Minarik",
+        "Martin Cervenka",
+        "Martin Cervinka",
+        "Martin Muzik",
+        "Martin Schneider",
+        "Martin Zelenka",
+        "Matous Bubenik",
+        "Max Prejda",
+        "Michal Kovala",
+        "Michal Sindelka",
+        "Milan Prokop",
+        "Ondrej Satoria",
+        "Ondrej Vank",
+        "Ryan Johnson",
+        "Terrin Vavra",
+        "Tomas Duffek",
+        "Tomas Ondra",
+        "Vojtech Mensik",
+        "William Escala"
+      ],
+      "away_roster": [
+        "An-Ko Lin",
+        "Chen Zhong-Ao Zhuang",
+        "Chen-Wei Chen",
+        "Cheng-Hui Sung",
+        "Chieh-Hsien Chen",
+        "Chih-Wei Hu",
+        "Hao-Chun Cheng",
+        "Hao-Yu  Lee",
+        "Jo-Hsi Hsu",
+        "Jun-Wei Zhang",
+        "Jyun-Yue Tseng",
+        "Kai-Wei Lin",
+        "Kuan-Yu Chen",
+        "Kun-Yu Chiang",
+        "Kungkuan Giljegiljaw",
+        "Lyle Lin",
+        "Nien-Ting Wu",
+        "Po-Yu Chen",
+        "Ruei-Yang Gu Lin",
+        "Shao-Hung Chiang",
+        "Shih-Hsiang Lin",
+        "Stuart Fairchild",
+        "Tsung-Che Cheng",
+        "Tzu-Chen Sha",
+        "Tzu-Wei Lin",
+        "Wei-En Lin",
+        "Yi Chang",
+        "Yi-Lei Sun",
+        "Yu Chang",
+        "Yu-Min Lin"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/800/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/791/roster?season=2026",
+      "home_sp": {
+        "name": "Jan Novak",
+        "team": "CZE",
+        "era": 5.5,
+        "fip": 5.6,
+        "whip": 1.58,
+        "k_per_9": 5.5,
+        "bb_per_9": 4.2,
+        "stuff_plus": 78,
+        "ip_last_30": 8.0,
+        "era_last_3": 5.2,
+        "spring_era": 5.0,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.285,
+        "vs_right_ba": 0.295,
+        "high_leverage_era": 5.8,
+        "fastball_velo": 87.5,
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Chen Zhong-Ao Zhuang",
+        "team": "TPE",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Jan Pospisil",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Chlup",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Krejcirik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervinka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Muzik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Zelenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Matous Bubenik",
+          "team": "CZE"
+        },
+        {
+          "name": "Max Prejda",
+          "team": "CZE"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "An-Ko Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Chen-Wei Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Cheng-Hui Sung",
+          "team": "TPE"
+        },
+        {
+          "name": "Chieh-Hsien Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Hao-Yu  Lee",
+          "team": "TPE"
+        },
+        {
+          "name": "Kun-Yu Chiang",
+          "team": "TPE"
+        },
+        {
+          "name": "Kungkuan Giljegiljaw",
+          "team": "TPE"
+        },
+        {
+          "name": "Lyle Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Nien-Ting Wu",
+          "team": "TPE"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/chinese-taipei-vs-czechia-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-07T04:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C06",
+      "aliases": [
+        "WBC2026_KOR_JPN_006",
+        "WBC26-KOR-JPN-006",
+        "KOR_AT_JPN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-07T19:00:00+09:00",
+      "game_time_utc": "2026-03-07T10:00:00Z",
+      "date": "2026-03-07",
+      "home": "JPN",
+      "away": "KOR",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Atsuki Taneichi",
+        "Chihiro Sumida",
+        "Hiromi Itoh",
+        "Hiroto Takahashi",
+        "Hiroya Miyagi",
+        "Kaito Kozono",
+        "Kazuma Okamoto",
+        "Kensuke Kondo",
+        "Kenya Wakatsuki",
+        "Koki Kitayama",
+        "Masataka Yoshida",
+        "Munetaka Murakami",
+        "Ryuhei Sotani",
+        "Seishiro Sakamoto",
+        "Seiya Suzuki",
+        "Shohei Ohtani",
+        "Shoma Fujihira",
+        "Shota Morishita",
+        "Shugo Maki",
+        "Sosuke Genda",
+        "Taisei Makihara",
+        "Taisei Ota",
+        "Teruaki Sato",
+        "Tomoyuki Sugano",
+        "Ukyo Shuto",
+        "Yoshinobu Yamamoto",
+        "Yuhei Nakamura",
+        "Yuki Matsumoto",
+        "Yumeto Kanemaru",
+        "Yusei Kikuchi"
+      ],
+      "away_roster": [
+        "Been Gwak",
+        "Bo Gyeong Moon",
+        "Byeong Hyeon Jo",
+        "Dane Dunning",
+        "Do Yeong Kim",
+        "Dong Won Park",
+        "Hae-Min Park",
+        "Hyeong Jun So",
+        "Hyeseong Kim",
+        "Hyun Bin Moon",
+        "Hyun Jin Ryu",
+        "Hyun Min Ahn",
+        "Hyung Jun Kim",
+        "Ja Wook Koo",
+        "Jahmai Jones",
+        "Ju Won Kim",
+        "Ju Young Son",
+        "Jung Hoo Lee",
+        "Kyung-Eun Noh",
+        "Min Jae Shin",
+        "Riley O'Brien",
+        "Seung Ki Song",
+        "Shay Whitcomb",
+        "Si Hwan Roh",
+        "Woo Joo Jeong",
+        "Woo-Suk Go",
+        "Yeong Chan You",
+        "Yeong Hyun Park",
+        "Young Kyu Kim",
+        "Young Pyo Ko"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/843/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/1171/roster?season=2026",
+      "home_sp": {
+        "name": "Yusei Kikuchi",
+        "team": "JPN",
+        "era": 3.65,
+        "fip": 3.5,
+        "whip": 1.2,
+        "k_per_9": 10.5,
+        "bb_per_9": 2.3,
+        "stuff_plus": 115,
+        "ip_last_30": 28.0,
+        "era_last_3": 3.1,
+        "spring_era": 2.8,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.24,
+        "vs_right_ba": 0.225,
+        "high_leverage_era": 3.2,
+        "fastball_velo": 95.5,
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Young Pyo Ko",
+        "team": "KOR",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Kaito Kozono",
+          "team": "JPN"
+        },
+        {
+          "name": "Kazuma Okamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Kensuke Kondo",
+          "team": "JPN"
+        },
+        {
+          "name": "Kenya Wakatsuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Masataka Yoshida",
+          "team": "JPN"
+        },
+        {
+          "name": "Munetaka Murakami",
+          "team": "JPN"
+        },
+        {
+          "name": "Seishiro Sakamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Seiya Suzuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Shohei Ohtani",
+          "team": "JPN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Bo Gyeong Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Do Yeong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Dong Won Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hae-Min Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyeseong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Bin Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Min Ahn",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyung Jun Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Ja Wook Koo",
+          "team": "KOR"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/korea-vs-japan-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-07T08:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A03",
+      "aliases": [
+        "WBC2026_COL_CAN_003",
+        "WBC26-COL-CAN-003",
+        "COL_AT_CAN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-07T12:00:00-04:00",
+      "game_time_utc": "2026-03-07T16:00:00Z",
+      "date": "2026-03-08",
+      "home": "CAN",
+      "away": "COL",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Abraham Toro",
+        "Adam Hall",
+        "Adam Macko",
+        "Antoine Jean",
+        "Bo Naylor",
+        "Brock Dykxhoorn",
+        "Cal Quantrill",
+        "Denzel Clarke",
+        "Edouard Julien",
+        "Eric Cerantola",
+        "Indigo Diaz",
+        "Jacob Robson",
+        "James Paxton",
+        "Jameson Taillon",
+        "Jared Young",
+        "Jordan Balazovic",
+        "Josh Naylor",
+        "Liam Hicks",
+        "Logan Allen",
+        "Matt Davidson",
+        "Matt Wilkinson",
+        "Micah Ashman",
+        "Michael Soroka",
+        "Noah Skirrow",
+        "Otto Lopez",
+        "Owen Caissie",
+        "Phillippe Aumont",
+        "Rob Zastryzny",
+        "Tyler Black",
+        "Tyler O'Neill"
+      ],
+      "away_roster": [
+        "Adrian Almeida",
+        "Austin Bergner",
+        "Brayan Buelvas",
+        "Carlos Arroyo",
+        "Carlos Martínez",
+        "Daniel Vellojin",
+        "Danis Correa",
+        "David Lorduy",
+        "Dayan Frias",
+        "Donovan Solano",
+        "Elkin Alcala",
+        "Emerson Martinez",
+        "Ezequiel Zabaleta",
+        "Gio Urshela",
+        "Guillo Zuñiga",
+        "Gustavo Campero",
+        "Harold Ramírez",
+        "Jesus Marriaga",
+        "Jhon Romero",
+        "Jordan Diaz",
+        "Jorge Alfaro",
+        "Jose Quintana",
+        "Julio Teheran",
+        "Luis Patiño",
+        "Michael Arroyo",
+        "Pedro Garcia",
+        "Reiver Sanmartin",
+        "Reynaldo Rodriguez",
+        "Rio Gomez",
+        "Yapson Gomez"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2026",
+      "home_sp": {
+        "name": "Michael Soroka",
+        "team": "CAN",
+        "era": 4.1,
+        "fip": 4.2,
+        "whip": 1.28,
+        "k_per_9": 7.0,
+        "bb_per_9": 2.5,
+        "stuff_plus": 98,
+        "ip_last_30": 16.0,
+        "era_last_3": 3.9,
+        "spring_era": 3.7,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.248,
+        "vs_right_ba": 0.242,
+        "high_leverage_era": 4.3,
+        "fastball_velo": 92.5,
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Julio Teheran",
+        "team": "COL",
+        "era": 4.5,
+        "fip": 4.6,
+        "whip": 1.35,
+        "k_per_9": 6.8,
+        "bb_per_9": 3.0,
+        "stuff_plus": 92,
+        "ip_last_30": 14.0,
+        "era_last_3": 4.3,
+        "spring_era": 4.1,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.26,
+        "vs_right_ba": 0.255,
+        "high_leverage_era": 4.8,
+        "fastball_velo": 90.0,
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Abraham Toro",
+          "team": "CAN"
+        },
+        {
+          "name": "Adam Hall",
+          "team": "CAN"
+        },
+        {
+          "name": "Bo Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Denzel Clarke",
+          "team": "CAN"
+        },
+        {
+          "name": "Edouard Julien",
+          "team": "CAN"
+        },
+        {
+          "name": "Jacob Robson",
+          "team": "CAN"
+        },
+        {
+          "name": "Jared Young",
+          "team": "CAN"
+        },
+        {
+          "name": "Josh Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Liam Hicks",
+          "team": "CAN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Brayan Buelvas",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Arroyo",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Martínez",
+          "team": "COL"
+        },
+        {
+          "name": "Daniel Vellojin",
+          "team": "COL"
+        },
+        {
+          "name": "Dayan Frias",
+          "team": "COL"
+        },
+        {
+          "name": "Donovan Solano",
+          "team": "COL"
+        },
+        {
+          "name": "Gio Urshela",
+          "team": "COL"
+        },
+        {
+          "name": "Gustavo Campero",
+          "team": "COL"
+        },
+        {
+          "name": "Harold Ramírez",
+          "team": "COL"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/world-baseball-classic/news/colombia-vs-canada-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-07T22:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D03",
+      "aliases": [
+        "WBC2026_NIC_NED_003",
+        "WBC26-NIC-NED-003",
+        "NIC_AT_NED"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-07T12:00:00-05:00",
+      "game_time_utc": "2026-03-07T17:00:00Z",
+      "date": "2026-03-08",
+      "home": "NED",
+      "away": "NIC",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Antwone Kelly",
+        "Arij Fransen",
+        "Ceddanne Rafaela",
+        "Chadwick Tromp",
+        "Dayson Croes",
+        "Delano Selassa",
+        "Derek West",
+        "Didi Gregorius",
+        "Druw Jones",
+        "Dylan Wilson",
+        "Eric Mendez",
+        "Hendrik Clementina",
+        "Jaitoine Kelly",
+        "Jakey Josepha",
+        "Jamdrick Cornelia",
+        "Jaydenn Estanista",
+        "Juan Carlos Sulbaran",
+        "Juremi Profar",
+        "Justin Morales",
+        "Kenley Jansen",
+        "Kevin Kelly",
+        "Lars Huijer",
+        "Ozzie Albies",
+        "Ray-Patrick Didder",
+        "Ryjeteri Merite",
+        "Shairon Martis",
+        "Sharlon Schoop",
+        "Shawndrick Oduber",
+        "Wendell Floranus",
+        "Xander Bogaerts"
+      ],
+      "away_roster": [
+        "Angel Obando",
+        "Benjamin Alegria",
+        "Brandon Leyton",
+        "Bryan Torres",
+        "Carlos Rodriguez",
+        "Carlos Teller",
+        "Chase Dawson",
+        "Cheslor Cuthbert",
+        "Cristhian Sandoval",
+        "Danilo Bermudez",
+        "Dilmer Mejia",
+        "Duque Hebbert",
+        "Elian Rayo",
+        "Emanuel Trujillo",
+        "Erasmo Ramírez",
+        "Freddy Zamora",
+        "Ismael Munguia",
+        "JC Ramírez",
+        "Jeter Downs",
+        "Jose Orozco",
+        "Juan Montes",
+        "Kenword Burton",
+        "Mark Vientos",
+        "Melvin Novoa",
+        "Omar Mendoza",
+        "Oscar Rayo",
+        "Osman Gutierrez",
+        "Ronald Medrano",
+        "Ronald Rivera",
+        "Stiven Cruz"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/881/roster?season=2026",
+      "home_sp": {
+        "name": "Jaitoine Kelly",
+        "team": "NED",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Erasmo Ramírez",
+        "team": "NIC",
+        "era": 4.8,
+        "fip": 4.9,
+        "whip": 1.38,
+        "k_per_9": 6.0,
+        "bb_per_9": 2.5,
+        "stuff_plus": 82,
+        "ip_last_30": 12.0,
+        "era_last_3": 4.5,
+        "spring_era": 4.3,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.265,
+        "vs_right_ba": 0.27,
+        "high_leverage_era": 5.1,
+        "fastball_velo": 90.0,
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Ceddanne Rafaela",
+          "team": "NED"
+        },
+        {
+          "name": "Chadwick Tromp",
+          "team": "NED"
+        },
+        {
+          "name": "Dayson Croes",
+          "team": "NED"
+        },
+        {
+          "name": "Delano Selassa",
+          "team": "NED"
+        },
+        {
+          "name": "Didi Gregorius",
+          "team": "NED"
+        },
+        {
+          "name": "Druw Jones",
+          "team": "NED"
+        },
+        {
+          "name": "Hendrik Clementina",
+          "team": "NED"
+        },
+        {
+          "name": "Jakey Josepha",
+          "team": "NED"
+        },
+        {
+          "name": "Juremi Profar",
+          "team": "NED"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Benjamin Alegria",
+          "team": "NIC"
+        },
+        {
+          "name": "Brandon Leyton",
+          "team": "NIC"
+        },
+        {
+          "name": "Chase Dawson",
+          "team": "NIC"
+        },
+        {
+          "name": "Cheslor Cuthbert",
+          "team": "NIC"
+        },
+        {
+          "name": "Cristhian Sandoval",
+          "team": "NIC"
+        },
+        {
+          "name": "Elian Rayo",
+          "team": "NIC"
+        },
+        {
+          "name": "Emanuel Trujillo",
+          "team": "NIC"
+        },
+        {
+          "name": "Freddy Zamora",
+          "team": "NIC"
+        },
+        {
+          "name": "Ismael Munguia",
+          "team": "NIC"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/news/nicaragua-vs-netherlands-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-07T15:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B03",
+      "aliases": [
+        "WBC2026_BRA_ITA_003",
+        "WBC26-BRA-ITA-003",
+        "BRA_AT_ITA"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-07T12:00:00-06:00",
+      "game_time_utc": "2026-03-07T18:00:00Z",
+      "date": "2026-03-08",
+      "home": "ITA",
+      "away": "BRA",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Aaron Nola",
+        "Adam Ottavino",
+        "Alek Jacob",
+        "Andrew Fischer",
+        "Claudio Scotti",
+        "Dan Altavilla",
+        "Dante Nori",
+        "Dominic Canzone",
+        "Dylan DeLucia",
+        "Gabriele Quattrini",
+        "Giaconino Lasaracina",
+        "Gordon Graceffo",
+        "Greg Weissert",
+        "J.J. D'Orazio",
+        "Jac Caglianone",
+        "Jakob Marsee",
+        "Joe La Sorsa",
+        "Jon Berti",
+        "Kyle Nicolas",
+        "Kyle Teel",
+        "Matt Festa",
+        "Michael Lorenzen",
+        "Miles Mastrobuoni",
+        "Nick Morabito",
+        "Ron Marinaccio",
+        "Sam Aldegheri",
+        "Sam Antonacci",
+        "Thomas Saggese",
+        "Vinnie Pasquantino",
+        "Zach Dezenzo"
+      ],
+      "away_roster": [
+        "Bo Takahashi",
+        "Daniel Missaki",
+        "Dante Bichette Jr.",
+        "Enzo Hayashida",
+        "Enzo Sawayama",
+        "Eric Pardinho",
+        "Felipe Koragi",
+        "Felipe Mizukosi",
+        "Gabriel Barbosa",
+        "Gabriel Carmo",
+        "Gabriel Gomes",
+        "Gabriel Maciel",
+        "Hector Villarroel",
+        "Hugo Kanabushi",
+        "Joao Gabriel Marostica",
+        "Joseph Contreras",
+        "Leonardo Reginatto",
+        "Lucas Ramirez",
+        "Lucas Rojo",
+        "Matheus Silva",
+        "Murilo Gouvea",
+        "Oscar Nakaoshi",
+        "Osvaldo Carvalho",
+        "Thyago Vieira",
+        "Tiago Da Silva",
+        "Tiago Nishiyama",
+        "Tomas Lopez",
+        "Victor Mascai",
+        "Vitor Ito",
+        "Vitor Takahashi"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/841/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/776/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Andrew Fischer",
+          "team": "ITA"
+        },
+        {
+          "name": "Dante Nori",
+          "team": "ITA"
+        },
+        {
+          "name": "Dominic Canzone",
+          "team": "ITA"
+        },
+        {
+          "name": "Giaconino Lasaracina",
+          "team": "ITA"
+        },
+        {
+          "name": "J.J. D'Orazio",
+          "team": "ITA"
+        },
+        {
+          "name": "Jac Caglianone",
+          "team": "ITA"
+        },
+        {
+          "name": "Jakob Marsee",
+          "team": "ITA"
+        },
+        {
+          "name": "Jon Berti",
+          "team": "ITA"
+        },
+        {
+          "name": "Kyle Teel",
+          "team": "ITA"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Dante Bichette Jr.",
+          "team": "BRA"
+        },
+        {
+          "name": "Enzo Hayashida",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Koragi",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Mizukosi",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Carmo",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Gomes",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Maciel",
+          "team": "BRA"
+        },
+        {
+          "name": "Leonardo Reginatto",
+          "team": "BRA"
+        },
+        {
+          "name": "Lucas Ramirez",
+          "team": "BRA"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A04",
+      "aliases": [
+        "WBC2026_PAN_PUR_004",
+        "WBC26-PAN-PUR-004",
+        "PAN_AT_PUR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-07T19:00:00-04:00",
+      "game_time_utc": "2026-03-07T23:00:00Z",
+      "date": "2026-03-08",
+      "home": "PUR",
+      "away": "PAN",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Angel Reyes",
+        "Bryan Torres",
+        "Carlos Cortes",
+        "Christian Vázquez",
+        "Darell Hernaiz",
+        "Eddie Rosario",
+        "Eduardo Rivera",
+        "Edwin Arroyo",
+        "Edwin Díaz",
+        "Elmer Rodríguez",
+        "Emmanuel Rivera",
+        "Fernando Cruz",
+        "Gabriel Rodriguez",
+        "Heliot Ramos",
+        "Jorge López",
+        "José De León",
+        "Jose Espada",
+        "Jovani Morán",
+        "Luis Hernandez",
+        "Luis Quiñones",
+        "Luis Vázquez",
+        "MJ Melendez",
+        "Martín Maldonado",
+        "Matthew Lugo",
+        "Nolan Arenado",
+        "Raymond Burgos",
+        "Ricardo Velez",
+        "Rico Garcia",
+        "Seth Lugo",
+        "Willi Castro",
+        "Yacksel Ríos"
+      ],
+      "away_roster": [
+        "Abdiel Mendoza",
+        "Alberto Baldonado",
+        "Allen Córdoba",
+        "Ariel Jurado",
+        "Christian Bethancourt",
+        "Dario Agrazal",
+        "Edmundo Sosa",
+        "Enrique Bradfield Jr.",
+        "Erian Rodriguez",
+        "Humberto Mejía",
+        "Jaime Barria",
+        "James Gonzalez",
+        "Javy Guerra",
+        "Jhonny Santos",
+        "Johan Camargo",
+        "Jonathan Araúz",
+        "Jorge Garcia",
+        "José Caballero",
+        "Jose Ramos",
+        "Kenny Hernandez",
+        "Leo Jiménez",
+        "Leonardo Bernal",
+        "Logan Allen",
+        "Luis Castillo",
+        "Miguel Amaya",
+        "Miguel Cienfuegos",
+        "Miguel Gomez",
+        "Paolo Espino",
+        "Rubén Tejada",
+        "Severino González"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/897/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2026",
+      "home_sp": {
+        "name": "Eduardo Rivera",
+        "team": "PUR",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Ariel Jurado",
+        "team": "PAN",
+        "era": 4.4,
+        "fip": 4.5,
+        "whip": 1.38,
+        "k_per_9": 6.5,
+        "bb_per_9": 2.8,
+        "stuff_plus": 90,
+        "ip_last_30": 14.0,
+        "era_last_3": 4.2,
+        "spring_era": 4.0,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.265,
+        "vs_right_ba": 0.258,
+        "high_leverage_era": 4.8,
+        "fastball_velo": 91.0,
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Bryan Torres",
+          "team": "PUR"
+        },
+        {
+          "name": "Carlos Cortes",
+          "team": "PUR"
+        },
+        {
+          "name": "Christian Vázquez",
+          "team": "PUR"
+        },
+        {
+          "name": "Darell Hernaiz",
+          "team": "PUR"
+        },
+        {
+          "name": "Eddie Rosario",
+          "team": "PUR"
+        },
+        {
+          "name": "Edwin Arroyo",
+          "team": "PUR"
+        },
+        {
+          "name": "Emmanuel Rivera",
+          "team": "PUR"
+        },
+        {
+          "name": "Heliot Ramos",
+          "team": "PUR"
+        },
+        {
+          "name": "Luis Hernandez",
+          "team": "PUR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Allen Córdoba",
+          "team": "PAN"
+        },
+        {
+          "name": "Christian Bethancourt",
+          "team": "PAN"
+        },
+        {
+          "name": "Edmundo Sosa",
+          "team": "PAN"
+        },
+        {
+          "name": "Enrique Bradfield Jr.",
+          "team": "PAN"
+        },
+        {
+          "name": "Jhonny Santos",
+          "team": "PAN"
+        },
+        {
+          "name": "Johan Camargo",
+          "team": "PAN"
+        },
+        {
+          "name": "Jonathan Araúz",
+          "team": "PAN"
+        },
+        {
+          "name": "José Caballero",
+          "team": "PAN"
+        },
+        {
+          "name": "Jose Ramos",
+          "team": "PAN"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/news/panama-vs-puerto-rico-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-07T00:15:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D04",
+      "aliases": [
+        "WBC2026_ISR_VEN_004",
+        "WBC26-ISR-VEN-004",
+        "ISR_AT_VEN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-07T18:00:00-05:00",
+      "game_time_utc": "2026-03-07T23:00:00Z",
+      "date": "2026-03-08",
+      "home": "VEN",
+      "away": "ISR",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Andrés Giménez",
+        "Andrés Machado",
+        "Angel Zerpa",
+        "Anthony Molina",
+        "Antonio Senzatela",
+        "Carlos Guzman",
+        "Christian Suarez",
+        "Daniel Palencia",
+        "Eduard Bazardo",
+        "Eduardo Rodriguez",
+        "Enmanuel De Jesus",
+        "Eugenio Suárez",
+        "Ezequiel Tovar",
+        "Gleyber Torres",
+        "Jackson Chourio",
+        "Javier Sanoja",
+        "Jhonathan Díaz",
+        "José Buttó",
+        "Keider Montero",
+        "Luinder Avila",
+        "Luis Arraez",
+        "Maikel Garcia",
+        "Ranger Suarez",
+        "Ricardo Sánchez",
+        "Ronald Acuña Jr.",
+        "Salvador Perez",
+        "William Contreras",
+        "Willson Contreras",
+        "Wilyer Abreu",
+        "Yoendrys Gómez"
+      ],
+      "away_roster": [
+        "Assaf Lowengart",
+        "Ben Simon",
+        "Benjamin Rosengard",
+        "C.J. Stubbs",
+        "Carlos Lequerica",
+        "Charlie Beilenson",
+        "Colby Halter",
+        "Cole Carrigg",
+        "Daniel Federman",
+        "Dean Kremer",
+        "Garrett Stubbs",
+        "Harrison Bader",
+        "Harrison Cohen",
+        "Jake Fishman",
+        "Jake Gelof",
+        "Jordan Geber",
+        "Josh Mallitz",
+        "Matt Bowman",
+        "Matt Mervis",
+        "Max Lazar",
+        "Noah Mendlinger",
+        "RJ Schreck",
+        "Rob Kaminsky",
+        "Robert Stock",
+        "Ryan Prager",
+        "Spencer Horwitz",
+        "Tommy Kahnle",
+        "Zach Levenson",
+        "Zack Leban",
+        "Zack Weiss"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/840/roster?season=2026",
+      "home_sp": {
+        "name": "Enmanuel De Jesus",
+        "team": "VEN",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Ben Simon",
+        "team": "ISR",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Andrés Giménez",
+          "team": "VEN"
+        },
+        {
+          "name": "Eugenio Suárez",
+          "team": "VEN"
+        },
+        {
+          "name": "Ezequiel Tovar",
+          "team": "VEN"
+        },
+        {
+          "name": "Gleyber Torres",
+          "team": "VEN"
+        },
+        {
+          "name": "Jackson Chourio",
+          "team": "VEN"
+        },
+        {
+          "name": "Javier Sanoja",
+          "team": "VEN"
+        },
+        {
+          "name": "Luis Arraez",
+          "team": "VEN"
+        },
+        {
+          "name": "Maikel Garcia",
+          "team": "VEN"
+        },
+        {
+          "name": "Ronald Acuña Jr.",
+          "team": "VEN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Assaf Lowengart",
+          "team": "ISR"
+        },
+        {
+          "name": "Benjamin Rosengard",
+          "team": "ISR"
+        },
+        {
+          "name": "C.J. Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Colby Halter",
+          "team": "ISR"
+        },
+        {
+          "name": "Cole Carrigg",
+          "team": "ISR"
+        },
+        {
+          "name": "Garrett Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Harrison Bader",
+          "team": "ISR"
+        },
+        {
+          "name": "Jake Gelof",
+          "team": "ISR"
+        },
+        {
+          "name": "Matt Mervis",
+          "team": "ISR"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/news/israel-vs-venezuela-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-07T23:15:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B04",
+      "aliases": [
+        "WBC2026_GBR_USA_004",
+        "WBC26-GBR-USA-004",
+        "GBR_AT_USA"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-07T18:00:00-06:00",
+      "game_time_utc": "2026-03-08T00:00:00Z",
+      "date": "2026-03-08",
+      "home": "USA",
+      "away": "GBR",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Aaron Judge",
+        "Alex Bregman",
+        "Bobby Witt Jr.",
+        "Brad Keller",
+        "Brice Turang",
+        "Bryce Harper",
+        "Byron Buxton",
+        "Cal Raleigh",
+        "Clay Holmes",
+        "Clayton Kershaw",
+        "David Bednar",
+        "Ernie Clement",
+        "Gabe Speier",
+        "Garrett Cleavinger",
+        "Garrett Whitlock",
+        "Griffin Jax",
+        "Gunnar Henderson",
+        "Kyle Schwarber",
+        "Logan Webb",
+        "Mason Miller",
+        "Matthew Boyd",
+        "Michael Wacha",
+        "Nolan McLean",
+        "Paul Goldschmidt",
+        "Paul Skenes",
+        "Pete Crow-Armstrong",
+        "Roman Anthony",
+        "Ryan Yarbrough",
+        "Tarik Skubal",
+        "Will Smith"
+      ],
+      "away_roster": [
+        "Andre Scrubb",
+        "BJ Murray",
+        "Brendan Beck",
+        "Chavez Fernander",
+        "Donovan Benoit",
+        "Dylan Covey",
+        "Gary Gill Hill",
+        "Graham Spraker",
+        "Harry Ford",
+        "Ian Lewis Jr.",
+        "Ivan Johnson",
+        "Jack Anderson",
+        "Jack Seppings",
+        "Jazz Chisholm Jr.",
+        "Justin Wylie",
+        "Kristian Robinson",
+        "Lucius Fox",
+        "Matt Koperniak",
+        "Miles Langhorne",
+        "Najer Victor",
+        "Nate Eaton",
+        "Nick Ward",
+        "Nick Wells",
+        "Owen Wild",
+        "Ryan Long",
+        "Trayce Thompson",
+        "Tristan Beck",
+        "Tyler Viza",
+        "Vance Worley",
+        "Will Cresswell"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/940/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/821/roster?season=2026",
+      "home_sp": {
+        "name": "Tarik Skubal",
+        "team": "USA",
+        "era": 2.5,
+        "fip": 2.7,
+        "whip": 0.95,
+        "k_per_9": 11.0,
+        "bb_per_9": 1.8,
+        "stuff_plus": 130,
+        "ip_last_30": 28.0,
+        "era_last_3": 2.2,
+        "spring_era": 2.1,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.195,
+        "vs_right_ba": 0.205,
+        "high_leverage_era": 2.4,
+        "fastball_velo": 96.0,
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Tyler Viza",
+        "team": "GBR",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Aaron Judge",
+          "team": "USA"
+        },
+        {
+          "name": "Alex Bregman",
+          "team": "USA"
+        },
+        {
+          "name": "Bobby Witt Jr.",
+          "team": "USA"
+        },
+        {
+          "name": "Brice Turang",
+          "team": "USA"
+        },
+        {
+          "name": "Bryce Harper",
+          "team": "USA"
+        },
+        {
+          "name": "Byron Buxton",
+          "team": "USA"
+        },
+        {
+          "name": "Cal Raleigh",
+          "team": "USA"
+        },
+        {
+          "name": "Ernie Clement",
+          "team": "USA"
+        },
+        {
+          "name": "Gunnar Henderson",
+          "team": "USA"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "BJ Murray",
+          "team": "GBR"
+        },
+        {
+          "name": "Harry Ford",
+          "team": "GBR"
+        },
+        {
+          "name": "Ian Lewis Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Ivan Johnson",
+          "team": "GBR"
+        },
+        {
+          "name": "Jazz Chisholm Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Justin Wylie",
+          "team": "GBR"
+        },
+        {
+          "name": "Kristian Robinson",
+          "team": "GBR"
+        },
+        {
+          "name": "Lucius Fox",
+          "team": "GBR"
+        },
+        {
+          "name": "Matt Koperniak",
+          "team": "GBR"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.mlb.com/news/usa-vs-great-britain-in-2026-world-baseball-classic"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-07T23:30:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C07",
+      "aliases": [
+        "WBC2026_TPE_KOR_007",
+        "WBC26-TPE-KOR-007",
+        "TPE_AT_KOR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-08T12:00:00+09:00",
+      "game_time_utc": "2026-03-08T03:00:00Z",
+      "date": "2026-03-08",
+      "home": "KOR",
+      "away": "TPE",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Been Gwak",
+        "Bo Gyeong Moon",
+        "Byeong Hyeon Jo",
+        "Dane Dunning",
+        "Do Yeong Kim",
+        "Dong Won Park",
+        "Hae-Min Park",
+        "Hyeong Jun So",
+        "Hyeseong Kim",
+        "Hyun Bin Moon",
+        "Hyun Jin Ryu",
+        "Hyun Min Ahn",
+        "Hyung Jun Kim",
+        "Ja Wook Koo",
+        "Jahmai Jones",
+        "Ju Won Kim",
+        "Ju Young Son",
+        "Jung Hoo Lee",
+        "Kyung-Eun Noh",
+        "Min Jae Shin",
+        "Riley O'Brien",
+        "Seung Ki Song",
+        "Shay Whitcomb",
+        "Si Hwan Roh",
+        "Woo Joo Jeong",
+        "Woo-Suk Go",
+        "Yeong Chan You",
+        "Yeong Hyun Park",
+        "Young Kyu Kim",
+        "Young Pyo Ko"
+      ],
+      "away_roster": [
+        "An-Ko Lin",
+        "Chen Zhong-Ao Zhuang",
+        "Chen-Wei Chen",
+        "Cheng-Hui Sung",
+        "Chieh-Hsien Chen",
+        "Chih-Wei Hu",
+        "Hao-Chun Cheng",
+        "Hao-Yu  Lee",
+        "Jo-Hsi Hsu",
+        "Jun-Wei Zhang",
+        "Jyun-Yue Tseng",
+        "Kai-Wei Lin",
+        "Kuan-Yu Chen",
+        "Kun-Yu Chiang",
+        "Kungkuan Giljegiljaw",
+        "Lyle Lin",
+        "Nien-Ting Wu",
+        "Po-Yu Chen",
+        "Ruei-Yang Gu Lin",
+        "Shao-Hung Chiang",
+        "Shih-Hsiang Lin",
+        "Stuart Fairchild",
+        "Tsung-Che Cheng",
+        "Tzu-Chen Sha",
+        "Tzu-Wei Lin",
+        "Wei-En Lin",
+        "Yi Chang",
+        "Yi-Lei Sun",
+        "Yu Chang",
+        "Yu-Min Lin"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/1171/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/791/roster?season=2026",
+      "home_sp": {
+        "name": "Hyun Jin Ryu",
+        "team": "KOR",
+        "era": 4.2,
+        "fip": 4.0,
+        "whip": 1.28,
+        "k_per_9": 7.2,
+        "bb_per_9": 2.0,
+        "stuff_plus": 98,
+        "ip_last_30": 12.0,
+        "era_last_3": 4.0,
+        "spring_era": 3.8,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.248,
+        "vs_right_ba": 0.235,
+        "high_leverage_era": 4.3,
+        "fastball_velo": 89.5,
+        "role": "PB"
+      },
+      "away_sp": {
+        "name": "Ruei-Yang Gu Lin",
+        "team": "TPE",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Bo Gyeong Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Do Yeong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Dong Won Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hae-Min Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyeseong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Bin Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Min Ahn",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyung Jun Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Ja Wook Koo",
+          "team": "KOR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "An-Ko Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Chen-Wei Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Cheng-Hui Sung",
+          "team": "TPE"
+        },
+        {
+          "name": "Chieh-Hsien Chen",
+          "team": "TPE"
+        },
+        {
+          "name": "Hao-Yu  Lee",
+          "team": "TPE"
+        },
+        {
+          "name": "Kun-Yu Chiang",
+          "team": "TPE"
+        },
+        {
+          "name": "Kungkuan Giljegiljaw",
+          "team": "TPE"
+        },
+        {
+          "name": "Lyle Lin",
+          "team": "TPE"
+        },
+        {
+          "name": "Nien-Ting Wu",
+          "team": "TPE"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260308&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-08T00:10:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C08",
+      "aliases": [
+        "WBC2026_AUS_JPN_008",
+        "WBC26-AUS-JPN-008",
+        "AUS_AT_JPN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-08T19:00:00+09:00",
+      "game_time_utc": "2026-03-08T10:00:00Z",
+      "date": "2026-03-08",
+      "home": "JPN",
+      "away": "AUS",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Atsuki Taneichi",
+        "Chihiro Sumida",
+        "Hiromi Itoh",
+        "Hiroto Takahashi",
+        "Hiroya Miyagi",
+        "Kaito Kozono",
+        "Kazuma Okamoto",
+        "Kensuke Kondo",
+        "Kenya Wakatsuki",
+        "Koki Kitayama",
+        "Masataka Yoshida",
+        "Munetaka Murakami",
+        "Ryuhei Sotani",
+        "Seishiro Sakamoto",
+        "Seiya Suzuki",
+        "Shohei Ohtani",
+        "Shoma Fujihira",
+        "Shota Morishita",
+        "Shugo Maki",
+        "Sosuke Genda",
+        "Taisei Makihara",
+        "Taisei Ota",
+        "Teruaki Sato",
+        "Tomoyuki Sugano",
+        "Ukyo Shuto",
+        "Yoshinobu Yamamoto",
+        "Yuhei Nakamura",
+        "Yuki Matsumoto",
+        "Yumeto Kanemaru",
+        "Yusei Kikuchi"
+      ],
+      "away_roster": [
+        "Aaron Whitefield",
+        "Alex Hall",
+        "Alex Wells",
+        "Blake Townsend",
+        "Chris Burke",
+        "Coen Wynne",
+        "Connor MacDonald",
+        "Cooper Morgan",
+        "Curtis Mead",
+        "George Callil",
+        "Jack O'Loughlin",
+        "Jarryd Dale",
+        "Jon Kennedy",
+        "Josh Hendrickson",
+        "Kieren Hall",
+        "Ky Hampton",
+        "Lachlan Wells",
+        "Logan Wade",
+        "Max Durrington",
+        "Mitch Neunborn",
+        "Mitchell Edwards",
+        "Rixon Wingrove",
+        "Robbie Glendinning",
+        "Robbie Perkins",
+        "Sam Holland",
+        "Tim Kennelly",
+        "Todd Van Steensel",
+        "Travis Bazzana",
+        "Ulrich Bojarski",
+        "Warwick Saupold"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/843/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026",
+      "home_sp": {
+        "name": "Tomoyuki Sugano",
+        "team": "JPN",
+        "era": 2.3,
+        "fip": 2.8,
+        "whip": 1.02,
+        "k_per_9": 8.5,
+        "bb_per_9": 1.5,
+        "stuff_plus": 110,
+        "ip_last_30": 16.0,
+        "era_last_3": 2.1,
+        "spring_era": 2.2,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.21,
+        "vs_right_ba": 0.205,
+        "high_leverage_era": 2.5,
+        "fastball_velo": 92.0,
+        "role": "PB"
+      },
+      "away_sp": {
+        "name": "Connor MacDonald",
+        "team": "AUS",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Kaito Kozono",
+          "team": "JPN"
+        },
+        {
+          "name": "Kazuma Okamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Kensuke Kondo",
+          "team": "JPN"
+        },
+        {
+          "name": "Kenya Wakatsuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Masataka Yoshida",
+          "team": "JPN"
+        },
+        {
+          "name": "Munetaka Murakami",
+          "team": "JPN"
+        },
+        {
+          "name": "Seishiro Sakamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Seiya Suzuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Shohei Ohtani",
+          "team": "JPN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Aaron Whitefield",
+          "team": "AUS"
+        },
+        {
+          "name": "Alex Hall",
+          "team": "AUS"
+        },
+        {
+          "name": "Chris Burke",
+          "team": "AUS"
+        },
+        {
+          "name": "Curtis Mead",
+          "team": "AUS"
+        },
+        {
+          "name": "George Callil",
+          "team": "AUS"
+        },
+        {
+          "name": "Jarryd Dale",
+          "team": "AUS"
+        },
+        {
+          "name": "Logan Wade",
+          "team": "AUS"
+        },
+        {
+          "name": "Max Durrington",
+          "team": "AUS"
+        },
+        {
+          "name": "Mitchell Edwards",
+          "team": "AUS"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260308&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-08T08:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A05",
+      "aliases": [
+        "WBC2026_COL_CUB_005",
+        "WBC26-COL-CUB-005",
+        "COL_AT_CUB"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-08T12:00:00-04:00",
+      "game_time_utc": "2026-03-08T16:00:00Z",
+      "date": "2026-03-09",
+      "home": "CUB",
+      "away": "COL",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Alexander Vargas",
+        "Alexei Ramirez",
+        "Alfredo Despaigne",
+        "Andrys Perez",
+        "Ariel Martinez",
+        "Armando Duenas",
+        "Christian Rodriguez",
+        "Darien Núñez",
+        "Denny Larrondo",
+        "Emmanuel Chapman",
+        "Erisbel Arruebarrena",
+        "Frank Alvarez",
+        "Josimar Cousin",
+        "Julio Robaina",
+        "Leonel Moas Jr.",
+        "Livan Moinelo",
+        "Luis Romero",
+        "Malcom Nuñez",
+        "Omar Hernandez",
+        "Osiel Rodriguez",
+        "Pedro Santos",
+        "Raidel Martinez",
+        "Randy Martinez",
+        "Roel Santos",
+        "Yariel Rodríguez",
+        "Yiddi Cappe",
+        "Yoan López",
+        "Yoán Moncada",
+        "Yoel Yanqui",
+        "Yoelkis Guibert"
+      ],
+      "away_roster": [
+        "Adrian Almeida",
+        "Austin Bergner",
+        "Brayan Buelvas",
+        "Carlos Arroyo",
+        "Carlos Martínez",
+        "Daniel Vellojin",
+        "Danis Correa",
+        "David Lorduy",
+        "Dayan Frias",
+        "Donovan Solano",
+        "Elkin Alcala",
+        "Emerson Martinez",
+        "Ezequiel Zabaleta",
+        "Gio Urshela",
+        "Guillo Zuñiga",
+        "Gustavo Campero",
+        "Harold Ramírez",
+        "Jesus Marriaga",
+        "Jhon Romero",
+        "Jordan Diaz",
+        "Jorge Alfaro",
+        "Jose Quintana",
+        "Julio Teheran",
+        "Luis Patiño",
+        "Michael Arroyo",
+        "Pedro Garcia",
+        "Reiver Sanmartin",
+        "Reynaldo Rodriguez",
+        "Rio Gomez",
+        "Yapson Gomez"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2026",
+      "home_sp": {
+        "name": "Denny Larrondo",
+        "team": "CUB",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Luis Patiño",
+        "team": "COL",
+        "era": 4.2,
+        "fip": 4.1,
+        "whip": 1.3,
+        "k_per_9": 9.0,
+        "bb_per_9": 3.5,
+        "stuff_plus": 108,
+        "ip_last_30": 10.0,
+        "era_last_3": 4.0,
+        "spring_era": 3.8,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.245,
+        "vs_right_ba": 0.238,
+        "high_leverage_era": 4.4,
+        "fastball_velo": 96.0,
+        "role": "PB"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Alexander Vargas",
+          "team": "CUB"
+        },
+        {
+          "name": "Alexei Ramirez",
+          "team": "CUB"
+        },
+        {
+          "name": "Alfredo Despaigne",
+          "team": "CUB"
+        },
+        {
+          "name": "Andrys Perez",
+          "team": "CUB"
+        },
+        {
+          "name": "Ariel Martinez",
+          "team": "CUB"
+        },
+        {
+          "name": "Christian Rodriguez",
+          "team": "CUB"
+        },
+        {
+          "name": "Erisbel Arruebarrena",
+          "team": "CUB"
+        },
+        {
+          "name": "Leonel Moas Jr.",
+          "team": "CUB"
+        },
+        {
+          "name": "Malcom Nuñez",
+          "team": "CUB"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Brayan Buelvas",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Arroyo",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Martínez",
+          "team": "COL"
+        },
+        {
+          "name": "Daniel Vellojin",
+          "team": "COL"
+        },
+        {
+          "name": "Dayan Frias",
+          "team": "COL"
+        },
+        {
+          "name": "Donovan Solano",
+          "team": "COL"
+        },
+        {
+          "name": "Gio Urshela",
+          "team": "COL"
+        },
+        {
+          "name": "Gustavo Campero",
+          "team": "COL"
+        },
+        {
+          "name": "Harold Ramírez",
+          "team": "COL"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-08T16:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D05",
+      "aliases": [
+        "WBC2026_NED_DOM_005",
+        "WBC26-NED-DOM-005",
+        "NED_AT_DOM"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-08T12:00:00-04:00",
+      "game_time_utc": "2026-03-08T16:00:00Z",
+      "date": "2026-03-09",
+      "home": "DOM",
+      "away": "NED",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Abner Uribe",
+        "Agustín Ramírez",
+        "Albert Abreu",
+        "Amed Rosario",
+        "Austin Wells",
+        "Brayan Bello",
+        "Camilo Doval",
+        "Carlos Estévez",
+        "Carlos Santana",
+        "Cristopher Sánchez",
+        "Dennis Santana",
+        "Elvis Alvarado",
+        "Enny Romero",
+        "Fernando Tatis Jr.",
+        "Geraldo Perdomo",
+        "Gregory Soto",
+        "Huascar Brazobán",
+        "Jeremy Peña",
+        "Jimmy Cordero",
+        "Juan Mejia",
+        "Juan Soto",
+        "Julio Rodríguez",
+        "Junior Caminero",
+        "Junior Lake",
+        "Ketel Marte",
+        "Luis Severino",
+        "Manny Machado",
+        "Mel Rojas Jr.",
+        "Michael De La Cruz",
+        "Michael De León",
+        "Oneil Cruz",
+        "Oscar De La Cruz",
+        "Pedro Severino",
+        "Phillips Valdez",
+        "Ricardo Cespedes",
+        "Sandy Alcantara",
+        "Seranthony Domínguez",
+        "Sócrates Brito",
+        "Vladimir Guerrero Jr.",
+        "Wandy Peralta",
+        "Webster Rivas"
+      ],
+      "away_roster": [
+        "Antwone Kelly",
+        "Arij Fransen",
+        "Ceddanne Rafaela",
+        "Chadwick Tromp",
+        "Dayson Croes",
+        "Delano Selassa",
+        "Derek West",
+        "Didi Gregorius",
+        "Druw Jones",
+        "Dylan Wilson",
+        "Eric Mendez",
+        "Hendrik Clementina",
+        "Jaitoine Kelly",
+        "Jakey Josepha",
+        "Jamdrick Cornelia",
+        "Jaydenn Estanista",
+        "Juan Carlos Sulbaran",
+        "Juremi Profar",
+        "Justin Morales",
+        "Kenley Jansen",
+        "Kevin Kelly",
+        "Lars Huijer",
+        "Ozzie Albies",
+        "Ray-Patrick Didder",
+        "Ryjeteri Merite",
+        "Shairon Martis",
+        "Sharlon Schoop",
+        "Shawndrick Oduber",
+        "Wendell Floranus",
+        "Xander Bogaerts"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/805/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2026",
+      "home_sp": {
+        "name": "Luis Severino",
+        "team": "DOM",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Arij Fransen",
+        "team": "NED",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Agustín Ramírez",
+          "team": "DOM"
+        },
+        {
+          "name": "Amed Rosario",
+          "team": "DOM"
+        },
+        {
+          "name": "Austin Wells",
+          "team": "DOM"
+        },
+        {
+          "name": "Carlos Santana",
+          "team": "DOM"
+        },
+        {
+          "name": "Fernando Tatis Jr.",
+          "team": "DOM"
+        },
+        {
+          "name": "Geraldo Perdomo",
+          "team": "DOM"
+        },
+        {
+          "name": "Jeremy Peña",
+          "team": "DOM"
+        },
+        {
+          "name": "Juan Soto",
+          "team": "DOM"
+        },
+        {
+          "name": "Julio Rodríguez",
+          "team": "DOM"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Ceddanne Rafaela",
+          "team": "NED"
+        },
+        {
+          "name": "Chadwick Tromp",
+          "team": "NED"
+        },
+        {
+          "name": "Dayson Croes",
+          "team": "NED"
+        },
+        {
+          "name": "Delano Selassa",
+          "team": "NED"
+        },
+        {
+          "name": "Didi Gregorius",
+          "team": "NED"
+        },
+        {
+          "name": "Druw Jones",
+          "team": "NED"
+        },
+        {
+          "name": "Hendrik Clementina",
+          "team": "NED"
+        },
+        {
+          "name": "Jakey Josepha",
+          "team": "NED"
+        },
+        {
+          "name": "Juremi Profar",
+          "team": "NED"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-08T16:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B05",
+      "aliases": [
+        "WBC2026_GBR_ITA_005",
+        "WBC26-GBR-ITA-005",
+        "GBR_AT_ITA"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-08T12:00:00-05:00",
+      "game_time_utc": "2026-03-08T17:00:00Z",
+      "date": "2026-03-09",
+      "home": "ITA",
+      "away": "GBR",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Aaron Nola",
+        "Adam Ottavino",
+        "Alek Jacob",
+        "Andrew Fischer",
+        "Claudio Scotti",
+        "Dan Altavilla",
+        "Dante Nori",
+        "Dominic Canzone",
+        "Dylan DeLucia",
+        "Gabriele Quattrini",
+        "Giaconino Lasaracina",
+        "Gordon Graceffo",
+        "Greg Weissert",
+        "J.J. D'Orazio",
+        "Jac Caglianone",
+        "Jakob Marsee",
+        "Joe La Sorsa",
+        "Jon Berti",
+        "Kyle Nicolas",
+        "Kyle Teel",
+        "Matt Festa",
+        "Michael Lorenzen",
+        "Miles Mastrobuoni",
+        "Nick Morabito",
+        "Ron Marinaccio",
+        "Sam Aldegheri",
+        "Sam Antonacci",
+        "Thomas Saggese",
+        "Vinnie Pasquantino",
+        "Zach Dezenzo"
+      ],
+      "away_roster": [
+        "Andre Scrubb",
+        "BJ Murray",
+        "Brendan Beck",
+        "Chavez Fernander",
+        "Donovan Benoit",
+        "Dylan Covey",
+        "Gary Gill Hill",
+        "Graham Spraker",
+        "Harry Ford",
+        "Ian Lewis Jr.",
+        "Ivan Johnson",
+        "Jack Anderson",
+        "Jack Seppings",
+        "Jazz Chisholm Jr.",
+        "Justin Wylie",
+        "Kristian Robinson",
+        "Lucius Fox",
+        "Matt Koperniak",
+        "Miles Langhorne",
+        "Najer Victor",
+        "Nate Eaton",
+        "Nick Ward",
+        "Nick Wells",
+        "Owen Wild",
+        "Ryan Long",
+        "Trayce Thompson",
+        "Tristan Beck",
+        "Tyler Viza",
+        "Vance Worley",
+        "Will Cresswell"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/841/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/821/roster?season=2026",
+      "home_sp": {
+        "name": "Dylan DeLucia",
+        "team": "ITA",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Owen Wild",
+        "team": "GBR",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Andrew Fischer",
+          "team": "ITA"
+        },
+        {
+          "name": "Dante Nori",
+          "team": "ITA"
+        },
+        {
+          "name": "Dominic Canzone",
+          "team": "ITA"
+        },
+        {
+          "name": "Giaconino Lasaracina",
+          "team": "ITA"
+        },
+        {
+          "name": "J.J. D'Orazio",
+          "team": "ITA"
+        },
+        {
+          "name": "Jac Caglianone",
+          "team": "ITA"
+        },
+        {
+          "name": "Jakob Marsee",
+          "team": "ITA"
+        },
+        {
+          "name": "Jon Berti",
+          "team": "ITA"
+        },
+        {
+          "name": "Kyle Teel",
+          "team": "ITA"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "BJ Murray",
+          "team": "GBR"
+        },
+        {
+          "name": "Harry Ford",
+          "team": "GBR"
+        },
+        {
+          "name": "Ian Lewis Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Ivan Johnson",
+          "team": "GBR"
+        },
+        {
+          "name": "Jazz Chisholm Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Justin Wylie",
+          "team": "GBR"
+        },
+        {
+          "name": "Kristian Robinson",
+          "team": "GBR"
+        },
+        {
+          "name": "Lucius Fox",
+          "team": "GBR"
+        },
+        {
+          "name": "Matt Koperniak",
+          "team": "GBR"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T05:40:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A06",
+      "aliases": [
+        "WBC2026_PAN_CAN_006",
+        "WBC26-PAN-CAN-006",
+        "PAN_AT_CAN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-08T19:00:00-04:00",
+      "game_time_utc": "2026-03-08T23:00:00Z",
+      "date": "2026-03-09",
+      "home": "CAN",
+      "away": "PAN",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Abraham Toro",
+        "Adam Hall",
+        "Adam Macko",
+        "Antoine Jean",
+        "Bo Naylor",
+        "Brock Dykxhoorn",
+        "Cal Quantrill",
+        "Denzel Clarke",
+        "Edouard Julien",
+        "Eric Cerantola",
+        "Indigo Diaz",
+        "Jacob Robson",
+        "James Paxton",
+        "Jameson Taillon",
+        "Jared Young",
+        "Jordan Balazovic",
+        "Josh Naylor",
+        "Liam Hicks",
+        "Logan Allen",
+        "Matt Davidson",
+        "Matt Wilkinson",
+        "Micah Ashman",
+        "Michael Soroka",
+        "Noah Skirrow",
+        "Otto Lopez",
+        "Owen Caissie",
+        "Phillippe Aumont",
+        "Rob Zastryzny",
+        "Tyler Black",
+        "Tyler O'Neill"
+      ],
+      "away_roster": [
+        "Abdiel Mendoza",
+        "Alberto Baldonado",
+        "Allen Córdoba",
+        "Ariel Jurado",
+        "Christian Bethancourt",
+        "Dario Agrazal",
+        "Edmundo Sosa",
+        "Enrique Bradfield Jr.",
+        "Erian Rodriguez",
+        "Humberto Mejía",
+        "Jaime Barria",
+        "James Gonzalez",
+        "Javy Guerra",
+        "Jhonny Santos",
+        "Johan Camargo",
+        "Jonathan Araúz",
+        "Jorge Garcia",
+        "José Caballero",
+        "Jose Ramos",
+        "Kenny Hernandez",
+        "Leo Jiménez",
+        "Leonardo Bernal",
+        "Logan Allen",
+        "Luis Castillo",
+        "Miguel Amaya",
+        "Miguel Cienfuegos",
+        "Miguel Gomez",
+        "Paolo Espino",
+        "Rubén Tejada",
+        "Severino González"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2026",
+      "home_sp": {
+        "name": "Jameson Taillon",
+        "team": "CAN",
+        "era": 4.0,
+        "fip": 4.1,
+        "whip": 1.25,
+        "k_per_9": 7.2,
+        "bb_per_9": 2.3,
+        "stuff_plus": 100,
+        "ip_last_30": 14.0,
+        "era_last_3": 3.8,
+        "spring_era": 3.6,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.245,
+        "vs_right_ba": 0.238,
+        "high_leverage_era": 4.2,
+        "fastball_velo": 93.0,
+        "role": "PB"
+      },
+      "away_sp": {
+        "name": "Jaime Barria",
+        "team": "PAN",
+        "era": 4.6,
+        "fip": 4.7,
+        "whip": 1.4,
+        "k_per_9": 6.8,
+        "bb_per_9": 3.0,
+        "stuff_plus": 88,
+        "ip_last_30": 12.0,
+        "era_last_3": 4.4,
+        "spring_era": 4.2,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.268,
+        "vs_right_ba": 0.26,
+        "high_leverage_era": 5.0,
+        "fastball_velo": 90.5,
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Abraham Toro",
+          "team": "CAN"
+        },
+        {
+          "name": "Adam Hall",
+          "team": "CAN"
+        },
+        {
+          "name": "Bo Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Denzel Clarke",
+          "team": "CAN"
+        },
+        {
+          "name": "Edouard Julien",
+          "team": "CAN"
+        },
+        {
+          "name": "Jacob Robson",
+          "team": "CAN"
+        },
+        {
+          "name": "Jared Young",
+          "team": "CAN"
+        },
+        {
+          "name": "Josh Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Liam Hicks",
+          "team": "CAN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Allen Córdoba",
+          "team": "PAN"
+        },
+        {
+          "name": "Christian Bethancourt",
+          "team": "PAN"
+        },
+        {
+          "name": "Edmundo Sosa",
+          "team": "PAN"
+        },
+        {
+          "name": "Enrique Bradfield Jr.",
+          "team": "PAN"
+        },
+        {
+          "name": "Jhonny Santos",
+          "team": "PAN"
+        },
+        {
+          "name": "Johan Camargo",
+          "team": "PAN"
+        },
+        {
+          "name": "Jonathan Araúz",
+          "team": "PAN"
+        },
+        {
+          "name": "José Caballero",
+          "team": "PAN"
+        },
+        {
+          "name": "Jose Ramos",
+          "team": "PAN"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T05:40:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D06",
+      "aliases": [
+        "WBC2026_NIC_ISR_006",
+        "WBC26-NIC-ISR-006",
+        "NIC_AT_ISR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-08T19:00:00-04:00",
+      "game_time_utc": "2026-03-08T23:00:00Z",
+      "date": "2026-03-09",
+      "home": "ISR",
+      "away": "NIC",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Assaf Lowengart",
+        "Ben Simon",
+        "Benjamin Rosengard",
+        "C.J. Stubbs",
+        "Carlos Lequerica",
+        "Charlie Beilenson",
+        "Colby Halter",
+        "Cole Carrigg",
+        "Daniel Federman",
+        "Dean Kremer",
+        "Garrett Stubbs",
+        "Harrison Bader",
+        "Harrison Cohen",
+        "Jake Fishman",
+        "Jake Gelof",
+        "Jordan Geber",
+        "Josh Mallitz",
+        "Matt Bowman",
+        "Matt Mervis",
+        "Max Lazar",
+        "Noah Mendlinger",
+        "RJ Schreck",
+        "Rob Kaminsky",
+        "Robert Stock",
+        "Ryan Prager",
+        "Spencer Horwitz",
+        "Tommy Kahnle",
+        "Zach Levenson",
+        "Zack Leban",
+        "Zack Weiss"
+      ],
+      "away_roster": [
+        "Angel Obando",
+        "Benjamin Alegria",
+        "Brandon Leyton",
+        "Bryan Torres",
+        "Carlos Rodriguez",
+        "Carlos Teller",
+        "Chase Dawson",
+        "Cheslor Cuthbert",
+        "Cristhian Sandoval",
+        "Danilo Bermudez",
+        "Dilmer Mejia",
+        "Duque Hebbert",
+        "Elian Rayo",
+        "Emanuel Trujillo",
+        "Erasmo Ramírez",
+        "Freddy Zamora",
+        "Ismael Munguia",
+        "JC Ramírez",
+        "Jeter Downs",
+        "Jose Orozco",
+        "Juan Montes",
+        "Kenword Burton",
+        "Mark Vientos",
+        "Melvin Novoa",
+        "Omar Mendoza",
+        "Oscar Rayo",
+        "Osman Gutierrez",
+        "Ronald Medrano",
+        "Ronald Rivera",
+        "Stiven Cruz"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/840/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/881/roster?season=2026",
+      "home_sp": {
+        "name": "Dean Kremer",
+        "team": "ISR",
+        "era": 3.8,
+        "fip": 3.9,
+        "whip": 1.22,
+        "k_per_9": 8.0,
+        "bb_per_9": 2.5,
+        "stuff_plus": 105,
+        "ip_last_30": 20.0,
+        "era_last_3": 3.5,
+        "spring_era": 3.4,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.24,
+        "vs_right_ba": 0.235,
+        "high_leverage_era": 3.9,
+        "fastball_velo": 92.5,
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Carlos Rodriguez",
+        "team": "NIC",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Assaf Lowengart",
+          "team": "ISR"
+        },
+        {
+          "name": "Benjamin Rosengard",
+          "team": "ISR"
+        },
+        {
+          "name": "C.J. Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Colby Halter",
+          "team": "ISR"
+        },
+        {
+          "name": "Cole Carrigg",
+          "team": "ISR"
+        },
+        {
+          "name": "Garrett Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Harrison Bader",
+          "team": "ISR"
+        },
+        {
+          "name": "Jake Gelof",
+          "team": "ISR"
+        },
+        {
+          "name": "Matt Mervis",
+          "team": "ISR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Benjamin Alegria",
+          "team": "NIC"
+        },
+        {
+          "name": "Brandon Leyton",
+          "team": "NIC"
+        },
+        {
+          "name": "Chase Dawson",
+          "team": "NIC"
+        },
+        {
+          "name": "Cheslor Cuthbert",
+          "team": "NIC"
+        },
+        {
+          "name": "Cristhian Sandoval",
+          "team": "NIC"
+        },
+        {
+          "name": "Elian Rayo",
+          "team": "NIC"
+        },
+        {
+          "name": "Emanuel Trujillo",
+          "team": "NIC"
+        },
+        {
+          "name": "Freddy Zamora",
+          "team": "NIC"
+        },
+        {
+          "name": "Ismael Munguia",
+          "team": "NIC"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-08T16:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B06",
+      "aliases": [
+        "WBC2026_BRA_MEX_006",
+        "WBC26-BRA-MEX-006",
+        "BRA_AT_MEX"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-08T19:00:00-05:00",
+      "game_time_utc": "2026-03-09T00:00:00Z",
+      "date": "2026-03-09",
+      "home": "MEX",
+      "away": "BRA",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Alejandro Kirk",
+        "Alejandro Osuna",
+        "Alek Thomas",
+        "Alex Carrillo",
+        "Alexander Armenta",
+        "Alexis Wilson",
+        "Andrés Muñoz",
+        "Brennan Bernardino",
+        "Daniel Duarte",
+        "Gerardo Reyes",
+        "Jared Serna",
+        "Jarren Duran",
+        "Javier Assad",
+        "Jesus Cruz",
+        "Joey Meneses",
+        "Joey Ortiz",
+        "Jonathan Aranda",
+        "Julian Ornelas",
+        "Luis Gastelum",
+        "Luis Urías",
+        "Manny Barreda",
+        "Nacho Alvarez Jr.",
+        "Nick Gonzales",
+        "Randy Arozarena",
+        "Robert Garcia",
+        "Roel Ramírez",
+        "Rowdy Tellez",
+        "Samy Natera Jr.",
+        "Taijuan Walker",
+        "Victor Vodnik"
+      ],
+      "away_roster": [
+        "Bo Takahashi",
+        "Daniel Missaki",
+        "Dante Bichette Jr.",
+        "Enzo Hayashida",
+        "Enzo Sawayama",
+        "Eric Pardinho",
+        "Felipe Koragi",
+        "Felipe Mizukosi",
+        "Gabriel Barbosa",
+        "Gabriel Carmo",
+        "Gabriel Gomes",
+        "Gabriel Maciel",
+        "Hector Villarroel",
+        "Hugo Kanabushi",
+        "Joao Gabriel Marostica",
+        "Joseph Contreras",
+        "Leonardo Reginatto",
+        "Lucas Ramirez",
+        "Lucas Rojo",
+        "Matheus Silva",
+        "Murilo Gouvea",
+        "Oscar Nakaoshi",
+        "Osvaldo Carvalho",
+        "Thyago Vieira",
+        "Tiago Da Silva",
+        "Tiago Nishiyama",
+        "Tomas Lopez",
+        "Victor Mascai",
+        "Vitor Ito",
+        "Vitor Takahashi"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/776/roster?season=2026",
+      "home_sp": {
+        "name": "Taijuan Walker",
+        "team": "MEX",
+        "era": 4.2,
+        "fip": 4.3,
+        "whip": 1.3,
+        "k_per_9": 7.0,
+        "bb_per_9": 2.8,
+        "stuff_plus": 95,
+        "ip_last_30": 16.0,
+        "era_last_3": 4.0,
+        "spring_era": 3.8,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.25,
+        "vs_right_ba": 0.245,
+        "high_leverage_era": 4.5,
+        "fastball_velo": 93.0,
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Eric Pardinho",
+        "team": "BRA",
+        "era": 4.3,
+        "fip": 4.2,
+        "whip": 1.32,
+        "k_per_9": 8.5,
+        "bb_per_9": 3.5,
+        "stuff_plus": 100,
+        "ip_last_30": 14.0,
+        "era_last_3": 4.0,
+        "spring_era": 3.8,
+        "pitch_count_last_3d": 0,
+        "vs_left_ba": 0.25,
+        "vs_right_ba": 0.245,
+        "high_leverage_era": 4.5,
+        "fastball_velo": 94.5,
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Alejandro Kirk",
+          "team": "MEX"
+        },
+        {
+          "name": "Alejandro Osuna",
+          "team": "MEX"
+        },
+        {
+          "name": "Alek Thomas",
+          "team": "MEX"
+        },
+        {
+          "name": "Alexis Wilson",
+          "team": "MEX"
+        },
+        {
+          "name": "Jared Serna",
+          "team": "MEX"
+        },
+        {
+          "name": "Jarren Duran",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Meneses",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Ortiz",
+          "team": "MEX"
+        },
+        {
+          "name": "Jonathan Aranda",
+          "team": "MEX"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Dante Bichette Jr.",
+          "team": "BRA"
+        },
+        {
+          "name": "Enzo Hayashida",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Koragi",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Mizukosi",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Carmo",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Gomes",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Maciel",
+          "team": "BRA"
+        },
+        {
+          "name": "Leonardo Reginatto",
+          "team": "BRA"
+        },
+        {
+          "name": "Lucas Ramirez",
+          "team": "BRA"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-08T16:00:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C09",
+      "aliases": [
+        "WBC2026_KOR_AUS_009",
+        "WBC26-KOR-AUS-009",
+        "KOR_AT_AUS"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-09T19:00:00+09:00",
+      "game_time_utc": "2026-03-09T10:00:00Z",
+      "date": "2026-03-09",
+      "home": "AUS",
+      "away": "KOR",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Aaron Whitefield",
+        "Alex Hall",
+        "Alex Wells",
+        "Blake Townsend",
+        "Chris Burke",
+        "Coen Wynne",
+        "Connor MacDonald",
+        "Cooper Morgan",
+        "Curtis Mead",
+        "George Callil",
+        "Jack O'Loughlin",
+        "Jarryd Dale",
+        "Jon Kennedy",
+        "Josh Hendrickson",
+        "Kieren Hall",
+        "Ky Hampton",
+        "Lachlan Wells",
+        "Logan Wade",
+        "Max Durrington",
+        "Mitch Neunborn",
+        "Mitchell Edwards",
+        "Rixon Wingrove",
+        "Robbie Glendinning",
+        "Robbie Perkins",
+        "Sam Holland",
+        "Tim Kennelly",
+        "Todd Van Steensel",
+        "Travis Bazzana",
+        "Ulrich Bojarski",
+        "Warwick Saupold"
+      ],
+      "away_roster": [
+        "Been Gwak",
+        "Bo Gyeong Moon",
+        "Byeong Hyeon Jo",
+        "Dane Dunning",
+        "Do Yeong Kim",
+        "Dong Won Park",
+        "Hae-Min Park",
+        "Hyeong Jun So",
+        "Hyeseong Kim",
+        "Hyun Bin Moon",
+        "Hyun Jin Ryu",
+        "Hyun Min Ahn",
+        "Hyung Jun Kim",
+        "Ja Wook Koo",
+        "Jahmai Jones",
+        "Ju Won Kim",
+        "Ju Young Son",
+        "Jung Hoo Lee",
+        "Kyung-Eun Noh",
+        "Min Jae Shin",
+        "Riley O'Brien",
+        "Seung Ki Song",
+        "Shay Whitcomb",
+        "Si Hwan Roh",
+        "Woo Joo Jeong",
+        "Woo-Suk Go",
+        "Yeong Chan You",
+        "Yeong Hyun Park",
+        "Young Kyu Kim",
+        "Young Pyo Ko"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/1171/roster?season=2026",
+      "home_sp": {
+        "name": "Lachlan Wells",
+        "team": "AUS",
+        "role": "SP"
+      },
+      "away_sp": {
+        "name": "Ju-Young Son",
+        "team": "KOR",
+        "role": "SP"
+      },
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Aaron Whitefield",
+          "team": "AUS"
+        },
+        {
+          "name": "Alex Hall",
+          "team": "AUS"
+        },
+        {
+          "name": "Chris Burke",
+          "team": "AUS"
+        },
+        {
+          "name": "Curtis Mead",
+          "team": "AUS"
+        },
+        {
+          "name": "George Callil",
+          "team": "AUS"
+        },
+        {
+          "name": "Jarryd Dale",
+          "team": "AUS"
+        },
+        {
+          "name": "Logan Wade",
+          "team": "AUS"
+        },
+        {
+          "name": "Max Durrington",
+          "team": "AUS"
+        },
+        {
+          "name": "Mitchell Edwards",
+          "team": "AUS"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Bo Gyeong Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Do Yeong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Dong Won Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hae-Min Park",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyeseong Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Bin Moon",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyun Min Ahn",
+          "team": "KOR"
+        },
+        {
+          "name": "Hyung Jun Kim",
+          "team": "KOR"
+        },
+        {
+          "name": "Ja Wook Koo",
+          "team": "KOR"
+        }
+      ],
+      "starter_source_urls": [
+        "https://www.playsport.cc/livescore/114?gamedate=20260309&mode=2"
+      ],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": true,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T05:40:00Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A07",
+      "aliases": [
+        "WBC2026_COL_PAN_007",
+        "WBC26-COL-PAN-007",
+        "COL_AT_PAN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-09T12:00:00-04:00",
+      "game_time_utc": "2026-03-09T16:00:00Z",
+      "date": "2026-03-10",
+      "home": "PAN",
+      "away": "COL",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Abdiel Mendoza",
+        "Alberto Baldonado",
+        "Allen Córdoba",
+        "Ariel Jurado",
+        "Christian Bethancourt",
+        "Dario Agrazal",
+        "Edmundo Sosa",
+        "Enrique Bradfield Jr.",
+        "Erian Rodriguez",
+        "Humberto Mejía",
+        "Jaime Barria",
+        "James Gonzalez",
+        "Javy Guerra",
+        "Jhonny Santos",
+        "Johan Camargo",
+        "Jonathan Araúz",
+        "Jorge Garcia",
+        "José Caballero",
+        "Jose Ramos",
+        "Kenny Hernandez",
+        "Leo Jiménez",
+        "Leonardo Bernal",
+        "Logan Allen",
+        "Luis Castillo",
+        "Miguel Amaya",
+        "Miguel Cienfuegos",
+        "Miguel Gomez",
+        "Paolo Espino",
+        "Rubén Tejada",
+        "Severino González"
+      ],
+      "away_roster": [
+        "Adrian Almeida",
+        "Austin Bergner",
+        "Brayan Buelvas",
+        "Carlos Arroyo",
+        "Carlos Martínez",
+        "Daniel Vellojin",
+        "Danis Correa",
+        "David Lorduy",
+        "Dayan Frias",
+        "Donovan Solano",
+        "Elkin Alcala",
+        "Emerson Martinez",
+        "Ezequiel Zabaleta",
+        "Gio Urshela",
+        "Guillo Zuñiga",
+        "Gustavo Campero",
+        "Harold Ramírez",
+        "Jesus Marriaga",
+        "Jhon Romero",
+        "Jordan Diaz",
+        "Jorge Alfaro",
+        "Jose Quintana",
+        "Julio Teheran",
+        "Luis Patiño",
+        "Michael Arroyo",
+        "Pedro Garcia",
+        "Reiver Sanmartin",
+        "Reynaldo Rodriguez",
+        "Rio Gomez",
+        "Yapson Gomez"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Allen Córdoba",
+          "team": "PAN"
+        },
+        {
+          "name": "Christian Bethancourt",
+          "team": "PAN"
+        },
+        {
+          "name": "Edmundo Sosa",
+          "team": "PAN"
+        },
+        {
+          "name": "Enrique Bradfield Jr.",
+          "team": "PAN"
+        },
+        {
+          "name": "Jhonny Santos",
+          "team": "PAN"
+        },
+        {
+          "name": "Johan Camargo",
+          "team": "PAN"
+        },
+        {
+          "name": "Jonathan Araúz",
+          "team": "PAN"
+        },
+        {
+          "name": "José Caballero",
+          "team": "PAN"
+        },
+        {
+          "name": "Jose Ramos",
+          "team": "PAN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Brayan Buelvas",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Arroyo",
+          "team": "COL"
+        },
+        {
+          "name": "Carlos Martínez",
+          "team": "COL"
+        },
+        {
+          "name": "Daniel Vellojin",
+          "team": "COL"
+        },
+        {
+          "name": "Dayan Frias",
+          "team": "COL"
+        },
+        {
+          "name": "Donovan Solano",
+          "team": "COL"
+        },
+        {
+          "name": "Gio Urshela",
+          "team": "COL"
+        },
+        {
+          "name": "Gustavo Campero",
+          "team": "COL"
+        },
+        {
+          "name": "Harold Ramírez",
+          "team": "COL"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D07",
+      "aliases": [
+        "WBC2026_DOM_ISR_007",
+        "WBC26-DOM-ISR-007",
+        "DOM_AT_ISR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-09T12:00:00-04:00",
+      "game_time_utc": "2026-03-09T16:00:00Z",
+      "date": "2026-03-10",
+      "home": "ISR",
+      "away": "DOM",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Assaf Lowengart",
+        "Ben Simon",
+        "Benjamin Rosengard",
+        "C.J. Stubbs",
+        "Carlos Lequerica",
+        "Charlie Beilenson",
+        "Colby Halter",
+        "Cole Carrigg",
+        "Daniel Federman",
+        "Dean Kremer",
+        "Garrett Stubbs",
+        "Harrison Bader",
+        "Harrison Cohen",
+        "Jake Fishman",
+        "Jake Gelof",
+        "Jordan Geber",
+        "Josh Mallitz",
+        "Matt Bowman",
+        "Matt Mervis",
+        "Max Lazar",
+        "Noah Mendlinger",
+        "RJ Schreck",
+        "Rob Kaminsky",
+        "Robert Stock",
+        "Ryan Prager",
+        "Spencer Horwitz",
+        "Tommy Kahnle",
+        "Zach Levenson",
+        "Zack Leban",
+        "Zack Weiss"
+      ],
+      "away_roster": [
+        "Abner Uribe",
+        "Agustín Ramírez",
+        "Albert Abreu",
+        "Amed Rosario",
+        "Austin Wells",
+        "Brayan Bello",
+        "Camilo Doval",
+        "Carlos Estévez",
+        "Carlos Santana",
+        "Cristopher Sánchez",
+        "Dennis Santana",
+        "Elvis Alvarado",
+        "Enny Romero",
+        "Fernando Tatis Jr.",
+        "Geraldo Perdomo",
+        "Gregory Soto",
+        "Huascar Brazobán",
+        "Jeremy Peña",
+        "Jimmy Cordero",
+        "Juan Mejia",
+        "Juan Soto",
+        "Julio Rodríguez",
+        "Junior Caminero",
+        "Junior Lake",
+        "Ketel Marte",
+        "Luis Severino",
+        "Manny Machado",
+        "Mel Rojas Jr.",
+        "Michael De La Cruz",
+        "Michael De León",
+        "Oneil Cruz",
+        "Oscar De La Cruz",
+        "Pedro Severino",
+        "Phillips Valdez",
+        "Ricardo Cespedes",
+        "Sandy Alcantara",
+        "Seranthony Domínguez",
+        "Sócrates Brito",
+        "Vladimir Guerrero Jr.",
+        "Wandy Peralta",
+        "Webster Rivas"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/840/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/805/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Assaf Lowengart",
+          "team": "ISR"
+        },
+        {
+          "name": "Benjamin Rosengard",
+          "team": "ISR"
+        },
+        {
+          "name": "C.J. Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Colby Halter",
+          "team": "ISR"
+        },
+        {
+          "name": "Cole Carrigg",
+          "team": "ISR"
+        },
+        {
+          "name": "Garrett Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Harrison Bader",
+          "team": "ISR"
+        },
+        {
+          "name": "Jake Gelof",
+          "team": "ISR"
+        },
+        {
+          "name": "Matt Mervis",
+          "team": "ISR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Agustín Ramírez",
+          "team": "DOM"
+        },
+        {
+          "name": "Amed Rosario",
+          "team": "DOM"
+        },
+        {
+          "name": "Austin Wells",
+          "team": "DOM"
+        },
+        {
+          "name": "Carlos Santana",
+          "team": "DOM"
+        },
+        {
+          "name": "Fernando Tatis Jr.",
+          "team": "DOM"
+        },
+        {
+          "name": "Geraldo Perdomo",
+          "team": "DOM"
+        },
+        {
+          "name": "Jeremy Peña",
+          "team": "DOM"
+        },
+        {
+          "name": "Juan Soto",
+          "team": "DOM"
+        },
+        {
+          "name": "Julio Rodríguez",
+          "team": "DOM"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B07",
+      "aliases": [
+        "WBC2026_BRA_GBR_007",
+        "WBC26-BRA-GBR-007",
+        "BRA_AT_GBR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-09T12:00:00-05:00",
+      "game_time_utc": "2026-03-09T17:00:00Z",
+      "date": "2026-03-10",
+      "home": "GBR",
+      "away": "BRA",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Andre Scrubb",
+        "BJ Murray",
+        "Brendan Beck",
+        "Chavez Fernander",
+        "Donovan Benoit",
+        "Dylan Covey",
+        "Gary Gill Hill",
+        "Graham Spraker",
+        "Harry Ford",
+        "Ian Lewis Jr.",
+        "Ivan Johnson",
+        "Jack Anderson",
+        "Jack Seppings",
+        "Jazz Chisholm Jr.",
+        "Justin Wylie",
+        "Kristian Robinson",
+        "Lucius Fox",
+        "Matt Koperniak",
+        "Miles Langhorne",
+        "Najer Victor",
+        "Nate Eaton",
+        "Nick Ward",
+        "Nick Wells",
+        "Owen Wild",
+        "Ryan Long",
+        "Trayce Thompson",
+        "Tristan Beck",
+        "Tyler Viza",
+        "Vance Worley",
+        "Will Cresswell"
+      ],
+      "away_roster": [
+        "Bo Takahashi",
+        "Daniel Missaki",
+        "Dante Bichette Jr.",
+        "Enzo Hayashida",
+        "Enzo Sawayama",
+        "Eric Pardinho",
+        "Felipe Koragi",
+        "Felipe Mizukosi",
+        "Gabriel Barbosa",
+        "Gabriel Carmo",
+        "Gabriel Gomes",
+        "Gabriel Maciel",
+        "Hector Villarroel",
+        "Hugo Kanabushi",
+        "Joao Gabriel Marostica",
+        "Joseph Contreras",
+        "Leonardo Reginatto",
+        "Lucas Ramirez",
+        "Lucas Rojo",
+        "Matheus Silva",
+        "Murilo Gouvea",
+        "Oscar Nakaoshi",
+        "Osvaldo Carvalho",
+        "Thyago Vieira",
+        "Tiago Da Silva",
+        "Tiago Nishiyama",
+        "Tomas Lopez",
+        "Victor Mascai",
+        "Vitor Ito",
+        "Vitor Takahashi"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/821/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/776/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "BJ Murray",
+          "team": "GBR"
+        },
+        {
+          "name": "Harry Ford",
+          "team": "GBR"
+        },
+        {
+          "name": "Ian Lewis Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Ivan Johnson",
+          "team": "GBR"
+        },
+        {
+          "name": "Jazz Chisholm Jr.",
+          "team": "GBR"
+        },
+        {
+          "name": "Justin Wylie",
+          "team": "GBR"
+        },
+        {
+          "name": "Kristian Robinson",
+          "team": "GBR"
+        },
+        {
+          "name": "Lucius Fox",
+          "team": "GBR"
+        },
+        {
+          "name": "Matt Koperniak",
+          "team": "GBR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Dante Bichette Jr.",
+          "team": "BRA"
+        },
+        {
+          "name": "Enzo Hayashida",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Koragi",
+          "team": "BRA"
+        },
+        {
+          "name": "Felipe Mizukosi",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Carmo",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Gomes",
+          "team": "BRA"
+        },
+        {
+          "name": "Gabriel Maciel",
+          "team": "BRA"
+        },
+        {
+          "name": "Leonardo Reginatto",
+          "team": "BRA"
+        },
+        {
+          "name": "Lucas Ramirez",
+          "team": "BRA"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A08",
+      "aliases": [
+        "WBC2026_CUB_PUR_008",
+        "WBC26-CUB-PUR-008",
+        "CUB_AT_PUR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-09T19:00:00-04:00",
+      "game_time_utc": "2026-03-09T23:00:00Z",
+      "date": "2026-03-10",
+      "home": "PUR",
+      "away": "CUB",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Angel Reyes",
+        "Bryan Torres",
+        "Carlos Cortes",
+        "Christian Vázquez",
+        "Darell Hernaiz",
+        "Eddie Rosario",
+        "Eduardo Rivera",
+        "Edwin Arroyo",
+        "Edwin Díaz",
+        "Elmer Rodríguez",
+        "Emmanuel Rivera",
+        "Fernando Cruz",
+        "Gabriel Rodriguez",
+        "Heliot Ramos",
+        "Jorge López",
+        "José De León",
+        "Jose Espada",
+        "Jovani Morán",
+        "Luis Hernandez",
+        "Luis Quiñones",
+        "Luis Vázquez",
+        "MJ Melendez",
+        "Martín Maldonado",
+        "Matthew Lugo",
+        "Nolan Arenado",
+        "Raymond Burgos",
+        "Ricardo Velez",
+        "Rico Garcia",
+        "Seth Lugo",
+        "Willi Castro",
+        "Yacksel Ríos"
+      ],
+      "away_roster": [
+        "Alexander Vargas",
+        "Alexei Ramirez",
+        "Alfredo Despaigne",
+        "Andrys Perez",
+        "Ariel Martinez",
+        "Armando Duenas",
+        "Christian Rodriguez",
+        "Darien Núñez",
+        "Denny Larrondo",
+        "Emmanuel Chapman",
+        "Erisbel Arruebarrena",
+        "Frank Alvarez",
+        "Josimar Cousin",
+        "Julio Robaina",
+        "Leonel Moas Jr.",
+        "Livan Moinelo",
+        "Luis Romero",
+        "Malcom Nuñez",
+        "Omar Hernandez",
+        "Osiel Rodriguez",
+        "Pedro Santos",
+        "Raidel Martinez",
+        "Randy Martinez",
+        "Roel Santos",
+        "Yariel Rodríguez",
+        "Yiddi Cappe",
+        "Yoan López",
+        "Yoán Moncada",
+        "Yoel Yanqui",
+        "Yoelkis Guibert"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/897/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Bryan Torres",
+          "team": "PUR"
+        },
+        {
+          "name": "Carlos Cortes",
+          "team": "PUR"
+        },
+        {
+          "name": "Christian Vázquez",
+          "team": "PUR"
+        },
+        {
+          "name": "Darell Hernaiz",
+          "team": "PUR"
+        },
+        {
+          "name": "Eddie Rosario",
+          "team": "PUR"
+        },
+        {
+          "name": "Edwin Arroyo",
+          "team": "PUR"
+        },
+        {
+          "name": "Emmanuel Rivera",
+          "team": "PUR"
+        },
+        {
+          "name": "Heliot Ramos",
+          "team": "PUR"
+        },
+        {
+          "name": "Luis Hernandez",
+          "team": "PUR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Alexander Vargas",
+          "team": "CUB"
+        },
+        {
+          "name": "Alexei Ramirez",
+          "team": "CUB"
+        },
+        {
+          "name": "Alfredo Despaigne",
+          "team": "CUB"
+        },
+        {
+          "name": "Andrys Perez",
+          "team": "CUB"
+        },
+        {
+          "name": "Ariel Martinez",
+          "team": "CUB"
+        },
+        {
+          "name": "Christian Rodriguez",
+          "team": "CUB"
+        },
+        {
+          "name": "Erisbel Arruebarrena",
+          "team": "CUB"
+        },
+        {
+          "name": "Leonel Moas Jr.",
+          "team": "CUB"
+        },
+        {
+          "name": "Malcom Nuñez",
+          "team": "CUB"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D08",
+      "aliases": [
+        "WBC2026_VEN_NIC_008",
+        "WBC26-VEN-NIC-008",
+        "VEN_AT_NIC"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-09T19:00:00-04:00",
+      "game_time_utc": "2026-03-09T23:00:00Z",
+      "date": "2026-03-10",
+      "home": "NIC",
+      "away": "VEN",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Angel Obando",
+        "Benjamin Alegria",
+        "Brandon Leyton",
+        "Bryan Torres",
+        "Carlos Rodriguez",
+        "Carlos Teller",
+        "Chase Dawson",
+        "Cheslor Cuthbert",
+        "Cristhian Sandoval",
+        "Danilo Bermudez",
+        "Dilmer Mejia",
+        "Duque Hebbert",
+        "Elian Rayo",
+        "Emanuel Trujillo",
+        "Erasmo Ramírez",
+        "Freddy Zamora",
+        "Ismael Munguia",
+        "JC Ramírez",
+        "Jeter Downs",
+        "Jose Orozco",
+        "Juan Montes",
+        "Kenword Burton",
+        "Mark Vientos",
+        "Melvin Novoa",
+        "Omar Mendoza",
+        "Oscar Rayo",
+        "Osman Gutierrez",
+        "Ronald Medrano",
+        "Ronald Rivera",
+        "Stiven Cruz"
+      ],
+      "away_roster": [
+        "Andrés Giménez",
+        "Andrés Machado",
+        "Angel Zerpa",
+        "Anthony Molina",
+        "Antonio Senzatela",
+        "Carlos Guzman",
+        "Christian Suarez",
+        "Daniel Palencia",
+        "Eduard Bazardo",
+        "Eduardo Rodriguez",
+        "Enmanuel De Jesus",
+        "Eugenio Suárez",
+        "Ezequiel Tovar",
+        "Gleyber Torres",
+        "Jackson Chourio",
+        "Javier Sanoja",
+        "Jhonathan Díaz",
+        "José Buttó",
+        "Keider Montero",
+        "Luinder Avila",
+        "Luis Arraez",
+        "Maikel Garcia",
+        "Ranger Suarez",
+        "Ricardo Sánchez",
+        "Ronald Acuña Jr.",
+        "Salvador Perez",
+        "William Contreras",
+        "Willson Contreras",
+        "Wilyer Abreu",
+        "Yoendrys Gómez"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/881/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Benjamin Alegria",
+          "team": "NIC"
+        },
+        {
+          "name": "Brandon Leyton",
+          "team": "NIC"
+        },
+        {
+          "name": "Chase Dawson",
+          "team": "NIC"
+        },
+        {
+          "name": "Cheslor Cuthbert",
+          "team": "NIC"
+        },
+        {
+          "name": "Cristhian Sandoval",
+          "team": "NIC"
+        },
+        {
+          "name": "Elian Rayo",
+          "team": "NIC"
+        },
+        {
+          "name": "Emanuel Trujillo",
+          "team": "NIC"
+        },
+        {
+          "name": "Freddy Zamora",
+          "team": "NIC"
+        },
+        {
+          "name": "Ismael Munguia",
+          "team": "NIC"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Andrés Giménez",
+          "team": "VEN"
+        },
+        {
+          "name": "Eugenio Suárez",
+          "team": "VEN"
+        },
+        {
+          "name": "Ezequiel Tovar",
+          "team": "VEN"
+        },
+        {
+          "name": "Gleyber Torres",
+          "team": "VEN"
+        },
+        {
+          "name": "Jackson Chourio",
+          "team": "VEN"
+        },
+        {
+          "name": "Javier Sanoja",
+          "team": "VEN"
+        },
+        {
+          "name": "Luis Arraez",
+          "team": "VEN"
+        },
+        {
+          "name": "Maikel Garcia",
+          "team": "VEN"
+        },
+        {
+          "name": "Ronald Acuña Jr.",
+          "team": "VEN"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B08",
+      "aliases": [
+        "WBC2026_MEX_USA_008",
+        "WBC26-MEX-USA-008",
+        "MEX_AT_USA"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-09T19:00:00-05:00",
+      "game_time_utc": "2026-03-10T00:00:00Z",
+      "date": "2026-03-10",
+      "home": "USA",
+      "away": "MEX",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Aaron Judge",
+        "Alex Bregman",
+        "Bobby Witt Jr.",
+        "Brad Keller",
+        "Brice Turang",
+        "Bryce Harper",
+        "Byron Buxton",
+        "Cal Raleigh",
+        "Clay Holmes",
+        "Clayton Kershaw",
+        "David Bednar",
+        "Ernie Clement",
+        "Gabe Speier",
+        "Garrett Cleavinger",
+        "Garrett Whitlock",
+        "Griffin Jax",
+        "Gunnar Henderson",
+        "Kyle Schwarber",
+        "Logan Webb",
+        "Mason Miller",
+        "Matthew Boyd",
+        "Michael Wacha",
+        "Nolan McLean",
+        "Paul Goldschmidt",
+        "Paul Skenes",
+        "Pete Crow-Armstrong",
+        "Roman Anthony",
+        "Ryan Yarbrough",
+        "Tarik Skubal",
+        "Will Smith"
+      ],
+      "away_roster": [
+        "Alejandro Kirk",
+        "Alejandro Osuna",
+        "Alek Thomas",
+        "Alex Carrillo",
+        "Alexander Armenta",
+        "Alexis Wilson",
+        "Andrés Muñoz",
+        "Brennan Bernardino",
+        "Daniel Duarte",
+        "Gerardo Reyes",
+        "Jared Serna",
+        "Jarren Duran",
+        "Javier Assad",
+        "Jesus Cruz",
+        "Joey Meneses",
+        "Joey Ortiz",
+        "Jonathan Aranda",
+        "Julian Ornelas",
+        "Luis Gastelum",
+        "Luis Urías",
+        "Manny Barreda",
+        "Nacho Alvarez Jr.",
+        "Nick Gonzales",
+        "Randy Arozarena",
+        "Robert Garcia",
+        "Roel Ramírez",
+        "Rowdy Tellez",
+        "Samy Natera Jr.",
+        "Taijuan Walker",
+        "Victor Vodnik"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/940/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Aaron Judge",
+          "team": "USA"
+        },
+        {
+          "name": "Alex Bregman",
+          "team": "USA"
+        },
+        {
+          "name": "Bobby Witt Jr.",
+          "team": "USA"
+        },
+        {
+          "name": "Brice Turang",
+          "team": "USA"
+        },
+        {
+          "name": "Bryce Harper",
+          "team": "USA"
+        },
+        {
+          "name": "Byron Buxton",
+          "team": "USA"
+        },
+        {
+          "name": "Cal Raleigh",
+          "team": "USA"
+        },
+        {
+          "name": "Ernie Clement",
+          "team": "USA"
+        },
+        {
+          "name": "Gunnar Henderson",
+          "team": "USA"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Alejandro Kirk",
+          "team": "MEX"
+        },
+        {
+          "name": "Alejandro Osuna",
+          "team": "MEX"
+        },
+        {
+          "name": "Alek Thomas",
+          "team": "MEX"
+        },
+        {
+          "name": "Alexis Wilson",
+          "team": "MEX"
+        },
+        {
+          "name": "Jared Serna",
+          "team": "MEX"
+        },
+        {
+          "name": "Jarren Duran",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Meneses",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Ortiz",
+          "team": "MEX"
+        },
+        {
+          "name": "Jonathan Aranda",
+          "team": "MEX"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "C10",
+      "aliases": [
+        "WBC2026_CZE_JPN_010",
+        "WBC26-CZE-JPN-010",
+        "CZE_AT_JPN"
+      ],
+      "tournament": "WBC2026",
+      "pool": "C",
+      "round_name": "Pool C",
+      "venue": "Tokyo Dome, Tokyo",
+      "game_time_local": "2026-03-10T19:00:00+09:00",
+      "game_time_utc": "2026-03-10T10:00:00Z",
+      "date": "2026-03-10",
+      "home": "JPN",
+      "away": "CZE",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Atsuki Taneichi",
+        "Chihiro Sumida",
+        "Hiromi Itoh",
+        "Hiroto Takahashi",
+        "Hiroya Miyagi",
+        "Kaito Kozono",
+        "Kazuma Okamoto",
+        "Kensuke Kondo",
+        "Kenya Wakatsuki",
+        "Koki Kitayama",
+        "Masataka Yoshida",
+        "Munetaka Murakami",
+        "Ryuhei Sotani",
+        "Seishiro Sakamoto",
+        "Seiya Suzuki",
+        "Shohei Ohtani",
+        "Shoma Fujihira",
+        "Shota Morishita",
+        "Shugo Maki",
+        "Sosuke Genda",
+        "Taisei Makihara",
+        "Taisei Ota",
+        "Teruaki Sato",
+        "Tomoyuki Sugano",
+        "Ukyo Shuto",
+        "Yoshinobu Yamamoto",
+        "Yuhei Nakamura",
+        "Yuki Matsumoto",
+        "Yumeto Kanemaru",
+        "Yusei Kikuchi"
+      ],
+      "away_roster": [
+        "Boris Vecerka",
+        "Daniel Padysak",
+        "Filip Capka",
+        "Filip Kollmann",
+        "Jan Novak",
+        "Jan Pospisil",
+        "Jeff Barto",
+        "Lukas Ercoli",
+        "Lukas Hlouch",
+        "Marek Chlup",
+        "Marek Krejcirik",
+        "Marek Minarik",
+        "Martin Cervenka",
+        "Martin Cervinka",
+        "Martin Muzik",
+        "Martin Schneider",
+        "Martin Zelenka",
+        "Matous Bubenik",
+        "Max Prejda",
+        "Michal Kovala",
+        "Michal Sindelka",
+        "Milan Prokop",
+        "Ondrej Satoria",
+        "Ondrej Vank",
+        "Ryan Johnson",
+        "Terrin Vavra",
+        "Tomas Duffek",
+        "Tomas Ondra",
+        "Vojtech Mensik",
+        "William Escala"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/843/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/800/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Kaito Kozono",
+          "team": "JPN"
+        },
+        {
+          "name": "Kazuma Okamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Kensuke Kondo",
+          "team": "JPN"
+        },
+        {
+          "name": "Kenya Wakatsuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Masataka Yoshida",
+          "team": "JPN"
+        },
+        {
+          "name": "Munetaka Murakami",
+          "team": "JPN"
+        },
+        {
+          "name": "Seishiro Sakamoto",
+          "team": "JPN"
+        },
+        {
+          "name": "Seiya Suzuki",
+          "team": "JPN"
+        },
+        {
+          "name": "Shohei Ohtani",
+          "team": "JPN"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Jan Pospisil",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Chlup",
+          "team": "CZE"
+        },
+        {
+          "name": "Marek Krejcirik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Cervinka",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Muzik",
+          "team": "CZE"
+        },
+        {
+          "name": "Martin Zelenka",
+          "team": "CZE"
+        },
+        {
+          "name": "Matous Bubenik",
+          "team": "CZE"
+        },
+        {
+          "name": "Max Prejda",
+          "team": "CZE"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D09",
+      "aliases": [
+        "WBC2026_ISR_NED_009",
+        "WBC26-ISR-NED-009",
+        "ISR_AT_NED"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-10T12:00:00-04:00",
+      "game_time_utc": "2026-03-10T16:00:00Z",
+      "date": "2026-03-11",
+      "home": "NED",
+      "away": "ISR",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Antwone Kelly",
+        "Arij Fransen",
+        "Ceddanne Rafaela",
+        "Chadwick Tromp",
+        "Dayson Croes",
+        "Delano Selassa",
+        "Derek West",
+        "Didi Gregorius",
+        "Druw Jones",
+        "Dylan Wilson",
+        "Eric Mendez",
+        "Hendrik Clementina",
+        "Jaitoine Kelly",
+        "Jakey Josepha",
+        "Jamdrick Cornelia",
+        "Jaydenn Estanista",
+        "Juan Carlos Sulbaran",
+        "Juremi Profar",
+        "Justin Morales",
+        "Kenley Jansen",
+        "Kevin Kelly",
+        "Lars Huijer",
+        "Ozzie Albies",
+        "Ray-Patrick Didder",
+        "Ryjeteri Merite",
+        "Shairon Martis",
+        "Sharlon Schoop",
+        "Shawndrick Oduber",
+        "Wendell Floranus",
+        "Xander Bogaerts"
+      ],
+      "away_roster": [
+        "Assaf Lowengart",
+        "Ben Simon",
+        "Benjamin Rosengard",
+        "C.J. Stubbs",
+        "Carlos Lequerica",
+        "Charlie Beilenson",
+        "Colby Halter",
+        "Cole Carrigg",
+        "Daniel Federman",
+        "Dean Kremer",
+        "Garrett Stubbs",
+        "Harrison Bader",
+        "Harrison Cohen",
+        "Jake Fishman",
+        "Jake Gelof",
+        "Jordan Geber",
+        "Josh Mallitz",
+        "Matt Bowman",
+        "Matt Mervis",
+        "Max Lazar",
+        "Noah Mendlinger",
+        "RJ Schreck",
+        "Rob Kaminsky",
+        "Robert Stock",
+        "Ryan Prager",
+        "Spencer Horwitz",
+        "Tommy Kahnle",
+        "Zach Levenson",
+        "Zack Leban",
+        "Zack Weiss"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/840/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Ceddanne Rafaela",
+          "team": "NED"
+        },
+        {
+          "name": "Chadwick Tromp",
+          "team": "NED"
+        },
+        {
+          "name": "Dayson Croes",
+          "team": "NED"
+        },
+        {
+          "name": "Delano Selassa",
+          "team": "NED"
+        },
+        {
+          "name": "Didi Gregorius",
+          "team": "NED"
+        },
+        {
+          "name": "Druw Jones",
+          "team": "NED"
+        },
+        {
+          "name": "Hendrik Clementina",
+          "team": "NED"
+        },
+        {
+          "name": "Jakey Josepha",
+          "team": "NED"
+        },
+        {
+          "name": "Juremi Profar",
+          "team": "NED"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Assaf Lowengart",
+          "team": "ISR"
+        },
+        {
+          "name": "Benjamin Rosengard",
+          "team": "ISR"
+        },
+        {
+          "name": "C.J. Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Colby Halter",
+          "team": "ISR"
+        },
+        {
+          "name": "Cole Carrigg",
+          "team": "ISR"
+        },
+        {
+          "name": "Garrett Stubbs",
+          "team": "ISR"
+        },
+        {
+          "name": "Harrison Bader",
+          "team": "ISR"
+        },
+        {
+          "name": "Jake Gelof",
+          "team": "ISR"
+        },
+        {
+          "name": "Matt Mervis",
+          "team": "ISR"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A09",
+      "aliases": [
+        "WBC2026_CAN_PUR_009",
+        "WBC26-CAN-PUR-009",
+        "CAN_AT_PUR"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-10T19:00:00-04:00",
+      "game_time_utc": "2026-03-10T23:00:00Z",
+      "date": "2026-03-11",
+      "home": "PUR",
+      "away": "CAN",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Angel Reyes",
+        "Bryan Torres",
+        "Carlos Cortes",
+        "Christian Vázquez",
+        "Darell Hernaiz",
+        "Eddie Rosario",
+        "Eduardo Rivera",
+        "Edwin Arroyo",
+        "Edwin Díaz",
+        "Elmer Rodríguez",
+        "Emmanuel Rivera",
+        "Fernando Cruz",
+        "Gabriel Rodriguez",
+        "Heliot Ramos",
+        "Jorge López",
+        "José De León",
+        "Jose Espada",
+        "Jovani Morán",
+        "Luis Hernandez",
+        "Luis Quiñones",
+        "Luis Vázquez",
+        "MJ Melendez",
+        "Martín Maldonado",
+        "Matthew Lugo",
+        "Nolan Arenado",
+        "Raymond Burgos",
+        "Ricardo Velez",
+        "Rico Garcia",
+        "Seth Lugo",
+        "Willi Castro",
+        "Yacksel Ríos"
+      ],
+      "away_roster": [
+        "Abraham Toro",
+        "Adam Hall",
+        "Adam Macko",
+        "Antoine Jean",
+        "Bo Naylor",
+        "Brock Dykxhoorn",
+        "Cal Quantrill",
+        "Denzel Clarke",
+        "Edouard Julien",
+        "Eric Cerantola",
+        "Indigo Diaz",
+        "Jacob Robson",
+        "James Paxton",
+        "Jameson Taillon",
+        "Jared Young",
+        "Jordan Balazovic",
+        "Josh Naylor",
+        "Liam Hicks",
+        "Logan Allen",
+        "Matt Davidson",
+        "Matt Wilkinson",
+        "Micah Ashman",
+        "Michael Soroka",
+        "Noah Skirrow",
+        "Otto Lopez",
+        "Owen Caissie",
+        "Phillippe Aumont",
+        "Rob Zastryzny",
+        "Tyler Black",
+        "Tyler O'Neill"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/897/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Bryan Torres",
+          "team": "PUR"
+        },
+        {
+          "name": "Carlos Cortes",
+          "team": "PUR"
+        },
+        {
+          "name": "Christian Vázquez",
+          "team": "PUR"
+        },
+        {
+          "name": "Darell Hernaiz",
+          "team": "PUR"
+        },
+        {
+          "name": "Eddie Rosario",
+          "team": "PUR"
+        },
+        {
+          "name": "Edwin Arroyo",
+          "team": "PUR"
+        },
+        {
+          "name": "Emmanuel Rivera",
+          "team": "PUR"
+        },
+        {
+          "name": "Heliot Ramos",
+          "team": "PUR"
+        },
+        {
+          "name": "Luis Hernandez",
+          "team": "PUR"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Abraham Toro",
+          "team": "CAN"
+        },
+        {
+          "name": "Adam Hall",
+          "team": "CAN"
+        },
+        {
+          "name": "Bo Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Denzel Clarke",
+          "team": "CAN"
+        },
+        {
+          "name": "Edouard Julien",
+          "team": "CAN"
+        },
+        {
+          "name": "Jacob Robson",
+          "team": "CAN"
+        },
+        {
+          "name": "Jared Young",
+          "team": "CAN"
+        },
+        {
+          "name": "Josh Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Liam Hicks",
+          "team": "CAN"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "D10",
+      "aliases": [
+        "WBC2026_VEN_DOM_010",
+        "WBC26-VEN-DOM-010",
+        "VEN_AT_DOM"
+      ],
+      "tournament": "WBC2026",
+      "pool": "D",
+      "round_name": "Pool D",
+      "venue": "LoanDepot Park, Miami",
+      "game_time_local": "2026-03-10T19:00:00-04:00",
+      "game_time_utc": "2026-03-10T23:00:00Z",
+      "date": "2026-03-11",
+      "home": "DOM",
+      "away": "VEN",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Abner Uribe",
+        "Agustín Ramírez",
+        "Albert Abreu",
+        "Amed Rosario",
+        "Austin Wells",
+        "Brayan Bello",
+        "Camilo Doval",
+        "Carlos Estévez",
+        "Carlos Santana",
+        "Cristopher Sánchez",
+        "Dennis Santana",
+        "Elvis Alvarado",
+        "Enny Romero",
+        "Fernando Tatis Jr.",
+        "Geraldo Perdomo",
+        "Gregory Soto",
+        "Huascar Brazobán",
+        "Jeremy Peña",
+        "Jimmy Cordero",
+        "Juan Mejia",
+        "Juan Soto",
+        "Julio Rodríguez",
+        "Junior Caminero",
+        "Junior Lake",
+        "Ketel Marte",
+        "Luis Severino",
+        "Manny Machado",
+        "Mel Rojas Jr.",
+        "Michael De La Cruz",
+        "Michael De León",
+        "Oneil Cruz",
+        "Oscar De La Cruz",
+        "Pedro Severino",
+        "Phillips Valdez",
+        "Ricardo Cespedes",
+        "Sandy Alcantara",
+        "Seranthony Domínguez",
+        "Sócrates Brito",
+        "Vladimir Guerrero Jr.",
+        "Wandy Peralta",
+        "Webster Rivas"
+      ],
+      "away_roster": [
+        "Andrés Giménez",
+        "Andrés Machado",
+        "Angel Zerpa",
+        "Anthony Molina",
+        "Antonio Senzatela",
+        "Carlos Guzman",
+        "Christian Suarez",
+        "Daniel Palencia",
+        "Eduard Bazardo",
+        "Eduardo Rodriguez",
+        "Enmanuel De Jesus",
+        "Eugenio Suárez",
+        "Ezequiel Tovar",
+        "Gleyber Torres",
+        "Jackson Chourio",
+        "Javier Sanoja",
+        "Jhonathan Díaz",
+        "José Buttó",
+        "Keider Montero",
+        "Luinder Avila",
+        "Luis Arraez",
+        "Maikel Garcia",
+        "Ranger Suarez",
+        "Ricardo Sánchez",
+        "Ronald Acuña Jr.",
+        "Salvador Perez",
+        "William Contreras",
+        "Willson Contreras",
+        "Wilyer Abreu",
+        "Yoendrys Gómez"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/805/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Agustín Ramírez",
+          "team": "DOM"
+        },
+        {
+          "name": "Amed Rosario",
+          "team": "DOM"
+        },
+        {
+          "name": "Austin Wells",
+          "team": "DOM"
+        },
+        {
+          "name": "Carlos Santana",
+          "team": "DOM"
+        },
+        {
+          "name": "Fernando Tatis Jr.",
+          "team": "DOM"
+        },
+        {
+          "name": "Geraldo Perdomo",
+          "team": "DOM"
+        },
+        {
+          "name": "Jeremy Peña",
+          "team": "DOM"
+        },
+        {
+          "name": "Juan Soto",
+          "team": "DOM"
+        },
+        {
+          "name": "Julio Rodríguez",
+          "team": "DOM"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Andrés Giménez",
+          "team": "VEN"
+        },
+        {
+          "name": "Eugenio Suárez",
+          "team": "VEN"
+        },
+        {
+          "name": "Ezequiel Tovar",
+          "team": "VEN"
+        },
+        {
+          "name": "Gleyber Torres",
+          "team": "VEN"
+        },
+        {
+          "name": "Jackson Chourio",
+          "team": "VEN"
+        },
+        {
+          "name": "Javier Sanoja",
+          "team": "VEN"
+        },
+        {
+          "name": "Luis Arraez",
+          "team": "VEN"
+        },
+        {
+          "name": "Maikel Garcia",
+          "team": "VEN"
+        },
+        {
+          "name": "Ronald Acuña Jr.",
+          "team": "VEN"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B09",
+      "aliases": [
+        "WBC2026_ITA_USA_009",
+        "WBC26-ITA-USA-009",
+        "ITA_AT_USA"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-10T20:00:00-05:00",
+      "game_time_utc": "2026-03-11T01:00:00Z",
+      "date": "2026-03-11",
+      "home": "USA",
+      "away": "ITA",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Aaron Judge",
+        "Alex Bregman",
+        "Bobby Witt Jr.",
+        "Brad Keller",
+        "Brice Turang",
+        "Bryce Harper",
+        "Byron Buxton",
+        "Cal Raleigh",
+        "Clay Holmes",
+        "Clayton Kershaw",
+        "David Bednar",
+        "Ernie Clement",
+        "Gabe Speier",
+        "Garrett Cleavinger",
+        "Garrett Whitlock",
+        "Griffin Jax",
+        "Gunnar Henderson",
+        "Kyle Schwarber",
+        "Logan Webb",
+        "Mason Miller",
+        "Matthew Boyd",
+        "Michael Wacha",
+        "Nolan McLean",
+        "Paul Goldschmidt",
+        "Paul Skenes",
+        "Pete Crow-Armstrong",
+        "Roman Anthony",
+        "Ryan Yarbrough",
+        "Tarik Skubal",
+        "Will Smith"
+      ],
+      "away_roster": [
+        "Aaron Nola",
+        "Adam Ottavino",
+        "Alek Jacob",
+        "Andrew Fischer",
+        "Claudio Scotti",
+        "Dan Altavilla",
+        "Dante Nori",
+        "Dominic Canzone",
+        "Dylan DeLucia",
+        "Gabriele Quattrini",
+        "Giaconino Lasaracina",
+        "Gordon Graceffo",
+        "Greg Weissert",
+        "J.J. D'Orazio",
+        "Jac Caglianone",
+        "Jakob Marsee",
+        "Joe La Sorsa",
+        "Jon Berti",
+        "Kyle Nicolas",
+        "Kyle Teel",
+        "Matt Festa",
+        "Michael Lorenzen",
+        "Miles Mastrobuoni",
+        "Nick Morabito",
+        "Ron Marinaccio",
+        "Sam Aldegheri",
+        "Sam Antonacci",
+        "Thomas Saggese",
+        "Vinnie Pasquantino",
+        "Zach Dezenzo"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/940/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/841/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Aaron Judge",
+          "team": "USA"
+        },
+        {
+          "name": "Alex Bregman",
+          "team": "USA"
+        },
+        {
+          "name": "Bobby Witt Jr.",
+          "team": "USA"
+        },
+        {
+          "name": "Brice Turang",
+          "team": "USA"
+        },
+        {
+          "name": "Bryce Harper",
+          "team": "USA"
+        },
+        {
+          "name": "Byron Buxton",
+          "team": "USA"
+        },
+        {
+          "name": "Cal Raleigh",
+          "team": "USA"
+        },
+        {
+          "name": "Ernie Clement",
+          "team": "USA"
+        },
+        {
+          "name": "Gunnar Henderson",
+          "team": "USA"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Andrew Fischer",
+          "team": "ITA"
+        },
+        {
+          "name": "Dante Nori",
+          "team": "ITA"
+        },
+        {
+          "name": "Dominic Canzone",
+          "team": "ITA"
+        },
+        {
+          "name": "Giaconino Lasaracina",
+          "team": "ITA"
+        },
+        {
+          "name": "J.J. D'Orazio",
+          "team": "ITA"
+        },
+        {
+          "name": "Jac Caglianone",
+          "team": "ITA"
+        },
+        {
+          "name": "Jakob Marsee",
+          "team": "ITA"
+        },
+        {
+          "name": "Jon Berti",
+          "team": "ITA"
+        },
+        {
+          "name": "Kyle Teel",
+          "team": "ITA"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "A10",
+      "aliases": [
+        "WBC2026_CAN_CUB_010",
+        "WBC26-CAN-CUB-010",
+        "CAN_AT_CUB"
+      ],
+      "tournament": "WBC2026",
+      "pool": "A",
+      "round_name": "Pool A",
+      "venue": "Estadio Hiram Bithorn, San Juan",
+      "game_time_local": "2026-03-11T15:00:00-04:00",
+      "game_time_utc": "2026-03-11T19:00:00Z",
+      "date": "2026-03-12",
+      "home": "CUB",
+      "away": "CAN",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Alexander Vargas",
+        "Alexei Ramirez",
+        "Alfredo Despaigne",
+        "Andrys Perez",
+        "Ariel Martinez",
+        "Armando Duenas",
+        "Christian Rodriguez",
+        "Darien Núñez",
+        "Denny Larrondo",
+        "Emmanuel Chapman",
+        "Erisbel Arruebarrena",
+        "Frank Alvarez",
+        "Josimar Cousin",
+        "Julio Robaina",
+        "Leonel Moas Jr.",
+        "Livan Moinelo",
+        "Luis Romero",
+        "Malcom Nuñez",
+        "Omar Hernandez",
+        "Osiel Rodriguez",
+        "Pedro Santos",
+        "Raidel Martinez",
+        "Randy Martinez",
+        "Roel Santos",
+        "Yariel Rodríguez",
+        "Yiddi Cappe",
+        "Yoan López",
+        "Yoán Moncada",
+        "Yoel Yanqui",
+        "Yoelkis Guibert"
+      ],
+      "away_roster": [
+        "Abraham Toro",
+        "Adam Hall",
+        "Adam Macko",
+        "Antoine Jean",
+        "Bo Naylor",
+        "Brock Dykxhoorn",
+        "Cal Quantrill",
+        "Denzel Clarke",
+        "Edouard Julien",
+        "Eric Cerantola",
+        "Indigo Diaz",
+        "Jacob Robson",
+        "James Paxton",
+        "Jameson Taillon",
+        "Jared Young",
+        "Jordan Balazovic",
+        "Josh Naylor",
+        "Liam Hicks",
+        "Logan Allen",
+        "Matt Davidson",
+        "Matt Wilkinson",
+        "Micah Ashman",
+        "Michael Soroka",
+        "Noah Skirrow",
+        "Otto Lopez",
+        "Owen Caissie",
+        "Phillippe Aumont",
+        "Rob Zastryzny",
+        "Tyler Black",
+        "Tyler O'Neill"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Alexander Vargas",
+          "team": "CUB"
+        },
+        {
+          "name": "Alexei Ramirez",
+          "team": "CUB"
+        },
+        {
+          "name": "Alfredo Despaigne",
+          "team": "CUB"
+        },
+        {
+          "name": "Andrys Perez",
+          "team": "CUB"
+        },
+        {
+          "name": "Ariel Martinez",
+          "team": "CUB"
+        },
+        {
+          "name": "Christian Rodriguez",
+          "team": "CUB"
+        },
+        {
+          "name": "Erisbel Arruebarrena",
+          "team": "CUB"
+        },
+        {
+          "name": "Leonel Moas Jr.",
+          "team": "CUB"
+        },
+        {
+          "name": "Malcom Nuñez",
+          "team": "CUB"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Abraham Toro",
+          "team": "CAN"
+        },
+        {
+          "name": "Adam Hall",
+          "team": "CAN"
+        },
+        {
+          "name": "Bo Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Denzel Clarke",
+          "team": "CAN"
+        },
+        {
+          "name": "Edouard Julien",
+          "team": "CAN"
+        },
+        {
+          "name": "Jacob Robson",
+          "team": "CAN"
+        },
+        {
+          "name": "Jared Young",
+          "team": "CAN"
+        },
+        {
+          "name": "Josh Naylor",
+          "team": "CAN"
+        },
+        {
+          "name": "Liam Hicks",
+          "team": "CAN"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    },
+    {
+      "canonical_game_id": "B10",
+      "aliases": [
+        "WBC2026_ITA_MEX_010",
+        "WBC26-ITA-MEX-010",
+        "ITA_AT_MEX"
+      ],
+      "tournament": "WBC2026",
+      "pool": "B",
+      "round_name": "Pool B",
+      "venue": "Minute Maid Park, Houston",
+      "game_time_local": "2026-03-11T18:00:00-05:00",
+      "game_time_utc": "2026-03-11T23:00:00Z",
+      "date": "2026-03-12",
+      "home": "MEX",
+      "away": "ITA",
+      "schedule_source_urls": [
+        "https://www.mlb.com/news/how-to-watch-the-2026-world-baseball-classic"
+      ],
+      "home_roster": [
+        "Alejandro Kirk",
+        "Alejandro Osuna",
+        "Alek Thomas",
+        "Alex Carrillo",
+        "Alexander Armenta",
+        "Alexis Wilson",
+        "Andrés Muñoz",
+        "Brennan Bernardino",
+        "Daniel Duarte",
+        "Gerardo Reyes",
+        "Jared Serna",
+        "Jarren Duran",
+        "Javier Assad",
+        "Jesus Cruz",
+        "Joey Meneses",
+        "Joey Ortiz",
+        "Jonathan Aranda",
+        "Julian Ornelas",
+        "Luis Gastelum",
+        "Luis Urías",
+        "Manny Barreda",
+        "Nacho Alvarez Jr.",
+        "Nick Gonzales",
+        "Randy Arozarena",
+        "Robert Garcia",
+        "Roel Ramírez",
+        "Rowdy Tellez",
+        "Samy Natera Jr.",
+        "Taijuan Walker",
+        "Victor Vodnik"
+      ],
+      "away_roster": [
+        "Aaron Nola",
+        "Adam Ottavino",
+        "Alek Jacob",
+        "Andrew Fischer",
+        "Claudio Scotti",
+        "Dan Altavilla",
+        "Dante Nori",
+        "Dominic Canzone",
+        "Dylan DeLucia",
+        "Gabriele Quattrini",
+        "Giaconino Lasaracina",
+        "Gordon Graceffo",
+        "Greg Weissert",
+        "J.J. D'Orazio",
+        "Jac Caglianone",
+        "Jakob Marsee",
+        "Joe La Sorsa",
+        "Jon Berti",
+        "Kyle Nicolas",
+        "Kyle Teel",
+        "Matt Festa",
+        "Michael Lorenzen",
+        "Miles Mastrobuoni",
+        "Nick Morabito",
+        "Ron Marinaccio",
+        "Sam Aldegheri",
+        "Sam Antonacci",
+        "Thomas Saggese",
+        "Vinnie Pasquantino",
+        "Zach Dezenzo"
+      ],
+      "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2026",
+      "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/841/roster?season=2026",
+      "home_sp": {},
+      "away_sp": {},
+      "home_lineup": [],
+      "away_lineup": [],
+      "home_previous_lineup": [
+        {
+          "name": "Alejandro Kirk",
+          "team": "MEX"
+        },
+        {
+          "name": "Alejandro Osuna",
+          "team": "MEX"
+        },
+        {
+          "name": "Alek Thomas",
+          "team": "MEX"
+        },
+        {
+          "name": "Alexis Wilson",
+          "team": "MEX"
+        },
+        {
+          "name": "Jared Serna",
+          "team": "MEX"
+        },
+        {
+          "name": "Jarren Duran",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Meneses",
+          "team": "MEX"
+        },
+        {
+          "name": "Joey Ortiz",
+          "team": "MEX"
+        },
+        {
+          "name": "Jonathan Aranda",
+          "team": "MEX"
+        }
+      ],
+      "away_previous_lineup": [
+        {
+          "name": "Andrew Fischer",
+          "team": "ITA"
+        },
+        {
+          "name": "Dante Nori",
+          "team": "ITA"
+        },
+        {
+          "name": "Dominic Canzone",
+          "team": "ITA"
+        },
+        {
+          "name": "Giaconino Lasaracina",
+          "team": "ITA"
+        },
+        {
+          "name": "J.J. D'Orazio",
+          "team": "ITA"
+        },
+        {
+          "name": "Jac Caglianone",
+          "team": "ITA"
+        },
+        {
+          "name": "Jakob Marsee",
+          "team": "ITA"
+        },
+        {
+          "name": "Jon Berti",
+          "team": "ITA"
+        },
+        {
+          "name": "Kyle Teel",
+          "team": "ITA"
+        }
+      ],
+      "starter_source_urls": [],
+      "lineup_source_urls": [],
+      "notes": "Schedule and roster are loaded from official sources. Lineups remain blocking until an official game-day lineup source is attached.",
+      "verification": {
+        "schedule_verified": true,
+        "rosters_verified": true,
+        "starters_verified": false,
+        "lineups_verified": false,
+        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "max_age_hours": 24
+      }
+    }
+  ]
+}

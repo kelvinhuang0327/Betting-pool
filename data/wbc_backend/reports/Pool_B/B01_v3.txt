@@ -1,0 +1,264 @@
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool B  |  Minute Maid Park, Houston
+  2026-03-06T12:00:00-06:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Mexico (MEX) vs Great Britain (GBR)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    MEX     |    GBR     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    3.35    |    4.80    |     MEX     |
+| 打擊 wRC+          |    112     |     82     |     MEX     |
+| 打線 wOBA          |   0.332    |   0.292    |     MEX     |
+| 守備 DER           |   0.708    |   0.688    |     MEX     |
+| 跑壘 SB%           |    74%     |    68%     |     MEX     |
+| 牛棚 ERA           |    3.40    |    4.80    |     MEX     |
+| 高壓 Clutch wOBA   |   0.325    |   0.282    |     MEX     |
+| Elo Rating         |    1440    |    1250    |     MEX     |
+
+#### 先發投手對決
+
+| 指標           |      Javier Assad      |      Vance Worley      |
+|----------------|------------------------|------------------------|
+| ERA            |          3.30          |          4.80          |
+| FIP            |          3.50          |          4.90          |
+| WHIP           |          1.18          |          1.42          |
+| K/9            |          8.0           |          6.0           |
+| BB/9           |          2.5           |          3.0           |
+| Stuff+         |          108           |           82           |
+| 均速 (mph)     |          94.0          |          89.5          |
+| 春訓 ERA       |          3.00          |          4.30          |
+| 近3場 ERA      |          3.10          |          4.50          |
+| vs LHB BA      |         0.235          |         0.275          |
+| vs RHB BA      |         0.230          |         0.280          |
+| 高壓 ERA       |          3.40          |          5.20          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool B
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      MEX       |      GBR       |
+|--------|----------------|----------------|
+|  1局   |    SP Assad    |   SP Worley    |
+|  2局   |    SP Assad    |   SP Worley    |
+|  3局   |    SP Assad    |   SP Worley    |
+|  4局   |    PB Muñoz    |  PB Petersen   |
+|  5局   |    PB Muñoz    |  PB Petersen   |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Andrés Muñoz      |    Michael Petersen    |
+|--------------|------------------------|------------------------|
+| ERA          |          2.40          |          5.00          |
+| FIP          |          2.30          |          5.10          |
+| Stuff+       |          138           |           78           |
+| 春訓 ERA     |          2.10          |          4.60          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      MEX |      GBR |
+|---------------|----------|----------|
+| elo           |    74.9% |    25.1% |
+| bayesian      |    72.0% |    28.0% |
+| poisson       |    86.0% |    13.9% |
+| gbm           |    79.7% |    20.3% |
+| monte_carlo   |    85.1% |    14.9% |
+|---------------|----------|----------|
+| **Ensemble**  | **82.9%** | **17.1%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Andrés Muñoz`
+- piggyback_home: `Michael Petersen`
+- piggyback_adjustment: `0.0046`
+- bullpen_fatigue_away_3d: `0`
+- bullpen_fatigue_home_3d: `0`
+- bp_penalty_away: `0.0`
+- bp_penalty_home: `0.0`
+- roster_strength_away: `82`
+- roster_strength_home: `55`
+- rsi_adjustment: `0.0108`
+- chemistry_bonus: `0.0022`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.8495`
+- pre_adjust_home: `0.1505`
+- post_adjust_away: `0.8287`
+- post_adjust_home: `0.1713`
+
+#### 比分預測
+
+| 排名 | 比分 (MEX-GBR) | 機率     |
+|------|----------------------|----------|
+|  1   |         7-3          |     4.1% |
+|  2   |         6-2          |     3.6% |
+|  3   |         5-3          |     3.5% |
+|  4   |         4-3          |     3.5% |
+|  5   |         5-4          |     3.5% |
+
+**最可能比分 (Most Likely Score):** `7-3` (MEX-GBR)
+
+**預測總分:** 9.3 分
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     81.2% |      18.8% |
+|         7.5 |     69.0% |      31.0% |
+|         8.5 |     58.9% |      41.1% |
+|         9.5 |     45.6% |      54.4% |
+
+**延長賽機率 (Extra Innings):** 9.1%
+
+**爆冷機率 (GBR 獲勝):** 17.1%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ✅ **MEX** @ 1.38 (TSL)
+  - 隱含機率: 72.5% | 模型真實機率: 82.9%
+  - 期望值 (EV): +14.4% → **STRONG**
+- ❌ **GBR** @ 3.20 (TSL)
+  - 隱含機率: 31.2% | 模型真實機率: 17.8%
+  - 期望值 (EV): -42.9% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **GBR (+2.5)** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型真實機率: 66.0%
+  - 期望值 (EV): +25.5% → **MEDIUM (Market Restricted)**
+- ❌ **MEX (-2.5)** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型真實機率: 38.7%
+  - 期望值 (EV): -26.5% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 7.5** @ 1.85 (TSL)
+  - EV: +25.0% → **MEDIUM (Market Restricted)**
+- ❌ **Under 7.5** @ 1.95 (TSL)
+  - EV: -27.4% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **MEX** @ 1.42 (TSL)
+  - 隱含機率: 70.4% | 模型真實機率: 83.9%
+  - 期望值 (EV): +19.2% → **STRONG**
+- ❌ **GBR** @ 3.00 (TSL)
+  - 隱含機率: 33.3% | 模型真實機率: 19.5%
+  - 期望值 (EV): -41.6% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT MEX_Over 4.5** @ 1.85 (TSL)
+  - EV: +25.9% → **SECONDARY_VALIDATION_REQUIRED**
+- ❌ **TT GBR_Over 2.5** @ 1.85 (TSL)
+  - EV: -3.4% → **PASS**
+- ❌ **TT GBR_Under 2.5** @ 1.95 (TSL)
+  - EV: -6.8% → **PASS**
+- ❌ **TT MEX_Under 4.5** @ 1.95 (TSL)
+  - EV: -28.4% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** TT MEX_Over (4.5) @ 1.85 (TSL)
+- True Probability: 68.1%
+- Implied Probability: 54.0%
+- **EV: +25.9%**
+- **Warning**: Edge calculation is extremely high. Secondary validation required.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3051 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 MEX 為優勢方 (82.9%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool B，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: GBR、MEX 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: GBR 陣容完整度僅 55%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 💪 **盤口建議 (讓分)**: MEX 具備強大分差優勢 (預計贏 3.1 分)，**讓分盤 (-1.5)** 具備高度穿盤潛力。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 9.3 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: F5 MEX 賠率為 1.42，隱含勝率僅 70.4%，但 AI 計算結果為 83.9%，存在 19.2% 的期望值邊際 (Edge)。
+- 💰 **價值交易點**: ML MEX 賠率為 1.38，隱含勝率僅 72.5%，但 AI 計算結果為 82.9%，存在 14.4% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool B 階段上限 65 球，Javier Assad 與 Vance Worley 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Andrés Muñoz (ERA 2.40) vs Michael Petersen (ERA 5.00) — MEX 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: 兩隊牛棚近 3 日用球數均為 0 (Pool 首戰)，牛棚狀態新鮮，可全力調度。
+5. 🔑 **打線核心對決**: Ramón Urías (wOBA 0.361, SwStr% vs 98mph+ 34.0%) vs Ivan Johnson (wOBA 0.321, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Randy Arozarena, Andrés Muñoz, Jarren Duran, Isaac Paredes, Alejandro Kirk, Jazz Chisholm Jr. 等 8 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: MEX 高出 190 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      MEX       |      GBR       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       82       |       55       |
+| MLB 球員數        |       12       |       4        |
+| 磨合度 Chemistry  |      0.83      |      0.72      |
+
+**MEX 確認出賽球星**: Randy Arozarena, Andrés Muñoz, Jarren Duran, Isaac Paredes, Alejandro Kirk
+**MEX 待確認球星**:  Julio Urías
+
+**GBR 確認出賽球星**: Jazz Chisholm Jr., Trayce Thompson, Harry Ford
+
+> ⚠️ **陣容差距**: MEX RSI 高出 27 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 5
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +20.3%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | TT | MEX_Over | 1.85 | +25.9% | 0.50% | $500 |
+| 2 | RL | GBR | 1.90 | +25.5% | 0.50% | $500 |
+| 3 | OU | Over | 1.85 | +25.0% | 0.50% | $500 |
+| 4 | F5 | MEX | 1.42 | +19.2% | 1.50% | $1,500 |
+| 5 | ML | MEX | 1.38 | +14.4% | 1.00% | $1,000 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================
