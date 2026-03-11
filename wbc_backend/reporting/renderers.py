@@ -7,26 +7,23 @@ Each game outputs:
 from __future__ import annotations
 
 import json
-from dataclasses import asdict
-from typing import Dict, List, Optional
 
 from wbc_backend.domain.schemas import (
-    BetRecommendation,
     GameOutput,
     PredictionResult,
     SimulationSummary,
 )
 
 
-def render_full_report(
+def render_full_report(  # noqa: C901
     game: GameOutput,
     pred: PredictionResult,
     sim: SimulationSummary,
-    market_result: Dict,
+    market_result: dict,
     adv_features=None,
     decision_report=None,
-    calibration_metrics: Optional[Dict] = None,
-    portfolio_metrics: Optional[Dict] = None,
+    calibration_metrics: dict | None = None,
+    portfolio_metrics: dict | None = None,
 ) -> str:
     """Generate comprehensive markdown report."""
     lines = [
@@ -38,11 +35,11 @@ def render_full_report(
         "━" * 40,
         "📊 CORE PREDICTION",
         "━" * 40,
-        f"  最終勝率 (Final Calibrated Win Probability):",
+        "  最終勝率 (Final Calibrated Win Probability):",
         f"    {game.home_team}: {game.home_win_prob:.1%}",
         f"    {game.away_team}: {game.away_win_prob:.1%}",
         "",
-        f"  最終展示比分 (Display Score):",
+        "  最終展示比分 (Display Score):",
         f"    {game.home_team} {game.predicted_home_score:.1f} - "
         f"{game.predicted_away_score:.1f} {game.away_team}",
         "",
@@ -212,10 +209,10 @@ def render_json(
     game: GameOutput,
     pred: PredictionResult,
     sim: SimulationSummary,
-    market_result: Dict,
+    market_result: dict,
     decision_report=None,
-    calibration_metrics: Optional[Dict] = None,
-    portfolio_metrics: Optional[Dict] = None,
+    calibration_metrics: dict | None = None,
+    portfolio_metrics: dict | None = None,
 ) -> str:
     """Generate JSON report."""
     payload = {

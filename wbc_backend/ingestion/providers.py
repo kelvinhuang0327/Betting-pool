@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, List
 
 import pandas as pd
 
@@ -26,7 +25,7 @@ class LeagueDataProvider:
     def __init__(self, config: AppConfig):
         self.config = config
 
-    def _safe_read(self, path: str, fallback: List[Dict]) -> pd.DataFrame:
+    def _safe_read(self, path: str, fallback: list[dict]) -> pd.DataFrame:
         file_path = Path(path)
         if not file_path.exists():
             return pd.DataFrame(fallback)

@@ -6,8 +6,6 @@ win probabilities and score distributions.
 """
 from __future__ import annotations
 
-import math
-from typing import Dict
 
 import numpy as np
 from scipy.stats import poisson
@@ -49,7 +47,7 @@ def poisson_win_prob(lambda_home: float, lambda_away: float, max_runs: int = 15)
     return home_win + draw * 0.5
 
 
-def score_distribution(lambda_home: float, lambda_away: float, max_runs: int = 12) -> Dict:
+def score_distribution(lambda_home: float, lambda_away: float, max_runs: int = 12) -> dict:
     """Return most likely score outcomes."""
     r = np.arange(max_runs + 1)
     ph = poisson.pmf(r, lambda_home)

@@ -4,13 +4,13 @@ import json
 from dataclasses import asdict, is_dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 from wbc_backend.config.settings import AppConfig
 from wbc_backend.domain.schemas import AnalyzeRequest, Matchup
 
 
-def _issue_payload(issues: List[Any]) -> List[Dict[str, Any]]:
+def _issue_payload(issues: list[Any]) -> list[dict[str, Any]]:
     payload = []
     for issue in issues:
         if is_dataclass(issue):
@@ -36,10 +36,10 @@ def append_prediction_record(
     game_output: Any,
     pred: Any,
     sim: Any,
-    top_bets: List[Any],
+    top_bets: list[Any],
     decision_report: Any,
-    calibration_metrics: Dict[str, Any] | None,
-    portfolio_metrics: Dict[str, Any] | None,
+    calibration_metrics: dict[str, Any] | None,
+    portfolio_metrics: dict[str, Any] | None,
 ) -> Path:
     target = Path(config.sources.prediction_registry_jsonl)
     target.parent.mkdir(parents=True, exist_ok=True)

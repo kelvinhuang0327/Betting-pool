@@ -7,27 +7,28 @@ via the Stacking meta-learner, applying WBC adjustments and advanced features.
 from __future__ import annotations
 
 import logging
-from typing import List, Optional
 
 from wbc_backend.config.settings import ModelConfig
 from wbc_backend.domain.schemas import (
     Matchup, PredictionResult, SubModelResult,
 )
 from wbc_backend.features.advanced import build_advanced_features
+from wbc_backend.features.alpha_signals import build_alpha_signals
 from wbc_backend.models import elo as elo_model
 from wbc_backend.models import poisson as poisson_model
 from wbc_backend.models import bayesian as bayesian_model
 from wbc_backend.models import baseline as baseline_model
 from wbc_backend.models.stacking import StackingModel
+from wbc_backend.models.dynamic_ensemble import blend_predictions
 from wbc_backend.intelligence.regime_classifier import RegimeClassifier
 from wbc_backend.models.gbm_stack import RealGBMStack
 
 logger = logging.getLogger(__name__)
 
 
-def predict_matchup(
+def predict_matchup(  # NOSONAR  # noqa: C901
     matchup: Matchup,
-    config: Optional[ModelConfig] = None,
+    config: ModelConfig | None = None,
 ) -> PredictionResult:
     """
     Run all sub-models, blend via stacking meta-learner,
@@ -36,7 +37,7 @@ def predict_matchup(
     config = config or ModelConfig()
 
     # ── 1. Statistical models ────────────────────────────
-    sub_results: List[SubModelResult] = []
+    sub_results: list[SubModelResult] = []
 
     elo_result = elo_model.predict(matchup, config.elo_home_advantage)
     sub_results.append(elo_result)
@@ -50,14 +51,17 @@ def predict_matchup(
     baseline_result = baseline_model.predict(matchup)
     sub_results.append(baseline_result)
 
-    # ── 2. Advanced features ─────────────────────────────
+    # ── 2. Advanced + Alpha features ─────────────────────
     adv_features = build_advanced_features(matchup)
+    alpha_signals = build_alpha_signals(matchup)
+    merged_features = dict(adv_features.feature_dict)
+    merged_features.update(alpha_signals.feature_dict)
 
     # ── 3. Machine learning models (RealGBMStack) ───
     try:
         # P0.1 Upgrade: RealGBM Stack replaces separate XGB/LGBM
         gbm_stack = RealGBMStack(config)
-        gbm_result = gbm_stack.predict_single(adv_features.feature_dict)
+        gbm_result = gbm_stack.predict_single(merged_features)
         sub_results.append(gbm_result)
     except Exception as e:
         logger.warning("RealGBMStack failed: %s — using fallback", e)
@@ -69,16 +73,36 @@ def predict_matchup(
     from wbc_backend.models.neural_net import NeuralNetModel
     try:
         nn = NeuralNetModel(config)
-        sub_results.append(nn.predict_single(adv_features.feature_dict))
+        sub_results.append(nn.predict_single(merged_features))
     except Exception as e:
         logger.warning("NeuralNet failed: %s", e)
 
-    # ── 4. Stacking meta-learner ─────────────────────────
+    # ── 4. Stacking + Dynamic Ensemble ───────────────────
     stacker = StackingModel()
-    home_wp, away_wp, confidence = stacker.predict(sub_results)
+    stack_home_wp, _, stack_confidence = stacker.predict(sub_results)
+
+    dynamic_blend = blend_predictions(
+        sub_results,
+        tournament=matchup.tournament,
+        round_name=matchup.round_name,
+    )
+
+    # Blend static stacker and dynamic Bayesian ensemble to stabilize live output.
+    home_wp = 0.4 * stack_home_wp + 0.6 * dynamic_blend.home_win_prob
+    away_wp = 1.0 - home_wp
+    confidence = max(0.1, min(0.98, 0.4 * stack_confidence + 0.6 * dynamic_blend.confidence))
+
+    alpha_quality = float(alpha_signals.n_signals) / 276.0 if alpha_signals.n_signals > 0 else 0.0
+    confidence *= (0.92 + 0.08 * min(1.0, alpha_quality))
     diagnostics = {
         "model_count": float(len(sub_results)),
         "stack_confidence": float(confidence),
+        "stack_home_wp": float(stack_home_wp),
+        "dynamic_home_wp": float(dynamic_blend.home_win_prob),
+        "dynamic_confidence": float(dynamic_blend.confidence),
+        "alpha_signals_n": float(alpha_signals.n_signals),
+        "alpha_categories_n": float(len(alpha_signals.categories_computed)),
+        "dynamic_weight_updates": float(dynamic_blend.diagnostics.get("n_weight_updates", 0.0)),
     }
 
     # ── 5. Use Poisson expected runs ─────────────────────
@@ -98,7 +122,7 @@ def predict_matchup(
     exp_away_runs = max(1.5, min(10.0, exp_away_runs))
 
     # ── 7. Build x-factors list ──────────────────────────
-    x_factors: List[str] = []
+    x_factors: list[str] = []
 
     if adv_features.home_sp_fatigue > 0.5:
         x_factors.append(f"Home SP fatigue alert (score={adv_features.home_sp_fatigue:.2f})")
@@ -122,6 +146,10 @@ def predict_matchup(
     if not x_factors:
         x_factors.append("No significant X-factors detected")
 
+    x_factors.append(
+        f"Alpha signals computed: {alpha_signals.n_signals} ({', '.join(alpha_signals.categories_computed[:3])}{'...' if len(alpha_signals.categories_computed) > 3 else ''})"
+    )
+
     # ── 9. SNR (Signal-to-Noise Ratio) Optimization ──────
     # Institutional safeguard: Divergence check vs. Sharp Market (Pinnacle)
     snr_score = 1.0
@@ -136,7 +164,7 @@ def predict_matchup(
         ),
         None,
     )
-    
+
     divergence = 0.0
     if p_home_odds:
         p_home_prob = 1.0 / p_home_odds

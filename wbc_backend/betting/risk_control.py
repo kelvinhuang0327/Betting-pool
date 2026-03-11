@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import List
 
 from wbc_backend.config.settings import BankrollConfig
 
@@ -29,7 +28,7 @@ class BankrollState:
     total_bets_today: int = 0
     daily_exposure: float = 0.0
     is_conservative_mode: bool = False
-    recent_results: List[float] = field(default_factory=list)  # P&L of recent bets
+    recent_results: list[float] = field(default_factory=list)  # P&L of recent bets
 
     @property
     def drawdown(self) -> float:
@@ -57,7 +56,7 @@ def check_risk_limits(
     state: BankrollState,
     proposed_stake: float,
     config: BankrollConfig,
-) -> tuple[float, List[str]]:
+) -> tuple[float, list[str]]:
     """
     Check all risk limits and adjust the proposed stake if necessary.
 
@@ -65,7 +64,7 @@ def check_risk_limits(
     -------
     (adjusted_stake, warnings)
     """
-    warnings: List[str] = []
+    warnings: list[str] = []
     adjusted = proposed_stake
 
     # ── 1. Max single bet ────────────────────────────────
@@ -114,7 +113,7 @@ def check_risk_limits(
     return round(adjusted, 2), warnings
 
 
-def compute_volatility(results: List[float], lookback: int = 30) -> float:
+def compute_volatility(results: list[float], lookback: int = 30) -> float:
     """Compute rolling volatility of recent bet results."""
     if len(results) < 2:
         return 0.0

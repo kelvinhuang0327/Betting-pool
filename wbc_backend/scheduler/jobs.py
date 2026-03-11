@@ -14,9 +14,9 @@ from __future__ import annotations
 import logging
 import threading
 import time
-from typing import Callable, Dict, List, Optional
+from collections.abc import Callable
 
-from wbc_backend.config.settings import AppConfig, SchedulerConfig
+from wbc_backend.config.settings import AppConfig
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class ScheduledTask:
         self.callback = callback
         self.last_run: float = 0.0
         self.run_count: int = 0
-        self.last_error: Optional[str] = None
+        self.last_error: str | None = None
 
     @property
     def is_due(self) -> bool:
@@ -61,11 +61,11 @@ class AutoScheduler:
         scheduler.stop()
     """
 
-    def __init__(self, config: Optional[AppConfig] = None):
+    def __init__(self, config: AppConfig | None = None):
         self.config = config or AppConfig()
-        self.tasks: List[ScheduledTask] = []
+        self.tasks: list[ScheduledTask] = []
         self._running = False
-        self._thread: Optional[threading.Thread] = None
+        self._thread: threading.Thread | None = None
 
     def add_task(self, name: str, interval_seconds: int, callback: Callable):
         self.tasks.append(ScheduledTask(name, interval_seconds, callback))
@@ -154,7 +154,7 @@ class AutoScheduler:
             self._thread.join(timeout=5)
             self._thread = None
 
-    def status(self) -> Dict:
+    def status(self) -> dict:
         """Return current scheduler status."""
         return {
             "running": self._running,

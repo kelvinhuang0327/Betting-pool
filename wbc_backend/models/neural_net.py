@@ -10,7 +10,6 @@ import logging
 import pickle
 import time
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import numpy as np
 from scipy.special import expit
@@ -31,19 +30,19 @@ class NeuralNetModel:
       - Binary cross-entropy loss
     """
 
-    def __init__(self, config: Optional[ModelConfig] = None):
+    def __init__(self, config: ModelConfig | None = None):
         self.config = config or ModelConfig()
         nn_p = self.config.nn_params
-        self.hidden_layers: List[int] = nn_p.get("hidden_layers", [128, 64, 32])
+        self.hidden_layers: list[int] = nn_p.get("hidden_layers", [128, 64, 32])
         self.dropout: float = nn_p.get("dropout", 0.3)
         self.lr: float = nn_p.get("learning_rate", 0.001)
         self.epochs: int = nn_p.get("epochs", 100)
         self.batch_size: int = nn_p.get("batch_size", 32)
         self.feature_names = FEATURE_NAMES
-        self.weights: List[np.ndarray] = []
-        self.biases: List[np.ndarray] = []
-        self.x_mean: Optional[np.ndarray] = None
-        self.x_std: Optional[np.ndarray] = None
+        self.weights: list[np.ndarray] = []
+        self.biases: list[np.ndarray] = []
+        self.x_mean: np.ndarray | None = None
+        self.x_std: np.ndarray | None = None
         self.artifact_path = Path("data/wbc_backend/artifacts/nn_model.pkl")
         self._fitted = False
 
@@ -93,7 +92,7 @@ class NeuralNetModel:
         rng = np.random.default_rng(42)
         best_loss = float("inf")
 
-        for epoch in range(self.epochs):
+        for _ in range(self.epochs):
             indices = rng.permutation(n)
             epoch_loss = 0.0
             batches = 0
@@ -187,7 +186,7 @@ class NeuralNetModel:
         logits = self._forward(Xn, training=False)
         return expit(logits)
 
-    def predict_single(self, feature_dict: Dict[str, float]) -> SubModelResult:
+    def predict_single(self, feature_dict: dict[str, float]) -> SubModelResult:
         features = np.array([[feature_dict.get(f, 0.0) for f in self.feature_names]])
         prob = float(self.predict_proba(features)[0])
 

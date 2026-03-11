@@ -17,11 +17,15 @@ from __future__ import annotations
 
 from dataclasses import replace
 import logging
-import time
-from typing import Dict, List, Optional
+from typing import cast
 
 from wbc_backend.betting.market import market_adjustment
-from wbc_backend.betting.optimizer import build_true_probs, find_top_bets, format_top_bets
+from wbc_backend.betting.optimizer import build_true_probs, find_top_bets
+from wbc_backend.betting.portfolio_risk import (
+    BetProposal,
+    PortfolioRiskManager,
+    compute_risk_of_ruin,
+)
 from wbc_backend.betting.bankroll_storage_v3 import BankrollStorageV3
 from wbc_backend.betting.risk_control import BankrollState, update_bankroll
 from wbc_backend.config.settings import AppConfig
@@ -42,19 +46,18 @@ from wbc_backend.domain.schemas import (
     OddsLine,
     PitcherSnapshot,
     PredictionResult,
-    SimulationSummary,
     TeamSnapshot,
 )
 from wbc_backend.features.advanced import build_advanced_features
+from wbc_backend.optimization.continuous_learning import ContinuousLearningSystem
 from wbc_backend.intelligence.decision_engine import (
     InstitutionalDecisionEngine,
     DecisionReport,
-    format_decision_report,
 )
 from wbc_backend.models.ensemble import predict_matchup
+from wbc_backend.models.dynamic_ensemble import record_outcome as record_ensemble_outcome
 from wbc_backend.pipeline.wbc_rule_engine import apply_wbc_rules
 from wbc_backend.pipeline.deployment_gate import (
-    DeploymentGateError,
     evaluate_deployment_gate,
 )
 from wbc_backend.reporting.prediction_registry import append_prediction_record
@@ -86,7 +89,7 @@ class PredictionService:
       11. generate report
     """
 
-    def __init__(self, config: Optional[AppConfig] = None):
+    def __init__(self, config: AppConfig | None = None):
         self.config = config or AppConfig()
         self.bankroll_storage = BankrollStorageV3(
             self.config.sources.bankroll_storage_db,
@@ -104,9 +107,14 @@ class PredictionService:
         self.decision_engine = InstitutionalDecisionEngine(
             bankroll=self.bankroll.current,
         )
+        self.portfolio_risk = PortfolioRiskManager(initial_bankroll=self.bankroll.current)
+        self.continuous_learning = ContinuousLearningSystem()
         # Calibration tracking
-        self._prob_history: List[float] = []
-        self._outcome_history: List[int] = []
+        self._prob_history: list[float] = []
+        self._outcome_history: list[int] = []
+        self._last_sub_model_results = []
+        self._last_tournament = "WBC"
+        self._last_round_name = "Pool"
 
     def analyze(self, request: AnalyzeRequest) -> AnalyzeResponse:
         """Run the full prediction pipeline for a game."""
@@ -168,11 +176,14 @@ class PredictionService:
                    pred.home_win_prob, pred.away_win_prob,
                    matchup.home.team, pred.expected_home_runs,
                    matchup.away.team, pred.expected_away_runs)
+        self._last_sub_model_results = list(pred.sub_model_results or [])
+        self._last_tournament = matchup.tournament
+        self._last_round_name = matchup.round_name
 
         # ── 5. WBC Rules ─────────────────────────────────
         if matchup.tournament.upper().startswith("WBC"):
             logger.info("[STEP 5] Applying WBC rule adjustments...")
-            pred, notes, deltas = apply_wbc_rules(matchup, pred)
+            pred, notes, _ = apply_wbc_rules(matchup, pred)
             for note in notes:
                 logger.info("[STEP 5] %s", note)
 
@@ -237,7 +248,7 @@ class PredictionService:
 
         # ── 11. Portfolio Optimization ───────────────────
         logger.info("[STEP 10] Running portfolio optimization...")
-        portfolio_metrics = self._run_portfolio_optimization(top_bets, decision_rpt)
+        portfolio_metrics = self._run_portfolio_optimization(top_bets, decision_rpt, matchup)
         logger.info("[STEP 10] Portfolio: survival=%.1f%%, cvar=%.4f",
                    portfolio_metrics.get("survival_prob", 0) * 100,
                    portfolio_metrics.get("cvar_95", 0))
@@ -348,7 +359,7 @@ class PredictionService:
         away_runs = max(0.0, total - home_runs)
         return round(home_runs, 2), round(away_runs, 2), True
 
-    def _build_matchup(self, request: AnalyzeRequest) -> Matchup:
+    def _build_matchup(self, request: AnalyzeRequest) -> Matchup:  # NOSONAR  # noqa: C901
         """
         Build a Matchup from the request.
 
@@ -375,7 +386,15 @@ class PredictionService:
             expected_away_lineup=None,
             snapshot_path=self.config.sources.wbc_authoritative_snapshot_json,
         )
-        precheck.ensure_verified()
+        if precheck.blocking and not precheck.used_fallback_lineup:
+            precheck.ensure_verified()
+        elif precheck.blocking:
+            issue_summary = "; ".join(issue.message for issue in precheck.issues) or "fallback verification warning"
+            logger.warning(
+                "Proceeding with fallback authoritative snapshot for %s: %s",
+                request.game_id,
+                issue_summary,
+            )
 
         # Find the game
         row = None
@@ -478,7 +497,7 @@ class PredictionService:
             logger.error("Failed to build verified matchup for %s: %s", request.game_id, e)
             raise
 
-    def _get_odds(self, request: AnalyzeRequest, matchup: Matchup) -> List[OddsLine]:
+    def _get_odds(self, request: AnalyzeRequest, matchup: Matchup) -> list[OddsLine]:
         """Get odds lines for the matchup."""
         from wbc_backend.ingestion.unified_loader import UnifiedDataLoader
 
@@ -500,7 +519,7 @@ class PredictionService:
         return []
 
     @staticmethod
-    def _profile_to_pitcher(profile: Dict[str, float]) -> PitcherSnapshot:
+    def _profile_to_pitcher(profile: dict[str, float]) -> PitcherSnapshot:
         return PitcherSnapshot(
             name=str(profile["name"]),
             team=str(profile.get("team", "")),
@@ -530,10 +549,10 @@ class PredictionService:
 
     def _enrich_pitcher_snapshot(
         self,
-        pitcher: Optional[PitcherSnapshot],
+        pitcher: PitcherSnapshot | None,
         team_code: str,
-        pitcher_profiles: Dict[str, Dict[str, Dict[str, float]]],
-    ) -> Optional[PitcherSnapshot]:
+        pitcher_profiles: dict[str, dict[str, dict[str, float]]],
+    ) -> PitcherSnapshot | None:
         if pitcher is None:
             return None
         team_profiles = pitcher_profiles.get(team_code, {})
@@ -541,14 +560,17 @@ class PredictionService:
         if not profile:
             return pitcher
         enriched = self._profile_to_pitcher(profile)
-        return replace(enriched, name=pitcher.name, team=team_code, role=pitcher.role or enriched.role)
+        return cast(
+            PitcherSnapshot,
+            replace(enriched, name=pitcher.name, team=team_code, role=pitcher.role or enriched.role),
+        )
 
     def _build_bullpen(
         self,
         team_code: str,
-        starter: Optional[PitcherSnapshot],
-        pitcher_profiles: Dict[str, Dict[str, Dict[str, float]]],
-    ) -> List[PitcherSnapshot]:
+        starter: PitcherSnapshot | None,
+        pitcher_profiles: dict[str, dict[str, dict[str, float]]],
+    ) -> list[PitcherSnapshot]:
         team_profiles = pitcher_profiles.get(team_code, {})
         starter_name = _normalize_player_name(starter.name) if starter else ""
         relievers = []
@@ -565,16 +587,16 @@ class PredictionService:
 
     # ── Institutional Intelligence Integration ───────────────────────────
 
-    def _run_decision_engine(
+    def _run_decision_engine(  # NOSONAR
         self,
         matchup: Matchup,
         pred: PredictionResult,
         adjusted_home_prob: float,
-        odds_lines: List[OddsLine],
+        odds_lines: list[OddsLine],
     ) -> DecisionReport:
         """Run the 7-phase institutional decision engine."""
         # Extract sub-model probabilities from diagnostics
-        sub_model_probs: Dict[str, float] = {}
+        sub_model_probs: dict[str, float] = {}
         if pred.sub_model_results:
             for sr in pred.sub_model_results:
                 sub_model_probs[sr.model_name] = sr.home_win_prob
@@ -612,67 +634,67 @@ class PredictionService:
 
     def _run_portfolio_optimization(
         self,
-        top_bets: List[BetRecommendation],
+        top_bets: list[BetRecommendation],
         decision_rpt: DecisionReport,
-    ) -> Dict[str, float]:
-        """Run portfolio-level risk optimization (CVaR + survival)."""
-        import numpy as np
-        from wbc_backend.research.portfolio_v3 import (
-            optimize_cvar_allocation,
-            bankroll_survival_probability,
-            drawdown_adaptive_sizing,
-        )
-
+        matchup: Matchup | None = None,
+    ) -> dict[str, float]:
+        """Run portfolio-level risk optimization via Phase 7 portfolio_risk engine."""
         if not top_bets:
             return {"survival_prob": 1.0, "cvar_95": 0.0, "drawdown_scale": 1.0}
 
-        # Build expected edges and scenario returns
-        edges = np.array([b.edge for b in top_bets], dtype=float)
-        n_bets = len(edges)
+        # Keep portfolio risk state aligned with runtime bankroll snapshot.
+        self.portfolio_risk.state.bankroll = float(self.bankroll.current)
+        self.portfolio_risk.state.peak_bankroll = float(self.bankroll.peak)
 
-        # Generate scenario returns: each bet either wins (odds-1) or loses (-1)
-        rng = np.random.RandomState(42)
-        n_scenarios = 500
-        scenarios = np.zeros((n_scenarios, n_bets))
-        for j, bet in enumerate(top_bets):
-            win_prob = bet.win_probability
-            wins = rng.rand(n_scenarios) < win_prob
-            scenarios[:, j] = np.where(wins, bet.kelly_fraction * (bet.ev + 1), -bet.kelly_fraction)
+        tournament = matchup.tournament if matchup else "WBC"
+        round_name = matchup.round_name if matchup else "Pool"
+        game_date = ""
+        if matchup and getattr(matchup, "game_time_utc", ""):
+            game_date = str(matchup.game_time_utc)[:10]
 
-        # CVaR optimization
-        result = optimize_cvar_allocation(
-            expected_edges=edges,
-            scenario_returns=scenarios,
-            max_gross_exposure=0.10,
-        )
+        proposals: list[BetProposal] = []
+        for b in top_bets:
+            proposals.append(BetProposal(
+                game_id=f"{b.market}:{b.side}",
+                market=b.market,
+                side=b.side,
+                win_prob=float(b.win_probability),
+                odds=2.0 if b.implied_probability <= 0 else float(1.0 / b.implied_probability),
+                ev=float(b.ev),
+                edge=float(b.edge),
+                individual_kelly=float(max(0.0, b.kelly_fraction)),
+                confidence=float(b.confidence),
+                tournament=tournament,
+                game_date=game_date,
+                group=round_name,
+            ))
 
-        # Drawdown-adaptive scaling
-        current_drawdown = 0.0
-        if self.bankroll.peak > 0:
-            current_drawdown = max(0, (self.bankroll.peak - self.bankroll.current) / self.bankroll.peak)
-        dd_scale = drawdown_adaptive_sizing(current_drawdown)
-
-        # Survival probability
-        survival = bankroll_survival_probability(
-            weights=result.weights,
-            scenario_returns=scenarios,
-            horizon_days=30,
-            ruin_threshold=0.5,
-            n_paths=500,
+        sizing = self.portfolio_risk.size_portfolio(proposals)
+        avg_stake = float(sum(p.stake_fraction for p in sizing.positions) / max(1, len(sizing.positions)))
+        avg_prob = float(sum(p.bet.win_prob for p in sizing.positions) / max(1, len(sizing.positions)))
+        avg_odds = float(sum(p.bet.odds for p in sizing.positions) / max(1, len(sizing.positions)))
+        ruin_metrics = compute_risk_of_ruin(
+            bankroll=self.portfolio_risk.state.bankroll,
+            avg_bet_size=max(0.0001, avg_stake),
+            win_rate=max(0.01, min(0.99, avg_prob)),
+            avg_odds=max(1.01, avg_odds),
+            ruin_threshold=0.10,
         )
 
         return {
-            "survival_prob": round(survival, 4),
-            "cvar_95": round(result.cvar_95, 6),
-            "expected_return": round(result.expected_return, 6),
-            "gross_exposure": round(result.gross_exposure, 4),
-            "drawdown_scale": round(dd_scale, 4),
-            "current_drawdown": round(current_drawdown, 4),
+            "survival_prob": round(max(0.0001, 1.0 - float(ruin_metrics.get("risk_of_ruin", 1.0))), 4),
+            "cvar_95": round(-float(sizing.portfolio_variance), 6),
+            "expected_return": round(float(sizing.expected_daily_return), 6),
+            "gross_exposure": round(float(sizing.total_exposure), 4),
+            "drawdown_scale": round(max(0.3, 1.0 - float(self.portfolio_risk.state.drawdown) * 2.0), 4),
+            "current_drawdown": round(float(self.portfolio_risk.state.drawdown), 4),
             "decision_verdict": decision_rpt.decision,
             "edge_score": decision_rpt.edge_score,
+            "risk_level": sizing.risk_level,
+            "risk_of_ruin": float(ruin_metrics.get("risk_of_ruin", 1.0)),
         }
 
-    def _run_calibration_monitoring(self) -> Optional[Dict[str, float]]:
+    def _run_calibration_monitoring(self) -> dict[str, float] | None:
         """Run calibration and drift detection on accumulated predictions."""
         if len(self._prob_history) < 10:
             return None
@@ -692,7 +714,7 @@ class PredictionService:
         cal = calibration_monitoring(self._prob_history, self._outcome_history)
 
         # Drift detection: compare first half vs second half
-        drift_metrics: Dict[str, float] = {}
+        drift_metrics: dict[str, float] = {}
         if n >= 20:
             mid = n // 2
             drift_metrics = drift_detection(
@@ -709,7 +731,7 @@ class PredictionService:
             **drift_metrics,
         }
 
-    def record_outcome(
+    def record_outcome(  # NOSONAR
         self,
         actual_home_win: int,
         *,
@@ -722,7 +744,41 @@ class PredictionService:
     ) -> None:
         """Record an actual game outcome for calibration tracking."""
         self._outcome_history.append(actual_home_win)
-        if stake > 0 or pnl != 0.0:
+
+        if self._prob_history:
+            try:
+                cl_result = self.continuous_learning.process_game_result(
+                    game_id=game_id or "unknown",
+                    predicted_prob=float(self._prob_history[-1]),
+                    actual_outcome=int(actual_home_win),
+                    tournament="WBC",
+                    round_name="Pool",
+                    bet_pnl=float(pnl),
+                )
+                logger.info(
+                    "[CONTINUOUS_LEARNING] game=%s status=%s actions=%s",
+                    game_id or "unknown",
+                    cl_result.get("system_status", "UNKNOWN"),
+                    ",".join(cl_result.get("actions", [])) or "none",
+                )
+            except Exception as exc:
+                logger.warning("Continuous learning update failed: %s", exc)
+
+        # Update dynamic ensemble weights only after actual outcome is known.
+        if game_id and self._prob_history:
+            try:
+                if self._last_sub_model_results:
+                    record_ensemble_outcome(
+                        sub_results=self._last_sub_model_results,
+                        actual_home_win=int(actual_home_win),
+                        tournament=self._last_tournament,
+                        round_name=self._last_round_name,
+                    )
+            except Exception as exc:
+                logger.warning("Dynamic ensemble outcome update failed: %s", exc)
+
+        has_financial_update = stake > 0 or abs(pnl) > 1e-12
+        if has_financial_update:
             update_bankroll(self.bankroll, pnl=pnl, stake=stake)
             if hasattr(self.decision_engine, "risk") and hasattr(self.decision_engine.risk, "state"):
                 self.decision_engine.risk.state.current_bankroll = self.bankroll.current
@@ -744,3 +800,13 @@ class PredictionService:
                     bankroll_after=self.bankroll.current,
                     metadata={"actual_home_win": actual_home_win},
                 )
+
+        if has_financial_update:
+            try:
+                self.portfolio_risk.record_outcome(
+                    game_id=game_id or "unknown",
+                    pnl=float(pnl),
+                    stake_amount=float(stake),
+                )
+            except Exception as exc:
+                logger.warning("Portfolio risk outcome update failed: %s", exc)

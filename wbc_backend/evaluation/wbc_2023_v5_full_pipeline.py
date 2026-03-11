@@ -17,17 +17,13 @@ First-ever backtest using the COMPLETE pipeline:
 """
 from __future__ import annotations
 
-import math
-import time
 from collections import defaultdict
-from typing import Dict, List
 
 import numpy as np
 from scipy.stats import poisson as scipy_poisson
 
 from wbc_backend.intelligence.decision_engine import (
     InstitutionalDecisionEngine,
-    format_decision_report,
 )
 import wbc_backend.intelligence.edge_validator as _ev
 import wbc_backend.intelligence.edge_realism_filter as _erf
@@ -111,12 +107,14 @@ def poisson_wp(lam_h, lam_a):
 
 
 def pythag(rpg, rapg):
-    if rpg + rapg <= 0: return 0.5
+    if rpg + rapg <= 0:
+        return 0.5
     return rpg ** 1.83 / (rpg ** 1.83 + rapg ** 1.83)
 
 
 def log5(pa, pb):
-    if pa + pb == 0: return 0.5
+    if pa + pb == 0:
+        return 0.5
     return pa * (1 - pb) / (pa * (1 - pb) + pb * (1 - pa))
 
 
@@ -130,7 +128,7 @@ def make_odds(fair, vig=0.08):
 # MAIN BACKTEST
 # ═══════════════════════════════════════════════════════════════
 
-def run():
+def run():  # noqa: C901
     print()
     print("=" * 70)
     print("🏛️  WBC 2023 Backtest v5")
@@ -178,9 +176,7 @@ def run():
     phase_block_counts = defaultdict(int)
     round_summary = defaultdict(lambda: {"bets": 0, "wins": 0, "pnl": 0.0})
 
-    game_num = 0
-    for home, away, hs, aws, rnd in WBC_2023_GAMES:
-        game_num += 1
+    for game_num, (home, away, hs, aws, rnd) in enumerate(WBC_2023_GAMES, start=1):
         actual_hw = 1 if hs > aws else 0
 
         # ── Ensemble prediction ──
@@ -329,15 +325,19 @@ def run():
             )
 
         # ── Update team stats ──
-        runs_for[home].append(hs); runs_for[away].append(aws)
-        runs_against[home].append(aws); runs_against[away].append(hs)
-        results_hist[home].append(actual_hw); results_hist[away].append(1 - actual_hw)
+        runs_for[home].append(hs)
+        runs_for[away].append(aws)
+        runs_against[home].append(aws)
+        runs_against[away].append(hs)
+        results_hist[home].append(actual_hw)
+        results_hist[away].append(1 - actual_hw)
 
         # Update Elo
         elo_exp = 1.0 / (1.0 + 10 ** (-(elo[home] - elo[away]) / 400.0))
         margin = abs(hs - aws)
         delta = 16.0 * (1.0 + 0.08 * min(margin, 10)) * (actual_hw - elo_exp)
-        elo[home] += delta; elo[away] -= delta
+        elo[home] += delta
+        elo[away] -= delta
 
     # ═══════════════════════════════════════════════════════════
     # RESULTS
@@ -353,7 +353,7 @@ def run():
           f"= {total_correct/total_preds:.1%}")
     print()
 
-    print(f"  🏛️ Phase Blocking Summary:")
+    print("  🏛️ Phase Blocking Summary:")
     for phase, count in sorted(phase_block_counts.items()):
         print(f"    {phase:25s}: {count} games blocked")
     total_blocked = sum(phase_block_counts.values())
@@ -363,7 +363,7 @@ def run():
 
     if total_bets > 0:
         win_rate = total_wins / total_bets
-        print(f"  💰 Betting Results:")
+        print("  💰 Betting Results:")
         print(f"    Bets:       {total_bets}")
         print(f"    Win Rate:   {win_rate:.0%} ({total_wins}/{total_bets})")
         print(f"    Net P&L:    ${total_pnl:+,.0f}")
@@ -371,7 +371,7 @@ def run():
         print(f"    DD:         {risk_status['drawdown_pct']:.1%}")
         print()
 
-        print(f"  📋 By Round:")
+        print("  📋 By Round:")
         for rnd in ["Pool A", "Pool B", "Pool C", "Pool D", "QF", "SF", "Final"]:
             rs = round_summary[rnd]
             if rs["bets"] > 0:
@@ -382,15 +382,15 @@ def run():
                 print(f"    {rnd:8s}: no bets")
         print()
 
-    print(f"  📋 Game-by-Game Detail:")
+    print("  📋 Game-by-Game Detail:")
     for d in bet_details:
         print(d)
 
     print()
     print("=" * 70)
     print("  📈 Version Comparison:")
-    print(f"    v2 (Elo-Heavy, no gate):      ROI = -51.3%")
-    print(f"    v4 (WBC Realism Gate):         ROI = +8.1%")
+    print("    v2 (Elo-Heavy, no gate):      ROI = -51.3%")
+    print("    v4 (WBC Realism Gate):         ROI = +8.1%")
     if total_bets > 0 and total_staked > 0:
         roi = total_pnl / (total_bets * 2500)  # approx avg stake
         print(f"    v5 (Full 11-Phase Engine):     ROI ≈ {roi:+.1%} | "

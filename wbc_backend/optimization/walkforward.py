@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List
 
 import numpy as np
 
@@ -46,7 +45,7 @@ def _band_key(odds: float) -> str:
     return "other"
 
 
-def run_walkforward_backtest(
+def run_walkforward_backtest(  # noqa: C901
     path: str,
     min_train_games: int = 240,
     retrain_every: int = 40,

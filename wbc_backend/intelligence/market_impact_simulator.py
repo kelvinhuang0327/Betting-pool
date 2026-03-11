@@ -44,12 +44,10 @@ Decision rules (applied in decision_engine):
 """
 from __future__ import annotations
 
-import math
 import random
 import statistics
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -69,7 +67,7 @@ class ExecutionStrategy(Enum):
 DEFAULT_SIM_COUNT = 200
 
 # Bookmaker sensitivity profiles (impact per $1000 bet, in implied prob points)
-BOOK_SENSITIVITY: Dict[str, float] = {
+BOOK_SENSITIVITY: dict[str, float] = {
     "pinnacle": 0.002,      # low sensitivity, high limits
     "bet365": 0.005,
     "draftkings": 0.004,
@@ -82,7 +80,7 @@ BOOK_SENSITIVITY: Dict[str, float] = {
 }
 
 # Sharp detection probability by book tier
-SHARP_DETECTION_PROB: Dict[str, float] = {
+SHARP_DETECTION_PROB: dict[str, float] = {
     "sharp": 0.15,       # sharp books tolerate sharp action
     "mid": 0.35,
     "soft": 0.65,        # soft books quickly flag sharps
@@ -115,7 +113,7 @@ class MarketImpactInput:
     hours_to_game: float = 24.0
 
     # ── Historical reaction database ─────────────────────────
-    past_line_reactions: Optional[List[float]] = None   # list of past slippages
+    past_line_reactions: list[float] | None = None   # list of past slippages
     book_tier: str = "generic"            # sharp / mid / soft / generic
     sharp_detection_history: float = 0.0  # 0-1 how often we've been flagged
 
@@ -123,7 +121,7 @@ class MarketImpactInput:
     edge_pct: float = 0.0                 # raw edge for slippage comparison
 
     # ── Reproducibility ───────────────────────────────────────
-    seed: Optional[int] = None
+    seed: int | None = None
     n_simulations: int = DEFAULT_SIM_COUNT
 
 
@@ -164,7 +162,7 @@ class MarketImpactReport:
 
     # Diagnostics
     n_simulations: int = 0
-    details: Dict[str, str] = field(default_factory=dict)
+    details: dict[str, str] = field(default_factory=dict)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -414,9 +412,9 @@ def _run_strategy_simulations(
     det_prob: float,
     rng: random.Random,
     n_sims: int,
-) -> Tuple[List[SimulationRun], float]:
+) -> tuple[list[SimulationRun], float]:
     """Run N simulations for a single strategy, return (runs, mean_slippage)."""
-    runs: List[SimulationRun] = []
+    runs: list[SimulationRun] = []
     for _ in range(n_sims):
         if strategy_enum == ExecutionStrategy.SINGLE_BOOK:
             run = strategy_fn(
@@ -537,9 +535,9 @@ def simulate_market_impact(inp: MarketImpactInput) -> MarketImpactReport:
     ]
 
     best_strategy = ExecutionStrategy.SINGLE_BOOK
-    best_runs: List[SimulationRun] = []
+    best_runs: list[SimulationRun] = []
     best_mean_slip = float("inf")
-    all_results: Dict[str, float] = {}
+    all_results: dict[str, float] = {}
 
     for fn, strat_enum in strategies:
         # Skip multi-book strategies if only 1 book

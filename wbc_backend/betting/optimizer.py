@@ -13,7 +13,6 @@ Output format:
 from __future__ import annotations
 
 import logging
-from typing import Dict, List, Optional
 
 from wbc_backend.betting.kelly import (
     calculate_kelly_bet,
@@ -22,7 +21,7 @@ from wbc_backend.betting.kelly import (
     implied_probability,
 )
 from wbc_backend.betting.risk_control import BankrollState, check_risk_limits
-from wbc_backend.config.settings import AppConfig, BankrollConfig, StrategyConfig
+from wbc_backend.config.settings import AppConfig
 from wbc_backend.domain.schemas import (
     BetRecommendation,
     OddsLine,
@@ -48,7 +47,7 @@ def _map_market_key(odds: OddsLine, home_code: str, away_code: str) -> str:
     if odds.market == "TT":
         return f"TT_{odds.side}"
     return f"{odds.market}_{odds.side}"
-    
+
 
 def apply_execution_slippage(odds: float, latency_seconds: float = 30.0) -> float:
     """
@@ -68,7 +67,7 @@ def build_true_probs(
     away_code: str,
     home_win_prob: float,
     sim: SimulationSummary,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Build true probability map from model + simulation."""
     return {
         f"ML_{home_code}": home_win_prob,
@@ -85,17 +84,17 @@ def build_true_probs(
 
 
 def find_top_bets(
-    odds_lines: List[OddsLine],
-    true_probs: Dict[str, float],
+    odds_lines: list[OddsLine],
+    true_probs: dict[str, float],
     home_code: str,
     away_code: str,
     confidence_score: float = 0.5,
-    config: Optional[AppConfig] = None,
-    bankroll_state: Optional[BankrollState] = None,
+    config: AppConfig | None = None,
+    bankroll_state: BankrollState | None = None,
     time_to_start_hours: float = 12.0,      # Default: 12h before start
     steam_signals: int = 0,                 # Recent steam moves
-    market_consensus: Dict[str, float] = None, # Average odds from other books
-) -> List[BetRecommendation]:
+    market_consensus: dict[str, float] = None, # Average odds from other books
+) -> list[BetRecommendation]:
     """
     Evaluate all available odds lines, compute EV, Kelly stakes,
     apply risk controls, and return TOP 3 best bets.
@@ -111,7 +110,7 @@ def find_top_bets(
     )
     base_confidence = confidence_score
 
-    candidates: List[BetRecommendation] = []
+    candidates: list[BetRecommendation] = []
 
     for odds in odds_lines:
         key = _map_market_key(odds, home_code, away_code)
@@ -121,7 +120,7 @@ def find_top_bets(
         # ── P1.2: Execution Slippage Adjustment ──────────
         # Assume 45s latency for manual execution (Institutional buffer)
         real_odds = apply_execution_slippage(odds.decimal_odds, latency_seconds=45.0)
-        
+
         win_prob = true_probs[key]
         impl_prob = implied_probability(real_odds)
         ev = expected_value(win_prob, real_odds)
@@ -129,13 +128,13 @@ def find_top_bets(
 
         # ── P1.4: CLV Alpha Gate ─────────────────────────
         clv_model = ClosingLineModel(config.model)
-        
+
         # Estimate predicted closing odds
         consensus = (market_consensus or {}).get(key, odds.decimal_odds)
         predicted_closing = clv_model.predict_closing_odds(
             odds.decimal_odds, time_to_start_hours, steam_signals, consensus
         )
-        
+
         # Only bet if we have an advantage over the predicted closing line
         clv_edge = (odds.decimal_odds / predicted_closing) - 1.0
         if clv_edge < 0.015:  # Require 1.5% CLV margin
@@ -223,7 +222,7 @@ def find_top_bets(
     return top
 
 
-def format_top_bets(bets: List[BetRecommendation]) -> str:
+def format_top_bets(bets: list[BetRecommendation]) -> str:
     """Format TOP 3 bets for display output."""
     lines = ["", "=" * 60, "🏆 TOP 3 BETS", "=" * 60]
 

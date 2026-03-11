@@ -40,9 +40,7 @@ from wbc_backend.pipeline.service import PredictionService
 from wbc_backend.reporting.renderers import render_full_report, render_json
 
 
-# ──────────────────────────────────────────────────────────────────────────────
-#  Fixtures
-# ──────────────────────────────────────────────────────────────────────────────
+# Fixtures
 
 def _make_matchup() -> Matchup:
     return Matchup(

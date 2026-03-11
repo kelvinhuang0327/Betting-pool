@@ -11,17 +11,15 @@ At least 50,000 simulations incorporating:
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
 
 import numpy as np
 
-from wbc_backend.config.settings import AppConfig
 from wbc_backend.domain.schemas import PredictionResult, SimulationSummary
 
 logger = logging.getLogger(__name__)
 
 
-def run_monte_carlo(
+def run_monte_carlo(  # noqa: C901
     pred: PredictionResult,
     line_total: float = 7.5,
     line_spread_home: float = -1.5,
@@ -65,7 +63,7 @@ def run_monte_carlo(
         for inn in range(1, 13): # Allow up to 12 innings
             if game_ended:
                 break
-            
+
             # 1. Pitching Gradient & Fatigue (SP vs RP)
             # Innings 1-4: SP dominated
             # Innings 5-9: Bullpen dominated
@@ -82,45 +80,43 @@ def run_monte_carlo(
                 # If depth is poor (high stress), bias scoring up
                 l_home += away_bullpen_stress * 0.08
                 l_away += home_bullpen_stress * 0.08
-            
+
             # 2. Inning Entropy / Scoring Chains (The "13-0" effect)
             # If a team starts scoring, the probability of scoring more in THAT inning increases
             # We simulate this via a Gamma-Poisson mixture per inning
             # High variance_add = more likely to have 4+ run innings
             volatility = 1.0 + wbc_variance_add
-            
+
             # Away Inning
             a_inn_lam = rng.gamma(l_away / volatility, volatility)
             a_inn_runs = rng.poisson(a_inn_lam)
-            
+
             # Zero-Inflation Check (Shutout logic)
             if rng.random() < 0.05 and l_away < 0.3: # 5% chance of total lockout if lambda is low
                 a_inn_runs = 0
-            
+
             a_score += a_inn_runs
 
             # Home Inning (Bottom)
             if not (inn >= 9 and h_score > a_score): # Home doesn't bat in bottom 9 if winning
                 h_inn_lam = rng.gamma(l_home / volatility, volatility)
                 h_inn_runs = rng.poisson(h_inn_lam)
-                
+
                 if rng.random() < 0.05 and l_home < 0.3:
                     h_inn_runs = 0
-                
+
                 h_score += h_inn_runs
 
             # 3. WBC Mercy Rule
             if mercy_rule:
                 lead = abs(h_score - a_score)
-                if inn == 5 and lead >= 15:
+                if inn == 5 and lead >= 15 or inn >= 7 and lead >= 10:
                     game_ended = True
-                elif inn >= 7 and lead >= 10:
-                    game_ended = True
-            
+
             # 4. Standard End of Game
             if inn >= 9 and h_score != a_score:
                 game_ended = True
-            
+
             final_innings[i] = inn
 
         final_home_runs[i] = h_score

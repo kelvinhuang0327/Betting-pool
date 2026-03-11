@@ -11,7 +11,6 @@ import logging
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -26,14 +25,14 @@ class ValidationReport:
     source: str
     total_records: int = 0
     completeness_pct: float = 0.0
-    missing_fields: List[str] = field(default_factory=list)
+    missing_fields: list[str] = field(default_factory=list)
     date_gaps: int = 0
     pitcher_stats_coverage: float = 0.0
     batter_stats_coverage: float = 0.0
     statcast_coverage: float = 0.0
     has_postseason: bool = False
     is_valid: bool = False
-    issues: List[str] = field(default_factory=list)
+    issues: list[str] = field(default_factory=list)
 
 
 # ── Required columns per source ─────────────────────────────────────────────
@@ -67,9 +66,9 @@ CANONICAL_COLUMN_ALIASES = {
 }
 
 
-def validate_dataset(
+def validate_dataset(  # noqa: C901
     source: str,
-    config: Optional[AppConfig] = None,
+    config: AppConfig | None = None,
 ) -> ValidationReport:
     """
     Validate completeness of a data source.
@@ -177,7 +176,7 @@ def validate_dataset(
 
 def auto_fetch_missing_data(
     source: str = "MLB_2025",
-    config: Optional[AppConfig] = None,
+    config: AppConfig | None = None,
     max_retries: int = 3,
 ) -> ValidationReport:
     """
@@ -207,7 +206,7 @@ def auto_fetch_missing_data(
 
 # ── Internal helpers ─────────────────────────────────────────────────────────
 
-def _resolve_path(source: str, config: AppConfig) -> Optional[str]:
+def _resolve_path(source: str, config: AppConfig) -> str | None:
     mapping = {
         "MLB_2025": config.sources.mlb_2025_csv,
         "MLB_2024": "data/mlb_2024/mlb-2024-asplayed.csv",
@@ -217,7 +216,7 @@ def _resolve_path(source: str, config: AppConfig) -> Optional[str]:
     return mapping.get(source.upper())
 
 
-def _read_csv_with_encoding(path: str) -> Tuple[Optional[pd.DataFrame], Optional[str]]:
+def _read_csv_with_encoding(path: str) -> tuple[pd.DataFrame | None, str | None]:
     for enc in ("utf-8", "utf-8-sig", "latin1", "cp1252"):
         try:
             return pd.read_csv(path, encoding=enc), enc
@@ -256,14 +255,14 @@ def _normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return normalized
 
 
-def _safe_load(path: str) -> Optional[pd.DataFrame]:
+def _safe_load(path: str) -> pd.DataFrame | None:
     df, _ = _read_csv_with_encoding(path)
     if df is None:
         return None
     return _normalize_dataframe(df)
 
 
-def load_dataset_frame(path: str) -> Optional[pd.DataFrame]:
+def load_dataset_frame(path: str) -> pd.DataFrame | None:
     return _safe_load(path)
 
 

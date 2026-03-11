@@ -17,11 +17,10 @@ Key rules:
 """
 from __future__ import annotations
 
-import math
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 
 # ─── Configuration ──────────────────────────────────────────────────────────
@@ -82,12 +81,12 @@ class ModelTracker:
     ewma_hit_rate: float = 0.50
 
     # History (circular buffer approach — keep last N)
-    recent_outcomes: List[int] = field(default_factory=list)
-    recent_roi: List[float] = field(default_factory=list)
+    recent_outcomes: list[int] = field(default_factory=list)
+    recent_roi: list[float] = field(default_factory=list)
 
     # Metadata
     last_retrain_at: int = 0
-    disabled_at: Optional[int] = None
+    disabled_at: int | None = None
     disabled_reason: str = ""
 
 
@@ -98,10 +97,10 @@ class RetrainEvent:
     timestamp: float = 0.0
     game_count: int = 0
     trigger: str = "SCHEDULED"         # SCHEDULED / REGIME_SHIFT / MANUAL
-    models_retrained: List[str] = field(default_factory=list)
-    weight_changes: Dict[str, Tuple[float, float]] = field(default_factory=dict)
-    models_disabled: List[str] = field(default_factory=list)
-    models_reactivated: List[str] = field(default_factory=list)
+    models_retrained: list[str] = field(default_factory=list)
+    weight_changes: dict[str, tuple[float, float]] = field(default_factory=dict)
+    models_disabled: list[str] = field(default_factory=list)
+    models_reactivated: list[str] = field(default_factory=list)
     notes: str = ""
 
 
@@ -109,8 +108,8 @@ class RetrainEvent:
 class MetaState:
     """Full state of the meta-learning system."""
     total_games: int = 0
-    models: Dict[str, ModelTracker] = field(default_factory=dict)
-    retrain_history: List[RetrainEvent] = field(default_factory=list)
+    models: dict[str, ModelTracker] = field(default_factory=dict)
+    retrain_history: list[RetrainEvent] = field(default_factory=list)
     next_retrain_at: int = 100
     regime_shift_detected: bool = False
     global_hit_rate: float = 0.50
@@ -119,7 +118,7 @@ class MetaState:
 
 # ─── Core Meta-Learning Functions ──────────────────────────────────────────
 
-def initialize_meta_state(model_names: List[str]) -> MetaState:
+def initialize_meta_state(model_names: list[str]) -> MetaState:
     """Initialize meta state with equal weights."""
     n = len(model_names)
     weight = 1.0 / n if n > 0 else 0.2
@@ -176,7 +175,7 @@ def record_game(state: MetaState) -> None:
     state.total_games += 1
 
 
-def should_retrain(state: MetaState) -> Tuple[bool, str]:
+def should_retrain(state: MetaState) -> tuple[bool, str]:
     """Check if a retrain is triggered."""
     if state.total_games >= state.next_retrain_at:
         return True, "SCHEDULED"
@@ -193,7 +192,7 @@ def should_retrain(state: MetaState) -> Tuple[bool, str]:
     return False, ""
 
 
-def execute_retrain(state: MetaState, trigger: str = "SCHEDULED") -> RetrainEvent:
+def execute_retrain(state: MetaState, trigger: str = "SCHEDULED") -> RetrainEvent:  # noqa: C901
     """
     Execute a meta-learning retrain:
       1. Evaluate each model's trailing performance
@@ -310,7 +309,7 @@ def execute_retrain(state: MetaState, trigger: str = "SCHEDULED") -> RetrainEven
     return event
 
 
-def get_model_weights(state: MetaState) -> Dict[str, float]:
+def get_model_weights(state: MetaState) -> dict[str, float]:
     """Get current model weights (only active models)."""
     return {
         name: tracker.current_weight
@@ -321,7 +320,7 @@ def get_model_weights(state: MetaState) -> Dict[str, float]:
 
 def detect_regime_shift(
     state: MetaState,
-    recent_regimes: List[str],
+    recent_regimes: list[str],
     window: int = 10,
 ) -> bool:
     """
@@ -353,7 +352,7 @@ def detect_regime_shift(
     return False
 
 
-def get_meta_summary(state: MetaState) -> Dict[str, Any]:
+def get_meta_summary(state: MetaState) -> dict[str, Any]:
     """Get a summary of the meta-learning state for reporting."""
     active = [m for m in state.models.values() if m.status == ModelStatus.ACTIVE]
     probation = [m for m in state.models.values() if m.status == ModelStatus.PROBATION]

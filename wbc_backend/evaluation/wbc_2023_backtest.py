@@ -8,9 +8,7 @@ WBC 2023 真實回測 — 使用完整 2023 WBC 比賽數據
 """
 from __future__ import annotations
 
-import math
 from collections import defaultdict
-from typing import Dict, List, Tuple
 
 import numpy as np
 
@@ -128,16 +126,18 @@ def poisson_win_prob(lam_h: float, lam_a: float) -> float:
 
 
 def pythag_wp(rpg: float, rapg: float) -> float:
-    if rpg + rapg <= 0: return 0.5
+    if rpg + rapg <= 0:
+        return 0.5
     return rpg ** 1.83 / (rpg ** 1.83 + rapg ** 1.83)
 
 
 def log5(pa: float, pb: float) -> float:
-    if pa + pb == 0: return 0.5
+    if pa + pb == 0:
+        return 0.5
     return pa * (1 - pb) / (pa * (1 - pb) + pb * (1 - pa))
 
 
-def run_wbc_backtest():
+def run_wbc_backtest():  # noqa: C901
     print()
     print("=" * 70)
     print("🏆 2023 WBC 真實回測")
@@ -147,14 +147,14 @@ def run_wbc_backtest():
 
     # ── Init Elo ──
     elo = {team: rating for team, rating in BASE_ELO.items()}
-    runs_for: Dict[str, List[int]] = defaultdict(list)
-    runs_against: Dict[str, List[int]] = defaultdict(list)
-    results: Dict[str, List[int]] = defaultdict(list)
+    runs_for: dict[str, list[int]] = defaultdict(list)
+    runs_against: dict[str, list[int]] = defaultdict(list)
+    results: dict[str, list[int]] = defaultdict(list)
 
     total = 0
     correct = 0
-    by_round: Dict[str, Dict] = defaultdict(lambda: {"total": 0, "correct": 0})
-    by_model: Dict[str, Dict] = defaultdict(lambda: {"total": 0, "correct": 0})
+    by_round: dict[str, dict] = defaultdict(lambda: {"total": 0, "correct": 0})
+    by_model: dict[str, dict] = defaultdict(lambda: {"total": 0, "correct": 0})
     upset_correct = 0
     upset_total = 0
     favourite_correct = 0
@@ -243,7 +243,6 @@ def run_wbc_backtest():
                 by_model[name]["correct"] += 1
 
         # Favourite/Upset tracking
-        is_favourite = p_final > 0.5
         if p_final > 0.55 or p_final < 0.45:
             favourite_total += 1
             if is_correct:
@@ -306,9 +305,9 @@ def run_wbc_backtest():
     #  RESULTS
     # ═══════════════════════════════════════════════════════
     accuracy = correct / total
-    print(f"━" * 60)
+    print("━" * 60)
     print(f"🎯 模型預測準確度: {accuracy:.1%}  ({correct}/{total})")
-    print(f"━" * 60)
+    print("━" * 60)
     print()
 
     # Per round
@@ -375,11 +374,11 @@ def run_wbc_backtest():
 
     print()
     print("=" * 70)
-    print(f"✅ WBC 2023 回測結論:")
+    print("✅ WBC 2023 回測結論:")
     print(f"   整體準確率: {accuracy:.1%}  ({correct}/{total})")
     fav_acc = favourite_correct / favourite_total if favourite_total else 0
     print(f"   有較強預測時 (>55%): {fav_acc:.0%}")
-    print(f"   淘汰賽準確率: ", end="")
+    print("   淘汰賽準確率: ", end="")
     ko_correct = sum(by_round[r]["correct"] for r in ["QF", "SF", "Final"] if r in by_round)
     ko_total = sum(by_round[r]["total"] for r in ["QF", "SF", "Final"] if r in by_round)
     print(f"{ko_correct}/{ko_total} = {ko_correct/ko_total:.0%}" if ko_total else "N/A")

@@ -3,7 +3,6 @@ Odds Analyzer — standardizes odds from multiple sources.
 """
 from __future__ import annotations
 
-from typing import Dict, List
 
 from wbc_backend.domain.schemas import OddsLine, SimulationSummary
 
@@ -12,7 +11,7 @@ def decimal_to_implied_prob(decimal_odds: float) -> float:
     return 1.0 / max(decimal_odds, 1.001)
 
 
-def standardize_odds() -> List[OddsLine]:
+def standardize_odds() -> list[OddsLine]:
     """
     Return standardized odds lines from all sources.
 
@@ -50,7 +49,7 @@ def market_probabilities_from_sim(
     home_code: str,
     away_code: str,
     sim_summary: SimulationSummary,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     return {
         f"ML_{home_code}": sim_summary.home_win_prob,
         f"ML_{away_code}": sim_summary.away_win_prob,

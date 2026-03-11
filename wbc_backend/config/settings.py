@@ -7,7 +7,6 @@ and self-improvement loop can all share a single source of truth.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List
 
 
 # ── Data Sources ─────────────────────────────────────────────────────────────
@@ -30,6 +29,7 @@ class DataSourceConfig:
     backtest_results_dir: str = "data/wbc_backend/backtest_results"
     reports_dir: str = "data/wbc_backend/reports"
     prediction_registry_jsonl: str = "data/wbc_backend/reports/prediction_registry.jsonl"
+    postgame_results_jsonl: str = "data/wbc_backend/reports/postgame_results.jsonl"
     review_report_latest_md: str = "data/wbc_backend/reports/WBC_Review_Meeting_Latest.md"
     review_report_archive_dir: str = "data/wbc_backend/reports/review_archive"
     bankroll_storage_db: str = "data/wbc_backend/bankroll_v3.db"
@@ -60,7 +60,7 @@ class ModelConfig:
     star_weight: float = 0.10     # MLB star impact
 
     # ML training
-    xgb_params: Dict = field(default_factory=lambda: {
+    xgb_params: dict = field(default_factory=lambda: {
         "max_depth": 6,
         "learning_rate": 0.05,
         "n_estimators": 300,
@@ -72,7 +72,7 @@ class ModelConfig:
         "objective": "binary:logistic",
         "eval_metric": "logloss",
     })
-    lgbm_params: Dict = field(default_factory=lambda: {
+    lgbm_params: dict = field(default_factory=lambda: {
         "max_depth": 6,
         "learning_rate": 0.05,
         "n_estimators": 300,
@@ -85,7 +85,7 @@ class ModelConfig:
         "metric": "binary_logloss",
         "verbosity": -1,
     })
-    nn_params: Dict = field(default_factory=lambda: {
+    nn_params: dict = field(default_factory=lambda: {
         "hidden_layers": [128, 64, 32],
         "dropout": 0.3,
         "learning_rate": 0.001,
@@ -114,7 +114,7 @@ class StrategyConfig:
     max_recommendations: int = 3
     fractional_kelly: float = 0.15  # More conservative Kelly (was 0.25)
     max_stake_fraction: float = 0.04  # Reduced from 0.05
-    market_priority: Dict[str, int] = field(default_factory=lambda: {
+    market_priority: dict[str, int] = field(default_factory=lambda: {
         "ML": 3, "RL": 2, "OU": 1, "F5": 2, "TT": 1, "OE": 1,
     })
 
@@ -146,20 +146,20 @@ class WBCAdjustmentConfig:
     # Edge Realism Gate — WBC-specific thresholds (calibrated from 2023 backtest)
     # MLB default = 65; WBC markets are less efficient → lower thresholds
     # v4 backtest: Gate blocked 3 FAKE_EDGE (all losses), passed 7 → 86% win, +8.1% ROI
-    edge_realism_thresholds: Dict = field(default_factory=lambda: {
+    edge_realism_thresholds: dict = field(default_factory=lambda: {
         "Pool": 50,             # Strictest: block low-liquidity Pool FAKE_EDGE
         "Quarter-Final": 45,    # More liquid, lower threshold
         "Semi-Final": 43,       # Near-institutional liquidity
         "Final": 40,            # Best liquidity → lowest threshold
     })
     mlb_edge_realism_threshold: float = 65.0  # Standard MLB threshold
-    pitch_limits: Dict = field(default_factory=lambda: {
+    pitch_limits: dict = field(default_factory=lambda: {
         "Pool": {"max_pitches": 65, "rest_30": 1, "rest_50": 4},
         "Quarter-Final": {"max_pitches": 80, "rest_30": 1, "rest_50": 4},
         "Semi-Final": {"max_pitches": 95, "rest_30": 1, "rest_50": 4},
         "Final": {"max_pitches": 95, "rest_30": 1, "rest_50": 4},
     })
-    round_adjustments: Dict = field(default_factory=lambda: {
+    round_adjustments: dict = field(default_factory=lambda: {
         "Pool": {"starter_impact": 0.55, "bullpen_impact": 1.60, "variance_add": 0.22},
         "Quarter-Final": {"starter_impact": 0.65, "bullpen_impact": 1.45, "variance_add": 0.18},
         "Semi-Final": {"starter_impact": 0.75, "bullpen_impact": 1.30, "variance_add": 0.14},

@@ -4,7 +4,6 @@ import json
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
 
 from .execution import V3ResearchExecutor
 
@@ -14,8 +13,8 @@ DEFAULT_RESEARCH_ARTIFACT = Path("data/wbc_backend/artifacts/v3_research_cycle.j
 
 def run_research_cycle(
     seed: int = 42,
-    artifact_path: Optional[Path] = None,
-) -> Dict:
+    artifact_path: Path | None = None,
+) -> dict:
     executor = V3ResearchExecutor(seed=seed)
     results = executor.execute_all()
     payload = {

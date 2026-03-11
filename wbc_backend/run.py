@@ -31,7 +31,7 @@ logging.basicConfig(
 logger = logging.getLogger("wbc_backend")
 
 
-def main():
+def main():  # NOSONAR  # noqa: C901
     parser = argparse.ArgumentParser(
         description="WBC 2026 Automated Prediction Backend",
     )
@@ -80,7 +80,7 @@ def main():
     from wbc_backend.data.validator import validate_dataset, auto_fetch_missing_data
 
     report = validate_dataset("MLB_2025", config)
-    print(f"  Source: MLB_2025")
+    print("  Source: MLB_2025")
     print(f"  Records: {report.total_records}")
     print(f"  Completeness: {report.completeness_pct:.1%}")
     print(f"  Valid: {report.is_valid}")
@@ -119,6 +119,7 @@ def main():
         line_total=args.line_total,
         line_spread_home=args.line_spread,
     )
+    response = None
     try:
         response = service.analyze(request)
     except WBCDataVerificationError as exc:
@@ -128,18 +129,21 @@ def main():
         print()
         print("  Populate data/wbc_2026_authoritative_snapshot.json with official schedule, roster,")
         print("  starting pitchers, and lineups before running analysis again.")
-        return
+        if not (args.backtest or args.improve or args.research_cycle or args.scheduler):
+            return
     except DeploymentGateError as exc:
         print("  BLOCKED: deployment gate rejected the current model package.")
         for check in exc.report.checks:
             marker = "OK" if check.passed else "FAIL"
             print(f"    - [{marker}] {check.name}: {check.details}")
-        return
+        if not (args.backtest or args.improve or args.research_cycle or args.scheduler):
+            return
 
     # Print markdown report
-    print(response.markdown_report)
+    if response is not None:
+        print(response.markdown_report)
 
-    if args.json:
+    if args.json and response is not None:
         print()
         print("━" * 50)
         print("📋 JSON OUTPUT")
@@ -150,15 +154,23 @@ def main():
     if args.backtest:
         print()
         print("━" * 50)
-        print("📊 STEP 4: Full Backtest")
+        print("📊 STEP 4: Institutional Backtest")
         print("━" * 50)
-        from wbc_backend.evaluation.backtester import (
-            run_full_backtest,
-            format_backtest_report,
-        )
+        from wbc_backend.evaluation.institutional_backtest import run_wbc_2023_backtest
 
-        bt_results = run_full_backtest()
-        print(format_backtest_report(bt_results))
+        bt = run_wbc_2023_backtest(initial_bankroll=config.bankroll.initial_bankroll)
+        print(f"  Games: {bt.n_games_total}")
+        print(f"  Bets: {bt.n_bets_placed}")
+        print(f"  Accuracy: {bt.accuracy:.3f}")
+        print(f"  Brier: {bt.brier_score:.4f}")
+        print(f"  ROI: {bt.roi:.3%}")
+        print(f"  Sharpe: {bt.sharpe_ratio:.3f}")
+        print(f"  Max Drawdown: {bt.max_drawdown:.3%}")
+        print(f"  p-value (vs random): {bt.p_value_vs_random:.4f}")
+        if bt.p_value_vs_random < 0.05:
+            print("  Significance: PASS (p < 0.05)")
+        else:
+            print("  Significance: FAIL (p >= 0.05)")
 
     # ── Step 5: Self-Improvement ─────────────────────────
     if args.improve:

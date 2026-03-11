@@ -5,7 +5,7 @@ WBC 2023 回測 v4 — WBC 專用 Edge Realism 調整
 發現：
   Phase 1b Gate (threshold=65) 在 WBC 太嚴格 → 全部擋住
   WBC 市場流動性低 (0.3-0.5)，所以 absorption 和 execution 分數天生偏低
-  
+
 解決：
   1. 降低 WBC 門檻到 45 (vs MLB 的 65)
   2. Pool 初期 (前 2 輪) 額外加 5 分門檻
@@ -14,16 +14,13 @@ WBC 2023 回測 v4 — WBC 專用 Edge Realism 調整
 """
 from __future__ import annotations
 
-import math
 from collections import defaultdict
-from typing import Dict, List
 
 import numpy as np
 
 from wbc_backend.intelligence.edge_realism_filter import (
     RealismInput,
     assess_edge_realism,
-    RealEdgeLabel,
 )
 
 
@@ -96,12 +93,14 @@ def poisson_wp(lam_h, lam_a):
 
 
 def pythag(rpg, rapg):
-    if rpg + rapg <= 0: return 0.5
+    if rpg + rapg <= 0:
+        return 0.5
     return rpg ** 1.83 / (rpg ** 1.83 + rapg ** 1.83)
 
 
 def log5(pa, pb):
-    if pa + pb == 0: return 0.5
+    if pa + pb == 0:
+        return 0.5
     return pa * (1 - pb) / (pa * (1 - pb) + pb * (1 - pa))
 
 
@@ -111,7 +110,7 @@ def make_odds(fair, vig=0.08):
     return h_dec, a_dec
 
 
-def run():
+def run():  # noqa: C901
     print()
     print("=" * 70)
     print("🏛️  WBC 2023 回測 v4 — WBC 專用 Edge Realism 門檻")
@@ -194,9 +193,15 @@ def run():
 
         bet_side = None
         if edge_h >= 0.04 and p >= 0.55:
-            bet_side = "home"; bet_prob = p; bet_odds = h_dec; edge = edge_h
+            bet_side = "home"
+            bet_prob = p
+            bet_odds = h_dec
+            edge = edge_h
         elif edge_a >= 0.04 and (1 - p) >= 0.55:
-            bet_side = "away"; bet_prob = 1 - p; bet_odds = a_dec; edge = edge_a
+            bet_side = "away"
+            bet_prob = 1 - p
+            bet_odds = a_dec
+            edge = edge_a
 
         if bet_side and bet_odds > 1.0:
             mkt = ROUND_MARKET.get(rnd, ROUND_MARKET["Pool A"])
@@ -229,13 +234,17 @@ def run():
             if score < threshold:
                 gate_blocked += 1
                 # Skip but still update
-                runs_for[home].append(hs); runs_for[away].append(aws)
-                runs_against[home].append(aws); runs_against[away].append(hs)
-                results_hist[home].append(actual_hw); results_hist[away].append(1 - actual_hw)
+                runs_for[home].append(hs)
+                runs_for[away].append(aws)
+                runs_against[home].append(aws)
+                runs_against[away].append(hs)
+                results_hist[home].append(actual_hw)
+                results_hist[away].append(1 - actual_hw)
                 elo_exp = 1.0 / (1.0 + 10 ** (-(elo[home] - elo[away]) / 400.0))
                 margin = abs(hs - aws)
                 delta = 16.0 * (1.0 + 0.08 * min(margin, 10)) * (actual_hw - elo_exp)
-                elo[home] += delta; elo[away] -= delta
+                elo[home] += delta
+                elo[away] -= delta
 
                 won_hypothetical = (bet_side == "home" and actual_hw == 1) or (bet_side == "away" and actual_hw == 0)
                 block_marker = "🛑✅" if won_hypothetical else "🛑❌"
@@ -259,12 +268,14 @@ def run():
                 total_staked += stake
                 total_pnl += pnl
                 bet_count += 1
-                if won: bet_wins += 1
+                if won:
+                    bet_wins += 1
                 peak = max(peak, bankroll)
                 max_dd = max(max_dd, (peak - bankroll) / peak)
 
                 label_summary[label]["bet"] += 1
-                if won: label_summary[label]["won"] += 1
+                if won:
+                    label_summary[label]["won"] += 1
 
                 marker = "✅" if won else "❌"
                 bet_details.append(
@@ -273,22 +284,26 @@ def run():
                 )
 
         # Update
-        runs_for[home].append(hs); runs_for[away].append(aws)
-        runs_against[home].append(aws); runs_against[away].append(hs)
-        results_hist[home].append(actual_hw); results_hist[away].append(1 - actual_hw)
+        runs_for[home].append(hs)
+        runs_for[away].append(aws)
+        runs_against[home].append(aws)
+        runs_against[away].append(hs)
+        results_hist[home].append(actual_hw)
+        results_hist[away].append(1 - actual_hw)
         elo_exp = 1.0 / (1.0 + 10 ** (-(elo[home] - elo[away]) / 400.0))
         margin = abs(hs - aws)
         delta = 16.0 * (1.0 + 0.08 * min(margin, 10)) * (actual_hw - elo_exp)
-        elo[home] += delta; elo[away] -= delta
+        elo[home] += delta
+        elo[away] -= delta
 
     # ── Results ──
     roi = total_pnl / total_staked if total_staked > 0 else 0
     print(f"  預測準確率: {total_correct/total_preds:.1%} ({total_correct}/{total_preds})")
     print()
-    print(f"  🏛️ Gate 結果:")
+    print("  🏛️ Gate 結果:")
     print(f"    通過: {gate_passed}   擋住: {gate_blocked}")
     if bet_count:
-        print(f"  💰 投注結果:")
+        print("  💰 投注結果:")
         print(f"    投注: {bet_count}場 | 勝率: {bet_wins/bet_count:.0%} | ROI: {roi:+.1%}")
         print(f"    淨利: ${total_pnl:+,.0f} | 最終: ${bankroll:,.0f} | DD: {max_dd:.1%}")
     print()

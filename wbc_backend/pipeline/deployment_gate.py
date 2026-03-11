@@ -4,7 +4,7 @@ import json
 import pickle
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from wbc_backend.config.settings import AppConfig
 from wbc_backend.features.advanced import FEATURE_NAMES
@@ -15,28 +15,28 @@ class GateCheck:
     name: str
     passed: bool
     details: str
-    value: Optional[float] = None
+    value: float | None = None
 
 
 @dataclass
 class DeploymentGateReport:
     status: str
     selected_calibration: str
-    checks: List[GateCheck] = field(default_factory=list)
-    walkforward_summary: Dict[str, Any] = field(default_factory=dict)
-    selected_calibration_summary: Dict[str, Any] = field(default_factory=dict)
-    artifact_feature_counts: Dict[str, Optional[int]] = field(default_factory=dict)
+    checks: list[GateCheck] = field(default_factory=list)
+    walkforward_summary: dict[str, Any] = field(default_factory=dict)
+    selected_calibration_summary: dict[str, Any] = field(default_factory=dict)
+    artifact_feature_counts: dict[str, int | None] = field(default_factory=dict)
 
     @property
     def blocking(self) -> bool:
         return any(not check.passed for check in self.checks)
 
-    def ensure_ready(self) -> "DeploymentGateReport":
+    def ensure_ready(self) -> DeploymentGateReport:
         if self.blocking:
             raise DeploymentGateError(self)
         return self
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -47,7 +47,7 @@ class DeploymentGateError(RuntimeError):
         super().__init__(f"Deployment gate blocked live prediction: {reasons or 'unknown reason'}")
 
 
-def _load_json(path: Path) -> Dict[str, Any]:
+def _load_json(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as fh:
         return json.load(fh)
 
@@ -57,7 +57,7 @@ def _load_pickle(path: Path) -> Any:
         return pickle.load(fh)
 
 
-def _artifact_feature_count(path: Path) -> Optional[int]:
+def _artifact_feature_count(path: Path) -> int | None:
     if not path.exists():
         return None
     payload = _load_pickle(path)
@@ -79,11 +79,11 @@ def evaluate_deployment_gate(config: AppConfig) -> DeploymentGateReport:
     if not gate_cfg.enabled:
         return DeploymentGateReport(status="DISABLED", selected_calibration="none")
 
-    checks: List[GateCheck] = []
-    walkforward_summary: Dict[str, Any] = {}
-    calibration_payload: Dict[str, Any] = {}
+    checks: list[GateCheck] = []
+    walkforward_summary: dict[str, Any] = {}
+    calibration_payload: dict[str, Any] = {}
     selected_calibration = "none"
-    selected_calibration_summary: Dict[str, Any] = {}
+    selected_calibration_summary: dict[str, Any] = {}
 
     walkforward_path = Path(config.sources.walkforward_summary_json)
     if walkforward_path.exists():
@@ -118,7 +118,7 @@ def evaluate_deployment_gate(config: AppConfig) -> DeploymentGateReport:
     calibration_path = Path(config.sources.calibration_compare_json)
     if calibration_path.exists():
         calibration_payload = _load_json(calibration_path)
-        candidates: List[tuple[str, float, Dict[str, Any]]] = []
+        candidates: list[tuple[str, float, dict[str, Any]]] = []
         for name, entry in calibration_payload.items():
             summary = entry.get("summary", {})
             candidates.append((name, float(summary.get("ml_roi", -1.0)), summary))
@@ -149,7 +149,7 @@ def evaluate_deployment_gate(config: AppConfig) -> DeploymentGateReport:
             )
         )
 
-    artifact_feature_counts: Dict[str, Optional[int]] = {}
+    artifact_feature_counts: dict[str, int | None] = {}
     if gate_cfg.require_artifact_schema_match:
         expected = len(FEATURE_NAMES)
         artifact_dir = Path(config.sources.model_artifacts_dir)
