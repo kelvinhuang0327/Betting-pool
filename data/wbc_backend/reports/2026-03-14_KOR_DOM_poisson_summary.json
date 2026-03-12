@@ -1,0 +1,14 @@
+{
+  "date_tpe": "2026-03-14",
+  "lambda_a": 4.75,
+  "lambda_b": 7.5,
+  "a_win_9": 0.1809824283218872,
+  "b_win_9": 0.7297255637272091,
+  "tie_9": 0.08929200795090367,
+  "a_full": 0.22562843229733903,
+  "b_full": 0.7743715677026609,
+  "special_matchup_weight": "無資料",
+  "odds": "無資料",
+  "model_artifacts_has_team_weights": false,
+  "matrix_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/2026-03-14_KOR_DOM_poisson_matrix.csv"
+}

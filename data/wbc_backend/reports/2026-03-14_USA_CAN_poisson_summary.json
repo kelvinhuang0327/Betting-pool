@@ -1,0 +1,14 @@
+{
+  "date_tpe": "2026-03-14",
+  "lambda_a": 5.625,
+  "lambda_b": 4.75,
+  "a_win_9": 0.5435802513446233,
+  "b_win_9": 0.3345075651391694,
+  "tie_9": 0.12191218351620733,
+  "a_full": 0.604536343102727,
+  "b_full": 0.3954636568972731,
+  "special_matchup_weight": "無資料",
+  "odds": "無資料",
+  "model_artifacts_has_team_weights": false,
+  "matrix_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/2026-03-14_USA_CAN_poisson_matrix.csv"
+}
