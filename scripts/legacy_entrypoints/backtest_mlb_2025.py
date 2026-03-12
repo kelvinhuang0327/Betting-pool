@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import sys
 import os
+import json
+from pathlib import Path
 
 # Add root to path
 sys.path.append(os.getcwd())
@@ -40,11 +42,23 @@ def american_to_decimal(odds):
         return 1.0
 
 def run_mlb_backtest(file_path, limit=None):
+    meta_path = Path(file_path + ".metadata.json")
+    if not meta_path.exists():
+        raise RuntimeError("MLB 2025 metadata sidecar missing; backtest blocked.")
+
+    metadata = json.loads(meta_path.read_text(encoding="utf-8"))
+    if not metadata.get("source_chain_verified", False):
+        raise RuntimeError("MLB 2025 dataset provenance is not verified; backtest blocked.")
+
     df = pd.read_csv(file_path)
     df.columns = df.columns.str.strip()
     df = df.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
     
     df = df[df['Status'] == 'Final'].copy()
+    if 'is_verified_real' not in df.columns:
+        raise RuntimeError("MLB 2025 dataset missing is_verified_real column; backtest blocked.")
+    if not df['is_verified_real'].fillna(False).astype(bool).all():
+        raise RuntimeError("MLB 2025 dataset contains unverified rows; backtest blocked.")
     df['Away Score'] = pd.to_numeric(df['Away Score'], errors='coerce')
     df['Home Score'] = pd.to_numeric(df['Home Score'], errors='coerce')
     df = df.dropna(subset=['Away Score', 'Home Score'])

@@ -49,6 +49,7 @@ def run_backtest(historical_matches: List[Dict], title: str = "Backtest"):
     rl_total_profit = 0.0
     ml_correct = 0
     rl_correct = 0
+    evaluated_matches = 0
 
     # Historical Context Meta-data — use expanded multi-year team database
     team_meta = WBC_TEAM_META
@@ -99,7 +100,11 @@ def run_backtest(historical_matches: List[Dict], title: str = "Backtest"):
         ml_winner = "HOME" if actual_home > actual_away else "AWAY"
         diff = actual_home - actual_away
         
-        tsl_odds = m["tsl_odds"]
+        tsl_odds = m.get("tsl_odds") or {}
+        if not m.get("odds_verified", False) or not tsl_odds:
+            print(f"Match: {away_code} vs {home_code} | 跳過投注評估：無已驗證歷史盤口")
+            continue
+        evaluated_matches += 1
         
         # --- Evaluate Money Line (ML) ---
         ml_bet_on = home_code if home_wp > away_wp else away_code
@@ -129,8 +134,12 @@ def run_backtest(historical_matches: List[Dict], title: str = "Backtest"):
         print(f"Match: {away_code} vs {home_code} | ML: {'✅' if ml_won else '❌'} ({ml_profit:+.2f}) | RL({line}): {'✅' if rl_won else '❌'} ({rl_profit:+.2f})")
 
     # Summary
-    n = len(historical_matches)
+    n = evaluated_matches
     print(f"\n--- {title} Summary ---")
+    if n == 0:
+        print("No verified historical odds available. Results-only dataset retained; betting backtest skipped.")
+        print("-" * 40 + "\n")
+        return
     print(f"ML: Win Rate {ml_correct/n:.1%}, Profit {ml_total_profit:.2f}, ROI {ml_total_profit/n:.2%}")
     print(f"RL: Win Rate {rl_correct/n:.1%}, Profit {rl_total_profit:.2f}, ROI {rl_total_profit/n:.2%}")
     print("-" * 40 + "\n")

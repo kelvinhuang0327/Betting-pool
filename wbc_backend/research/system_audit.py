@@ -143,7 +143,7 @@ def run_full_system_audit() -> FunctionalAuditReport:
             title="Backtest engine coverage is fragmented",
             weakness="There are multiple backtest scripts and runners without a single canonical harness for comparable metrics.",
             optimization_opportunity="Unify via one backtest contract producing calibration/CLV/risk outputs per market.",
-            files=["backtester.py", "wbc_backend/optimization/walkforward.py", "wbc_backend/backtest/runner.py"],
+            files=["scripts/legacy_entrypoints/backtester.py", "wbc_backend/optimization/walkforward.py", "wbc_backend/backtest/runner.py"],
         ),
     ]
 

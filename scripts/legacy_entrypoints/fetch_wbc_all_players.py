@@ -5,8 +5,9 @@ import time
 from typing import List, Dict
 
 class WBCCrawler:
-    def __init__(self, season=2026):
+    def __init__(self, season=2026, timeout=20):
         self.season = season
+        self.timeout = timeout
         self.base_url = "https://statsapi.mlb.com/api/v1"
         self.headers = {'User-Agent': 'Mozilla/5.0'}
 
@@ -14,7 +15,7 @@ class WBCCrawler:
         url = f"{self.base_url}/{endpoint}"
         req = urllib.request.Request(url, headers=self.headers)
         try:
-            with urllib.request.urlopen(req) as response:
+            with urllib.request.urlopen(req, timeout=self.timeout) as response:
                 return json.loads(response.read().decode('utf-8'))
         except Exception as e:
             print(f"Error fetching {url}: {e}")

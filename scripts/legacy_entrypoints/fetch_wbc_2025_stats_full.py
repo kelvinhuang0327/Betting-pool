@@ -11,7 +11,8 @@ class Stats2025Fetcher_All:
         self.target_teams = [
             "United States", "Japan", "Dominican Republic", "Chinese Taipei", 
             "Venezuela", "Puerto Rico", "Mexico", "Korea", "Kingdom of the Netherlands",
-            "Canada", "Australia", "Cuba", "Panama", "Colombia", "Israel", "Italy"
+            "Canada", "Australia", "Cuba", "Panama", "Colombia", "Israel", "Italy",
+            "Great Britain", "Czechia", "Nicaragua", "Brazil"
         ]
         self.roster_file = "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_all_players_realtime.json"
         self.output_file = "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_players_2025_stats.json"
@@ -22,7 +23,7 @@ class Stats2025Fetcher_All:
         url = f"{self.base_url}/{endpoint}"
         req = urllib.request.Request(url, headers=self.headers)
         try:
-            with urllib.request.urlopen(req) as response:
+            with urllib.request.urlopen(req, timeout=10) as response:
                 return json.loads(response.read().decode('utf-8'))
         except Exception:
             return None
@@ -43,12 +44,29 @@ class Stats2025Fetcher_All:
         with open(self.roster_file, 'r', encoding='utf-8') as f:
             roster_data = json.load(f)
 
+        # Load existing results to support incremental updates
+        existing = {}
+        if os.path.exists(self.output_file):
+            try:
+                with open(self.output_file, 'r', encoding='utf-8') as f:
+                    for t in json.load(f):
+                        if len(t.get("players_with_stats", [])) > 0:
+                            existing[t["team"]] = t
+            except Exception:
+                pass
+
         results = []
         print(f"Starting 2025 stats extraction for ALL major teams...")
 
         for team_entry in roster_data:
             team_name = team_entry['team']
             if team_name not in self.target_teams: continue
+
+            # Skip teams already fetched with reasonable data
+            if team_name in existing and len(existing[team_name]["players_with_stats"]) >= 1:
+                print(f"Skipping {team_name} (already have {len(existing[team_name]['players_with_stats'])} players)")
+                results.append(existing[team_name])
+                continue
 
             print(f"Processing {team_name}...")
             team_results = {"team": team_name, "players_with_stats": []}
@@ -65,9 +83,11 @@ class Stats2025Fetcher_All:
 
             results.append(team_results)
 
-        with open(self.output_file, 'w', encoding='utf-8') as f:
-            json.dump(results, f, indent=4, ensure_ascii=False)
-        
+            # Save incrementally after each team
+            with open(self.output_file, 'w', encoding='utf-8') as f:
+                json.dump(results, f, indent=4, ensure_ascii=False)
+            print(f"  -> Saved {len(team_results['players_with_stats'])} players for {team_name}")
+
         count = sum(len(t["players_with_stats"]) for t in results)
         print(f"\nCompleted! Saved 2025 stats for {count} players to {self.output_file}")
 

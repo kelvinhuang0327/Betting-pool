@@ -26,7 +26,7 @@ jobs:
       - name: Run Data Update
         run: |
           # 執行資料更新與賠率爬取
-          python fetch_wbc_all_players.py
+          python scripts/legacy_entrypoints/fetch_wbc_all_players.py
           python data/live_updater.py
 
       - name: Commit and Push changes

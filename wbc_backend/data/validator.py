@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import logging
 import os
+import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -33,6 +34,7 @@ class ValidationReport:
     has_postseason: bool = False
     is_valid: bool = False
     issues: list[str] = field(default_factory=list)
+    provenance_verified: bool = False
 
 
 # ── Required columns per source ─────────────────────────────────────────────
@@ -40,6 +42,11 @@ class ValidationReport:
 MLB_REQUIRED_COLS = [
     "date", "home_team", "away_team", "home_score", "away_score",
     "home_starter", "away_starter",
+]
+MLB_PROVENANCE_COLS = [
+    "source_file",
+    "source_type",
+    "is_verified_real",
 ]
 MLB_PITCHER_COLS = [
     "era", "fip", "whip", "k_per_9", "bb_per_9", "ip", "stuff_plus",
@@ -110,6 +117,30 @@ def validate_dataset(  # noqa: C901
         report.missing_fields = list(missing)
         report.issues.append(f"Missing required columns: {missing}")
 
+    strict_provenance = _requires_strict_provenance(source, csv_path)
+    if strict_provenance:
+        provenance_missing = set(MLB_PROVENANCE_COLS) - all_cols
+        if provenance_missing:
+            report.issues.append(f"Missing provenance columns: {provenance_missing}")
+
+        meta = _load_metadata_sidecar(csv_path)
+        if not meta:
+            report.issues.append("Dataset metadata sidecar missing.")
+        else:
+            if not bool(meta.get("source_chain_verified", False)):
+                report.issues.append("Dataset provenance chain is not verified.")
+            else:
+                report.provenance_verified = True
+
+        if "is_verified_real" in df.columns:
+            verified_real = df["is_verified_real"].fillna(False).astype(bool)
+            if not verified_real.all():
+                report.issues.append("Rows flagged as not verified real exist in dataset.")
+    else:
+        # Allow temporary/ad-hoc MLB CSV validation (e.g., tests, exploratory checks)
+        # without weakening strict provenance enforcement for production datasets.
+        report.provenance_verified = True
+
     # ── Row completeness ─────────────────────────────────
     non_null_ratio = df[list(required & all_cols)].notna().mean().mean() if (required & all_cols) else 0.0
     report.completeness_pct = round(non_null_ratio, 4)
@@ -165,6 +196,7 @@ def validate_dataset(  # noqa: C901
         and len(report.missing_fields) == 0
         and report.total_records > 0
         and not any("Synthetic rows detected" in issue for issue in report.issues)
+        and report.provenance_verified
     )
 
     level = logging.INFO if report.is_valid else logging.WARNING
@@ -225,6 +257,16 @@ def _read_csv_with_encoding(path: str) -> tuple[pd.DataFrame | None, str | None]
     return None, None
 
 
+def _requires_strict_provenance(source: str, csv_path: str) -> bool:
+    if source.upper() != "MLB_2025":
+        return True
+    try:
+        resolved = Path(csv_path).resolve().as_posix().lower()
+    except Exception:
+        return True
+    return "/data/mlb_2025/" in resolved
+
+
 def _normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     normalized = df.copy()
 
@@ -264,6 +306,16 @@ def _safe_load(path: str) -> pd.DataFrame | None:
 
 def load_dataset_frame(path: str) -> pd.DataFrame | None:
     return _safe_load(path)
+
+
+def _load_metadata_sidecar(path: str) -> dict | None:
+    meta_path = Path(path).with_suffix(Path(path).suffix + ".metadata.json")
+    if not meta_path.exists():
+        return None
+    try:
+        return json.loads(meta_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
 
 
 def _patch_missing_values(csv_path: str, report: ValidationReport) -> None:
