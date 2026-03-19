@@ -132,6 +132,23 @@ def evaluate_deployment_gate(config: AppConfig) -> DeploymentGateReport:
                     value=best_roi,
                 )
             )
+            # ECE gate：目標 < 0.12（Platt Scaling 後應達 < 0.08）
+            # 僅在 ECE 欄位存在於校準摘要時才判斷（舊格式校準文件豁免）
+            raw_ece = selected_calibration_summary.get("ece")
+            if raw_ece is not None:
+                best_ece = float(raw_ece)
+                max_ece = getattr(gate_cfg, "max_calibration_ece", 0.12)
+                checks.append(
+                    GateCheck(
+                        name="calibration_ece",
+                        passed=best_ece <= max_ece,
+                        details=(
+                            f"calibration={selected_calibration}, ECE={best_ece:.4f}, "
+                            f"required<={max_ece:.4f} (target=0.08 after Platt Scaling)"
+                        ),
+                        value=best_ece,
+                    )
+                )
         else:
             checks.append(
                 GateCheck(

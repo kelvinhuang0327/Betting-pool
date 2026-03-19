@@ -45,8 +45,8 @@ def _write_gate_files(root: Path, stale_artifact: bool = False) -> AppConfig:
     calibration_path.write_text(
         json.dumps(
             {
-                "platt": {"summary": {"ml_roi": -0.01}},
-                "isotonic": {"summary": {"ml_roi": 0.02}},
+                "platt": {"summary": {"ml_roi": -0.01, "ece": 0.09}},
+                "isotonic": {"summary": {"ml_roi": 0.02, "ece": 0.07}},
             }
         ),
         encoding="utf-8",
@@ -179,6 +179,7 @@ class TestPredictionRegistry(unittest.TestCase):
                     edge=0.04,
                     kelly_fraction=0.01,
                     stake_fraction=0.005,
+                    market_support_state="tsl_direct",
                 )
             ]
 
@@ -194,7 +195,11 @@ class TestPredictionRegistry(unittest.TestCase):
                 top_bets=top_bets,
                 decision_report={"decision": "NO_BET"},
                 calibration_metrics={"brier": 0.24},
-                portfolio_metrics={"survival_prob": 1.0},
+                portfolio_metrics={
+                    "survival_prob": 1.0,
+                    "market_support_profile": "tsl_direct",
+                    "market_support_tilt": "direct_favored",
+                },
             )
 
             lines = registry_path.read_text(encoding="utf-8").strip().splitlines()
@@ -204,6 +209,9 @@ class TestPredictionRegistry(unittest.TestCase):
             self.assertEqual(payload["teams"]["home"], "KOR")
             self.assertEqual(payload["verification"]["status"], "VERIFIED_WITH_FALLBACK")
             self.assertEqual(payload["deployment_gate"]["status"], "READY")
+            self.assertEqual(payload["market_support"]["primary"], "tsl_direct")
+            self.assertEqual(payload["market_support"]["best_bet_state"], "tsl_direct")
+            self.assertEqual(payload["market_support"]["tilt"], "direct_favored")
 
 
 if __name__ == "__main__":

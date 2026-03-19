@@ -16,11 +16,27 @@ Ties together:
 from __future__ import annotations
 
 from dataclasses import replace
+from datetime import datetime, timezone
+import json
 import logging
+from pathlib import Path
 from typing import cast
 
+from data.fetch_status import classify_tsl_feed_status, read_tsl_fetch_status
+from data.tsl_snapshot import (
+    TEAM_NAME_TO_CODE,
+    build_tsl_line_movement_context,
+    build_tsl_odds_time_series,
+    load_tsl_snapshot,
+)
+from league_adapters.base import LeagueContext as _LeagueContext
+from league_adapters.registry import get_league_adapter, normalize_league_name
 from wbc_backend.betting.market import market_adjustment
-from wbc_backend.betting.optimizer import build_true_probs, find_top_bets
+from wbc_backend.betting.optimizer import (
+    build_true_probs,
+    classify_market_support_state,
+    find_top_bets,
+)
 from wbc_backend.betting.portfolio_risk import (
     BetProposal,
     PortfolioRiskManager,
@@ -63,8 +79,37 @@ from wbc_backend.pipeline.deployment_gate import (
 from wbc_backend.reporting.prediction_registry import append_prediction_record
 from wbc_backend.reporting.renderers import render_full_report, render_json
 from wbc_backend.simulation.monte_carlo import run_monte_carlo
+from wbc_backend.strategy.bet_decision_flow import (
+    DecisionContext,
+    run_decision_pipeline,
+)
 
 logger = logging.getLogger(__name__)
+_TSL_DIRECT_SUPPORT_MAX_AGE_HOURS = 8.0
+_MARKET_SUPPORT_PRIORITY = [
+    "tsl_direct",
+    "intl_only",
+    "tsl_stale",
+    "tsl_unlisted_market",
+    "tsl_unlisted_matchup",
+    "mixed",
+    "unknown",
+]
+_MARKET_SUPPORT_RANK = {
+    state: idx for idx, state in enumerate(_MARKET_SUPPORT_PRIORITY)
+}
+_PORTFOLIO_SUPPORT_MULTIPLIER = {
+    "tsl_direct": 1.08,
+    "intl_only": 0.98,
+    "tsl_stale": 0.88,
+    "tsl_unlisted_market": 0.84,
+    "tsl_unlisted_matchup": 0.80,
+    "mixed": 0.95,
+    "unknown": 1.0,
+}
+_SUPPORT_PERF_MIN_GAMES = 3
+_SUPPORT_PERF_ADJ_MIN = 0.92
+_SUPPORT_PERF_ADJ_MAX = 1.08
 
 
 def _normalize_player_name(name: str) -> str:
@@ -168,7 +213,19 @@ class PredictionService:
         # ── 4. Ensemble Prediction ───────────────────────
         logger.info("[STEP 4] Running hybrid ensemble prediction...")
         pred = predict_matchup(matchup, self.config.model)
-        if verification.used_fallback_lineup:
+        if verification.status == "VERIFIED_WITH_FALLBACK":
+            # 升為 deploy gate：先發認定依賴 fallback 時，禁止輸出下注建議
+            # 仍保留 confidence 懲罰供報告使用
+            pred.confidence_score *= 0.85
+            pred.x_factors.append(
+                "DEPLOY_GATE_FALLBACK: 先發資料未完整認定（VERIFIED_WITH_FALLBACK），"
+                "本場次不輸出下注建議。"
+            )
+            logger.warning(
+                "[STEP 2] VERIFIED_WITH_FALLBACK for %s — bet recommendations BLOCKED",
+                matchup.game_id,
+            )
+        elif verification.used_fallback_lineup:
             pred.confidence_score *= 0.85
             pred.x_factors.append("Previous-game lineup fallback applied")
         logger.info("[STEP 4] Raw prediction: home=%.3f, away=%.3f, "
@@ -186,6 +243,15 @@ class PredictionService:
             pred, notes, _ = apply_wbc_rules(matchup, pred)
             for note in notes:
                 logger.info("[STEP 5] %s", note)
+            # Hard serving-boundary cap after rule engine.
+            pred.home_win_prob = max(0.15, min(0.85, float(pred.home_win_prob)))
+            pred.away_win_prob = 1.0 - pred.home_win_prob
+
+        # ── N.02 崩盤風險（mismatch_blowout_propensity）──────────────────────
+        # 在 MC 之前計算，讓 volatility expansion 也能影響 OU 模擬尾部
+        import math as _math
+        _elo_gap = abs(matchup.home.elo - matchup.away.elo)
+        _blowout_propensity = float(_math.tanh(_elo_gap / 150.0))
 
         # ── 6. Monte Carlo (50K) ─────────────────────────
         logger.info("[STEP 6] Running Monte Carlo simulation (%d sims)...",
@@ -199,23 +265,37 @@ class PredictionService:
             away_sp_fatigue=adv_features.away_sp_fatigue,
             home_bullpen_stress=adv_features.home_bullpen_stress,
             away_bullpen_stress=adv_features.away_bullpen_stress,
+            blowout_propensity=_blowout_propensity,
         )
         logger.info("[STEP 6] MC result: home_wp=%.3f, over=%.3f, "
-                   "mean_total=%.1f, odd=%.3f",
+                   "mean_total=%.1f, odd=%.3f (blowout_propensity=%.2f)",
                    sim.home_win_prob, sim.over_prob,
-                   sim.mean_total_runs, sim.odd_prob)
+                   sim.mean_total_runs, sim.odd_prob, _blowout_propensity)
 
         # ── 7. Market Calibration ────────────────────────
         logger.info("[STEP 7] Running market calibration...")
         odds_lines = self._get_odds(request, matchup)
+        tsl_status = read_tsl_fetch_status()
+        self._attach_tsl_fetch_context(pred, matchup, odds_lines, tsl_status)
+        tsl_matchup_status = pred.diagnostics.get("tsl_matchup") if pred.diagnostics else None
         if not odds_lines:
             pred.x_factors.append("No verified live odds available; market calibration skipped")
+        tsl_odds_history = build_tsl_odds_time_series(
+            matchup.away.team,
+            matchup.home.team,
+            markets=("ML",),
+            max_snapshots=12,
+            max_snapshot_age_hours=8.0,
+        )
         market_result = market_adjustment(
             pred.home_win_prob,
             odds_lines,
             matchup.home.team,
             matchup.away.team,
             self.config.market,
+            odds_history=tsl_odds_history or None,
+            feed_status=tsl_status or None,
+            matchup_status=tsl_matchup_status if isinstance(tsl_matchup_status, dict) else None,
         )
         adjusted_home_prob = market_result["adjusted_home_prob"]
         pred.market_bias_score = market_result["market_bias_score"]
@@ -230,12 +310,60 @@ class PredictionService:
         )
 
         # ── 9. Find Top 3 Bets ──────────────────────────
-        logger.info("[STEP 8] Finding top EV bets...")
-        top_bets = find_top_bets(
-            odds_lines, true_probs,
-            matchup.home.team, matchup.away.team,
-            pred.confidence_score, self.config, self.bankroll,
+        # Gate A: VERIFIED_WITH_FALLBACK 狀態禁止輸出下注建議
+        # Gate B: MLB PAPER_ONLY — CLV 代理、無 Statcast、BSS = -14.1%
+        _league_name = normalize_league_name(matchup.tournament)
+        _league_adapter = get_league_adapter(_league_name)
+        _league_rules = _league_adapter.rules(
+            _LeagueContext(
+                league=_league_name,
+                game_id=matchup.game_id,
+                home_team=matchup.home.team,
+                away_team=matchup.away.team,
+            )
         )
+        _is_paper_only = _league_rules.deployment_mode != "live"
+
+        # ── N.02 崩盤風險評估（已在 Step 6 前計算，此處直接使用）──────────
+        if _blowout_propensity > 0.60:
+            pred.x_factors.append(
+                f"BLOWOUT_RISK: Elo gap {_elo_gap:.0f} → "
+                f"mismatch_blowout_propensity={_blowout_propensity:.2f}"
+                f"（大比分崩盤風險高，OU Under 已壓制）"
+            )
+            logger.info(
+                "[STEP 8] High blowout propensity=%.2f (Elo gap %.0f) — OU Under suppressed",
+                _blowout_propensity, _elo_gap,
+            )
+
+        if verification.status == "VERIFIED_WITH_FALLBACK":
+            logger.warning(
+                "[STEP 8] Bet finding SKIPPED — starter identity unverified (VERIFIED_WITH_FALLBACK)"
+            )
+            top_bets: list[BetRecommendation] = []
+        elif _is_paper_only:
+            logger.warning(
+                "[STEP 8] %s PAPER_ONLY mode — bets suppressed. Reason: %s",
+                _league_name.upper(),
+                _league_rules.paper_only_reason,
+            )
+            pred.x_factors.append(
+                f"{_league_name.upper()}_PAPER_ONLY: {_league_rules.paper_only_reason}"
+            )
+            top_bets = []
+        else:
+            logger.info("[STEP 8] Finding top EV bets...")
+            top_bets = find_top_bets(
+                odds_lines, true_probs,
+                matchup.home.team, matchup.away.team,
+                pred.confidence_score, self.config, self.bankroll,
+                model_brier=pred.diagnostics.get("brier_score") if pred.diagnostics else None,
+                calibration_ece=pred.diagnostics.get("ece") if pred.diagnostics else None,
+                tsl_feed_status=tsl_status or None,
+                tsl_matchup_status=tsl_matchup_status if isinstance(tsl_matchup_status, dict) else None,
+                market_support_by_market=market_result.get("market_support_by_market"),
+                blowout_propensity=_blowout_propensity,
+            )
 
         # ── 10. Institutional Decision Engine (7-Phase) ──
         logger.info("[STEP 9] Running institutional decision engine...")
@@ -245,6 +373,22 @@ class PredictionService:
         logger.info("[STEP 9] Decision: %s (%s) — edge=%.1f, regime=%s",
                    decision_rpt.decision, decision_rpt.confidence,
                    decision_rpt.edge_score, decision_rpt.market_regime)
+
+        raw_top_bets_count = len(top_bets)
+        top_bets = self._apply_bet_decision_flow(
+            top_bets,
+            matchup,
+            pred,
+            adjusted_home_prob,
+            market_result,
+        )
+        top_bets = self._sort_bets_for_execution(top_bets)
+        if raw_top_bets_count and not top_bets:
+            pred.x_factors.append("All optimizer candidates were rejected by institutional bet gates")
+        elif raw_top_bets_count > len(top_bets):
+            pred.x_factors.append(
+                f"Institutional bet gates filtered {raw_top_bets_count - len(top_bets)} candidate bets"
+            )
 
         # ── 11. Portfolio Optimization ───────────────────
         logger.info("[STEP 10] Running portfolio optimization...")
@@ -272,6 +416,9 @@ class PredictionService:
             if best.line is not None:
                 best_bet_desc += f" ({best.line:+.1f})"
             best_bet_desc += f" @ {best.sportsbook}"
+            best_bet_desc += f" [{self._best_bet_support_label(best.market_support_state)}]"
+            if best.decision_timing != "IMMEDIATE":
+                best_bet_desc += f" [{best.decision_timing}]"
             best_ev = best.ev
 
         display_home_score, display_away_score, reconciled = self._resolve_display_scores(
@@ -304,12 +451,14 @@ class PredictionService:
             decision_report=decision_rpt,
             calibration_metrics=calibration_metrics,
             portfolio_metrics=portfolio_metrics,
+            market_support_performance=self._load_market_support_performance_summary(),
         )
         json_report = render_json(
             game_output, pred, sim, market_result,
             decision_report=decision_rpt,
             calibration_metrics=calibration_metrics,
             portfolio_metrics=portfolio_metrics,
+            market_support_performance=self._load_market_support_performance_summary(),
         )
 
         logger.info("=" * 70)
@@ -358,6 +507,221 @@ class PredictionService:
         home_runs = max(0.0, total * final_home_prob)
         away_runs = max(0.0, total - home_runs)
         return round(home_runs, 2), round(away_runs, 2), True
+
+    def _load_market_support_performance_summary(self) -> dict[str, object] | None:
+        target = Path(self.config.sources.reports_dir) / "market_support_performance_summary.json"
+        if not target.exists():
+            return None
+        try:
+            payload = json.loads(target.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None
+        return payload if isinstance(payload, dict) else None
+
+    @staticmethod
+    def _best_bet_support_label(state: str) -> str:
+        mapping = {
+            "tsl_direct": "TSL_DIRECT",
+            "intl_only": "INTL_ONLY",
+            "tsl_stale": "TSL_STALE",
+            "tsl_unlisted_market": "TSL_MARKET_GAP",
+            "tsl_unlisted_matchup": "TSL_MATCHUP_GAP",
+        }
+        return mapping.get(str(state or ""), str(state or "UNKNOWN").upper())
+
+    @staticmethod
+    def _summarize_market_support(top_bets: list[BetRecommendation]) -> tuple[str, dict[str, int]]:
+        if not top_bets:
+            return "unknown", {}
+
+        counts: dict[str, int] = {}
+        for bet in top_bets:
+            state = str(getattr(bet, "market_support_state", "") or "unknown")
+            counts[state] = counts.get(state, 0) + 1
+
+        if len(counts) == 1:
+            return next(iter(counts)), counts
+
+        dominant_state = max(
+            counts.items(),
+            key=lambda item: (
+                item[1],
+                -_MARKET_SUPPORT_PRIORITY.index(item[0]) if item[0] in _MARKET_SUPPORT_PRIORITY else -999,
+            ),
+        )[0]
+        return dominant_state, counts
+
+    @staticmethod
+    def _sort_bets_for_execution(top_bets: list[BetRecommendation]) -> list[BetRecommendation]:
+        if not top_bets:
+            return []
+
+        def _priority_key(bet: BetRecommendation) -> tuple[int, int, float, float]:
+            support_rank = _MARKET_SUPPORT_RANK.get(
+                str(getattr(bet, "market_support_state", "") or "unknown"),
+                len(_MARKET_SUPPORT_RANK),
+            )
+            delay_minutes = int(getattr(bet, "delay_minutes", 0) or 0)
+            return (
+                support_rank,
+                delay_minutes,
+                -float(getattr(bet, "ev", 0.0)),
+                -float(getattr(bet, "confidence", 0.0)),
+            )
+
+        return sorted(top_bets, key=_priority_key)
+
+    @staticmethod
+    def _performance_adjusted_support_multiplier(
+        state: str,
+        performance_summary: dict[str, object] | None,
+    ) -> float:
+        base = _PORTFOLIO_SUPPORT_MULTIPLIER.get(str(state or "unknown"), 1.0)
+        if not performance_summary:
+            return base
+
+        groups = performance_summary.get("groups")
+        if not isinstance(groups, dict):
+            return base
+
+        metrics = groups.get(str(state))
+        if not isinstance(metrics, dict):
+            return base
+
+        games = int(metrics.get("games", 0) or 0)
+        if games < _SUPPORT_PERF_MIN_GAMES:
+            return base
+
+        accuracy = float(metrics.get("winner_accuracy", 0.0) or 0.0)
+        avg_brier = float(metrics.get("avg_brier", 0.25) or 0.25)
+
+        # Small adaptive overlay: reward sustained accuracy, penalize poor calibration.
+        overlay = 1.0 + ((accuracy - 0.5) * 0.12) - ((avg_brier - 0.20) * 0.25)
+        overlay = max(_SUPPORT_PERF_ADJ_MIN, min(_SUPPORT_PERF_ADJ_MAX, overlay))
+        return round(base * overlay, 4)
+
+    @staticmethod
+    def _attach_tsl_fetch_context(
+        pred: PredictionResult,
+        matchup: Matchup,
+        odds_lines: list[OddsLine],
+        status: dict | None = None,
+    ) -> None:
+        if status is None:
+            status = read_tsl_fetch_status()
+        if not status:
+            return
+
+        pred.diagnostics["tsl_status"] = status
+        pred.diagnostics["tsl_fetch_success"] = 1.0 if status.get("success") else 0.0
+        pred.diagnostics["tsl_games_count"] = float(status.get("games_count", 0) or 0)
+
+        snapshot_ctx = PredictionService._lookup_tsl_matchup_snapshot(matchup)
+        if snapshot_ctx:
+            pred.diagnostics["tsl_matchup"] = snapshot_ctx
+
+        note = str(status.get("note") or status.get("error") or "").strip()
+        source = str(status.get("source") or "unknown").strip()
+        fetched_at = str(status.get("fetched_at") or "").strip()
+
+        if status.get("success"):
+            if snapshot_ctx and snapshot_ctx.get("in_snapshot"):
+                if snapshot_ctx.get("is_fresh", False):
+                    pred.x_factors.append(
+                        "TSL snapshot includes this matchup: "
+                        f"game_id={snapshot_ctx.get('game_id')}, "
+                        f"markets={snapshot_ctx.get('market_count', 0)}, "
+                        f"codes={','.join(snapshot_ctx.get('market_codes', []))}"
+                    )
+                else:
+                    pred.x_factors.append(
+                        "TSL snapshot includes this matchup, but the latest Taiwan-market data is stale: "
+                        f"age={snapshot_ctx.get('snapshot_age_hours', 999.0):.2f}h"
+                    )
+            else:
+                pred.x_factors.append(
+                    "TSL feed healthy, but this matchup is not present in the latest Taiwan-market snapshot"
+                )
+            pred.x_factors.append(
+                f"TSL feed healthy: source={source}, games={status.get('games_count', 0)}, fetched_at={fetched_at}"
+            )
+            return
+
+        if any(line.sportsbook == "TSL" for line in odds_lines):
+            pred.x_factors.append(
+                f"TSL feed degraded but cached odds still available: source={source}, fetched_at={fetched_at}"
+            )
+            return
+
+        if "modern_pre_" in note and "403" in note:
+            pred.x_factors.append(
+                "TSL pre-match feed is currently blocked by the official source; Taiwan market calibration is running without fresh TSL odds"
+            )
+        elif "legacy_fetch_failed" in note:
+            pred.x_factors.append(
+                "Legacy TSL API no longer returns machine-readable odds; fallback source migration is still in progress"
+            )
+        else:
+            pred.x_factors.append(
+                f"TSL feed unavailable: source={source}, fetched_at={fetched_at}"
+            )
+
+    @staticmethod
+    def _lookup_tsl_matchup_snapshot(matchup: Matchup) -> dict[str, object] | None:
+        snapshot = load_tsl_snapshot()
+        fetched_at = str(snapshot.get("fetched_at", ""))
+        snapshot_age_hours = 999.0
+        if fetched_at:
+            try:
+                fetched_dt = datetime.fromisoformat(fetched_at.replace("Z", "+00:00"))
+                snapshot_age_hours = max(
+                    0.0,
+                    (datetime.now(timezone.utc) - fetched_dt.astimezone(timezone.utc)).total_seconds() / 3600.0,
+                )
+            except ValueError:
+                snapshot_age_hours = 999.0
+        is_fresh = snapshot_age_hours <= _TSL_DIRECT_SUPPORT_MAX_AGE_HOURS
+        games = snapshot.get("games", []) or []
+        if not games:
+            return {
+                "in_snapshot": False,
+                "snapshot_source": str(snapshot.get("source", "")),
+                "snapshot_fetched_at": fetched_at,
+                "snapshot_age_hours": round(snapshot_age_hours, 3),
+                "is_fresh": is_fresh,
+            }
+
+        for game in games:
+            away_code = TEAM_NAME_TO_CODE.get(str(game.get("awayTeamName", "")).strip(), "")
+            home_code = TEAM_NAME_TO_CODE.get(str(game.get("homeTeamName", "")).strip(), "")
+            if away_code != matchup.away.team or home_code != matchup.home.team:
+                continue
+
+            market_codes = []
+            for market in game.get("markets", []) or []:
+                code = str(market.get("marketCode", "")).strip()
+                if code:
+                    market_codes.append(code)
+
+            return {
+                "in_snapshot": True,
+                "game_id": str(game.get("gameId", "")),
+                "game_time": str(game.get("gameTime", "")),
+                "market_count": len(market_codes),
+                "market_codes": market_codes,
+                "snapshot_source": str(snapshot.get("source", "")),
+                "snapshot_fetched_at": fetched_at,
+                "snapshot_age_hours": round(snapshot_age_hours, 3),
+                "is_fresh": is_fresh,
+            }
+
+        return {
+            "in_snapshot": False,
+            "snapshot_source": str(snapshot.get("source", "")),
+            "snapshot_fetched_at": fetched_at,
+            "snapshot_age_hours": round(snapshot_age_hours, 3),
+            "is_fresh": is_fresh,
+        }
 
     def _build_matchup(self, request: AnalyzeRequest) -> Matchup:  # NOSONAR  # noqa: C901
         """
@@ -617,6 +981,14 @@ class PredictionService:
         platt_b = pred.diagnostics.get("platt_b", 0.0) if pred.diagnostics else 0.0
 
         league = "WBC" if matchup.tournament.upper().startswith("WBC") else "MLB"
+        tsl_line_ctx = build_tsl_line_movement_context(
+            matchup.away.team,
+            matchup.home.team,
+            market="ML",
+            game_time=matchup.game_time_utc,
+            max_snapshots=12,
+            max_snapshot_age_hours=8.0,
+        )
 
         report = self.decision_engine.analyze_match(
             match_id=matchup.game_id,
@@ -628,9 +1000,99 @@ class PredictionService:
             brier_score=brier,
             platt_a=platt_a,
             platt_b=platt_b,
+            opening_odds=float(tsl_line_ctx.get("opening_home_odds", 0.0)),
+            line_movement_velocity=float(tsl_line_ctx.get("line_movement_velocity", 0.0)),
+            total_line_moves=int(tsl_line_ctx.get("total_line_moves", 0)),
+            line_history=cast(list, tsl_line_ctx.get("line_history", [])),
+            odds_velocity=float(tsl_line_ctx.get("recent_velocity", 0.0)),
+            odds_acceleration=float(tsl_line_ctx.get("odds_acceleration", 0.0)),
             league=league,
         )
         return report
+
+    def _apply_bet_decision_flow(
+        self,
+        top_bets: list[BetRecommendation],
+        matchup: Matchup,
+        pred: PredictionResult,
+        adjusted_home_prob: float,
+        market_result: dict[str, float],
+    ) -> list[BetRecommendation]:
+        """Apply the institutional 5-gate flow to optimizer output."""
+        if not top_bets:
+            return []
+
+        sub_model_probs: dict[str, float] = {}
+        if pred.sub_model_results:
+            for sr in pred.sub_model_results:
+                sub_model_probs[sr.model_name] = sr.home_win_prob
+        if not sub_model_probs:
+            sub_model_probs["ensemble"] = adjusted_home_prob
+
+        sharp_signals: list[str] = []
+        if abs(float(getattr(pred, "market_bias_score", 0.0))) >= 0.03:
+            sharp_signals.append("market_bias")
+        if int(market_result.get("n_steam_moves", 0)) > 0:
+            sharp_signals.append("steam")
+
+        approved_bets: list[BetRecommendation] = []
+        cumulative_exposure = float(self.bankroll.daily_exposure_pct)
+        market_efficiency = max(
+            0.0,
+            min(1.0, 0.55 + float(market_result.get("market_weight_applied", 0.0))),
+        )
+        tsl_matchup_status = pred.diagnostics.get("tsl_matchup") if pred.diagnostics else None
+
+        for bet in top_bets:
+            market_support_state = (
+                classify_market_support_state(bet, tsl_matchup_status if isinstance(tsl_matchup_status, dict) else None)
+                if str(getattr(bet, "sportsbook", "")) == "TSL"
+                else "intl_only"
+            )
+
+            ctx = DecisionContext(
+                prediction=pred,
+                sub_model_probs=sub_model_probs,
+                market_implied_prob=float(bet.implied_probability),
+                model_prob=float(bet.win_probability),
+                odds=float(1.0 / max(bet.implied_probability, 0.01)),
+                bankroll=float(self.bankroll.current),
+                daily_exposure_pct=cumulative_exposure,
+                peak_bankroll=float(self.bankroll.peak),
+                consecutive_losses=int(self.bankroll.consecutive_losses),
+                sharp_signals=sharp_signals,
+                steam_detected=bool(market_result.get("n_steam_moves", 0)),
+                market_efficiency=market_efficiency,
+                home_code=matchup.home.team,
+                away_code=matchup.away.team,
+                market_support_state=market_support_state,
+            )
+            decision = run_decision_pipeline(bet, ctx)
+            if not decision.approved:
+                continue
+
+            final_stake_pct = min(float(bet.stake_fraction), float(decision.final_stake_pct or bet.stake_fraction))
+            final_stake_amount = min(
+                float(bet.stake_amount),
+                round(final_stake_pct * float(self.bankroll.current), 2),
+            )
+            confidence_scale = min(
+                1.0,
+                final_stake_pct / max(float(bet.stake_fraction), 1e-6),
+            )
+            approved_bets.append(replace(
+                bet,
+                stake_fraction=round(final_stake_pct, 4),
+                stake_amount=round(final_stake_amount, 0),
+                confidence=round(min(1.0, float(bet.confidence) * max(0.6, confidence_scale)), 4),
+                approved=True,
+                decision_timing=decision.timing,
+                delay_minutes=decision.delay_minutes,
+                reason=f"{bet.reason}; gate_summary={decision.summary}",
+            ))
+            cumulative_exposure += final_stake_pct
+
+        return approved_bets
 
     def _run_portfolio_optimization(
         self,
@@ -652,8 +1114,14 @@ class PredictionService:
         if matchup and getattr(matchup, "game_time_utc", ""):
             game_date = str(matchup.game_time_utc)[:10]
 
+        market_support_performance = self._load_market_support_performance_summary()
         proposals: list[BetProposal] = []
         for b in top_bets:
+            support_state = str(getattr(b, "market_support_state", "") or "unknown")
+            support_mult = self._performance_adjusted_support_multiplier(
+                support_state,
+                market_support_performance,
+            )
             proposals.append(BetProposal(
                 game_id=f"{b.market}:{b.side}",
                 market=b.market,
@@ -662,14 +1130,17 @@ class PredictionService:
                 odds=2.0 if b.implied_probability <= 0 else float(1.0 / b.implied_probability),
                 ev=float(b.ev),
                 edge=float(b.edge),
-                individual_kelly=float(max(0.0, b.kelly_fraction)),
-                confidence=float(b.confidence),
+                individual_kelly=float(max(0.0, b.kelly_fraction) * support_mult),
+                confidence=float(min(1.0, max(0.0, b.confidence) * support_mult)),
                 tournament=tournament,
                 game_date=game_date,
                 group=round_name,
             ))
 
         sizing = self.portfolio_risk.size_portfolio(proposals)
+        tsl_status = read_tsl_fetch_status()
+        tsl_health = classify_tsl_feed_status(tsl_status)
+        tsl_matchup = self._lookup_tsl_matchup_snapshot(matchup) if matchup else None
         avg_stake = float(sum(p.stake_fraction for p in sizing.positions) / max(1, len(sizing.positions)))
         avg_prob = float(sum(p.bet.win_prob for p in sizing.positions) / max(1, len(sizing.positions)))
         avg_odds = float(sum(p.bet.odds for p in sizing.positions) / max(1, len(sizing.positions)))
@@ -681,6 +1152,33 @@ class PredictionService:
             ruin_threshold=0.10,
         )
 
+        risk_level = sizing.risk_level
+        portfolio_warnings = list(sizing.warnings)
+        if tsl_health["state"] == "blocked":
+            portfolio_warnings.append("TSL pre-match feed blocked; Taiwan-market recommendations are running in degraded mode")
+            if risk_level == "GREEN":
+                risk_level = "YELLOW"
+        elif tsl_health["stale_or_degraded"]:
+            portfolio_warnings.append(f"TSL feed {tsl_health['state']}; verify market freshness before execution")
+        elif tsl_matchup and not tsl_matchup.get("in_snapshot", False):
+            portfolio_warnings.append("TSL feed healthy, but this matchup is not listed in the latest Taiwan-market snapshot")
+
+        market_support_profile, market_support_breakdown = self._summarize_market_support(top_bets)
+        market_support_tilt = "neutral"
+        if market_support_profile == "tsl_direct":
+            market_support_tilt = "direct_favored"
+        elif market_support_profile in {"tsl_stale", "tsl_unlisted_market", "tsl_unlisted_matchup"}:
+            market_support_tilt = "degraded_caution"
+        elif market_support_profile == "intl_only":
+            market_support_tilt = "international_favored"
+
+        support_adjustments: dict[str, float] = {}
+        for state in market_support_breakdown:
+            support_adjustments[state] = self._performance_adjusted_support_multiplier(
+                state,
+                market_support_performance,
+            )
+
         return {
             "survival_prob": round(max(0.0001, 1.0 - float(ruin_metrics.get("risk_of_ruin", 1.0))), 4),
             "cvar_95": round(-float(sizing.portfolio_variance), 6),
@@ -690,8 +1188,18 @@ class PredictionService:
             "current_drawdown": round(float(self.portfolio_risk.state.drawdown), 4),
             "decision_verdict": decision_rpt.decision,
             "edge_score": decision_rpt.edge_score,
-            "risk_level": sizing.risk_level,
+            "risk_level": risk_level,
             "risk_of_ruin": float(ruin_metrics.get("risk_of_ruin", 1.0)),
+            "warnings": portfolio_warnings,
+            "data_quality_risk": tsl_health["severity"],
+            "tsl_feed_state": tsl_health["state"],
+            "tsl_feed_summary": tsl_health["summary"],
+            "tsl_matchup_in_snapshot": bool(tsl_matchup.get("in_snapshot")) if tsl_matchup else False,
+            "tsl_matchup_market_count": int(tsl_matchup.get("market_count", 0)) if tsl_matchup else 0,
+            "market_support_profile": market_support_profile,
+            "market_support_breakdown": market_support_breakdown,
+            "market_support_tilt": market_support_tilt,
+            "market_support_adjustments": support_adjustments,
         }
 
     def _run_calibration_monitoring(self) -> dict[str, float] | None:

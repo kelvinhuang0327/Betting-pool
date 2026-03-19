@@ -31,6 +31,7 @@ def run_monte_carlo(  # noqa: C901
     away_bullpen_stress: float = 0.0,
     wbc_variance_add: float = 0.18,
     mercy_rule: bool = True,
+    blowout_propensity: float = 0.0,    # N.02 mismatch_blowout_propensity → tail expansion
 ) -> SimulationSummary:
     """
     Run N Monte Carlo game simulations with inning-by-inning precision.
@@ -52,6 +53,20 @@ def run_monte_carlo(  # noqa: C901
     # Base lambdas from prediction (per game, divide by 9)
     lam_home_base = max(0.5, pred.expected_home_runs) / 9.0
     lam_away_base = max(0.5, pred.expected_away_runs) / 9.0
+
+    # ── Asymmetric λ Boost for High-Mismatch Games (N.02) ────────────────
+    # blowout_propensity > 0.3 → amplify existing λ asymmetry
+    # Rationale: Elo gap captures capability mismatch not fully reflected in
+    # per-game run estimates; stronger team scores MORE, weaker team scores LESS
+    # blowout=0.85 (B06 level) → elo_boost=0.17 → lam_h × 1.17, lam_a × 0.915
+    if blowout_propensity > 0.3:
+        elo_boost = blowout_propensity * 0.20  # max +20% per inning at propensity=1.0
+        if lam_home_base >= lam_away_base:
+            lam_home_base = lam_home_base * (1.0 + elo_boost)
+            lam_away_base = max(0.10, lam_away_base * (1.0 - elo_boost * 0.5))
+        else:
+            lam_away_base = lam_away_base * (1.0 + elo_boost)
+            lam_home_base = max(0.10, lam_home_base * (1.0 - elo_boost * 0.5))
 
     # ── Simulation Loop ──
     for i in range(simulations):
@@ -85,7 +100,11 @@ def run_monte_carlo(  # noqa: C901
             # If a team starts scoring, the probability of scoring more in THAT inning increases
             # We simulate this via a Gamma-Poisson mixture per inning
             # High variance_add = more likely to have 4+ run innings
-            volatility = 1.0 + wbc_variance_add
+            # blowout_propensity (N.02) inflates variance for high-mismatch games:
+            #   propensity=0.85 (B06 level) → adds +0.128 to variance_add
+            #   propensity=0.00 → no change
+            effective_variance_add = wbc_variance_add + blowout_propensity * 0.15
+            volatility = 1.0 + effective_variance_add
 
             # Away Inning
             a_inn_lam = rng.gamma(l_away / volatility, volatility)

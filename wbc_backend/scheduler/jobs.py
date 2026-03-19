@@ -117,6 +117,30 @@ class AutoScheduler:
 
         self.add_task("research_cycle", sc.research_cycle_interval_hours * 3600, research_cycle)
 
+        # ── Postgame Sync (every 2h) — 賽後閉環核心 ─────
+        def postgame_sync():
+            from scripts.run_postgame_sync import sync_completed_games
+            synced = sync_completed_games(config=self.config)
+            if synced:
+                logger.info("[SCHEDULER] Postgame sync: %d new games recorded", len(synced))
+
+        self.add_task("postgame_sync", sc.postgame_sync_interval_hours * 3600, postgame_sync)
+
+        # ── ML Artifact Rebuild (weekly) — gate artifact 保鮮 ──
+        def artifact_rebuild():
+            from scripts.rebuild_ml_artifacts import rebuild_walkforward, rebuild_calibration, verify_artifacts
+            data_path = self.config.sources.mlb_2025_csv
+            wf = rebuild_walkforward(data_path)
+            cal = rebuild_calibration(data_path)
+            ok = verify_artifacts(wf, cal)
+            logger.info(
+                "[SCHEDULER] Artifact rebuild %s: wf_ece=%.4f",
+                "OK" if ok else "FAILED",
+                wf.get("ece", float("nan")),
+            )
+
+        self.add_task("artifact_rebuild", sc.artifact_rebuild_interval_hours * 3600, artifact_rebuild)
+
     def run_once(self):
         """Run all due tasks once (non-blocking)."""
         for task in self.tasks:

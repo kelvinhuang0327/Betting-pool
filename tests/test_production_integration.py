@@ -18,6 +18,7 @@ from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Dict, List, Optional
 from unittest.mock import MagicMock, patch
+from types import SimpleNamespace
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -115,12 +116,14 @@ def _make_top_bets() -> List[BetRecommendation]:
             source_type="tsl", win_probability=0.62, implied_probability=0.667,
             ev=0.038, edge=0.045, kelly_fraction=0.03,
             stake_fraction=0.015, stake_amount=150, confidence=0.72,
+            market_support_state="tsl_direct",
         ),
         BetRecommendation(
             market="OU", side="OVER", line=7.5, sportsbook="TSL",
             source_type="tsl", win_probability=0.55, implied_probability=0.526,
             ev=0.025, edge=0.030, kelly_fraction=0.02,
             stake_fraction=0.010, stake_amount=100, confidence=0.65,
+            market_support_state="tsl_direct",
         ),
     ]
 
@@ -252,6 +255,209 @@ class TestPortfolioOptimization(unittest.TestCase):
 
         self.assertLess(metrics["drawdown_scale"], 1.0)
         self.assertAlmostEqual(metrics["current_drawdown"], 0.2, places=2)
+
+    def test_portfolio_summarizes_market_support_breakdown(self):
+        from wbc_backend.pipeline.service import PredictionService
+
+        svc = PredictionService()
+        top_bets = [
+            _make_top_bets()[0],
+            BetRecommendation(
+                market="RL", side="AWAY", line=1.5, sportsbook="BookA",
+                source_type="intl", win_probability=0.57, implied_probability=0.51,
+                ev=0.031, edge=0.028, kelly_fraction=0.02,
+                stake_fraction=0.01, stake_amount=100, confidence=0.64,
+                market_support_state="intl_only",
+            ),
+            BetRecommendation(
+                market="OU", side="OVER", line=7.5, sportsbook="BookB",
+                source_type="intl", win_probability=0.54, implied_probability=0.51,
+                ev=0.018, edge=0.017, kelly_fraction=0.01,
+                stake_fraction=0.005, stake_amount=50, confidence=0.58,
+                market_support_state="tsl_stale",
+            ),
+        ]
+        decision_rpt = DecisionReport(decision="BET", edge_score=2.0)
+
+        metrics = svc._run_portfolio_optimization(top_bets, decision_rpt)
+
+        self.assertEqual(metrics["market_support_profile"], "tsl_direct")
+        self.assertEqual(metrics["market_support_breakdown"]["tsl_direct"], 1)
+        self.assertEqual(metrics["market_support_breakdown"]["intl_only"], 1)
+        self.assertEqual(metrics["market_support_breakdown"]["tsl_stale"], 1)
+        self.assertEqual(metrics["market_support_tilt"], "direct_favored")
+
+    def test_execution_sorting_prefers_direct_and_faster_bets(self):
+        from wbc_backend.pipeline.service import PredictionService
+
+        bets = [
+            BetRecommendation(
+                market="ML", side="AWAY", line=None, sportsbook="BookA",
+                source_type="intl", win_probability=0.60, implied_probability=0.52,
+                ev=0.050, edge=0.040, kelly_fraction=0.03,
+                stake_fraction=0.015, stake_amount=150, confidence=0.70,
+                market_support_state="intl_only", decision_timing="DELAY", delay_minutes=10,
+            ),
+            BetRecommendation(
+                market="OU", side="OVER", line=7.5, sportsbook="TSL",
+                source_type="tsl", win_probability=0.56, implied_probability=0.51,
+                ev=0.030, edge=0.025, kelly_fraction=0.02,
+                stake_fraction=0.010, stake_amount=100, confidence=0.66,
+                market_support_state="tsl_direct", decision_timing="DELAY", delay_minutes=15,
+            ),
+            BetRecommendation(
+                market="RL", side="AWAY", line=1.5, sportsbook="TSL",
+                source_type="tsl", win_probability=0.57, implied_probability=0.52,
+                ev=0.028, edge=0.023, kelly_fraction=0.018,
+                stake_fraction=0.009, stake_amount=90, confidence=0.64,
+                market_support_state="tsl_direct", decision_timing="IMMEDIATE", delay_minutes=0,
+            ),
+        ]
+
+        ordered = PredictionService._sort_bets_for_execution(bets)
+
+        self.assertEqual([bet.market for bet in ordered], ["RL", "OU", "ML"])
+
+    def test_portfolio_applies_support_multiplier_to_proposals(self):
+        from wbc_backend.pipeline.service import PredictionService
+
+        svc = PredictionService()
+        captured = {}
+
+        def fake_size_portfolio(proposals):
+            captured["proposals"] = proposals
+            return SimpleNamespace(
+                positions=[],
+                total_exposure=0.0,
+                portfolio_variance=0.0,
+                expected_daily_return=0.0,
+                sharpe_estimate=0.0,
+                risk_level="GREEN",
+                circuit_breaker_active=False,
+                warnings=[],
+                diagnostics={},
+            )
+
+        top_bets = [
+            BetRecommendation(
+                market="ML", side="AWAY", line=None, sportsbook="TSL",
+                source_type="tsl", win_probability=0.62, implied_probability=0.52,
+                ev=0.040, edge=0.035, kelly_fraction=0.03,
+                stake_fraction=0.015, stake_amount=150, confidence=0.70,
+                market_support_state="tsl_direct",
+            ),
+            BetRecommendation(
+                market="RL", side="AWAY", line=1.5, sportsbook="BookA",
+                source_type="intl", win_probability=0.60, implied_probability=0.52,
+                ev=0.040, edge=0.035, kelly_fraction=0.03,
+                stake_fraction=0.015, stake_amount=150, confidence=0.70,
+                market_support_state="intl_only",
+            ),
+        ]
+
+        with patch.object(svc.portfolio_risk, "size_portfolio", side_effect=fake_size_portfolio):
+            svc._run_portfolio_optimization(top_bets, DecisionReport(decision="BET", edge_score=2.0))
+
+        proposals = captured["proposals"]
+        self.assertEqual(len(proposals), 2)
+        self.assertGreater(proposals[0].individual_kelly, proposals[1].individual_kelly)
+        self.assertGreater(proposals[0].confidence, proposals[1].confidence)
+
+    def test_portfolio_uses_performance_artifact_to_adjust_proposals(self):
+        from wbc_backend.pipeline.service import PredictionService
+
+        svc = PredictionService()
+        captured = {}
+
+        def fake_size_portfolio(proposals):
+            captured["proposals"] = proposals
+            return SimpleNamespace(
+                positions=[],
+                total_exposure=0.0,
+                portfolio_variance=0.0,
+                expected_daily_return=0.0,
+                sharpe_estimate=0.0,
+                risk_level="GREEN",
+                circuit_breaker_active=False,
+                warnings=[],
+                diagnostics={},
+            )
+
+        top_bets = [
+            BetRecommendation(
+                market="ML", side="AWAY", line=None, sportsbook="TSL",
+                source_type="tsl", win_probability=0.62, implied_probability=0.52,
+                ev=0.040, edge=0.035, kelly_fraction=0.03,
+                stake_fraction=0.015, stake_amount=150, confidence=0.70,
+                market_support_state="tsl_direct",
+            )
+        ]
+
+        with patch.object(svc, "_load_market_support_performance_summary", return_value={
+            "groups": {
+                "tsl_direct": {"games": 5, "winner_accuracy": 0.80, "avg_brier": 0.10},
+            }
+        }):
+            with patch.object(svc.portfolio_risk, "size_portfolio", side_effect=fake_size_portfolio):
+                metrics = svc._run_portfolio_optimization(top_bets, DecisionReport(decision="BET", edge_score=2.0))
+
+        proposals = captured["proposals"]
+        self.assertEqual(len(proposals), 1)
+        self.assertGreater(proposals[0].individual_kelly, 0.03 * 1.08)
+        self.assertGreater(metrics["market_support_adjustments"]["tsl_direct"], 1.08)
+
+    def test_service_loads_market_support_performance_summary_artifact(self):
+        from wbc_backend.pipeline.service import PredictionService
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            reports_dir = root / "reports"
+            reports_dir.mkdir(parents=True, exist_ok=True)
+            (reports_dir / "market_support_performance_summary.json").write_text(
+                json.dumps(
+                    {
+                        "group_by": "market_support_primary",
+                        "n_games": 3,
+                        "groups": {"tsl_direct": {"games": 2, "winner_accuracy": 1.0, "avg_brier": 0.1}},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            base = AppConfig()
+            svc = PredictionService(
+                replace(base, sources=replace(base.sources, reports_dir=str(reports_dir)))
+            )
+
+            payload = svc._load_market_support_performance_summary()
+
+            self.assertIsNotNone(payload)
+            self.assertEqual(payload["n_games"], 3)
+
+    def test_support_multiplier_uses_performance_summary_when_sample_is_sufficient(self):
+        from wbc_backend.pipeline.service import PredictionService
+
+        summary = {
+            "groups": {
+                "tsl_direct": {"games": 6, "winner_accuracy": 0.75, "avg_brier": 0.12},
+            }
+        }
+
+        mult = PredictionService._performance_adjusted_support_multiplier("tsl_direct", summary)
+
+        self.assertGreater(mult, 1.08)
+
+    def test_support_multiplier_stays_neutral_when_sample_is_too_small(self):
+        from wbc_backend.pipeline.service import PredictionService
+
+        summary = {
+            "groups": {
+                "intl_only": {"games": 2, "winner_accuracy": 1.0, "avg_brier": 0.01},
+            }
+        }
+
+        mult = PredictionService._performance_adjusted_support_multiplier("intl_only", summary)
+
+        self.assertEqual(mult, 0.98)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -395,6 +601,79 @@ class TestReportRendering(unittest.TestCase):
         self.assertIn("95.0%", md)  # survival prob
         self.assertIn("0.003000", md)  # cvar
 
+    def test_markdown_includes_market_support_breakdown(self):
+        game = _make_game_output(_make_top_bets())
+        pred = _make_pred()
+        sim = _make_sim()
+        portfolio = {
+            "survival_prob": 0.95,
+            "cvar_95": 0.003,
+            "market_support_profile": "tsl_direct",
+            "market_support_tilt": "direct_favored",
+            "market_support_breakdown": {
+                "tsl_direct": 2,
+                "intl_only": 1,
+            },
+        }
+
+        md = render_full_report(
+            game, pred, sim, {"adjusted_home_prob": 0.38},
+            portfolio_metrics=portfolio,
+        )
+
+        self.assertIn("Support Breakdown", md)
+        self.assertIn("TSL direct x2", md)
+        self.assertIn("International only x1", md)
+        self.assertIn("Support Tilt", md)
+        self.assertIn("direct_favored", md)
+
+    def test_markdown_includes_market_support_performance_section(self):
+        game = _make_game_output(_make_top_bets())
+        pred = _make_pred()
+        sim = _make_sim()
+
+        md = render_full_report(
+            game,
+            pred,
+            sim,
+            {"adjusted_home_prob": 0.38},
+            market_support_performance={
+                "group_by": "market_support_primary",
+                "n_games": 4,
+                "decision_note": "Recent postgame results favor TSL direct support.",
+                "groups": {
+                    "tsl_direct": {"games": 3, "winner_accuracy": 0.6667, "avg_brier": 0.142},
+                    "intl_only": {"games": 1, "winner_accuracy": 0.0, "avg_brier": 0.311},
+                },
+            },
+        )
+
+        self.assertIn("MARKET SUPPORT PERFORMANCE", md)
+        self.assertIn("Tracked Games:       4", md)
+        self.assertIn("Decision Note:       Recent postgame results favor TSL direct support.", md)
+        self.assertIn("TSL direct: games=3, acc=66.7%, brier=0.1420", md)
+
+    def test_markdown_includes_market_support_adjustments(self):
+        game = _make_game_output(_make_top_bets())
+        pred = _make_pred()
+        sim = _make_sim()
+
+        md = render_full_report(
+            game,
+            pred,
+            sim,
+            {"adjusted_home_prob": 0.38},
+            portfolio_metrics={
+                "market_support_adjustments": {
+                    "tsl_direct": 1.111,
+                    "intl_only": 0.98,
+                }
+            },
+        )
+
+        self.assertIn("Support Adjustments", md)
+        self.assertIn("TSL direct x1.111", md)
+
     def test_markdown_includes_calibration_section(self):
         game = _make_game_output(_make_top_bets())
         pred = _make_pred()
@@ -427,12 +706,19 @@ class TestReportRendering(unittest.TestCase):
         self.assertEqual(data["decision_engine"]["verdict"], "BET")
         self.assertEqual(data["decision_engine"]["confidence"], "STRONG")
         self.assertAlmostEqual(data["decision_engine"]["edge_score"], 4.2)
+        self.assertEqual(data["top_3_bets"][0]["market_support_state"], "tsl_direct")
+        self.assertEqual(data["top_3_bets"][0]["market_support_label"], "TSL direct")
 
     def test_json_includes_portfolio_and_calibration(self):
         game = _make_game_output(_make_top_bets())
         pred = _make_pred()
         sim = _make_sim()
-        portfolio = {"survival_prob": 0.92, "cvar_95": 0.005}
+        portfolio = {
+            "survival_prob": 0.92,
+            "cvar_95": 0.005,
+            "market_support_tilt": "direct_favored",
+            "market_support_breakdown": {"tsl_direct": 2, "intl_only": 1},
+        }
         cal = {"brier": 0.20, "ece": 0.04}
 
         json_str = render_json(
@@ -444,8 +730,36 @@ class TestReportRendering(unittest.TestCase):
 
         self.assertIn("portfolio", data)
         self.assertEqual(data["portfolio"]["survival_prob"], 0.92)
+        self.assertEqual(
+            data["portfolio"]["market_support_breakdown_label"],
+            "TSL direct x2 | International only x1",
+        )
+        self.assertEqual(data["portfolio"]["market_support_tilt"], "direct_favored")
         self.assertIn("calibration", data)
         self.assertEqual(data["calibration"]["brier"], 0.20)
+
+    def test_json_includes_market_support_performance(self):
+        game = _make_game_output(_make_top_bets())
+        pred = _make_pred()
+        sim = _make_sim()
+
+        json_str = render_json(
+            game,
+            pred,
+            sim,
+            {"adjusted_home_prob": 0.38},
+            market_support_performance={
+                "group_by": "best_bet_support_state",
+                "n_games": 2,
+                "decision_note": "Keep support multipliers neutral.",
+                "groups": {"tsl_direct": {"games": 2, "winner_accuracy": 1.0, "avg_brier": 0.12}},
+            },
+        )
+        data = json.loads(json_str)
+
+        self.assertIn("market_support_performance", data)
+        self.assertEqual(data["market_support_performance"]["group_by"], "best_bet_support_state")
+        self.assertEqual(data["market_support_performance"]["decision_note"], "Keep support multipliers neutral.")
 
     def test_json_without_optional_fields(self):
         """When no decision/portfolio/calibration, JSON should still work."""

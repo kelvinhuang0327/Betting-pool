@@ -115,7 +115,8 @@ class StrategyConfig:
     fractional_kelly: float = 0.15  # More conservative Kelly (was 0.25)
     max_stake_fraction: float = 0.04  # Reduced from 0.05
     market_priority: dict[str, int] = field(default_factory=lambda: {
-        "ML": 3, "RL": 2, "OU": 1, "F5": 2, "TT": 1, "OE": 1,
+        "ML": 3, "RL": 2, "OU": 1, "F5": 4, "TT": 1,
+        # OE 已移除：純隨機市場 + 最高 vig，無模型邊際
     })
 
 
@@ -189,6 +190,8 @@ class SchedulerConfig:
     backtest_interval_hours: int = 24          # Backtest daily
     self_improve_interval_hours: int = 168     # Self-improvement weekly
     research_cycle_interval_hours: int = 24    # V3 research phase-gate cycle daily
+    postgame_sync_interval_hours: int = 2      # 賽後回寫 + retrainer 更新（每 2 小時）
+    artifact_rebuild_interval_hours: int = 168  # ML artifact 重建（每週；有資料更新時手動提前觸發）
 
 
 # ── Self-Improvement Config ──────────────────────────────────────────────────
@@ -218,7 +221,39 @@ class DeploymentGateConfig:
     min_walkforward_games: int = 500
     max_walkforward_brier: float = 0.255
     min_best_calibration_ml_roi: float = 0.0
+    max_calibration_ece: float = 0.12    # 目標 Platt Scaling 後達 0.08；當前系統 0.1447
     require_artifact_schema_match: bool = True
+
+
+# ── LLM / NLP Config ─────────────────────────────────────────────────────────
+
+@dataclass(frozen=True)
+class LLMConfig:
+    """
+    NLP 賽前特徵提取層的 LLM Provider 設定。
+
+    Provider 優先順序（自動 fallback）：
+      1. groq      — 免費，速度最快 (100+ tok/s)，推薦首選
+      2. gemini    — Google 免費 tier (15 RPM)
+      3. anthropic — Claude Haiku，最精準但需付費
+      4. openrouter— 聚合器，部分模型免費
+      5. ollama    — 本地端，需自行架設
+      6. rule      — 純規則引擎（無 API 時的最終 fallback）
+
+    API Key 從環境變數讀取（.env 設定）
+    """
+    # Provider 選擇: "groq" | "gemini" | "anthropic" | "openrouter" | "ollama" | "rule"
+    provider: str = "groq"
+    # 各 Provider 模型名稱
+    groq_model: str = "llama-3.1-8b-instant"      # 免費，極快
+    gemini_model: str = "gemini-1.5-flash"         # 免費 tier
+    anthropic_model: str = "claude-haiku-4-5-20251001"  # 最便宜 Claude
+    openrouter_model: str = "meta-llama/llama-3.1-8b-instruct:free"  # 免費模型
+    ollama_model: str = "qwen2.5:7b"
+    ollama_base_url: str = "http://localhost:11434"
+    timeout_seconds: int = 30
+    # 是否在賽前分析中啟用 LLM（False = 直接使用規則引擎）
+    enabled: bool = True
 
 
 # ── Master Config ────────────────────────────────────────────────────────────
@@ -235,3 +270,4 @@ class AppConfig:
     self_improve: SelfImproveConfig = field(default_factory=SelfImproveConfig)
     data_recency: DataRecencyConfig = field(default_factory=DataRecencyConfig)
     deployment_gate: DeploymentGateConfig = field(default_factory=DeploymentGateConfig)
+    llm: LLMConfig = field(default_factory=LLMConfig)

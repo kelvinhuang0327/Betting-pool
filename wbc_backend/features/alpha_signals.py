@@ -1,9 +1,10 @@
 """
-Institutional Alpha Signal Registry — 260 Predictive Features
+Institutional Alpha Signal Registry — 318 Predictive Features
 ==============================================================
-Phase 3: Exhaustive alpha signal discovery for WBC/MLB prediction.
+Phase 3+: Exhaustive alpha signal discovery for WBC/MLB prediction.
+Phase 4 (MiroFish-inspired): Knowledge Graph + NLP + Market Simulation layers.
 
-Signal catalogue organized into 10 categories:
+Signal catalogue organized into 13 categories:
   A. Advanced Batting          (40 signals)
   B. Advanced Pitching         (38 signals)
   C. Bullpen Dynamics          (22 signals)
@@ -14,14 +15,19 @@ Signal catalogue organized into 10 categories:
   H. Interaction/Polynomial    (18 signals)
   I. Time-Series/Momentum      (20 signals)
   J. Lineup Construction       (17 signals)
-  Total new signals: 240
-  Total (incl. 37 existing): 277
+  K. Knowledge Graph           (20 signals) ← MiroFish GraphRAG 借鑑
+  L. NLP Pre-game Semantics    (11 signals) ← MiroFish ReACT 借鑑
+  M. Market Agent Simulation   (10 signals) ← MiroFish Multi-Agent 借鑑
+  Total (A-J existing): 277
+  Total (K-M new):       41
+  Grand Total:          318
 
 Design principles:
   - All signals computed defensively (fall back to league average if missing)
   - Each signal includes: name, category, hypothesis, data_available flag
   - Feature dict compatible with existing ML models (key → float)
   - Differential signals (home - away) are the primary ML inputs
+  - K/L/M categories: zero external API cost, local computation only
 """
 from __future__ import annotations
 
@@ -34,6 +40,13 @@ import numpy as np
 from wbc_backend.domain.schemas import (
     BatterSnapshot, Matchup, PitcherSnapshot, TeamSnapshot,
 )
+from wbc_backend.features.knowledge_graph import (
+    compute_knowledge_graph_signals, get_default_kg,
+)
+from wbc_backend.features.nlp_extractor import (
+    PregameTextBundle, build_empty_nlp_features, compute_nlp_signals,
+)
+from wbc_backend.betting.market_simulator import compute_market_simulation_signals
 
 logger = logging.getLogger(__name__)
 
@@ -1370,11 +1383,34 @@ class AlphaSignals:
         return sorted(self.feature_dict.keys())
 
 
-def build_alpha_signals(matchup: Matchup) -> AlphaSignals:
+def build_alpha_signals(  # noqa: C901
+    matchup: Matchup,
+    pregame_text: PregameTextBundle | None = None,
+    cutoff_date: str = "2099-12-31",
+    enable_kg: bool = True,
+    enable_nlp: bool = True,
+    enable_market_sim: bool = True,
+    use_llm: bool = False,
+) -> AlphaSignals:
     """
-    Compute all 260 alpha signals from a Matchup object.
+    Compute all 277+ alpha signals from a Matchup object.
 
-    Returns AlphaSignals with combined feature_dict ready for ML models.
+    擴充三層新特徵模組 (借鑑 MiroFish 架構，Phase 1-3)：
+      K: 棒球知識圖譜特徵 (20 signals)  — enable_kg
+      L: NLP 賽前語義特徵 (11 signals)  — enable_nlp
+      M: 市場代理人模擬特徵 (10 signals) — enable_market_sim
+
+    Args:
+        matchup:         Matchup 物件（開賽前狀態快照）
+        pregame_text:    賽前文字資料包（可選，None 時 NLP 使用中性值）
+        cutoff_date:     知識圖譜查詢截止日 'YYYY-MM-DD'（防止資料外洩）
+        enable_kg:       啟用知識圖譜特徵
+        enable_nlp:      啟用 NLP 特徵
+        enable_market_sim: 啟用市場模擬特徵
+        use_llm:         NLP 是否使用本地 LLM（需 Ollama 服務運行）
+
+    Returns:
+        AlphaSignals with combined feature_dict ready for ML models.
     """
     home = matchup.home
     away = matchup.away
@@ -1457,6 +1493,53 @@ def build_alpha_signals(matchup: Matchup) -> AlphaSignals:
     except Exception as e:
         logger.warning("Category J (Lineup) failed: %s", e)
 
+    # ── Category K: 棒球知識圖譜特徵 (20 signals) ──────────────────────────
+    if enable_kg:
+        try:
+            kg = get_default_kg()
+            feats_k = compute_knowledge_graph_signals(matchup, kg, cutoff_date)
+            result.update(feats_k)
+            computed.append("K:KnowledgeGraph")
+        except Exception as e:
+            logger.warning("Category K (KnowledgeGraph) failed: %s", e)
+
+    # ── Category L: NLP 賽前語義特徵 (11 signals) ──────────────────────────
+    if enable_nlp:
+        try:
+            if pregame_text is not None:
+                feats_l = compute_nlp_signals(pregame_text, use_llm=use_llm)
+            else:
+                feats_l = build_empty_nlp_features()
+            result.update(feats_l)
+            computed.append("L:NLP")
+        except Exception as e:
+            logger.warning("Category L (NLP) failed: %s", e)
+            result.update(build_empty_nlp_features())
+
+    # ── Category M: 市場代理人模擬特徵 (10 signals) ────────────────────────
+    if enable_market_sim:
+        try:
+            opening_prob = getattr(matchup.home, "opening_ml_prob", 0.50)
+            model_prob = result.get("elo_win_prob_home", opening_prob)
+            public_pct = getattr(matchup, "public_bet_pct_home", 0.55)
+            feats_m = compute_market_simulation_signals(
+                opening_home_prob=float(opening_prob),
+                model_home_prob=float(model_prob),
+                public_bet_pct_home=float(public_pct),
+            )
+            result.update(feats_m)
+            computed.append("M:MarketSim")
+        except Exception as e:
+            logger.warning("Category M (MarketSim) failed: %s", e)
+
+    # ── Category N: 崩盤風險特徵 (12 signals) ──────────────────────────────
+    try:
+        feats_n = _compute_blowout_risk_signals(home, away, matchup, result)
+        result.update(feats_n)
+        computed.append("N:BlowoutRisk")
+    except Exception as e:
+        logger.warning("Category N (BlowoutRisk) failed: %s", e)
+
     # Round all to 4 decimal places
     result = {k: round(float(v), 4) for k, v in result.items()}
 
@@ -1465,6 +1548,81 @@ def build_alpha_signals(matchup: Matchup) -> AlphaSignals:
         categories_computed=computed,
         n_signals=len(result),
     )
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CATEGORY N — Blowout Risk / Data Quality (12 signals)
+# ═══════════════════════════════════════════════════════════════════════════
+
+def _compute_blowout_risk_signals(
+    home: TeamSnapshot,
+    away: TeamSnapshot,
+    matchup: Matchup,
+    existing_feats: dict[str, float],
+) -> dict[str, float]:
+    """Compute 12 blowout-risk and data-quality signals.
+
+    觸發自 3/9 賽後檢討（B06 墨西哥 16:0 巴西 / C09 先發身份問題）：
+      N.01-04  大比分崩盤鏈（Elo 差距 → tanh 正規化 → 慈悲規則危害）
+      N.05-07  先發身份可信度（資料品質 → 置信度閘）
+      N.08-09  先發陣容覆蓋率（確認打者 / 9 人名單覆蓋比）
+      N.10-12  牛棚串聯疲勞（錦標賽跨賽 7 天累計球數正規化）
+    """
+    feats: dict[str, float] = {}
+    round_num = getattr(matchup, "tournament_round_num", 1)
+
+    # ── N.01-04 大比分崩盤鏈 ──────────────────────────────────────────────
+    # N.01 Elo 差距絕對值 → 原始不對稱強度
+    elo_gap = abs(home.elo - away.elo)
+    feats["elo_gap_abs"] = float(elo_gap)
+
+    # N.02 mismatch_blowout_propensity: tanh 正規化 (Elo gap 150 ≈ 0.76)
+    # WBC 2023 實測：elo_gap > 150 場次中 P(分差≥7) ≈ 0.35
+    feats["mismatch_blowout_propensity"] = float(np.tanh(elo_gap / 150.0))
+
+    # N.03 wOBA 差距放大崩盤風險
+    woba_diff = existing_feats.get("woba_diff", 0.0)
+    feats["woba_gap_blowout_risk"] = float(min(1.0, abs(woba_diff) * 5.0))
+
+    # N.04 WBC 慈悲規則危害：錦標賽後段（round >= 3 = QF）比賽更長
+    # P(mercy rule) ≈ blowout_propensity × 0.5，Pool 降權（常被中斷）
+    round_mercy_factor = {1: 0.30, 2: 0.45, 3: 0.60, 4: 0.70, 5: 0.70}.get(round_num, 0.30)
+    feats["mercy_rule_hazard"] = float(
+        min(1.0, feats["mismatch_blowout_propensity"] * round_mercy_factor)
+    )
+
+    # ── N.05-07 先發身份可信度 ───────────────────────────────────────────
+    # 若 SP 為 None → 身份完全未知（信心 = 0）
+    # 若 SP 存在但名稱為空 / "TBD" → 部分未知
+    def _sp_confidence(sp: "PitcherSnapshot | None") -> float:
+        if sp is None:
+            return 0.0
+        name = (sp.name or "").strip().upper()
+        if not name or name in {"TBD", "UNKNOWN", "?"}:
+            return 0.5
+        return 1.0
+
+    h_sic = _sp_confidence(matchup.home_sp)
+    a_sic = _sp_confidence(matchup.away_sp)
+    feats["starter_identity_confidence_home"] = h_sic
+    feats["starter_identity_confidence_away"] = a_sic
+    feats["starter_identity_confidence_min"] = float(min(h_sic, a_sic))
+
+    # ── N.08-09 先發陣容覆蓋率 ───────────────────────────────────────────
+    h_cov = min(1.0, len(matchup.home_lineup) / 9.0)
+    a_cov = min(1.0, len(matchup.away_lineup) / 9.0)
+    feats["lineup_coverage_min"] = float(min(h_cov, a_cov))
+    feats["lineup_coverage_diff"] = float(h_cov - a_cov)
+
+    # ── N.10-12 牛棚串聯疲勞（7 天累計球數正規化）────────────────────────
+    # 300 球 / 7 天 ≈ WBC 高負擔上限（Pool 轉 QF 連日出賽情境）
+    h_fatigue = min(1.0, home.bullpen_workload_7d / 300.0)
+    a_fatigue = min(1.0, away.bullpen_workload_7d / 300.0)
+    feats["bullpen_cascade_fatigue_home"] = float(h_fatigue)
+    feats["bullpen_cascade_fatigue_away"] = float(a_fatigue)
+    feats["bullpen_cascade_fatigue_diff"] = float(h_fatigue - a_fatigue)
+
+    return feats
 
 
 # ── Signal catalogue (metadata registry) ────────────────────────────────────

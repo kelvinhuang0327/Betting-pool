@@ -32,10 +32,28 @@ class BacktestSummary:
     ou_roi: float
     brier: float
     logloss: float
+    ece: float = 0.0   # Expected Calibration Error（deployment gate P1-A 硬閘，目標 < 0.12）
 
 
 def _ev(prob: float, dec: float) -> float:
     return prob * (dec - 1.0) - (1.0 - prob)
+
+
+def _compute_ece(y_prob: np.ndarray, y_true: np.ndarray, n_bins: int = 10) -> float:
+    """Expected Calibration Error（等距分箱，面積加權平均絕對誤差）。"""
+    bins = np.linspace(0.0, 1.0, n_bins + 1)
+    n = len(y_prob)
+    if n == 0:
+        return 0.0
+    ece = 0.0
+    for i in range(n_bins):
+        lo, hi = bins[i], bins[i + 1]
+        mask = (y_prob >= lo) & (y_prob < hi)
+        cnt = int(mask.sum())
+        if cnt == 0:
+            continue
+        ece += (cnt / n) * abs(float(y_prob[mask].mean()) - float(y_true[mask].mean()))
+    return round(float(ece), 6)
 
 
 def _band_key(odds: float) -> str:
@@ -214,6 +232,7 @@ def run_walkforward_backtest(  # noqa: C901
     y_prob_arr = np.clip(np.array(y_prob, dtype=float), 1e-6, 1 - 1e-6)
     brier = float(np.mean((y_prob_arr - y_true_arr) ** 2))
     logloss = float(-np.mean(y_true_arr * np.log(y_prob_arr) + (1 - y_true_arr) * np.log(1 - y_prob_arr)))
+    ece = _compute_ece(y_prob_arr, y_true_arr)
 
     summary = BacktestSummary(
         games=len(y_true),
@@ -226,6 +245,7 @@ def run_walkforward_backtest(  # noqa: C901
         ou_roi=(ou_profit / ou_bets) if ou_bets else 0.0,
         brier=brier,
         logloss=logloss,
+        ece=ece,
     )
 
     odds_band_roi = {
