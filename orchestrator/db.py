@@ -1,6 +1,6 @@
 """
 Betting-pool Orchestrator DB Manager
-完整複製 LotteryNew 的資料庫結構與邏輯
+Betting-pool 任務編排 DB — agent_tasks、runs、scheduler_state 等表格的存取邏輯
 """
 
 import sqlite3

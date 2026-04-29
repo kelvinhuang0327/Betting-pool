@@ -1,6 +1,6 @@
 """
 Betting-pool Orchestrator Common Utilities
-複製 LotteryNew 的通用工具函數
+Betting-pool Orchestrator 共用工具函數（UTC dedupe、型別轉換、安全讀取）
 """
 
 import os

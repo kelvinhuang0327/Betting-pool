@@ -1,6 +1,6 @@
 """
 Betting-pool Orchestrator Planner Tick
-複製 LotteryNew 的 Planner 邏輯
+Betting-pool 任務排程、強制探索輪次、探索結果路由、驗證任務建立
 """
 from __future__ import annotations
 
@@ -940,7 +940,7 @@ def _build_validation_prompt(
         f"unless the source report explicitly lists it as a required read-only data source.\n"
         f"- **No live bets**: Do not place any bets or simulate live bet placement.\n"
         f"- **No bankroll changes**: Do not modify bankroll state, risk-cap, or Kelly fractions.\n"
-        f"- **No LotteryNew**: Do not touch any LotteryNew draw logic, lottery number "
+        f"- **No lottery domain**: Do not touch any lottery draw logic, lottery number "
         f"generators, or lottery-domain files.\n\n"
         f"---\n\n"
         f"## Domain Vocabulary\n\n"
@@ -974,7 +974,7 @@ def _build_validation_prompt(
         f"- Walk-forward isolation not confirmed\n"
         f"- Look-ahead leakage detected\n"
         f"- Any production deployment or strategy activation performed\n"
-        f"- LotteryNew terms appear in the output\n"
+        f"- Lottery-domain terms appear in the output\n"
     )
 
 
@@ -1209,28 +1209,53 @@ def _load_system_state_snapshot() -> dict:
         return {}
 
 
-def _load_strategy_snapshot() -> str:
-    """掃描 strategy_states_*.json，產出各遊戲策略表現快照。"""
-    import glob
-    lines: list[str] = []
-    for path in sorted(glob.glob("lottery_api/data/strategy_states_*.json")):
-        try:
-            with open(path, encoding="utf-8") as f:
-                data = json.load(f)
-            game = os.path.basename(path).replace("strategy_states_", "").replace(".json", "")
-            count = len(data) if isinstance(data, dict) else 0
-            edges = [
-                v.get("short_term_edge", v.get("edge"))
-                for v in data.values()
-                if isinstance(v, dict)
-            ]
-            valid_edges = [e for e in edges if isinstance(e, (int, float))]
-            best_edge = max(valid_edges) if valid_edges else None
-            edge_str = f"+{best_edge:.3f}" if best_edge is not None else "N/A"
-            lines.append(f"- **{game}**: {count} 策略, 短期最佳 edge={edge_str}")
-        except Exception:
-            continue
-    return "\n".join(lines) if lines else "（無策略快照資料）"
+_BETTING_STRATEGY_STATE_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "runtime", "agent_orchestrator", "strategy_state.json",
+)
+
+
+def _load_betting_strategy_snapshot() -> dict:
+    """讀取 Betting-pool 策略狀態快照 (runtime/agent_orchestrator/strategy_state.json)。
+
+    Returns a compact dict with:
+      source, confidence_weight, exposure_level,
+      consecutive_negative, consecutive_positive, regime_override_keys
+
+    If file is missing or unreadable, returns a safe degraded response.
+
+    # DOMAIN_DESIGN_REQUIRED: StrategyBand — future Betting-pool native
+    # active/reduced/no-bet/suspended design should extend this loader.
+    # See cross-system design audit 2026-04-29.
+    """
+    try:
+        with open(_BETTING_STRATEGY_STATE_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+        return {
+            "source": _BETTING_STRATEGY_STATE_PATH,
+            "confidence_weight": data.get("confidence_weight"),
+            "exposure_level": data.get("exposure_level"),
+            "consecutive_negative": data.get("consecutive_negative"),
+            "consecutive_positive": data.get("consecutive_positive"),
+            "regime_override_keys": list(data.get("regime_overrides", {}).keys()),
+            "last_updated": data.get("last_updated"),
+        }
+    except FileNotFoundError:
+        return {
+            "source": "strategy_state_unavailable",
+            "status": "UNKNOWN",
+            "reason": f"File not found: {_BETTING_STRATEGY_STATE_PATH}",
+        }
+    except Exception as exc:
+        return {
+            "source": "strategy_state_unavailable",
+            "status": "UNKNOWN",
+            "reason": str(exc),
+        }
+
+
+# Alias for call sites that have not yet been migrated
+_load_strategy_snapshot = _load_betting_strategy_snapshot
 
 
 def _build_task_contract(blueprint: dict) -> dict:
@@ -1259,6 +1284,23 @@ def _render_blueprint_prompt(blueprint: dict, generated_at: str, sys_state: Opti
     confidence_str = f"{confidence:.2f}" if confidence is not None else "N/A"
     merge_rate_str = f"{merge_rate:.1%}" if merge_rate is not None else "N/A"
     strategy_snapshot = _load_strategy_snapshot()
+    if isinstance(strategy_snapshot, dict):
+        if strategy_snapshot.get("status") == "UNKNOWN":
+            strategy_snapshot_str = f"（{strategy_snapshot.get('reason', '策略狀態不可用')}）"
+        else:
+            _sw = strategy_snapshot.get("confidence_weight", "N/A")
+            _ex = strategy_snapshot.get("exposure_level", "N/A")
+            _cn = strategy_snapshot.get("consecutive_negative", 0)
+            _cp = strategy_snapshot.get("consecutive_positive", 0)
+            _rk = strategy_snapshot.get("regime_override_keys", [])
+            strategy_snapshot_str = (
+                f"- confidence_weight: {_sw}\n"
+                f"- exposure_level: {_ex}\n"
+                f"- consecutive_negative: {_cn}  consecutive_positive: {_cp}\n"
+                f"- regime_overrides: {', '.join(_rk) if _rk else '（無）'}"
+            )
+    else:
+        strategy_snapshot_str = str(strategy_snapshot)
     datasets = blueprint.get("dataset_paths", [])
     steps = blueprint.get("steps", [])
     validation_checks = blueprint.get("validation_checks", [])
@@ -1312,7 +1354,7 @@ def _render_blueprint_prompt(blueprint: dict, generated_at: str, sys_state: Opti
 | 預期時長 | {blueprint.get('expected_duration_hours', 2)}h |
 
 ## 策略表現快照
-{strategy_snapshot}
+{strategy_snapshot_str}
 
 ## 單一目標
 {blueprint['objective']}
@@ -1584,7 +1626,7 @@ def _resolve_previous_task_blocker(latest: dict) -> Optional[str]:
     前置封鎖守衛：檢查最新任務是否阻止 Planner 繼續。
     回傳 blocker 描述字串；None 表示允許繼續。
 
-    封鎖規則（對齊 LotteryNew，適配本系統）：
+    封鎖規則（Betting-pool Planner 守衛）：
     - RUNNING / QUEUED → 封鎖（不堆疊任務）
     - BLOCKED_ENV + 年齡 < 600s → 封鎖（給環境時間自我恢復）
     - BLOCKED_ENV + 年齡 ≥ 600s → 自動解除：
