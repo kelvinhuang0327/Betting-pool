@@ -542,6 +542,272 @@ def _attempt_maintenance_task(request_id: str, start_time: datetime) -> dict:
     return {"status": "CREATED", "task_id": task_id, "dedupe_key": dedupe_key}
 
 
+# ── Phase 4: Forced Exploration Lane Definitions ──────────────────────────
+
+_FORCED_EXPLORATION_LANES: list[dict] = [
+    {
+        "name": "market_signal",
+        "task_type": "forced_exploration_market_signal",
+        "title": "[EXPLORE] Market Signal Research: Odds Movement & CLV Proxy",
+        "purpose": (
+            "Research whether market-derived signals may improve betting decision quality."
+        ),
+        "examples": [
+            "odds movement",
+            "opening line vs closing line",
+            "line drift",
+            "implied probability change",
+            "market consensus",
+            "CLV proxy",
+        ],
+        "output_prefix": "market_signal_hypothesis",
+    },
+    {
+        "name": "risk_rule",
+        "task_type": "forced_exploration_risk_rule",
+        "title": "[EXPLORE] Risk / Bankroll Rule Research: No-Bet & Drawdown Guards",
+        "purpose": (
+            "Research no-bet / risk-cap rules that may reduce bad bets or drawdown."
+        ),
+        "examples": [
+            "max drawdown guard",
+            "Kelly cap",
+            "exposure concentration",
+            "low-liquidity no-bet rule",
+            "high-uncertainty no-bet rule",
+        ],
+        "output_prefix": "risk_rule_hypothesis",
+    },
+    {
+        "name": "walk_forward",
+        "task_type": "forced_exploration_walk_forward",
+        "title": "[EXPLORE] Walk-Forward Robustness Research: Backtest & Leakage Checks",
+        "purpose": (
+            "Research whether current backtest / model logic survives walk-forward, "
+            "sample sufficiency, and leakage checks."
+        ),
+        "examples": [
+            "train/test split integrity",
+            "sample sufficiency by market regime",
+            "rolling window stability",
+            "leakage risk",
+            "OOS degradation",
+        ],
+        "output_prefix": "walk_forward_hypothesis",
+    },
+    {
+        "name": "calibration",
+        "task_type": "forced_exploration_calibration",
+        "title": "[EXPLORE] Model Calibration / CLV Research: Brier Score & Reliability",
+        "purpose": "Research calibration quality and CLV alignment.",
+        "examples": [
+            "predicted probability calibration",
+            "Brier score",
+            "reliability curve",
+            "CLV vs model confidence",
+            "overconfident market regimes",
+        ],
+        "output_prefix": "calibration_hypothesis",
+    },
+    {
+        "name": "no_bet",
+        "task_type": "forced_exploration_no_bet",
+        "title": "[EXPLORE] Anti-Strategy / No-Bet Rule Research: Fake Edge & Market Shock",
+        "purpose": "Research conditions where the system should avoid betting.",
+        "examples": [
+            "fake edge",
+            "market shock",
+            "stale odds",
+            "conflicting model / market signals",
+            "high variance regime",
+            "low sample confidence",
+        ],
+        "output_prefix": "no_bet_rule_hypothesis",
+    },
+    {
+        "name": "ux_decision",
+        "task_type": "forced_exploration_ux_decision",
+        "title": "[EXPLORE] UX / Decision Quality Research: Decision Card & CLV Display",
+        "purpose": (
+            "Research UI / decision improvements that reduce operator error."
+        ),
+        "examples": [
+            "decision card clarity",
+            "bet/no-bet explanation",
+            "confidence badge",
+            "CLV tracking display",
+            "risk warning visibility",
+            "manual override audit trail",
+        ],
+        "output_prefix": "ux_decision_quality_hypothesis",
+    },
+]
+
+# Lane rotation order (deterministic, by index)
+# market_signal → risk_rule → walk_forward → calibration → no_bet → ux_decision → repeat
+
+
+def _build_forced_exploration_prompt(lane_def: dict, today: str, output_filename: str) -> str:
+    """Build the research prompt markdown for a forced exploration lane task."""
+    lane_name = lane_def["name"]
+    task_type = lane_def["task_type"]
+    title = lane_def["title"]
+    purpose = lane_def["purpose"]
+    examples_list = "\n".join(f"- {ex}" for ex in lane_def["examples"])
+
+    return (
+        f"# {title}\n\n"
+        f"## Lane\n{lane_name}\n\n"
+        f"## Task Type\n{task_type}\n\n"
+        f"## Worker Type\nresearch\n\n"
+        f"## Purpose\n{purpose}\n\n"
+        f"## Exploration Examples\n{examples_list}\n\n"
+        f"## Constraints\n"
+        f"- No betting strategy changes\n"
+        f"- No model weight modifications\n"
+        f"- No external betting API calls\n"
+        f"- No production betting data writes\n"
+        f"- Research only; do not place bets\n\n"
+        f"## Required Report Sections\n\n"
+        f"### 1. New Hypothesis\n"
+        f"State one clear, falsifiable hypothesis relevant to: {purpose}\n\n"
+        f"### 2. Why It May Improve Betting Decision Quality\n"
+        f"Explain the mechanism: how this hypothesis, if validated, would improve "
+        f"match odds assessment, CLV, ROI, hit rate, or drawdown.\n"
+        f"Use only Betting-pool domain terms: market, match, odds, line movement, CLV, "
+        f"ROI, hit rate, drawdown, active betting strategy, benchmark model, shadow model, "
+        f"walk-forward, backtest, leakage audit, bankroll / risk-cap, no-bet rule, "
+        f"market regime, sample sufficiency.\n\n"
+        f"### 3. Required Data\n"
+        f"List the data sources, time windows, and minimum sample requirements.\n\n"
+        f"### 4. Minimal Validation Plan\n"
+        f"Describe the smallest meaningful experiment:\n"
+        f"- Metric to measure\n"
+        f"- Baseline to compare against\n"
+        f"- Acceptance threshold\n\n"
+        f"### 5. Risk / Leakage Check\n"
+        f"Identify:\n"
+        f"- Any look-ahead leakage risks\n"
+        f"- Data availability risks\n"
+        f"- Market regime sensitivity\n\n"
+        f"### 6. Decision\n"
+        f"State exactly one of:\n"
+        f"- WORTH_VALIDATION\n"
+        f"- WATCH_ONLY\n"
+        f"- REJECT_FOR_NOW\n"
+        f"- INCONCLUSIVE_NEED_DATA\n\n"
+        f"### 7. Next Task If Worth Validation\n"
+        f"If decision is WORTH_VALIDATION, include a complete validation task prompt with:\n"
+        f"- Title\n"
+        f"- Objective\n"
+        f"- Dataset paths\n"
+        f"- Steps\n"
+        f"- Validation checks\n"
+        f"- Expected output\n\n"
+        f"---\n\n"
+        f"## Output File\n{output_filename}\n\n"
+        f"## Created\n{today}\n\n"
+        f"## Source\nforced_exploration\n"
+    )
+
+
+def _attempt_forced_exploration(request_id: str, start_time: datetime) -> dict:
+    """Attempt to create exactly one forced exploration research task (daily cap per lane).
+
+    Lane rotation order (deterministic):
+      market_signal → risk_rule → walk_forward → calibration → no_bet → ux_decision → repeat
+
+    Skips any lane whose dedupe_key already has a non-failed task today.
+    Creates the first eligible lane only.
+
+    Returns:
+      {"status": "CREATED", "task_id": int, "dedupe_key": str, "lane": str}
+      {"status": "SKIP_ALL_LANES_CAPPED", "capped_lanes": list[str]}
+    """
+    today = _common.dedupe_day_utc()
+    capped_lanes: list[str] = []
+
+    for lane_def in _FORCED_EXPLORATION_LANES:
+        lane_name = lane_def["name"]
+        task_type = lane_def["task_type"]
+        dedupe_key = f"forced_exploration:{lane_name}:{today}"
+
+        existing = db.get_nonfailed_task_by_dedupe_key(dedupe_key)
+        if existing:
+            capped_lanes.append(lane_name)
+            logger.info(
+                "[PlannerTick] PLANNER_SKIP_DAILY_CAP lane=%r existing_task_id=%s existing_status=%s",
+                lane_name, existing["id"], existing["status"],
+            )
+            continue
+
+        # First eligible lane — create task
+        slot_key = generate_task_slot_key()
+        date_folder = today
+        task_dir = os.path.join(db.ORCH_ROOT, "tasks", date_folder)
+        os.makedirs(task_dir, exist_ok=True)
+        prompt_path = os.path.join(task_dir, f"{slot_key}-prompt.md")
+
+        output_filename = f"{lane_def['output_prefix']}_{today}.md"
+        prompt_text = _build_forced_exploration_prompt(lane_def, today, output_filename)
+
+        with open(prompt_path, "w", encoding="utf-8") as f:
+            f.write(prompt_text)
+
+        task_id = db.create_task(
+            slot_key=slot_key,
+            date_folder=date_folder,
+            title=lane_def["title"],
+            slug=slot_key,
+            status="QUEUED",
+            prompt_file_path=prompt_path,
+            prompt_text=prompt_text,
+            dedupe_key=dedupe_key,
+            task_type=task_type,
+            worker_type="research",
+            regime_state="exploration",
+            epoch_id=0,
+            focus_keys=f"forced_exploration,{lane_name}",
+            signal_state_type=f"forced_exploration_{lane_name}",
+        )
+
+        msg = (
+            f"Planner created forced exploration task #{task_id} "
+            f"lane={lane_name!r} task_type={task_type!r} "
+            f"dedupe_key={dedupe_key!r}"
+        )
+        logger.info("[PlannerTick] %s", msg)
+        db.record_run(
+            runner="planner_tick",
+            outcome="SUCCESS",
+            request_id=request_id,
+            task_id=task_id,
+            message=msg,
+            tick_at=start_time.isoformat(),
+        )
+        return {
+            "status": "CREATED",
+            "task_id": task_id,
+            "dedupe_key": dedupe_key,
+            "lane": lane_name,
+        }
+
+    # All lanes have non-failed tasks today
+    msg = (
+        f"PLANNER_SKIP_FORCED_EXPLORATION_DAILY_CAP: 今日所有 forced exploration lanes 已建立。 "
+        f"capped_lanes={capped_lanes}"
+    )
+    logger.info("[PlannerTick] %s", msg)
+    db.record_run(
+        runner="planner_tick",
+        outcome="SKIPPED",
+        request_id=request_id,
+        message=msg,
+        tick_at=start_time.isoformat(),
+    )
+    return {"status": "SKIP_ALL_LANES_CAPPED", "capped_lanes": capped_lanes}
+
+
 def _load_system_state_snapshot() -> dict:
     """從 DB 讀取目前系統狀態，安全降級為空 dict。"""
     try:
@@ -1257,7 +1523,25 @@ def run_planner_tick() -> dict:
                 )
 
         # ── STEP 3: 所有候選都失敗 ──
-        # Phase 3: 無可用研究任務時，嘗試建立 maintenance_health_check（daily cap 守衛）
+        # Phase 4: 先嘗試 forced exploration（daily cap per lane，rotation）
+        _explore = _attempt_forced_exploration(request_id, start_time)
+        if _explore["status"] == "CREATED":
+            end_time = datetime.now(timezone.utc)
+            duration = int((end_time - start_time).total_seconds())
+            return {
+                "status": "SUCCESS",
+                "quality_status": "FORCED_EXPLORATION",
+                "message": (
+                    f"Planner created forced exploration task #{_explore['task_id']} "
+                    f"lane={_explore['lane']!r}"
+                ),
+                "task_id": _explore["task_id"],
+                "lane": _explore["lane"],
+                "objective": _explore.get("dedupe_key", ""),
+                "duration_seconds": duration,
+            }
+
+        # Phase 3: 所有 exploration lanes 已滿 → fallback 到 maintenance_health_check
         _maint = _attempt_maintenance_task(request_id, start_time)
         if _maint["status"] == "CREATED":
             end_time = datetime.now(timezone.utc)
