@@ -1,0 +1,67 @@
+raw_team_name,normalized_team_name,inferred_team_code,inferred_team_name_en,source_count,evidence_sources,confidence,quality_flags
+kt巫師,kt巫師,KT,KT Wiz,12,TSL_BLOB3RD,HIGH,RESOLVED
+lg雙子,lg雙子,LGT,LG Twins,12,TSL_BLOB3RD,HIGH,RESOLVED
+nc恐龍,nc恐龍,NCD,NC Dinos,12,TSL_BLOB3RD,HIGH,RESOLVED
+ssg登陸者,ssg登陸者,SSG,SSG Landers,13,TSL_BLOB3RD,HIGH,RESOLVED
+三星獅,三星獅,SAM,Samsung Lions,13,TSL_BLOB3RD,HIGH,RESOLVED
+中信兄弟,中信兄弟,,,7,TSL_BLOB3RD,NONE,TEAM_CODE_MISSING
+中日龍,中日龍,CNJ,Chunichi Dragons,11,TSL_BLOB3RD,HIGH,RESOLVED
+亞歷桑那響尾蛇,亞歷桑那響尾蛇,ARI,Arizona Diamondbacks,15,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+亞特蘭大勇士,亞特蘭大勇士,ATL,Atlanta Braves,18,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+休士頓太空人,休士頓太空人,HOU,Houston Astros,16,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+克里夫蘭守護者,克里夫蘭守護者,CLE,Cleveland Guardians,14,TSL_BLOB3RD,HIGH,RESOLVED
+加拿大,加拿大,CAN,Canada,1,TSL_BLOB3RD,HIGH,RESOLVED
+匹茲堡海盜,匹茲堡海盜,PIT,Pittsburgh Pirates,19,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+南韓,南韓,KOR,Korea,1,TSL_BLOB3RD,HIGH,RESOLVED
+台鋼雄鷹,台鋼雄鷹,,,11,TSL_BLOB3RD|tsl_crawler_v2,NONE,TEAM_CODE_MISSING
+味全龍,味全龍,,,9,TSL_BLOB3RD,NONE,TEAM_CODE_MISSING
+坦帕灣光芒,坦帕灣光芒,TBR,Tampa Bay Rays,18,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+培證英雄,培證英雄,KWH,Kiwoom Heroes,13,TSL_BLOB3RD,HIGH,RESOLVED
+堪薩斯皇家,堪薩斯皇家,KCR,Kansas City Royals,16,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+多倫多藍鳥,多倫多藍鳥,TOR,Toronto Blue Jays,18,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+多明尼加,多明尼加,DOM,Dominican Republic,2,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+委內瑞拉,委內瑞拉,VEN,Venezuela,3,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+密爾瓦基釀酒人,密爾瓦基釀酒人,MIL,Milwaukee Brewers,15,TSL_BLOB3RD,HIGH,RESOLVED
+富邦悍將,富邦悍將,,,10,TSL_BLOB3RD|tsl_crawler_v2,NONE,TEAM_CODE_MISSING
+巴爾的摩金鶯,巴爾的摩金鶯,BAL,Baltimore Orioles,17,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+底特律老虎,底特律老虎,DET,Detroit Tigers,18,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+廣島東洋鯉魚,廣島東洋鯉魚,HRS,Hiroshima Toyo Carp,10,TSL_BLOB3RD,HIGH,RESOLVED
+德州遊騎兵,德州遊騎兵,TEX,Texas Rangers,16,TSL_BLOB3RD,HIGH,RESOLVED
+斗山熊,斗山熊,DBS,Doosan Bears,13,TSL_BLOB3RD,HIGH,RESOLVED
+日本,日本,JPN,Japan,1,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+日本火腿鬥士,日本火腿鬥士,HAM,Hokkaido Nippon-Ham Fighters,13,TSL_BLOB3RD,HIGH,RESOLVED
+明尼蘇達雙城,明尼蘇達雙城,MIN,Minnesota Twins,18,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+樂天巨人,樂天巨人,LOT,Lotte Giants,12,TSL_BLOB3RD,HIGH,RESOLVED
+樂天桃猿,樂天桃猿,,,10,TSL_BLOB3RD|tsl_crawler_v2,NONE,TEAM_CODE_MISSING
+樂天金鷲,樂天金鷲,RKT,Tohoku Rakuten Golden Eagles,12,TSL_BLOB3RD,HIGH,RESOLVED
+橫濱海灣之星,橫濱海灣之星,YDB,Yokohama DeNA BayStars,12,TSL_BLOB3RD,HIGH,RESOLVED
+歐力士猛牛,歐力士猛牛,ORI,Orix Buffaloes,13,TSL_BLOB3RD,HIGH,RESOLVED
+波士頓紅襪,波士頓紅襪,BOS,Boston Red Sox,17,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+波多黎各,波多黎各,PUR,Puerto Rico,1,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+洛杉磯天使,洛杉磯天使,LAA,Los Angeles Angels,15,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+洛杉磯道奇,洛杉磯道奇,LAD,Los Angeles Dodgers,16,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+福岡軟銀鷹,福岡軟銀鷹,SFH,Fukuoka SoftBank Hawks,12,TSL_BLOB3RD,LOW,LOW_CONFIDENCE
+科羅拉多落磯,科羅拉多落磯,COL,Colorado Rockies,12,TSL_BLOB3RD,HIGH,RESOLVED
+紐約大都會,紐約大都會,NYM,New York Mets,15,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+紐約洋基,紐約洋基,NYY,New York Yankees,17,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+統一獅,統一獅,,,9,TSL_BLOB3RD,NONE,TEAM_CODE_MISSING
+羅德海洋,羅德海洋,CRM,Chiba Lotte Marines,11,TSL_BLOB3RD,HIGH,RESOLVED
+美國,美國,USA,United States,3,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+義大利,義大利,ITA,Italy,2,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+聖地牙哥教士,聖地牙哥教士,SDP,San Diego Padres,14,TSL_BLOB3RD,HIGH,RESOLVED
+聖路易紅雀,聖路易紅雀,STL,St. Louis Cardinals,16,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+舊金山巨人,舊金山巨人,SFG,San Francisco Giants,17,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+芝加哥小熊,芝加哥小熊,CHC,Chicago Cubs,15,TSL_BLOB3RD,HIGH,RESOLVED
+芝加哥白襪,芝加哥白襪,CWS,Chicago White Sox,15,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+華盛頓國民,華盛頓國民,WSN,Washington Nationals,17,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+西武獅,西武獅,SWL,Saitama Seibu Lions,13,TSL_BLOB3RD,HIGH,RESOLVED
+西雅圖水手,西雅圖水手,SEA,Seattle Mariners,14,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+讀賣巨人,讀賣巨人,YGT,Yomiuri Giants,12,TSL_BLOB3RD,HIGH,RESOLVED
+費城費城人,費城費城人,PHI,Philadelphia Phillies,19,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+起亞老虎,起亞老虎,KIA,KIA Tigers,13,TSL_BLOB3RD,HIGH,RESOLVED
+辛辛那堤紅人,辛辛那堤紅人,CIN,Cincinnati Reds,13,TSL_BLOB3RD,HIGH,RESOLVED
+運動家,運動家,OAK,Oakland Athletics,15,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+邁阿密馬林魚,邁阿密馬林魚,MIA,Miami Marlins,19,TSL_BLOB3RD|tsl_crawler_v2,HIGH,RESOLVED
+阪神虎,阪神虎,HNS,Hanshin Tigers,10,TSL_BLOB3RD,HIGH,RESOLVED
+韓華老鷹,韓華老鷹,HHE,Hanwha Eagles,13,TSL_BLOB3RD,HIGH,RESOLVED
+養樂多燕子,養樂多燕子,YKL,Tokyo Yakult Swallows,13,TSL_BLOB3RD,HIGH,RESOLVED
