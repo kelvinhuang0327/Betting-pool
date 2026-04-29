@@ -808,6 +808,399 @@ def _attempt_forced_exploration(request_id: str, start_time: datetime) -> dict:
     return {"status": "SKIP_ALL_LANES_CAPPED", "capped_lanes": capped_lanes}
 
 
+# ── Phase 5: Exploration Result Router ───────────────────────────────────
+
+_DECISION_ENUMS = frozenset([
+    "WORTH_VALIDATION",
+    "WATCH_ONLY",
+    "REJECT_FOR_NOW",
+    "INCONCLUSIVE_NEED_DATA",
+])
+
+_LANE_OUTPUT_PREFIX: dict[str, str] = {
+    lane["name"]: lane["output_prefix"] for lane in _FORCED_EXPLORATION_LANES
+}
+
+
+def _find_research_report_path(source_task: dict, source_lane: str) -> str | None:
+    """Attempt to locate the hypothesis report for a completed forced exploration task.
+
+    Strategy (in order):
+    1. Search completed_text / completed_file content for a 'research/...' path.
+    2. Convention-based path: research/{output_prefix}_{YYYY-MM-DD}.md
+    """
+    import re
+
+    dedupe_key = source_task.get("dedupe_key", "")
+    # Extract YYYYMMDD from dedupe_key: forced_exploration:{lane}:{YYYYMMDD}
+    parts = dedupe_key.split(":")
+    date_ymd = parts[-1] if len(parts) >= 3 else ""
+    date_dashed = (
+        f"{date_ymd[:4]}-{date_ymd[4:6]}-{date_ymd[6:8]}"
+        if len(date_ymd) == 8 else ""
+    )
+
+    # 1. Search completed_text or completed_file content for a research/ path
+    for content_src in (source_task.get("completed_text"), _read_file_safe(source_task.get("completed_file_path"))):
+        if not content_src:
+            continue
+        m = re.search(r'research/[\w/_-]+\.md', content_src)
+        if m:
+            candidate = os.path.join(db.ORCH_ROOT.replace("runtime/agent_orchestrator/", "").rstrip("/"), m.group(0))
+            # ORCH_ROOT is relative; use REPO_ROOT
+            candidate_abs = os.path.join(_REPO_ROOT, m.group(0))
+            if os.path.exists(candidate_abs):
+                return candidate_abs
+
+    # 2. Convention-based
+    output_prefix = _LANE_OUTPUT_PREFIX.get(source_lane, f"{source_lane}_hypothesis")
+    if date_dashed:
+        convention_path = os.path.join(_REPO_ROOT, "research", f"{output_prefix}_{date_dashed}.md")
+        if os.path.exists(convention_path):
+            return convention_path
+
+    return None
+
+
+def _read_file_safe(path: str | None) -> str | None:
+    """Read file content safely; return None on any error."""
+    if not path or not os.path.exists(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            return f.read()
+    except Exception:
+        return None
+
+
+def _parse_decision_from_report(report_content: str) -> str | None:
+    """Extract the decision enum from a research hypothesis report.
+
+    Looks for a '### 6. Decision' section and returns the first matching enum on the
+    lines that follow it. Returns None if not found.
+    """
+    import re
+
+    # Find the Decision section
+    decision_section_match = re.search(
+        r"###\s+6\.\s+Decision\s*\n(.*?)(?=\n###|\Z)",
+        report_content,
+        re.DOTALL | re.IGNORECASE,
+    )
+    if not decision_section_match:
+        return None
+
+    section_text = decision_section_match.group(1)
+    for enum_val in ("WORTH_VALIDATION", "WATCH_ONLY", "REJECT_FOR_NOW", "INCONCLUSIVE_NEED_DATA"):
+        if enum_val in section_text:
+            return enum_val
+    return None
+
+
+def _build_validation_prompt(
+    source_task: dict,
+    source_lane: str,
+    source_report_path: str,
+    today: str,
+) -> str:
+    """Build a structured validation task prompt for a WORTH_VALIDATION exploration result."""
+    report_rel = os.path.relpath(source_report_path, _REPO_ROOT) if source_report_path else "unknown"
+    created_at = datetime.now(timezone.utc).isoformat()
+    return (
+        f"# [VALIDATION] Exploration Follow-up: {source_lane}\n\n"
+        f"**Source Task ID:** {source_task['id']}\n"
+        f"**Source Lane:** {source_lane}\n"
+        f"**Source Decision:** WORTH_VALIDATION\n"
+        f"**Source Report:** `{report_rel}`\n"
+        f"**Created At:** {created_at}\n\n"
+        f"---\n\n"
+        f"## Objective\n\n"
+        f"Formally validate the hypothesis documented in the source exploration report.\n"
+        f"The exploration identified a potential edge in the **{source_lane}** domain "
+        f"and recommended statistical validation before integration.\n\n"
+        f"Read the source report at `{report_rel}` to understand the hypothesis, "
+        f"required data, and minimal validation plan.\n\n"
+        f"---\n\n"
+        f"## Task\n\n"
+        f"1. Re-read the source exploration report (Section 3: Required Data, "
+        f"Section 4: Minimal Validation Plan, Section 5: Risk / Leakage Check).\n"
+        f"2. Implement the Minimal Validation Plan as a reproducible script "
+        f"or analysis notebook — no production changes.\n"
+        f"3. Run the validation on historical data within the repository.\n"
+        f"4. Report the primary metric (e.g., ROI delta, CLV proxy lift, hit rate improvement) "
+        f"against the acceptance threshold defined in the exploration report.\n"
+        f"5. Perform walk-forward isolation: training data must not overlap with validation data.\n"
+        f"6. Confirm zero look-ahead leakage (no future data accessible at decision time).\n\n"
+        f"---\n\n"
+        f"## Constraints (Read-Only)\n\n"
+        f"- **Read-only**: Do not modify any betting strategy, model weights, or active parameters.\n"
+        f"- **No production deployment**: Do not push changes to any live betting system.\n"
+        f"- **No betting strategy promotion**: Do not activate any new strategy or model.\n"
+        f"- **No external betting API**: Do not call any sportsbook, exchange, or odds feed API "
+        f"unless the source report explicitly lists it as a required read-only data source.\n"
+        f"- **No live bets**: Do not place any bets or simulate live bet placement.\n"
+        f"- **No bankroll changes**: Do not modify bankroll state, risk-cap, or Kelly fractions.\n"
+        f"- **No LotteryNew**: Do not touch any LotteryNew draw logic, lottery number "
+        f"generators, or lottery-domain files.\n\n"
+        f"---\n\n"
+        f"## Domain Vocabulary\n\n"
+        f"Use only Betting-pool terms in your analysis and report:\n"
+        f"market, match, odds, CLV, ROI, hit rate, drawdown, active betting strategy, "
+        f"benchmark model, shadow model, walk-forward, backtest, leakage audit, "
+        f"bankroll, risk-cap, no-bet rule, market regime, sample sufficiency.\n\n"
+        f"---\n\n"
+        f"## Required Outputs\n\n"
+        f"1. **Validation Script / Notebook** (if applicable):\n"
+        f"   - Reproducible, standalone script in `research/` or `scripts/`\n"
+        f"   - Input: historical match data from `data/`\n"
+        f"   - Output: metric table + statistical test result\n\n"
+        f"2. **Validation Report** at:\n"
+        f"   `research/{source_lane}_validation_{today}.md`\n\n"
+        f"   Must contain:\n"
+        f"   - Hypothesis restated\n"
+        f"   - Dataset used (path, row count, date range)\n"
+        f"   - Primary metric value vs. acceptance threshold\n"
+        f"   - Statistical test result (p-value or confidence interval)\n"
+        f"   - Walk-forward isolation confirmation\n"
+        f"   - Leakage audit result\n"
+        f"   - **Validation Decision**: one of:\n"
+        f"     VALIDATED / REJECTED / INCONCLUSIVE_NEED_MORE_DATA / DEFERRED\n"
+        f"   - Recommended next step (if VALIDATED)\n\n"
+        f"---\n\n"
+        f"## Fail Conditions\n\n"
+        f"- Report does not include a Validation Decision enum\n"
+        f"- Primary metric value not reported\n"
+        f"- No statistical test conducted\n"
+        f"- Walk-forward isolation not confirmed\n"
+        f"- Look-ahead leakage detected\n"
+        f"- Any production deployment or strategy activation performed\n"
+        f"- LotteryNew terms appear in the output\n"
+    )
+
+
+_REPO_ROOT: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def process_completed_exploration_tasks(
+    request_id: str | None = None,
+    start_time: datetime | None = None,
+) -> dict:
+    """Phase 5: Scan completed forced exploration tasks and route decisions.
+
+    For each COMPLETED forced_exploration task that has not yet been routed:
+      - Parse the Decision enum from the research report
+      - WORTH_VALIDATION → create validation task (with dedupe) + record routing state
+      - Other decisions → record routing state with appropriate route_status
+
+    Returns a summary dict:
+      {
+        "processed": int,       # tasks newly routed
+        "validation_created": int,
+        "watch_recorded": int,
+        "reject_recorded": int,
+        "inconclusive_recorded": int,
+        "parse_failed": int,
+        "already_routed": int,
+        "validation_task_ids": list[int],
+      }
+    """
+    if request_id is None:
+        import uuid
+        request_id = str(uuid.uuid4())
+    if start_time is None:
+        start_time = datetime.now(timezone.utc)
+
+    today = _common.dedupe_day_utc()
+    summary: dict = {
+        "processed": 0,
+        "validation_created": 0,
+        "watch_recorded": 0,
+        "reject_recorded": 0,
+        "inconclusive_recorded": 0,
+        "parse_failed": 0,
+        "already_routed": 0,
+        "validation_task_ids": [],
+    }
+
+    # Fetch all completed forced_exploration tasks
+    conn = db.get_conn()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM agent_tasks "
+            "WHERE dedupe_key LIKE 'forced_exploration:%' AND status='COMPLETED' "
+            "ORDER BY id ASC"
+        ).fetchall()
+        source_tasks = [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+    for source_task in source_tasks:
+        source_task_id = source_task["id"]
+        dedupe_key = source_task.get("dedupe_key", "")
+
+        # Extract lane name from dedupe_key: forced_exploration:{lane}:{date}
+        parts = dedupe_key.split(":")
+        source_lane = parts[1] if len(parts) >= 2 else "unknown"
+
+        # Skip if already routed
+        existing_route = db.get_exploration_routing_state_by_source_task_id(source_task_id)
+        if existing_route:
+            logger.info(
+                "[PlannerTick] PLANNER_SKIP_EXPLORATION_ALREADY_ROUTED "
+                "source_task_id=%s route_status=%s",
+                source_task_id, existing_route["route_status"],
+            )
+            summary["already_routed"] += 1
+            continue
+
+        # Locate research report
+        report_path = _find_research_report_path(source_task, source_lane)
+        report_content = _read_file_safe(report_path)
+
+        # Parse decision
+        decision = None
+        if report_content:
+            decision = _parse_decision_from_report(report_content)
+
+        if not decision:
+            logger.warning(
+                "[PlannerTick] PARSE_FAILED: cannot parse decision from source_task_id=%s "
+                "report_path=%r",
+                source_task_id, report_path,
+            )
+            db.create_exploration_routing_state(
+                source_task_id=source_task_id,
+                source_lane=source_lane,
+                source_dedupe_key=dedupe_key,
+                source_report_path=report_path,
+                decision=None,
+                route_status="PARSE_FAILED",
+            )
+            summary["parse_failed"] += 1
+            summary["processed"] += 1
+            continue
+
+        # Route by decision
+        if decision == "WORTH_VALIDATION":
+            # Check dedupe for validation task
+            validation_dedupe_key = f"validation:{source_lane}:{today}"
+            existing_validation = db.get_nonfailed_task_by_dedupe_key(validation_dedupe_key)
+            if existing_validation:
+                msg = (
+                    f"PLANNER_SKIP_EXPLORATION_VALIDATION_DEDUPE: validation task already exists "
+                    f"for dedupe_key={validation_dedupe_key!r} "
+                    f"existing_task_id={existing_validation['id']}"
+                )
+                logger.info("[PlannerTick] %s", msg)
+                db.create_exploration_routing_state(
+                    source_task_id=source_task_id,
+                    source_lane=source_lane,
+                    source_dedupe_key=dedupe_key,
+                    source_report_path=report_path,
+                    decision=decision,
+                    route_status="VALIDATION_CREATED",
+                    validation_task_id=existing_validation["id"],
+                )
+                summary["validation_created"] += 1
+                summary["validation_task_ids"].append(existing_validation["id"])
+                summary["processed"] += 1
+                continue
+
+            # Create validation task
+            slot_key = generate_task_slot_key()
+            date_folder = today
+            task_dir = os.path.join(db.ORCH_ROOT, "tasks", date_folder)
+            os.makedirs(task_dir, exist_ok=True)
+            prompt_path = os.path.join(task_dir, f"{slot_key}-prompt.md")
+            prompt_text = _build_validation_prompt(source_task, source_lane, report_path or "", today)
+
+            with open(prompt_path, "w", encoding="utf-8") as f:
+                f.write(prompt_text)
+
+            validation_task_id = db.create_task(
+                slot_key=slot_key,
+                date_folder=date_folder,
+                title=f"[VALIDATION] Exploration follow-up ({source_lane}) — {today}",
+                slug=slot_key,
+                status="QUEUED",
+                prompt_file_path=prompt_path,
+                prompt_text=prompt_text,
+                dedupe_key=validation_dedupe_key,
+                task_type=f"validation_{source_lane}",
+                worker_type="research",
+                regime_state="validation",
+                epoch_id=0,
+                focus_keys=f"validation,{source_lane}",
+                signal_state_type=f"validation_{source_lane}",
+                previous_task_id=source_task_id,
+            )
+
+            db.create_exploration_routing_state(
+                source_task_id=source_task_id,
+                source_lane=source_lane,
+                source_dedupe_key=dedupe_key,
+                source_report_path=report_path,
+                decision=decision,
+                route_status="VALIDATION_CREATED",
+                validation_task_id=validation_task_id,
+            )
+
+            msg = (
+                f"PLANNER_CREATE_EXPLORATION_VALIDATION: "
+                f"source_task_id={source_task_id} source_lane={source_lane!r} "
+                f"decision=WORTH_VALIDATION → validation_task_id={validation_task_id} "
+                f"dedupe_key={validation_dedupe_key!r}"
+            )
+            logger.info("[PlannerTick] %s", msg)
+            db.record_run(
+                runner="planner_tick",
+                outcome="SUCCESS",
+                request_id=request_id,
+                task_id=validation_task_id,
+                message=msg,
+                tick_at=start_time.isoformat(),
+            )
+            summary["validation_created"] += 1
+            summary["validation_task_ids"].append(validation_task_id)
+
+        elif decision == "WATCH_ONLY":
+            db.create_exploration_routing_state(
+                source_task_id=source_task_id,
+                source_lane=source_lane,
+                source_dedupe_key=dedupe_key,
+                source_report_path=report_path,
+                decision=decision,
+                route_status="WATCH_RECORDED",
+            )
+            summary["watch_recorded"] += 1
+
+        elif decision == "REJECT_FOR_NOW":
+            db.create_exploration_routing_state(
+                source_task_id=source_task_id,
+                source_lane=source_lane,
+                source_dedupe_key=dedupe_key,
+                source_report_path=report_path,
+                decision=decision,
+                route_status="REJECT_RECORDED",
+            )
+            summary["reject_recorded"] += 1
+
+        elif decision == "INCONCLUSIVE_NEED_DATA":
+            db.create_exploration_routing_state(
+                source_task_id=source_task_id,
+                source_lane=source_lane,
+                source_dedupe_key=dedupe_key,
+                source_report_path=report_path,
+                decision=decision,
+                route_status="INCONCLUSIVE_RECORDED",
+            )
+            summary["inconclusive_recorded"] += 1
+
+        summary["processed"] += 1
+
+    return summary
+
+
 def _load_system_state_snapshot() -> dict:
     """從 DB 讀取目前系統狀態，安全降級為空 dict。"""
     try:
@@ -1555,6 +1948,25 @@ def run_planner_tick() -> dict:
                 "duration_seconds": duration,
             }
         elif _maint["status"] == "SKIP_DAILY_CAP":
+            # Phase 5: forced exploration capped + maintenance capped
+            # → process completed exploration results → create validation task if needed
+            _routing = process_completed_exploration_tasks(request_id, start_time)
+            if _routing["validation_created"] > 0:
+                end_time = datetime.now(timezone.utc)
+                duration = int((end_time - start_time).total_seconds())
+                vt_ids = _routing["validation_task_ids"]
+                return {
+                    "status": "SUCCESS",
+                    "quality_status": "EXPLORATION_ROUTING",
+                    "message": (
+                        f"Planner created {_routing['validation_created']} validation task(s) "
+                        f"from completed exploration results: {vt_ids}"
+                    ),
+                    "validation_task_ids": vt_ids,
+                    "routing_summary": _routing,
+                    "duration_seconds": duration,
+                }
+            # All lanes capped, maintenance capped, no new validation tasks → idle
             end_time = datetime.now(timezone.utc)
             duration = int((end_time - start_time).total_seconds())
             idle_msg = "PLANNER_IDLE_NO_ELIGIBLE_TASK: 目前沒有合格任務，排程正常待命。"
@@ -1572,6 +1984,7 @@ def run_planner_tick() -> dict:
                 "outcome": "PLANNER_IDLE_NO_ELIGIBLE_TASK",
                 "message": idle_msg,
                 "skip_daily_cap_task_id": _maint["task_id"],
+                "routing_summary": _routing,
                 "duration_seconds": duration,
             }
 

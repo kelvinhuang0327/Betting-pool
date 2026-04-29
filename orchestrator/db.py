@@ -205,6 +205,36 @@ def init_db():
         c.execute("CREATE INDEX IF NOT EXISTS idx_backlog_priority ON cto_backlog_items(priority_score)")
         c.execute("CREATE INDEX IF NOT EXISTS idx_backlog_category ON cto_backlog_items(category)")
 
+        # ── Phase 5: Exploration Routing State ──────────────────────────────
+        c.execute("""
+            CREATE TABLE IF NOT EXISTS exploration_routing_state (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                source_task_id INTEGER NOT NULL,
+                source_lane TEXT NOT NULL,
+                source_dedupe_key TEXT NOT NULL,
+                source_report_path TEXT,
+                decision TEXT,
+                route_status TEXT NOT NULL,
+                validation_task_id INTEGER,
+                routed_at TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (source_task_id) REFERENCES agent_tasks(id)
+            )
+        """)
+        c.execute(
+            "CREATE INDEX IF NOT EXISTS idx_ers_source_task "
+            "ON exploration_routing_state(source_task_id)"
+        )
+        c.execute(
+            "CREATE INDEX IF NOT EXISTS idx_ers_route_status "
+            "ON exploration_routing_state(route_status)"
+        )
+        c.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS idx_ers_source_unique "
+            "ON exploration_routing_state(source_task_id)"
+        )
+
         # 初始化預設設定
         for key, value in DEFAULT_SETTINGS.items():
             c.execute("INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)", (key, value))
@@ -465,6 +495,55 @@ def get_nonfailed_task_by_dedupe_key(dedupe_key: str) -> Optional[dict]:
             f"SELECT * FROM agent_tasks WHERE dedupe_key=? AND status NOT IN ({placeholders})"
             " ORDER BY id DESC LIMIT 1",
             (dedupe_key, *_FAILED_STATUSES),
+        ).fetchone()
+        return dict(row) if row else None
+    finally:
+        conn.close()
+
+
+# ── Phase 5: Exploration Routing State Helpers ───────────────────────────
+
+def create_exploration_routing_state(**kwargs) -> int:
+    """Insert a row into exploration_routing_state. Returns the new row id."""
+    now = datetime.now(timezone.utc).isoformat()
+    conn = get_conn()
+    try:
+        c = conn.cursor()
+        c.execute(
+            """
+            INSERT INTO exploration_routing_state (
+                source_task_id, source_lane, source_dedupe_key,
+                source_report_path, decision, route_status,
+                validation_task_id, routed_at, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                kwargs["source_task_id"],
+                kwargs["source_lane"],
+                kwargs["source_dedupe_key"],
+                kwargs.get("source_report_path"),
+                kwargs.get("decision"),
+                kwargs["route_status"],
+                kwargs.get("validation_task_id"),
+                kwargs.get("routed_at", now),
+                kwargs.get("created_at", now),
+                kwargs.get("updated_at", now),
+            ),
+        )
+        row_id = c.lastrowid
+        conn.commit()
+        return row_id
+    finally:
+        conn.close()
+
+
+def get_exploration_routing_state_by_source_task_id(source_task_id: int) -> Optional[dict]:
+    """Return the routing state row for a given source_task_id, or None."""
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            "SELECT * FROM exploration_routing_state WHERE source_task_id=? LIMIT 1",
+            (source_task_id,),
         ).fetchone()
         return dict(row) if row else None
     finally:
