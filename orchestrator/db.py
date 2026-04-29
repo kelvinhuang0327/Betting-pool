@@ -393,11 +393,15 @@ def get_task(task_id: int) -> dict:
         conn.close()
 
 
-def claim_task_atomic(task_type: Optional[str] = None) -> Optional[dict]:
+def claim_task_atomic(
+    task_type: Optional[str] = None,
+    worker_type: Optional[str] = None,
+) -> Optional[dict]:
     """Atomically claim one QUEUED task using BEGIN IMMEDIATE to prevent double-claim.
 
     Returns the claimed task dict (status already set to RUNNING), or None if no task available.
     Uses isolation_level=None (autocommit) so BEGIN IMMEDIATE can be issued explicitly.
+    Supports optional filtering by task_type and/or worker_type.
     """
     conn = sqlite3.connect(DB_PATH, isolation_level=None)
     conn.row_factory = sqlite3.Row
@@ -408,6 +412,9 @@ def claim_task_atomic(task_type: Optional[str] = None) -> Optional[dict]:
         if task_type:
             where_clauses.append("task_type=?")
             params.append(task_type)
+        if worker_type:
+            where_clauses.append("worker_type=?")
+            params.append(worker_type)
         where_sql = " AND ".join(where_clauses)
         row = conn.execute(
             f"SELECT * FROM agent_tasks WHERE {where_sql} ORDER BY id ASC LIMIT 1",
@@ -432,6 +439,34 @@ def claim_task_atomic(task_type: Optional[str] = None) -> Optional[dict]:
         except Exception:
             pass
         raise
+    finally:
+        conn.close()
+
+
+def get_nonfailed_task_by_dedupe_key(dedupe_key: str) -> Optional[dict]:
+    """Return the most recent task with this dedupe_key that is NOT in a failed/cancelled state.
+
+    'Non-failed' statuses that block re-creation (daily cap):
+      QUEUED, RUNNING, COMPLETED, APPROVED, MERGE_READY
+
+    'Failed' statuses that allow retry:
+      FAILED, ERROR, CANCELLED, FAILED_RATE_LIMIT, FAILED_STUB, REPLAN_REQUIRED, ARCHIVED
+
+    Used by the planner to enforce PLANNER_SKIP_DAILY_CAP logic.
+    """
+    _FAILED_STATUSES = (
+        "FAILED", "ERROR", "CANCELLED", "FAILED_RATE_LIMIT",
+        "FAILED_STUB", "REPLAN_REQUIRED", "ARCHIVED",
+    )
+    placeholders = ",".join(["?"] * len(_FAILED_STATUSES))
+    conn = get_conn()
+    try:
+        row = conn.execute(
+            f"SELECT * FROM agent_tasks WHERE dedupe_key=? AND status NOT IN ({placeholders})"
+            " ORDER BY id DESC LIMIT 1",
+            (dedupe_key, *_FAILED_STATUSES),
+        ).fetchone()
+        return dict(row) if row else None
     finally:
         conn.close()
 
