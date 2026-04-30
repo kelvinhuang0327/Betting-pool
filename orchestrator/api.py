@@ -270,6 +270,15 @@ def get_summary():
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
+def _get_usage_detail_safe(window: str = "today", limit: int = 10) -> dict:
+    """Usage 摘要 helper — 例外不對外曝露，回傳空摘要。"""
+    try:
+        from orchestrator.llm_usage_summary import get_usage_summary
+        return get_usage_summary(window=window, limit=limit)
+    except Exception:
+        return {"available": False, "roles": {}, "recent": [], "warnings": []}
+
+
 @router.get("/api/orchestrator/summary", responses=ERROR_500_RESPONSE)
 def get_orchestrator_summary():
     try:
@@ -322,6 +331,7 @@ def get_orchestrator_summary():
             "copilot_daemon_task_id": None,
             "next_planner_tick_estimate": next_planner_at,
             "next_worker_tick_estimate": next_worker_at,
+            "usage_detail": _get_usage_detail_safe(),
         }
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
