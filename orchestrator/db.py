@@ -19,12 +19,12 @@ DB_PATH = os.path.join(ORCH_ROOT, "orchestrator.db")
 DEFAULT_SETTINGS = {
     "scheduler_enabled": "1",
     "llm_execution_mode": "safe-run",
-    "planner_provider": "claude",
+    "planner_provider": "local",          # Phase 0: Planner 預設為本地執行
     "worker_provider": "codex",
     "worker_copilot_model": "",
     "cto_review_frequency_mode": "once_daily",
     "cto_scheduler_enabled": "1",
-    "cto_planner_provider": "claude",
+    "cto_planner_provider": "local",      # Phase 0: CTO Planner 預設為本地執行
     "cto_planner_model": "",
     # ── Track C/D 四軌排程設定 ──
     "track_c_enabled": "1",              # Track C 模擬壓力測試（0=停用）
@@ -33,6 +33,28 @@ DEFAULT_SETTINGS = {
     "track_d_interval_seconds": "300",   # Track D 執行間隔（預設 5 分鐘）
     # ── 任務回收冷卻期設定 ──
     "task_recycle_cooldown_hours": "4",  # 已完成任務在此時間內不重建（小時）
+    # ── Phase 0: 角色導向外部 LLM 配額開關 ──────────────────────────────────
+    # 角色層級開關（0=封鎖, 1=允許）
+    "ext_llm_role_planner": "0",         # Planner 不得呼叫外部 LLM
+    "ext_llm_role_worker": "1",          # Worker 可呼叫外部 LLM（受 execution_policy 管控）
+    "ext_llm_role_cto": "0",             # CTO 不得呼叫外部 LLM（本地確定性）
+    # Provider × 角色細粒度開關（0=封鎖, 1=允許）
+    "codex_enabled_for_planner": "0",
+    "codex_enabled_for_worker": "1",
+    "codex_enabled_for_cto": "0",
+    "claude_enabled_for_planner": "0",
+    "claude_enabled_for_worker": "1",
+    "claude_enabled_for_cto": "0",
+    "copilot_enabled_for_planner": "0",
+    "copilot_enabled_for_worker": "1",
+    "copilot_enabled_for_cto": "0",
+    # Worker 配額上限
+    "worker_daily_llm_cap": "100",       # Worker 每日外部 LLM 呼叫上限（0=不限制）
+    "worker_hourly_llm_cap": "20",       # Worker 每小時外部 LLM 呼叫上限（0=不限制）
+    "worker_max_retries_per_task": "2",  # Worker 每任務最大重試次數
+    # Planner / CTO 硬性上限（永遠為 0）
+    "planner_daily_llm_cap": "0",        # Planner 每日外部 LLM 上限（必須為 0）
+    "cto_daily_llm_cap": "0",            # CTO 每日外部 LLM 上限（必須為 0）
 }
 RUN_HISTORY_RETENTION = int(os.environ.get("ORCH_RUN_HISTORY_RETENTION", "5000"))
 
@@ -105,6 +127,7 @@ def init_db():
             ("track", "TEXT"),  # A/B/C/D — 四軌排程標記
             ("task_type", "TEXT"),       # e.g. orchestration_smoke, match_monitor
             ("worker_type", "TEXT"),     # 'research' | 'light'
+            ("completion_quality", "TEXT"),  # Phase 10 completion quality state
         ])
 
         # ── 任務執行記錄表 ──
@@ -333,6 +356,34 @@ def get_cto_scheduler_enabled() -> bool:
 
 def set_cto_scheduler_enabled(enabled: bool) -> None:
     set_setting("cto_scheduler_enabled", "1" if enabled else "0")
+
+
+# ── Phase 0: 角色導向 LLM 配額開關存取器 ────────────────────────────────────
+
+def get_ext_llm_role_enabled(role: str) -> bool:
+    """回傳指定角色是否允許呼叫外部 LLM（0=封鎖, 1=允許）。"""
+    key = f"ext_llm_role_{role.lower().replace('-', '_')}"
+    return get_setting(key, "0") == "1"
+
+
+def get_provider_enabled_for_role(provider: str, role: str) -> bool:
+    """回傳指定 provider 對指定角色是否啟用（0=封鎖, 1=允許）。"""
+    norm_provider = provider.lower().replace("-", "_")
+    norm_role = role.lower().replace("-", "_")
+    key = f"{norm_provider}_enabled_for_{norm_role}"
+    return get_setting(key, "0") == "1"
+
+
+def get_worker_daily_llm_cap() -> int:
+    return int(get_setting("worker_daily_llm_cap", "100") or "100")
+
+
+def get_worker_hourly_llm_cap() -> int:
+    return int(get_setting("worker_hourly_llm_cap", "20") or "20")
+
+
+def get_worker_max_retries_per_task() -> int:
+    return int(get_setting("worker_max_retries_per_task", "2") or "2")
 
 
 # ── Task Management ──

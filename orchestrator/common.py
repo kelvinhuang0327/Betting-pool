@@ -285,6 +285,7 @@ COPILOT_DAEMON_STATE_PATH = os.path.join(
 )
 COPILOT_DAEMON_HEARTBEAT_TTL = 45
 PLANNER_PROVIDER_LABELS = {
+    "local": "本地確定性（Local）",   # Phase 0: 預設選項，不呼叫外部 LLM
     "claude": "Claude CLI",
     "codex": "Codex CLI",
 }

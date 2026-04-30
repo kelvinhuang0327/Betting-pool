@@ -69,6 +69,10 @@ def _llm_block_reason(provider: str) -> Optional[str]:
 
 
 def _assert_llm_execution_allowed(provider: str, runner: str) -> None:
+    # Phase 0: ProviderFactory 角色守衛——Worker 呼叫外部 LLM 前先確認
+    from orchestrator.provider_factory import ProviderFactory
+    ProviderFactory.assert_role_allowed("worker", provider)
+
     reason = _llm_block_reason(provider)
     if reason:
         execution_policy.record_llm_block(runner=runner, provider=provider, reason=reason)
@@ -125,7 +129,7 @@ def _collect_task_changed_files(
 
 def execute_task_with_provider(task: dict, provider: str) -> dict:
     """使用指定 Provider 執行任務。model_patch_* 任務走真實研究路徑。"""
-    sst = task.get("signal_state_type", "")
+    sst = task.get("signal_state_type") or ""
     if sst.startswith("model_patch_"):
         return execute_model_patch_task(task)
 
@@ -575,8 +579,22 @@ def run_worker_tick() -> dict:
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         before_dirty_files = _list_dirty_files(project_root)
 
-        # 執行任務
-        execution_result = execute_task_with_provider(task, worker_provider)
+        # ── Phase 11: deterministic safe task bypass ───────────────────
+        # closing_monitor (and future registered types) execute Python logic
+        # directly — no LLM provider is invoked.
+        from orchestrator.safe_task_executor import (
+            is_deterministic_safe_task,
+            execute_safe_task,
+        )
+        if is_deterministic_safe_task(task):
+            logger.info(
+                "[WorkerTick] Task #%d (type=%s) → deterministic safe executor (no LLM)",
+                task_id, task.get("task_type"),
+            )
+            execution_result = execute_safe_task(task)
+        else:
+            # 執行任務（LLM provider path）
+            execution_result = execute_task_with_provider(task, worker_provider)
         after_dirty_files = _list_dirty_files(project_root)
         changed_files = _collect_task_changed_files(
             before_dirty_files,
@@ -589,19 +607,42 @@ def run_worker_tick() -> dict:
             # 任務成功完成
             end_time = datetime.now(timezone.utc)
             duration = int((end_time - start_time).total_seconds())
-            
+
+            # ── Phase 10: 完成品質驗證 ────────────────────────────────
+            from orchestrator.task_completion_validator import (
+                validate_completion,
+                QUALITY_INVALID_STATES,
+            )
+            quality_result = validate_completion(
+                task,
+                {**execution_result, "duration_seconds": duration},
+            )
+            completion_quality = quality_result["quality"]
+            is_empty_completion = completion_quality in QUALITY_INVALID_STATES
+
             # 更新任務狀態
-            update_data = {
+            update_data: dict = {
                 "status": "COMPLETED",
                 "completed_at": end_time.isoformat(),
                 "duration_seconds": duration,
                 "completed_file_path": execution_result.get("completed_file_path"),
                 "completed_text": execution_result.get("completed_text"),
-                "changed_files_json": json.dumps(execution_result.get("changed_files", []))
+                "changed_files_json": json.dumps(execution_result.get("changed_files", [])),
+                "completion_quality": completion_quality,
             }
+            if is_empty_completion:
+                update_data["error_message"] = (
+                    f"[COMPLETION_QUALITY:{completion_quality}] {quality_result['reason']}"
+                )
+                logger.warning(
+                    f"[WorkerTick] Task #{task_id} COMPLETED but quality={completion_quality}: "
+                    f"{quality_result['reason']}"
+                )
             db.update_task(task_id, **update_data)
-            
+
             message = f"Worker completed task #{task_id}: {task['title']}"
+            if is_empty_completion:
+                message += f" [quality={completion_quality}]"
             db.record_run(
                 runner="worker_tick",
                 outcome="SUCCESS",
@@ -612,15 +653,19 @@ def run_worker_tick() -> dict:
                 duration_seconds=duration,
                 log_snippet=execution_result.get("execution_log", "")
             )
-            
-            logger.info(f"[WorkerTick] Completed task #{task_id} in {duration}s")
-            
+
+            logger.info(
+                f"[WorkerTick] Completed task #{task_id} in {duration}s "
+                f"quality={completion_quality}"
+            )
+
             return {
                 "status": "SUCCESS",
                 "message": message,
                 "task_id": task_id,
                 "duration_seconds": duration,
-                "changed_files": execution_result.get("changed_files", [])
+                "changed_files": execution_result.get("changed_files", []),
+                "completion_quality": completion_quality,
             }
         else:
             # 任務執行失敗
