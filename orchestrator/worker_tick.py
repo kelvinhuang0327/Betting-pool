@@ -85,6 +85,37 @@ def _assert_llm_execution_allowed(provider: str, runner: str) -> None:
     execution_policy.record_llm_call(runner=runner, provider=provider, context="worker_provider_boundary")
 
 
+def _log_exec_result(
+    *,
+    provider: str,
+    task_id: int,
+    success: bool,
+    source_function: str,
+    error: Optional[str] = None,
+    raw_text: Optional[str] = None,
+) -> None:
+    """執行後補充 usage 記錄（post-execution: 含 success / tokens / rate_limit）。"""
+    try:
+        from orchestrator.llm_usage_logger import log_usage
+        log_usage(
+            runner="worker",
+            role="worker",
+            provider=provider,
+            blocked=False,
+            allowed=True,
+            task_id=task_id,
+            success=success,
+            error=error,
+            raw_usage_text=raw_text,
+            source_file="orchestrator/worker_tick.py",
+            source_function=source_function,
+            entrypoint="post_execution",
+            caller_skip_frames=4,
+        )
+    except Exception:  # noqa: BLE001
+        pass
+
+
 def _list_dirty_files(project_root: str) -> list[str]:
     """取得目前工作樹的 dirty files。"""
     try:
@@ -303,8 +334,17 @@ def execute_task_with_claude(task: dict) -> dict:
     changed_files = _collect_task_changed_files(before_dirty, after_dirty, [completed_path])
 
     # ── 判斷成功/失敗 ───────────────────────────────────────────────────────
+    raw_output = (proc.stdout or "") + (proc.stderr or "")
     if proc.returncode != 0:
         stderr_snippet = (proc.stderr or "")[:800]
+        _log_exec_result(
+            provider="claude",
+            task_id=task_id,
+            success=False,
+            source_function="execute_task_with_claude",
+            error=f"[Claude] exited with code {proc.returncode}: {stderr_snippet}",
+            raw_text=raw_output[:500],
+        )
         raise RuntimeError(
             f"[Claude] exited with code {proc.returncode}: {stderr_snippet}"
         )
@@ -313,6 +353,13 @@ def execute_task_with_claude(task: dict) -> dict:
     with open(completed_path, "w", encoding="utf-8") as fh:
         fh.write(completed_text)
 
+    _log_exec_result(
+        provider="claude",
+        task_id=task_id,
+        success=True,
+        source_function="execute_task_with_claude",
+        raw_text=raw_output[:500],
+    )
     logger.info(
         "[Worker] task #%d completed with Claude: %d changed files",
         task_id, len(changed_files),
@@ -407,12 +454,28 @@ def execute_task_with_codex(task: dict) -> dict:
     changed_files = _collect_task_changed_files(before_dirty, after_dirty, [completed_path])
 
     # ── 判斷成功/失敗 ───────────────────────────────────────────────────────
+    raw_output = (proc.stdout or "") + (proc.stderr or "")
     if proc.returncode != 0:
         stderr_snippet = (proc.stderr or "")[:800]
+        _log_exec_result(
+            provider="codex",
+            task_id=task_id,
+            success=False,
+            source_function="execute_task_with_codex",
+            error=f"[Codex] exited with code {proc.returncode}: {stderr_snippet}",
+            raw_text=raw_output[:500],
+        )
         raise RuntimeError(
             f"[Codex] exited with code {proc.returncode}: {stderr_snippet}"
         )
 
+    _log_exec_result(
+        provider="codex",
+        task_id=task_id,
+        success=True,
+        source_function="execute_task_with_codex",
+        raw_text=raw_output[:500],
+    )
     logger.info(
         "[Worker] task #%d completed with Codex: %d changed files",
         task_id, len(changed_files),

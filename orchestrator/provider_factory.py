@@ -26,16 +26,28 @@ from orchestrator.llm_usage_logger import log_llm_event
 
 logger = logging.getLogger(__name__)
 
-# ── 外部 LLM Provider 集合 ──────────────────────────────────────────────────
+# ── 外部 AI / GitHub Provider 集合 ──────────────────────────────────────────
+# 覆蓋所有需要配額、速率限制或外部 API 的工具。
 EXTERNAL_PROVIDERS: frozenset[str] = frozenset({
+    # OpenAI / Codex
     "codex",
     "codex-cli",
+    "openai",
+    # Anthropic / Claude
     "claude",
     "claude-cli",
-    "openai",
+    "claude-code",
+    "anthropic",
+    # GitHub
     "copilot",
     "copilot-daemon",
     "github-copilot",
+    "github-cli",
+    "github-api",
+    "git-remote",
+    # Google Gemini
+    "gemini",
+    "gemini-cli",
 })
 
 LOCAL_PROVIDERS: frozenset[str] = frozenset({
