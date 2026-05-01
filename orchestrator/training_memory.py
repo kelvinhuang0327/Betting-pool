@@ -608,3 +608,97 @@ def get_latest_learning_cycle() -> Optional[dict]:
     cycles = get_learning_cycle_history(n=1)
     return cycles[0] if cycles else None
 
+
+# ─────────────────────────────────────────────
+# Phase 21 Patch Gate Recording
+# ─────────────────────────────────────────────
+
+MAX_GATE_DECISIONS = 50
+
+
+def record_gate_decision(
+    learning_cycle_id: str,
+    gate_decision: str,
+    reason: str,
+    confidence: str,
+    requires_human_review: bool,
+    recommendation: str,
+    computed_clv_count: int,
+    source: str = "sandbox/test",
+    generated_task_id: Optional[str] = None,
+    allowed_task_family: Optional[str] = None,
+) -> dict:
+    """
+    Record a learning patch gate evaluation result into training memory.
+
+    CRITICAL CONSTRAINTS:
+    - Does NOT modify patch_history or consecutive_successes/failures.
+    - Does NOT create actual tasks — it only records the gate outcome.
+    - source must reflect the true signal origin ("sandbox/test" or "production").
+
+    Args:
+        learning_cycle_id:    task_id from the corresponding learning cycle.
+        gate_decision:        One of GATE_ALLOW_PATCH_CANDIDATE / GATE_HOLD /
+                              GATE_INVESTIGATE_ONLY / GATE_REJECT_INSUFFICIENT_EVIDENCE.
+        reason:               Human-readable explanation of the gate decision.
+        confidence:           "low" | "medium" | "high".
+        requires_human_review: True if the decision needs operator sign-off.
+        recommendation:       Input recommendation ("HOLD" / "INVESTIGATE" / "CANDIDATE_PATCH").
+        computed_clv_count:   Number of COMPUTED CLV records evaluated.
+        source:               Origin marker — always "sandbox/test" for Phase 21 sandbox.
+        generated_task_id:    ID of any task created as a result of this gate (or None).
+        allowed_task_family:  Task family that was allowed, if any (or None).
+
+    Returns:
+        Updated memory dict (already saved to disk).
+    """
+    mem = load_memory()
+    now = datetime.now(timezone.utc).isoformat()
+
+    entry: dict = {
+        "learning_cycle_id": learning_cycle_id,
+        "gate_decision": gate_decision,
+        "reason": reason,
+        "confidence": confidence,
+        "requires_human_review": requires_human_review,
+        "recommendation": recommendation,
+        "computed_clv_count": computed_clv_count,
+        "source": source,
+        "generated_task_id": generated_task_id,
+        "allowed_task_family": allowed_task_family,
+        "recorded_at": now,
+    }
+
+    decisions: list[dict] = mem.get("gate_decisions", [])
+    decisions.append(entry)
+    if len(decisions) > MAX_GATE_DECISIONS:
+        decisions = decisions[-MAX_GATE_DECISIONS:]
+    mem["gate_decisions"] = decisions
+    mem["last_updated"] = now
+    _save_memory(mem)
+
+    logger.info(
+        "[TrainingMemory] Gate decision recorded: cycle_id=%s  gate=%s  "
+        "confidence=%s  human_review=%s  task=%s  source=%s",
+        learning_cycle_id,
+        gate_decision,
+        confidence,
+        requires_human_review,
+        generated_task_id or "(none)",
+        source,
+    )
+    return mem
+
+
+def get_gate_decision_history(n: int = 20) -> list[dict]:
+    """Return the most recent n gate decisions, newest last."""
+    mem = load_memory()
+    decisions = mem.get("gate_decisions", [])
+    return decisions[-n:]
+
+
+def get_latest_gate_decision() -> Optional[dict]:
+    """Return the most recent gate decision, or None if none recorded."""
+    decisions = get_gate_decision_history(n=1)
+    return decisions[0] if decisions else None
+
