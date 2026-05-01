@@ -2203,6 +2203,147 @@ def run_planner_tick() -> dict:
                 "[PlannerTick] Gate-driven task gen failed (non-fatal): %s", _peg_exc
             )
 
+        # ── STEP 0.8: Phase 23 — Patch Evaluation Decision Gate ─────────────────
+        # If the latest sandbox evaluation has no gate decision yet, run the second-
+        # stage gate and potentially generate a follow-up task spec.
+        _eval_gate_candidates: list[dict] = []
+        try:
+            from orchestrator.training_memory import (
+                get_latest_patch_evaluation,
+                get_latest_patch_evaluation_gate_decision,
+                record_patch_evaluation_gate_decision,
+            )
+            from orchestrator.patch_evaluation_gate import (
+                evaluate_patch_evaluation_gate,
+                ND_REQUEST_MORE,
+                ND_HUMAN_REVIEW,
+                ND_PROMOTE,
+                ND_REJECT,
+                ND_HOLD,
+            )
+            _latest_eval = get_latest_patch_evaluation()
+            _latest_gate23 = get_latest_patch_evaluation_gate_decision()
+
+            # Only run if there is an evaluation result and no gate decision yet for it
+            _eval_task_id = str(_latest_eval.get("task_id", "")) if _latest_eval else ""
+            _gate23_task_id = str(_latest_gate23.get("task_id", "")) if _latest_gate23 else ""
+
+            if _latest_eval and _eval_task_id and _eval_task_id != _gate23_task_id:
+                _gate23_result = evaluate_patch_evaluation_gate(_latest_eval)
+                _nd = _gate23_result.get("next_decision", "")
+                _nd_family = _gate23_result.get("allowed_next_task_family")
+                _nd_reason = _gate23_result.get("reason", "")
+
+                # Record gate decision immediately (non-fatal if it fails)
+                try:
+                    record_patch_evaluation_gate_decision(
+                        task_id=_eval_task_id,
+                        evaluation_decision=str(_latest_eval.get("evaluation_decision", "")),
+                        next_decision=_nd,
+                        reason=_nd_reason,
+                        confidence=_gate23_result.get("confidence", "low"),
+                        requires_human_review=bool(_gate23_result.get("requires_human_review", False)),
+                        allowed_next_task_family=_nd_family,
+                        gate_decision_id=str(_latest_eval.get("gate_decision_id", "")),
+                        source=str(_latest_eval.get("source", "sandbox/test")),
+                        delta=_latest_eval.get("delta"),
+                        sample_count=int(_latest_eval.get("sample_count", 0)),
+                    )
+                except Exception as _rec_exc:
+                    logger.warning("[PlannerTick] Gate23 record failed (non-fatal): %s", _rec_exc)
+
+                # Create follow-up task spec based on next_decision
+                _now_iso = datetime.now(timezone.utc).isoformat()
+                if _nd == ND_REQUEST_MORE:
+                    _eval_gate_candidates.append({
+                        "title": "[Phase23] CLV Quality Analysis — Additional Data Requested",
+                        "task_type": "clv_quality_analysis",
+                        "analysis_family": "clv-quality-analysis",
+                        "focus_area": "clv-patch-eval-data-request",
+                        "source": "patch_evaluation_gate",
+                        "phase23_next_decision": _nd,
+                        "phase23_eval_task_id": _eval_task_id,
+                        "prompt": (
+                            "# Phase 23 — CLV Quality Analysis (Data Request)\n\n"
+                            "## Objective\nCollect additional COMPUTED CLV records to "
+                            "support sandbox patch evaluation.\n\n"
+                            f"## Reason\n{_nd_reason}\n\n"
+                            "## Hard Constraints\n"
+                            "- Do NOT apply any production patch.\n"
+                            "- Do NOT call any external LLM.\n"
+                            "- Read-only CLV data collection only.\n\n"
+                            f"## Task Type\nclv_quality_analysis\n\n"
+                            f"## Created At\n{_now_iso}\n"
+                        ),
+                    })
+                    logger.info(
+                        "[PlannerTick] Gate23 REQUEST_MORE_DATA → queuing clv_quality_analysis"
+                    )
+                elif _nd == ND_HUMAN_REVIEW:
+                    _eval_gate_candidates.append({
+                        "title": "[Phase23] Human Review Required — Patch Evaluation Outcome",
+                        "task_type": "manual_review_summary",
+                        "analysis_family": "manual-review",
+                        "focus_area": "patch-eval-human-review",
+                        "source": "patch_evaluation_gate",
+                        "phase23_next_decision": _nd,
+                        "phase23_eval_task_id": _eval_task_id,
+                        "prompt": (
+                            "# Phase 23 — Human Review Required\n\n"
+                            "## Objective\nOperator must review sandbox patch evaluation "
+                            "outcome before any further action.\n\n"
+                            f"## Reason\n{_nd_reason}\n\n"
+                            "## Hard Constraints\n"
+                            "- Do NOT apply any production patch.\n"
+                            "- Do NOT call any external LLM.\n"
+                            "- Summarise findings for human operator only.\n\n"
+                            f"## Task Type\nmanual_review_summary\n\n"
+                            f"## Created At\n{_now_iso}\n"
+                        ),
+                    })
+                    logger.info(
+                        "[PlannerTick] Gate23 HUMAN_REVIEW_REQUIRED → queuing manual_review_summary"
+                    )
+                elif _nd == ND_PROMOTE:
+                    # Production proposal only — NOT a production patch
+                    _eval_gate_candidates.append({
+                        "title": "[Phase23] Production Proposal — Sandbox Patch Candidate",
+                        "task_type": "manual_review_summary",
+                        "analysis_family": "production-proposal",
+                        "focus_area": "patch-production-proposal",
+                        "source": "patch_evaluation_gate",
+                        "phase23_next_decision": _nd,
+                        "phase23_eval_task_id": _eval_task_id,
+                        "production_patch_allowed": False,
+                        "requires_human_review": True,
+                        "prompt": (
+                            "# Phase 23 — Production Proposal (Human Review REQUIRED)\n\n"
+                            "## Objective\nDocument the sandbox patch candidate for human "
+                            "operator to review and decide whether to promote.\n\n"
+                            f"## Reason\n{_nd_reason}\n\n"
+                            "## CRITICAL CONSTRAINTS\n"
+                            "- This is a PROPOSAL ONLY. No production patch is applied automatically.\n"
+                            "- Operator must explicitly approve before any production change.\n"
+                            "- Do NOT call any external LLM.\n\n"
+                            f"## Task Type\nmanual_review_summary\n\n"
+                            f"## Created At\n{_now_iso}\n"
+                        ),
+                    })
+                    logger.info(
+                        "[PlannerTick] Gate23 PROMOTE_TO_PRODUCTION_PROPOSAL → queuing proposal task "
+                        "(human review required, no auto-patch)"
+                    )
+                elif _nd in (ND_REJECT, ND_HOLD):
+                    logger.info(
+                        "[PlannerTick] Gate23 %s → no follow-up task", _nd
+                    )
+                # else: unknown — skip silently
+
+        except Exception as _g23_exc:
+            logger.warning(
+                "[PlannerTick] Phase23 eval gate failed (non-fatal): %s", _g23_exc
+            )
+
         # ── STEP 1: 前置封鎖守衛（RUNNING / QUEUED / BLOCKED_ENV 自動解除）──
         latest_task = db.get_latest_task()
         blocker = _resolve_previous_task_blocker(latest_task)
@@ -2269,8 +2410,8 @@ def run_planner_tick() -> dict:
         blueprints = list(TASK_BLUEPRINTS)
         random.shuffle(blueprints)
         wiki_candidates = _mine_tasks_from_wiki()
-        # 優先順序：patch-eval gate > validation > patch > audit blueprints > wiki candidates
-        all_candidates = _patch_eval_candidates + _validation_candidates + _patch_candidates + blueprints + wiki_candidates
+        # 優先順序：patch-eval gate23 > patch-eval gate22 > validation > patch > blueprints > wiki
+        all_candidates = _eval_gate_candidates + _patch_eval_candidates + _validation_candidates + _patch_candidates + blueprints + wiki_candidates
 
         last_verdict = None
         blocked_by_recent_count = 0
@@ -2341,6 +2482,18 @@ def run_planner_tick() -> dict:
                     except Exception as _ugt_exc:
                         logger.debug(
                             "[PlannerTick] Gate decision update failed (non-fatal): %s", _ugt_exc
+                        )
+
+                # Phase 23: update patch eval gate decision with generated task ID
+                if task_data.get("source") == "patch_evaluation_gate":
+                    try:
+                        from orchestrator.training_memory import update_patch_eval_gate_generated_task_id
+                        _pe_task_id = task_data.get("phase23_eval_task_id", "")
+                        if _pe_task_id:
+                            update_patch_eval_gate_generated_task_id(_pe_task_id, task_id)
+                    except Exception as _pg23_exc:
+                        logger.debug(
+                            "[PlannerTick] Gate23 task id update failed (non-fatal): %s", _pg23_exc
                         )
 
                 # 更新洞見生命週期

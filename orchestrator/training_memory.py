@@ -830,3 +830,136 @@ def update_gate_decision_generated_task_id(
             generated_task_id,
         )
     return updated
+
+
+# ─────────────────────────────────────────────
+# Phase 23 Patch Evaluation Decision Gate Recording
+# ─────────────────────────────────────────────
+
+MAX_PATCH_EVAL_GATE_DECISIONS = 50
+
+
+def record_patch_evaluation_gate_decision(
+    task_id: str,
+    evaluation_decision: str,
+    next_decision: str,
+    reason: str,
+    confidence: str,
+    requires_human_review: bool,
+    allowed_next_task_family: str | None = None,
+    generated_task_id: str | int | None = None,
+    gate_decision_id: str | None = None,
+    source: str = "sandbox/test",
+    delta: float | None = None,
+    sample_count: int = 0,
+) -> dict:
+    """
+    Record a Phase 23 patch evaluation gate decision into training memory.
+
+    CRITICAL CONSTRAINTS:
+    - production_patch_allowed is ALWAYS False.
+    - Does NOT modify patch_history, consecutive counters, or CLV records.
+    - generated_task_id captures any follow-up task created by the planner.
+
+    Args:
+        task_id:                 Phase 22 task that produced the evaluation result.
+        evaluation_decision:     KEEP_SANDBOX_CANDIDATE | REJECT_SANDBOX_CANDIDATE | NEED_MORE_DATA
+        next_decision:           Gate output: PROMOTE_TO_PRODUCTION_PROPOSAL | REJECT |
+                                 REQUEST_MORE_DATA | HUMAN_REVIEW_REQUIRED | HOLD
+        reason:                  Human-readable rationale.
+        confidence:              "low" | "medium" | "high"
+        requires_human_review:   Always True for PROMOTE decisions.
+        allowed_next_task_family: Task family to create next (or None).
+        generated_task_id:       If a follow-up task was already created.
+        gate_decision_id:        ID of the upstream Phase 21/22 gate decision.
+        source:                  "sandbox/test" or "production".
+        delta:                   CLV delta from evaluation.
+        sample_count:            Sample size used in evaluation.
+
+    Returns:
+        Updated memory dict (already saved to disk).
+    """
+    mem = load_memory()
+    now = datetime.now(timezone.utc).isoformat()
+
+    entry: dict = {
+        "task_id": task_id,
+        "evaluation_decision": evaluation_decision,
+        "next_decision": next_decision,
+        "reason": reason,
+        "confidence": confidence,
+        "requires_human_review": requires_human_review,
+        "allowed_next_task_family": allowed_next_task_family,
+        "generated_task_id": str(generated_task_id) if generated_task_id is not None else None,
+        "gate_decision_id": gate_decision_id,
+        "source": source,
+        "delta": delta,
+        "sample_count": sample_count,
+        # Safety contract — always hardcoded
+        "production_patch_allowed": False,
+        "production_model_modified": False,
+        "external_llm_called": False,
+        "recorded_at": now,
+    }
+
+    records: list[dict] = mem.get("patch_eval_gate_decisions", [])
+    records.append(entry)
+    if len(records) > MAX_PATCH_EVAL_GATE_DECISIONS:
+        records = records[-MAX_PATCH_EVAL_GATE_DECISIONS:]
+    mem["patch_eval_gate_decisions"] = records
+    mem["last_updated"] = now
+    _save_memory(mem)
+
+    logger.info(
+        "[TrainingMemory] Patch eval gate decision recorded: "
+        "task=%s  eval=%s  next=%s  confidence=%s",
+        task_id,
+        evaluation_decision,
+        next_decision,
+        confidence,
+    )
+    return mem
+
+
+def get_patch_evaluation_gate_history(n: int = 20) -> list[dict]:
+    """Return the most recent n patch evaluation gate decisions, newest last."""
+    mem = load_memory()
+    records = mem.get("patch_eval_gate_decisions", [])
+    return records[-n:]
+
+
+def get_latest_patch_evaluation_gate_decision() -> Optional[dict]:
+    """Return the most recent patch evaluation gate decision, or None."""
+    history = get_patch_evaluation_gate_history(n=1)
+    return history[0] if history else None
+
+
+def update_patch_eval_gate_generated_task_id(
+    task_id: str,
+    generated_task_id: int | str,
+) -> bool:
+    """
+    Update the most recent patch_eval_gate_decisions entry for task_id
+    with the ID of the follow-up task that the planner created.
+
+    Returns True if found and updated, False otherwise.
+    """
+    mem = load_memory()
+    records = mem.get("patch_eval_gate_decisions", [])
+    updated = False
+    for i in range(len(records) - 1, -1, -1):
+        if records[i].get("task_id") == str(task_id):
+            records[i]["generated_task_id"] = str(generated_task_id)
+            records[i]["task_generated_at"] = datetime.now(timezone.utc).isoformat()
+            updated = True
+            break
+    if updated:
+        mem["patch_eval_gate_decisions"] = records
+        mem["last_updated"] = datetime.now(timezone.utc).isoformat()
+        _save_memory(mem)
+        logger.info(
+            "[TrainingMemory] Patch eval gate entry updated: task=%s  generated_task=%s",
+            task_id,
+            generated_task_id,
+        )
+    return updated
