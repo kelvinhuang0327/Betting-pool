@@ -185,6 +185,8 @@ def _get_training_memory_summary() -> dict[str, Any]:
         latest_learning_cycle = learning_cycles[-1] if learning_cycles else None
         gate_decisions: list[dict] = mem.get("gate_decisions", [])
         latest_gate_decision = gate_decisions[-1] if gate_decisions else None
+        patch_evaluations: list[dict] = mem.get("patch_evaluations", [])
+        latest_patch_evaluation = patch_evaluations[-1] if patch_evaluations else None
         return {
             "patch_total": len(patch_hist),
             "state_transitions": transitions,
@@ -196,6 +198,8 @@ def _get_training_memory_summary() -> dict[str, Any]:
             "latest_learning_cycle": latest_learning_cycle,
             "gate_decisions_total": len(gate_decisions),
             "latest_gate_decision": latest_gate_decision,
+            "patch_evaluations_total": len(patch_evaluations),
+            "latest_patch_evaluation": latest_patch_evaluation,
         }
     except Exception as exc:
         logger.warning("[OpsReport] training memory read failed: %s", exc)

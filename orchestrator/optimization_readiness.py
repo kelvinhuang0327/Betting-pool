@@ -518,6 +518,14 @@ def get_readiness_summary() -> dict[str, Any]:
     except Exception as exc:
         logger.debug("[Readiness] latest_gate_decision unavailable: %s", exc)
 
+    # Phase 22: surface latest patch evaluation from training memory
+    latest_patch_evaluation: dict | None = None
+    try:
+        from orchestrator.training_memory import get_latest_patch_evaluation
+        latest_patch_evaluation = get_latest_patch_evaluation()
+    except Exception as exc:
+        logger.debug("[Readiness] latest_patch_evaluation unavailable: %s", exc)
+
     return {
         "generated_at": now,
         "readiness_state": readiness_state,
@@ -540,6 +548,8 @@ def get_readiness_summary() -> dict[str, Any]:
         "latest_learning_cycle": latest_learning_cycle,
         # Phase 21: patch gate decision
         "latest_gate_decision": latest_gate_decision,
+        # Phase 22: patch evaluation result
+        "latest_patch_evaluation": latest_patch_evaluation,
     }
 
 

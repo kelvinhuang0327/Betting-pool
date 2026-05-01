@@ -460,6 +460,352 @@ def generate_task_slot_key() -> str:
     return f"{date_str}{time_str}-task"
 
 
+def _attempt_data_waiting_safe_task(
+    request_id: str,
+    start_time: datetime,
+    opt_state_result: dict,
+) -> dict:
+    """
+    DATA_WAITING fallback: auto-generate a safe closing-monitor task when due.
+
+    Phase 16: delegates to _attempt_closing_source_refresh_task() which selects
+    the highest-priority refresh action based on Phase 15 diagnostics.
+
+    Phase 12: uses cadence-based deduplication instead of a daily-cap dedupe key.
+
+    HARD RULES:
+      - Does not mark any CLV as COMPUTED
+      - Does not trigger model-patch or strategy-reinforcement
+      - Does not call any live betting API
+
+    Returns:
+      {"status": "CREATED",        "task_id": int, "dedupe_key": str, "action_type": str}
+      {"status": "SKIP_CADENCE",   "task_id": int, "dedupe_key": str, "action_type": str}
+    """
+    return _attempt_closing_source_refresh_task(request_id, start_time, opt_state_result)
+
+
+def _choose_closing_refresh_action(closing_availability: dict) -> str:
+    """
+    Phase 16/17 — Pick highest-priority DATA_WAITING refresh action.
+
+    Phase 17 escalation check runs FIRST:
+      If any action_type has consecutive_no_improvement >= threshold,
+      return "manual_review_summary" to trigger operator escalation.
+
+    Priority order (highest first):
+      manual_review_summary     — Phase 17: escalation triggered (auto-refresh exhausted)
+      refresh_external_closing  — external closing data available but invalid/stale
+      refresh_tsl_closing       — TSL closing data available but invalid/stale
+      closing_availability_audit — records missing all sources
+      closing_monitor           — default (run the full monitor + upgrade pass)
+
+    Args:
+        closing_availability: dict returned by get_pending_diagnostics()['source_summary']
+            or the enriched dict from _get_closing_availability().
+
+    Returns:
+        One of: "manual_review_summary", "refresh_external_closing",
+                "refresh_tsl_closing", "closing_availability_audit", "closing_monitor"
+    """
+    # Phase 17: check escalation status FIRST
+    try:
+        from orchestrator.closing_refresh_memory import get_escalation_status
+        esc = get_escalation_status()
+        if esc.get("escalation_recommended"):
+            return "manual_review_summary"
+    except Exception:
+        pass  # escalation check is advisory; never block the main flow
+
+    # Phase 16 priority (unchanged)
+    ss = closing_availability
+    if ss.get("recommended_refresh_external", 0) > 0:
+        return "refresh_external_closing"
+    if ss.get("recommended_refresh_tsl", 0) > 0:
+        return "refresh_tsl_closing"
+    if ss.get("missing_all_sources", 0) > 0:
+        return "closing_availability_audit"
+    return "closing_monitor"
+
+
+def _attempt_closing_source_refresh_task(
+    request_id: str,
+    start_time: datetime,
+    opt_state_result: dict,
+) -> dict:
+    """
+    Phase 16 — DATA_WAITING: create the highest-priority closing refresh task.
+
+    Steps:
+      1. Call get_pending_diagnostics() to get source_summary.
+      2. Call _choose_closing_refresh_action() to pick the action.
+      3. Look up cadence window for the chosen action.
+      4. Check DB dedupe; if slot is already occupied → SKIP_CADENCE.
+      5. Otherwise create the task and return CREATED.
+
+    Cadence windows:
+      refresh_external_closing  → 60 min
+      refresh_tsl_closing       → 30 min
+      closing_availability_audit → 60 min
+      closing_monitor            → 20 min (existing)
+
+    HARD RULES:
+      - Creates at most ONE task per call
+      - Does not mark any CLV as COMPUTED
+      - Does not trigger model-patch or strategy-reinforcement
+      - Does not call any live external API
+
+    Returns:
+      {"status": "CREATED",      "task_id": int, "dedupe_key": str, "action_type": str}
+      {"status": "SKIP_CADENCE", "task_id": int, "dedupe_key": str, "action_type": str}
+    """
+    from orchestrator.closing_odds_monitor import get_pending_diagnostics
+    from orchestrator.data_waiting_cadence import cadence_dedupe_key, CADENCE_MINUTES
+
+    # Phase 16 cadence windows per task type
+    _REFRESH_CADENCE_MINUTES: dict[str, int] = CADENCE_MINUTES
+
+    # Step 1: get diagnostics to determine priority action
+    try:
+        diag = get_pending_diagnostics()
+        source_summary = diag.get("source_summary", {})
+    except Exception as _exc:
+        logger.warning("[PlannerTick] _attempt_closing_source_refresh_task: get_pending_diagnostics failed: %s", _exc)
+        source_summary = {}
+
+    # Step 2: pick highest-priority action
+    action_type = _choose_closing_refresh_action(source_summary)
+
+    # Step 3: cadence dedupe key for this action
+    dedupe_key = cadence_dedupe_key(action_type)
+    cadence_min = _REFRESH_CADENCE_MINUTES.get(action_type, 20)
+
+    # Step 4: check for existing task in this cadence slot
+    existing = db.get_nonfailed_task_by_dedupe_key(dedupe_key)
+    if existing:
+        msg = (
+            f"PLANNER_SKIP_CADENCE: DATA_WAITING safe task already exists for "
+            f"current cadence slot ({cadence_min} min window). "
+            f"action_type={action_type!r} "
+            f"existing_task_id={existing['id']} "
+            f"existing_status={existing['status']} "
+            f"dedupe_key={dedupe_key!r}"
+        )
+        logger.info("[PlannerTick] %s", msg)
+        db.record_run(
+            runner="planner_tick",
+            outcome="SKIPPED",
+            request_id=request_id,
+            task_id=existing["id"],
+            message=msg,
+            tick_at=start_time.isoformat(),
+        )
+        return {
+            "status": "SKIP_CADENCE",
+            "task_id": existing["id"],
+            "dedupe_key": dedupe_key,
+            "action_type": action_type,
+        }
+
+    # Step 5: create the task
+    reasons = opt_state_result.get("reasons", [])
+    reasons_str = "; ".join(reasons) if reasons else "all CLV PENDING_CLOSING"
+
+    slot_key = generate_task_slot_key()
+    date_folder = _common.dedupe_day_utc()
+    task_dir = os.path.join(db.ORCH_ROOT, "tasks", date_folder)
+    os.makedirs(task_dir, exist_ok=True)
+    prompt_path = os.path.join(task_dir, f"{slot_key}-prompt.md")
+
+    # Build action-specific prompt
+    if action_type == "manual_review_summary":
+        title = "DATA_WAITING Escalation Manual Review — Closing Refresh Exhausted"
+        prompt_text = (
+            "# DATA_WAITING Escalation Manual Review — Closing Refresh Exhausted\n\n"
+            "## Objective\n"
+            "Automated closing refresh has not improved PENDING_CLOSING availability "
+            "after repeated attempts. Produce a structured operator summary with "
+            "per-record detail and recommended manual actions.\n\n"
+            "## Background\n"
+            f"Optimization state is DATA_WAITING. Reason: {reasons_str}\n"
+            f"Escalation triggered: consecutive refresh attempts have not resolved "
+            f"{source_summary.get('pending_total', 0)} PENDING_CLOSING records.\n"
+            f"Missing all sources: {source_summary.get('missing_all_sources', 0)}.\n\n"
+            "## Scope\n"
+            "- Aggregate current closing odds state from diagnostics.\n"
+            "- Report per-action-type no-improvement streaks from closing_refresh_memory.\n"
+            "- Provide operator-facing action checklist.\n"
+            "- Identify which records need manual investigation.\n\n"
+            "## Hard Constraints\n"
+            "- Do NOT unlock learning state.\n"
+            "- Do NOT mark any PENDING_CLOSING record as COMPUTED.\n"
+            "- Do NOT call any paid external API.\n"
+            "- Do NOT trigger strategy reinforcement or model-patch tasks.\n"
+            "- Produce operator summary only — no automated fixes.\n\n"
+            f"## Task Type\nmanual_review_summary\n\n"
+            f"## Created At\n{datetime.now(timezone.utc).isoformat()}\n"
+        )
+        focus_area = "clv-closing-refresh-escalation"
+        focus_keys = "manual_review_summary,escalation,clv,pending_closing,operator_action"
+        analysis_family = "closing-escalation"
+
+    elif action_type == "refresh_external_closing":
+        title = "DATA_WAITING External Closing Odds Availability Diagnostic"
+        prompt_text = (
+            "# DATA_WAITING External Closing Odds Availability Diagnostic\n\n"
+            "## Objective\n"
+            "Inspect PENDING_CLOSING CLV records for external closing odds availability "
+            "and report which records need external data refresh.\n\n"
+            "## Background\n"
+            f"Optimization state is DATA_WAITING. Reason: {reasons_str}\n"
+            f"Phase 15 diagnostics indicate {source_summary.get('recommended_refresh_external', 0)} "
+            "records need external closing data refresh.\n\n"
+            "## Scope\n"
+            "- Identify records where external closing odds are present but invalid.\n"
+            "- Report invalid reasons (before_prediction, same_snapshot, stale).\n"
+            "- Do NOT call any paid external API.\n"
+            "- Produce a diagnostic artifact with per-record details.\n\n"
+            "## Hard Constraints\n"
+            "- Do NOT mark any PENDING_CLOSING record as COMPUTED.\n"
+            "- Do NOT call any paid external odds API.\n"
+            "- Do NOT trigger strategy reinforcement or model-patch tasks.\n"
+            "- Read-only diagnostic only.\n\n"
+            f"## Task Type\nrefresh_external_closing\n\n"
+            f"## Created At\n{datetime.now(timezone.utc).isoformat()}\n"
+        )
+        focus_area = "clv-external-closing-refresh"
+        focus_keys = "refresh_external_closing,clv,pending_closing,external_odds"
+        analysis_family = "closing-refresh"
+
+    elif action_type == "refresh_tsl_closing":
+        title = "DATA_WAITING TSL Closing Odds Refresh Diagnostic"
+        prompt_text = (
+            "# DATA_WAITING TSL Closing Odds Refresh Diagnostic\n\n"
+            "## Objective\n"
+            "Inspect PENDING_CLOSING CLV records for TSL closing odds availability "
+            "and identify records that need TSL data refresh.\n\n"
+            "## Background\n"
+            f"Optimization state is DATA_WAITING. Reason: {reasons_str}\n"
+            f"Phase 15 diagnostics indicate {source_summary.get('recommended_refresh_tsl', 0)} "
+            "records need TSL closing data refresh.\n\n"
+            "## Scope\n"
+            "- Identify records where TSL closing odds are absent or invalid.\n"
+            "- Report what TSL data would be needed.\n"
+            "- Do NOT make live network calls (dry-run diagnostic).\n"
+            "- Produce a diagnostic artifact with per-record details.\n\n"
+            "## Hard Constraints\n"
+            "- Do NOT mark any PENDING_CLOSING record as COMPUTED.\n"
+            "- Do NOT call any live TSL network API.\n"
+            "- Do NOT trigger strategy reinforcement or model-patch tasks.\n"
+            "- Dry-run diagnostic only.\n\n"
+            f"## Task Type\nrefresh_tsl_closing\n\n"
+            f"## Created At\n{datetime.now(timezone.utc).isoformat()}\n"
+        )
+        focus_area = "clv-tsl-closing-refresh"
+        focus_keys = "refresh_tsl_closing,clv,pending_closing,tsl_odds"
+        analysis_family = "closing-refresh"
+
+    elif action_type == "closing_availability_audit":
+        title = "DATA_WAITING Closing Odds Availability Audit"
+        prompt_text = (
+            "# DATA_WAITING Closing Odds Availability Audit\n\n"
+            "## Objective\n"
+            "Perform a detailed per-record audit of PENDING_CLOSING CLV records "
+            "to understand why closing odds are unavailable.\n\n"
+            "## Background\n"
+            f"Optimization state is DATA_WAITING. Reason: {reasons_str}\n"
+            f"Phase 15 diagnostics indicate {source_summary.get('missing_all_sources', 0)} "
+            "records are missing all closing odds sources.\n\n"
+            "## Scope\n"
+            "- Audit every PENDING_CLOSING record against the odds timeline.\n"
+            "- Classify each record: missing_timeline, before_prediction, stale, etc.\n"
+            "- Produce a diagnostic artifact with source availability summary.\n\n"
+            "## Hard Constraints\n"
+            "- Do NOT mark any PENDING_CLOSING record as COMPUTED.\n"
+            "- Do NOT call any external API.\n"
+            "- Do NOT trigger strategy reinforcement or model-patch tasks.\n"
+            "- Read-only audit only.\n\n"
+            f"## Task Type\nclosing_availability_audit\n\n"
+            f"## Created At\n{datetime.now(timezone.utc).isoformat()}\n"
+        )
+        focus_area = "clv-closing-availability-audit"
+        focus_keys = "closing_availability_audit,clv,pending_closing,odds_sources"
+        analysis_family = "closing-audit"
+
+    else:
+        # Default: closing_monitor (original behavior)
+        title = "DATA_WAITING CLV Closing Monitor and Odds Freshness Audit"
+        prompt_text = (
+            "# DATA_WAITING CLV Closing Monitor and Odds Freshness Audit\n\n"
+            "## Objective\n"
+            "Inspect PENDING_CLOSING CLV records and verify whether closing odds have arrived "
+            "without modifying any learning state.\n\n"
+            "## Background\n"
+            f"Optimization state is DATA_WAITING. Reason: {reasons_str}\n\n"
+            "## Scope\n"
+            "- Enumerate all PENDING_CLOSING CLV records (count, game IDs, staleness).\n"
+            "- Check whether closing odds data is available for those records.\n"
+            "- Run closing odds monitor / freshness audit.\n"
+            "- Summarise pending / computed / stale counts in a diagnostic artifact.\n\n"
+            "## Hard Constraints\n"
+            "- Do NOT mark any PENDING_CLOSING record as COMPUTED without valid closing odds.\n"
+            "- Do NOT trigger strategy reinforcement or model-patch tasks.\n"
+            "- Do NOT write to training_memory learning state.\n"
+            "- No external API calls beyond read-only data freshness check.\n\n"
+            "## Acceptance Criteria\n"
+            "- Output includes: pending_count, computed_count, stale_count.\n"
+            "- Output includes: list of game IDs still awaiting closing odds.\n"
+            "- Output includes: whether closing odds source is reachable.\n"
+            "- No fake COMPUTED CLV.\n"
+            "- No strategy reinforcement.\n\n"
+            f"## Task Type\nclosing-monitor\n\n"
+            f"## Created At\n{datetime.now(timezone.utc).isoformat()}\n"
+        )
+        focus_area = "clv-closing-monitor"
+        focus_keys = "closing_monitor,clv,pending_closing,odds_freshness"
+        analysis_family = "closing-monitor"
+
+    with open(prompt_path, "w", encoding="utf-8") as f:
+        f.write(prompt_text)
+
+    task_id = db.create_task(
+        slot_key=slot_key,
+        date_folder=date_folder,
+        title=title,
+        slug=slot_key,
+        status="QUEUED",
+        prompt_file_path=prompt_path,
+        prompt_text=prompt_text,
+        dedupe_key=dedupe_key,
+        task_type=action_type,
+        worker_type="light",
+        regime_state="data_waiting",
+        epoch_id=0,
+        analysis_family=analysis_family,
+        focus_area=focus_area,
+        focus_keys=focus_keys,
+    )
+    msg = (
+        f"Planner created DATA_WAITING safe task #{task_id}: "
+        f"{title!r} (action_type={action_type!r} dedupe_key={dedupe_key!r})"
+    )
+    logger.info("[PlannerTick] %s", msg)
+    db.record_run(
+        runner="planner_tick",
+        outcome="SUCCESS",
+        request_id=request_id,
+        task_id=task_id,
+        message=msg,
+        tick_at=start_time.isoformat(),
+    )
+    return {
+        "status": "CREATED",
+        "task_id": task_id,
+        "dedupe_key": dedupe_key,
+        "action_type": action_type,
+    }
+
+
 def _attempt_maintenance_task(request_id: str, start_time: datetime) -> dict:
     """嘗試建立 maintenance_health_check light task（每日一次，daily cap 守衛）。
 
@@ -1826,6 +2172,37 @@ def run_planner_tick() -> dict:
         if _auto_validated:
             logger.info("[PlannerTick] Auto-validated %d insights: %s", len(_auto_validated), _auto_validated)
 
+        # ── STEP 0.7: Phase 22 — Gate-driven Sandbox Patch Evaluation Task ──────────
+        _patch_eval_candidates: list[dict] = []
+        try:
+            from orchestrator.training_memory import get_latest_gate_decision
+            from orchestrator.learning_patch_task_generator import (
+                generate_patch_evaluation_task,
+                generate_investigation_task,
+            )
+            _latest_gate = get_latest_gate_decision()
+            if _latest_gate and not _latest_gate.get("generated_task_id"):
+                _gd = _latest_gate.get("gate_decision", "")
+                if _gd == "ALLOW_PATCH_CANDIDATE":
+                    _spec = generate_patch_evaluation_task(_latest_gate)
+                    if _spec is not None:
+                        _patch_eval_candidates.append(_spec)
+                        logger.info(
+                            "[PlannerTick] Gate ALLOW_PATCH_CANDIDATE → queuing calibration_patch_evaluation"
+                        )
+                elif _gd == "INVESTIGATE_ONLY":
+                    _spec = generate_investigation_task(_latest_gate)
+                    if _spec is not None:
+                        _patch_eval_candidates.append(_spec)
+                        logger.info(
+                            "[PlannerTick] Gate INVESTIGATE_ONLY → queuing model-validation-atomic"
+                        )
+                # HOLD / REJECT → no task
+        except Exception as _peg_exc:
+            logger.warning(
+                "[PlannerTick] Gate-driven task gen failed (non-fatal): %s", _peg_exc
+            )
+
         # ── STEP 1: 前置封鎖守衛（RUNNING / QUEUED / BLOCKED_ENV 自動解除）──
         latest_task = db.get_latest_task()
         blocker = _resolve_previous_task_blocker(latest_task)
@@ -1847,6 +2224,31 @@ def run_planner_tick() -> dict:
                 "blocking_task_id": latest_task["id"] if latest_task else None,
             }
 
+        # ── STEP 1.5: Phase 8 Optimization Governance — classify state ──────────
+        # Must run BEFORE candidate generation so blocked families are filtered early.
+        opt_state_result: dict = {}
+        try:
+            from orchestrator import optimization_state as _opt_state
+            opt_state_result = _opt_state.classify()
+            _opt_st = opt_state_result.get("state", "UNKNOWN")
+            _opt_blocked = opt_state_result.get("blocked_task_families", [])
+            _opt_reasons = opt_state_result.get("reasons", [])
+            logger.info(
+                "[PlannerTick] OptimizationState=%s  blocked_families=%s  reasons=%s",
+                _opt_st, _opt_blocked, _opt_reasons,
+            )
+            # Record state transition in training memory (non-fatal)
+            try:
+                from orchestrator import training_memory as _tm
+                _tm.record_optimization_state_transition(
+                    new_state=_opt_st,
+                    reasons=_opt_reasons,
+                )
+            except Exception as _tm_exc:
+                logger.debug("[PlannerTick] State transition record failed (non-fatal): %s", _tm_exc)
+        except Exception as _os_exc:
+            logger.warning("[PlannerTick] OptimizationState classify failed (non-fatal): %s", _os_exc)
+
         # ── STEP 2: 建立候選列表（blueprints 優先，再試 wiki-mined tasks）──
         # 包含 cooldown 時間內已完成的任務（防止 stub 執行時任務被立即重建）
         cooldown_hours = int(db.get_setting("task_recycle_cooldown_hours", "4"))
@@ -1867,16 +2269,37 @@ def run_planner_tick() -> dict:
         blueprints = list(TASK_BLUEPRINTS)
         random.shuffle(blueprints)
         wiki_candidates = _mine_tasks_from_wiki()
-        # 優先順序：validation > patch > audit blueprints > wiki candidates
-        all_candidates = _validation_candidates + _patch_candidates + blueprints + wiki_candidates
+        # 優先順序：patch-eval gate > validation > patch > audit blueprints > wiki candidates
+        all_candidates = _patch_eval_candidates + _validation_candidates + _patch_candidates + blueprints + wiki_candidates
 
         last_verdict = None
         blocked_by_recent_count = 0
         duplicate_rejection_count = 0
         non_duplicate_rejection_count = 0
+        governance_rejection_count = 0
         for candidate in all_candidates:
             _insight_id = candidate.get("insight_id")  # only set for patch/validation tasks
             task_data = normalize_task_draft(_build_task_from_candidate(candidate))
+
+            # ── Phase 8 Governance Gate: block wrong task families ──────────
+            # This runs BEFORE quality gate to avoid wasted processing.
+            if opt_state_result:
+                _cand_family = task_data.get("analysis_family", "")
+                try:
+                    from orchestrator import optimization_state as _opt_state_mod
+                    if _opt_state_mod.is_task_family_blocked(_cand_family, opt_state_result):
+                        governance_rejection_count += 1
+                        logger.info(
+                            "[PlannerTick] Governance BLOCKED '%s' family=%s  state=%s  "
+                            "reasons=%s",
+                            task_data.get("title", "?"),
+                            _cand_family,
+                            opt_state_result.get("state"),
+                            opt_state_result.get("reasons"),
+                        )
+                        continue
+                except Exception as _gov_exc:
+                    logger.debug("[PlannerTick] Governance gate check failed (non-fatal): %s", _gov_exc)
 
             # ── 前置去重：依 focus_area + analysis_family 快速排除 ──────────
             # （quality_gate 的 text-similarity 無法解析 current task 的 family，
@@ -1907,6 +2330,18 @@ def run_planner_tick() -> dict:
                 # 通過品質驗收
                 task_data = persist_task_prompt(task_data)
                 task_id = db.create_task(**task_data)
+
+                # Phase 22: update gate decision with generated task ID
+                if task_data.get("source") == "learning_patch_gate":
+                    try:
+                        from orchestrator.training_memory import update_gate_decision_generated_task_id
+                        _lc_id = task_data.get("learning_cycle_id", "")
+                        if _lc_id:
+                            update_gate_decision_generated_task_id(_lc_id, task_id)
+                    except Exception as _ugt_exc:
+                        logger.debug(
+                            "[PlannerTick] Gate decision update failed (non-fatal): %s", _ugt_exc
+                        )
 
                 # 更新洞見生命週期
                 _family = task_data.get("analysis_family", "")
@@ -1941,6 +2376,8 @@ def run_planner_tick() -> dict:
                     "objective": task_data["title"],
                     "duration_seconds": duration,
                     "replan_recovered": recovery["archived_count"],
+                    "optimization_state": opt_state_result.get("state"),
+                    "governance_rejection_count": governance_rejection_count,
                 }
             else:
                 duplicate_only_rejection = (
@@ -1958,6 +2395,28 @@ def run_planner_tick() -> dict:
                 )
 
         # ── STEP 3: 所有候選都失敗 ──
+        # DATA_WAITING special path: inject a safe closing-monitor fallback task
+        # before expensive forced exploration, to prevent 8h idle skip storms.
+        _dw_state = (opt_state_result.get("state") or "").upper()
+        if _dw_state == "DATA_WAITING":
+            _dw = _attempt_data_waiting_safe_task(request_id, start_time, opt_state_result)
+            if _dw["status"] == "CREATED":
+                end_time = datetime.now(timezone.utc)
+                duration = int((end_time - start_time).total_seconds())
+                return {
+                    "status": "SUCCESS",
+                    "quality_status": "DATA_WAITING_SAFE_TASK",
+                    "message": (
+                        f"Planner created DATA_WAITING safe task #{_dw['task_id']}: "
+                        f"CLV Closing Monitor"
+                    ),
+                    "task_id": _dw["task_id"],
+                    "objective": "DATA_WAITING CLV Closing Monitor and Odds Freshness Audit",
+                    "duration_seconds": duration,
+                    "optimization_state": "DATA_WAITING",
+                    "governance_rejection_count": governance_rejection_count,
+                }
+
         # Phase 4: 先嘗試 forced exploration（daily cap per lane，rotation）
         _explore = _attempt_forced_exploration(request_id, start_time)
         if _explore["status"] == "CREATED":

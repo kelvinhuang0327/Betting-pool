@@ -1286,6 +1286,180 @@ def _execute_clv_quality_analysis(task: dict) -> dict:
 
 # Maps task_type (lowercase) → executor function.
 # Add new deterministic task types here when they are implemented.
+def _execute_calibration_patch_evaluation(task: dict) -> dict:
+    """
+    Phase 22 — Deterministic sandbox calibration patch-evaluation executor.
+
+    Simulates a simple calibration / threshold candidate against a baseline
+    using the sandbox CLV fixture.  NO external LLM is called.  NO production
+    model or CLV file is modified.
+
+    Sandbox injection:
+        ``task["_sandbox_reports_dir"]`` — Path to a directory containing
+        ``clv_validation_records_6u_*.jsonl`` fixtures.
+
+    Evaluation logic (deterministic):
+        baseline  = mean of all COMPUTED CLV values (raw values as-is)
+        candidate = mean of the 70th-percentile upper subset (simulates
+                    a tighter threshold that retains only better-performing bets)
+
+    Outcomes:
+        KEEP_SANDBOX_CANDIDATE  — candidate_mean > baseline_mean by > 0.005
+        REJECT_SANDBOX_CANDIDATE — candidate_mean <= baseline_mean
+        NEED_MORE_DATA           — fewer than 3 COMPUTED records available
+    """
+    import statistics as _stat
+
+    task_id = str(task.get("id", "unknown"))
+    exec_start = datetime.now(timezone.utc)
+
+    logger.info(
+        "[SafeExecutor] calibration_patch_evaluation task #%s — starting sandbox eval",
+        task_id,
+    )
+
+    # ── Resolve reports directory ─────────────────────────────────────────
+    sandbox_reports_dir = task.get("_sandbox_reports_dir")
+    reports_dir: Path = (
+        Path(sandbox_reports_dir) if sandbox_reports_dir else _REPORTS_DIR
+    )
+
+    # ── Read COMPUTED CLV records (identical to clv_quality_analysis reader) ─
+    clv_values: list[float] = []
+    for path in sorted(reports_dir.glob("clv_validation_records_6u_*.jsonl")):
+        try:
+            for line in path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if row.get("clv_status") == "COMPUTED" and row.get("clv_value") is not None:
+                    try:
+                        clv_values.append(float(row["clv_value"]))
+                    except (TypeError, ValueError):
+                        pass
+        except OSError as exc:
+            logger.warning(
+                "[SafeExecutor] calibration_patch_evaluation: cannot read %s — %s",
+                path,
+                exc,
+            )
+
+    sample_count = len(clv_values)
+
+    # ── Evaluate ──────────────────────────────────────────────────────────
+    if sample_count < 3:
+        evaluation_decision = "NEED_MORE_DATA"
+        baseline_mean = None
+        candidate_mean = None
+        delta = None
+        reason = f"Insufficient data: {sample_count} record(s) — need >= 3"
+    else:
+        # Baseline: mean of all records
+        baseline_mean = sum(clv_values) / sample_count
+
+        # Candidate: mean of top-70th-percentile by CLV value
+        # (simulates a stricter acceptance threshold)
+        sorted_vals = sorted(clv_values, reverse=True)
+        top_n = max(1, int(sample_count * 0.70))
+        candidate_vals = sorted_vals[:top_n]
+        candidate_mean = sum(candidate_vals) / len(candidate_vals)
+
+        delta = candidate_mean - baseline_mean
+
+        if delta > 0.005:
+            evaluation_decision = "KEEP_SANDBOX_CANDIDATE"
+            reason = (
+                f"Candidate mean {candidate_mean:.4f} exceeds baseline "
+                f"{baseline_mean:.4f} by {delta:.4f} — candidate retained in sandbox"
+            )
+        else:
+            evaluation_decision = "REJECT_SANDBOX_CANDIDATE"
+            reason = (
+                f"Candidate mean {candidate_mean:.4f} does not outperform baseline "
+                f"{baseline_mean:.4f} (delta={delta:.4f}) — candidate rejected"
+            )
+
+    # ── Artifact ──────────────────────────────────────────────────────────
+    sandbox_artifact_dir = task.get("_sandbox_artifact_dir")
+    if sandbox_artifact_dir:
+        artifact_dir = Path(sandbox_artifact_dir)
+    else:
+        date_str = exec_start.strftime("%Y%m%d")
+        artifact_dir = _ORCH_TASKS_ROOT / date_str
+
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    artifact_path = artifact_dir / f"{task_id}-calibration-patch-evaluation.md"
+
+    def _fmt(v: float | None) -> str:
+        return f"{v:.4f}" if v is not None else "N/A"
+
+    learning_cycle_id = task.get("learning_cycle_id", "unknown")
+    gate_decision_id = task.get("gate_decision_id", "unknown")
+
+    artifact_text = (
+        f"# Calibration Patch Evaluation — Task {task_id}\n\n"
+        f"**Execution mode**: `SANDBOX_ONLY`\n"
+        f"**Source**: `{reports_dir}`\n"
+        f"**Executed at**: {exec_start.isoformat()}\n"
+        f"**Learning cycle**: `{learning_cycle_id}`\n"
+        f"**Gate decision**: `{gate_decision_id}`\n\n"
+        "---\n\n"
+        "## Evaluation Summary\n\n"
+        f"| Metric | Value |\n"
+        f"|--------|-------|\n"
+        f"| Sample count       | {sample_count} |\n"
+        f"| Baseline mean CLV  | {_fmt(baseline_mean)} |\n"
+        f"| Candidate mean CLV | {_fmt(candidate_mean)} |\n"
+        f"| Delta              | {_fmt(delta)} |\n"
+        f"| **Decision**       | **{evaluation_decision}** |\n\n"
+        f"## Reason\n\n{reason}\n\n"
+        "## Hard Rules Applied\n\n"
+        "- No external LLM called\n"
+        "- No production model modified\n"
+        "- No production CLV file modified\n"
+        "- No live betting triggered\n"
+        "- Execution mode: `SANDBOX_ONLY`\n"
+        "- production_patch_allowed: `false`\n"
+    )
+
+    try:
+        artifact_path.write_text(artifact_text, encoding="utf-8")
+        logger.info(
+            "[SafeExecutor] calibration_patch_evaluation: artifact → %s", artifact_path
+        )
+    except OSError as exc:
+        logger.error(
+            "[SafeExecutor] calibration_patch_evaluation: artifact write failed — %s", exc
+        )
+
+    duration = (datetime.now(timezone.utc) - exec_start).total_seconds()
+
+    return {
+        "success": True,
+        "completed_text": artifact_text,
+        "completed_file_path": str(artifact_path),
+        "changed_files": [str(artifact_path)],
+        "duration_seconds": duration,
+        # Evaluation results
+        "sample_count": sample_count,
+        "baseline_mean_clv": baseline_mean,
+        "candidate_mean_clv": candidate_mean,
+        "delta": delta,
+        "evaluation_decision": evaluation_decision,
+        "reason": reason,
+        # Provenance
+        "execution_mode": "SANDBOX_ONLY",
+        "production_patch_allowed": False,
+        "source": "sandbox/test",
+        "learning_cycle_id": learning_cycle_id,
+        "gate_decision_id": gate_decision_id,
+    }
+
+
 DETERMINISTIC_TASK_TYPES: dict[str, Callable[[dict], dict]] = {
     "closing_monitor": _execute_closing_monitor,
     "closing_availability_audit": _execute_closing_availability_audit,
@@ -1293,6 +1467,7 @@ DETERMINISTIC_TASK_TYPES: dict[str, Callable[[dict], dict]] = {
     "refresh_external_closing": _execute_refresh_external_closing,
     "manual_review_summary": _execute_manual_review_summary,
     "clv_quality_analysis": _execute_clv_quality_analysis,
+    "calibration_patch_evaluation": _execute_calibration_patch_evaluation,
 }
 
 # Future task types — listed here for registry completeness; not yet implemented.

@@ -702,3 +702,131 @@ def get_latest_gate_decision() -> Optional[dict]:
     decisions = get_gate_decision_history(n=1)
     return decisions[0] if decisions else None
 
+
+# ─────────────────────────────────────────────
+# Phase 22 Patch Evaluation Recording
+# ─────────────────────────────────────────────
+
+MAX_PATCH_EVALUATIONS = 50
+
+
+def record_patch_evaluation(
+    gate_decision_id: str,
+    task_id: str,
+    evaluation_decision: str,
+    baseline_metric: float | None,
+    candidate_metric: float | None,
+    delta: float | None,
+    sample_count: int,
+    source: str = "sandbox/test",
+    learning_cycle_id: Optional[str] = None,
+    artifact_path: Optional[str] = None,
+) -> dict:
+    """
+    Record a calibration patch evaluation result into training memory.
+
+    CRITICAL CONSTRAINTS:
+    - This NEVER marks the evaluation as a production patch.
+    - Does NOT modify patch_history (that is for production-validated patches).
+    - Does NOT affect consecutive_successes / consecutive_failures counters.
+    - source must reflect the true origin ("sandbox/test" always for Phase 22).
+
+    Args:
+        gate_decision_id:    ID of the gate decision that authorised this evaluation.
+        task_id:             DB task ID of the calibration_patch_evaluation task.
+        evaluation_decision: "KEEP_SANDBOX_CANDIDATE" | "REJECT_SANDBOX_CANDIDATE" |
+                             "NEED_MORE_DATA".
+        baseline_metric:     Baseline mean CLV (None if no data).
+        candidate_metric:    Candidate mean CLV (None if no data).
+        delta:               candidate_metric - baseline_metric (None if no data).
+        sample_count:        Number of COMPUTED CLV records evaluated.
+        source:              Always "sandbox/test" for Phase 22.
+        learning_cycle_id:   ID of the originating learning cycle.
+        artifact_path:       Path to the written Markdown artifact.
+
+    Returns:
+        Updated memory dict (already saved to disk).
+    """
+    mem = load_memory()
+    now = datetime.now(timezone.utc).isoformat()
+
+    entry: dict = {
+        "gate_decision_id": gate_decision_id,
+        "task_id": task_id,
+        "evaluation_decision": evaluation_decision,
+        "baseline_metric": baseline_metric,
+        "candidate_metric": candidate_metric,
+        "delta": delta,
+        "sample_count": sample_count,
+        "source": source,
+        "production_patch_allowed": False,
+        "learning_cycle_id": learning_cycle_id,
+        "artifact_path": artifact_path,
+        "recorded_at": now,
+    }
+
+    evaluations: list[dict] = mem.get("patch_evaluations", [])
+    evaluations.append(entry)
+    if len(evaluations) > MAX_PATCH_EVALUATIONS:
+        evaluations = evaluations[-MAX_PATCH_EVALUATIONS:]
+    mem["patch_evaluations"] = evaluations
+    mem["last_updated"] = now
+    _save_memory(mem)
+
+    logger.info(
+        "[TrainingMemory] Patch evaluation recorded: gate=%s  task=%s  "
+        "decision=%s  delta=%s  source=%s",
+        gate_decision_id,
+        task_id,
+        evaluation_decision,
+        f"{delta:.4f}" if delta is not None else "N/A",
+        source,
+    )
+    return mem
+
+
+def get_patch_evaluation_history(n: int = 20) -> list[dict]:
+    """Return the most recent n patch evaluation records, newest last."""
+    mem = load_memory()
+    evaluations = mem.get("patch_evaluations", [])
+    return evaluations[-n:]
+
+
+def get_latest_patch_evaluation() -> Optional[dict]:
+    """Return the most recent patch evaluation result, or None if none recorded."""
+    evals = get_patch_evaluation_history(n=1)
+    return evals[0] if evals else None
+
+
+def update_gate_decision_generated_task_id(
+    learning_cycle_id: str,
+    generated_task_id: int | str,
+) -> bool:
+    """
+    Update the most recent gate decision for learning_cycle_id with generated_task_id.
+
+    Used by planner_tick to mark that a task has already been created for this gate
+    decision, preventing duplicate task generation on subsequent planner ticks.
+
+    Returns:
+        True if a matching gate decision was found and updated, False otherwise.
+    """
+    mem = load_memory()
+    decisions = mem.get("gate_decisions", [])
+    updated = False
+    for i in range(len(decisions) - 1, -1, -1):
+        if decisions[i].get("learning_cycle_id") == learning_cycle_id:
+            decisions[i]["generated_task_id"] = str(generated_task_id)
+            decisions[i]["task_generated_at"] = datetime.now(timezone.utc).isoformat()
+            updated = True
+            break
+    if updated:
+        mem["gate_decisions"] = decisions
+        mem["last_updated"] = datetime.now(timezone.utc).isoformat()
+        _save_memory(mem)
+        logger.info(
+            "[TrainingMemory] Gate decision updated: learning_cycle=%s  task_id=%s",
+            learning_cycle_id,
+            generated_task_id,
+        )
+    return updated
