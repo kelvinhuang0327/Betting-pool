@@ -2304,6 +2304,27 @@ def run_planner_tick() -> dict:
                     logger.info(
                         "[PlannerTick] Gate23 HUMAN_REVIEW_REQUIRED → queuing manual_review_summary"
                     )
+                    # Phase 24: enqueue human review item
+                    try:
+                        from orchestrator.human_review_queue import (
+                            queue_review_item,
+                            RT_SANDBOX_UNCERTAIN,
+                            RISK_MEDIUM,
+                            NTF_ADDITIONAL_VALIDATION,
+                        )
+                        queue_review_item(
+                            source="patch_evaluation_gate",
+                            source_task_id=_eval_task_id,
+                            source_decision_id=str(_latest_eval.get("gate_decision_id", _eval_task_id)),
+                            review_type=RT_SANDBOX_UNCERTAIN,
+                            title=f"[Phase24] Sandbox Uncertain — {_eval_task_id}",
+                            summary=_nd_reason,
+                            risk_level=RISK_MEDIUM,
+                            recommended_action="Review sandbox evaluation outcome and approve or reject.",
+                            allowed_next_task_family=NTF_ADDITIONAL_VALIDATION,
+                        )
+                    except Exception as _hrq_exc:
+                        logger.warning("[PlannerTick] Phase24 human review enqueue failed (non-fatal): %s", _hrq_exc)
                 elif _nd == ND_PROMOTE:
                     # Production proposal only — NOT a production patch
                     _eval_gate_candidates.append({
@@ -2333,6 +2354,31 @@ def run_planner_tick() -> dict:
                         "[PlannerTick] Gate23 PROMOTE_TO_PRODUCTION_PROPOSAL → queuing proposal task "
                         "(human review required, no auto-patch)"
                     )
+                    # Phase 24: enqueue human review item for production proposal
+                    try:
+                        from orchestrator.human_review_queue import (
+                            queue_review_item,
+                            RT_PRODUCTION_PROPOSAL,
+                            RISK_HIGH,
+                            NTF_PROPOSAL_VALIDATION,
+                        )
+                        queue_review_item(
+                            source="patch_evaluation_gate",
+                            source_task_id=_eval_task_id,
+                            source_decision_id=str(_latest_eval.get("gate_decision_id", _eval_task_id)),
+                            review_type=RT_PRODUCTION_PROPOSAL,
+                            title=f"[Phase24] Production Proposal — {_eval_task_id}",
+                            summary=_nd_reason,
+                            risk_level=RISK_HIGH,
+                            recommended_action=(
+                                "Review evidence carefully. Approve to proceed with "
+                                "production-proposal-validation (paper only). "
+                                "No production patch applied automatically."
+                            ),
+                            allowed_next_task_family=NTF_PROPOSAL_VALIDATION,
+                        )
+                    except Exception as _hrq_exc:
+                        logger.warning("[PlannerTick] Phase24 human review enqueue failed (non-fatal): %s", _hrq_exc)
                 elif _nd in (ND_REJECT, ND_HOLD):
                     logger.info(
                         "[PlannerTick] Gate23 %s → no follow-up task", _nd
@@ -2342,6 +2388,150 @@ def run_planner_tick() -> dict:
         except Exception as _g23_exc:
             logger.warning(
                 "[PlannerTick] Phase23 eval gate failed (non-fatal): %s", _g23_exc
+            )
+
+        # ── STEP 0.9: Phase 24 — Human Review Queue Gate ─────────────────────
+        # Check the human review queue and generate follow-up candidates for
+        # APPROVED reviews.  Block the planner (return SKIPPED) if any review
+        # is still PENDING, so no candidate progresses until an operator
+        # explicitly approves / rejects via scripts/review_queue.py.
+        _hrq_candidates: list[dict] = []
+        try:
+            from orchestrator.human_review_queue import (
+                get_pending_reviews,
+                get_approved_reviews,
+                get_more_data_reviews,
+                STATUS_APPROVED,
+                STATUS_MORE_DATA,
+                NTF_PROPOSAL_VALIDATION,
+                NTF_PAPER_ROLLOUT,
+                NTF_ADDITIONAL_VALIDATION,
+                NTF_CLV_QUALITY,
+                NTF_MODEL_VALIDATION,
+            )
+            _pending = get_pending_reviews()
+            _approved = get_approved_reviews()
+            _more_data = get_more_data_reviews()
+
+            if _pending:
+                # Surface PENDING state — do not proceed with any further task candidates
+                _pids = [i.get("review_id") for i in _pending]
+                logger.info(
+                    "[PlannerTick] Phase24 blocking: %d pending review(s) require human approval: %s",
+                    len(_pending),
+                    _pids,
+                )
+                db.record_run(
+                    runner="planner_tick",
+                    outcome="SKIPPED",
+                    request_id=request_id,
+                    task_id=None,
+                    message=(
+                        f"waiting_for_human_review: {len(_pending)} review(s) pending "
+                        f"— run `python3 scripts/review_queue.py list` to act"
+                    ),
+                    tick_at=start_time.isoformat(),
+                )
+                return {
+                    "status": "SKIPPED",
+                    "outcome": "WAITING_FOR_HUMAN_REVIEW",
+                    "pending_review_ids": _pids,
+                    "message": (
+                        f"Planner blocked: {len(_pending)} human review(s) pending. "
+                        f"Run: python3 scripts/review_queue.py list"
+                    ),
+                }
+
+            # Build follow-up candidates for APPROVED reviews not yet actioned
+            _now_hrq = datetime.now(timezone.utc).isoformat()
+            for _rev in _approved:
+                _next_family = _rev.get("allowed_next_task_family") or NTF_ADDITIONAL_VALIDATION
+                _rev_id = _rev.get("review_id", "")
+                _rt = _rev.get("review_type", "")
+                # Skip if already has a generated follow-up task
+                if _rev.get("generated_task_id"):
+                    continue
+                if _rt == "production_patch_proposal":
+                    _hrq_candidates.append({
+                        "title": f"[Phase24] Production Proposal Validation — {_rev_id}",
+                        "task_type": "manual_review_summary",
+                        "analysis_family": _next_family,
+                        "focus_area": "production-proposal-validation",
+                        "source": "human_review_queue",
+                        "phase24_review_id": _rev_id,
+                        "production_patch_allowed": False,
+                        "requires_human_review": True,
+                        "prompt": (
+                            f"# Phase 24 — Production Proposal Validation (APPROVED)\n\n"
+                            f"## Review ID\n{_rev_id}\n\n"
+                            f"## Summary\n{_rev.get('summary', '')}\n\n"
+                            "## Objective\nCreate a paper-only validation plan for the approved "
+                            "sandbox patch proposal. No production code is modified.\n\n"
+                            "## Hard Constraints\n"
+                            "- Do NOT apply production patch.\n"
+                            "- Do NOT call external LLM.\n"
+                            "- Produce paper validation plan only.\n\n"
+                            f"## Task Type\nmanual_review_summary\n\n"
+                            f"## Created At\n{_now_hrq}\n"
+                        ),
+                    })
+                else:
+                    _hrq_candidates.append({
+                        "title": f"[Phase24] Additional Validation — {_rev_id}",
+                        "task_type": "manual_review_summary",
+                        "analysis_family": NTF_ADDITIONAL_VALIDATION,
+                        "focus_area": "sandbox-additional-validation",
+                        "source": "human_review_queue",
+                        "phase24_review_id": _rev_id,
+                        "prompt": (
+                            f"# Phase 24 — Additional Sandbox Validation (APPROVED)\n\n"
+                            f"## Review ID\n{_rev_id}\n\n"
+                            f"## Summary\n{_rev.get('summary', '')}\n\n"
+                            "## Objective\nCollect additional sandbox validation evidence as approved.\n\n"
+                            "## Hard Constraints\n"
+                            "- Do NOT apply production patch.\n"
+                            "- Do NOT call external LLM.\n\n"
+                            f"## Task Type\nmanual_review_summary\n\n"
+                            f"## Created At\n{_now_hrq}\n"
+                        ),
+                    })
+                logger.info(
+                    "[PlannerTick] Phase24 APPROVED review %s → queuing %s",
+                    _rev_id, _next_family,
+                )
+
+            # MORE_DATA_REQUESTED → clv_quality_analysis follow-up
+            for _rev in _more_data:
+                if _rev.get("generated_task_id"):
+                    continue
+                _rev_id = _rev.get("review_id", "")
+                _hrq_candidates.append({
+                    "title": f"[Phase24] Data Collection — {_rev_id}",
+                    "task_type": "clv_quality_analysis",
+                    "analysis_family": NTF_CLV_QUALITY,
+                    "focus_area": "review-data-collection",
+                    "source": "human_review_queue",
+                    "phase24_review_id": _rev_id,
+                    "prompt": (
+                        f"# Phase 24 — CLV Quality Analysis (More Data Requested)\n\n"
+                        f"## Review ID\n{_rev_id}\n\n"
+                        f"## Summary\n{_rev.get('summary', '')}\n\n"
+                        "## Objective\nCollect additional CLV data as requested by reviewer.\n\n"
+                        "## Hard Constraints\n"
+                        "- Do NOT apply production patch.\n"
+                        "- Do NOT call external LLM.\n"
+                        "- Read-only CLV data collection only.\n\n"
+                        f"## Task Type\nclv_quality_analysis\n\n"
+                        f"## Created At\n{_now_hrq}\n"
+                    ),
+                })
+                logger.info(
+                    "[PlannerTick] Phase24 MORE_DATA review %s → queuing clv_quality_analysis", _rev_id
+                )
+
+        except Exception as _hrq_exc:
+            logger.warning(
+                "[PlannerTick] Phase24 review queue check failed (non-fatal): %s", _hrq_exc
             )
 
         # ── STEP 1: 前置封鎖守衛（RUNNING / QUEUED / BLOCKED_ENV 自動解除）──
@@ -2410,8 +2600,8 @@ def run_planner_tick() -> dict:
         blueprints = list(TASK_BLUEPRINTS)
         random.shuffle(blueprints)
         wiki_candidates = _mine_tasks_from_wiki()
-        # 優先順序：patch-eval gate23 > patch-eval gate22 > validation > patch > blueprints > wiki
-        all_candidates = _eval_gate_candidates + _patch_eval_candidates + _validation_candidates + _patch_candidates + blueprints + wiki_candidates
+        # 優先順序：hrq(P24) > patch-eval gate23 > patch-eval gate22 > validation > patch > blueprints > wiki
+        all_candidates = _hrq_candidates + _eval_gate_candidates + _patch_eval_candidates + _validation_candidates + _patch_candidates + blueprints + wiki_candidates
 
         last_verdict = None
         blocked_by_recent_count = 0
@@ -2494,6 +2684,19 @@ def run_planner_tick() -> dict:
                     except Exception as _pg23_exc:
                         logger.debug(
                             "[PlannerTick] Gate23 task id update failed (non-fatal): %s", _pg23_exc
+                        )
+
+                # Phase 24: back-fill generated_task_id on review queue entry
+                if task_data.get("source") == "human_review_queue":
+                    try:
+                        from orchestrator.human_review_queue import _update_item as _hrq_update
+                        _hrq_rid = task_data.get("phase24_review_id", "")
+                        if _hrq_rid:
+                            _hrq_update(_hrq_rid, {"generated_task_id": task_id})
+                    except Exception as _hrq_up_exc:
+                        logger.debug(
+                            "[PlannerTick] Phase24 review task_id back-fill failed (non-fatal): %s",
+                            _hrq_up_exc,
                         )
 
                 # 更新洞見生命週期

@@ -210,6 +210,16 @@ def _get_training_memory_summary() -> dict[str, Any]:
         return {}
 
 
+def _get_human_review_queue_summary() -> dict:
+    """Return Phase 24 human review queue summary."""
+    try:
+        from orchestrator.human_review_queue import get_queue_summary
+        return get_queue_summary()
+    except Exception as exc:
+        logger.debug("[OpsReport] human review queue unavailable: %s", exc)
+        return {}
+
+
 def _get_phase6_summary() -> dict[str, Any]:
     """Read Phase 6 CLV state."""
     try:
@@ -749,6 +759,8 @@ def generate_report(window: str = "8h") -> dict[str, Any]:
         # Phase 15: closing availability
         "closing_availability": closing_availability,
         "closing_sub_classification": closing_sub_classification,
+        # Phase 24: human review queue
+        "human_review_queue": _get_human_review_queue_summary(),
     }
 
 
@@ -949,6 +961,40 @@ def render_markdown(report: dict) -> str:
                 f"| Consecutive no-improvement | {consec} |",
                 f"| Escalation recommended | {esc_str} |",
                 f"| Recommended escalation action | `{esc_action}` |",
+                f"",
+            ]
+
+    # ── Phase 24: Human Review Queue ─────────────────────────────────
+    hrq = report.get("human_review_queue") or {}
+    hrq_pending = hrq.get("pending_count", 0)
+    hrq_total = hrq.get("total", 0)
+    if hrq_total > 0 or hrq_pending > 0:
+        block_flag = "⚠️ BLOCKING PLANNER" if hrq.get("blocked_by_human_review") else "ok"
+        lines += [
+            f"## Phase 24: Human Review Queue",
+            f"",
+            f"| Metric | Value |",
+            f"|--------|-------|",
+            f"| Total items | {hrq_total} |",
+            f"| Pending (blocking) | {hrq_pending} |",
+            f"| Approved | {hrq.get('approved_count', 0)} |",
+            f"| Rejected | {hrq.get('rejected_count', 0)} |",
+            f"| More data requested | {hrq.get('more_data_count', 0)} |",
+            f"| Planner status | {block_flag} |",
+            f"",
+        ]
+        if hrq_pending > 0:
+            lines.append(
+                f"> ⚠️ **{hrq_pending} review(s) PENDING** — planner is blocked until actioned."
+            )
+            lines.append(f"> Run: `python3 scripts/review_queue.py list`")
+            lines.append("")
+        latest_rev = hrq.get("latest_review")
+        if latest_rev:
+            lines += [
+                f"**Latest review**: `{latest_rev.get('review_id', '?')}` "
+                f"— {latest_rev.get('status', '?')} "
+                f"({latest_rev.get('review_type', '?')})",
                 f"",
             ]
 

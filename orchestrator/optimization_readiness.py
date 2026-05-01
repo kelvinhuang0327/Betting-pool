@@ -534,6 +534,14 @@ def get_readiness_summary() -> dict[str, Any]:
     except Exception as exc:
         logger.debug("[Readiness] latest_eval_gate_decision unavailable: %s", exc)
 
+    # Phase 24: surface human review queue summary
+    human_review_queue_summary: dict = {}
+    try:
+        from orchestrator.human_review_queue import get_queue_summary
+        human_review_queue_summary = get_queue_summary()
+    except Exception as exc:
+        logger.debug("[Readiness] human_review_queue_summary unavailable: %s", exc)
+
     return {
         "generated_at": now,
         "readiness_state": readiness_state,
@@ -560,6 +568,9 @@ def get_readiness_summary() -> dict[str, Any]:
         "latest_patch_evaluation": latest_patch_evaluation,
         # Phase 23: patch evaluation decision gate result
         "latest_eval_gate_decision": latest_eval_gate_decision,
+        # Phase 24: human review queue
+        "human_review_queue": human_review_queue_summary,
+        "blocked_by_human_review": human_review_queue_summary.get("blocked_by_human_review", False),
     }
 
 
