@@ -272,6 +272,7 @@ def _build_cases() -> list[CaseResult]:
 
 
 def _browser_check(html_report_path: Path, expected_cases: list[CaseResult]) -> dict[str, Any]:
+    html_report_path = html_report_path.resolve()
     if not html_report_path.exists():
         return {
             "status": "SKIP",
