@@ -1,0 +1,60 @@
+{
+  "generated_at_utc": "2026-05-09T11:56:35.086360+00:00",
+  "overall_status": "PASS",
+  "cases": [
+    {
+      "name": "mismatch",
+      "expected_outcome": "BLOCKED",
+      "actual_outcome": "BLOCKED",
+      "validation_status": "PASS",
+      "details": {
+        "applied": false,
+        "upgraded": 0,
+        "still_pending": 1,
+        "reason": "no_upgradeable_records",
+        "lookup_by_canonical": 0,
+        "lookup_by_snapshot_ref": 0,
+        "backup_path": null,
+        "run_at": "2026-05-09T11:56:35.072525+00:00"
+      }
+    },
+    {
+      "name": "aligned",
+      "expected_outcome": "PASS",
+      "actual_outcome": "PASS",
+      "validation_status": "PASS",
+      "details": {
+        "applied": true,
+        "upgraded": 1,
+        "still_pending": 0,
+        "reason": null,
+        "lookup_by_canonical": 1,
+        "lookup_by_snapshot_ref": 0,
+        "backup_path": "/var/folders/tm/ft7d03r14b35h16hbjkjppbs_jv8xm/T/tmpze2bna4b/backups/aligned.before_phase29_2026-05-09.jsonl",
+        "run_at": "2026-05-09T11:56:35.080142+00:00"
+      }
+    },
+    {
+      "name": "multi-state",
+      "expected_outcome": "PASS",
+      "actual_outcome": "PASS",
+      "validation_status": "PASS",
+      "details": {
+        "applied": true,
+        "upgraded": 2,
+        "still_pending": 0,
+        "reason": null,
+        "lookup_by_canonical": 1,
+        "lookup_by_snapshot_ref": 1,
+        "backup_path": "/var/folders/tm/ft7d03r14b35h16hbjkjppbs_jv8xm/T/tmpaor3fz7h/backups/multi-state.before_phase29_2026-05-09.jsonl",
+        "run_at": "2026-05-09T11:56:35.083115+00:00"
+      }
+    }
+  ],
+  "browser": {
+    "status": "SKIP",
+    "reason": "Playwright Python package is not installed in this environment.",
+    "detail": "Local/browser tooling unavailable; keeping honest SKIP."
+  },
+  "recommendation": "Keep the browser lane optional until CI consistently installs Playwright + Chromium; once the workflow is stable, it can be promoted to required status."
+}

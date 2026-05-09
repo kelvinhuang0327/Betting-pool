@@ -1,0 +1,29 @@
+{
+  "generated_at_utc": "2026-05-09T00:00:00Z",
+  "repo": "kelvinhuang0327/Betting-pool",
+  "workflow_file": ".github/workflows/replay_default_validation.yml",
+  "workflow_registered_on_github": false,
+  "workflow_run_status": "NO_RUN_AVAILABLE",
+  "workflow_run_url": null,
+  "browser_tooling_in_ci": null,
+  "browser_lane_result": "UNVERIFIED_IN_CI",
+  "local_fixture_results": {
+    "mismatch": "BLOCKED",
+    "aligned": "PASS",
+    "multi_state": "PASS",
+    "browser": "SKIP",
+    "overall": "PASS"
+  },
+  "blocker": "GitHub Actions cannot see the replay_default_validation workflow on the default branch, so there is no CI run to inspect yet.",
+  "evidence": {
+    "gh_workflow_list": [
+      {
+        "name": "Daily WBC Data Sync",
+        "path": ".github/workflows/daily_update.yml",
+        "state": "disabled_inactivity"
+      }
+    ],
+    "gh_run_list_error": "HTTP 404: workflow replay_default_validation.yml not found on the default branch"
+  },
+  "recommendation": "Push the workflow file to the default branch or open a PR that includes it, then re-check Actions. Do not mark the lane required until a real CI browser PASS is observed."
+}
