@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Replay Lifecycle Default Validation</title>
+  <style>
+    :root { color-scheme: light; --bg: #0f172a; --panel: #111827; --card: #1f2937; --text: #e5e7eb; --muted: #9ca3af; --accent: #22c55e; --warn: #f59e0b; --fail: #ef4444; --border: #374151; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: linear-gradient(180deg, #020617, #0f172a 40%, #111827); color: var(--text); }
+    main { max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px; }
+    header { margin-bottom: 24px; }
+    h1 { font-size: 2rem; margin: 0 0 8px; }
+    .muted { color: var(--muted); }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
+    .pill { padding: 14px 16px; border: 1px solid var(--border); background: rgba(17, 24, 39, 0.75); border-radius: 14px; }
+    .pill strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+    .pill span { font-size: 1.05rem; }
+    .case-list { display: grid; gap: 16px; }
+    .card { border: 1px solid var(--border); background: rgba(31, 41, 55, 0.82); border-radius: 18px; padding: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.22); }
+    .card h2 { margin: 0 0 12px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .label { display: block; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    pre { margin: 14px 0 0; padding: 14px; background: rgba(15, 23, 42, 0.85); border-radius: 12px; overflow: auto; color: #d1d5db; font-size: 0.85rem; line-height: 1.45; }
+    .PASS { color: var(--accent); font-weight: 700; }
+    .BLOCKED { color: var(--warn); font-weight: 700; }
+    .SKIP { color: #60a5fa; font-weight: 700; }
+    .FAIL { color: var(--fail); font-weight: 700; }
+    .browser { margin-top: 28px; padding: 18px; border: 1px solid var(--border); border-radius: 18px; background: rgba(17, 24, 39, 0.85); }
+    .footer { margin-top: 28px; color: var(--muted); font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Replay Lifecycle Default Validation</h1>
+      <p class="muted">Generated at 2026-05-09T12:29:08.508307+00:00 | Overall status: <span class="PASS">PASS</span></p>
+    </header>
+
+    <section class="summary">
+      <div class="pill"><strong>Mismatch fixture</strong><span class="PASS" data-field="mismatch_status">PASS</span></div>
+      <div class="pill"><strong>Aligned fixture</strong><span class="PASS" data-field="aligned_status">PASS</span></div>
+      <div class="pill"><strong>Multi-state fixture</strong><span class="PASS" data-field="multi_state_status">PASS</span></div>
+    </section>
+
+    <section class="case-list">
+      <article class="card" data-case="mismatch">
+              <h2>mismatch</h2>
+              <div class="grid">
+                <div><span class="label">Expected</span><span data-field="expected_outcome">BLOCKED</span></div>
+                <div><span class="label">Actual</span><span data-field="actual_outcome">BLOCKED</span></div>
+                <div><span class="label">Validation</span><span data-field="validation_status">PASS</span></div>
+              </div>
+              <pre>{
+  "applied": false,
+  "upgraded": 0,
+  "still_pending": 1,
+  "reason": "no_upgradeable_records",
+  "lookup_by_canonical": 0,
+  "lookup_by_snapshot_ref": 0,
+  "backup_path": null,
+  "run_at": "2026-05-09T12:29:08.505563+00:00"
+}</pre>
+            </article><article class="card" data-case="aligned">
+              <h2>aligned</h2>
+              <div class="grid">
+                <div><span class="label">Expected</span><span data-field="expected_outcome">PASS</span></div>
+                <div><span class="label">Actual</span><span data-field="actual_outcome">PASS</span></div>
+                <div><span class="label">Validation</span><span data-field="validation_status">PASS</span></div>
+              </div>
+              <pre>{
+  "applied": true,
+  "upgraded": 1,
+  "still_pending": 0,
+  "reason": null,
+  "lookup_by_canonical": 1,
+  "lookup_by_snapshot_ref": 0,
+  "backup_path": null,
+  "run_at": "2026-05-09T12:29:08.506975+00:00"
+}</pre>
+            </article><article class="card" data-case="multi-state">
+              <h2>multi-state</h2>
+              <div class="grid">
+                <div><span class="label">Expected</span><span data-field="expected_outcome">PASS</span></div>
+                <div><span class="label">Actual</span><span data-field="actual_outcome">PASS</span></div>
+                <div><span class="label">Validation</span><span data-field="validation_status">PASS</span></div>
+              </div>
+              <pre>{
+  "applied": true,
+  "upgraded": 2,
+  "still_pending": 0,
+  "reason": null,
+  "lookup_by_canonical": 1,
+  "lookup_by_snapshot_ref": 1,
+  "backup_path": null,
+  "run_at": "2026-05-09T12:29:08.507909+00:00"
+}</pre>
+            </article>
+    </section>
+
+    <section class="browser" data-section="browser">
+      <h2>Browser Lane</h2>
+      <p>Status: <span class="SKIP" data-field="browser_status">SKIP</span></p>
+      <p class="muted" data-field="browser_reason">Playwright Python package is not installed in this environment.</p>
+      <p class="muted" data-field="browser_detail">Local/browser tooling unavailable; keeping honest SKIP.</p>
+    </section>
+
+    <section class="footer">
+      <p>Keep the browser lane optional until CI consistently installs Playwright + Chromium; once the workflow is stable, it can be promoted to required status.</p>
+    </section>
+  </main>
+</body>
+</html>
