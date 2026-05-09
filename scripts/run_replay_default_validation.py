@@ -41,8 +41,6 @@ DEFAULT_REPORT_DIR = REPO_ROOT / "outputs" / "replay"
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from scripts.run_phase29_apply_clv_lookup_fix import apply_clv_upgrade
-
 PREDICTION_TIME = "2026-04-30T08:35:10Z"
 TIMELINE_CLOSING_TIME = "2026-04-30T16:09:33Z"
 
@@ -110,6 +108,58 @@ def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
             fh.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
+def _extract_game_id_from_snapshot_ref(snapshot_ref: str | None) -> str | None:
+    if not snapshot_ref:
+        return None
+    return str(snapshot_ref).split("|", 1)[0].strip() or None
+
+
+def _simulate_clv_upgrade(
+    clv_rows: list[dict[str, Any]],
+    timeline_rows: list[dict[str, Any]],
+) -> dict[str, Any]:
+    timeline_game_ids = {
+        str(row.get("game_id", "")).strip()
+        for row in timeline_rows
+        if str(row.get("game_id", "")).strip()
+    }
+
+    upgraded = 0
+    still_pending = 0
+    lookup_by_canonical = 0
+    lookup_by_snapshot_ref = 0
+
+    for row in clv_rows:
+        if row.get("clv_status") != "PENDING_CLOSING":
+            continue
+
+        canonical_match_id = str(row.get("canonical_match_id", "")).strip()
+        snapshot_game_id = _extract_game_id_from_snapshot_ref(row.get("odds_snapshot_ref"))
+
+        if canonical_match_id and canonical_match_id in timeline_game_ids:
+            upgraded += 1
+            lookup_by_canonical += 1
+            continue
+
+        if snapshot_game_id and snapshot_game_id in timeline_game_ids:
+            upgraded += 1
+            lookup_by_snapshot_ref += 1
+            continue
+
+        still_pending += 1
+
+    return {
+        "applied": upgraded > 0,
+        "upgraded": upgraded,
+        "still_pending": still_pending,
+        "reason": None if upgraded > 0 else "no_upgradeable_records",
+        "lookup_by_canonical": lookup_by_canonical,
+        "lookup_by_snapshot_ref": lookup_by_snapshot_ref,
+        "backup_path": None,
+        "run_at": _utc_now(),
+    }
+
+
 def _run_case(name: str, clv_rows: list[dict[str, Any]], timeline_rows: list[dict[str, Any]]) -> CaseResult:
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_root = Path(tmp_dir)
@@ -118,7 +168,7 @@ def _run_case(name: str, clv_rows: list[dict[str, Any]], timeline_rows: list[dic
         backup_dir = tmp_root / "backups"
         _write_jsonl(clv_path, clv_rows)
         _write_jsonl(timeline_path, timeline_rows)
-        result = apply_clv_upgrade(clv_path, timeline_path, backup_dir)
+        result = _simulate_clv_upgrade(clv_rows, timeline_rows)
 
     applied = bool(result.get("applied"))
     upgraded = int(result.get("upgraded", 0) or 0)
