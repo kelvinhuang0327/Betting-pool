@@ -146,19 +146,84 @@ def _prepare_rows(df: pd.DataFrame) -> list[dict[str, Any]]:
     return rows
 
 
+def _prepare_rows_with_odds(df: pd.DataFrame) -> list[dict[str, Any]]:
+    """
+    Convert OOF DataFrame (with joined odds columns) to simulation row dicts.
+
+    When odds columns are present (from MarketOddsJoinAdapter), injects
+    p_market, odds_decimal_home, and edge so that capped_kelly_policy can
+    produce non-zero stakes for JOINED rows.
+
+    Joined columns expected (all optional — rows without them stay as None):
+      odds_join_status : 'JOINED' | 'MISSING' | 'INVALID_ODDS'
+      p_market         : float, home-win implied probability
+      odds_decimal_home: float, decimal odds on home team
+      edge             : float, p_oof - p_market
+    """
+    from wbc_backend.simulation.market_odds_adapter import JOIN_STATUS_JOINED
+
+    df = df.copy()
+    df = df.sort_values("p_oof", ascending=False).reset_index(drop=True)
+    df["confidence_rank"] = range(1, len(df) + 1)
+    df["n_total"] = len(df)
+
+    has_odds_cols = "odds_join_status" in df.columns
+
+    rows: list[dict[str, Any]] = []
+    for _, row in df.iterrows():
+        if has_odds_cols and row.get("odds_join_status") == JOIN_STATUS_JOINED:
+            p_mkt = _safe_float(row.get("p_market"))
+            dec_odds = _safe_float(row.get("odds_decimal_home"))
+            edge_val = _safe_float(row.get("edge"))
+        else:
+            p_mkt = None
+            dec_odds = None
+            edge_val = None
+
+        rows.append({
+            "y_true": int(row["y_true"]),
+            "p_model": float(row["p_oof"]),
+            "p_market": p_mkt,
+            "decimal_odds": dec_odds,
+            "edge": edge_val,
+            "fold_id": row.get("fold_id"),
+            "source_model": row.get("source_model", "p13_walk_forward_logistic"),
+            "source_bss_oof": row.get("source_bss_oof"),
+            "paper_only": True,
+            "confidence_rank": int(row["confidence_rank"]),
+            "n_total": int(row["n_total"]),
+            "game_id": row.get("game_id"),
+            "odds_join_status": row.get("odds_join_status") if has_odds_cols else None,
+        })
+    return rows
+
+
 # ── P14 runner ────────────────────────────────────────────────────────────────
 
 class P13StrategySimulationRunner:
     """
     Strategy simulation spine using P13 OOF probability output.
 
-    Usage
-    -----
+    Two construction modes:
+    1. Model-only (P14 mode): from_oof_csv() — no market odds.
+    2. Odds-aware (P15 mode): from_joined_df() — accepts pre-joined DataFrame
+       with p_market, odds_decimal_home, edge, odds_join_status columns.
+
+    Usage (model-only)
+    ------------------
     runner = P13StrategySimulationRunner.from_oof_csv(
-        oof_csv_path="outputs/predictions/PAPER/2026-05-12/p13_walk_forward_logistic/oof_predictions.csv",
+        oof_csv_path="outputs/.../oof_predictions.csv",
         source_bss_oof=0.008253,
     )
-    summary = runner.run(policies=["flat", "capped_kelly", "confidence_rank", "no_bet"])
+
+    Usage (odds-aware)
+    ------------------
+    runner = P13StrategySimulationRunner.from_joined_df(
+        joined_df=df_with_odds,
+        source_bss_oof=0.008253,
+        odds_join_coverage=1577,
+        odds_source_path="data/mlb_2025/mlb_odds_2025_real.csv",
+    )
     """
 
     def __init__(
@@ -169,6 +234,10 @@ class P13StrategySimulationRunner:
         date_start: str = "UNKNOWN",
         date_end: str = "UNKNOWN",
         paper_only: bool = True,
+        odds_join_coverage: int = 0,
+        odds_joined_rows: int = 0,
+        odds_missing_rows: int = 0,
+        odds_source_path: str = "",
     ) -> None:
         if not paper_only:
             raise ValueError(
@@ -181,6 +250,10 @@ class P13StrategySimulationRunner:
         self._date_start = date_start
         self._date_end = date_end
         self._paper_only = paper_only
+        self._odds_join_coverage = odds_join_coverage
+        self._odds_joined_rows = odds_joined_rows
+        self._odds_missing_rows = odds_missing_rows
+        self._odds_source_path = odds_source_path
 
     @classmethod
     def from_oof_csv(
@@ -235,6 +308,65 @@ class P13StrategySimulationRunner:
             date_start=date_start,
             date_end=date_end,
             paper_only=paper_only,
+        )
+
+    @classmethod
+    def from_joined_df(
+        cls,
+        joined_df: pd.DataFrame,
+        source_bss_oof: float,
+        source_model: str = "p13_walk_forward_logistic",
+        paper_only: bool = True,
+        odds_join_coverage: int = 0,
+        odds_joined_rows: int = 0,
+        odds_missing_rows: int = 0,
+        odds_source_path: str = "",
+    ) -> "P13StrategySimulationRunner":
+        """Construct runner from a DataFrame that already has odds columns joined.
+
+        Use this for P15 odds-aware simulation.  The DataFrame must have the
+        standard OOF columns (y_true, p_oof, fold_id) and optionally:
+        odds_join_status, p_market, odds_decimal_home, edge.
+
+        Parameters
+        ----------
+        joined_df : pd.DataFrame
+            OOF DataFrame enriched by MarketOddsJoinAdapter.
+        source_bss_oof : float
+            BSS from P13 OOF report (must be > 0).
+        odds_join_coverage : int
+            Number of rows with market odds joined.
+        odds_joined_rows : int
+            Alias for coverage (may differ if partial).
+        odds_missing_rows : int
+            Number of rows where odds were absent.
+        odds_source_path : str
+            Path of the odds source file used.
+        """
+        missing = [c for c in _REQUIRED_OOF_COLUMNS if c not in joined_df.columns]
+        if missing:
+            raise ValueError(
+                f"joined_df missing required columns: {missing}. "
+                f"Available: {list(joined_df.columns)}"
+            )
+
+        df = joined_df.dropna(subset=list(_REQUIRED_OOF_COLUMNS)).reset_index(drop=True)
+        if len(df) == 0:
+            raise ValueError("joined_df has 0 usable rows after dropping NaN.")
+
+        rows = _prepare_rows_with_odds(df)
+
+        return cls(
+            rows=rows,
+            source_bss_oof=source_bss_oof,
+            source_model=source_model,
+            date_start="OOF_FOLD_DERIVED",
+            date_end="OOF_FOLD_DERIVED",
+            paper_only=paper_only,
+            odds_join_coverage=odds_join_coverage,
+            odds_joined_rows=odds_joined_rows,
+            odds_missing_rows=odds_missing_rows,
+            odds_source_path=odds_source_path,
         )
 
     # ── Policy runners ────────────────────────────────────────────────────────
@@ -429,6 +561,10 @@ class P13StrategySimulationRunner:
             market_odds_available=not all_market_absent,
             paper_only=True,
             generated_at_utc=datetime.now(tz=timezone.utc),
+            odds_join_coverage=self._odds_join_coverage,
+            odds_joined_rows=self._odds_joined_rows,
+            odds_missing_rows=self._odds_missing_rows,
+            odds_source_path=self._odds_source_path,
         )
 
 
@@ -453,6 +589,10 @@ class SimulationSummary:
         market_odds_available: bool,
         paper_only: bool,
         generated_at_utc: datetime,
+        odds_join_coverage: int = 0,
+        odds_joined_rows: int = 0,
+        odds_missing_rows: int = 0,
+        odds_source_path: str = "",
     ) -> None:
         if spine_gate not in _VALID_SPINE_GATES:
             raise ValueError(
@@ -469,6 +609,10 @@ class SimulationSummary:
         self.market_odds_available = market_odds_available
         self.paper_only = paper_only
         self.generated_at_utc = generated_at_utc
+        self.odds_join_coverage = odds_join_coverage
+        self.odds_joined_rows = odds_joined_rows
+        self.odds_missing_rows = odds_missing_rows
+        self.odds_source_path = odds_source_path
 
     def to_summary_dict(self) -> dict[str, Any]:
         """Produce a deterministic summary dict (no timestamps in core metrics)."""
@@ -502,8 +646,12 @@ class SimulationSummary:
             "p14_note": (
                 "P14 proves simulation spine activation, not betting profitability."
                 if not self.market_odds_available
-                else "Spine activated with market odds."
+                else "P15 odds-aware simulation: spine activated with market odds."
             ),
+            "odds_join_coverage": self.odds_join_coverage,
+            "odds_joined_rows": self.odds_joined_rows,
+            "odds_missing_rows": self.odds_missing_rows,
+            "odds_source_path": self.odds_source_path,
             "per_policy": per_policy,
         }
 
