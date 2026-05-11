@@ -234,6 +234,19 @@ def run_oof(args: argparse.Namespace) -> None:
         json.dump(report, f, indent=2, default=str)
     print(f"[P13] Written: {json_path}", file=sys.stderr)
 
+    # Predictions CSV (deterministic; no wall-clock timestamps)
+    csv_path = output_dir / "oof_predictions.csv"
+    oof_out = oof.copy()
+    oof_out["source_model"] = "p13_walk_forward_logistic"
+    oof_out["source_bss_oof"] = round(bss, 6)
+    oof_out["paper_only"] = True
+    # Convert datetime columns to ISO strings for CSV portability
+    for col in ["train_window_start", "train_window_end", "predict_window_start", "predict_window_end"]:
+        if col in oof_out.columns:
+            oof_out[col] = oof_out[col].astype(str)
+    oof_out.to_csv(csv_path, index=False)
+    print(f"[P13] Written: {csv_path}", file=sys.stderr)
+
     # Markdown report
     fold_rows = "\n".join(
         f"| {m['fold_id']} | {m['train_size']} | {m['predict_size']} "
