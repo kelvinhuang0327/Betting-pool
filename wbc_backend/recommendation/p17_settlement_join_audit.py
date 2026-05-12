@@ -32,6 +32,14 @@ _MEDIUM_COVERAGE = 0.50
 JOIN_METHOD_GAME_ID = "game_id"
 JOIN_METHOD_POSITION = "position"
 JOIN_METHOD_NONE = "none"
+JOIN_METHOD_ROW_IDX = "row_idx"
+
+# P19 explicit join method constants (for enriched ledger)
+JOIN_BY_GAME_ID = "JOIN_BY_GAME_ID"
+JOIN_BY_ROW_IDX = "JOIN_BY_ROW_IDX"
+JOIN_BLOCKED_MISSING_IDENTITY = "JOIN_BLOCKED_MISSING_IDENTITY"
+JOIN_BLOCKED_DUPLICATE_IDENTITY = "JOIN_BLOCKED_DUPLICATE_IDENTITY"
+JOIN_BLOCKED_UNSAFE_ALIGNMENT = "JOIN_BLOCKED_UNSAFE_ALIGNMENT"
 
 
 def audit_recommendation_to_p15_join(
@@ -210,3 +218,130 @@ def identify_duplicate_game_ids(joined_df: pd.DataFrame) -> list[str]:
         return []
     dup_mask = joined_df["game_id"].duplicated(keep=False)
     return joined_df.loc[dup_mask, "game_id"].unique().tolist()
+
+
+def audit_recommendation_to_enriched_p15_join(
+    recommendation_rows_df: pd.DataFrame,
+    enriched_p15_df: pd.DataFrame,
+) -> tuple[pd.DataFrame, SettlementJoinResult]:
+    """
+    Join recommendation rows to a P19-enriched P15 ledger.
+
+    Supports enriched ledger with game_id (from P19 identity repair).
+    Returns (joined_df, SettlementJoinResult) using explicit P19 join methods.
+
+    Behaviour:
+    - If enriched_p15_df has 'identity_enrichment_status' that is a blocked status →
+      emits JOIN_BLOCKED_MISSING_IDENTITY / JOIN_BLOCKED_UNSAFE_ALIGNMENT.
+    - If enriched_p15_df has game_id with no duplicates → JOIN_BY_GAME_ID.
+    - Falls back to original audit_recommendation_to_p15_join behaviour.
+    """
+    from wbc_backend.recommendation.p19_p15_ledger_identity_enricher import (
+        IDENTITY_BLOCKED_UNSAFE_ALIGNMENT,
+        IDENTITY_BLOCKED_MISSING_GAME_ID_SOURCE,
+        IDENTITY_BLOCKED_DUPLICATE_GAME_ID,
+    )
+
+    rec_df = recommendation_rows_df.copy()
+    enriched_df = enriched_p15_df.copy()
+    n_rec = len(rec_df)
+    risk_notes: list[str] = []
+
+    # Check enrichment status
+    enrichment_status: str | None = None
+    if "identity_enrichment_status" in enriched_df.columns and len(enriched_df) > 0:
+        enrichment_status = str(enriched_df["identity_enrichment_status"].iloc[0])
+
+    # Blocked enrichment → cannot join
+    if enrichment_status in {
+        IDENTITY_BLOCKED_UNSAFE_ALIGNMENT,
+        IDENTITY_BLOCKED_MISSING_GAME_ID_SOURCE,
+        IDENTITY_BLOCKED_DUPLICATE_GAME_ID,
+    }:
+        if enrichment_status == IDENTITY_BLOCKED_UNSAFE_ALIGNMENT:
+            join_method_p19 = JOIN_BLOCKED_UNSAFE_ALIGNMENT
+            risk_notes.append("P19 identity enrichment blocked: unsafe positional alignment")
+        elif enrichment_status == IDENTITY_BLOCKED_DUPLICATE_GAME_ID:
+            join_method_p19 = JOIN_BLOCKED_DUPLICATE_IDENTITY
+            risk_notes.append("P19 identity enrichment blocked: duplicate game_id in source")
+        else:
+            join_method_p19 = JOIN_BLOCKED_MISSING_IDENTITY
+            risk_notes.append("P19 identity enrichment blocked: missing game_id source")
+
+        return rec_df.copy(), SettlementJoinResult(
+            n_recommendations=n_rec,
+            n_joined=0,
+            n_unmatched=n_rec,
+            n_duplicate_game_ids=0,
+            join_coverage=0.0,
+            join_method=join_method_p19,
+            join_quality="NONE",
+            risk_notes=risk_notes,
+        )
+
+    # Check game_id availability in enriched ledger
+    enriched_has_game_id = (
+        "game_id" in enriched_df.columns and enriched_df["game_id"].notna().any()
+    )
+
+    if not enriched_has_game_id:
+        risk_notes.append("enriched_p15_df missing 'game_id' column — cannot join")
+        return rec_df.copy(), SettlementJoinResult(
+            n_recommendations=n_rec,
+            n_joined=0,
+            n_unmatched=n_rec,
+            n_duplicate_game_ids=0,
+            join_coverage=0.0,
+            join_method=JOIN_BLOCKED_MISSING_IDENTITY,
+            join_quality="NONE",
+            risk_notes=risk_notes,
+        )
+
+    # Check for duplicates in enriched ledger game_ids
+    # Use one row per game_id (dedup — enriched ledger has 4 policies per row_idx)
+    enriched_dedup = enriched_df.drop_duplicates(subset=["game_id"], keep="first")
+
+    # Build p15 columns for join
+    p15_cols_for_join = [
+        c for c in ["game_id", "y_true", "fold_id", "p_market", "decimal_odds",
+                     "row_idx", "reason"]
+        if c in enriched_dedup.columns
+    ]
+    p15_sub = enriched_dedup[p15_cols_for_join].rename(
+        columns={c: f"p15_{c}" for c in p15_cols_for_join if c != "game_id"}
+    )
+
+    joined_df = rec_df.merge(p15_sub, on="game_id", how="left")
+    n_joined = int(joined_df["game_id"].isin(enriched_dedup["game_id"]).sum())
+
+    dup_count = _count_duplicate_game_ids_in_rec(rec_df)
+    if dup_count > 0:
+        risk_notes.append(
+            f"Recommendation rows contain {dup_count} duplicate game_id values"
+        )
+
+    n_unmatched = n_rec - n_joined
+    join_coverage = n_joined / n_rec if n_rec > 0 else 0.0
+
+    if join_coverage >= _HIGH_COVERAGE:
+        join_quality = "HIGH"
+    elif join_coverage >= _MEDIUM_COVERAGE:
+        join_quality = "MEDIUM"
+        risk_notes.append(f"Join coverage {join_coverage:.1%} below HIGH threshold")
+    elif join_coverage > 0:
+        join_quality = "LOW"
+        risk_notes.append(f"Join coverage {join_coverage:.1%} is very low")
+    else:
+        join_quality = "NONE"
+
+    result = SettlementJoinResult(
+        n_recommendations=n_rec,
+        n_joined=n_joined,
+        n_unmatched=n_unmatched,
+        n_duplicate_game_ids=dup_count,
+        join_coverage=join_coverage,
+        join_method=JOIN_BY_GAME_ID,
+        join_quality=join_quality,
+        risk_notes=risk_notes,
+    )
+    return joined_df, result
