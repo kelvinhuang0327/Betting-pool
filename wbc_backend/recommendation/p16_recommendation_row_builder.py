@@ -185,3 +185,150 @@ def build_all_rows(
         build_recommendation_row(r, g, risk_profile, selected_edge_threshold, max_stake_cap)
         for r, g in zip(input_rows, gate_results)
     ]
+
+
+# ── P16.6 extensions (P18 policy gate re-run) ─────────────────────────────────
+
+CREATED_FROM_P16_6 = "P16_6_RECOMMENDATION_GATE_RERUN_WITH_P18_POLICY"
+STRATEGY_POLICY_P16_6 = "capped_kelly_p18"
+
+
+@dataclass
+class P16_6RecommendationRow:
+    """Extended recommendation row with P18 policy metadata (P16.6 re-run)."""
+
+    # ── Core row fields ────────────────────────────────────────────────────────
+    recommendation_id: str
+    game_id: str
+    date: str
+    side: str
+    p_model: float | None
+    p_market: float | None
+    edge: float | None
+    odds_decimal: float | None
+    paper_stake_fraction: float
+    strategy_policy: str
+    gate_decision: str
+    gate_reason: str
+    source_model: str
+    source_bss_oof: float
+    odds_join_status: str
+    paper_only: bool
+    production_ready: bool
+    created_from: str
+    selected_edge_threshold: float
+
+    # ── P18 policy fields ──────────────────────────────────────────────────────
+    p18_policy_id: str
+    p18_edge_threshold: float
+    p18_max_stake_cap: float
+    p18_kelly_fraction: float
+    p18_odds_decimal_max: float
+    p18_policy_max_drawdown_pct: float
+    p18_policy_sharpe_ratio: float
+    p18_policy_n_bets: int
+    p18_policy_roi_ci_low_95: float
+    p18_policy_roi_ci_high_95: float
+
+    def to_dict(self) -> dict:
+        return {
+            "recommendation_id": self.recommendation_id,
+            "game_id": self.game_id,
+            "date": self.date,
+            "side": self.side,
+            "p_model": self.p_model,
+            "p_market": self.p_market,
+            "edge": self.edge,
+            "odds_decimal": self.odds_decimal,
+            "paper_stake_fraction": self.paper_stake_fraction,
+            "strategy_policy": self.strategy_policy,
+            "gate_decision": self.gate_decision,
+            "gate_reason": self.gate_reason,
+            "source_model": self.source_model,
+            "source_bss_oof": self.source_bss_oof,
+            "odds_join_status": self.odds_join_status,
+            "paper_only": self.paper_only,
+            "production_ready": self.production_ready,
+            "created_from": self.created_from,
+            "selected_edge_threshold": self.selected_edge_threshold,
+            "p18_policy_id": self.p18_policy_id,
+            "p18_edge_threshold": self.p18_edge_threshold,
+            "p18_max_stake_cap": self.p18_max_stake_cap,
+            "p18_kelly_fraction": self.p18_kelly_fraction,
+            "p18_odds_decimal_max": self.p18_odds_decimal_max,
+            "p18_policy_max_drawdown_pct": self.p18_policy_max_drawdown_pct,
+            "p18_policy_sharpe_ratio": self.p18_policy_sharpe_ratio,
+            "p18_policy_n_bets": self.p18_policy_n_bets,
+            "p18_policy_roi_ci_low_95": self.p18_policy_roi_ci_low_95,
+            "p18_policy_roi_ci_high_95": self.p18_policy_roi_ci_high_95,
+        }
+
+
+def build_recommendation_row_p16_6(
+    row: P16InputRow,
+    gate: GateResult,
+    p18_policy: "P18SelectedPolicy",
+    stake: float,
+) -> P16_6RecommendationRow:
+    """Build a single P16.6 recommendation row."""
+    edge = row.edge
+    side = "HOME" if (edge is not None and edge >= 0) else "AWAY"
+
+    rec_id = _make_recommendation_id(
+        row.game_id, row.date, gate.decision, p18_policy.edge_threshold
+    )
+
+    return P16_6RecommendationRow(
+        recommendation_id=rec_id,
+        game_id=row.game_id,
+        date=row.date,
+        side=side,
+        p_model=row.p_model,
+        p_market=row.p_market,
+        edge=row.edge,
+        odds_decimal=row.odds_decimal,
+        paper_stake_fraction=stake,
+        strategy_policy=STRATEGY_POLICY_P16_6,
+        gate_decision=gate.decision,
+        gate_reason=gate.reason_code,
+        source_model=row.source_model,
+        source_bss_oof=row.source_bss_oof,
+        odds_join_status=row.odds_join_status,
+        paper_only=row.paper_only,
+        production_ready=row.production_ready,
+        created_from=CREATED_FROM_P16_6,
+        selected_edge_threshold=p18_policy.edge_threshold,
+        p18_policy_id=p18_policy.selected_policy_id,
+        p18_edge_threshold=p18_policy.edge_threshold,
+        p18_max_stake_cap=p18_policy.max_stake_cap,
+        p18_kelly_fraction=p18_policy.kelly_fraction,
+        p18_odds_decimal_max=p18_policy.odds_decimal_max,
+        p18_policy_max_drawdown_pct=p18_policy.max_drawdown_pct,
+        p18_policy_sharpe_ratio=p18_policy.sharpe_ratio,
+        p18_policy_n_bets=p18_policy.n_bets,
+        p18_policy_roi_ci_low_95=p18_policy.roi_ci_low_95,
+        p18_policy_roi_ci_high_95=p18_policy.roi_ci_high_95,
+    )
+
+
+def build_all_rows_p16_6(
+    input_rows: list[P16InputRow],
+    gate_results: list[GateResult],
+    stakes: list[float],
+    p18_policy: "P18SelectedPolicy",
+) -> list[P16_6RecommendationRow]:
+    """
+    Build all P16.6 recommendation rows from parallel input_rows + gate_results + stakes.
+    """
+    assert len(input_rows) == len(gate_results) == len(stakes), (
+        "input_rows, gate_results, and stakes must have the same length"
+    )
+    return [
+        build_recommendation_row_p16_6(r, g, p18_policy, s)
+        for r, g, s in zip(input_rows, gate_results, stakes)
+    ]
+
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from wbc_backend.recommendation.p16_p18_policy_loader import P18SelectedPolicy

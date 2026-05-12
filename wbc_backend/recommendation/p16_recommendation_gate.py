@@ -39,6 +39,18 @@ BLOCKED_DRAWDOWN = "P16_BLOCKED_DRAWDOWN_EXCEEDS_LIMIT"
 BLOCKED_SHARPE = "P16_BLOCKED_SHARPE_BELOW_FLOOR"
 BLOCKED_UNKNOWN = "P16_BLOCKED_UNKNOWN"
 
+# ── P16.6 reason codes (P18-policy gate re-run) ───────────────────────────────
+
+P16_6_ELIGIBLE = "P16_6_ELIGIBLE_PAPER_RECOMMENDATION"
+P16_6_BLOCKED_INVALID_P18_POLICY = "P16_6_BLOCKED_INVALID_P18_POLICY"
+P16_6_BLOCKED_ODDS_ABOVE_POLICY_MAX = "P16_6_BLOCKED_ODDS_ABOVE_POLICY_MAX"
+P16_6_BLOCKED_EDGE_BELOW_P18 = "P16_6_BLOCKED_EDGE_BELOW_P18_THRESHOLD"
+P16_6_BLOCKED_POLICY_RISK_INVALID = "P16_6_BLOCKED_POLICY_RISK_PROFILE_INVALID"
+P16_6_BLOCKED_PRODUCTION = "P16_6_BLOCKED_PRODUCTION_NOT_ALLOWED"
+P16_6_BLOCKED_NOT_PAPER_ONLY = "P16_6_BLOCKED_NOT_PAPER_ONLY"
+P16_6_BLOCKED_INVALID_STAKE = "P16_6_BLOCKED_INVALID_STAKE"
+P16_6_BLOCKED_UNKNOWN = "P16_6_BLOCKED_UNKNOWN"
+
 # ── Gate result ───────────────────────────────────────────────────────────────
 
 
@@ -207,3 +219,135 @@ def compute_paper_stake(
     kelly = max(0.0, kelly)
 
     return float(min(kelly, max_stake_cap))
+
+
+# ── P16.6 gate functions (uses P18 selected policy) ───────────────────────────
+
+def apply_gate_with_p18_policy(
+    row: "P16InputRow",
+    p18_policy: "P18SelectedPolicy",
+) -> GateResult:
+    """
+    Apply P16.6 per-row gate using P18 selected policy parameters.
+
+    Checks (in order):
+      1. production_ready must be False
+      2. paper_only must be True
+      3. odds_join_status must be JOINED
+      4. p_model and p_market must be valid probabilities
+      5. odds_decimal must be valid (> 1.0)
+      6. odds_decimal <= p18_policy.odds_decimal_max
+      7. edge >= p18_policy.edge_threshold
+      8. p18_policy risk: max_drawdown_pct <= 25.0
+      9. p18_policy risk: sharpe_ratio >= 0.0
+    """
+    # production_ready must be False
+    if row.production_ready:
+        return GateResult(
+            decision=P16_6_BLOCKED_PRODUCTION,
+            reason_code=P16_6_BLOCKED_PRODUCTION,
+            passed=False,
+        )
+
+    # paper_only must be True
+    if not row.paper_only:
+        return GateResult(
+            decision=P16_6_BLOCKED_NOT_PAPER_ONLY,
+            reason_code=P16_6_BLOCKED_NOT_PAPER_ONLY,
+            passed=False,
+        )
+
+    # odds_join_status == JOINED
+    if row.odds_join_status != "JOINED":
+        return GateResult(
+            decision=P16_6_BLOCKED_UNKNOWN,
+            reason_code=P16_6_BLOCKED_UNKNOWN,
+            passed=False,
+        )
+
+    # Probability validity
+    if not _is_valid_probability(row.p_model) or not _is_valid_probability(row.p_market):
+        return GateResult(
+            decision=P16_6_BLOCKED_UNKNOWN,
+            reason_code=P16_6_BLOCKED_UNKNOWN,
+            passed=False,
+        )
+
+    # Odds validity
+    if not _is_valid_odds(row.odds_decimal):
+        return GateResult(
+            decision=P16_6_BLOCKED_UNKNOWN,
+            reason_code=P16_6_BLOCKED_UNKNOWN,
+            passed=False,
+        )
+
+    # Odds cap from P18 policy
+    assert row.odds_decimal is not None  # validated above
+    if row.odds_decimal > p18_policy.odds_decimal_max:
+        return GateResult(
+            decision=P16_6_BLOCKED_ODDS_ABOVE_POLICY_MAX,
+            reason_code=P16_6_BLOCKED_ODDS_ABOVE_POLICY_MAX,
+            passed=False,
+        )
+
+    # Edge threshold from P18 policy
+    edge = row.edge if row.edge is not None else (row.p_model - row.p_market)  # type: ignore[operator]
+    if edge < p18_policy.edge_threshold:
+        return GateResult(
+            decision=P16_6_BLOCKED_EDGE_BELOW_P18,
+            reason_code=P16_6_BLOCKED_EDGE_BELOW_P18,
+            passed=False,
+        )
+
+    # P18 risk profile checks
+    if p18_policy.max_drawdown_pct > 25.0:
+        return GateResult(
+            decision=P16_6_BLOCKED_POLICY_RISK_INVALID,
+            reason_code=P16_6_BLOCKED_POLICY_RISK_INVALID,
+            passed=False,
+        )
+    if p18_policy.sharpe_ratio < 0.0:
+        return GateResult(
+            decision=P16_6_BLOCKED_POLICY_RISK_INVALID,
+            reason_code=P16_6_BLOCKED_POLICY_RISK_INVALID,
+            passed=False,
+        )
+
+    return GateResult(
+        decision=P16_6_ELIGIBLE,
+        reason_code=P16_6_ELIGIBLE,
+        passed=True,
+    )
+
+
+def compute_paper_stake_p18(
+    row: "P16InputRow",
+    gate: GateResult,
+    p18_policy: "P18SelectedPolicy",
+) -> float:
+    """
+    Compute paper stake using P18 policy parameters.
+
+    Gate fail → 0.0
+    Gate pass → min(full_kelly * kelly_fraction, max_stake_cap)
+    """
+    if not gate.passed:
+        return 0.0
+
+    p = row.p_model
+    odds = row.odds_decimal
+    assert p is not None and odds is not None  # validated in gate
+
+    b = odds - 1.0
+    full_kelly = (p * b - (1.0 - p)) / b if b > 0.0 else 0.0
+    full_kelly = max(0.0, full_kelly)
+
+    stake = full_kelly * p18_policy.kelly_fraction
+    stake = min(stake, p18_policy.max_stake_cap)
+    return float(stake)
+
+
+# ── Type stubs (avoid circular imports) ──────────────────────────────────────
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from wbc_backend.recommendation.p16_p18_policy_loader import P18SelectedPolicy
