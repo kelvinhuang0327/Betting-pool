@@ -1,0 +1,55 @@
+{
+  "paper_only": true,
+  "production_ready": false,
+  "overall_p32_recommendation": "GO_PARTIAL_GAME_LOGS_ONLY",
+  "odds_license_resolved": false,
+  "game_logs_license_safe": true,
+  "candidates": [
+    {
+      "source_name": "Retrosheet 2024 Game Logs (gl2024)",
+      "source_type": "RAW_SECONDARY",
+      "expected_payload": "~2,430 regular-season game records with date, teams, final scores, starting pitchers, attendance. Fixed-width text, ~161 columns. NO betting odds included.",
+      "url": "https://www.retrosheet.org/gamelogs/index.html",
+      "provenance_status": "VERIFIED",
+      "license_status": "REQUIRES_ATTRIBUTION",
+      "acquisition_risk": "LOW",
+      "schema_gap": [
+        "closing_moneyline_home",
+        "closing_moneyline_away",
+        "run_line_spread",
+        "over_under"
+      ],
+      "recommended_decision": "GO_PARTIAL",
+      "notes": "gl2024.zip is publicly available for non-commercial research. Schema provides game outcomes and starting pitchers but no closing odds. A supplemental odds source (separate license) is required for full moneyline model training. P32 can proceed for game-log ingestion independently of odds resolution. Attribution required per Retrosheet terms: 'The information used here was obtained free of charge from and is copyrighted by Retrosheet.'"
+    },
+    {
+      "source_name": "MLB Stats API 2024 Schedule + Linescore",
+      "source_type": "RAW_SECONDARY",
+      "expected_payload": "2024 regular-season schedule (~2,430 games), game status, linescore (inning-by-inning runs), team abbreviations. JSON format. NO closing odds included.",
+      "url": "https://statsapi.mlb.com/api/v1/schedule?sportId=1&season=2024",
+      "provenance_status": "VERIFIED",
+      "license_status": "REQUIRES_ATTRIBUTION",
+      "acquisition_risk": "MEDIUM",
+      "schema_gap": [
+        "closing_moneyline_home",
+        "closing_moneyline_away",
+        "run_line_spread",
+        "over_under"
+      ],
+      "recommended_decision": "GO_PARTIAL",
+      "notes": "MLB Stats API provides game outcomes but no betting odds. Useful as a cross-validation source alongside Retrosheet gl2024. Risk: MLB may rate-limit; API schema changes between seasons require field-mapping validation. Not a source for odds — must be paired with a licensed odds provider for full moneyline model input. Medium risk due to potential schema drift; recommend pinning API version."
+    },
+    {
+      "source_name": "2024 Closing Moneyline Odds (Provider TBD)",
+      "source_type": "RAW_PRIMARY_CANDIDATE",
+      "expected_payload": "Pre-game and closing moneyline odds for ~2,430 MLB games in 2024. Required columns: closing_moneyline_home, closing_moneyline_away, game_date, home_team, away_team.",
+      "url": "",
+      "provenance_status": "UNRESOLVED",
+      "license_status": "UNKNOWN",
+      "acquisition_risk": "HIGH",
+      "schema_gap": [],
+      "recommended_decision": "PENDING_LICENSE",
+      "notes": "CRITICAL BLOCKER for full GO decision. Three candidate providers evaluated:\n  1. The Odds API (historical tier):      https://the-odds-api.com/ — paid subscription;      non-commercial research use unclear; requires direct license inquiry.\n  2. OddsPortal: scraping prohibited by TOS; HIGH legal risk.\n  3. Pinnacle historical API: commercial license required;      research exception not documented.\nACTION REQUIRED before P32: Select provider, obtain license confirmation in writing, record in data/p31_provenance_audit.json. Until resolved, P32 can only ingest game logs (GO_PARTIAL). Full GO requires this blocker cleared."
+    }
+  ]
+}
