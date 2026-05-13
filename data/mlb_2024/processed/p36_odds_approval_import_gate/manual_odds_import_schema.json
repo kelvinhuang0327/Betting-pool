@@ -1,0 +1,43 @@
+{
+  "required_columns": [
+    "game_id",
+    "game_date",
+    "home_team",
+    "away_team",
+    "p_market",
+    "odds_decimal",
+    "sportsbook",
+    "market_type",
+    "closing_timestamp",
+    "source_odds_ref",
+    "license_ref"
+  ],
+  "forbidden_columns": [
+    "y_true",
+    "final_score",
+    "home_score",
+    "away_score",
+    "winner",
+    "outcome",
+    "result",
+    "run_diff",
+    "total_runs",
+    "game_result"
+  ],
+  "allowed_market_types": [
+    "moneyline",
+    "ml",
+    "money_line",
+    "1x2",
+    "h2h"
+  ],
+  "p_market_range": [
+    0.0,
+    1.0
+  ],
+  "odds_decimal_min": 1.0,
+  "paper_only": true,
+  "production_ready": false,
+  "notes": "Manual licensed odds import only. No automated scraping or downloading. File must be obtained by the researcher after explicit ToS review. Raw odds files must NOT be committed to the repository.",
+  "season": 2024
+}

@@ -1,0 +1,20 @@
+{
+  "approval_status": "APPROVAL_MISSING",
+  "approval_record_found": false,
+  "all_fields_present": false,
+  "internal_research_allowed": false,
+  "allowed_use_valid": false,
+  "approved_by_present": false,
+  "approved_at_present": false,
+  "source_file_path_present": false,
+  "redistribution_allowed": false,
+  "redistribution_risk_note": "No approval record — redistribution status unknown.",
+  "approval_blocker_reason": "No approval record was provided.",
+  "manual_import_file_provided": false,
+  "manual_import_schema_valid": false,
+  "manual_import_overall_valid": false,
+  "paper_only": true,
+  "production_ready": false,
+  "season": 2024,
+  "generated_at": "2026-05-13T05:31:49.389146+00:00"
+}

@@ -1,0 +1,17 @@
+{
+  "file_provided": false,
+  "schema_valid": false,
+  "coverage_valid": false,
+  "leakage_clean": false,
+  "value_ranges_valid": false,
+  "row_count": 0,
+  "game_count": 0,
+  "issues": [
+    "No manual odds file provided."
+  ],
+  "paper_only": true,
+  "production_ready": false,
+  "season": 2024,
+  "status": "NO_FILE",
+  "generated_at": "2026-05-13T05:31:49.389146+00:00"
+}
