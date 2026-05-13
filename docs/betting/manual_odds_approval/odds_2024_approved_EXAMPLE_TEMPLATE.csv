@@ -1,0 +1,2 @@
+game_id,game_date,home_team,away_team,p_market,odds_decimal,sportsbook,market_type,closing_timestamp,source_odds_ref,license_ref
+EXAMPLE_GAME_ID,EXAMPLE_DATE,EXAMPLE_HOME,EXAMPLE_AWAY,0.52,1.92,EXAMPLE_SPORTSBOOK,moneyline,EXAMPLE_ISO8601_TIMESTAMP,EXAMPLE_SOURCE_REF,EXAMPLE_LICENSE_REF

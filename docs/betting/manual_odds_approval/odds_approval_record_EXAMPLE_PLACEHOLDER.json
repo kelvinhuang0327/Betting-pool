@@ -1,0 +1,21 @@
+{
+  "_comment": "EXAMPLE PLACEHOLDER — Replace ALL PLACEHOLDER_* values before use. Do NOT commit filled version to git.",
+  "_usage": "Copy this file, fill in all fields, place at data/mlb_2024/manual_import/odds_approval_record.json",
+  "provider_name": "PLACEHOLDER_PROVIDER_NAME",
+  "source_name": "PLACEHOLDER_SOURCE_DATASET_NAME",
+  "source_url_or_reference": "PLACEHOLDER_URL_OR_CITATION",
+  "license_terms_summary": "PLACEHOLDER_LICENSE_SUMMARY — e.g. Internal research use only, non-commercial, no redistribution",
+  "allowed_use": "internal_research",
+  "redistribution_allowed": false,
+  "attribution_required": true,
+  "internal_research_allowed": true,
+  "commercial_use_allowed": false,
+  "approved_by": "PLACEHOLDER_APPROVER_NAME",
+  "approved_at": "PLACEHOLDER_ISO8601_DATETIME",
+  "approval_scope": "mlb_2024_season",
+  "source_file_expected_path": "data/mlb_2024/manual_import/odds_2024_approved.csv",
+  "checksum_required": true,
+  "checksum_sha256": "PLACEHOLDER_SHA256_HASH_OF_CSV_FILE",
+  "paper_only": true,
+  "production_ready": false
+}

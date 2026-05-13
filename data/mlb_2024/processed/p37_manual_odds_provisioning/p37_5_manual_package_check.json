@@ -1,0 +1,17 @@
+{
+  "p37_5_status": "P37_5_MANUAL_ODDS_PACKAGE_MISSING",
+  "paper_only": true,
+  "production_ready": false,
+  "raw_odds_commit_allowed": false,
+  "season": 2024,
+  "approval_record_exists": false,
+  "manual_odds_exists": false,
+  "approval_record_path": "data/mlb_2024/manual_import/odds_approval_record.json",
+  "manual_odds_path": "data/mlb_2024/manual_import/odds_2024_approved.csv",
+  "validation": {
+    "dry_run_attempted": false
+  },
+  "exit_code": 1,
+  "generated_at": "2026-05-13T06:49:10.900860+00:00",
+  "next_action": "Provision both manual files at data/mlb_2024/manual_import/ per the P37.5 Operator Checklist and Runbook."
+}
