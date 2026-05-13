@@ -1,0 +1,107 @@
+{
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "generated_at": "2026-05-13T05:01:07.882832+00:00",
+  "options": [
+    {
+      "option_id": "pred_r01",
+      "source_name": "Retrain 2024 OOF from P32 gl2024 features",
+      "source_type": "oof_rebuild",
+      "acquisition_method": "Train XGBoost/LightGBM with k-fold OOF on P32 Retrosheet game log features. Features engineered from gl2024.txt (2,429 rows). Model trained on (team, pitcher, park, run-environment) features available before each game. p_oof = OOF probability, NOT inferred from y_true.",
+      "expected_columns": [
+        "game_id",
+        "game_date",
+        "home_team",
+        "away_team",
+        "p_oof",
+        "model_version",
+        "fold_id",
+        "source_prediction_ref",
+        "generated_without_y_true"
+      ],
+      "missing_columns": [],
+      "provenance_status": "p32_verified",
+      "license_status": "internal_research",
+      "leakage_risk": "none",
+      "implementation_risk": "medium",
+      "estimated_coverage": 0.9995884773662551,
+      "paper_only": true,
+      "production_ready": false,
+      "status": "OPTION_READY_FOR_IMPLEMENTATION_PLAN",
+      "blocker_if_skipped": "No calibrated 2024 prediction probability; EV analysis impossible.",
+      "notes": "P32 game logs: 2429 rows, coverage=100.0%. Requires: feature engineering pipeline, OOF model training, leakage audit before use."
+    },
+    {
+      "option_id": "pred_r02",
+      "source_name": "External 2024 prediction CSV import",
+      "source_type": "external_import",
+      "acquisition_method": "Manual provision of externally generated CSV",
+      "expected_columns": [
+        "game_id",
+        "game_date",
+        "home_team",
+        "away_team",
+        "p_oof",
+        "model_version",
+        "fold_id",
+        "source_prediction_ref",
+        "generated_without_y_true"
+      ],
+      "missing_columns": [
+        "p_oof",
+        "model_version",
+        "fold_id",
+        "source_prediction_ref"
+      ],
+      "provenance_status": "not_available",
+      "license_status": "unknown",
+      "leakage_risk": "medium",
+      "implementation_risk": "medium",
+      "estimated_coverage": 0.0,
+      "paper_only": true,
+      "production_ready": false,
+      "status": "OPTION_REQUIRES_MANUAL_APPROVAL",
+      "blocker_if_skipped": "No external prediction file found in P33 scan.",
+      "notes": "Requires manual provision of a verified 2024 prediction CSV with provenance, schema, and leakage documentation."
+    },
+    {
+      "option_id": "pred_r03",
+      "source_name": "No prediction source available",
+      "source_type": "blocker",
+      "acquisition_method": "none",
+      "expected_columns": [
+        "game_id",
+        "game_date",
+        "home_team",
+        "away_team",
+        "p_oof",
+        "model_version",
+        "fold_id",
+        "source_prediction_ref",
+        "generated_without_y_true"
+      ],
+      "missing_columns": [
+        "game_id",
+        "game_date",
+        "home_team",
+        "away_team",
+        "p_oof",
+        "model_version",
+        "fold_id",
+        "source_prediction_ref",
+        "generated_without_y_true"
+      ],
+      "provenance_status": "blocked",
+      "license_status": "blocked",
+      "leakage_risk": "none",
+      "implementation_risk": "high",
+      "estimated_coverage": 0.0,
+      "paper_only": true,
+      "production_ready": false,
+      "status": "OPTION_BLOCKED_PROVENANCE",
+      "blocker_if_skipped": "Without a verified prediction source the P34 plan cannot proceed to P35.",
+      "notes": "Explicit blocker. Must be resolved before EV analysis or Kelly position sizing can be performed."
+    }
+  ]
+}

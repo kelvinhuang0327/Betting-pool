@@ -1,0 +1,20 @@
+{
+  "gate": "P34_DUAL_SOURCE_ACQUISITION_PLAN_READY",
+  "season": 2024,
+  "prediction_path_status": "OPTION_READY_FOR_IMPLEMENTATION_PLAN",
+  "odds_path_status": "OPTION_REQUIRES_LICENSE_REVIEW",
+  "license_risk": "Odds acquisition path requires license review before data can be downloaded. Do NOT download or use odds until ToS is confirmed.",
+  "blocker_reason": "",
+  "paper_only": true,
+  "production_ready": false,
+  "next_phase": "P35_DUAL_SOURCE_IMPORT_VALIDATION",
+  "artifacts": [
+    "data/mlb_2024/processed/p34_dual_source_acquisition/prediction_acquisition_options.json",
+    "data/mlb_2024/processed/p34_dual_source_acquisition/odds_acquisition_options.json",
+    "data/mlb_2024/processed/p34_dual_source_acquisition/dual_source_acquisition_plan.json",
+    "data/mlb_2024/processed/p34_dual_source_acquisition/dual_source_acquisition_plan.md",
+    "data/mlb_2024/processed/p34_dual_source_acquisition/prediction_import_template.csv",
+    "data/mlb_2024/processed/p34_dual_source_acquisition/odds_import_template.csv",
+    "data/mlb_2024/processed/p34_dual_source_acquisition/joined_input_validation_rules.json"
+  ]
+}

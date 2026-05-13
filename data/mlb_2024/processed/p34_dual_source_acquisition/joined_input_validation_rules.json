@@ -1,0 +1,106 @@
+{
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "description": "Validation rules for the P35 2024 joined input. All rules must pass before the joined input is certified.",
+  "required_fields": {
+    "prediction": [
+      "game_id",
+      "game_date",
+      "home_team",
+      "away_team",
+      "p_oof",
+      "model_version",
+      "fold_id",
+      "source_prediction_ref",
+      "generated_without_y_true"
+    ],
+    "odds": [
+      "game_id",
+      "game_date",
+      "home_team",
+      "away_team",
+      "p_market",
+      "odds_decimal",
+      "sportsbook",
+      "market_type",
+      "closing_timestamp",
+      "source_odds_ref",
+      "license_ref"
+    ]
+  },
+  "field_rules": [
+    {
+      "field": "game_id",
+      "rule": "required",
+      "description": "game_id must be present and non-null for every row."
+    },
+    {
+      "field": "game_date",
+      "rule": "required",
+      "description": "game_date must be present and parseable as a date."
+    },
+    {
+      "field": "p_oof",
+      "rule": "range_inclusive",
+      "min": 0.0,
+      "max": 1.0,
+      "description": "p_oof must be a calibrated probability in [0, 1]."
+    },
+    {
+      "field": "p_market",
+      "rule": "range_inclusive",
+      "min": 0.0,
+      "max": 1.0,
+      "description": "p_market must be an implied probability in [0, 1]."
+    },
+    {
+      "field": "odds_decimal",
+      "rule": "range_exclusive_min",
+      "min": 1.0,
+      "description": "odds_decimal must be > 1.0 (valid decimal odds)."
+    },
+    {
+      "field": "generated_without_y_true",
+      "rule": "must_be_true",
+      "description": "generated_without_y_true must be True for every prediction row. Predictions inferred from y_true are FORBIDDEN."
+    },
+    {
+      "field": "license_ref",
+      "rule": "required_non_empty",
+      "description": "license_ref must be populated for every odds row. Unlicensed odds are rejected."
+    },
+    {
+      "field": "source_odds_ref",
+      "rule": "required_non_empty",
+      "description": "source_odds_ref must identify the provenance of each odds row."
+    },
+    {
+      "field": "source_prediction_ref",
+      "rule": "required_non_empty",
+      "description": "source_prediction_ref must identify the model/version used."
+    }
+  ],
+  "global_rules": [
+    {
+      "rule": "no_production_ready",
+      "description": "production_ready must be False. The 2024 joined input is research-only."
+    },
+    {
+      "rule": "no_outcome_derived_odds",
+      "description": "Odds must NOT be reverse-engineered from game outcomes (y_true, scores, etc.)."
+    },
+    {
+      "rule": "no_y_true_derived_predictions",
+      "description": "Predictions (p_oof, p_model) must NOT be derived from final game scores or y_true labels."
+    },
+    {
+      "rule": "game_id_spine_match",
+      "description": "Every game_id in prediction and odds templates must match the P32 game identity spine (mlb_2024_game_identity.csv)."
+    },
+    {
+      "rule": "season_2024_only",
+      "description": "Only 2024 MLB regular-season games are permitted."
+    }
+  ]
+}

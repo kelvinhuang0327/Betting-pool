@@ -1,0 +1,13 @@
+{
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "generated_at": "2026-05-13T05:01:07.882832+00:00",
+  "best_prediction_option_id": "pred_r01",
+  "best_odds_option_id": "odds_r01",
+  "prediction_path_status": "OPTION_READY_FOR_IMPLEMENTATION_PLAN",
+  "odds_path_status": "OPTION_REQUIRES_LICENSE_REVIEW",
+  "plan_summary": "Best prediction option: [pred_r01] Retrain 2024 OOF from P32 gl2024 features (status=OPTION_READY_FOR_IMPLEMENTATION_PLAN, coverage=100%). Best odds option: [odds_r01] sportsbookreviewsonline.com 2024 MLB Closing Moneylines (status=OPTION_REQUIRES_LICENSE_REVIEW, license=personal_research_verify_tos). Schema templates written (prediction + odds import templates). PAPER_ONLY=True, PRODUCTION_READY=False.",
+  "gate": "P34_DUAL_SOURCE_ACQUISITION_PLAN_READY",
+  "license_risk": "Odds acquisition path requires license review before data can be downloaded. Do NOT download or use odds until ToS is confirmed."
+}
