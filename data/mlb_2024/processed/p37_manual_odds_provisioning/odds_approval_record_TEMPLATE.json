@@ -1,0 +1,19 @@
+{
+  "provider_name": "PLACEHOLDER_PROVIDER",
+  "source_name": "PLACEHOLDER_SOURCE",
+  "source_url_or_reference": "PLACEHOLDER_URL_OR_DOI",
+  "license_terms_summary": "PLACEHOLDER_LICENSE_SUMMARY",
+  "allowed_use": "internal_research",
+  "redistribution_allowed": false,
+  "attribution_required": true,
+  "internal_research_allowed": true,
+  "commercial_use_allowed": false,
+  "approved_by": "PLACEHOLDER_APPROVER",
+  "approved_at": "YYYY-MM-DDTHH:MM:SS+00:00",
+  "approval_scope": "mlb_2024_season",
+  "source_file_expected_path": "data/mlb_2024/manual_import/odds_2024_approved.csv",
+  "checksum_required": true,
+  "checksum_sha256": "PLACEHOLDER_SHA256",
+  "paper_only": true,
+  "production_ready": false
+}

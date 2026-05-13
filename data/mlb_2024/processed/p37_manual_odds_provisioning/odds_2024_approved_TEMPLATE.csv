@@ -1,0 +1,2 @@
+game_id,game_date,home_team,away_team,p_market,odds_decimal,sportsbook,market_type,closing_timestamp,source_odds_ref,license_ref
+EXAMPLE_20240401_NYA_BOS,2024-04-01,BOS,NYA,0.52,1.92,EXAMPLE_BOOK,moneyline,2024-04-01T17:00:00+00:00,EXAMPLE_SOURCE_REF,EXAMPLE_LICENSE_REF

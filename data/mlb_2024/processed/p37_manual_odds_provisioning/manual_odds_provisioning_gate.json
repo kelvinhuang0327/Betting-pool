@@ -1,0 +1,21 @@
+{
+  "gate": "P37_BLOCKED_APPROVAL_RECORD_MISSING",
+  "approval_record_status": "APPROVAL_MISSING",
+  "manual_odds_file_status": "MANUAL_ODDS_REQUIRED",
+  "raw_commit_risk": false,
+  "templates_written": true,
+  "paper_only": true,
+  "production_ready": false,
+  "raw_odds_commit_allowed": false,
+  "approval_record_commit_allowed": false,
+  "odds_artifact_ready": false,
+  "blocker_reason": "No approval record provided.",
+  "recommended_next_action": "Fill in odds_approval_record_TEMPLATE.json and place the completed file at data/mlb_2024/manual_import/odds_approval_record.json, then rerun P37 with --approval-record.",
+  "season": 2024,
+  "approval_issues": [
+    "No approval record path provided or file does not exist."
+  ],
+  "odds_issues": [
+    "No manual odds file path provided or file does not exist."
+  ]
+}
