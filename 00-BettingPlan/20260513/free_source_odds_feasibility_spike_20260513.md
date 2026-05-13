@@ -188,3 +188,56 @@ P37.5 must still be completed before any production or wagering use of odds data
 ---
 
 **Acceptance Marker:** FREE_SOURCE_ODDS_FEASIBILITY_SPIKE_20260513_READY
+
+---
+
+## 2026-05-13 P1 Candidate Investigation Update
+
+**Agent:** CTO Agent  
+**Session:** P1 — Free-Source Odds Community Dataset Investigation  
+**Status:** CANDIDATE_LICENSE_REVIEW_PENDING
+
+### Candidate Inventory Results
+
+7 candidates were evaluated for MLB 2022-2024 moneyline closing odds:
+
+| Category                    | Count | Sources                                             |
+|-----------------------------|-------|-----------------------------------------------------|
+| ACCEPTABLE_FOR_RESEARCH     | 3     | Retrosheet GL (join anchor), manual-import CSV, synthetic fixtures |
+| MANUAL_REVIEW_REQUIRED      | 2     | Kaggle US Sports Master (paid), AusSportsBetting.com |
+| REJECTED                    | 2     | SBRO (data stops 2021 + license), GitHub (no repos found) |
+
+**Key finding:** No freely downloadable, license-clear 2022-2024 MLB moneyline closing odds dataset was found automatically. The download path has been deferred (see `research_odds_dataset_download_deferred_20260513.md`).
+
+### Current Join Certification Status
+
+- `JOIN_CERT_RESEARCH_ODDS_READY`: **NOT achieved**
+- Blocker: No real-data odds source has been provisioned
+- Join certification plan is ready and waiting for data (see TRACK 4 artifact)
+- Fixture-only smoke test skeleton defined but not yet built
+
+### Artifacts Produced in P1 Session
+
+| Artifact                                                   | Status    | Acceptance Marker                                       |
+|------------------------------------------------------------|-----------|----------------------------------------------------------|
+| research_odds_candidate_inventory_20260513.md              | ✅ Created | RESEARCH_ODDS_CANDIDATE_INVENTORY_20260513_READY         |
+| research_odds_license_risk_matrix_20260513.md              | ✅ Created | RESEARCH_ODDS_LICENSE_RISK_MATRIX_20260513_READY         |
+| research_odds_manual_import_contract_20260513.md           | ✅ Created | RESEARCH_ODDS_MANUAL_IMPORT_CONTRACT_20260513_READY      |
+| research_odds_join_certification_plan_20260513.md          | ✅ Created | RESEARCH_ODDS_JOIN_CERTIFICATION_PLAN_20260513_READY     |
+| research_odds_dataset_download_deferred_20260513.md        | ✅ Created | RESEARCH_ODDS_DOWNLOAD_DEFERRED_20260513_READY           |
+| data/research_odds/ directory structure                    | ✅ Created | local_only/.gitkeep + fixtures/EXAMPLE_TEMPLATE.csv      |
+| .gitignore updated                                         | ✅ Updated | research_odds/local_only/ + mlb_2024/raw/                |
+
+### Required Human Actions to Unblock
+
+| Action                                           | Priority | Unblocks                          |
+|--------------------------------------------------|----------|-----------------------------------|
+| Manually check AusSportsBetting.com (ToS + 2024 data availability) | HIGH | Source-04 unlock |
+| Decide whether to purchase Kaggle full dataset   | MEDIUM   | Source-03b unlock                 |
+| Provide manual-import CSV from personal history  | HIGH     | Immediate P38A replay without waiting |
+
+### Licensed Odds Approval Reminder
+
+Even if a research-grade odds source is provisioned and join-certified, it does NOT replace the production-path licensed odds approval requirement. P37.5 licensed odds approval is still required before any production edge claims, live betting, or wagering decisions.
+
+**Acceptance Marker:** FREE_SOURCE_ODDS_P1_INVESTIGATION_UPDATE_20260513_READY
