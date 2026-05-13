@@ -1,289 +1,354 @@
 # MLB Betting Prediction and Strategy Optimization Roadmap
 
 **Original reset date:** 2026-05-10  
-**CTO execution update:** 2026-05-11 P12 completion  
-**Scope:** Betting-pool only  
-**Repo guard:** `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`  
-**Mission:** MLB game prediction mapped to Taiwan Sports Lottery recommendations, plus strategy simulation / optimization as the second core track.
+**CTO realignment date:** 2026-05-12  
+**Current repo guard:** `/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13`  
+**Current branch guard:** `p13-clean`  
+**Scope:** MLB prediction mapped to Taiwan Sports Lottery PAPER recommendations, plus strategy simulation / optimization.  
+**Current gate:** `P15_ODDS_AWARE_SIMULATION_READY`  
+**Production status:** `paper_only=True`, `production_ready=False`
 
-Marker: `CTO_MLB_P12_ABLATION_ROADMAP_20260511_READY`
-
-> **P12 UPDATE (2026-05-11):** Feature-family ablation and context safety audit are complete.
->
-> Key findings:
-> - Context safety: all 4 active pregame context files are PREGAME_SAFE (bullpen/rest/weather/starters). 76 files flagged POSTGAME_RISK are output artifacts, not pipeline inputs.
-> - Feature ranking: recent_form > starter > bullpen ≈ 0 > weather = 0 > rest (slightly negative).
-> - Best variant: `no_rest` — OOF BSS = -0.027537, OOF ECE = 0.042400.
-> - All 16 ablation variants remain BLOCKED_NEGATIVE_BSS.
-> - Root cause confirmed: the logit-correction base estimator cannot produce positive BSS regardless of feature combination.
-> - P13 direction: **Model Architecture Repair** — replace logit-correction pipeline with trained walk-forward ML model.
-> - Test baseline: 165 passed (48 P12 new + 117 P11 regression).
-> - P12 artifacts: `outputs/predictions/PAPER/2026-05-11/ablation/`, `outputs/predictions/PAPER/2026-05-11/context_safety/`
-> - P12 report: `00-BettingPlan/20260511/p12_feature_family_ablation_context_safety_report.md`
+Marker: `CTO_MLB_P15_P16_ROADMAP_REALIGNMENT_20260512_READY`
 
 ---
 
 ## 1. CTO Decision
 
-The roadmap now pivots from "add more features" to an evidence chain:
+The system has moved past the 2026-05-11 P12 blocker. The earlier roadmap said the next priority was model architecture repair because all P12 feature ablations had negative BSS. That is now stale.
+
+Current evidence:
+
+| Phase | Result | Product meaning |
+|---|---|---|
+| P13 | `P13_WALK_FORWARD_LOGISTIC_BASELINE_READY`; OOF BSS `+0.008253` | Model probability quality is now positive enough for PAPER simulation promotion. |
+| P14 | `P14_STRATEGY_SIMULATION_SPINE_READY`; simulation spine activated | Strategy policies can consume P13 OOF probabilities deterministically. |
+| P15 | `P15_ODDS_AWARE_SIMULATION_READY`; odds coverage `1575/1577 = 99.87%` | Historical market odds are joined, enabling edge / ROI / capped Kelly PAPER evidence. |
+
+Therefore the next most valuable optimization direction is:
 
 ```text
-context coverage -> OOF evidence -> simulation gate -> recommendation gate -> ablation/promotion decision
+P16 Recommendation Gate Re-evaluation
 ```
 
-P11 repaired the context coverage blocker, but it did not clear model promotion:
-
-- Context hit count: 2402/2402.
-- Context hit rate: 1.0 after metadata repair.
-- OOF BSS improved but remains negative: `-0.027668`.
-- OOF ECE improved: `0.042928`.
-- Strategy simulation is blocked: `BLOCKED_NEGATIVE_BSS`.
-- Recommendation pipeline correctly blocks issuance: `BLOCKED_SIMULATION_GATE`.
-- TSL live source remains unavailable / 403, so production remains NO-GO.
-
-The next most valuable optimization direction is **P12 feature-family ablation plus context safety audit**, not production launch and not another general roadmap document.
+P16 should consume the completed P13 + P15 artifacts and determine whether the MLB PAPER recommendation layer can issue auditable PAPER_ONLY recommendation rows. It must not repair live TSL, place bets, or claim production readiness.
 
 ---
 
-## 2. Current Implementation State
+## 2. Product North Star
+
+Betting-pool has two product axes:
+
+1. **MLB prediction -> Taiwan Sports Lottery recommendation**
+   - Convert model probability, market probability, edge, and odds into auditable recommendation rows.
+   - Support TSL-style markets over time: moneyline, run line, totals, first-five, odd/even, team totals.
+   - Keep all current output PAPER_ONLY.
+
+2. **Strategy simulation optimization**
+   - Validate policies through walk-forward / OOF evidence before any recommendation is trusted.
+   - Optimize staking and abstention rules with ROI, BSS, ECE, drawdown, exposure, and settlement evidence.
+   - Treat positive ROI as research evidence only until live-source and production gates are separately cleared.
+
+The roadmap must keep these axes connected:
+
+```text
+model probabilities -> historical odds join -> strategy simulation -> recommendation gate -> paper ledger -> settlement/optimization
+```
+
+---
+
+## 3. Current Implementation State
 
 ### Completed / usable
 
-- P11 context key reconciliation works for `Date`, `Home`, `Away`, and context game keys.
-- `--auto-discover-context` finds context files and the export runs successfully.
-- P11 targeted tests pass:
+- P13 walk-forward logistic baseline:
+  - `source_model = p13_walk_forward_logistic`
+  - OOF BSS `+0.008253`
+  - OOF rows `1577`
+  - Marker: `P13_WALK_FORWARD_LOGISTIC_BASELINE_READY`
 
-```text
-117 passed
-```
+- P14 strategy simulation spine:
+  - Deterministic PAPER simulation runner exists.
+  - Policies include `flat`, `capped_kelly`, `confidence_rank`, `no_bet`.
+  - P14 market-absent mode correctly blocked odds-dependent Kelly until P15.
+  - Marker: `P14_STRATEGY_SIMULATION_SPINE_READY`
 
-- OOF calibration artifact exists:
-  - `outputs/predictions/PAPER/2026-05-11/oof_calibration_evaluation.json`
-- Simulation artifact exists:
-  - `outputs/simulation/PAPER/2026-05-11/2025-03-01_2025-12-31_moneyline_edge_threshold_v0_p11_context_reconcil_5e6d90f9.jsonl`
-- Paper recommendation artifact exists:
-  - `outputs/recommendations/PAPER/2026-05-11/2026-05-11-LAA-CLE-824441.jsonl`
+- P15 historical market odds adapter:
+  - `joined_oof_with_odds.csv` contains `p_oof`, `p_market`, `edge`, `odds_decimal_home`, `odds_decimal_away`, `odds_join_status`.
+  - Odds join coverage `99.87%`.
+  - Invalid odds rows `2`.
+  - `capped_kelly` PAPER ROI `+5.51%`.
+  - `confidence_rank` PAPER ROI `+0.055%`.
+  - Marker: `P15_MARKET_ODDS_JOIN_SIMULATION_READY`
 
-### Still blocked
+- Existing recommendation smoke layer:
+  - `wbc_backend/recommendation/recommendation_row.py`
+  - `wbc_backend/recommendation/recommendation_gate_policy.py`
+  - `scripts/run_mlb_tsl_paper_recommendation.py`
+  - It enforces PAPER_ONLY, writes under `outputs/recommendations/PAPER/`, and blocks when TSL/simulation gates block.
 
-- Model promotion remains blocked because BSS is still negative.
-- Production betting remains blocked.
-- TSL live source remains blocked / unavailable.
-- Context provenance is not production-safe until feature-family safety is audited.
-- Existing full-suite failures / dirty worktree still need separate release hygiene.
+### Still blocked / incomplete
+
+- The recommendation layer does not yet consume P15 joined odds artifacts directly.
+- Existing recommendation smoke script may use estimated odds and TSL availability checks; it is not the P15 odds-aware recommendation path.
+- No P16 adapter exists yet to transform `joined_oof_with_odds.csv` into recommendation candidates.
+- No P16 gate exists yet with explicit P13/P15 reason codes.
+- No recommendation summary exists with `n_recommended_rows`, `n_blocked_rows`, and gate reason distribution.
+- Live TSL remains unresolved and must stay out of P16.
+- Production remains blocked.
 
 ---
 
-## 3. Roadmap Alignment Gaps
+## 4. Roadmap Alignment Gaps
 
-| Area | Previous assumption | Actual P11 result | CTO adjustment |
+| Area | Previous roadmap assumption | Actual 2026-05-12 state | CTO adjustment |
 |---|---|---|---|
-| Feature expansion | More context should improve model | Coverage improved, BSS still negative | Move to ablation and safety audit |
-| Context hit rate | 100% headline | JSON metric previously inconsistent | Fixed metric and require tests |
-| OOF validation | Missing | Completed, improved but blocked | Use as promotion gate |
-| Simulation | Pending | Completed, `BLOCKED_NEGATIVE_BSS` | Keep recommendation gate blocked |
-| Recommendation | Could run after simulation | It runs, but blocks stake and issuance | Correct behavior; keep paper-only |
-| Production | Not ready | Still not ready | No production proposal |
-| TSL | External source concern | 403/unavailable still blocks real odds | Keep as P5 blocker |
+| Model quality | P13 still needed to repair negative BSS | P13 is complete with OOF BSS `+0.008253` | Move model repair from immediate P0 to later improvement track. |
+| Simulation | Market odds absent, Kelly blocked | P15 joined historical odds; capped Kelly can run | Promote odds-aware simulation evidence into recommendation gate. |
+| Recommendation | Smoke path exists but simulation/TSL still block | Existing script is not P15-aware and can use estimated odds | Build P16 P15-artifact recommendation gate, not live smoke. |
+| Live TSL | Treated as early blocker | Still unresolved, but not required for historical PAPER P16 | Keep live TSL as production blocker, not P16 blocker. |
+| Strategy optimization | Could wait after recommendation | P15 now exposes ROI/edge/stake evidence | Put strategy hardening immediately after P16/P17 ledger. |
+| Production | Could be confused by positive ROI | `production_ready=False` remains correct | Every phase must preserve PAPER_ONLY until live-source + human approval. |
 
 ---
 
-## 4. Updated P0-P10 Execution Roadmap
+## 5. Reordered P0-P10 Execution Roadmap
 
-### P0 - P12 Feature Family Ablation and Context Safety ✅ COMPLETE
+### P0 - P16 Recommendation Gate Re-evaluation
 
-**Goal:** identify which P11 feature families actually help and which are unsafe/noisy.
+**Goal:** connect P13 probabilities and P15 joined historical odds to the PAPER recommendation gate.
 
-**Result (2026-05-11):**
-- Context safety: 4 pregame pipeline files are PREGAME_SAFE; 76 POSTGAME_RISK files are output artifacts (not pipeline inputs).
-- Feature family BSS impact: recent_form (−0.0022 if removed), starter (−0.0015), bullpen (0.0), weather (0.0), rest (+0.0001 noise).
-- Best variant `no_rest`: OOF BSS = -0.027537 — still negative.
-- Conclusion: all ablation candidates remain BLOCKED_NEGATIVE_BSS. **Roadmap moves to model architecture repair (P13/P8).**
-- Tests: 48 P12 + 117 P11 = 165 passed.
-- Artifacts: `outputs/predictions/PAPER/2026-05-11/ablation/`, `context_safety/`
-
-### P1 - P11 Report and Evidence Lock
-
-**Goal:** make P11 auditable and prevent the same coverage bug from reappearing.
+**Why now:** This is the first step that converts research/simulation evidence into the product-facing recommendation contract while staying PAPER_ONLY.
 
 **Work:**
-- Keep `p11_bullpen_rest_context_key_reconciliation_report.md` as source of truth.
-- Preserve targeted test coverage around `p11_context_reconciled_v1`.
-- Add follow-up tests if separate context key / loader tests are created later.
+- Create `p16_recommendation_input_adapter.py` to consume `joined_oof_with_odds.csv`.
+- Create `p16_recommendation_gate.py` with explicit reason codes.
+- Create `p16_recommendation_row_builder.py`.
+- Create `scripts/run_p16_recommendation_gate_reevaluation.py`.
+- Emit `recommendation_rows.csv`, `recommendation_summary.json`, `recommendation_summary.md`, and `gate_reason_counts.json`.
 
 **Acceptance:**
-- P11 final report exists.
-- `context_hit_rate` is consistent with hit/miss counts.
-- Targeted tests pass.
+- P13/P14/P15 markers verified.
+- All invalid/missing odds rows are preserved and blocked.
+- Passed rows may have `paper_stake_fraction > 0`.
+- Failed rows always have stake `0`.
+- `paper_only=True`, `production_ready=False`.
+- Determinism check passes.
+- Final marker: `P16_RECOMMENDATION_GATE_REEVALUATION_READY`.
 
-### P2 - Simulation Gate Hardening
+### P1 - P17 Paper Recommendation Ledger / Settlement Join
 
-**Goal:** ensure recommendation output is impossible to mistake for approved betting advice when simulation blocks.
+**Goal:** turn P16 recommendation rows into an auditable PAPER ledger that can be settled against known outcomes.
 
 **Work:**
-- Make simulation gate fields explicit in recommendation rows.
-- Keep `stake_units_paper = 0.0` when gate is blocked.
-- Ensure blocked rows include the simulation ID and BSS reason.
+- Join P16 rows with `y_true` / final game result where available.
+- Record paper P/L, stake, odds, side, gate decision, and no-bet reasons.
+- Produce daily/season ledger summaries.
+- Preserve blocked rows as first-class rows.
 
 **Acceptance:**
-- Negative-BSS simulation always produces `BLOCKED_SIMULATION_GATE`.
-- No real-bet fields appear.
+- Ledger reconciles recommendation rows to settlement labels.
+- No production DB write.
+- No live TSL call.
+- Summary exposes ROI, hit rate, average edge, average stake, and reason-code distribution.
 
-### P3 - TSL Source / Market Availability Repair
+### P2 - P18 Strategy Optimization Hardening
 
-**Goal:** solve the TSL 403 / unavailable odds blocker without weakening gates.
+**Goal:** make strategy simulation a real optimization engine, not just a proof that the spine can run.
+
+**Work:**
+- Add `avg_edge_pct` and `avg_kelly_fraction` to P15/P18 policy summaries.
+- Run threshold sweeps for edge threshold, Kelly cap, confidence rank cutoff, and no-bet abstention.
+- Add drawdown, turnover, exposure, and bankroll trajectory.
+- Separate raw implied probability from no-vig market probability.
+- Compare flat, capped Kelly, fractional Kelly, confidence-rank, and abstention-heavy policies.
+
+**Acceptance:**
+- Strategy ranking is based on walk-forward/OOF evidence plus drawdown and exposure, not ROI alone.
+- Positive ROI is reported as PAPER evidence only.
+- Capped Kelly promotion requires stable risk metrics, not just one headline ROI.
+
+### P3 - P19 Market Odds Data Quality and Identity Audit
+
+**Goal:** improve audit quality of the historical market odds join before expanding markets.
+
+**Work:**
+- Investigate the 2 invalid odds rows.
+- Keep deterministic fold/position alignment tests.
+- Add row-level join audit output with source row index, fold id, and invalid reason.
+- Normalize American/decimal odds conversion contracts.
+- Add optional vig-removal method for moneyline pairs.
+
+**Acceptance:**
+- Invalid odds are explained, not merely counted.
+- Join coverage and identity mapping are reproducible.
+- Market probability semantics are explicit: raw implied vs no-vig.
+
+### P4 - P20 Daily PAPER MLB Recommendation Orchestrator
+
+**Goal:** run daily PAPER recommendation output using the P16 row contract, not the older smoke-only estimate path.
+
+**Work:**
+- Build a daily runner that consumes approved PAPER artifacts or approved source snapshots.
+- Emit all eligible games, not one smoke row.
+- Keep TSL live disabled unless explicitly sourced through an approved bridge.
+- Surface recommended/watch/pass/blocked rows.
+
+**Acceptance:**
+- Daily PAPER output can be regenerated deterministically.
+- Recommendation rows include model source, odds source, edge, stake, gate reason, and production flags.
+- No estimated odds are represented as real TSL odds.
+
+### P5 - P21 Live TSL / Market Source Repair
+
+**Goal:** solve real market data availability without weakening historical PAPER gates.
 
 **Options:**
-- session-cookie workflow,
-- API key / partner source,
-- operator-provided CSV bridge,
-- manually approved odds snapshot ingestion,
-- continued replay-paper fallback with explicit warning.
+- TSL session/cookie workflow.
+- Approved API / partner source.
+- Operator-provided CSV bridge.
+- Manual odds snapshot ingestion with provenance and timestamp.
 
 **Acceptance:**
-- Recommendation rows distinguish live TSL odds from estimated odds.
-- No production claim while live odds are unavailable.
+- Live/pre-game odds have source timestamp, market identity, and replayable snapshot.
+- Recommendation rows distinguish historical odds, approved snapshot odds, and live TSL odds.
+- Production remains blocked until live-source validation passes.
 
-### P4 - Moneyline Recommendation MVP
+### P6 - P22 Model Improvement and Calibration
 
-**Goal:** ship a conservative paper-only moneyline MVP after simulation gate behavior is stable.
+**Goal:** improve model quality after the product contract is stable.
 
 **Work:**
-- Use the best safe model / feature candidate from P12.
-- Generate daily rows for each game with recommend/watch/pass/blocked.
-- Surface model probability, market probability, edge, data tier, and abstention reason.
+- Segment P13 by home/away, favorite/underdog, high/low odds, month, and park/starter buckets.
+- Compare logistic regression with regularized variants and tree/boosted models.
+- Add calibration selection only with walk-forward or OOF evidence.
+- Evaluate BSS, ECE, log-loss, ROI proxy, and decision quality.
 
 **Acceptance:**
-- Every row is auditable and reproducible from source snapshots.
-- Blocked rows are first-class output, not hidden.
+- No model replaces P13 unless it improves OOF/walk-forward evidence.
+- No in-sample calibration is allowed into recommendation decisions.
 
-### P5 - Strategy Simulation Optimization Spine
+### P7 - P23 TSL Market Expansion Beyond Moneyline
 
-**Goal:** turn simulation into the strategy optimizer, not just a gate.
-
-**Work:**
-- Compare flat stake, fractional Kelly, capped Kelly, drawdown-adaptive Kelly, abstention-heavy policy, and market de-risk policy.
-- Track BSS, ECE, ROI proxy, CLV where available, max drawdown, turnover, hit rate, and exposure.
-
-**Acceptance:**
-- No staking policy graduates without walk-forward evidence and drawdown analysis.
-
-### P6 - Settlement / CLV / Join Reliability
-
-**Goal:** close the loop from prediction to market to result.
-
-**Work:**
-- Stabilize game IDs across schedule, odds, prediction, closing, and settlement.
-- Track prediction timestamp, market timestamp, closing timestamp, and settlement timestamp.
-- Flag inferred or stale joins.
-
-**Acceptance:**
-- CLV and EV are computed only when timestamps and market identities are valid.
-
-### P7 - Expand Beyond Moneyline
+**Goal:** expand to Taiwan Sports Lottery betting items after moneyline contracts are reliable.
 
 **Order:**
-1. Run line (`HDC`)
-2. Totals (`OU`)
-3. First 5 moneyline (`FMNL`)
-4. Odd/even (`OE`)
-5. Team total (`TTO`)
+1. Run line.
+2. Totals.
+3. First-five moneyline / spread / total.
+4. Odd/even.
+5. Team totals.
 
 **Acceptance:**
-- Each market has label availability, no-lookahead validation, backtest, and abstention rules.
-- F5/team total stay blocked until labels and TSL lines exist.
+- Each market has labels, odds schema, settlement semantics, and no-lookahead validation.
+- Markets without reliable labels or odds remain blocked with explicit reason codes.
 
-### P8 / P13 - Model Architecture Repair ← NEXT PRIORITY
+### P8 - P24 CI, Regression, and Worktree Hygiene
 
-**Goal:** fix probability quality now that ablations confirmed feature tuning alone cannot produce positive BSS.
-
-**P12 confirmed trigger:** best ablation variant `no_rest` has OOF BSS = -0.027537. No variant achieves positive BSS. Context safety is clean. Feature coverage is adequate (86–99%). The logit-correction base estimator is the bottleneck.
-
-**P13 direction:**
-- Replace logit-correction pipeline with a trained walk-forward ML estimator.
-- Features to retain: `indep_recent_win_rate_delta`, `indep_starter_era_delta`.
-- Features to drop: `indep_rest_days_delta` (marginal noise), weather (zero contribution).
-- Bullpen: reassess with real boxscore data; current proxy contributes zero marginal signal.
-- Model: logistic regression or LightGBM, walk-forward CV (same protocol as `mlb_oof_calibration.py`).
-- Gate: require OOF BSS > 0 before simulation promotion.
-- Input: `outputs/predictions/PAPER/2026-05-11/ablation/variant_no_rest.csv` (best P12 variant).
-
-**Focus:**
-- home-bias compression,
-- probability range compression,
-- strong favorite / away favourite segments,
-- market-relative blending,
-- feature-only logistic candidate,
-- model family comparison.
-
-**Acceptance:**
-- Improvements must show out-of-sample BSS or market-relative decision quality, not just in-sample ECE.
-
-### P9 - CI / Regression Hygiene
-
-**Goal:** reduce noise from pre-existing failures without blocking P12.
+**Goal:** keep the research branch trustworthy as new P16/P17/P18 outputs accumulate.
 
 **Work:**
-- Quarantine known non-P11 failures.
-- Keep targeted P11/P12 suite green.
-- Do not alter branch protection casually.
+- Maintain focused P13-P18 regression suites.
+- Quarantine unrelated legacy failures without hiding product regressions.
+- Avoid staging `outputs/`, `runtime/`, `.venv/`, DB binaries, or large generated files.
+- Document dirty-worktree context before commits.
 
 **Acceptance:**
-- A CTO can tell whether a failure is product regression or legacy noise.
+- A CTO can tell whether a failing test blocks MLB recommendation work or belongs to legacy debt.
+- Source/report/test commits stay clean.
 
-### P10 - Production Proposal Gate
+### P9 - P25 Daily Ops and Monitoring
+
+**Goal:** make the PAPER system observable enough to run every day.
+
+**Work:**
+- Track source availability, artifact freshness, recommendation count, blocked count, stake exposure, and drift.
+- Add alerts for missing P13/P15/P16 inputs.
+- Add daily summaries for model metrics, market metrics, gate reasons, and settlement performance.
+
+**Acceptance:**
+- A daily operator can tell whether the system produced no recommendations because there was no edge, no odds, no data, or a gate failure.
+
+### P10 - P26 Production Proposal Gate
+
+**Goal:** define the minimum bar for any future production request.
 
 **Minimum gate:**
-- Positive OOF / walk-forward BSS over sufficient sample.
-- Safe pregame feature provenance.
-- Valid TSL live or approved odds source.
-- Settlement and CLV pipeline ready.
-- Drawdown/exposure rules pass.
-- Human approval and rollback plan.
+- Positive and stable walk-forward evidence.
+- Auditable pre-game features.
+- Approved live or snapshot market source.
+- Recommendation ledger and settlement join ready.
+- Strategy drawdown/exposure within approved limits.
+- Human approval, rollback plan, and clear no-bet fail-safe.
 
-**Current status:** deferred.
-
----
-
-## 5. Key Blockers
-
-1. **Negative BSS:** P11 improves BSS but remains below zero.
-2. **Context safety:** rest/bullpen/weather context provenance must be proven pregame-safe.
-3. **TSL 403 / unavailable:** real TSL odds are not reliably available.
-4. **Simulation gate:** correctly blocks recommendation issuance.
-5. **Dirty worktree:** release hygiene risk remains.
-6. **Pre-existing test failures:** full-suite trust still needs cleanup/quarantine.
+**Current status:** deferred. P15/P16 evidence is necessary but not sufficient.
 
 ---
 
-## 6. Immediate Engineering Sequence
+## 6. Key Blockers
 
-1. Run P12 ablation candidates.
-2. For each candidate, run OOF calibration and strategy simulation.
-3. Rank by safe-feature BSS/ECE/gate status, not ROI proxy alone.
-4. Keep moneyline recommendation blocked unless simulation gate passes.
-5. Solve TSL source separately; do not combine source repair with model promotion.
+1. **Recommendation layer not P15-aware yet.** This is the immediate P0 blocker.
+2. **Live TSL unresolved.** This blocks production and true live recommendations, but not P16 historical PAPER rows.
+3. **Historical odds source is not live TSL.** P15 proves replay/historical odds-aware behavior only.
+4. **2 invalid odds rows remain unexplained.** Low volume, but should be audited in P19.
+5. **Strategy summary lacks avg edge / avg Kelly.** P18 should fix this before optimizing stake policies.
+6. **Existing smoke recommendation path can use estimated odds.** It must not be confused with P16 P15-backed recommendation rows.
+7. **Production readiness confusion risk.** Positive capped Kelly ROI must remain labeled PAPER evidence.
 
 ---
 
-## 7. CTO Recommendation
+## 7. Immediate Engineering Sequence
 
-The system is now aligned with the two product goals:
+1. Run P16 Recommendation Gate Re-evaluation.
+2. If P16 emits eligible rows, proceed to P17 Paper Recommendation Ledger / Settlement Join.
+3. If P16 emits no eligible rows, inspect gate reason distribution and edge threshold.
+4. After ledger exists, run P18 strategy hardening with drawdown/exposure.
+5. Only after P16-P18 are stable, reopen live TSL / approved odds-source repair as P21.
 
-1. MLB prediction to Taiwan Sports Lottery recommendation.
-2. Strategy simulation / optimization before any recommendation is trusted.
+Do not start with live TSL repair unless the explicit task is production-source readiness. The current product value bottleneck is the PAPER recommendation contract, not live execution.
 
-**P12 is complete. P13 direction is confirmed.**
+---
+
+## 8. CTO Recommendation
+
+Proceed with P16 now.
+
+The system is no longer blocked by negative BSS or absent historical market odds. It is blocked by the missing adapter between odds-aware simulation evidence and recommendation rows.
+
+P16 should answer one concrete question:
 
 ```text
-P12 = feature family ablation + context safety audit  ✅ DONE
-P13 = model architecture repair (trained walk-forward ML model)
+Can Betting-pool produce deterministic, auditable, PAPER_ONLY MLB recommendation rows
+from P13 walk-forward probabilities and P15 historical market odds?
 ```
 
-P12 confirmed: no feature combination produces positive BSS with the current logit-correction estimator. Context sources are safe. The path to positive BSS requires a trained model, not more feature engineering.
+Until that answer is available:
 
-P13 must achieve OOF BSS > 0 before simulation promotion. Until then:
-- Simulation gate: BLOCKED_NEGATIVE_BSS
-- Recommendation gate: BLOCKED_SIMULATION_GATE
-- Production: deferred
-- Paper stake: 0.0
+- Do not tune the model first.
+- Do not repair live TSL first.
+- Do not expand to additional markets first.
+- Do not claim production readiness.
+
+Current production readiness remains:
+
+```text
+production_ready = false
+paper_only = true
+```
+
+CTO_MLB_P15_P16_ROADMAP_REALIGNMENT_20260512_READY
+
+---
+
+## Roadmap v3 Update — 2026-05-13
+
+**Superseded by**: `00-BettingPlan/20260513/cto_roadmap_realignment_20260513.md`
+
+Key changes in v3:
+- P30 "READY" acknowledged as misleading (derived outputs ≠ raw historical)
+- P31 re-scoped from "build joined artifacts" → "honest data reality audit"
+- Blocker chain corrected: P32 acquisition is the single highest-leverage move
+- Sample wall (324 < 1,500) explicitly acknowledged as hard blocker
+
+```
+CTO_MLB_P30_P31_ROADMAP_REALIGNMENT_20260513_READY
+```
