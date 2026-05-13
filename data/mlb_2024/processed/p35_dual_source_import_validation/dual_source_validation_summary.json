@@ -1,0 +1,17 @@
+{
+  "odds_license_status": "blocked_not_approved",
+  "odds_source_status": "source_not_provided",
+  "prediction_feasibility_status": "FEASIBILITY_BLOCKED_ADAPTER_MISSING",
+  "feature_pipeline_status": "found",
+  "validator_specs_written": true,
+  "gate": "P35_BLOCKED_ODDS_LICENSE_NOT_APPROVED",
+  "blocker_reasons": [
+    "No approval record provided. Odds import blocked until explicit license approval is recorded in approval_record.json."
+  ],
+  "paper_only": true,
+  "production_ready": false,
+  "season": 2024,
+  "recommended_next_action": "Obtain odds license approval: review sportsbookreviewsonline.com ToS, create approval_record.json, then re-run P35 with --odds-approval-record.",
+  "generated_at": "2026-05-13T05:17:35.695286+00:00",
+  "output_dir": "data/mlb_2024/processed/p35_dual_source_import_validation"
+}

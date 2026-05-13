@@ -1,0 +1,39 @@
+{
+  "feature_pipeline_found": true,
+  "model_training_found": true,
+  "oof_generation_found": true,
+  "leakage_guard_found": true,
+  "time_aware_split_found": true,
+  "adapter_for_2024_format_found": false,
+  "feasibility_status": "FEASIBILITY_BLOCKED_ADAPTER_MISSING",
+  "blocker_reason": "Feature engineering pipeline exists (walk_forward_logistic.py, gbm_stack.py) but is configured for WBC/2025/2026 feature columns (indep_recent_win_rate_delta, indep_starter_era_delta, etc.). P32 2024 Retrosheet data provides game_id, game_date, home/away teams, and outcome columns only. A 2024-format feature engineering adapter is required to bridge P32 game log columns → model input features. Recommend: P36 builds this adapter with strict leakage guards.",
+  "candidate_scripts": [
+    "orchestrator/planner_tick.py",
+    "scripts/build_prediction_registry_dry_run.py",
+    "scripts/rebuild_ml_artifacts.py",
+    "scripts/run_mlb_feature_family_ablation.py",
+    "scripts/run_mlb_independent_feature_candidate_export.py",
+    "scripts/run_mlb_model_deep_diagnostics.py",
+    "scripts/run_mlb_oof_calibration_validation.py",
+    "scripts/run_mlb_repaired_model_probability_export.py",
+    "scripts/run_mlb_tsl_paper_recommendation.py",
+    "scripts/run_p13_walk_forward_logistic_oof.py"
+  ],
+  "candidate_models": [
+    "scripts/run_mlb_tsl_paper_recommendation.py",
+    "wbc_backend/api/app.py",
+    "wbc_backend/evaluation/auto_learn.py",
+    "wbc_backend/evaluation/clv_strategy.py",
+    "wbc_backend/models/catboost_model.py",
+    "wbc_backend/models/lightgbm_model.py",
+    "wbc_backend/models/next_gen_stack.py",
+    "wbc_backend/models/stacking.py",
+    "wbc_backend/models/trainer.py",
+    "wbc_backend/models/walk_forward_logistic.py"
+  ],
+  "paper_only": true,
+  "production_ready": false,
+  "season": 2024,
+  "notes": "Do NOT run model training in P35. Do NOT fabricate p_oof. Leakage audit required before any predictions can be used.",
+  "generated_at": "2026-05-13T05:17:35.695286+00:00"
+}

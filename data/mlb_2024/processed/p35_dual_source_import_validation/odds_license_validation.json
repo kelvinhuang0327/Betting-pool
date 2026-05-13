@@ -1,0 +1,31 @@
+{
+  "source_type": "licensed_export",
+  "source_name": "sportsbookreviewsonline.com 2024 MLB Closing Moneylines",
+  "source_path_or_url": "https://www.sportsbookreviewsonline.com/scoresoddsarchives/mlb/",
+  "license_status": "blocked_not_approved",
+  "provenance_status": "external_public_archive",
+  "schema_status": "valid",
+  "leakage_risk": "none",
+  "implementation_ready": false,
+  "blocker_reason": "No approval record provided. Odds import blocked until explicit license approval is recorded in approval_record.json.",
+  "paper_only": true,
+  "production_ready": false,
+  "season": 2024,
+  "approval_record_found": false,
+  "checklist_items": [
+    "Confirm ToS permits internal research use without redistribution.",
+    "Confirm data may be downloaded manually (no automated scraping).",
+    "Confirm attribution is required and format is understood.",
+    "Confirm redistribution policy (paper_only, no public sharing).",
+    "Confirm data covers 2024 MLB season (April–October).",
+    "Confirm American moneyline → decimal odds conversion is correct.",
+    "Confirm game_id alignment with P32 Retrosheet spine.",
+    "Confirm closing moneyline timestamp is pre-game.",
+    "Confirm no outcome information is embedded in odds record.",
+    "Record all approvals in a machine-readable approval_record.json.",
+    "[odds_r01] Manually download Excel archives for each month of 2024 MLB season.",
+    "[odds_r02] Confirm paid API subscription is active and covers 2024 historical data."
+  ],
+  "notes": "Do NOT scrape odds. Download manually after ToS approval. Do NOT infer odds from game outcomes.",
+  "generated_at": "2026-05-13T05:17:35.695286+00:00"
+}

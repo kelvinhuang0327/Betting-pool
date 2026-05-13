@@ -1,0 +1,127 @@
+{
+  "spec_name": "odds_import_validator",
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "source_type": "licensed_export",
+  "required_columns": [
+    "game_id",
+    "game_date",
+    "home_team",
+    "away_team",
+    "p_market",
+    "odds_decimal",
+    "sportsbook",
+    "market_type",
+    "closing_timestamp",
+    "source_odds_ref",
+    "license_ref"
+  ],
+  "field_rules": {
+    "game_id": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Must match P32 game_id spine exactly."
+    },
+    "game_date": {
+      "required": true,
+      "nullable": false,
+      "type": "date",
+      "format": "YYYY-MM-DD",
+      "description": "Game date; must be in 2024 MLB season (2024-03-20 to 2024-10-30)."
+    },
+    "home_team": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Home team abbreviation; must match P32 spine."
+    },
+    "away_team": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Away team abbreviation; must match P32 spine."
+    },
+    "p_market": {
+      "required": true,
+      "nullable": false,
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "description": "Market-implied home win probability; derived from odds_decimal. Range [0, 1]."
+    },
+    "odds_decimal": {
+      "required": true,
+      "nullable": false,
+      "type": "float",
+      "min_exclusive": 1.0,
+      "description": "Closing home moneyline in decimal odds format. Must be > 1.0."
+    },
+    "sportsbook": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Name of the sportsbook or archive source."
+    },
+    "market_type": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "allowed_values": [
+        "moneyline",
+        "h2h"
+      ],
+      "description": "Odds market type. Only moneyline/h2h is supported."
+    },
+    "closing_timestamp": {
+      "required": true,
+      "nullable": false,
+      "type": "datetime",
+      "description": "Timestamp of closing odds; must be BEFORE game start."
+    },
+    "source_odds_ref": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Reference to original data source (URL or archive name)."
+    },
+    "license_ref": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Reference to the approved license record. Must be non-empty."
+    }
+  },
+  "global_rules": {
+    "no_production_ready": {
+      "rule": "No row may be used for live betting or production output.",
+      "enforcement": "paper_only=True must be present in pipeline config."
+    },
+    "no_outcome_derived_odds": {
+      "rule": "Odds must never be inferred from game outcomes (y_true).",
+      "enforcement": "Provenance audit must confirm odds source predates game."
+    },
+    "no_scraping": {
+      "rule": "Odds must be downloaded manually; scraping is forbidden.",
+      "enforcement": "acquisition_method must be 'manual_download'."
+    },
+    "game_id_spine_match": {
+      "rule": "Every game_id in odds import must match a P32 game_id.",
+      "enforcement": "Left-join on P32 game_identity; no unmatched rows allowed."
+    },
+    "closing_before_game_start": {
+      "rule": "closing_timestamp must be before the game start time.",
+      "enforcement": "Validated by timestamp comparison against P32 game_date."
+    },
+    "season_2024_only": {
+      "rule": "Only 2024 MLB season data is permitted.",
+      "enforcement": "game_date year must be 2024."
+    },
+    "license_ref_required": {
+      "rule": "Every row must have a non-empty license_ref.",
+      "enforcement": "Validated during import; rows without license_ref are rejected."
+    }
+  },
+  "generated_at": "2026-05-13T05:17:35.691001+00:00"
+}

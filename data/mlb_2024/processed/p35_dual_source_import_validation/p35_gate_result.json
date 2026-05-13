@@ -1,0 +1,22 @@
+{
+  "gate": "P35_BLOCKED_ODDS_LICENSE_NOT_APPROVED",
+  "odds_license_status": "blocked_not_approved",
+  "odds_source_status": "source_not_provided",
+  "prediction_feasibility_status": "FEASIBILITY_BLOCKED_ADAPTER_MISSING",
+  "feature_pipeline_status": "found",
+  "blocker_reason": "Odds license is not approved. No odds may be downloaded until explicit approval record is provided.",
+  "license_risk": "HIGH — odds cannot be imported without license approval",
+  "paper_only": true,
+  "production_ready": false,
+  "season": 2024,
+  "next_phase": "P36_ODDS_APPROVAL_RECORD_AND_MANUAL_LICENSED_ODDS_IMPORT_GATE",
+  "artifacts": [
+    "odds_license_validation.json",
+    "prediction_rebuild_feasibility.json",
+    "dual_source_validation_summary.json",
+    "dual_source_validation_summary.md",
+    "odds_import_validator_spec.json",
+    "prediction_import_validator_spec.json"
+  ],
+  "generated_at": "2026-05-13T05:17:35.695286+00:00"
+}

@@ -1,0 +1,106 @@
+{
+  "spec_name": "prediction_import_validator",
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "source_type": "oof_rebuild",
+  "required_columns": [
+    "game_id",
+    "game_date",
+    "home_team",
+    "away_team",
+    "p_oof",
+    "model_version",
+    "fold_id",
+    "source_prediction_ref",
+    "generated_without_y_true"
+  ],
+  "field_rules": {
+    "game_id": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Must match P32 game_id spine exactly."
+    },
+    "game_date": {
+      "required": true,
+      "nullable": false,
+      "type": "date",
+      "format": "YYYY-MM-DD",
+      "description": "Game date; must be in 2024 MLB season."
+    },
+    "home_team": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Home team abbreviation; must match P32 spine."
+    },
+    "away_team": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Away team abbreviation; must match P32 spine."
+    },
+    "p_oof": {
+      "required": true,
+      "nullable": false,
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "description": "Out-of-fold model probability for home team win. Must be in [0, 1]. NEVER derived from y_true."
+    },
+    "model_version": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Model identifier and version string."
+    },
+    "fold_id": {
+      "required": true,
+      "nullable": false,
+      "type": "integer",
+      "min": 0,
+      "description": "Walk-forward fold index; must be >= 0."
+    },
+    "source_prediction_ref": {
+      "required": true,
+      "nullable": false,
+      "type": "string",
+      "description": "Reference to prediction generation script and run ID."
+    },
+    "generated_without_y_true": {
+      "required": true,
+      "nullable": false,
+      "type": "boolean",
+      "must_be_true": true,
+      "description": "Flag certifying p_oof was generated without access to y_true. Must be True for EVERY row — no exceptions."
+    }
+  },
+  "global_rules": {
+    "no_production_ready": {
+      "rule": "No prediction row may be used for live betting.",
+      "enforcement": "paper_only=True must be present in pipeline config."
+    },
+    "no_y_true_derived_predictions": {
+      "rule": "p_oof must NEVER be derived from y_true / home_win / outcome.",
+      "enforcement": "generated_without_y_true must be True for all rows. Provenance audit required before use."
+    },
+    "game_id_spine_match": {
+      "rule": "Every game_id in prediction import must match a P32 game_id.",
+      "enforcement": "Left-join on P32 game_identity; no unmatched rows allowed."
+    },
+    "oof_temporal_integrity": {
+      "rule": "p_oof for game G must be generated using only data from games before G.",
+      "enforcement": "Walk-forward split must be verified; training cutoff < game_date."
+    },
+    "p_oof_range": {
+      "rule": "p_oof must be in [0.0, 1.0] inclusive for all rows.",
+      "enforcement": "Validated during import; out-of-range values rejected."
+    },
+    "season_2024_only": {
+      "rule": "Only 2024 MLB season predictions are permitted.",
+      "enforcement": "game_date year must be 2024."
+    }
+  },
+  "generated_at": "2026-05-13T05:17:35.691001+00:00"
+}
