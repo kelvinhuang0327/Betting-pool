@@ -1,0 +1,24 @@
+{
+  "gate": "P33_BLOCKED_NO_VERIFIED_PREDICTION_SOURCE",
+  "season": 2024,
+  "prediction_gap_blocked": true,
+  "odds_gap_blocked": true,
+  "schema_gap_blocked": false,
+  "license_blocked": false,
+  "blocker_reason": "PREDICTION: File path contains non-2024 year token '2025'. Cross-year data cannot be used as a 2024 source.; File path contains non-2024 year token '2026'. Cross-year data cannot be used as a 2024 source. | ODDS: File path contains non-2024 year token '2026'. Cross-year odds cannot be used as a 2024 source.; File path contains non-2024 year token '2025'. Cross-year odds cannot be used as a 2024 source.",
+  "paper_only": true,
+  "production_ready": false,
+  "next_phase": "P34_DUAL_SOURCE_ACQUISITION_PLAN",
+  "artifacts": [
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/p33_source_gap_summary.json",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/p33_source_gap_summary.md",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/prediction_source_candidates.csv",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/odds_source_candidates.csv",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/source_recommendations.json",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/joined_input_required_spec.json",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/joined_input_schema_gap.json",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/mlb_2024_joined_input_schema.csv",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/mlb_2024_joined_input_gap_rows.csv",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/mlb_2024_joined_input_schema_manifest.json"
+  ]
+}

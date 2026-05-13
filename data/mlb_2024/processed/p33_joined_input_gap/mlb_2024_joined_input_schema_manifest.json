@@ -1,0 +1,18 @@
+{
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "gap_status": {
+    "prediction_missing": true,
+    "odds_missing": true,
+    "prediction_gap_reason": "File path contains non-2024 year token '2025'. Cross-year data cannot be used as a 2024 source.; File path contains non-2024 year token '2026'. Cross-year data cannot be used as a 2024 source.",
+    "odds_gap_reason": "File path contains non-2024 year token '2026'. Cross-year odds cannot be used as a 2024 source.; File path contains non-2024 year token '2025'. Cross-year odds cannot be used as a 2024 source."
+  },
+  "artifacts": [
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/joined_input_required_spec.json",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/joined_input_schema_gap.json",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/mlb_2024_joined_input_schema.csv",
+    "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/processed/p33_joined_input_gap/mlb_2024_joined_input_gap_rows.csv"
+  ],
+  "artifact_count": 4
+}

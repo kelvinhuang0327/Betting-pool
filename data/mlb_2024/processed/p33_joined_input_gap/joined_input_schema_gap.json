@@ -1,0 +1,37 @@
+{
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "field_availability": {
+    "game_id": "MISSING",
+    "game_date": "MISSING",
+    "home_team": "MISSING",
+    "away_team": "MISSING",
+    "y_true_home_win": "MISSING",
+    "p_model": "MISSING",
+    "p_oof": "MISSING",
+    "p_market": "MISSING",
+    "odds_decimal": "MISSING",
+    "source_prediction_ref": "MISSING",
+    "source_odds_ref": "MISSING",
+    "paper_only": "MISSING",
+    "production_ready": "MISSING"
+  },
+  "missing_count": 13,
+  "missing_fields": [
+    "game_id",
+    "game_date",
+    "home_team",
+    "away_team",
+    "y_true_home_win",
+    "p_model",
+    "p_oof",
+    "p_market",
+    "odds_decimal",
+    "source_prediction_ref",
+    "source_odds_ref",
+    "paper_only",
+    "production_ready"
+  ],
+  "total_required": 13
+}

@@ -1,0 +1,22 @@
+{
+  "season": 2024,
+  "paper_only": true,
+  "production_ready": false,
+  "description": "2024 MLB joined input frame: game identity + outcomes + pre-game model predictions + pre-closing market odds. No future data. No fabrication.",
+  "required_fields": [
+    "game_id",
+    "game_date",
+    "home_team",
+    "away_team",
+    "y_true_home_win",
+    "p_model",
+    "p_oof",
+    "p_market",
+    "odds_decimal",
+    "source_prediction_ref",
+    "source_odds_ref",
+    "paper_only",
+    "production_ready"
+  ],
+  "field_count": 13
+}
