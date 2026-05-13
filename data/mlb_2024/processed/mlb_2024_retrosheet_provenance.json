@@ -1,0 +1,16 @@
+{
+  "source_name": "Retrosheet",
+  "season": 2024,
+  "attribution_required": true,
+  "license_status": "ATTRIBUTION_REQUIRED",
+  "source_url_or_reference": "https://www.retrosheet.org/gamelogs/index.html",
+  "attribution_text": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at www.retrosheet.org.",
+  "source_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/raw/gl2024.txt",
+  "source_file_exists": true,
+  "source_file_mtime": "2026-05-13T03:55:20Z",
+  "downloaded_at": "2026-05-13T03:55:52Z",
+  "no_odds_included": true,
+  "no_predictions_included": true,
+  "paper_only": true,
+  "production_ready": false
+}

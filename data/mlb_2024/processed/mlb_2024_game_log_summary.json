@@ -1,0 +1,18 @@
+{
+  "season": 2024,
+  "source_name": "Retrosheet",
+  "source_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/raw/gl2024.txt",
+  "row_count_raw": 2429,
+  "row_count_processed": 2429,
+  "unique_game_id_count": 2429,
+  "date_start": "2024-03-20",
+  "date_end": "2024-09-30",
+  "teams_detected_count": 60,
+  "outcome_coverage_pct": 1.0,
+  "schema_valid": true,
+  "blocker": "",
+  "paper_only": true,
+  "production_ready": false,
+  "contains_odds": false,
+  "contains_predictions": false
+}

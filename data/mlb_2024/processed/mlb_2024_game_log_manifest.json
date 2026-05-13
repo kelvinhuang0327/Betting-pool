@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-13T03:55:53Z",
+  "paper_only": true,
+  "production_ready": false,
+  "contains_odds": false,
+  "contains_predictions": false,
+  "artifact_count": 6,
+  "artifacts": [
+    {
+      "filename": "mlb_2024_game_identity.csv",
+      "size_bytes": 156867,
+      "paper_only": true,
+      "production_ready": false,
+      "contains_odds": false,
+      "contains_predictions": false
+    },
+    {
+      "filename": "mlb_2024_game_identity_outcomes_joined.csv",
+      "size_bytes": 171806,
+      "paper_only": true,
+      "production_ready": false,
+      "contains_odds": false,
+      "contains_predictions": false
+    },
+    {
+      "filename": "mlb_2024_game_log_summary.json",
+      "size_bytes": 506,
+      "paper_only": true,
+      "production_ready": false,
+      "contains_odds": false,
+      "contains_predictions": false
+    },
+    {
+      "filename": "mlb_2024_game_outcomes.csv",
+      "size_bytes": 171806,
+      "paper_only": true,
+      "production_ready": false,
+      "contains_odds": false,
+      "contains_predictions": false
+    },
+    {
+      "filename": "mlb_2024_retrosheet_provenance.json",
+      "size_bytes": 720,
+      "paper_only": true,
+      "production_ready": false,
+      "contains_odds": false,
+      "contains_predictions": false
+    },
+    {
+      "filename": "p32_gate_result.json",
+      "size_bytes": 708,
+      "paper_only": true,
+      "production_ready": false,
+      "contains_odds": false,
+      "contains_predictions": false
+    }
+  ]
+}
