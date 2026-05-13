@@ -1,0 +1,17 @@
+{
+  "gate": "P32_BLOCKED_SOURCE_FILE_MISSING",
+  "season": 2024,
+  "source_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/raw/gl2024.txt",
+  "row_count_raw": 0,
+  "row_count_processed": 0,
+  "unique_game_id_count": 0,
+  "date_start": "",
+  "date_end": "",
+  "outcome_coverage_pct": 0.0,
+  "provenance_status": "ATTRIBUTION_REQUIRED",
+  "license_status": "ATTRIBUTION_REQUIRED",
+  "paper_only": true,
+  "production_ready": false,
+  "blocker_reason": "Source file not found: /Users/kelvin/Kelvin-WorkSpace/Betting-pool-p13/data/mlb_2024/raw/gl2024.txt. Manually download from https://www.retrosheet.org/gamelogs/index.html and place at data/mlb_2024/raw/gl2024.txt.",
+  "artifacts": []
+}
