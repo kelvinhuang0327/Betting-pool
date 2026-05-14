@@ -152,3 +152,34 @@ grep -n "research_odds\|mlb_2024/raw" .gitignore || echo "NOT YET IN GITIGNORE"
 ---
 
 **Acceptance Marker:** RESEARCH_ODDS_DOWNLOAD_DEFERRED_20260513_READY
+
+---
+
+## 2026-05-13 P1.5 License Review / Join Smoke Update
+
+### Updated Classification Snapshot
+
+| Classification | Count |
+|---|---:|
+| ACCEPTABLE_FOR_LOCAL_RESEARCH | 0 |
+| ACCEPTABLE_FOR_FIXTURE_ONLY | 1 |
+| MANUAL_APPROVAL_REQUIRED | 2 |
+| Rejected (within P1.5 manual-review subset) | 0 |
+
+### Decision
+
+- Local-only sample decision: `FIXTURE_ONLY_SMOKE_ALLOWED_20260513`
+- Download status: still deferred for real external raw odds
+- Reason: no source promoted to ACCEPTABLE_FOR_LOCAL_RESEARCH after terms review
+
+### Join Smoke Outcome
+
+- Achieved: `FIXTURE_ONLY_JOIN_SMOKE_READY`
+- Not achieved: `JOIN_CERT_RESEARCH_ODDS_READY`
+- Interpretation: structure and contract path are validated; real-data join remains blocked by source approval
+
+### Production Reminder
+
+Research outcomes do not replace licensed production odds requirements. P37.5 approval remains required for any production use.
+
+**Acceptance Marker:** RESEARCH_ODDS_P15_LICENSE_JOIN_UPDATE_20260513_READY

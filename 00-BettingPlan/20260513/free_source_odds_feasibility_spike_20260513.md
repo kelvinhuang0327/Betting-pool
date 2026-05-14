@@ -241,3 +241,32 @@ P37.5 must still be completed before any production or wagering use of odds data
 Even if a research-grade odds source is provisioned and join-certified, it does NOT replace the production-path licensed odds approval requirement. P37.5 licensed odds approval is still required before any production edge claims, live betting, or wagering decisions.
 
 **Acceptance Marker:** FREE_SOURCE_ODDS_P1_INVESTIGATION_UPDATE_20260513_READY
+
+---
+
+## 2026-05-13 P1.5 License Review / Join Smoke Update
+
+### Summary Counters
+
+| Metric | Count |
+|---|---:|
+| manual review candidates count | 3 |
+| ACCEPTABLE_FOR_LOCAL_RESEARCH count | 0 |
+| ACCEPTABLE_FOR_FIXTURE_ONLY count | 1 |
+| MANUAL_APPROVAL_REQUIRED count | 2 |
+| rejected count | 0 |
+
+### Decisions and Status
+
+- local-only sample decision: `FIXTURE_ONLY_SMOKE_ALLOWED_20260513`
+- join smoke status: `FIXTURE_ONLY_JOIN_SMOKE_READY`
+- `JOIN_CERT_RESEARCH_ODDS_READY`: **NOT achieved**
+- licensed odds approval still required: **YES** (P37.5 remains mandatory for production path)
+
+### Supporting Artifacts (P1.5)
+
+- `research_odds_manual_review_audit_20260513.md`
+- `research_odds_local_only_decision_20260513.md`
+- `research_odds_join_smoke_report_20260513.md`
+
+**Acceptance Marker:** RESEARCH_ODDS_P15_LICENSE_JOIN_UPDATE_20260513_READY
