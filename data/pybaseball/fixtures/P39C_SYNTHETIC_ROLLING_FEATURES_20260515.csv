@@ -1,0 +1,11 @@
+as_of_date,team,feature_window_start,feature_window_end,window_days,sample_size,leakage_status,rolling_pa_proxy,rolling_avg_launch_speed,rolling_hard_hit_rate_proxy,rolling_barrel_rate_proxy
+2024-04-15,BAL,2024-04-08,2024-04-14,7,5,pregame_safe,22.0,91.2,0.38,0.12
+2024-04-15,BOS,2024-04-08,2024-04-14,7,5,pregame_safe,24.0,93.4,0.42,0.15
+2024-04-16,NYY,2024-04-09,2024-04-15,7,5,pregame_safe,23.0,92.1,0.40,0.13
+2024-04-16,TBR,2024-04-09,2024-04-15,7,5,pregame_safe,20.0,89.5,0.35,0.10
+2024-04-17,HOU,2024-04-10,2024-04-16,7,5,pregame_safe,25.0,94.0,0.44,0.16
+2024-04-17,LAA,2024-04-10,2024-04-16,7,5,pregame_safe,19.0,88.3,0.33,0.09
+2024-04-18,ATL,2024-04-11,2024-04-17,7,5,pregame_safe,26.0,95.2,0.46,0.18
+2024-04-18,NYM,2024-04-11,2024-04-17,7,5,pregame_safe,21.0,90.7,0.37,0.11
+2024-04-19,CHC,2024-04-12,2024-04-18,7,5,pregame_safe,22.0,91.8,0.39,0.12
+2024-04-19,MIL,2024-04-12,2024-04-18,7,5,pregame_safe,20.0,90.1,0.36,0.10
