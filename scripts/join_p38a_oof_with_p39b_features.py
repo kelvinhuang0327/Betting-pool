@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-P39C — Join P38A OOF Predictions with P39B Rolling Pybaseball Features
+P39C / P39E — Join P38A OOF Predictions with P39B Rolling Pybaseball Features
 
 SCRIPT_VERSION = "p39c_feature_join_v1"
 PAPER_ONLY = True
@@ -13,13 +13,15 @@ Usage:
   # Fixture smoke (synthetic data, no network):
   python scripts/join_p38a_oof_with_p39b_features.py --fixture-mode --summary-only
 
-  # Custom paths, execute + write:
+  # Custom paths, execute + write (with team code normalization on by default):
   python scripts/join_p38a_oof_with_p39b_features.py \\
     --p38a-path outputs/predictions/PAPER/p38a_2024_oof/p38a_2024_oof_predictions.csv \\
-    --p39b-path data/pybaseball/fixtures/P39C_SYNTHETIC_ROLLING_FEATURES_20260515.csv \\
-    --execute --out-file /tmp/p39c_enriched.csv
+    --p39b-path data/pybaseball/local_only/p39e_rolling_features_2024_04_08_04_30.csv \\
+    --execute --out-file data/pybaseball/local_only/p39e_enriched_p38a_april_sample.csv
 
-Acceptance marker: P39C_JOIN_UTILITY_READY_20260515
+Acceptance markers:
+  P39C_JOIN_UTILITY_READY_20260515
+  P39E_JOIN_UTILITY_TEAM_NORMALIZATION_READY_20260515
 """
 from __future__ import annotations
 
@@ -29,6 +31,8 @@ import sys
 from typing import Any
 
 import pandas as pd
+
+from scripts.team_code_normalization import normalize_team_code
 
 SCRIPT_VERSION = "p39c_feature_join_v1"
 PREV_VERSION = "p39b_pybaseball_rolling_v1"
@@ -78,6 +82,46 @@ P39B_META_COLS = {
 # ──────────────────────────────────────────────────────────────────────────────
 # Pure Functions
 # ──────────────────────────────────────────────────────────────────────────────
+
+
+def normalize_team_codes_in_df(
+    df: pd.DataFrame,
+    columns: list[str],
+) -> tuple[pd.DataFrame, dict[str, list[str]]]:
+    """
+    Normalize team code columns in a DataFrame to canonical Statcast codes.
+
+    Missing columns are silently skipped (e.g., away_team absent from real P38A).
+    Unknown codes are kept as-is and reported in the returned dict.
+
+    Args:
+        df: Input DataFrame.
+        columns: Column names to normalize (e.g. ["home_team", "away_team"] or ["team"]).
+
+    Returns:
+        Tuple of (normalized DataFrame copy, dict mapping column → list of unknown codes seen).
+    """
+    result = df.copy()
+    unknown_by_col: dict[str, list[str]] = {}
+    for col in columns:
+        if col not in result.columns:
+            continue
+        unknowns: list[str] = []
+        new_vals: list[Any] = []
+        for val in result[col]:
+            if pd.isna(val):
+                new_vals.append(val)
+            else:
+                normalized = normalize_team_code(str(val))
+                if normalized is None:
+                    unknowns.append(str(val))
+                    new_vals.append(str(val))  # keep original; caller decides how to handle
+                else:
+                    new_vals.append(normalized)
+        result[col] = new_vals
+        if unknowns:
+            unknown_by_col[col] = unknowns
+    return result, unknown_by_col
 
 
 def assert_no_odds_columns(columns: list[str] | pd.Index) -> None:
@@ -347,6 +391,15 @@ def parse_args() -> argparse.Namespace:
         default=False,
         help="Use synthetic inline P38A fixture (smoke testing without raw data)",
     )
+    parser.add_argument(
+        "--normalize-team-codes",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help=(
+            "Normalize team codes (Retrosheet→Statcast) before join (default: on). "
+            "Use --no-normalize-team-codes to disable."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -387,6 +440,20 @@ def main() -> None:
         sys.exit(1)
     print(f"  p39b_rows     : {len(feature_df)}")
 
+    # ── Team code normalization (default: ON) ────────────────────────────────
+    if args.normalize_team_codes:
+        p38a_df, p38a_unknown = normalize_team_codes_in_df(
+            p38a_df, ["home_team", "away_team"]
+        )
+        feature_df, feat_unknown = normalize_team_codes_in_df(feature_df, ["team"])
+        all_unknown = {**p38a_unknown, **feat_unknown}
+        if all_unknown:
+            print(f"  [WARN] Unknown team codes (kept as-is): {all_unknown}")
+        else:
+            print(f"  team_code_normalization : OK (no unknowns)")
+    else:
+        print(f"  team_code_normalization : DISABLED (--no-normalize-team-codes)")
+
     # ── Odds boundary check on inputs ─────────────────────────────────────────
     try:
         assert_no_odds_columns(list(p38a_df.columns))
@@ -425,7 +492,9 @@ def main() -> None:
     for k, v in summary.items():
         print(f"    {k:<40}: {v}")
 
-    print(f"\n  Marker: P39C_JOIN_UTILITY_READY_20260515")
+    print(f"\n  Markers:")
+    print(f"    P39C_JOIN_UTILITY_READY_20260515")
+    print(f"    P39E_JOIN_UTILITY_TEAM_NORMALIZATION_READY_20260515")
     print(f"  PAPER_ONLY=True — no production write")
 
     # ── Write output (only with --execute) ───────────────────────────────────

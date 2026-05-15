@@ -17,6 +17,7 @@ import pytest
 from scripts.join_p38a_oof_with_p39b_features import (
     assert_no_odds_columns,
     join_home_away_features,
+    normalize_team_codes_in_df,
     summarize_join_result,
     validate_join_leakage,
 )
@@ -249,3 +250,191 @@ def test_acceptance_marker() -> None:
     """Sentinel: all P39C join contract tests pass."""
     marker = "P39C_FEATURE_JOIN_TESTS_PASS_20260515"
     assert marker == "P39C_FEATURE_JOIN_TESTS_PASS_20260515"
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# P39E — Team Code Normalization Integration Tests
+# ──────────────────────────────────────────────────────────────────────────────
+
+
+def _make_p38a_retrosheet() -> pd.DataFrame:
+    """
+    Synthetic P38A fixture using Retrosheet codes that differ from Statcast.
+    CHA (White Sox), TBA (Tampa Bay), ARI (Arizona), OAK (Athletics).
+    """
+    return pd.DataFrame([
+        {
+            "game_id": "CHA-20240415-0",
+            "p_oof": 0.55,
+            "fold_id": 0,
+            "model_version": "p38a_fixture",
+            "game_date": "2024-04-15",
+            "home_team": "CHA",   # Retrosheet → CWS
+            "away_team": "TBA",   # Retrosheet → TB
+        },
+        {
+            "game_id": "ARI-20240416-0",
+            "p_oof": 0.48,
+            "fold_id": 0,
+            "model_version": "p38a_fixture",
+            "game_date": "2024-04-16",
+            "home_team": "ARI",   # Retrosheet → AZ
+            "away_team": "OAK",   # Retrosheet → ATH
+        },
+    ])
+
+
+def _make_features_statcast() -> pd.DataFrame:
+    """Synthetic P39B features using Statcast canonical codes."""
+    return pd.DataFrame([
+        {
+            "as_of_date": "2024-04-15",
+            "team": "CWS",   # Statcast White Sox
+            "feature_window_start": "2024-04-08",
+            "feature_window_end": "2024-04-14",
+            "window_days": 7,
+            "sample_size": 6,
+            "leakage_status": "pregame_safe",
+            "rolling_pa_proxy": 20.0,
+            "rolling_avg_launch_speed": 88.5,
+            "rolling_hard_hit_rate_proxy": 0.33,
+            "rolling_barrel_rate_proxy": 0.10,
+        },
+        {
+            "as_of_date": "2024-04-15",
+            "team": "TB",    # Statcast Tampa Bay
+            "feature_window_start": "2024-04-08",
+            "feature_window_end": "2024-04-14",
+            "window_days": 7,
+            "sample_size": 5,
+            "leakage_status": "pregame_safe",
+            "rolling_pa_proxy": 19.0,
+            "rolling_avg_launch_speed": 87.0,
+            "rolling_hard_hit_rate_proxy": 0.31,
+            "rolling_barrel_rate_proxy": 0.09,
+        },
+        {
+            "as_of_date": "2024-04-16",
+            "team": "AZ",    # Statcast Arizona
+            "feature_window_start": "2024-04-09",
+            "feature_window_end": "2024-04-15",
+            "window_days": 7,
+            "sample_size": 5,
+            "leakage_status": "pregame_safe",
+            "rolling_pa_proxy": 21.0,
+            "rolling_avg_launch_speed": 90.1,
+            "rolling_hard_hit_rate_proxy": 0.36,
+            "rolling_barrel_rate_proxy": 0.11,
+        },
+        {
+            "as_of_date": "2024-04-16",
+            "team": "ATH",   # Statcast Athletics
+            "feature_window_start": "2024-04-09",
+            "feature_window_end": "2024-04-15",
+            "window_days": 7,
+            "sample_size": 5,
+            "leakage_status": "pregame_safe",
+            "rolling_pa_proxy": 18.0,
+            "rolling_avg_launch_speed": 86.5,
+            "rolling_hard_hit_rate_proxy": 0.29,
+            "rolling_barrel_rate_proxy": 0.08,
+        },
+    ])
+
+
+def test_cha_normalizes_and_joins_as_cws() -> None:
+    """
+    P38A home_team CHA (Retrosheet) must normalize to CWS before join.
+    After normalization, CWS in P38A matches CWS feature row.
+    """
+    p38a = _make_p38a_retrosheet()
+    features = _make_features_statcast()
+    p38a_norm, _ = normalize_team_codes_in_df(p38a, ["home_team", "away_team"])
+    features_norm, _ = normalize_team_codes_in_df(features, ["team"])
+    joined = join_home_away_features(p38a_norm, features_norm)
+    cws_row = joined[joined["game_id"] == "CHA-20240415-0"].iloc[0]
+    # CHA → CWS home join should match the 88.5 feature
+    assert cws_row["home_rolling_avg_launch_speed"] == pytest.approx(88.5)
+
+
+def test_tba_normalizes_and_joins_as_tb() -> None:
+    """
+    P38A away_team TBA (Retrosheet) must normalize to TB before join.
+    After normalization, TB in P38A matches TB feature row.
+    """
+    p38a = _make_p38a_retrosheet()
+    features = _make_features_statcast()
+    p38a_norm, _ = normalize_team_codes_in_df(p38a, ["home_team", "away_team"])
+    features_norm, _ = normalize_team_codes_in_df(features, ["team"])
+    joined = join_home_away_features(p38a_norm, features_norm)
+    row = joined[joined["game_id"] == "CHA-20240415-0"].iloc[0]
+    # TBA → TB away join should match the 87.0 feature
+    assert row["away_rolling_avg_launch_speed"] == pytest.approx(87.0)
+
+
+def test_ari_normalizes_and_joins_as_az() -> None:
+    """
+    P38A home_team ARI (Retrosheet) must normalize to AZ before join.
+    """
+    p38a = _make_p38a_retrosheet()
+    features = _make_features_statcast()
+    p38a_norm, _ = normalize_team_codes_in_df(p38a, ["home_team", "away_team"])
+    features_norm, _ = normalize_team_codes_in_df(features, ["team"])
+    joined = join_home_away_features(p38a_norm, features_norm)
+    az_row = joined[joined["game_id"] == "ARI-20240416-0"].iloc[0]
+    # ARI → AZ home join should match the 90.1 feature
+    assert az_row["home_rolling_avg_launch_speed"] == pytest.approx(90.1)
+
+
+def test_oak_normalizes_and_joins_as_ath() -> None:
+    """
+    P38A away_team OAK (Retrosheet) must normalize to ATH before join.
+    """
+    p38a = _make_p38a_retrosheet()
+    features = _make_features_statcast()
+    p38a_norm, _ = normalize_team_codes_in_df(p38a, ["home_team", "away_team"])
+    features_norm, _ = normalize_team_codes_in_df(features, ["team"])
+    joined = join_home_away_features(p38a_norm, features_norm)
+    row = joined[joined["game_id"] == "ARI-20240416-0"].iloc[0]
+    # OAK → ATH away join should match the 86.5 feature
+    assert row["away_rolling_avg_launch_speed"] == pytest.approx(86.5)
+
+
+def test_unknown_team_code_kept_as_is_and_reported() -> None:
+    """
+    normalize_team_codes_in_df must report unknown codes in the returned dict
+    rather than silently substituting a wrong canonical code.
+    """
+    df = pd.DataFrame([
+        {"home_team": "BAL", "game_date": "2024-04-15"},
+        {"home_team": "ZZZ", "game_date": "2024-04-16"},  # unknown
+    ])
+    normed, unknown = normalize_team_codes_in_df(df, ["home_team"])
+    # BAL is known — should stay BAL
+    assert normed.iloc[0]["home_team"] == "BAL"
+    # ZZZ is unknown — kept as-is, reported in unknown dict
+    assert normed.iloc[1]["home_team"] == "ZZZ"
+    assert "home_team" in unknown
+    assert "ZZZ" in unknown["home_team"]
+
+
+def test_normalized_join_still_respects_leakage() -> None:
+    """
+    Normalization must not bypass leakage checks.
+    validate_join_leakage should still catch future-dated window_end after normalization.
+    """
+    p38a = _make_p38a_retrosheet()
+    features = _make_features_statcast().copy()
+    features["feature_window_end"] = "2024-04-30"  # future leakage!
+    p38a_norm, _ = normalize_team_codes_in_df(p38a, ["home_team", "away_team"])
+    features_norm, _ = normalize_team_codes_in_df(features, ["team"])
+    violations = validate_join_leakage(p38a_norm, features_norm)
+    assert len(violations) > 0
+    assert any("feature_window_end >= as_of_date" in v for v in violations)
+
+
+def test_normalization_acceptance_marker() -> None:
+    """Sentinel: all P39E join normalization tests pass."""
+    marker = "P39E_JOIN_UTILITY_TEAM_NORMALIZATION_READY_20260515"
+    assert marker == "P39E_JOIN_UTILITY_TEAM_NORMALIZATION_READY_20260515"
+
