@@ -34,9 +34,12 @@ import pandas as pd
 # Constants
 # ---------------------------------------------------------------------------
 
-SCRIPT_VERSION = "p39b_pybaseball_rolling_v1"
-PREV_VERSION = "p39a_pybaseball_skeleton_v1"
+SCRIPT_VERSION = "p39g_pybaseball_chunked_v1"
+PREV_VERSION = "p39b_pybaseball_rolling_v1"
 PAPER_ONLY = True
+
+# P39G marker
+# P39G_CHUNKED_FETCH_RUNTIME_READY_20260515
 
 # Exact column names forbidden in any output
 FORBIDDEN_ODDS_COLUMNS: frozenset[str] = frozenset(
@@ -299,9 +302,9 @@ def build_team_daily_statcast_aggregates(df: pd.DataFrame) -> pd.DataFrame:
             bb = g[g["launch_speed"].notna()]
             n_bb = len(bb)
             row["batted_balls"] = n_bb
-            row["avg_launch_speed"] = float(bb["launch_speed"].mean()) if n_bb > 0 else None
+            row["avg_launch_speed"] = _to_float_or_none(bb["launch_speed"].mean()) if n_bb > 0 else None
             row["hard_hit_rate_proxy"] = (
-                float((bb["launch_speed"] >= 95.0).mean()) if n_bb > 0 else None
+                _to_float_or_none((bb["launch_speed"] >= 95.0).mean()) if n_bb > 0 else None
             )
         else:
             row["batted_balls"] = None
@@ -312,19 +315,19 @@ def build_team_daily_statcast_aggregates(df: pd.DataFrame) -> pd.DataFrame:
         if has_la and has_ls:
             bb2 = g[g["launch_speed"].notna() & g["launch_angle"].notna()]
             n_bb2 = len(bb2)
-            row["avg_launch_angle"] = float(bb2["launch_angle"].mean()) if n_bb2 > 0 else None
+            row["avg_launch_angle"] = _to_float_or_none(bb2["launch_angle"].mean()) if n_bb2 > 0 else None
             if n_bb2 > 0:
                 barrel_mask = (
                     (bb2["launch_speed"] >= 98.0)
                     & (bb2["launch_angle"] >= 26.0)
                     & (bb2["launch_angle"] <= 30.0)
                 )
-                row["barrel_rate_proxy"] = float(barrel_mask.mean())
+                row["barrel_rate_proxy"] = _to_float_or_none(barrel_mask.mean())
             else:
                 row["barrel_rate_proxy"] = None
         elif has_la:
             bb_la = g[g["launch_angle"].notna()]
-            row["avg_launch_angle"] = float(bb_la["launch_angle"].mean()) if len(bb_la) > 0 else None
+            row["avg_launch_angle"] = _to_float_or_none(bb_la["launch_angle"].mean()) if len(bb_la) > 0 else None
             row["barrel_rate_proxy"] = None
         else:
             row["avg_launch_angle"] = None
@@ -334,7 +337,7 @@ def build_team_daily_statcast_aggregates(df: pd.DataFrame) -> pd.DataFrame:
         if has_woba:
             woba_rows = g[g["estimated_woba_using_speedangle"].notna()]
             row["avg_estimated_woba_using_speedangle"] = (
-                float(woba_rows["estimated_woba_using_speedangle"].mean())
+                _to_float_or_none(woba_rows["estimated_woba_using_speedangle"].mean())
                 if len(woba_rows) > 0 else None
             )
         else:
@@ -342,7 +345,7 @@ def build_team_daily_statcast_aggregates(df: pd.DataFrame) -> pd.DataFrame:
 
         # Release speed faced (proxy for opponent pitcher quality)
         if has_release:
-            row["avg_release_speed_against"] = float(g["release_speed"].mean()) if len(g) > 0 else None
+            row["avg_release_speed_against"] = _to_float_or_none(g["release_speed"].mean()) if len(g) > 0 else None
         else:
             row["avg_release_speed_against"] = None
 
@@ -426,7 +429,7 @@ def build_rolling_features(
 
             def _mean(col: str) -> float | None:
                 if col in window_df.columns and window_df[col].notna().any():
-                    return float(window_df[col].mean())
+                    return _to_float_or_none(window_df[col].mean())
                 return None
 
             def _sum_int(col: str) -> int | None:
@@ -480,6 +483,94 @@ def compute_summary_hash(summary: dict) -> str:
     return hashlib.sha256(serialized.encode()).hexdigest()[:16]
 
 
+def _to_float_or_none(val) -> float | None:  # noqa: ANN001
+    """
+    Safely convert a value to float, returning None on NA / NaN / None.
+
+    Handles pandas NAType (pd.NA), numpy.nan, and None.
+    Necessary because pybaseball uses pandas nullable float dtype
+    (Float64) whose .mean() returns pd.NA instead of np.nan when
+    all values in a group are missing.
+    """
+    if val is None:
+        return None
+    try:
+        f = float(val)
+        return None if (f != f) else f  # NaN self-comparison
+    except (TypeError, ValueError):
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Chunked fetch / resume manifest helpers (P39G)
+# ---------------------------------------------------------------------------
+
+
+def build_date_chunks(
+    start_date: str,
+    end_date: str,
+    chunk_days: int,
+) -> list[dict]:
+    """
+    Split [start_date, end_date] into sequential non-overlapping chunks.
+
+    Returns list of dicts:
+        chunk_id, start_date, end_date, status='PENDING'
+    """
+    start = date.fromisoformat(start_date)
+    end = date.fromisoformat(end_date)
+    chunks: list[dict] = []
+    chunk_id = 0
+    cur = start
+    while cur <= end:
+        chunk_end = min(cur + timedelta(days=chunk_days - 1), end)
+        chunks.append(
+            {
+                "chunk_id": chunk_id,
+                "start_date": str(cur),
+                "end_date": str(chunk_end),
+                "status": "PENDING",
+                "rows": None,
+                "error": None,
+                "hash": None,
+                "fetched_at": None,
+            }
+        )
+        cur = chunk_end + timedelta(days=1)
+        chunk_id += 1
+    return chunks
+
+
+def load_manifest(manifest_path: Path) -> dict[int, dict]:
+    """
+    Load existing manifest JSON → {chunk_id: entry}.
+    Returns empty dict if file does not exist.
+    """
+    if not manifest_path.exists():
+        return {}
+    try:
+        data = json.loads(manifest_path.read_text())
+        return {int(e["chunk_id"]): e for e in data.get("chunks", [])}
+    except Exception as exc:  # noqa: BLE001
+        log.warning("[P39G] Failed to load manifest %s: %s", manifest_path, exc)
+        return {}
+
+
+def save_manifest(
+    manifest_path: Path,
+    chunks: list[dict],
+    meta: dict | None = None,
+) -> None:
+    """
+    Write manifest JSON (always overwrites with latest state).
+    manifest_path must be inside local_only/.
+    """
+    assert_output_path_gitignored(str(manifest_path))
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {"meta": meta or {}, "chunks": chunks}
+    manifest_path.write_text(json.dumps(payload, indent=2, default=str))
+
+
 # ---------------------------------------------------------------------------
 # Runtime functions — may call pybaseball (only if --execute)
 # ---------------------------------------------------------------------------
@@ -520,6 +611,162 @@ def fetch_statcast_range(
     except Exception as exc:  # noqa: BLE001
         log.warning("[pybaseball] Statcast fetch FAILED: %s", exc)
         return None
+
+
+def fetch_statcast_chunked(
+    start_date: str,
+    end_date: str,
+    chunk_days: int,
+    cache_dir: Path,
+    manifest_path: Path,
+    force_refresh: bool = False,
+) -> pd.DataFrame | None:
+    """
+    Fetch Statcast for [start_date, end_date] in chunk_days-sized windows.
+
+    Resume behaviour:
+        - Load existing manifest (if any)
+        - Skip SUCCESS chunks (load from cache CSV) unless force_refresh=True
+        - Fetch PENDING / FAILED chunks via pybaseball.statcast()
+        - Save per-chunk CSV to cache_dir/chunk_{id:03d}_{start}_{end}.csv
+        - Update manifest after each chunk
+
+    Returns:
+        Concatenated deduplicated DataFrame (all chunks SUCCESS)
+        or None if all chunks failed / empty.
+    """
+    assert_output_path_gitignored(str(cache_dir))
+    assert_output_path_gitignored(str(manifest_path))
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    chunks = build_date_chunks(start_date, end_date, chunk_days)
+    n_total = len(chunks)
+
+    # Merge existing manifest status into chunks
+    existing = load_manifest(manifest_path)
+    if force_refresh:
+        log.info("[P39G] --force-refresh: clearing all chunk statuses")
+        existing = {}
+
+    for c in chunks:
+        cid = c["chunk_id"]
+        if cid in existing:
+            prev = existing[cid]
+            # Only carry over SUCCESS status (keep date range from current)
+            if prev.get("status") == "SUCCESS":
+                c["status"] = "SUCCESS"
+                c["rows"] = prev.get("rows")
+                c["hash"] = prev.get("hash")
+                c["fetched_at"] = prev.get("fetched_at")
+
+    # Lazy import
+    try:
+        import pybaseball  # noqa: PLC0415
+        try:
+            pybaseball.cache.enable()
+        except Exception:  # noqa: BLE001
+            pass
+    except ImportError as exc:
+        log.error("[P39G] pybaseball not installed: %s", exc)
+        return None
+
+    all_frames: list[pd.DataFrame] = []
+    n_success = 0
+    n_failed = 0
+
+    for c in chunks:
+        cid = c["chunk_id"]
+        cs = c["start_date"]
+        ce = c["end_date"]
+        chunk_csv = cache_dir / f"chunk_{cid:03d}_{cs}_{ce}.csv"
+
+        if c["status"] == "SUCCESS" and chunk_csv.exists():
+            log.info(
+                "[P39G] Chunk %d/%d (%s→%s): CACHED — loading",
+                cid + 1, n_total, cs, ce,
+            )
+            try:
+                cached_df = pd.read_csv(str(chunk_csv), low_memory=False)
+                all_frames.append(cached_df)
+                n_success += 1
+                continue
+            except Exception as exc:  # noqa: BLE001
+                log.warning("[P39G] Cache load failed for chunk %d: %s — re-fetching", cid, exc)
+                c["status"] = "PENDING"
+
+        log.info(
+            "[P39G] Chunk %d/%d (%s→%s): FETCHING ...",
+            cid + 1, n_total, cs, ce,
+        )
+        try:
+            df_chunk = pybaseball.statcast(start_dt=cs, end_dt=ce)
+            if df_chunk is None or df_chunk.empty:
+                log.warning("[P39G] Chunk %d returned empty", cid)
+                c["status"] = "SUCCESS"  # treat empty period as success
+                c["rows"] = 0
+                c["hash"] = "empty"
+                c["fetched_at"] = datetime.now(timezone.utc).isoformat()
+                n_success += 1
+            else:
+                n_rows = len(df_chunk)
+                h = hashlib.sha256(
+                    str(n_rows).encode() + cs.encode() + ce.encode()
+                ).hexdigest()[:12]
+                # Save chunk CSV
+                df_chunk.to_csv(str(chunk_csv), index=False)
+                all_frames.append(df_chunk)
+                c["status"] = "SUCCESS"
+                c["rows"] = n_rows
+                c["hash"] = h
+                c["fetched_at"] = datetime.now(timezone.utc).isoformat()
+                c["error"] = None
+                n_success += 1
+                log.info(
+                    "[P39G] Chunk %d: %d rows → %s",
+                    cid, n_rows, chunk_csv.name,
+                )
+        except Exception as exc:  # noqa: BLE001
+            log.warning("[P39G] Chunk %d FAILED: %s", cid, exc)
+            c["status"] = "FAILED"
+            c["error"] = str(exc)
+            c["fetched_at"] = datetime.now(timezone.utc).isoformat()
+            n_failed += 1
+
+        # Save manifest after every chunk
+        save_manifest(
+            manifest_path,
+            chunks,
+            meta={
+                "start_date": start_date,
+                "end_date": end_date,
+                "chunk_days": chunk_days,
+                "n_chunks": n_total,
+                "n_success": n_success,
+                "n_failed": n_failed,
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            },
+        )
+
+    log.info(
+        "[P39G] Chunked fetch complete: %d/%d SUCCESS, %d FAILED",
+        n_success, n_total, n_failed,
+    )
+
+    if not all_frames:
+        return None
+
+    combined = pd.concat(all_frames, ignore_index=True)
+
+    # Dedup by (game_date, game_pk, batter) if columns present
+    dedup_cols = [c for c in ["game_date", "game_pk", "batter"] if c in combined.columns]
+    if dedup_cols:
+        before = len(combined)
+        combined = combined.drop_duplicates(subset=dedup_cols)
+        after = len(combined)
+        if before != after:
+            log.info("[P39G] Dedup removed %d duplicate rows (%d→%d)", before - after, before, after)
+
+    return combined
 
 
 def build_feature_summary_only(
@@ -616,6 +863,23 @@ def parse_args() -> argparse.Namespace:
         default="data/pybaseball/local_only/cache",
         help="Directory for raw Statcast cache",
     )
+    p.add_argument(
+        "--chunk-days",
+        type=int,
+        default=None,
+        help="Fetch Statcast in N-day chunks (P39G resume mode). None = single call.",
+    )
+    p.add_argument(
+        "--resume-manifest",
+        default=None,
+        help="Path to per-chunk manifest JSON (local_only only). Enables resume.",
+    )
+    p.add_argument(
+        "--force-refresh",
+        action="store_true",
+        default=False,
+        help="Ignore cached chunk status and re-fetch all chunks.",
+    )
     return p.parse_args()
 
 
@@ -671,11 +935,31 @@ def main() -> None:
     print("  Execute Mode — fetching Statcast + computing rolling features ...")
     print("=" * 60)
 
-    df_raw = fetch_statcast_range(
-        args.start_date,
-        args.end_date,
-        cache_dir=Path(args.cache_dir) if args.cache_dir else None,
-    )
+    # P39G chunked fetch path
+    if args.chunk_days is not None:
+        manifest_path = (
+            Path(args.resume_manifest)
+            if args.resume_manifest
+            else Path(args.cache_dir) / "p39g_manifest.json"
+        )
+        print(f"  Chunk mode     : {args.chunk_days}-day chunks")
+        print(f"  Manifest       : {manifest_path}")
+        print(f"  Force refresh  : {args.force_refresh}")
+        print()
+        df_raw = fetch_statcast_chunked(
+            args.start_date,
+            args.end_date,
+            chunk_days=args.chunk_days,
+            cache_dir=Path(args.cache_dir),
+            manifest_path=manifest_path,
+            force_refresh=args.force_refresh,
+        )
+    else:
+        df_raw = fetch_statcast_range(
+            args.start_date,
+            args.end_date,
+            cache_dir=Path(args.cache_dir) if args.cache_dir else None,
+        )
 
     raw_summary = summarize_statcast_frame(
         df_raw if df_raw is not None else pd.DataFrame()
@@ -753,6 +1037,7 @@ def main() -> None:
     print()
     print("  Marker: P39B_ROLLING_FEATURE_CORE_READY_20260515")
     print("  Marker: P39D_REAL_FEATURE_OUTPUT_RUNTIME_READY_20260515")
+    print("  Marker: P39G_CHUNKED_FETCH_RUNTIME_READY_20260515")
     sys.exit(0)
 
 
