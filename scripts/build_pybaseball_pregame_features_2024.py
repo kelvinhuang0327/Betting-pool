@@ -664,9 +664,9 @@ def main() -> None:
         print()
         print("  Marker: P39B_ROLLING_FEATURE_CORE_READY_20260515")
         print("  Marker: P39A_PYBASEBALL_SKELETON_SCRIPT_READY_20260515")
+        print("  Marker: P39D_REAL_FEATURE_OUTPUT_RUNTIME_READY_20260515")
         sys.exit(0)
 
-    # ── EXECUTE MODE ─────────────────────────────────────────────────────────
     print("=" * 60)
     print("  Execute Mode — fetching Statcast + computing rolling features ...")
     print("=" * 60)
@@ -752,6 +752,7 @@ def main() -> None:
 
     print()
     print("  Marker: P39B_ROLLING_FEATURE_CORE_READY_20260515")
+    print("  Marker: P39D_REAL_FEATURE_OUTPUT_RUNTIME_READY_20260515")
     sys.exit(0)
 
 
