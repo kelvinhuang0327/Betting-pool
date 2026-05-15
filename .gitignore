@@ -82,3 +82,5 @@ tmp/
 data/research_odds/local_only/
 # Retrosheet raw game log — large file, not needed in CI
 data/mlb_2024/raw/
+# pybaseball research data — local only, never commit raw Statcast / team data
+data/pybaseball/local_only/
