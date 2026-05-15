@@ -1,18 +1,21 @@
 """
-P39A — Pybaseball Pregame-Safe Feature Adapter
+P39B — Pybaseball Pregame-Safe Feature Adapter (Rolling Core)
 scripts/build_pybaseball_pregame_features_2024.py
 
 Purpose:
     Research-only feature pipeline using pybaseball / Statcast.
-    Builds rolling pregame-safe batting, pitching, workload, and team form
+    Builds rolling pregame-safe batting, workload, and team form
     features for P39 enrichment of P38A OOF predictions.
 
     ⚠️  pybaseball does NOT provide betting odds.
     ⚠️  This script does NOT produce moneyline / CLV / sportsbook data.
     ⚠️  All features use only data BEFORE game_date (no look-ahead).
+    ⚠️  window_end = game_date - 1  (strict D-1 cutoff enforced everywhere)
 
-SCRIPT_VERSION = p39a_pybaseball_skeleton_v1
-PAPER_ONLY = True
+SCRIPT_VERSION = p39b_pybaseball_rolling_v1
+PREV_VERSION   = p39a_pybaseball_skeleton_v1
+PAPER_ONLY     = True
+P39B_ROLLING_FEATURE_CORE_READY_20260515
 """
 
 from __future__ import annotations
@@ -31,9 +34,11 @@ import pandas as pd
 # Constants
 # ---------------------------------------------------------------------------
 
-SCRIPT_VERSION = "p39a_pybaseball_skeleton_v1"
+SCRIPT_VERSION = "p39b_pybaseball_rolling_v1"
+PREV_VERSION = "p39a_pybaseball_skeleton_v1"
 PAPER_ONLY = True
 
+# Exact column names forbidden in any output
 FORBIDDEN_ODDS_COLUMNS: frozenset[str] = frozenset(
     {
         "moneyline",
@@ -49,7 +54,29 @@ FORBIDDEN_ODDS_COLUMNS: frozenset[str] = frozenset(
         "clv",
         "closing_implied_prob",
         "no_vig_prob",
+        "spread",
+        "over_under",
+        "sportsbook",
+        "line_move",
+        "sharp_money",
     }
+)
+
+# Keyword substrings that flag a column as odds-related
+FORBIDDEN_ODDS_KEYWORDS: frozenset[str] = frozenset(
+    {
+        "odds",
+        "moneyline",
+        "spread",
+        "sportsbook",
+        "vig",
+        "implied",
+    }
+)
+
+# Required Statcast columns for team-daily aggregation
+REQUIRED_STATCAST_COLS: frozenset[str] = frozenset(
+    {"game_date", "game_pk", "inning_topbot", "home_team", "away_team"}
 )
 
 OUTPUT_SCHEMA_COLUMNS: list[str] = [
@@ -106,14 +133,30 @@ def build_rolling_window_dates(
 
 def assert_no_odds_columns(columns: list[str]) -> None:
     """
-    Raise ValueError if any forbidden odds column is present.
+    Raise ValueError if any odds-related column is present.
 
-    Call this before saving any feature DataFrame.
+    Two checks:
+    1. Exact match against FORBIDDEN_ODDS_COLUMNS
+    2. Keyword substring match against FORBIDDEN_ODDS_KEYWORDS
+       (case-insensitive — catches 'home_odds', 'sportsbook_id', etc.)
+
+    Call this before returning or saving any feature DataFrame.
     """
-    found = set(columns) & FORBIDDEN_ODDS_COLUMNS
-    if found:
+    exact_found = {c for c in columns if c in FORBIDDEN_ODDS_COLUMNS}
+
+    keyword_found: set[str] = set()
+    for col in columns:
+        col_lower = col.lower()
+        for kw in FORBIDDEN_ODDS_KEYWORDS:
+            if kw in col_lower:
+                keyword_found.add(col)
+                break
+
+    all_found = exact_found | keyword_found
+    if all_found:
         raise ValueError(
-            f"LEAKAGE_DETECTED: Odds columns found in feature output: {found}\n"
+            f"LEAKAGE_DETECTED: Odds/market columns found in feature output: "
+            f"{sorted(all_found)}\n"
             "pybaseball adapter must NOT produce odds data."
         )
 
@@ -130,7 +173,7 @@ def summarize_statcast_frame(df: pd.DataFrame) -> dict:
         sample_columns        — list[str] (first 10)
         odds_boundary_status  — "CONFIRMED" | "VIOLATION"
         odds_columns_found    — list[str]
-        leakage_rows          — 0 (statcast frame does not have leakage status)
+        leakage_rows          — 0 (Statcast frame has no leakage column)
     """
     if df is None or df.empty:
         return {
@@ -145,12 +188,17 @@ def summarize_statcast_frame(df: pd.DataFrame) -> dict:
         }
 
     cols = list(df.columns)
-    found_odds = list(set(cols) & FORBIDDEN_ODDS_COLUMNS)
+    exact_found = [c for c in cols if c in FORBIDDEN_ODDS_COLUMNS]
+    keyword_found = [
+        c for c in cols
+        if any(kw in c.lower() for kw in FORBIDDEN_ODDS_KEYWORDS)
+    ]
+    found_odds = list(set(exact_found) | set(keyword_found))
     odds_status = "VIOLATION" if found_odds else "CONFIRMED"
 
     date_col = "game_date" if "game_date" in cols else None
-    date_min = str(df[date_col].min()) if date_col else None
-    date_max = str(df[date_col].max()) if date_col else None
+    date_min = str(df[date_col].min())[:10] if date_col else None
+    date_max = str(df[date_col].max())[:10] if date_col else None
 
     return {
         "rows": len(df),
@@ -162,6 +210,251 @@ def summarize_statcast_frame(df: pd.DataFrame) -> dict:
         "odds_columns_found": found_odds,
         "leakage_rows": 0,
     }
+
+
+def build_team_daily_statcast_aggregates(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Aggregate Statcast pitch-level data to team-day batting statistics.
+
+    Required Statcast columns:
+        game_date, game_pk, inning_topbot, home_team, away_team
+
+    Optional (fail-soft if absent — logs warning, outputs None for that metric):
+        events, launch_speed, launch_angle,
+        estimated_woba_using_speedangle, release_speed
+
+    Batting-team derivation:
+        inning_topbot == "Top"  →  away_team bats
+        inning_topbot == "Bot"  →  home_team bats
+
+    Returns:
+        DataFrame with one row per (game_date, game_pk, team), columns:
+            game_date, team, game_pk,
+            plate_appearances_proxy, batted_balls,
+            avg_launch_speed, avg_launch_angle,
+            avg_estimated_woba_using_speedangle,
+            hard_hit_rate_proxy   (launch_speed >= 95 mph),
+            barrel_rate_proxy     (launch_speed >= 98 AND 26 <= angle <= 30),
+            avg_release_speed_against,
+            source
+
+    Guarantees:
+        - No odds columns in output (asserted before return)
+        - Returns empty DataFrame on missing required columns or empty input
+    """
+    if df is None or df.empty:
+        return pd.DataFrame()
+
+    missing = REQUIRED_STATCAST_COLS - set(df.columns)
+    if missing:
+        log.warning(
+            "[P39B] build_team_daily_statcast_aggregates: "
+            "missing required columns %s — returning empty", missing
+        )
+        return pd.DataFrame()
+
+    work = df.copy()
+
+    # Normalize game_date to YYYY-MM-DD string
+    gd = work["game_date"]
+    if hasattr(gd, "dt"):
+        work["game_date"] = gd.dt.strftime("%Y-%m-%d")
+    else:
+        work["game_date"] = gd.astype(str).str[:10]
+
+    # Determine batting team per pitch
+    is_top = work["inning_topbot"] == "Top"
+    work["batting_team"] = work["away_team"].where(is_top, work["home_team"])
+
+    has_events = "events" in work.columns
+    has_ls = "launch_speed" in work.columns
+    has_la = "launch_angle" in work.columns
+    has_woba = "estimated_woba_using_speedangle" in work.columns
+    has_release = "release_speed" in work.columns
+
+    if not has_events:
+        log.warning("[P39B] 'events' column absent — plate_appearances_proxy unavailable")
+    if not has_ls:
+        log.warning("[P39B] 'launch_speed' column absent — batted ball metrics unavailable")
+
+    records: list[dict] = []
+    for (game_date, game_pk, team), g in work.groupby(
+        ["game_date", "game_pk", "batting_team"]
+    ):
+        row: dict = {
+            "game_date": game_date,
+            "team": str(team),
+            "game_pk": int(game_pk),
+            "source": "pybaseball_statcast",
+        }
+
+        # Plate appearance proxy: events is not null = completed PA
+        if has_events:
+            row["plate_appearances_proxy"] = int(g["events"].notna().sum())
+        else:
+            row["plate_appearances_proxy"] = None
+
+        # Batted ball metrics (non-null launch_speed = ball put in play)
+        if has_ls:
+            bb = g[g["launch_speed"].notna()]
+            n_bb = len(bb)
+            row["batted_balls"] = n_bb
+            row["avg_launch_speed"] = float(bb["launch_speed"].mean()) if n_bb > 0 else None
+            row["hard_hit_rate_proxy"] = (
+                float((bb["launch_speed"] >= 95.0).mean()) if n_bb > 0 else None
+            )
+        else:
+            row["batted_balls"] = None
+            row["avg_launch_speed"] = None
+            row["hard_hit_rate_proxy"] = None
+
+        # Launch angle and barrel proxy
+        if has_la and has_ls:
+            bb2 = g[g["launch_speed"].notna() & g["launch_angle"].notna()]
+            n_bb2 = len(bb2)
+            row["avg_launch_angle"] = float(bb2["launch_angle"].mean()) if n_bb2 > 0 else None
+            if n_bb2 > 0:
+                barrel_mask = (
+                    (bb2["launch_speed"] >= 98.0)
+                    & (bb2["launch_angle"] >= 26.0)
+                    & (bb2["launch_angle"] <= 30.0)
+                )
+                row["barrel_rate_proxy"] = float(barrel_mask.mean())
+            else:
+                row["barrel_rate_proxy"] = None
+        elif has_la:
+            bb_la = g[g["launch_angle"].notna()]
+            row["avg_launch_angle"] = float(bb_la["launch_angle"].mean()) if len(bb_la) > 0 else None
+            row["barrel_rate_proxy"] = None
+        else:
+            row["avg_launch_angle"] = None
+            row["barrel_rate_proxy"] = None
+
+        # xwOBA
+        if has_woba:
+            woba_rows = g[g["estimated_woba_using_speedangle"].notna()]
+            row["avg_estimated_woba_using_speedangle"] = (
+                float(woba_rows["estimated_woba_using_speedangle"].mean())
+                if len(woba_rows) > 0 else None
+            )
+        else:
+            row["avg_estimated_woba_using_speedangle"] = None
+
+        # Release speed faced (proxy for opponent pitcher quality)
+        if has_release:
+            row["avg_release_speed_against"] = float(g["release_speed"].mean()) if len(g) > 0 else None
+        else:
+            row["avg_release_speed_against"] = None
+
+        records.append(row)
+
+    if not records:
+        return pd.DataFrame()
+
+    result = pd.DataFrame(records)
+    assert_no_odds_columns(list(result.columns))
+    return result
+
+
+def build_rolling_features(
+    team_daily_df: pd.DataFrame,
+    as_of_dates: list[date],
+    window_days: int,
+) -> pd.DataFrame:
+    """
+    Build rolling window batting features for each (as_of_date, team) pair.
+
+    LEAKAGE GUARANTEE (enforced with assertion):
+        window_end   = as_of_date - 1   (NEVER includes as_of_date row)
+        window_start = window_end - window_days + 1
+
+    Input:
+        team_daily_df — output of build_team_daily_statcast_aggregates
+        as_of_dates   — list of game dates for which to compute features
+        window_days   — number of calendar days in rolling window
+
+    Returns:
+        DataFrame with one row per (as_of_date, team), columns:
+            as_of_date, team,
+            feature_window_start, feature_window_end, window_days,
+            rolling_pa_proxy, rolling_avg_launch_speed,
+            rolling_hard_hit_rate_proxy, rolling_barrel_rate_proxy,
+            sample_size, leakage_status
+
+    Guarantees:
+        - feature_window_end < as_of_date for every row (asserted at runtime)
+        - No odds columns in output (asserted before return)
+        - Fail-soft on empty input: returns empty DataFrame with warning
+    """
+    if team_daily_df is None or team_daily_df.empty:
+        log.warning("[P39B] build_rolling_features: empty input — returning empty")
+        return pd.DataFrame()
+
+    if not as_of_dates:
+        return pd.DataFrame()
+
+    if "game_date" not in team_daily_df.columns:
+        log.warning("[P39B] build_rolling_features: 'game_date' missing — returning empty")
+        return pd.DataFrame()
+
+    df = team_daily_df.copy()
+
+    # Normalize game_date to Python date objects (handles str, ArrowString, datetime, date)
+    df["game_date"] = pd.to_datetime(df["game_date"].astype(str)).dt.date
+
+    teams = df["team"].unique().tolist()
+    records: list[dict] = []
+
+    for as_of in as_of_dates:
+        window_end = as_of - timedelta(days=1)
+        window_start = window_end - timedelta(days=window_days - 1)
+
+        # Hard leakage assertion
+        if not validate_feature_window(as_of, window_end):
+            raise RuntimeError(
+                f"LEAKAGE_VIOLATION: window_end={window_end} >= as_of_date={as_of}"
+            )
+
+        for team in teams:
+            mask = (
+                (df["team"] == team)
+                & (df["game_date"] >= window_start)
+                & (df["game_date"] <= window_end)
+            )
+            window_df = df[mask]
+            sample_size = len(window_df)
+
+            def _mean(col: str) -> float | None:
+                if col in window_df.columns and window_df[col].notna().any():
+                    return float(window_df[col].mean())
+                return None
+
+            def _sum_int(col: str) -> int | None:
+                if col in window_df.columns and window_df[col].notna().any():
+                    return int(window_df[col].sum())
+                return None
+
+            row: dict = {
+                "as_of_date": as_of,
+                "team": team,
+                "feature_window_start": window_start,
+                "feature_window_end": window_end,
+                "window_days": window_days,
+                "sample_size": sample_size,
+                "leakage_status": "pregame_safe",
+                "rolling_pa_proxy": _sum_int("plate_appearances_proxy") if sample_size > 0 else None,
+                "rolling_avg_launch_speed": _mean("avg_launch_speed") if sample_size > 0 else None,
+                "rolling_hard_hit_rate_proxy": _mean("hard_hit_rate_proxy") if sample_size > 0 else None,
+                "rolling_barrel_rate_proxy": _mean("barrel_rate_proxy") if sample_size > 0 else None,
+            }
+            records.append(row)
+
+    if not records:
+        return pd.DataFrame()
+
+    result = pd.DataFrame(records)
+    assert_no_odds_columns(list(result.columns))
+    return result
 
 
 def assert_output_path_gitignored(path: str) -> None:
@@ -198,18 +491,29 @@ def fetch_statcast_range(
     cache_dir: Path | None = None,
 ) -> pd.DataFrame | None:
     """
-    Fetch Statcast data via pybaseball.
+    Fetch Statcast pitch-level data via pybaseball.
 
-    Imported inside function to avoid import cost in --summary-only mode.
-    Fails softly: returns None on HTTPError / timeout.
+    Lazy import: pybaseball is not loaded in --summary-only mode.
+    Fail-soft: returns None on any exception (network, timeout, etc.).
     """
     try:
         import pybaseball  # noqa: PLC0415
+
+        try:
+            pybaseball.cache.enable()
+        except Exception:  # noqa: BLE001
+            pass  # cache enable is optional
+
+        if cache_dir:
+            cache_dir.mkdir(parents=True, exist_ok=True)
 
         log.info(
             "[pybaseball] Fetching Statcast %s → %s ...", start_date, end_date
         )
         df = pybaseball.statcast(start_dt=start_date, end_dt=end_date)
+        if df is None or df.empty:
+            log.warning("[pybaseball] Statcast returned empty DataFrame")
+            return None
         log.info("[pybaseball] Fetched %d rows, %d cols", len(df), len(df.columns))
         return df
 
@@ -226,13 +530,12 @@ def build_feature_summary_only(
     """
     Dry-run: describe what features would be built without fetching.
 
-    No external network call. Safe for CI.
+    No external network call. Safe for CI and offline testing.
     """
     start = date.fromisoformat(start_date)
     end = date.fromisoformat(end_date)
     n_days = (end - start).days + 1
 
-    # Validate window for first game date
     first_game = start
     ws, we = build_rolling_window_dates(first_game, window_days)
     window_safe = validate_feature_window(first_game, we)
@@ -257,12 +560,25 @@ def build_feature_summary_only(
             "statcast_aggregate_proxies",
             "schedule_density_proxies",
         ],
+        "implemented_features": [
+            "plate_appearances_proxy",
+            "batted_balls",
+            "avg_launch_speed",
+            "avg_launch_angle",
+            "avg_estimated_woba_using_speedangle",
+            "hard_hit_rate_proxy",
+            "barrel_rate_proxy",
+            "avg_release_speed_against",
+            "rolling_pa_proxy",
+            "rolling_avg_launch_speed",
+            "rolling_hard_hit_rate_proxy",
+            "rolling_barrel_rate_proxy",
+        ],
         "estimated_feature_count": 28,
         "odds_boundary": "CONFIRMED (design: no odds columns)",
         "leakage_violations": 0,
         "note": (
-            "This is a dry-run summary. "
-            "Use --execute to fetch Statcast data and compute features."
+            "Dry-run summary. Use --execute to fetch Statcast and compute features."
         ),
     }
 
@@ -308,7 +624,7 @@ def main() -> None:
     run_ts = datetime.now(timezone.utc).isoformat()
 
     print("=" * 60)
-    print("  P39A pybaseball Pregame-Safe Feature Adapter")
+    print("  P39B pybaseball Pregame-Safe Feature Adapter (Rolling Core)")
     print("=" * 60)
     print(f"  Script version : {SCRIPT_VERSION}")
     print(f"  PAPER_ONLY     : {PAPER_ONLY}")
@@ -323,23 +639,20 @@ def main() -> None:
     print()
 
     if not args.execute:
-        # ── SUMMARY-ONLY MODE (default, safe) ──────────────────────────────
+        # ── SUMMARY-ONLY MODE (default, offline, safe) ──────────────────────
         print("=" * 60)
         print("  Summary-Only Mode (dry-run — no external fetch)")
         print("=" * 60)
         summary = build_feature_summary_only(
             args.start_date, args.end_date, args.window_days
         )
-
         for key, val in summary.items():
-            print(f"  {key:30s} : {val}")
+            print(f"  {key:35s} : {val}")
 
-        # Deterministic hash for smoke repeatability check
         h = compute_summary_hash(summary)
         print()
         print(f"  Summary hash   : {h}")
 
-        # Gate: verify window safety
         if not summary["sample_window_check"]["pregame_safe"]:
             print()
             print("  FAIL: pregame window safety check failed")
@@ -349,54 +662,96 @@ def main() -> None:
         print("  Pregame-safe  : CONFIRMED")
         print("  Odds boundary : CONFIRMED")
         print()
-        print(
-            "  Marker: P39A_PYBASEBALL_SKELETON_SCRIPT_READY_20260515"
-        )
+        print("  Marker: P39B_ROLLING_FEATURE_CORE_READY_20260515")
+        print("  Marker: P39A_PYBASEBALL_SKELETON_SCRIPT_READY_20260515")
         sys.exit(0)
 
-    # ── EXECUTE MODE ────────────────────────────────────────────────────────
+    # ── EXECUTE MODE ─────────────────────────────────────────────────────────
     print("=" * 60)
-    print("  Execute Mode — fetching Statcast ...")
+    print("  Execute Mode — fetching Statcast + computing rolling features ...")
     print("=" * 60)
 
-    df = fetch_statcast_range(
+    df_raw = fetch_statcast_range(
         args.start_date,
         args.end_date,
         cache_dir=Path(args.cache_dir) if args.cache_dir else None,
     )
 
-    if df is None or df.empty:
+    raw_summary = summarize_statcast_frame(
+        df_raw if df_raw is not None else pd.DataFrame()
+    )
+    print(f"  Raw Statcast rows     : {raw_summary['rows']}")
+    print(f"  Raw Statcast columns  : {raw_summary['columns']}")
+    print(f"  Date range            : {raw_summary['date_range_start']} → {raw_summary['date_range_end']}")
+    print(f"  Odds boundary (raw)   : {raw_summary['odds_boundary_status']}")
+
+    if df_raw is None or df_raw.empty:
+        print()
         print("  [WARN] No Statcast data returned. Check date range or network.")
-        print("  Overall: PARTIAL — no data to summarize")
+        print("  Overall: PARTIAL — no data to aggregate")
+        print()
+        print("  Marker: P39B_ROLLING_FEATURE_CORE_READY_20260515")
         sys.exit(0)
 
-    summary = summarize_statcast_frame(df)
-    for key, val in summary.items():
-        print(f"  {key:30s} : {val}")
+    # Build team-daily aggregates
+    print()
+    print("  Building team-daily aggregates ...")
+    team_daily = build_team_daily_statcast_aggregates(df_raw)
+    print(f"  Team-daily rows : {len(team_daily)}")
+    if not team_daily.empty:
+        print(f"  Teams found     : {sorted(team_daily['team'].unique().tolist())}")
 
-    # Hard assert odds boundary
+    # Build rolling features for each game date in range
+    start_d = date.fromisoformat(args.start_date)
+    end_d = date.fromisoformat(args.end_date)
+    n_days = (end_d - start_d).days + 1
+    as_of_dates = [start_d + timedelta(days=i) for i in range(n_days)]
+
+    print()
+    print(f"  Building rolling features for {n_days} as_of_dates, window={args.window_days}d ...")
+    rolling_df = build_rolling_features(team_daily, as_of_dates, args.window_days)
+    print(f"  Rolling feature rows        : {len(rolling_df)}")
+    if not rolling_df.empty:
+        non_null_speed = rolling_df["rolling_avg_launch_speed"].notna().sum()
+        print(f"  Rows with launch_speed data : {non_null_speed}")
+        safe_rows = (rolling_df.get("leakage_status", pd.Series([])) == "pregame_safe").sum()
+        print(f"  Pregame-safe rows           : {safe_rows}")
+
+    # Hard odds boundary check
     try:
-        assert_no_odds_columns(list(df.columns))
+        assert_no_odds_columns(list(team_daily.columns) if not team_daily.empty else [])
+        assert_no_odds_columns(list(rolling_df.columns) if not rolling_df.empty else [])
+        print()
         print("  Odds boundary : CONFIRMED")
     except ValueError as exc:
         print(f"  FAIL: {exc}")
         sys.exit(2)
 
-    # Optional write
+    # Optional file output (local_only only)
     if args.out_file:
         assert_output_path_gitignored(args.out_file)
         out_path = Path(args.out_file)
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        # NOTE: In skeleton, we write summary JSON only (not feature rows).
-        # Full feature computation is deferred to P39 implementation round.
-        summary["generated_at"] = run_ts
+        result_meta = {
+            "script_version": SCRIPT_VERSION,
+            "paper_only": PAPER_ONLY,
+            "generated_at": run_ts,
+            "date_range": {"start": args.start_date, "end": args.end_date},
+            "window_days": args.window_days,
+            "raw_rows": raw_summary["rows"],
+            "team_daily_rows": len(team_daily),
+            "rolling_feature_rows": len(rolling_df),
+            "odds_boundary": "CONFIRMED",
+        }
         out_path.with_suffix(".summary.json").write_text(
-            json.dumps(summary, indent=2, default=str)
+            json.dumps(result_meta, indent=2, default=str)
         )
-        print(f"  Summary written: {out_path.with_suffix('.summary.json')}")
+        if not rolling_df.empty:
+            rolling_df.to_csv(str(out_path), index=False)
+            print(f"  Rolling features written : {out_path}")
 
     print()
-    print("  Marker: P39A_PYBASEBALL_SKELETON_SCRIPT_READY_20260515")
+    print("  Marker: P39B_ROLLING_FEATURE_CORE_READY_20260515")
     sys.exit(0)
 
 
