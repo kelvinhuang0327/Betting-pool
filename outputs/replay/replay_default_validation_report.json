@@ -1,0 +1,60 @@
+{
+  "generated_at_utc": "2026-05-09T12:29:08.508307+00:00",
+  "overall_status": "PASS",
+  "cases": [
+    {
+      "name": "mismatch",
+      "expected_outcome": "BLOCKED",
+      "actual_outcome": "BLOCKED",
+      "validation_status": "PASS",
+      "details": {
+        "applied": false,
+        "upgraded": 0,
+        "still_pending": 1,
+        "reason": "no_upgradeable_records",
+        "lookup_by_canonical": 0,
+        "lookup_by_snapshot_ref": 0,
+        "backup_path": null,
+        "run_at": "2026-05-09T12:29:08.505563+00:00"
+      }
+    },
+    {
+      "name": "aligned",
+      "expected_outcome": "PASS",
+      "actual_outcome": "PASS",
+      "validation_status": "PASS",
+      "details": {
+        "applied": true,
+        "upgraded": 1,
+        "still_pending": 0,
+        "reason": null,
+        "lookup_by_canonical": 1,
+        "lookup_by_snapshot_ref": 0,
+        "backup_path": null,
+        "run_at": "2026-05-09T12:29:08.506975+00:00"
+      }
+    },
+    {
+      "name": "multi-state",
+      "expected_outcome": "PASS",
+      "actual_outcome": "PASS",
+      "validation_status": "PASS",
+      "details": {
+        "applied": true,
+        "upgraded": 2,
+        "still_pending": 0,
+        "reason": null,
+        "lookup_by_canonical": 1,
+        "lookup_by_snapshot_ref": 1,
+        "backup_path": null,
+        "run_at": "2026-05-09T12:29:08.507909+00:00"
+      }
+    }
+  ],
+  "browser": {
+    "status": "SKIP",
+    "reason": "Playwright Python package is not installed in this environment.",
+    "detail": "Local/browser tooling unavailable; keeping honest SKIP."
+  },
+  "recommendation": "Keep the browser lane optional until CI consistently installs Playwright + Chromium; once the workflow is stable, it can be promoted to required status."
+}
