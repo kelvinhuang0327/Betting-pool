@@ -1,0 +1,69 @@
+{
+  "script_version": "p39h_enriched_feature_model_comparison_v1",
+  "paper_only": true,
+  "generated_at": "2026-05-15T07:10:28.155983+00:00",
+  "split": {
+    "type": "TIME_AWARE",
+    "test_start_date": "2024-08-01",
+    "train_rows": 1389,
+    "test_rows": 798
+  },
+  "baseline": {
+    "model": "p38a_baseline_p_oof",
+    "brier": 0.247675,
+    "log_loss": 0.688475,
+    "bss_vs_base_rate": 0.008676,
+    "base_rate": 0.5125,
+    "n_test": 798
+  },
+  "enriched": {
+    "model": "logistic",
+    "feature_cols": [
+      "home_rolling_pa_proxy",
+      "home_rolling_avg_launch_speed",
+      "home_rolling_hard_hit_rate_proxy",
+      "home_rolling_barrel_rate_proxy",
+      "away_rolling_pa_proxy",
+      "away_rolling_avg_launch_speed",
+      "away_rolling_hard_hit_rate_proxy",
+      "away_rolling_barrel_rate_proxy",
+      "diff_rolling_avg_launch_speed",
+      "diff_rolling_hard_hit_rate_proxy",
+      "diff_sample_size",
+      "p_oof"
+    ],
+    "n_train": 1389,
+    "n_test": 798,
+    "brier": 0.248631,
+    "log_loss": 0.690359,
+    "bss_vs_base_rate": 0.00485,
+    "base_rate": 0.5125,
+    "coef": {
+      "home_rolling_pa_proxy": 0.021096,
+      "home_rolling_avg_launch_speed": 0.003134,
+      "home_rolling_hard_hit_rate_proxy": 0.074493,
+      "home_rolling_barrel_rate_proxy": 0.025182,
+      "away_rolling_pa_proxy": 0.05271,
+      "away_rolling_avg_launch_speed": -7.6e-05,
+      "away_rolling_hard_hit_rate_proxy": -0.006591,
+      "away_rolling_barrel_rate_proxy": -0.027762,
+      "diff_rolling_avg_launch_speed": 0.002176,
+      "diff_rolling_hard_hit_rate_proxy": 0.057289,
+      "diff_sample_size": 0.038806,
+      "p_oof": 0.090909
+    }
+  },
+  "comparison": {
+    "delta_brier": 0.000956,
+    "delta_log_loss": 0.001884,
+    "interpretation": "INCONCLUSIVE",
+    "marker": "P39H_ENRICHED_MODEL_COMPARISON_NO_IMPROVEMENT_20260515",
+    "note": "delta_brier < 0 means enriched model is better (lower Brier is better). No production edge claim. Paper-only research comparison."
+  },
+  "guards": {
+    "odds_features": "NONE",
+    "leakage_violations": 0,
+    "random_split": false,
+    "production_edge_claim": false
+  }
+}
