@@ -8,9 +8,7 @@ Provides:
 from __future__ import annotations
 
 import logging
-import os
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -61,11 +59,7 @@ def _df_to_features(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
         if feat_name not in feature_frame.columns:
             if feat_name == "is_neutral":
                 feature_frame[feat_name] = 0.0
-            elif feat_name == "park_factor":
-                feature_frame[feat_name] = 1.0
-            elif feat_name == "climate_run_factor":
-                feature_frame[feat_name] = 1.0
-            elif feat_name == "climate_hr_factor":
+            elif feat_name == "park_factor" or feat_name == "climate_run_factor" or feat_name == "climate_hr_factor":
                 feature_frame[feat_name] = 1.0
             elif feat_name == "recent_inning_load_diff":
                 feature_frame[feat_name] = 0.0
@@ -83,16 +77,16 @@ def _df_to_features(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
 
 
 def _build_real_feature_frame(df: pd.DataFrame) -> pd.DataFrame:
-    ratings: Dict[str, float] = {}
-    run_history: Dict[str, list[float]] = {}
-    allow_history: Dict[str, list[float]] = {}
-    win_history: Dict[str, list[float]] = {}
-    last_game_date: Dict[str, pd.Timestamp] = {}
+    ratings: dict[str, float] = {}
+    run_history: dict[str, list[float]] = {}
+    allow_history: dict[str, list[float]] = {}
+    win_history: dict[str, list[float]] = {}
+    last_game_date: dict[str, pd.Timestamp] = {}
 
     def _rating(team: str) -> float:
         return ratings.get(team, 1500.0)
 
-    def _rolling(history: Dict[str, list[float]], team: str, default: float) -> float:
+    def _rolling(history: dict[str, list[float]], team: str, default: float) -> float:
         values = history.get(team, [])
         return float(np.mean(values[-10:])) if values else default
 
@@ -107,10 +101,10 @@ def _build_real_feature_frame(df: pd.DataFrame) -> pd.DataFrame:
 
     for row in df.itertuples(index=False):
         game_date = getattr(row, "date", pd.NaT)
-        home_team = getattr(row, "home_team")
-        away_team = getattr(row, "away_team")
-        home_score = float(getattr(row, "home_score"))
-        away_score = float(getattr(row, "away_score"))
+        home_team = row.home_team
+        away_team = row.away_team
+        home_score = float(row.home_score)
+        away_score = float(row.away_score)
 
         home_rating = _rating(home_team)
         away_rating = _rating(away_team)
@@ -199,7 +193,7 @@ def _generate_synthetic_training_data(n: int = 500) -> tuple[np.ndarray, np.ndar
     return X, y
 
 
-def auto_train_models(config: Optional[AppConfig] = None) -> List[TrainingResult]:
+def auto_train_models(config: AppConfig | None = None) -> list[TrainingResult]:
     """
     Auto-train all ML models and the stacking meta-learner.
 
@@ -212,7 +206,7 @@ def auto_train_models(config: Optional[AppConfig] = None) -> List[TrainingResult
     Returns list of TrainingResult.
     """
     config = config or AppConfig()
-    results: List[TrainingResult] = []
+    results: list[TrainingResult] = []
 
     logger.info("=" * 60)
     logger.info("AUTO TRAIN MODELS — Starting")
@@ -233,7 +227,7 @@ def auto_train_models(config: Optional[AppConfig] = None) -> List[TrainingResult
         ("neural_net", NeuralNetModel(config.model)),
     ]
 
-    base_predictions: Dict[str, np.ndarray] = {}
+    base_predictions: dict[str, np.ndarray] = {}
 
     for name, model in models:
         try:

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, Tuple
 
 import numpy as np
 import pandas as pd
@@ -105,7 +104,7 @@ def load_odds_results(path: str) -> pd.DataFrame:
     return df
 
 
-def _park_factors(park_name: str) -> Tuple[float, float]:
+def _park_factors(park_name: str) -> tuple[float, float]:
     f = PARK_FACTORS.get(park_name, PARK_FACTORS["default"])
     return float(f["hr"]), float(f["run"])
 
@@ -165,8 +164,8 @@ def build_pregame_features(df: pd.DataFrame, lookback: int = 15, elo_k: float = 
         for _, r in split_df.iterrows()
     }
 
-    history: Dict[str, list] = {}
-    elo: Dict[str, float] = {}
+    history: dict[str, list] = {}
+    elo: dict[str, float] = {}
 
     rows = []
     for _, row in df.iterrows():

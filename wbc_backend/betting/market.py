@@ -9,8 +9,6 @@ Provides:
 from __future__ import annotations
 
 import logging
-import math
-from typing import Dict, List, Optional
 
 from wbc_backend.config.settings import MarketConfig
 from wbc_backend.domain.schemas import OddsLine, OddsTimeSeries
@@ -72,7 +70,7 @@ def detect_steam_move(
 
 def compute_market_bias_score(
     model_prob: float,
-    odds_lines: List[OddsLine],
+    odds_lines: list[OddsLine],
     market_type: str = "ML",
     side: str = "",
 ) -> float:
@@ -113,12 +111,12 @@ def compute_market_bias_score(
 
 def market_adjustment(
     model_home_prob: float,
-    odds_lines: List[OddsLine],
+    odds_lines: list[OddsLine],
     home_code: str,
     away_code: str,
-    config: Optional[MarketConfig] = None,
-    odds_history: Optional[Dict[str, OddsTimeSeries]] = None,
-) -> Dict:
+    config: MarketConfig | None = None,
+    odds_history: dict[str, OddsTimeSeries] | None = None,
+) -> dict:
     """
     Full market calibration:
       1. Compute market-implied probabilities

@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import List
 
 
 @dataclass(frozen=True)
 class DataFlowStage:
     stage: str
     module: str
-    inputs: List[str]
-    outputs: List[str]
+    inputs: list[str]
+    outputs: list[str]
 
 
 @dataclass(frozen=True)
@@ -19,21 +18,21 @@ class AuditFinding:
     title: str
     weakness: str
     optimization_opportunity: str
-    files: List[str] = field(default_factory=list)
+    files: list[str] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
 class FunctionalAuditReport:
-    data_flow: List[DataFlowStage]
-    structural_weaknesses: List[AuditFinding]
-    modeling_blind_spots: List[AuditFinding]
-    missing_feature_domains: List[AuditFinding]
-    data_leakage_risks: List[AuditFinding]
-    regime_dependency_risks: List[AuditFinding]
-    correlation_risks: List[AuditFinding]
-    stability_weaknesses: List[AuditFinding]
+    data_flow: list[DataFlowStage]
+    structural_weaknesses: list[AuditFinding]
+    modeling_blind_spots: list[AuditFinding]
+    missing_feature_domains: list[AuditFinding]
+    data_leakage_risks: list[AuditFinding]
+    regime_dependency_risks: list[AuditFinding]
+    correlation_risks: list[AuditFinding]
+    stability_weaknesses: list[AuditFinding]
 
-    def all_findings(self) -> List[AuditFinding]:
+    def all_findings(self) -> list[AuditFinding]:
         buckets = [
             self.structural_weaknesses,
             self.modeling_blind_spots,
@@ -43,13 +42,13 @@ class FunctionalAuditReport:
             self.correlation_risks,
             self.stability_weaknesses,
         ]
-        merged: List[AuditFinding] = []
+        merged: list[AuditFinding] = []
         for bucket in buckets:
             merged.extend(bucket)
         return merged
 
 
-def map_data_flow() -> List[DataFlowStage]:
+def map_data_flow() -> list[DataFlowStage]:
     return [
         DataFlowStage(
             stage="Data ingestion",
@@ -108,7 +107,7 @@ def _f(
     title: str,
     weakness: str,
     optimization_opportunity: str,
-    files: List[str],
+    files: list[str],
 ) -> AuditFinding:
     return AuditFinding(
         category=category,
@@ -144,7 +143,7 @@ def run_full_system_audit() -> FunctionalAuditReport:
             title="Backtest engine coverage is fragmented",
             weakness="There are multiple backtest scripts and runners without a single canonical harness for comparable metrics.",
             optimization_opportunity="Unify via one backtest contract producing calibration/CLV/risk outputs per market.",
-            files=["backtester.py", "wbc_backend/optimization/walkforward.py", "wbc_backend/backtest/runner.py"],
+            files=["scripts/legacy_entrypoints/backtester.py", "wbc_backend/optimization/walkforward.py", "wbc_backend/backtest/runner.py"],
         ),
     ]
 

@@ -15,11 +15,9 @@ Builds on existing BankrollState but adds institutional-grade guardrails.
 """
 from __future__ import annotations
 
-import math
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ─── Configuration (IMMUTABLE — do not override) ───────────────────────────
@@ -104,8 +102,8 @@ class RiskState:
     max_consecutive_losses: int = 0
 
     # Open positions
-    open_positions: List[Dict] = field(default_factory=list)
-    position_correlations: Dict[str, List[str]] = field(default_factory=dict)
+    open_positions: list[dict] = field(default_factory=list)
+    position_correlations: dict[str, list[str]] = field(default_factory=dict)
 
     # Recovery mode
     in_recovery: bool = False
@@ -114,7 +112,7 @@ class RiskState:
 
     # Status
     risk_level: RiskLevel = RiskLevel.GREEN
-    active_violations: List[RiskViolation] = field(default_factory=list)
+    active_violations: list[RiskViolation] = field(default_factory=list)
     is_shutdown: bool = False
     shutdown_reason: str = ""
 
@@ -127,11 +125,11 @@ class RiskCheckResult:
     """Result of a pre-bet risk check."""
     approved: bool = True
     risk_level: RiskLevel = RiskLevel.GREEN
-    violations: List[RiskViolation] = field(default_factory=list)
+    violations: list[RiskViolation] = field(default_factory=list)
     max_allowed_size: float = 0.025        # max bet size as % of bankroll
     sizing_multiplier: float = 1.0         # apply to position sizing
-    reasons: List[str] = field(default_factory=list)
-    warnings: List[str] = field(default_factory=list)
+    reasons: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
 
 
 # ─── Risk Engine ────────────────────────────────────────────────────────────
@@ -147,11 +145,11 @@ class RiskEngine:
             session_start=time.time(),
         )
 
-    def pre_bet_check(
+    def pre_bet_check(  # noqa: C901
         self,
         proposed_size_pct: float,
         match_id: str = "",
-        correlated_events: Optional[List[str]] = None,
+        correlated_events: list[str] | None = None,
         sharpness_paused: bool = False,
     ) -> RiskCheckResult:
         """
@@ -424,7 +422,7 @@ class RiskEngine:
             state.consecutive_losses = 0
             self._update_risk_level()
 
-    def get_status(self) -> Dict:
+    def get_status(self) -> dict:
         """Get current risk status for dashboard."""
         s = self.state
         return {

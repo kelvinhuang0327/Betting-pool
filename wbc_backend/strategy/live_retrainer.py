@@ -18,7 +18,6 @@ import math
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
 
 
 # ─── Data Structures ─────────────────────────────────────────────────────────
@@ -40,11 +39,11 @@ class GameResult:
 class ModelPerformance:
     """Performance tracking for a single sub-model."""
     model_name: str
-    brier_scores: List[float] = field(default_factory=list)
-    log_losses: List[float] = field(default_factory=list)
-    predictions: List[float] = field(default_factory=list)
-    actuals: List[int] = field(default_factory=list)
-    timestamps: List[float] = field(default_factory=list)
+    brier_scores: list[float] = field(default_factory=list)
+    log_losses: list[float] = field(default_factory=list)
+    predictions: list[float] = field(default_factory=list)
+    actuals: list[int] = field(default_factory=list)
+    timestamps: list[float] = field(default_factory=list)
 
     @property
     def recent_brier(self) -> float:
@@ -90,11 +89,11 @@ class DriftReport:
 @dataclass
 class ModelHealthReport:
     """Health status for the entire model ensemble."""
-    model_performances: Dict[str, ModelPerformance] = field(default_factory=dict)
-    drift_reports: List[DriftReport] = field(default_factory=list)
-    current_weights: Dict[str, float] = field(default_factory=dict)
-    updated_weights: Dict[str, float] = field(default_factory=dict)
-    retired_models: List[str] = field(default_factory=list)
+    model_performances: dict[str, ModelPerformance] = field(default_factory=dict)
+    drift_reports: list[DriftReport] = field(default_factory=list)
+    current_weights: dict[str, float] = field(default_factory=dict)
+    updated_weights: dict[str, float] = field(default_factory=dict)
+    retired_models: list[str] = field(default_factory=list)
     retrain_recommended: bool = False
     overall_health: str = "HEALTHY"  # HEALTHY | DEGRADING | CRITICAL
     summary: str = ""
@@ -126,10 +125,10 @@ DEFAULT_WEIGHTS = {
 # ─── Core: Bayesian Weight Updater ──────────────────────────────────────────
 
 def update_weights_bayesian(
-    performances: Dict[str, ModelPerformance],
-    current_weights: Dict[str, float],
+    performances: dict[str, ModelPerformance],
+    current_weights: dict[str, float],
     sigma: float = 0.15,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Bayesian posterior weight update using recent prediction accuracy.
 
@@ -171,8 +170,8 @@ def update_weights_bayesian(
 # ─── Drift Detection ────────────────────────────────────────────────────────
 
 def compute_psi(
-    reference: List[float],
-    current: List[float],
+    reference: list[float],
+    current: list[float],
     bins: int = 10,
 ) -> float:
     """
@@ -213,8 +212,8 @@ def compute_psi(
 
 
 def detect_drift(
-    performances: Dict[str, ModelPerformance],
-) -> List[DriftReport]:
+    performances: dict[str, ModelPerformance],
+) -> list[DriftReport]:
     """
     Detect prediction distribution drift per model.
 
@@ -270,7 +269,7 @@ def detect_drift(
     return reports
 
 
-def _kl_divergence_binned(p_data: List[float], q_data: List[float], bins: int = 10) -> float:
+def _kl_divergence_binned(p_data: list[float], q_data: list[float], bins: int = 10) -> float:
     """KL(P || Q) via histogram approximation."""
     if len(p_data) < bins or len(q_data) < bins:
         return 0.0
@@ -297,8 +296,8 @@ def _kl_divergence_binned(p_data: List[float], q_data: List[float], bins: int = 
 # ─── Model Health Evaluation ────────────────────────────────────────────────
 
 def evaluate_model_health(
-    performances: Dict[str, ModelPerformance],
-    current_weights: Dict[str, float],
+    performances: dict[str, ModelPerformance],
+    current_weights: dict[str, float],
 ) -> ModelHealthReport:
     """
     Comprehensive model health evaluation.
@@ -360,9 +359,9 @@ def evaluate_model_health(
 
 def ingest_game_result(
     result: GameResult,
-    predictions: Dict[str, float],
-    performances: Dict[str, ModelPerformance],
-) -> Dict[str, ModelPerformance]:
+    predictions: dict[str, float],
+    performances: dict[str, ModelPerformance],
+) -> dict[str, ModelPerformance]:
     """
     Process a completed game: record each model's Brier & log-loss.
 
@@ -399,8 +398,8 @@ def ingest_game_result(
 # ─── Persistence ─────────────────────────────────────────────────────────────
 
 def save_state(
-    performances: Dict[str, ModelPerformance],
-    weights: Dict[str, float],
+    performances: dict[str, ModelPerformance],
+    weights: dict[str, float],
 ):
     """Persist retrainer state to JSON."""
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -419,7 +418,7 @@ def save_state(
     STATE_FILE.write_text(json.dumps(data, indent=2))
 
 
-def load_state() -> Tuple[Dict[str, ModelPerformance], Dict[str, float]]:
+def load_state() -> tuple[dict[str, ModelPerformance], dict[str, float]]:
     """Load persisted retrainer state."""
     if not STATE_FILE.exists():
         return {}, dict(DEFAULT_WEIGHTS)
@@ -427,7 +426,7 @@ def load_state() -> Tuple[Dict[str, ModelPerformance], Dict[str, float]]:
     data = json.loads(STATE_FILE.read_text())
     weights = data.get("weights", dict(DEFAULT_WEIGHTS))
 
-    performances: Dict[str, ModelPerformance] = {}
+    performances: dict[str, ModelPerformance] = {}
     for name, pdata in data.get("performances", {}).items():
         perf = ModelPerformance(model_name=name)
         perf.brier_scores = pdata.get("brier_scores", [])
@@ -442,8 +441,8 @@ def load_state() -> Tuple[Dict[str, ModelPerformance], Dict[str, float]]:
 # ─── Full Retraining Pipeline ────────────────────────────────────────────────
 
 def run_retraining_cycle(
-    new_results: List[GameResult],
-    all_predictions: List[Dict[str, float]],
+    new_results: list[GameResult],
+    all_predictions: list[dict[str, float]],
 ) -> ModelHealthReport:
     """
     Complete retraining cycle: ingest results → update weights → check health.

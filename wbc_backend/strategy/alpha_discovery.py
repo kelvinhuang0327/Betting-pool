@@ -16,7 +16,7 @@ from __future__ import annotations
 import math
 import random
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 
 # ─── Data Structures ─────────────────────────────────────────────────────────
@@ -63,13 +63,13 @@ class MarketInefficiency:
 @dataclass
 class AlphaReport:
     """Complete alpha discovery report."""
-    feature_importances: List[FeatureImportance] = field(default_factory=list)
-    market_inefficiencies: List[MarketInefficiency] = field(default_factory=list)
-    alpha_signals: List[AlphaSignal] = field(default_factory=list)
-    features_to_add: List[str] = field(default_factory=list)
-    features_to_remove: List[str] = field(default_factory=list)
+    feature_importances: list[FeatureImportance] = field(default_factory=list)
+    market_inefficiencies: list[MarketInefficiency] = field(default_factory=list)
+    alpha_signals: list[AlphaSignal] = field(default_factory=list)
+    features_to_add: list[str] = field(default_factory=list)
+    features_to_remove: list[str] = field(default_factory=list)
     total_alpha_count: int = 0
-    best_signal: Optional[AlphaSignal] = None
+    best_signal: AlphaSignal | None = None
     summary: str = ""
 
 
@@ -84,10 +84,10 @@ MIN_SAMPLE_SIZE = 30             # minimum games to trust a signal
 # ─── 1. Feature Importance Analysis ─────────────────────────────────────────
 
 def analyze_feature_importance(
-    feature_matrix: List[Dict[str, float]],
-    targets: List[int],
-    feature_names: Optional[List[str]] = None,
-) -> List[FeatureImportance]:
+    feature_matrix: list[dict[str, float]],
+    targets: list[int],
+    feature_names: list[str] | None = None,
+) -> list[FeatureImportance]:
     """
     Compute permutation-based feature importance without external ML libraries.
 
@@ -101,8 +101,6 @@ def analyze_feature_importance(
 
     if feature_names is None:
         feature_names = list(feature_matrix[0].keys()) if feature_matrix else []
-
-    n = len(targets)
 
     # Build matrix
     X = [[row.get(f, 0.0) for f in feature_names] for row in feature_matrix]
@@ -159,16 +157,16 @@ def analyze_feature_importance(
 
 # ─── 2. Market Inefficiency Detection ───────────────────────────────────────
 
-def detect_market_inefficiencies(
-    backtest_results: List[Dict[str, Any]],
-) -> List[MarketInefficiency]:
+def detect_market_inefficiencies(  # noqa: C901
+    backtest_results: list[dict[str, Any]],
+) -> list[MarketInefficiency]:
     """
     Scan backtest results for systematic market inefficiencies.
 
     Looks for patterns where certain conditions consistently produce
     positive expected value bets.
     """
-    inefficiencies: List[MarketInefficiency] = []
+    inefficiencies: list[MarketInefficiency] = []
 
     # Pattern 1: Odds band inefficiency
     bands = {
@@ -211,7 +209,7 @@ def detect_market_inefficiencies(
             ))
 
     # Pattern 2: Day-of-week effect
-    dow_stats: Dict[str, Dict[str, Any]] = {}
+    dow_stats: dict[str, dict[str, Any]] = {}
     for res in backtest_results:
         dow = res.get("day_of_week", "unknown")
         if dow not in dow_stats:
@@ -276,10 +274,10 @@ def detect_market_inefficiencies(
 # ─── 3. Non-Linear Edge Discovery ───────────────────────────────────────────
 
 def discover_interaction_effects(
-    feature_matrix: List[Dict[str, float]],
-    targets: List[int],
+    feature_matrix: list[dict[str, float]],
+    targets: list[int],
     top_k: int = 5,
-) -> List[AlphaSignal]:
+) -> list[AlphaSignal]:
     """
     Search for interaction effects (feature pairs) that have predictive power
     beyond individual features.
@@ -291,7 +289,7 @@ def discover_interaction_effects(
 
     feature_names = list(feature_matrix[0].keys())
     n = len(feature_names)
-    interactions: List[Tuple[str, str, float]] = []
+    interactions: list[tuple[str, str, float]] = []
 
     for i in range(min(n, 15)):  # limit search space
         for j in range(i + 1, min(n, 15)):
@@ -345,14 +343,14 @@ def discover_interaction_effects(
 # ─── 4. Alpha Signal Aggregation ────────────────────────────────────────────
 
 def generate_alpha_signals(
-    feature_importances: List[FeatureImportance],
-    market_inefficiencies: List[MarketInefficiency],
-    interaction_signals: List[AlphaSignal],
-) -> List[AlphaSignal]:
+    feature_importances: list[FeatureImportance],
+    market_inefficiencies: list[MarketInefficiency],
+    interaction_signals: list[AlphaSignal],
+) -> list[AlphaSignal]:
     """
     Aggregate all discovered alpha sources into actionable signals.
     """
-    signals: List[AlphaSignal] = list(interaction_signals)
+    signals: list[AlphaSignal] = list(interaction_signals)
 
     # Feature-based signals
     for fi in feature_importances:
@@ -391,9 +389,9 @@ def generate_alpha_signals(
 # ─── 5. Full Alpha Discovery Pipeline ───────────────────────────────────────
 
 def run_alpha_discovery(
-    feature_matrix: List[Dict[str, float]],
-    targets: List[int],
-    backtest_results: Optional[List[Dict[str, Any]]] = None,
+    feature_matrix: list[dict[str, float]],
+    targets: list[int],
+    backtest_results: list[dict[str, Any]] | None = None,
 ) -> AlphaReport:
     """
     Run the complete alpha discovery pipeline.
@@ -450,7 +448,7 @@ def run_alpha_discovery(
 
 # ─── Internal Helpers ────────────────────────────────────────────────────────
 
-def _logistic_accuracy(X: List[List[float]], y: List[int]) -> float:
+def _logistic_accuracy(X: list[list[float]], y: list[int]) -> float:
     """
     Quick logistic regression accuracy estimate (no scipy dependency).
     Uses a simple dot-product with uniform weights + bias.
@@ -470,7 +468,7 @@ def _logistic_accuracy(X: List[List[float]], y: List[int]) -> float:
     return correct / max(len(y), 1)
 
 
-def _pearson(x: List[float], y: List[float]) -> float:
+def _pearson(x: list[float], y: list[float]) -> float:
     """Pearson correlation coefficient."""
     n = min(len(x), len(y))
     if n < 3:
@@ -487,11 +485,11 @@ def _pearson(x: List[float], y: List[float]) -> float:
 
 
 def _feature_correlations(
-    X: List[List[float]],
-    names: List[str],
-) -> Dict[str, Dict[str, float]]:
+    X: list[list[float]],
+    names: list[str],
+) -> dict[str, dict[str, float]]:
     """Compute pairwise feature correlations."""
-    corrs: Dict[str, Dict[str, float]] = {n: {} for n in names}
+    corrs: dict[str, dict[str, float]] = {n: {} for n in names}
 
     for i in range(len(names)):
         for j in range(i + 1, len(names)):

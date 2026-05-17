@@ -17,7 +17,6 @@ from __future__ import annotations
 import math
 import warnings
 from collections import defaultdict
-from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -71,18 +70,18 @@ class FeatureEngine:
     """Build rolling features from game history."""
 
     def __init__(self):
-        self.team_runs_for: Dict[str, List[int]] = defaultdict(list)
-        self.team_runs_against: Dict[str, List[int]] = defaultdict(list)
-        self.team_results: Dict[str, List[int]] = defaultdict(list)  # 1=win
-        self.team_margins: Dict[str, List[int]] = defaultdict(list)
-        self.team_totals: Dict[str, List[float]] = defaultdict(list)
-        self.h2h_results: Dict[str, List[int]] = defaultdict(list)
-        self.pitcher_results: Dict[str, List[int]] = defaultdict(list)
-        self.pitcher_runs: Dict[str, List[int]] = defaultdict(list)
-        self.team_games_as_home: Dict[str, List[int]] = defaultdict(list)
-        self.team_games_as_away: Dict[str, List[int]] = defaultdict(list)
+        self.team_runs_for: dict[str, list[int]] = defaultdict(list)
+        self.team_runs_against: dict[str, list[int]] = defaultdict(list)
+        self.team_results: dict[str, list[int]] = defaultdict(list)  # 1=win
+        self.team_margins: dict[str, list[int]] = defaultdict(list)
+        self.team_totals: dict[str, list[float]] = defaultdict(list)
+        self.h2h_results: dict[str, list[int]] = defaultdict(list)
+        self.pitcher_results: dict[str, list[int]] = defaultdict(list)
+        self.pitcher_runs: dict[str, list[int]] = defaultdict(list)
+        self.team_games_as_home: dict[str, list[int]] = defaultdict(list)
+        self.team_games_as_away: dict[str, list[int]] = defaultdict(list)
         # Elo
-        self.elo: Dict[str, float] = defaultdict(lambda: 1500.0)
+        self.elo: dict[str, float] = defaultdict(lambda: 1500.0)
         self.elo_k = 6.0
 
     def _rolling(self, data: list, w: int) -> list:
@@ -100,7 +99,7 @@ class FeatureEngine:
         return (sum((x - m) ** 2 for x in d) / len(d)) ** 0.5
 
     def build_features(self, home: str, away: str, home_sp: str, away_sp: str,
-                       home_fair: float, ou_line: float) -> Dict[str, float]:
+                       home_fair: float, ou_line: float) -> dict[str, float]:
         f = {}
 
         for w in [5, 10, 20, 40]:
@@ -240,7 +239,7 @@ class FeatureEngine:
 # AUTO-LEARN: Hyperparameter Search
 # ═══════════════════════════════════════════════════════════════
 
-def walk_forward_backtest(
+def walk_forward_backtest(  # noqa: C901
     df: pd.DataFrame,
     warm_up: int = 200,
     train_window: int = 400,
@@ -250,7 +249,7 @@ def walk_forward_backtest(
     confidence_min: float = 0.55,
     kelly_fraction: float = 0.15,
     verbose: bool = True,
-) -> Dict:
+) -> dict:
     """
     Walk-forward backtest with XGBoost.
 
@@ -260,7 +259,6 @@ def walk_forward_backtest(
     4. Predict + bet on each subsequent game
     """
     import xgboost as xgb
-    from sklearn.metrics import log_loss, brier_score_loss
 
     if xgb_params is None:
         xgb_params = {
@@ -327,18 +325,17 @@ def walk_forward_backtest(
         X_row = np.array([feat.get(f, 0.0) for f in feature_names]).reshape(1, -1)
 
         # ── Train/retrain model ──
-        if model is None or (idx - warm_up) % retrain_every == 0:
-            if len(all_features) >= 50:
-                X_train = np.array([[f.get(fn, 0.0) for fn in feature_names] for f in all_features])
-                y_train = np.array(all_labels)
+        if (model is None or (idx - warm_up) % retrain_every == 0) and len(all_features) >= 50:
+            X_train = np.array([[f.get(fn, 0.0) for fn in feature_names] for f in all_features])
+            y_train = np.array(all_labels)
 
-                # Use last train_window samples only
-                if len(X_train) > train_window:
-                    X_train = X_train[-train_window:]
-                    y_train = y_train[-train_window:]
+            # Use last train_window samples only
+            if len(X_train) > train_window:
+                X_train = X_train[-train_window:]
+                y_train = y_train[-train_window:]
 
-                model = xgb.XGBClassifier(**xgb_params, use_label_encoder=False, verbosity=0)
-                model.fit(X_train, y_train, verbose=False)
+            model = xgb.XGBClassifier(**xgb_params, use_label_encoder=False, verbosity=0)
+            model.fit(X_train, y_train, verbose=False)
 
         # ── Predict ──
         if model is not None:

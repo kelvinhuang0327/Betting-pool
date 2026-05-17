@@ -7,7 +7,6 @@ and self-improvement loop can all share a single source of truth.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List
 
 
 # ── Data Sources ─────────────────────────────────────────────────────────────
@@ -30,6 +29,7 @@ class DataSourceConfig:
     backtest_results_dir: str = "data/wbc_backend/backtest_results"
     reports_dir: str = "data/wbc_backend/reports"
     prediction_registry_jsonl: str = "data/wbc_backend/reports/prediction_registry.jsonl"
+    postgame_results_jsonl: str = "data/wbc_backend/reports/postgame_results.jsonl"
     review_report_latest_md: str = "data/wbc_backend/reports/WBC_Review_Meeting_Latest.md"
     review_report_archive_dir: str = "data/wbc_backend/reports/review_archive"
     bankroll_storage_db: str = "data/wbc_backend/bankroll_v3.db"
@@ -60,7 +60,7 @@ class ModelConfig:
     star_weight: float = 0.10     # MLB star impact
 
     # ML training
-    xgb_params: Dict = field(default_factory=lambda: {
+    xgb_params: dict = field(default_factory=lambda: {
         "max_depth": 6,
         "learning_rate": 0.05,
         "n_estimators": 300,
@@ -72,7 +72,7 @@ class ModelConfig:
         "objective": "binary:logistic",
         "eval_metric": "logloss",
     })
-    lgbm_params: Dict = field(default_factory=lambda: {
+    lgbm_params: dict = field(default_factory=lambda: {
         "max_depth": 6,
         "learning_rate": 0.05,
         "n_estimators": 300,
@@ -85,7 +85,7 @@ class ModelConfig:
         "metric": "binary_logloss",
         "verbosity": -1,
     })
-    nn_params: Dict = field(default_factory=lambda: {
+    nn_params: dict = field(default_factory=lambda: {
         "hidden_layers": [128, 64, 32],
         "dropout": 0.3,
         "learning_rate": 0.001,
@@ -114,8 +114,9 @@ class StrategyConfig:
     max_recommendations: int = 3
     fractional_kelly: float = 0.15  # More conservative Kelly (was 0.25)
     max_stake_fraction: float = 0.04  # Reduced from 0.05
-    market_priority: Dict[str, int] = field(default_factory=lambda: {
-        "ML": 3, "RL": 2, "OU": 1, "F5": 2, "TT": 1, "OE": 1,
+    market_priority: dict[str, int] = field(default_factory=lambda: {
+        "ML": 3, "RL": 2, "OU": 1, "F5": 4, "TT": 1,
+        # OE 已移除：純隨機市場 + 最高 vig，無模型邊際
     })
 
 
@@ -146,20 +147,20 @@ class WBCAdjustmentConfig:
     # Edge Realism Gate — WBC-specific thresholds (calibrated from 2023 backtest)
     # MLB default = 65; WBC markets are less efficient → lower thresholds
     # v4 backtest: Gate blocked 3 FAKE_EDGE (all losses), passed 7 → 86% win, +8.1% ROI
-    edge_realism_thresholds: Dict = field(default_factory=lambda: {
+    edge_realism_thresholds: dict = field(default_factory=lambda: {
         "Pool": 50,             # Strictest: block low-liquidity Pool FAKE_EDGE
         "Quarter-Final": 45,    # More liquid, lower threshold
         "Semi-Final": 43,       # Near-institutional liquidity
         "Final": 40,            # Best liquidity → lowest threshold
     })
     mlb_edge_realism_threshold: float = 65.0  # Standard MLB threshold
-    pitch_limits: Dict = field(default_factory=lambda: {
+    pitch_limits: dict = field(default_factory=lambda: {
         "Pool": {"max_pitches": 65, "rest_30": 1, "rest_50": 4},
         "Quarter-Final": {"max_pitches": 80, "rest_30": 1, "rest_50": 4},
         "Semi-Final": {"max_pitches": 95, "rest_30": 1, "rest_50": 4},
         "Final": {"max_pitches": 95, "rest_30": 1, "rest_50": 4},
     })
-    round_adjustments: Dict = field(default_factory=lambda: {
+    round_adjustments: dict = field(default_factory=lambda: {
         "Pool": {"starter_impact": 0.55, "bullpen_impact": 1.60, "variance_add": 0.22},
         "Quarter-Final": {"starter_impact": 0.65, "bullpen_impact": 1.45, "variance_add": 0.18},
         "Semi-Final": {"starter_impact": 0.75, "bullpen_impact": 1.30, "variance_add": 0.14},
@@ -189,6 +190,8 @@ class SchedulerConfig:
     backtest_interval_hours: int = 24          # Backtest daily
     self_improve_interval_hours: int = 168     # Self-improvement weekly
     research_cycle_interval_hours: int = 24    # V3 research phase-gate cycle daily
+    postgame_sync_interval_hours: int = 2      # 賽後回寫 + retrainer 更新（每 2 小時）
+    artifact_rebuild_interval_hours: int = 168  # ML artifact 重建（每週；有資料更新時手動提前觸發）
 
 
 # ── Self-Improvement Config ──────────────────────────────────────────────────
@@ -218,7 +221,39 @@ class DeploymentGateConfig:
     min_walkforward_games: int = 500
     max_walkforward_brier: float = 0.255
     min_best_calibration_ml_roi: float = 0.0
+    max_calibration_ece: float = 0.12    # 目標 Platt Scaling 後達 0.08；當前系統 0.1447
     require_artifact_schema_match: bool = True
+
+
+# ── LLM / NLP Config ─────────────────────────────────────────────────────────
+
+@dataclass(frozen=True)
+class LLMConfig:
+    """
+    NLP 賽前特徵提取層的 LLM Provider 設定。
+
+    Provider 優先順序（自動 fallback）：
+      1. groq      — 免費，速度最快 (100+ tok/s)，推薦首選
+      2. gemini    — Google 免費 tier (15 RPM)
+      3. anthropic — Claude Haiku，最精準但需付費
+      4. openrouter— 聚合器，部分模型免費
+      5. ollama    — 本地端，需自行架設
+      6. rule      — 純規則引擎（無 API 時的最終 fallback）
+
+    API Key 從環境變數讀取（.env 設定）
+    """
+    # Provider 選擇: "groq" | "gemini" | "anthropic" | "openrouter" | "ollama" | "rule"
+    provider: str = "groq"
+    # 各 Provider 模型名稱
+    groq_model: str = "llama-3.1-8b-instant"      # 免費，極快
+    gemini_model: str = "gemini-1.5-flash"         # 免費 tier
+    anthropic_model: str = "claude-haiku-4-5-20251001"  # 最便宜 Claude
+    openrouter_model: str = "meta-llama/llama-3.1-8b-instruct:free"  # 免費模型
+    ollama_model: str = "qwen2.5:7b"
+    ollama_base_url: str = "http://localhost:11434"
+    timeout_seconds: int = 30
+    # 是否在賽前分析中啟用 LLM（False = 直接使用規則引擎）
+    enabled: bool = True
 
 
 # ── Master Config ────────────────────────────────────────────────────────────
@@ -235,3 +270,4 @@ class AppConfig:
     self_improve: SelfImproveConfig = field(default_factory=SelfImproveConfig)
     data_recency: DataRecencyConfig = field(default_factory=DataRecencyConfig)
     deployment_gate: DeploymentGateConfig = field(default_factory=DeploymentGateConfig)
+    llm: LLMConfig = field(default_factory=LLMConfig)

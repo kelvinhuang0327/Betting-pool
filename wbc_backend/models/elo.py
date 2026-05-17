@@ -6,7 +6,6 @@ Includes WBC-specific adjustments for neutral site and roster strength.
 """
 from __future__ import annotations
 
-import math
 from wbc_backend.domain.schemas import Matchup, SubModelResult
 
 

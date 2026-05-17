@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import logging
 from dataclasses import replace
-from typing import Dict, List, Tuple
 
 from wbc_backend.domain.schemas import Matchup, PredictionResult, TeamSnapshot
 
@@ -26,7 +25,7 @@ def _empirical_bayes_strength(team: TeamSnapshot, alpha: float = 120.0) -> float
     return posterior
 
 
-def _pitch_count_adjustment(team: TeamSnapshot) -> Tuple[float, float]:
+def _pitch_count_adjustment(team: TeamSnapshot) -> tuple[float, float]:
     """Returns (win_delta_component, run_delta_component)."""
     deficit = max(0, 75 - team.pitch_limit)
     starter_penalty = 0.0014 * deficit
@@ -39,9 +38,9 @@ def _pitch_count_adjustment(team: TeamSnapshot) -> Tuple[float, float]:
 def apply_wbc_rules(
     matchup: Matchup,
     pred: PredictionResult,
-) -> Tuple[PredictionResult, List[str], Dict[str, float]]:
+) -> tuple[PredictionResult, list[str], dict[str, float]]:
     """Apply WBC-specific adjustments to the prediction."""
-    notes: List[str] = []
+    notes: list[str] = []
 
     home_eb = _empirical_bayes_strength(matchup.home)
     away_eb = _empirical_bayes_strength(matchup.away)

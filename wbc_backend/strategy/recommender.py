@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from typing import Dict, List
 
 from wbc_backend.config.settings import StrategyConfig
 from wbc_backend.domain.schemas import BetRecommendation, OddsLine
@@ -33,13 +32,13 @@ def _kelly_fraction(win_prob: float, odds: float) -> float:
 
 
 def recommend_top_bets(
-    odds_lines: List[OddsLine],
-    true_probs: Dict[str, float],
+    odds_lines: list[OddsLine],
+    true_probs: dict[str, float],
     home_code: str,
     away_code: str,
     config: StrategyConfig,
-) -> List[BetRecommendation]:
-    bets: List[BetRecommendation] = []
+) -> list[BetRecommendation]:
+    bets: list[BetRecommendation] = []
     quality = load_market_quality()
     conf_bands = load_high_confidence_odds_bands()
 

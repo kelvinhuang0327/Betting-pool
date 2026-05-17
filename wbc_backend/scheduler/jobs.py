@@ -14,9 +14,9 @@ from __future__ import annotations
 import logging
 import threading
 import time
-from typing import Callable, Dict, List, Optional
+from collections.abc import Callable
 
-from wbc_backend.config.settings import AppConfig, SchedulerConfig
+from wbc_backend.config.settings import AppConfig
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class ScheduledTask:
         self.callback = callback
         self.last_run: float = 0.0
         self.run_count: int = 0
-        self.last_error: Optional[str] = None
+        self.last_error: str | None = None
 
     @property
     def is_due(self) -> bool:
@@ -61,11 +61,11 @@ class AutoScheduler:
         scheduler.stop()
     """
 
-    def __init__(self, config: Optional[AppConfig] = None):
+    def __init__(self, config: AppConfig | None = None):
         self.config = config or AppConfig()
-        self.tasks: List[ScheduledTask] = []
+        self.tasks: list[ScheduledTask] = []
         self._running = False
-        self._thread: Optional[threading.Thread] = None
+        self._thread: threading.Thread | None = None
 
     def add_task(self, name: str, interval_seconds: int, callback: Callable):
         self.tasks.append(ScheduledTask(name, interval_seconds, callback))
@@ -117,6 +117,30 @@ class AutoScheduler:
 
         self.add_task("research_cycle", sc.research_cycle_interval_hours * 3600, research_cycle)
 
+        # ── Postgame Sync (every 2h) — 賽後閉環核心 ─────
+        def postgame_sync():
+            from scripts.run_postgame_sync import sync_completed_games
+            synced = sync_completed_games(config=self.config)
+            if synced:
+                logger.info("[SCHEDULER] Postgame sync: %d new games recorded", len(synced))
+
+        self.add_task("postgame_sync", sc.postgame_sync_interval_hours * 3600, postgame_sync)
+
+        # ── ML Artifact Rebuild (weekly) — gate artifact 保鮮 ──
+        def artifact_rebuild():
+            from scripts.rebuild_ml_artifacts import rebuild_walkforward, rebuild_calibration, verify_artifacts
+            data_path = self.config.sources.mlb_2025_csv
+            wf = rebuild_walkforward(data_path)
+            cal = rebuild_calibration(data_path)
+            ok = verify_artifacts(wf, cal)
+            logger.info(
+                "[SCHEDULER] Artifact rebuild %s: wf_ece=%.4f",
+                "OK" if ok else "FAILED",
+                wf.get("ece", float("nan")),
+            )
+
+        self.add_task("artifact_rebuild", sc.artifact_rebuild_interval_hours * 3600, artifact_rebuild)
+
     def run_once(self):
         """Run all due tasks once (non-blocking)."""
         for task in self.tasks:
@@ -154,7 +178,7 @@ class AutoScheduler:
             self._thread.join(timeout=5)
             self._thread = None
 
-    def status(self) -> Dict:
+    def status(self) -> dict:
         """Return current scheduler status."""
         return {
             "running": self._running,

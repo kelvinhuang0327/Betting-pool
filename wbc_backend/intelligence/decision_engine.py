@@ -36,54 +36,40 @@ Absolute rules:
 """
 from __future__ import annotations
 
-import asyncio
 import statistics
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from wbc_backend.intelligence.edge_validator import (
-    EdgeReport,
     compute_edge_score,
 )
 from wbc_backend.intelligence.edge_realism_filter import (
     RealismInput,
-    RealismReport,
-    RealEdgeLabel,
     assess_edge_realism,
-    REALISM_THRESHOLD,
 )
 from wbc_backend.intelligence.regime_classifier import (
-    MarketRegime,
-    RegimeReport,
     RegimeSignals,
     classify_market_regime,
     build_signals_from_microstructure,
 )
 from wbc_backend.intelligence.bet_selector import (
     BetCandidate,
-    SelectionResult,
     evaluate_bet_candidate,
     select_bets,
 )
 from wbc_backend.intelligence.position_sizing_ai import (
     SizingInput,
-    SizingResult,
     compute_position_size,
 )
 from wbc_backend.intelligence.sharpness_monitor import (
     SharpnessMonitor,
-    SharpnessReport,
-    SharpnessLevel,
 )
 from wbc_backend.intelligence.risk_engine import (
     RiskEngine,
-    RiskCheckResult,
-    RiskLevel,
 )
 from wbc_backend.intelligence.meta_learning_loop import (
-    MetaState,
     ModelPerformanceEntry,
     initialize_meta_state,
     record_prediction,
@@ -96,38 +82,25 @@ from wbc_backend.intelligence.meta_learning_loop import (
 )
 from wbc_backend.intelligence.edge_decay_predictor import (
     EdgeDecayInput,
-    EdgeDecayForecast,
     UrgencyLevel,
     predict_edge_decay,
 )
 from wbc_backend.intelligence.line_movement_predictor import (
     LineMovementPredictor,
     LineMovementInput,
-    LineMovementResult,
-    LineSnapshot,
-    MovementDirection,
     TimingAction,
 )
 from wbc_backend.intelligence.market_impact_simulator import (
     MarketImpactInput,
-    MarketImpactReport,
-    ExecutionStrategy,
     simulate_market_impact,
 )
 from wbc_backend.intelligence.fake_move_detector import (
     FakeMoveInput,
-    FakeMoveResult,
-    FakeMoveType,
     FakeAction,
     detect_fake_move,
 )
 from wbc_backend.intelligence.cl_bias_corrector import (
     ClosingLineBiasCorrector,
-    CLBiasReport,
-)
-from wbc_backend.intelligence.league_config import (
-    LeagueConfig,
-    get_league_config,
 )
 
 
@@ -166,13 +139,13 @@ class DecisionReport:
     real_edge_score: float = 0.0
     real_edge_label: str = "FAKE_EDGE"
     realism_tradeable: bool = False
-    realism_details: Dict[str, str] = field(default_factory=dict)
+    realism_details: dict[str, str] = field(default_factory=dict)
 
     # Phase 1c: Edge Decay
     decay_half_life: float = 0.0
     decay_urgency: str = "MONITOR"
     decay_confidence: float = 0.0
-    decay_curve: List[float] = field(default_factory=list)
+    decay_curve: list[float] = field(default_factory=list)
     decay_lower_bound: float = 0.0
     decay_upper_bound: float = 0.0
 
@@ -207,7 +180,7 @@ class DecisionReport:
     fake_confidence_mult: float = 1.0
 
     # Phase 3 + 5: Selection & Sizing
-    bets: List[BetDecision] = field(default_factory=list)
+    bets: list[BetDecision] = field(default_factory=list)
     total_exposure_pct: float = 0.0
 
     # Phase 6: Sharpness
@@ -218,16 +191,16 @@ class DecisionReport:
     # Phase 7: Risk
     risk_level: str = "GREEN"
     risk_approved: bool = True
-    risk_warnings: List[str] = field(default_factory=list)
+    risk_warnings: list[str] = field(default_factory=list)
 
     # Overall decision
     decision: str = "NO_BET"           # BET / NO_BET / WATCH
     confidence: str = "LOW"            # LOW / MODERATE / STRONG / ELITE
-    reasoning: List[str] = field(default_factory=list)
+    reasoning: list[str] = field(default_factory=list)
 
     # Meta
-    model_weights: Dict[str, float] = field(default_factory=dict)
-    meta_summary: Dict[str, Any] = field(default_factory=dict)
+    model_weights: dict[str, float] = field(default_factory=dict)
+    meta_summary: dict[str, Any] = field(default_factory=dict)
 
 
 # ─── Institutional Decision Engine ─────────────────────────────────────────
@@ -245,7 +218,7 @@ class InstitutionalDecisionEngine:
     def __init__(
         self,
         bankroll: float = 10000.0,
-        model_names: Optional[List[str]] = None,
+        model_names: list[str] | None = None,
     ):
         if model_names is None:
             model_names = ["elo", "bayesian", "poisson", "gradient_boosting", "ensemble"]
@@ -258,10 +231,10 @@ class InstitutionalDecisionEngine:
         self.cl_corrector = ClosingLineBiasCorrector()
 
         # Trailing data for position sizing
-        self._trailing_pnl: List[float] = []
-        self._trailing_sizes: List[float] = []
-        self._trailing_strategies: List[str] = []
-        self._recent_regimes: List[str] = []
+        self._trailing_pnl: list[float] = []
+        self._trailing_sizes: list[float] = []
+        self._trailing_strategies: list[str] = []
+        self._recent_regimes: list[str] = []
 
         # Band ROI lookup from backtest data
         self._band_roi_lookup = {
@@ -290,27 +263,27 @@ class InstitutionalDecisionEngine:
         ]
         return tuple(f.result() for f in futures)
 
-    def analyze_match(
+    def analyze_match(  # noqa: C901
         self,
         match_id: str,
         match_label: str,
         # Model predictions
-        sub_model_probs: Dict[str, float],
+        sub_model_probs: dict[str, float],
         calibrated_prob: float,
         # Odds
         odds_home: float = 2.0,
         odds_away: float = 1.85,
-        odds_over: Optional[float] = None,
-        odds_under: Optional[float] = None,
-        odds_f5_home: Optional[float] = None,
-        odds_f5_away: Optional[float] = None,
+        odds_over: float | None = None,
+        odds_under: float | None = None,
+        odds_f5_home: float | None = None,
+        odds_f5_away: float | None = None,
         # Calibration info
         brier_score: float = 0.25,
         platt_a: float = 1.0,
         platt_b: float = 0.0,
         # Market signals
-        regime_signals: Optional[RegimeSignals] = None,
-        micro_report: Optional[Any] = None,
+        regime_signals: RegimeSignals | None = None,
+        micro_report: Any | None = None,
         public_pct: float = 0.5,
         hours_to_game: float = 24.0,
         # Context
@@ -324,14 +297,14 @@ class InstitutionalDecisionEngine:
         sharp_direction_agrees: bool = True,
         steam_moves: int = 0,
         reverse_line_moves: int = 0,
-        closing_line_history: Optional[List[float]] = None,
-        recent_model_probs: Optional[List[float]] = None,
+        closing_line_history: list[float] | None = None,
+        recent_model_probs: list[float] | None = None,
         # Edge decay inputs
         odds_velocity: float = 0.0,
         odds_acceleration: float = 0.0,
         sharp_money_pct: float = 0.0,
         past_similar_edges: int = 0,
-        historical_decay_times: Optional[List[float]] = None,
+        historical_decay_times: list[float] | None = None,
         league: str = "WBC",
         # Market impact inputs
         avg_limit_usd: float = 5000.0,
@@ -560,7 +533,7 @@ class InstitutionalDecisionEngine:
                 report.decision = "NO_BET"
                 report.confidence = "LOW"
                 report.reasoning.append(
-                    f"Line Movement AVOID: aggressive adverse movement detected"
+                    "Line Movement AVOID: aggressive adverse movement detected"
                 )
                 return report
 
@@ -684,7 +657,7 @@ class InstitutionalDecisionEngine:
         # ════════════════════════════════════════════════════════
         # PHASE 3: Bet Selection (evaluate all bet types)
         # ════════════════════════════════════════════════════════
-        bet_candidates: List[BetCandidate] = []
+        bet_candidates: list[BetCandidate] = []
 
         # Build bet type candidates
         bet_types = []
@@ -708,9 +681,8 @@ class InstitutionalDecisionEngine:
                 bet_types.append(("OU", "UNDER", odds_under, 1.0 - calibrated_prob))
 
         # First 5 innings (if available)
-        if odds_f5_home and odds_f5_away:
-            if calibrated_prob > 0.55:
-                bet_types.append(("F5", "HOME", odds_f5_home, calibrated_prob * 0.95))
+        if odds_f5_home and odds_f5_away and calibrated_prob > 0.55:
+            bet_types.append(("F5", "HOME", odds_f5_home, calibrated_prob * 0.95))
 
         for bt, side, odds, cal_prob in bet_types:
             candidate = evaluate_bet_candidate(
@@ -742,7 +714,7 @@ class InstitutionalDecisionEngine:
         # ════════════════════════════════════════════════════════
         # PHASE 4 + 7: Position Sizing & Risk Check
         # ════════════════════════════════════════════════════════
-        approved_bets: List[BetDecision] = []
+        approved_bets: list[BetDecision] = []
 
         for candidate in selection.selected:
             # Phase 4: Position sizing
@@ -847,7 +819,7 @@ class InstitutionalDecisionEngine:
         closing_odds: float = 2.0,
         opening_odds: float = 0.0,
         bet_side: str = "",
-        model_probs: Optional[Dict[str, float]] = None,
+        model_probs: dict[str, float] | None = None,
         actual_outcome: int = 0,
         sizing_strategy: str = "",
         size_pct: float = 0.01,
@@ -910,7 +882,7 @@ class InstitutionalDecisionEngine:
         """Call at the start of each betting day."""
         self.risk.reset_daily()
 
-    def get_dashboard(self) -> Dict[str, Any]:
+    def get_dashboard(self) -> dict[str, Any]:
         """Get a combined status dashboard."""
         return {
             "risk": self.risk.get_status(),

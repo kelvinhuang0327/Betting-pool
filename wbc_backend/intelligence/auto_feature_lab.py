@@ -17,8 +17,8 @@ from __future__ import annotations
 
 import itertools
 import logging
-from dataclasses import dataclass, field
-from typing import Dict, List, Sequence, Tuple
+from dataclasses import dataclass
+from collections.abc import Sequence
 
 import numpy as np
 import pandas as pd
@@ -56,9 +56,9 @@ class FeatureImportance:
 
 @dataclass
 class SelectionResult:
-    all_ranked: List[FeatureImportance]
-    survivors: List[str]
-    pruned: List[str]
+    all_ranked: list[FeatureImportance]
+    survivors: list[str]
+    pruned: list[str]
     threshold_used: float
 
 
@@ -90,7 +90,7 @@ class AlphaFeatureLab:
         self.base_features = list(base_features)
         self.operators = [op for op in operators if op in _OPS]
         self.max_candidates = max_candidates
-        self._candidate_names: List[str] = []
+        self._candidate_names: list[str] = []
 
     # ------------------------------------------------------------------
     # 1. Generate candidate interaction columns
@@ -119,7 +119,7 @@ class AlphaFeatureLab:
         pairs.sort(key=lambda ab: var[ab[0]] * var[ab[1]], reverse=True)
 
         out = df.copy()
-        generated: List[str] = []
+        generated: list[str] = []
 
         for a, b in pairs:
             if len(generated) >= self.max_candidates:
@@ -142,7 +142,7 @@ class AlphaFeatureLab:
         return out
 
     @property
-    def candidate_names(self) -> List[str]:
+    def candidate_names(self) -> list[str]:
         return list(self._candidate_names)
 
     # ------------------------------------------------------------------
@@ -204,7 +204,7 @@ class AlphaFeatureLab:
 
         # ---- permutation importance (out-of-fold) ----
         rng = np.random.RandomState(42)
-        importances: List[FeatureImportance] = []
+        importances: list[FeatureImportance] = []
 
         for j, fname in enumerate(features):
             deltas = []
@@ -252,8 +252,8 @@ class AlphaFeatureLab:
     # ------------------------------------------------------------------
     def compute_stability(
         self,
-        window_results: List[SelectionResult],
-    ) -> Dict[str, float]:
+        window_results: list[SelectionResult],
+    ) -> dict[str, float]:
         """
         Given a list of ``SelectionResult`` from consecutive walk-forward
         windows, return per-feature *survival rate* (fraction of windows
@@ -263,7 +263,7 @@ class AlphaFeatureLab:
         if not window_results:
             return {}
 
-        feature_counts: Dict[str, int] = {}
+        feature_counts: dict[str, int] = {}
         n_windows = len(window_results)
 
         for sr in window_results:

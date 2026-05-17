@@ -1,53 +1,58 @@
 # WBC 檢討會議報告
 
-日期: 2026-03-08
+日期: 2026-03-09
 固定位置: `data/wbc_backend/reports/WBC_Review_Meeting_Latest.md`
-歸檔位置: `data/wbc_backend/reports/review_archive/`
+歸檔位置: `archive/legacy_reports/wbc_backend_reports/review_archive/`
 
-## 今日白天賽果
+## 今日已完成回填賽果
 
-- 加拿大 8:2 哥倫比亞
-- 荷蘭 4:3 尼加拉瓜
-- 義大利 8:0 巴西
-- 波多黎各 4:3 巴拿馬
-- 委內瑞拉 11:3 以色列
-- 美國 9:1 英國
-- 台灣 5:4 南韓
-- 澳洲 vs 日本: 夜場，另行補充
+- 墨西哥 16:0 巴西 (`B06`)
+- 南韓 7:2 澳洲 (`C09`)
 
-## 核心結論
+## 今日核心結論
 
-1. 問題主因不是單一模型錯誤，而是資料驗證、模型部署、回測校準沒有形成強制閉環。
-2. 先發投手驗證門檻已補上，但 live inference 直到今日仍暴露出 artifact schema 與 feature count 不一致風險。
-3. 現有系統能做方向判讀，但不等於已具備穩定可下注能力；校準、過擬合抑制、賽後自動學習仍需補強。
+1. 3/9 兩場勝負方向都抓對，但這不代表系統可直接信任。
+2. **B06** 暴露出大比分崩盤鏈低估: 預測總分 6.65，實際總分 16。
+3. **C09** 暴露出資料血緣問題: authoritative snapshot 已驗證 `Ju-Young Son / Lachlan Wells`，最終對外報告仍殘留 seed 版 `Koo Chang-Mo / Jack O'Loughlin`。
+4. 今天之前 prediction registry 沒有賽後結果回寫，無法形成真正自動學習閉環。
 
 ## 三位虛擬評審團結論
 
 ### 方法理論專家
 
-- 先補 uncertainty 與 calibration，再談增加模型複雜度。
-- WBC 小樣本要靠跨屆 shrinkage、walk-forward、conformal/區間信心控風險。
+- 要先修補 uncertainty 與肥尾分布，再談增加模型複雜度。
+- B06 類型需要 zero-inflated / hurdle / heavy-tail 得分模型；C09 類型需要把資料可信度變成模型與 gate 的一級訊號。
 
 ### 技術務實專家
 
-- 最優先是版本一致性: feature schema、artifact、walk-forward、calibration 必須同版。
-- 沒有通過 deployment gate，一律不准 live 預測。
+- `VERIFIED_WITH_FALLBACK` 不應只是 warning，應升級成 deploy gate。
+- 立即補上 `starter_identity_confidence`、`lineup_coverage_ratio`、`bullpen_cascade_fatigue`、`mismatch_blowout_propensity`。
 
 ### 程式架構專家
 
-- 必須建立 prediction registry，逐場落地賽前快照、預測、決策、賽後結果。
-- 優先順序: deployment gate > prediction registry > calibration loop > feature expansion。
+- 優先順序不是再加模型，而是補完整閉環。
+- 已新增 [`postgame_learning.py`](/Users/kelvin/Kelvin-WorkSpace/Betting-pool/wbc_backend/reporting/postgame_learning.py) 並回填 [`postgame_results.jsonl`](/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/postgame_results.jsonl)，後續要排入 scheduler 自動化。
 
-## 已啟動優化項目
+## 今日已落地
 
-- 新增 deployment gate
-- 新增 prediction registry
-- 模型 artifact schema 驗證
-- 重訓 32-feature artifact
+- 3/9 賽後回寫檔: [`postgame_results.jsonl`](/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/postgame_results.jsonl)
+- 線上學習狀態檔: [`retrainer_state.json`](/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/artifacts/retrainer_state.json)
+- 詳細賽後檢討: [`3_9_postmortem.md`](/Users/kelvin/Kelvin-WorkSpace/Betting-pool/docs/reports/postmortem/3_9_postmortem.md)
+
+## 回填後觀察
+
+- 目前 retrainer 僅有 **2 場**樣本，權重只可觀察不可部署。
+- 暫時權重排序:
+  - `real_gbm_stack` 23.84%
+  - `neural_net` 21.38%
+  - `bayesian` 17.77%
+  - `poisson` 16.08%
+  - `elo` 13.83%
+  - `baseline` 7.10%
 
 ## 後續優先項
 
-1. prediction registry 串上賽後結果回寫
-2. walk-forward / calibration 作為 deploy gate
-3. lineup-level / leverage bullpen / elimination pressure 特徵
-4. meta-learning 僅在校準合格時允許更新權重
+1. verified snapshot 強制覆蓋最終報告輸出
+2. `VERIFIED_WITH_FALLBACK` 升級成 deploy gate
+3. 大比分崩盤特徵與 mercy-rule hazard 納入建模
+4. postgame result → retrainer → daily review 全自動化

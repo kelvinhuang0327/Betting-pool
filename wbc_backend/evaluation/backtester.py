@@ -10,11 +10,10 @@ from __future__ import annotations
 
 import logging
 import math
-from typing import Dict, List, Optional
 
 import numpy as np
 
-from wbc_backend.domain.schemas import BacktestMetrics, BetRecommendation
+from wbc_backend.domain.schemas import BacktestMetrics
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +22,7 @@ logger = logging.getLogger(__name__)
 _SYNTHETIC_MARKERS = {"synthetic", "fallback", "generated", "mock_auto", "seed_auto"}
 
 
-def assert_no_synthetic_data(predictions: List[Dict], context: str = "") -> None:
+def assert_no_synthetic_data(predictions: list[dict], context: str = "") -> None:
     """
     § 核心規範 01 — 斷言回測數據不含合成 / 回退 / 自動生成紀錄。
 
@@ -46,7 +45,7 @@ def assert_no_synthetic_data(predictions: List[Dict], context: str = "") -> None
 
 
 def run_backtest(
-    predictions: List[Dict],
+    predictions: list[dict],
     initial_bankroll: float = 100_000.0,
 ) -> BacktestMetrics:
     """
@@ -75,14 +74,13 @@ def run_backtest(
     bankroll = initial_bankroll
     peak = initial_bankroll
     max_dd = 0.0
-    daily_returns: List[float] = []
+    daily_returns: list[float] = []
     wins = 0
     losses = 0
     total_staked = 0.0
     total_return = 0.0
 
     for pred in predictions:
-        win_prob = pred.get("win_prob", 0.5)
         actual_win = pred.get("actual_win", 0)
         odds = pred.get("odds", 2.0)
         stake_frac = pred.get("stake_fraction", 0.02)
@@ -166,7 +164,7 @@ def backtest_season(
     rng = np.random.default_rng(42)
 
     predictions = []
-    for i in range(n_games):
+    for _ in range(n_games):
         # Simulate model making predictions
         true_prob = rng.beta(5, 5)  # True probability
         model_prob = np.clip(true_prob + rng.normal(0, 0.05), 0.05, 0.95)
@@ -198,7 +196,7 @@ def backtest_season(
     return run_backtest(predictions)
 
 
-def run_full_backtest() -> Dict[str, BacktestMetrics]:
+def run_full_backtest() -> dict[str, BacktestMetrics]:
     """Run backtests across all historical seasons."""
     seasons = {
         "MLB_2023": 162,
@@ -224,7 +222,7 @@ def run_full_backtest() -> Dict[str, BacktestMetrics]:
     return results
 
 
-def format_backtest_report(results: Dict[str, BacktestMetrics]) -> str:
+def format_backtest_report(results: dict[str, BacktestMetrics]) -> str:
     """Format backtest results for display."""
     lines = [
         "", "=" * 60,

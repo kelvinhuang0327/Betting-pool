@@ -10,17 +10,13 @@ WBC 2023 回測 v3 — 整合 Institutional Decision Engine
 """
 from __future__ import annotations
 
-import math
 from collections import defaultdict
-from typing import Dict, List
 
 import numpy as np
 
 from wbc_backend.intelligence.edge_realism_filter import (
     RealismInput,
     assess_edge_realism,
-    RealEdgeLabel,
-    REALISM_THRESHOLD,
 )
 
 
@@ -90,12 +86,14 @@ def poisson_wp(lam_h, lam_a):
 
 
 def pythag(rpg, rapg):
-    if rpg + rapg <= 0: return 0.5
+    if rpg + rapg <= 0:
+        return 0.5
     return rpg ** 1.83 / (rpg ** 1.83 + rapg ** 1.83)
 
 
 def log5(pa, pb):
-    if pa + pb == 0: return 0.5
+    if pa + pb == 0:
+        return 0.5
     return pa * (1 - pb) / (pa * (1 - pb) + pb * (1 - pa))
 
 
@@ -105,7 +103,7 @@ def make_odds(fair, vig=0.08):
     return h_dec, a_dec
 
 
-def run():
+def run():  # noqa: C901
     print()
     print("=" * 70)
     print("🏛️  WBC 2023 回測 v3 — Institutional Decision Engine")
@@ -256,13 +254,17 @@ def run():
                 if use_gate and not realism.is_tradeable:
                     gate_blocked += 1
                     # Update state and skip
-                    runs_for[home].append(hs); runs_for[away].append(aws)
-                    runs_against[home].append(aws); runs_against[away].append(hs)
-                    results_hist[home].append(actual_hw); results_hist[away].append(1 - actual_hw)
+                    runs_for[home].append(hs)
+                    runs_for[away].append(aws)
+                    runs_against[home].append(aws)
+                    runs_against[away].append(hs)
+                    results_hist[home].append(actual_hw)
+                    results_hist[away].append(1 - actual_hw)
                     elo_exp = 1.0 / (1.0 + 10 ** (-(elo[home] - elo[away]) / 400.0))
                     margin = abs(hs - aws)
                     delta = 16.0 * (1.0 + 0.08 * min(margin, 10)) * (actual_hw - elo_exp)
-                    elo[home] += delta; elo[away] -= delta
+                    elo[home] += delta
+                    elo[away] -= delta
                     continue
                 else:
                     gate_passed += 1
@@ -280,7 +282,8 @@ def run():
                     total_staked += stake
                     total_pnl += pnl
                     bet_count += 1
-                    if won: bet_wins += 1
+                    if won:
+                        bet_wins += 1
                     peak = max(peak, bankroll)
                     max_dd = max(max_dd, (peak - bankroll) / peak)
 
@@ -293,13 +296,17 @@ def run():
                     )
 
             # ── Update ──
-            runs_for[home].append(hs); runs_for[away].append(aws)
-            runs_against[home].append(aws); runs_against[away].append(hs)
-            results_hist[home].append(actual_hw); results_hist[away].append(1 - actual_hw)
+            runs_for[home].append(hs)
+            runs_for[away].append(aws)
+            runs_against[home].append(aws)
+            runs_against[away].append(hs)
+            results_hist[home].append(actual_hw)
+            results_hist[away].append(1 - actual_hw)
             elo_exp = 1.0 / (1.0 + 10 ** (-(elo[home] - elo[away]) / 400.0))
             margin = abs(hs - aws)
             delta = 16.0 * (1.0 + 0.08 * min(margin, 10)) * (actual_hw - elo_exp)
-            elo[home] += delta; elo[away] -= delta
+            elo[home] += delta
+            elo[away] -= delta
 
         # ── Print results ──
         print(f"━━━ {strat_name} ━━━")
@@ -310,7 +317,7 @@ def run():
                   f"ROI: {roi:+.1%} | 淨利: ${total_pnl:+,.0f}")
             print(f"  最終資金: ${bankroll:,.0f} | Max DD: {max_dd:.1%}")
         else:
-            print(f"  ⚠️ 無符合門檻投注")
+            print("  ⚠️ 無符合門檻投注")
 
         if use_gate:
             print(f"  Gate 統計: {gate_passed} passed / {gate_blocked} blocked")

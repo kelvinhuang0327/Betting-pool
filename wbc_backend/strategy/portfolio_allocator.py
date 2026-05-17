@@ -6,7 +6,6 @@ Portfolio Allocator — § 十 組合最佳化與風險分配系統
 from __future__ import annotations
 
 import logging
-from typing import Dict, List, Optional
 import numpy as np
 
 from wbc_backend.domain.schemas import BetRecommendation
@@ -22,37 +21,38 @@ class PortfolioAllocator:
         self.bankroll_total = bankroll_total
         self.config = config
 
-    def optimize_allocation(self, daily_bets: List[BetRecommendation]) -> List[BetRecommendation]:
+    def optimize_allocation(self, daily_bets: list[BetRecommendation]) -> list[BetRecommendation]:
         """
         P3.10 Upgrade: Portfolio Optimization.
-        
+
         Calculates:
         1. Correlation adjustment between markets (e.g. Home MLs across games).
         2. Mean-Variance risk balance.
         3. Hard cap on daily exposure (MAX_DAILY_EXPOSURE_PCT).
         """
-        if not daily_bets: return []
-        
+        if not daily_bets:
+            return []
+
         # 1. Individual EV/Risk ranking
         daily_bets.sort(key=lambda b: (b.ev, b.win_probability), reverse=True)
-        
+
         # 2. Daily exposure cap
         max_daily_usd = self.bankroll_total * self.config.max_daily_exposure_pct
         current_daily_sum = 0.0
-        
+
         final_portfolio = []
-        
+
         # 3. Simple Correlation Filtering (Heuristic for WBC)
         # Avoid betting > 3 Overs on the same venue/climate
         over_count = 0
-        
+
         for bet in daily_bets:
             # Correlation check: Over exposure
             if bet.market == "OU" and bet.side == "Over":
                 over_count += 1
                 if over_count > 3: # Too much systematic 'Over' risk
                     bet.stake_amount *= 0.5 # Reduce correlation risk
-                    
+
             # 4. Check daily exposure limit
             if current_daily_sum + bet.stake_amount > max_daily_usd:
                 # Scaled reduction to fit the cap
@@ -66,15 +66,15 @@ class PortfolioAllocator:
 
             current_daily_sum += bet.stake_amount
             final_portfolio.append(bet)
-            
-        logger.info("[PORTFOLIO] Allocated total $%.2f across %d bets. (Daily Cap: $%.2f)", 
+
+        logger.info("[PORTFOLIO] Allocated total $%.2f across %d bets. (Daily Cap: $%.2f)",
                     current_daily_sum, len(final_portfolio), max_daily_usd)
-        
+
         return final_portfolio
 
-    def calculate_correlation_matrix(self, match_ids: List[str]) -> np.ndarray:
+    def calculate_correlation_matrix(self, match_ids: list[str]) -> np.ndarray:
         """
-        Placeholder for full MVO: Compute correlation between games 
+        Placeholder for full MVO: Compute correlation between games
         based on shared factors (venue, weather, time zone fatigue).
         """
         n = len(match_ids)

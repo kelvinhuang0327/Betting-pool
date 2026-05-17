@@ -33,10 +33,8 @@ Hard rule:
 """
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ─── Enums ──────────────────────────────────────────────────────────────────
@@ -142,13 +140,13 @@ class FakeMoveResult:
     toxicity_score: float = 0.0
 
     # Diagnostics
-    details: Dict[str, str] = field(default_factory=dict)
+    details: dict[str, str] = field(default_factory=dict)
     reasoning: str = ""
 
 
 # ─── Component 1: Velocity Anomaly ─────────────────────────────────────────
 
-def _score_velocity_anomaly(inp: FakeMoveInput) -> Tuple[float, str]:
+def _score_velocity_anomaly(inp: FakeMoveInput) -> tuple[float, str]:
     """
     Is the move speed abnormally fast?
 
@@ -196,7 +194,7 @@ def _score_velocity_anomaly(inp: FakeMoveInput) -> Tuple[float, str]:
 
 # ─── Component 2: Volume Mismatch ──────────────────────────────────────────
 
-def _score_volume_mismatch(inp: FakeMoveInput) -> Tuple[float, str]:
+def _score_volume_mismatch(inp: FakeMoveInput) -> tuple[float, str]:
     """
     Does volume justify the line movement?
 
@@ -237,7 +235,7 @@ def _score_volume_mismatch(inp: FakeMoveInput) -> Tuple[float, str]:
 
 # ─── Component 3: Reversion Pattern ────────────────────────────────────────
 
-def _score_reversion_pattern(inp: FakeMoveInput) -> Tuple[float, str]:
+def _score_reversion_pattern(inp: FakeMoveInput) -> tuple[float, str]:
     """
     Did the line snap back after the move?
 
@@ -276,7 +274,7 @@ def _score_reversion_pattern(inp: FakeMoveInput) -> Tuple[float, str]:
 
 # ─── Component 4: Cross-Book Disparity ─────────────────────────────────────
 
-def _score_cross_book_disparity(inp: FakeMoveInput) -> Tuple[float, str]:
+def _score_cross_book_disparity(inp: FakeMoveInput) -> tuple[float, str]:
     """
     Do other sportsbooks confirm the move?
 
@@ -314,7 +312,7 @@ def _score_cross_book_disparity(inp: FakeMoveInput) -> Tuple[float, str]:
 
 # ─── Component 5: Toxicity Signal ──────────────────────────────────────────
 
-def _score_toxicity_signal(inp: FakeMoveInput) -> Tuple[float, str]:
+def _score_toxicity_signal(inp: FakeMoveInput) -> tuple[float, str]:
     """
     Order flow toxicity using VPIN (Volume-Synchronized Probability
     of Informed Trading) proxy.
@@ -525,7 +523,7 @@ def _run_smoke_tests():
     print("  ✅ PASSED")
 
     print(f"\n{'=' * 60}")
-    print(f"✅ All 4 smoke tests passed")
+    print("✅ All 4 smoke tests passed")
     print(f"{'=' * 60}")
 
 

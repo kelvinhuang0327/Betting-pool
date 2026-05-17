@@ -16,7 +16,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 from wbc_backend.domain.schemas import BetRecommendation, PredictionResult
 
@@ -45,7 +44,7 @@ class BetDecision:
     """Complete decision pipeline output for a single bet."""
     bet: BetRecommendation
     approved: bool
-    gates: List[GateDecision] = field(default_factory=list)
+    gates: list[GateDecision] = field(default_factory=list)
     final_stake_pct: float = 0.0
     final_stake_amount: float = 0.0
     timing: str = "IMMEDIATE"
@@ -57,7 +56,7 @@ class BetDecision:
 class DecisionContext:
     """All context needed for the decision pipeline."""
     prediction: PredictionResult
-    sub_model_probs: Dict[str, float]    # {model_name: home_win_prob}
+    sub_model_probs: dict[str, float]    # {model_name: home_win_prob}
     market_implied_prob: float            # market's implied probability
     model_prob: float                     # ensemble model probability
     odds: float                           # current decimal odds
@@ -65,7 +64,7 @@ class DecisionContext:
     daily_exposure_pct: float = 0.0
     peak_bankroll: float = 100_000.0
     consecutive_losses: int = 0
-    sharp_signals: List[str] = field(default_factory=list)
+    sharp_signals: list[str] = field(default_factory=list)
     steam_detected: bool = False
     market_efficiency: float = 0.5
 
@@ -116,7 +115,6 @@ def gate_consensus(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision
         )
 
     # Determine bet side: is this bet on the favourite or underdog?
-    model_home = ctx.model_prob
     bet_side = getattr(bet, "side", "home").lower()
     bet_on_home = "home" in bet_side
 
@@ -125,9 +123,7 @@ def gate_consensus(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision
     positive_ev = 0
     total = len(probs)
 
-    market_ip = 1.0 / max(ctx.odds, 1.01)
-
-    for name, home_p in probs.items():
+    for _name, home_p in probs.items():
         model_bet_side_prob = home_p if bet_on_home else (1.0 - home_p)
 
         # Agreement: model also favours this side
@@ -389,7 +385,7 @@ def run_decision_pipeline(
     A bet must survive all 5 gates. Each gate can reject, pass, or modify.
     Modifications accumulate (e.g., reduced confidence → smaller position).
     """
-    gates: List[GateDecision] = []
+    gates: list[GateDecision] = []
     confidence_multiplier = 1.0
     position_multiplier = 1.0
     timing = "IMMEDIATE"
@@ -455,14 +451,14 @@ def run_decision_pipeline(
 
 
 def run_batch_decisions(
-    bets: List[BetRecommendation],
+    bets: list[BetRecommendation],
     ctx: DecisionContext,
-) -> List[BetDecision]:
+) -> list[BetDecision]:
     """
     Run decision pipeline for multiple bets.
     Tracks cumulative exposure across bets.
     """
-    decisions: List[BetDecision] = []
+    decisions: list[BetDecision] = []
     cumulative_exposure = ctx.daily_exposure_pct
 
     for bet in bets:
@@ -480,7 +476,7 @@ def run_batch_decisions(
 
 def _build_rejected(
     bet: BetRecommendation,
-    gates: List[GateDecision],
+    gates: list[GateDecision],
     reason: str,
 ) -> BetDecision:
     return BetDecision(
@@ -491,7 +487,7 @@ def _build_rejected(
     )
 
 
-def _std(values: List[float]) -> float:
+def _std(values: list[float]) -> float:
     if len(values) < 2:
         return 0.0
     mean = sum(values) / len(values)

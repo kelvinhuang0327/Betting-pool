@@ -22,7 +22,6 @@ import math
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ─── Configuration ──────────────────────────────────────────────────────────
@@ -98,7 +97,7 @@ class SharpnessReport:
     sharp_co_movement: float = 0.50        # % aligned with sharp money
 
     # Prediction decay
-    decay_curve: List[DecayPoint] = field(default_factory=list)
+    decay_curve: list[DecayPoint] = field(default_factory=list)
     half_life_hours: float = 12.0      # hours until edge halves
 
     # Actions
@@ -106,7 +105,7 @@ class SharpnessReport:
     edge_threshold_adjustment: float = 0.0  # add this to edge threshold
     frequency_adjustment: float = 1.0       # multiply bet frequency by this
     alert_message: str = ""
-    recommendations: List[str] = field(default_factory=list)
+    recommendations: list[str] = field(default_factory=list)
 
 
 # ─── CLV Tracking ──────────────────────────────────────────────────────────
@@ -115,10 +114,10 @@ class SharpnessMonitor:
     """Stateful monitor that accumulates CLV data and provides assessments."""
 
     def __init__(self):
-        self.clv_history: List[CLVEntry] = []
-        self.movement_history: List[Dict] = []
-        self.decay_snapshots: Dict[str, List[DecayPoint]] = {}
-        self._last_report: Optional[SharpnessReport] = None
+        self.clv_history: list[CLVEntry] = []
+        self.movement_history: list[dict] = []
+        self.decay_snapshots: dict[str, list[DecayPoint]] = {}
+        self._last_report: SharpnessReport | None = None
 
     def record_clv(
         self,
@@ -293,14 +292,14 @@ class SharpnessMonitor:
         self._last_report = report
         return report
 
-    def _compute_aggregate_decay(self) -> List[DecayPoint]:
+    def _compute_aggregate_decay(self) -> list[DecayPoint]:
         """Average decay curve across all tracked games."""
         hour_buckets = SHARPNESS_CONFIG["decay_lookback_hours"]
         aggregated = []
 
         for h in hour_buckets:
             edges = []
-            for game_id, points in self.decay_snapshots.items():
+            for _game_id, points in self.decay_snapshots.items():
                 # Find closest point to this hour bucket
                 closest = min(points, key=lambda p: abs(p.hours_before - h), default=None)
                 if closest and abs(closest.hours_before - h) < h * 0.3:
@@ -314,7 +313,7 @@ class SharpnessMonitor:
 
         return aggregated
 
-    def _estimate_half_life(self, curve: List[DecayPoint]) -> float:
+    def _estimate_half_life(self, curve: list[DecayPoint]) -> float:
         """Estimate the half-life of edge in hours."""
         if len(curve) < 2:
             return 12.0  # default
@@ -331,7 +330,7 @@ class SharpnessMonitor:
 
         return curve[-1].hours_before  # never fully decays within window
 
-    def get_quick_status(self) -> Dict:
+    def get_quick_status(self) -> dict:
         """Quick status for dashboard."""
         if self._last_report:
             r = self._last_report

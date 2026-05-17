@@ -20,7 +20,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 from wbc_backend.intelligence.edge_validator import EdgeReport
 from wbc_backend.intelligence.regime_classifier import (
@@ -89,7 +88,7 @@ class BetCandidate:
     regime_confidence: float = 0.5
 
     # Gate audit trail
-    gates_passed: List[GateResult] = field(default_factory=list)
+    gates_passed: list[GateResult] = field(default_factory=list)
     all_passed: bool = False
 
     # Selection metadata
@@ -104,8 +103,8 @@ class SelectionResult:
     match_id: str = ""
     candidates_evaluated: int = 0
     candidates_selected: int = 0
-    selected: List[BetCandidate] = field(default_factory=list)
-    rejected: List[BetCandidate] = field(default_factory=list)
+    selected: list[BetCandidate] = field(default_factory=list)
+    rejected: list[BetCandidate] = field(default_factory=list)
     daily_bet_count: int = 0
     summary: str = ""
 
@@ -129,7 +128,7 @@ def _check_edge_score(edge_report: EdgeReport) -> GateResult:
 
 
 def _check_model_consensus(
-    sub_model_probs: List[float],
+    sub_model_probs: list[float],
     predicted_side_prob: float,
 ) -> GateResult:
     """
@@ -163,7 +162,7 @@ def _check_model_consensus(
     )
 
 
-def _check_prediction_stability(sub_model_probs: List[float]) -> GateResult:
+def _check_prediction_stability(sub_model_probs: list[float]) -> GateResult:
     """
     Gate 3: Prediction stability — standard deviation of sub-model
     probabilities must be below threshold.
@@ -298,11 +297,11 @@ def evaluate_bet_candidate(
     odds: float,
     model_prob: float,
     calibrated_prob: float,
-    sub_model_probs: List[float],
+    sub_model_probs: list[float],
     edge_report: EdgeReport,
     regime_report: RegimeReport,
     daily_bet_count: int = 0,
-    band_roi_lookup: Optional[Dict] = None,
+    band_roi_lookup: dict | None = None,
 ) -> BetCandidate:
     """
     Evaluate a single bet through all 7 gates.
@@ -392,7 +391,7 @@ def evaluate_bet_candidate(
 
 
 def select_bets(
-    candidates: List[BetCandidate],
+    candidates: list[BetCandidate],
     max_per_match: int = 2,
 ) -> SelectionResult:
     """
@@ -408,7 +407,7 @@ def select_bets(
     passed.sort(key=lambda c: -c.priority_score)
 
     # Limit per match
-    selected_per_match: Dict[str, int] = {}
+    selected_per_match: dict[str, int] = {}
     selected = []
     for c in passed:
         count = selected_per_match.get(c.match_id, 0)

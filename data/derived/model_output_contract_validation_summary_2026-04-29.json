@@ -1,0 +1,100 @@
+{
+  "schema_version": "6k-1.0",
+  "run_date": "2026-04-29",
+  "run_timestamp_utc": "2026-04-29T16:22:24.909496+00:00",
+  "candidate_files_scanned": 10,
+  "real_model_output_file_exists": false,
+  "real_model_output_rows": 0,
+  "real_model_output_valid_rows": 0,
+  "dry_run_rows": 2080,
+  "gate_results": {
+    "M1": {
+      "total_rows": 2080,
+      "pass": 0,
+      "fail": 2080,
+      "block": 0,
+      "pass_pct": 0.0
+    },
+    "M2": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    },
+    "M3": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    },
+    "M4": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    },
+    "M5": {
+      "total_rows": 2080,
+      "pass": 0,
+      "fail": 2080,
+      "block": 0,
+      "pass_pct": 0.0
+    },
+    "M6": {
+      "total_rows": 2080,
+      "pass": 0,
+      "fail": 2080,
+      "block": 0,
+      "pass_pct": 0.0
+    },
+    "M7": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    },
+    "M8": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    },
+    "M9": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    },
+    "M10": {
+      "total_rows": 2080,
+      "pass": 766,
+      "fail": 1314,
+      "block": 0,
+      "pass_pct": 36.8
+    },
+    "M11": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    },
+    "M12": {
+      "total_rows": 2080,
+      "pass": 2080,
+      "fail": 0,
+      "block": 0,
+      "pass_pct": 100.0
+    }
+  },
+  "readiness_decision": "NOT_READY_MODEL_OUTPUT_GAP",
+  "recommended_next_step": "Phase 6L: ML-Only Model Output Adapter",
+  "source_data_modified": false,
+  "formal_clv_validation_run": false
+}
