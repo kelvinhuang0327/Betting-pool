@@ -1,10 +1,14 @@
 """
-P26 — Line-Aware CLV Outcome Matching
+P26/P25 — Line-Aware CLV Outcome Matching
 paper_only=true / diagnostic_only=true
 
 Replaces P22 index-based outcome comparison with name-based matching.
 Skips any pair where the outcome name (which encodes the handicap/total line)
 changed between pregame and closing snapshots.
+
+P25 CLV Construction Fix: adds line_comparable / line_shift_detected /
+excluded_from_clean_clv / clv_status / audit_reason fields to satisfy
+P25 CLV audit contract.
 
 Supported market codes: MNL, HDC, OU, OE, TTO
 """
@@ -24,6 +28,20 @@ class MatchStatus(str, Enum):
     UNSUPPORTED_MARKET = "UNSUPPORTED_MARKET"
 
 
+# P25 CLV status vocabulary (maps from MatchStatus)
+_CLV_STATUS_MAP: dict[MatchStatus, str] = {
+    MatchStatus.MATCHED: "CLV_COMPARABLE",
+    MatchStatus.LINE_MOVED: "LINE_SHIFT_UNCOMPARABLE",
+    MatchStatus.MARKET_SHAPE_MISMATCH: "LINE_SHIFT_UNCOMPARABLE",
+    MatchStatus.MISSING_OUTCOME: "MISSING_CLOSING_ODDS",
+    MatchStatus.PARSE_FAILED: "MISSING_OPENING_ODDS",
+    MatchStatus.UNSUPPORTED_MARKET: "UNSUPPORTED_MARKET",
+}
+
+# Statuses that indicate a line-shift event specifically
+_LINE_SHIFT_STATUSES = {MatchStatus.LINE_MOVED, MatchStatus.MARKET_SHAPE_MISMATCH}
+
+
 @dataclass
 class OutcomeMatchResult:
     market_code: str
@@ -40,6 +58,35 @@ class OutcomeMatchResult:
     def is_valid_clv(self) -> bool:
         return self.status == MatchStatus.MATCHED
 
+    # ── P25 CLV audit contract fields ─────────────────────────────────────────
+
+    @property
+    def clv_status(self) -> str:
+        """P25 CLV status vocabulary."""
+        return _CLV_STATUS_MAP.get(self.status, "UNSUPPORTED_MARKET")
+
+    @property
+    def line_comparable(self) -> bool:
+        """True only when the line is identical between pregame and closing."""
+        return self.status == MatchStatus.MATCHED
+
+    @property
+    def line_shift_detected(self) -> bool:
+        """True when the outcome name changed between pregame and closing (HDC/OU/TTO line moved)."""
+        return self.status in _LINE_SHIFT_STATUSES
+
+    @property
+    def excluded_from_clean_clv(self) -> bool:
+        """True for any row that must not contribute to clean CLV analysis."""
+        return self.status != MatchStatus.MATCHED
+
+    @property
+    def audit_reason(self) -> str:
+        """Human-readable reason for exclusion or inclusion."""
+        if self.status == MatchStatus.MATCHED:
+            return "CLV_COMPARABLE: same line in pregame and closing — CLV valid"
+        return self.skip_reason or self.clv_status
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "market_code": self.market_code,
@@ -51,6 +98,12 @@ class OutcomeMatchResult:
             "clv_pct": self.clv_pct,
             "skip_reason": self.skip_reason,
             "meta": self.meta,
+            # P25 fields
+            "clv_status": self.clv_status,
+            "line_comparable": self.line_comparable,
+            "line_shift_detected": self.line_shift_detected,
+            "excluded_from_clean_clv": self.excluded_from_clean_clv,
+            "audit_reason": self.audit_reason,
         }
 
 

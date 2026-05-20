@@ -1,0 +1,76 @@
+{
+  "artifact_id": "p25_clv_construction_fix_20260520",
+  "phase": "P25",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "classification": "P25_CLV_CONSTRUCTION_FIX_COMPLETED",
+  "title": "P25 CLV Construction Fix — HDC / OU / TTO Line-Shift Bug",
+
+  "bug_summary": {
+    "root_cause": "HDC / OU / TTO outcome names encode the handicap / total line (e.g., '底特律老虎 -2.5', '大 8.5', '大 4.5'). The old (P22) CLV pipeline compared pregame and closing odds by array index position, ignoring outcome names. When the line shifted between pregame and closing, index[0] at pregame mapped to a *different line* than index[0] at closing, producing mathematically invalid CLV values.",
+    "example_false_positive": {
+      "match_id": "3468261.1",
+      "market": "HDC",
+      "pregame_outcome": "底特律老虎 -1.5",
+      "pregame_odds": 2.90,
+      "closing_outcome": "底特律老虎 -2.5",
+      "closing_odds": 1.40,
+      "old_index_based_clv_pct": 107.14,
+      "new_line_aware_clv_pct": null,
+      "new_clv_status": "LINE_SHIFT_UNCOMPARABLE"
+    },
+    "affected_market_pairs": {
+      "HDC": {"mismatch_pct": 12.2, "outlier_gt50pct_count": 17},
+      "TTO": {"mismatch_pct": 14.7, "outlier_gt50pct_count": null},
+      "OU":  {"mismatch_pct": 9.1,  "outlier_gt50pct_count": null}
+    }
+  },
+
+  "fix_summary": {
+    "module": "wbc_backend/clv/outcome_matching.py",
+    "approach": "Name-based (line-aware) outcome matching. For HDC/OU/TTO, the outcome name is the key. If pregame name != closing name the pair is excluded. No index fallback is ever used.",
+    "mnl_unaffected": "MNL uses team-name matching (no line in name). Two-way vs three-way shape mismatch is detected separately. Moneyline CLV computation is unchanged.",
+    "p25_api_fields_added": [
+      "clv_status: CLV_COMPARABLE | LINE_SHIFT_UNCOMPARABLE | MISSING_OPENING_ODDS | MISSING_CLOSING_ODDS | UNSUPPORTED_MARKET",
+      "line_comparable: bool — True only when same line at pregame and closing",
+      "line_shift_detected: bool — True when LINE_MOVED or MARKET_SHAPE_MISMATCH",
+      "excluded_from_clean_clv: bool — True for any non-MATCHED result",
+      "audit_reason: str — human-readable explanation"
+    ]
+  },
+
+  "clv_status_mapping": {
+    "MATCHED":               "CLV_COMPARABLE",
+    "LINE_MOVED":            "LINE_SHIFT_UNCOMPARABLE",
+    "MARKET_SHAPE_MISMATCH": "LINE_SHIFT_UNCOMPARABLE",
+    "MISSING_OUTCOME":       "MISSING_CLOSING_ODDS",
+    "PARSE_FAILED":          "MISSING_OPENING_ODDS",
+    "UNSUPPORTED_MARKET":    "UNSUPPORTED_MARKET"
+  },
+
+  "test_results": {
+    "test_file": "tests/test_p25_clv_construction_fix.py",
+    "total": 21,
+    "passed": 21,
+    "failed": 0,
+    "p26_regression": {"total": 23, "passed": 23, "failed": 0}
+  },
+
+  "wbc_clean_clv_restart": {
+    "pregame_safe_games": 797,
+    "data_source": "TSL WBC odds history (>=4h pregame)",
+    "can_restart": true,
+    "blocker": null,
+    "note": "Line-shift rows will be marked excluded_from_clean_clv=true. CLV analysis must filter to line_comparable=true rows only."
+  },
+
+  "remaining_blockers": [
+    "MLB pregame-safe games = 0 (all post-game proxy). MLB CLV validation remains blocked until real-time TSL collection begins (2026 regular season).",
+    "Model quality insufficient: MLB walkforward Brier=0.2487 (near random), hit rate=46.25% < 50%. Even with clean CLV, model edge must be rebuilt separately.",
+    "P1 real Orchestrator w_market sweep: still blocked (MLB market_prob is post-game proxy)."
+  ]
+}
