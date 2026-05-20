@@ -1,0 +1,48 @@
+{
+  "phase": "P23_GATE_AND_REPRODUCIBILITY_RECONCILIATION",
+  "task": "P23-A",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "p23_allowed": true,
+  "p23_scope": "GATE_AND_REPRODUCIBILITY_RECONCILIATION_ONLY",
+  "owner": "CTO_ENGINEER",
+  "forbidden_actions": [
+    "production_proposal",
+    "promotion",
+    "champion_replacement",
+    "live_api_call",
+    "crawler_modification",
+    "pr2_merge",
+    "optimizer_promotion",
+    "profitability_claim",
+    "p23c_distribution_expansion",
+    "p23d_market_expansion",
+    "p23e_sanity_check_expansion",
+    "p1_activation"
+  ],
+  "promotion_frozen": true,
+  "champion_preserved": "fixed_edge_5pct",
+  "hold_status": "HOLD_NO_EXPANSION_MAINTAINED",
+  "canonical_gate_source": "P22-E",
+  "canonical_gate_rationale": "P22-E (p22_hold_ready_gate_refresh_20260523.json) is the final gate state of P22, representing the post-validation gate outcome. P22-B (p22_ceo_decision_branch_20260523.json) was the CEO decision to approve CLV validation only — this was an intermediate decision gate, not a terminal gate. P22-E supersedes P22-B as it reflects the completed state. P22-E stated p23_allowed=false with unblock_condition='CEO explicit approval required'. The active P23 task was authorized by CEO as P0, satisfying that condition.",
+  "p22b_gate_state": {
+    "file": "data/paper_recommendations/p22_ceo_decision_branch_20260523.json",
+    "p23_allowed": true,
+    "p23_scope": "CLV_REPORT_REVIEW_ONLY",
+    "role": "intermediate_ceo_approval_for_p22_clv_validation"
+  },
+  "p22e_gate_state": {
+    "file": "data/paper_recommendations/p22_hold_ready_gate_refresh_20260523.json",
+    "p23_allowed": false,
+    "p23_unblock_condition": "CEO explicit approval required for any next gate",
+    "role": "terminal_gate_of_p22"
+  },
+  "gate_contradiction_resolution": "P22-E is canonical. P22-E's p23_allowed=false was unblocked by explicit CEO P0 authorization of this P23 task. The scope 'CLV_REPORT_REVIEW_ONLY' in P22-B is superseded by CEO-authorized scope 'GATE_AND_REPRODUCIBILITY_RECONCILIATION_ONLY'.",
+  "gate_conflict_classification": "RESOLVED",
+  "final_classification": "P23_GATE_RECONCILED"
+}

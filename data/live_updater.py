@@ -17,7 +17,7 @@ class LiveDataEngine:
             'Referer': 'https://www.google.com/'
         }
 
-    def fetch_live_scores(self, target_date: str = None) -> List[Dict]:
+    def fetch_live_scores(self, target_date: str = None, sport_ids: str = "51") -> List[Dict]:
         """
         Scrapes real-time and completed box scores from the public MLB/WBC Stats API.
         This endpoint is completely free, unprotected by Cloudflare, and updates pitch-by-pitch.
@@ -26,8 +26,8 @@ class LiveDataEngine:
             # Default to today's date in YYYY-MM-DD
             target_date = datetime.datetime.now().strftime("%Y-%m-%d")
             
-        # sportId 1=MLB, 51=WBC, 11=Triple-A (We include 51 for World Baseball Classic)
-        url = f"https://statsapi.mlb.com/api/v1/schedule?sportId=1,51&date={target_date}"
+        # sportId 51 = WBC. Keep MLB (1) excluded by default to avoid mixed-league data.
+        url = f"https://statsapi.mlb.com/api/v1/schedule?sportId={sport_ids}&date={target_date}"
         
         print(f"[Live Scraper] Fetching real-time scores for {target_date}...")
         

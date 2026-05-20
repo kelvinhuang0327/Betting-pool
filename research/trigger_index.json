@@ -1,0 +1,114 @@
+[
+  {
+    "period": "2026-03-09",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-33-14.553620Z.md",
+    "roi": -1.0,
+    "signature": "daily:2026-03-09:negative:-1.0",
+    "timestamp": "2026-04-18T16:33:14.553620Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-W11",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-33-14.553624Z.md",
+    "roi": -1.0,
+    "signature": "weekly:2026-W11:negative:-1.0",
+    "timestamp": "2026-04-18T16:33:14.553624Z",
+    "trigger_type": "weekly"
+  },
+  {
+    "period": "2026-03",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-33-14.553627Z.md",
+    "roi": -1.0,
+    "signature": "monthly:2026-03:negative:-1.0",
+    "timestamp": "2026-04-18T16:33:14.553627Z",
+    "trigger_type": "monthly"
+  },
+  {
+    "period": "2026-03-05",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590975Z.md",
+    "roi": -0.7708,
+    "signature": "daily:2026-03-05:negative:-0.7708",
+    "timestamp": "2026-04-18T16:44:07.590975Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-03-06",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590980Z.md",
+    "roi": -1.0,
+    "signature": "daily:2026-03-06:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590980Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-03-07",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590982Z.md",
+    "roi": -1.0,
+    "signature": "daily:2026-03-07:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590982Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-03-08",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590985Z.md",
+    "roi": -1.0,
+    "signature": "daily:2026-03-08:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590985Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-03-09",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590987Z.md",
+    "roi": -0.6484,
+    "signature": "daily:2026-03-09:negative:-0.6484",
+    "timestamp": "2026-04-18T16:44:07.590987Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-03-10",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590990Z.md",
+    "roi": -1.0,
+    "signature": "daily:2026-03-10:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590990Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-03-11",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590992Z.md",
+    "roi": 2.7683,
+    "signature": "daily:2026-03-11:positive:2.7683",
+    "timestamp": "2026-04-18T16:44:07.590992Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-03-12",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590995Z.md",
+    "roi": 0.1016,
+    "signature": "daily:2026-03-12:positive:0.1016",
+    "timestamp": "2026-04-18T16:44:07.590995Z",
+    "trigger_type": "daily"
+  },
+  {
+    "period": "2026-W10",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.590998Z.md",
+    "roi": -0.9823,
+    "signature": "weekly:2026-W10:negative:-0.9823",
+    "timestamp": "2026-04-18T16:44:07.590998Z",
+    "trigger_type": "weekly"
+  },
+  {
+    "period": "2026-W11",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.591000Z.md",
+    "roi": -0.189,
+    "signature": "weekly:2026-W11:negative:-0.189",
+    "timestamp": "2026-04-18T16:44:07.591000Z",
+    "trigger_type": "weekly"
+  },
+  {
+    "period": "2026-03",
+    "report_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/research/postmortem_reports/2026-04-18T16-44-07.591003Z.md",
+    "roi": -0.6845,
+    "signature": "monthly:2026-03:negative:-0.6845",
+    "timestamp": "2026-04-18T16:44:07.591003Z",
+    "trigger_type": "monthly"
+  }
+]

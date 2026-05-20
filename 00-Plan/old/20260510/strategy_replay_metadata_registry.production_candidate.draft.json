@@ -1,0 +1,40 @@
+{
+  "registry_kind": "production_candidate_draft",
+  "registry_purpose": "Strategy Replay metadata registry production candidate draft for acceptance review only",
+  "production_candidate": true,
+  "accepted": false,
+  "runtime_enabled": false,
+  "non_production_example": false,
+  "review_status": "draft_only",
+  "notes": "This artifact is review-ready but not production-approved. It must not be loaded automatically by runtime.",
+  "records": [
+    {
+      "strategy_id": "strategy.pool_c.ml_v1",
+      "strategy_name": "Pool C ML v1",
+      "current_lifecycle_state": "online",
+      "lifecycle_state_source": "explicit_registry",
+      "lifecycle_state_updated_at": "2026-05-10T08:00:00Z",
+      "owner_module": "wbc_backend.reporting.strategy_registry",
+      "audit_source": "strategy_registry_seed",
+      "allowed_for_future_writes": true,
+      "allowed_for_historical_backfill": false,
+      "metadata_version": "p30-candidate-1.0",
+      "notes": "Production candidate draft only; not accepted and not runtime-enabled.",
+      "source_kind": "registry"
+    },
+    {
+      "strategy_id": "strategy.pool_d.ml_v1",
+      "strategy_name": "Pool D ML v1",
+      "current_lifecycle_state": "offline",
+      "lifecycle_state_source": "explicit_registry",
+      "lifecycle_state_updated_at": "2026-05-10T08:00:00Z",
+      "owner_module": "wbc_backend.reporting.strategy_registry",
+      "audit_source": "strategy_registry_seed",
+      "allowed_for_future_writes": true,
+      "allowed_for_historical_backfill": false,
+      "metadata_version": "p30-candidate-1.0",
+      "notes": "Production candidate draft only; not accepted and not runtime-enabled.",
+      "source_kind": "registry"
+    }
+  ]
+}

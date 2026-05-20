@@ -1,0 +1,50 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "index_fallback_used": false,
+  "source_snapshot_lines_used": 2788,
+  "source_snapshot_sha256_expected": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+  "source_snapshot_drift_detected": true,
+  "current_snapshot_lines": 2803,
+  "current_snapshot_sha256": "157f4bdb77e7eed7b61de0746814bd71376f274981246bc2f107b1d3b46a6daa",
+  "drift_action": "RECORDED_ONLY_NOT_OVERWRITTEN",
+  "generated_at": "2026-05-20T04:37:59.658677+00:00",
+  "date": "2026-05-20",
+  "artifact": "P26_CLV_LINE_AWARE_MATCHING_RESULT",
+  "phase": "P26_CLV_LINE_AWARE_MATCHING_REPAIR",
+  "module": "wbc_backend/clv/outcome_matching.py",
+  "test_file": "tests/test_p26_clv_line_aware_matching.py",
+  "test_count": 23,
+  "test_result": "23/23_PASS",
+  "valid_pairs_derived": 236,
+  "total_match_results": 2499,
+  "matched_count": 2331,
+  "skip_counts": {
+    "LINE_MOVED": 162,
+    "MARKET_SHAPE_MISMATCH": 6
+  },
+  "skip_pct": 6.72,
+  "market_codes_processed": [
+    "MNL",
+    "HDC",
+    "OU",
+    "OE",
+    "TTO"
+  ],
+  "matching_rules": {
+    "MNL": "match by team name; 2-way vs 3-way shape mismatch → MARKET_SHAPE_MISMATCH",
+    "HDC": "match by exact outcome name (includes handicap line); absent → LINE_MOVED",
+    "OU": "match by exact outcome name (includes total); absent → LINE_MOVED",
+    "OE": "match by exact outcome name (odd/even, no line risk)",
+    "TTO": "match by exact outcome name (includes team total); absent → LINE_MOVED",
+    "UNKNOWN": "→ UNSUPPORTED_MARKET"
+  },
+  "no_index_fallback": true,
+  "final_classification": "P26_CLV_LINE_AWARE_MATCHING_COMPLETED"
+}

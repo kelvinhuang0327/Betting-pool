@@ -1,0 +1,17 @@
+{
+  "original_bss": -0.014313,
+  "oof_bss": -0.033835,
+  "original_ece": 0.012419,
+  "oof_ece": 0.004323,
+  "delta_bss": -0.019521,
+  "delta_ece": -0.008096,
+  "oof_row_count": 681,
+  "skipped_row_count": 644,
+  "recommendation": "OOF_REJECTED",
+  "deployability_status": "REJECTED",
+  "gate_reasons": [
+    "OOF BSS=-0.0338 did not improve over original BSS=-0.0143. Calibration does not generalize out-of-fold.",
+    "walk-forward OOF calibration candidate; production still requires human approval"
+  ],
+  "generated_at": "2026-05-11T07:35:58.651408+00:00"
+}

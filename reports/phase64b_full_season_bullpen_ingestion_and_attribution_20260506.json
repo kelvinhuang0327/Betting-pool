@@ -1,0 +1,889 @@
+{
+  "phase_version": "phase64b_full_season_attribution_v1",
+  "run_timestamp": "2026-05-06T06:45:57.328094+00:00",
+  "candidate_patch_created": false,
+  "production_modified": false,
+  "alpha_modified": false,
+  "diagnostic_only": true,
+  "alpha": 0.4,
+  "phase64_gate": "DATA_LIMITED",
+  "phase64_audit_hash": "4923b662e37f0ca1",
+  "n_bull_3d_rows": 2430,
+  "n_ssot_artifacts": 4694,
+  "n_predictions": 2025,
+  "alignment": {
+    "n_ssot_artifacts": 4694,
+    "n_predictions": 2025,
+    "n_aligned_3d": 1914,
+    "n_unmatched": 111,
+    "alignment_rate": 0.9452,
+    "coverage_sufficient": true
+  },
+  "feature_coverage": [
+    {
+      "feature_name": "bullpen_usage_last_3d_fav",
+      "n_available": 1914,
+      "n_total": 2025,
+      "coverage_pct": 0.9452,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_usage_last_3d_dog",
+      "n_available": 1902,
+      "n_total": 2025,
+      "coverage_pct": 0.9393,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_rest_imbalance_3d",
+      "n_available": 1843,
+      "n_total": 2025,
+      "coverage_pct": 0.9101,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_fatigue_favorite_side",
+      "n_available": 1914,
+      "n_total": 2025,
+      "coverage_pct": 0.9452,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_fatigue_underdog_side",
+      "n_available": 1902,
+      "n_total": 2025,
+      "coverage_pct": 0.9393,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_usage_last_1d_fav",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 1d [DATA_LIMITED: no 1d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_1d_dog",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 1d [DATA_LIMITED: no 1d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_5d_fav",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 5d [DATA_LIMITED: no 5d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_5d_dog",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 5d [DATA_LIMITED: no 5d source]"
+    },
+    {
+      "feature_name": "reliever_b2b_count_fav",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav b2b count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_b2b_count_dog",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog b2b count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_3in4_count_fav",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 3in4 count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_3in4_count_dog",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 3in4 count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "closer_used_1d_fav",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav closer yesterday [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "closer_used_2d_fav",
+      "n_available": 0,
+      "n_total": 2025,
+      "coverage_pct": 0.0,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav closer last 2d [DATA_LIMITED]"
+    }
+  ],
+  "n_available_features": 5,
+  "n_data_limited_features": 10,
+  "segment_n_all": 2025,
+  "segment_n_heavy_fav": 60,
+  "segment_n_high_conf": 10,
+  "phase60_baseline_replication": {
+    "status": "REPLICATED",
+    "n_all_aligned": 1914,
+    "n_heavy_fav": 59,
+    "brier": 0.2427,
+    "bss": 0.0259,
+    "heavy_fav_win_rate": 0.661,
+    "heavy_fav_bucket_attribution": {
+      "n_high": 29,
+      "n_low": 30,
+      "win_rate_high": 0.6552,
+      "win_rate_low": 0.6667,
+      "win_rate_delta": -0.0115,
+      "bootstrap_ci_lower": -0.2816,
+      "bootstrap_ci_upper": 0.2276,
+      "bootstrap_significant": false
+    },
+    "phase60_signal": "DIAGNOSTIC_ONLY_SIGNAL"
+  },
+  "attributions": [
+    {
+      "feature_name": "bullpen_usage_last_3d_fav",
+      "segment": "all",
+      "n": 1914,
+      "coverage_pct": 0.9452,
+      "brier": 0.2427,
+      "bss": 0.0259,
+      "calibration_residual": 0.0053,
+      "ece": 0.0293,
+      "bucket_attribution": {
+        "n_high": 937,
+        "n_low": 977,
+        "win_rate_high": 0.5475,
+        "win_rate_low": 0.5128,
+        "win_rate_delta": 0.0347,
+        "bootstrap_ci_lower": -0.009,
+        "bootstrap_ci_upper": 0.0799,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_usage_last_3d_fav",
+      "segment": "heavy_favorite",
+      "n": 59,
+      "coverage_pct": 0.9833,
+      "brier": 0.1722,
+      "bss": 0.2315,
+      "calibration_residual": -0.0655,
+      "ece": 0.0655,
+      "bucket_attribution": {
+        "n_high": 29,
+        "n_low": 30,
+        "win_rate_high": 0.6552,
+        "win_rate_low": 0.6667,
+        "win_rate_delta": -0.0115,
+        "bootstrap_ci_lower": -0.2816,
+        "bootstrap_ci_upper": 0.2276,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_usage_last_3d_dog",
+      "segment": "all",
+      "n": 1902,
+      "coverage_pct": 0.9393,
+      "brier": 0.2424,
+      "bss": 0.027,
+      "calibration_residual": 0.0056,
+      "ece": 0.0294,
+      "bucket_attribution": {
+        "n_high": 923,
+        "n_low": 979,
+        "win_rate_high": 0.5287,
+        "win_rate_low": 0.5291,
+        "win_rate_delta": -0.0004,
+        "bootstrap_ci_lower": -0.0449,
+        "bootstrap_ci_upper": 0.0443,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_usage_last_3d_dog",
+      "segment": "heavy_favorite",
+      "n": 59,
+      "coverage_pct": 0.9833,
+      "brier": 0.1722,
+      "bss": 0.2315,
+      "calibration_residual": -0.0655,
+      "ece": 0.0655,
+      "bucket_attribution": {
+        "n_high": 28,
+        "n_low": 31,
+        "win_rate_high": 0.75,
+        "win_rate_low": 0.5806,
+        "win_rate_delta": 0.1694,
+        "bootstrap_ci_lower": -0.0703,
+        "bootstrap_ci_upper": 0.409,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_rest_imbalance_3d",
+      "segment": "all",
+      "n": 1843,
+      "coverage_pct": 0.9101,
+      "brier": 0.2423,
+      "bss": 0.0271,
+      "calibration_residual": 0.0049,
+      "ece": 0.0287,
+      "bucket_attribution": {
+        "n_high": 896,
+        "n_low": 947,
+        "win_rate_high": 0.5379,
+        "win_rate_low": 0.5227,
+        "win_rate_delta": 0.0152,
+        "bootstrap_ci_lower": -0.0296,
+        "bootstrap_ci_upper": 0.0545,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_rest_imbalance_3d",
+      "segment": "heavy_favorite",
+      "n": 59,
+      "coverage_pct": 0.9833,
+      "brier": 0.1722,
+      "bss": 0.2315,
+      "calibration_residual": -0.0655,
+      "ece": 0.0655,
+      "bucket_attribution": {
+        "n_high": 29,
+        "n_low": 30,
+        "win_rate_high": 0.6207,
+        "win_rate_low": 0.7,
+        "win_rate_delta": -0.0793,
+        "bootstrap_ci_lower": -0.3184,
+        "bootstrap_ci_upper": 0.1575,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_fatigue_favorite_side",
+      "segment": "all",
+      "n": 1914,
+      "coverage_pct": 0.9452,
+      "brier": 0.2427,
+      "bss": 0.0259,
+      "calibration_residual": 0.0053,
+      "ece": 0.0293,
+      "bucket_attribution": {
+        "n_high": 937,
+        "n_low": 977,
+        "win_rate_high": 0.5475,
+        "win_rate_low": 0.5128,
+        "win_rate_delta": 0.0347,
+        "bootstrap_ci_lower": -0.009,
+        "bootstrap_ci_upper": 0.0799,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_fatigue_favorite_side",
+      "segment": "heavy_favorite",
+      "n": 59,
+      "coverage_pct": 0.9833,
+      "brier": 0.1722,
+      "bss": 0.2315,
+      "calibration_residual": -0.0655,
+      "ece": 0.0655,
+      "bucket_attribution": {
+        "n_high": 29,
+        "n_low": 30,
+        "win_rate_high": 0.6552,
+        "win_rate_low": 0.6667,
+        "win_rate_delta": -0.0115,
+        "bootstrap_ci_lower": -0.2816,
+        "bootstrap_ci_upper": 0.2276,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_fatigue_underdog_side",
+      "segment": "all",
+      "n": 1902,
+      "coverage_pct": 0.9393,
+      "brier": 0.2424,
+      "bss": 0.027,
+      "calibration_residual": 0.0056,
+      "ece": 0.0294,
+      "bucket_attribution": {
+        "n_high": 923,
+        "n_low": 979,
+        "win_rate_high": 0.5287,
+        "win_rate_low": 0.5291,
+        "win_rate_delta": -0.0004,
+        "bootstrap_ci_lower": -0.0449,
+        "bootstrap_ci_upper": 0.0443,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_fatigue_underdog_side",
+      "segment": "heavy_favorite",
+      "n": 59,
+      "coverage_pct": 0.9833,
+      "brier": 0.1722,
+      "bss": 0.2315,
+      "calibration_residual": -0.0655,
+      "ece": 0.0655,
+      "bucket_attribution": {
+        "n_high": 28,
+        "n_low": 31,
+        "win_rate_high": 0.75,
+        "win_rate_low": 0.5806,
+        "win_rate_delta": 0.1694,
+        "bootstrap_ci_lower": -0.0703,
+        "bootstrap_ci_upper": 0.409,
+        "bootstrap_significant": false
+      },
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": false,
+      "data_limited_reason": null
+    },
+    {
+      "feature_name": "bullpen_usage_last_1d_fav",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 1d [DATA_LIMITED: no 1d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_1d_fav",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 1d [DATA_LIMITED: no 1d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_1d_dog",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 1d [DATA_LIMITED: no 1d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_1d_dog",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 1d [DATA_LIMITED: no 1d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_5d_fav",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 5d [DATA_LIMITED: no 5d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_5d_fav",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 5d [DATA_LIMITED: no 5d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_5d_dog",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 5d [DATA_LIMITED: no 5d source]"
+    },
+    {
+      "feature_name": "bullpen_usage_last_5d_dog",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 5d [DATA_LIMITED: no 5d source]"
+    },
+    {
+      "feature_name": "reliever_b2b_count_fav",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav b2b count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_b2b_count_fav",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav b2b count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_b2b_count_dog",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog b2b count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_b2b_count_dog",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog b2b count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_3in4_count_fav",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 3in4 count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_3in4_count_fav",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav 3in4 count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_3in4_count_dog",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 3in4 count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "reliever_3in4_count_dog",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Dog 3in4 count [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "closer_used_1d_fav",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav closer yesterday [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "closer_used_1d_fav",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav closer yesterday [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "closer_used_2d_fav",
+      "segment": "all",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav closer last 2d [DATA_LIMITED]"
+    },
+    {
+      "feature_name": "closer_used_2d_fav",
+      "segment": "heavy_favorite",
+      "n": 0,
+      "coverage_pct": 0.0,
+      "brier": null,
+      "bss": null,
+      "calibration_residual": 0.0,
+      "ece": null,
+      "bucket_attribution": null,
+      "oof_win_rate_delta": null,
+      "oof_n": null,
+      "oof_replicated": null,
+      "data_limited": true,
+      "data_limited_reason": "DATA_LIMITED: Fav closer last 2d [DATA_LIMITED]"
+    }
+  ],
+  "negative_controls": [
+    {
+      "feature_name": "bullpen_usage_last_3d_fav",
+      "segment": "heavy_favorite",
+      "real_win_rate_delta": -0.0115,
+      "shuffled_mean_delta": 0.0082,
+      "shuffled_std_delta": 0.1263,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "feature_name": "bullpen_usage_last_3d_dog",
+      "segment": "heavy_favorite",
+      "real_win_rate_delta": 0.1694,
+      "shuffled_mean_delta": -0.0087,
+      "shuffled_std_delta": 0.1241,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "feature_name": "bullpen_rest_imbalance_3d",
+      "segment": "heavy_favorite",
+      "real_win_rate_delta": -0.0793,
+      "shuffled_mean_delta": -0.023,
+      "shuffled_std_delta": 0.1183,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "feature_name": "bullpen_fatigue_favorite_side",
+      "segment": "heavy_favorite",
+      "real_win_rate_delta": -0.0115,
+      "shuffled_mean_delta": 0.0082,
+      "shuffled_std_delta": 0.1263,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "feature_name": "bullpen_fatigue_underdog_side",
+      "segment": "heavy_favorite",
+      "real_win_rate_delta": 0.1694,
+      "shuffled_mean_delta": -0.0087,
+      "shuffled_std_delta": 0.1241,
+      "null_rejected": false,
+      "overfit_risk": false
+    }
+  ],
+  "oof_results": [
+    {
+      "feature_name": "bullpen_usage_last_3d_fav",
+      "n_folds": 2,
+      "fold_months": [
+        "2025-06",
+        "2025-07"
+      ],
+      "fold_win_rate_deltas": [
+        0.0,
+        0.2
+      ],
+      "fold_n": [
+        24,
+        8
+      ],
+      "oof_mean_delta": 0.1,
+      "oof_consistent_sign": false,
+      "oof_significant": true
+    },
+    {
+      "feature_name": "bullpen_usage_last_3d_dog",
+      "n_folds": 2,
+      "fold_months": [
+        "2025-06",
+        "2025-07"
+      ],
+      "fold_win_rate_deltas": [
+        -0.1008,
+        0.2
+      ],
+      "fold_n": [
+        24,
+        8
+      ],
+      "oof_mean_delta": 0.0496,
+      "oof_consistent_sign": false,
+      "oof_significant": true
+    },
+    {
+      "feature_name": "bullpen_rest_imbalance_3d",
+      "n_folds": 2,
+      "fold_months": [
+        "2025-06",
+        "2025-07"
+      ],
+      "fold_win_rate_deltas": [
+        -0.1875,
+        0.25
+      ],
+      "fold_n": [
+        24,
+        8
+      ],
+      "oof_mean_delta": 0.0312,
+      "oof_consistent_sign": false,
+      "oof_significant": true
+    },
+    {
+      "feature_name": "bullpen_fatigue_favorite_side",
+      "n_folds": 2,
+      "fold_months": [
+        "2025-06",
+        "2025-07"
+      ],
+      "fold_win_rate_deltas": [
+        0.0,
+        0.2
+      ],
+      "fold_n": [
+        24,
+        8
+      ],
+      "oof_mean_delta": 0.1,
+      "oof_consistent_sign": false,
+      "oof_significant": true
+    },
+    {
+      "feature_name": "bullpen_fatigue_underdog_side",
+      "n_folds": 2,
+      "fold_months": [
+        "2025-06",
+        "2025-07"
+      ],
+      "fold_win_rate_deltas": [
+        -0.1008,
+        0.2
+      ],
+      "fold_n": [
+        24,
+        8
+      ],
+      "oof_mean_delta": 0.0496,
+      "oof_consistent_sign": false,
+      "oof_significant": true
+    }
+  ],
+  "any_bootstrap_significant": false,
+  "gate": "BULLPEN_GRANULAR_FEATURE_NOT_PROMISING",
+  "gate_rationale": "No bootstrap-significant attribution found for any 3d feature. OOF deltas inconsistent or weak. Bullpen 3d fatigue does not provide reliable signal above baseline. No production patch produced.",
+  "next_step": "De-prioritise 3d bullpen attribution as primary signal. Investigate 1d/b2b granular features (requires StatsAPI cache). Consider SP fatigue, weather, park factor, rest as alternative signals.",
+  "completion_marker": "PHASE_64B_FULL_SEASON_BULLPEN_INGESTION_ATTRIBUTION_VERIFIED"
+}

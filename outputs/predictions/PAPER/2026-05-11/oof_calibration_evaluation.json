@@ -1,0 +1,17 @@
+{
+  "original_bss": -0.050579,
+  "oof_bss": -0.027668,
+  "original_ece": 0.081139,
+  "oof_ece": 0.042928,
+  "delta_bss": 0.022911,
+  "delta_ece": -0.038211,
+  "oof_row_count": 1949,
+  "skipped_row_count": 451,
+  "recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+  "deployability_status": "PAPER_ONLY_CANDIDATE",
+  "gate_reasons": [
+    "OOF BSS=-0.0277 improved over original BSS=-0.0506 but remains <= 0. Gate stays blocked.",
+    "walk-forward OOF calibration candidate; production still requires human approval"
+  ],
+  "generated_at": "2026-05-11T06:44:07.177265+00:00"
+}

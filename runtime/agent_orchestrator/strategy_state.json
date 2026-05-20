@@ -1,0 +1,36 @@
+{
+  "confidence_weight": 1.09,
+  "exposure_level": 0.73,
+  "regime_overrides": {
+    "deep_research_calibration": {
+      "confidence_weight": 1.04,
+      "exposure_level": 0.75
+    },
+    "deep_research_backtest_validity": {
+      "confidence_weight": 1.05,
+      "exposure_level": 0.78
+    }
+  },
+  "revert_flag": false,
+  "last_processed_insight_ids": [
+    "15f08789",
+    "12b9ac84",
+    "ceb7e8dc",
+    "07742efd"
+  ],
+  "consecutive_negative": 0,
+  "consecutive_positive": 1,
+  "last_updated": "2026-04-24T08:26:26.753191+00:00",
+  "update_history": [
+    {
+      "run_at": "2026-04-24T08:26:26.753191+00:00",
+      "confidence_before": 1.0,
+      "confidence_after": 1.09,
+      "exposure_before": 0.75,
+      "exposure_after": 0.73,
+      "n_insights": 4,
+      "sim_penalty": -0.05,
+      "revert_flag": false
+    }
+  ]
+}

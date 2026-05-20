@@ -1,0 +1,8 @@
+{
+  "source": "TSL_MULTI_SOURCE",
+  "success": false,
+  "games_count": 0,
+  "error": "modern_fetch_failed=HTTP Error 403: Forbidden; frontend_probe_failed=Unable to locate TSL frontend bundle URL; legacy_fetch_failed=HTTP Error 403: Forbidden",
+  "note": "modern_fetch_failed=HTTP Error 403: Forbidden; frontend_probe_failed=Unable to locate TSL frontend bundle URL; legacy_fetch_failed=HTTP Error 403: Forbidden",
+  "fetched_at": "2026-05-20T09:58:51.499163Z"
+}

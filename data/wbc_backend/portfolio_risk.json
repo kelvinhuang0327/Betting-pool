@@ -1,0 +1,13 @@
+{
+  "bankroll": 81500.0,
+  "initial_bankroll": 100000,
+  "total_exposure": 0.0,
+  "daily_pnl": 2500.0,
+  "peak_bankroll": 100000,
+  "current_drawdown": 0.185,
+  "is_circuit_breaker_active": true,
+  "consecutive_losses": 0,
+  "session_bets": 1,
+  "session_wins": 1,
+  "n_updates": 1
+}

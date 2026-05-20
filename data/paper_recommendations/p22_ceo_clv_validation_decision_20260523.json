@@ -1,0 +1,13 @@
+{
+  "decision": "APPROVE_CLV_VALIDATION_ONLY",
+  "paper_only": true,
+  "note": "Approve P22 to run CLV validation using canonical regenerated 233 valid CLV pairs. No optimizer promotion, no champion replacement, no production proposal, no profitability claim.",
+  "scope": "CLV_VALIDATION_ONLY",
+  "approved_by": "CEO",
+  "date": "2026-05-23",
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false
+}

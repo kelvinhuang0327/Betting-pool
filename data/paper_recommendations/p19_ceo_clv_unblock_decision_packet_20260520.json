@@ -1,0 +1,56 @@
+{
+  "task": "P19-E",
+  "title": "P19 CEO CLV Unblock Decision Packet",
+  "date": "2026-05-20T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "executive_summary": {
+    "p17_stale_artifact_explanation": "P17-C (forward_coverage_readonly_check) was generated inside the git worktree .claude/worktrees/awesome-mclean-f52768, which did not have tsl_odds_history.jsonl. This caused pair_count=0 and tsl_odds_history_exists=false in the P17 artifact chain.",
+    "canonical_root_finding": "Canonical root has data/tsl_odds_history.jsonl (7.06MB, 2747 records, 41 unique game dates 2026-03-13 to 2026-05-20). Raw data analysis yields 233 valid CLV pairs.",
+    "regenerated_artifact_result": "P19-B regenerated artifact confirms valid_clv_pairs=233 >= pair_target=200. forward_coverage_status=CANONICAL_FORWARD_COVERAGE_SUFFICIENT.",
+    "closing_line_recheck_result": "P19-C closing-line recheck confirms all 233 pairs have valid pregame+closing snapshots with odds. timestamp_parse_error_count=0.",
+    "clv_data_status": "CLV_DATA_SUFFICIENT (data layer only)",
+    "current_block_remaining": "CEO decision = DEFER_DECISION. This is the sole remaining block. Data is sufficient."
+  },
+  "stale_artifact_corrected": true,
+  "regenerated_valid_clv_pairs": 233,
+  "pair_target": 200,
+  "pair_coverage_pct": 116.5,
+  "ceo_decision_options": {
+    "option_a": {
+      "label": "批准 CLV_VALIDATION_ONLY",
+      "action": "APPROVE_CLV_VALIDATION_ONLY",
+      "meaning": "允許執行 CLV 計算驗證。不 promote optimizer。不開啟 production proposal。資料唯讀。",
+      "unblocks": "P19 CLV validation run (read-only, no promotion)"
+    },
+    "option_b": {
+      "label": "維持 hold，繼續只讀監控",
+      "action": "MAINTAIN_HOLD_MONITOR_ONLY",
+      "meaning": "維持 HOLD_NO_EXPANSION。worker 繼續 daily monitor only。不執行 CLV 計算。",
+      "unblocks": "nothing, next review TBD"
+    },
+    "option_c": {
+      "label": "要求人工複核 233 pairs sample",
+      "action": "REQUEST_MANUAL_SAMPLE_REVIEW",
+      "meaning": "要求 worker 提供 sample pairs 的詳細資料供 CEO / CTO 審閱後再決定。",
+      "unblocks": "nothing until sample reviewed"
+    }
+  },
+  "explicit_prohibitions": [
+    "optimizer_promotion: FORBIDDEN",
+    "production_proposal: FORBIDDEN",
+    "live_odds_api_call: FORBIDDEN",
+    "tsl_crawler_modification: FORBIDDEN",
+    "profitability_claim: FORBIDDEN"
+  ],
+  "champion": "fixed_edge_5pct",
+  "champion_status": "PRESERVED",
+  "promotion_status": "FROZEN",
+  "p18_allowed": false,
+  "p20_allowed_if_ceo_approves_option_a": true,
+  "p20_allowed_otherwise": false,
+  "profitability_claim": false,
+  "annotation": "paper_only=true。P19-E CEO CLV Unblock Decision Packet。無網路呼叫。233 valid pairs 已確認（stale artifact 已修正）。資料層面 CLV gate PASS。CEO 決策為唯一剩餘 block。提供三個決策選項。不宣稱任何策略獲利能力。",
+  "classification": "P19_CLV_DATA_SUFFICIENT_CEO_UNBLOCK_REQUIRED"
+}

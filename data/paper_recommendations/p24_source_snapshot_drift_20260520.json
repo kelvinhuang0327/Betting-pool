@@ -1,0 +1,36 @@
+{
+  "artifact": "P24_SOURCE_SNAPSHOT_DRIFT",
+  "phase": "P24_CLV_ROBUSTNESS_DIAGNOSTIC",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "production_proposal": false,
+  "p23_pinned_baseline": {
+    "file": "data/tsl_odds_history.jsonl",
+    "line_count": 2788,
+    "sha256": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+    "first_fetched_at": "2026-03-13T03:30:16.039741Z",
+    "last_fetched_at": "2026-05-20T03:06:23.144632Z"
+  },
+  "current_state": {
+    "file": "data/tsl_odds_history.jsonl",
+    "line_count": 2796,
+    "sha256": "a06625180efe9e2f08c13f24bbf93c08c2284a9e1d736048f3038850abc3d6aa",
+    "detected_at": "2026-05-20T00:00:00Z"
+  },
+  "drift": {
+    "lines_added": 8,
+    "sha256_changed": true,
+    "status": "DRIFT_DETECTED"
+  },
+  "action_taken": "USE_P23_PINNED_BASELINE_ONLY",
+  "action_detail": "P24 diagnostic uses first 2788 lines only. New 8 lines are excluded. P23 CLV pairs derivation is reproducible on pinned slice.",
+  "p24_data_source": "P23-PINNED-SLICE (lines 1-2788)",
+  "note": "Append-only drift is expected; 8 new lines represent new live odds snapshots added after P23 pin. P24 diagnostic re-derives from pinned slice to maintain isolation.",
+  "final_classification": "P24_DRIFT_RECORDED"
+}

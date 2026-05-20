@@ -1,0 +1,70 @@
+{
+  "task": "P19-C",
+  "title": "P19 Closing-Line Availability Recheck",
+  "date": "2026-05-20T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "source_file": "data/tsl_odds_history.jsonl",
+  "pair_definition": {
+    "pregame": "fetched_at >= 2.0 hours before game_time",
+    "closing": "fetched_at within ±2.0 hours of game_time",
+    "required": "same match_id has BOTH pregame AND closing snapshots with odds fields present"
+  },
+  "valid_pair_count": 233,
+  "invalid_pair_count": 620,
+  "missing_closing_count": 563,
+  "missing_pregame_count": 57,
+  "timestamp_parse_error_count": 0,
+  "odds_field_validation": "all 233 valid pairs confirmed to have odds in both pregame and closing snapshots",
+  "source_trace_field": "TSL_BLOB3RD",
+  "sample_valid_pairs": [
+    {
+      "mid": "3468398.1",
+      "pregame_fetched_at": "2026-05-13T16:14:37.716436Z",
+      "closing_fetched_at": "2026-05-14T03:41:06.890918Z",
+      "game_time": "2026-05-14T12:00:00+08:00",
+      "source": "TSL_BLOB3RD"
+    },
+    {
+      "mid": "3461584.1",
+      "pregame_fetched_at": "2026-04-17T04:22:00.552873Z",
+      "closing_fetched_at": "2026-04-17T23:09:49.966256Z",
+      "game_time": "2026-04-18T07:10:00+08:00",
+      "source": "TSL_BLOB3RD"
+    },
+    {
+      "mid": "3467361.1",
+      "pregame_fetched_at": "2026-05-09T02:27:25.624931Z",
+      "closing_fetched_at": "2026-05-09T23:07:06.528312Z",
+      "game_time": "2026-05-10T07:15:00+08:00",
+      "source": "TSL_BLOB3RD"
+    },
+    {
+      "mid": "3462246.1",
+      "pregame_fetched_at": "2026-04-18T18:19:19.381599Z",
+      "closing_fetched_at": "2026-04-19T16:09:19.704096Z",
+      "game_time": "2026-04-20T01:35:00+08:00",
+      "source": "TSL_BLOB3RD"
+    },
+    {
+      "mid": "3464719.1",
+      "pregame_fetched_at": "2026-04-28T17:16:38.694226Z",
+      "closing_fetched_at": "2026-04-29T04:48:19.186347Z",
+      "game_time": "2026-04-29T13:00:00+08:00",
+      "source": "TSL_BLOB3RD"
+    }
+  ],
+  "sample_invalid_pairs": [
+    {"mid": "3461338.1", "reason": "no_closing_snapshot"},
+    {"mid": "3466999.1", "reason": "no_closing_snapshot"},
+    {"mid": "3467745.1", "reason": "no_closing_snapshot"},
+    {"mid": "3469291.1", "reason": "no_closing_snapshot"},
+    {"mid": "3452937.1", "reason": "no_closing_snapshot"}
+  ],
+  "closing_line_available": true,
+  "closing_line_count": 233,
+  "recheck_result": "CLOSING_LINE_CONFIRMED_233_PAIRS",
+  "profitability_claim": false,
+  "annotation": "paper_only=true。P19-C Closing-Line Availability Recheck。無網路呼叫。233 個 match_id 均有明確的 pregame + closing snapshot。odds 欄位驗證通過。timestamp parse 0 errors。closing line 確認可用。"
+}

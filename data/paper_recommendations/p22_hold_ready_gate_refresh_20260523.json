@@ -1,0 +1,23 @@
+{
+  "phase": "P22_HOLD_READY_GATE_REFRESH",
+  "task": "P22-E",
+  "date": "2026-05-23",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "clv_validation_completed": true,
+  "p23_allowed": false,
+  "p23_scope": "REPORT_REVIEW_ONLY",
+  "p23_unblock_condition": "CEO explicit approval required for any next gate",
+  "promotion_frozen": true,
+  "champion": "fixed_edge_5pct",
+  "champion_status": "PRESERVED",
+  "champion_replacement_allowed": false,
+  "hold_status": "HOLD_NO_EXPANSION_MAINTAINED",
+  "valid_clv_pairs": 236,
+  "overall_clv_mean_pct": 0.2332,
+  "overall_positive_rate_pct": 32.65,
+  "next_owner": "CEO",
+  "final_classification": "P22_CLV_VALIDATION_ONLY_COMPLETED"
+}

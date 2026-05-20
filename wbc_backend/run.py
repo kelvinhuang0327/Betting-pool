@@ -3,6 +3,7 @@
 WBC Automated Prediction Backend — Main Entry Point
 
 Usage:
+    python scripts/run_mode.py --mode wbc  # Preferred canonical launcher
     python -m wbc_backend.run                  # Full pipeline: analyze default game
     python -m wbc_backend.run --game WBC26-X   # Analyze specific game
     python -m wbc_backend.run --train          # Force model retrain
@@ -19,6 +20,10 @@ import argparse
 import logging
 import sys
 
+from wbc_backend.reporting.strategy_replay_runtime_metadata import (
+    prepare_runtime_strategy_metadata_request_kwargs,
+)
+
 # ── Logging Setup ────────────────────────────────────────────────────────────
 
 logging.basicConfig(
@@ -31,7 +36,7 @@ logging.basicConfig(
 logger = logging.getLogger("wbc_backend")
 
 
-def main():
+def main():  # NOSONAR  # noqa: C901
     parser = argparse.ArgumentParser(
         description="WBC 2026 Automated Prediction Backend",
     )
@@ -43,6 +48,14 @@ def main():
                         help="Home spread line")
     parser.add_argument("--train", action="store_true",
                         help="Force model retrain before analysis")
+    parser.add_argument("--strategy-id", type=str, default=None,
+                        help="Explicit strategy_id for runtime metadata injection")
+    parser.add_argument("--strategy-metadata-registry", type=str, default=None,
+                        help="Explicit path to a validated strategy metadata registry")
+    parser.add_argument("--current-lifecycle-state", type=str, default=None,
+                        help="Optional explicit current lifecycle state snapshot")
+    parser.add_argument("--strict-strategy-metadata", action="store_true",
+                        help="Fail when runtime strategy metadata cannot be resolved")
     parser.add_argument("--backtest", action="store_true",
                         help="Run full backtest")
     parser.add_argument("--improve", action="store_true",
@@ -79,14 +92,14 @@ def main():
     print("━" * 50)
     from wbc_backend.data.validator import validate_dataset, auto_fetch_missing_data
 
-    report = validate_dataset("MLB_2025", config)
-    print(f"  Source: MLB_2025")
+    report = validate_dataset("WBC_2026", config)
+    print("  Source: WBC_2026")
     print(f"  Records: {report.total_records}")
     print(f"  Completeness: {report.completeness_pct:.1%}")
     print(f"  Valid: {report.is_valid}")
     if not report.is_valid:
         print("  ⚠️  Auto-fetching missing data...")
-        report = auto_fetch_missing_data("MLB_2025", config)
+        report = auto_fetch_missing_data("WBC_2026", config)
         print(f"  → Completeness after fetch: {report.completeness_pct:.1%}")
     print()
 
@@ -114,11 +127,25 @@ def main():
     service = PredictionService(config)
     from wbc_backend.domain.schemas import AnalyzeRequest
 
+    try:
+        strategy_metadata_kwargs = prepare_runtime_strategy_metadata_request_kwargs(
+            args.strategy_id,
+            registry_path=args.strategy_metadata_registry,
+            current_lifecycle_state=args.current_lifecycle_state,
+            strict=args.strict_strategy_metadata,
+        )
+    except ValueError as exc:
+        print("  BLOCKED: strategy metadata injection failed.")
+        print(f"    - {exc}")
+        return
+
     request = AnalyzeRequest(
         game_id=args.game,
         line_total=args.line_total,
         line_spread_home=args.line_spread,
+        **strategy_metadata_kwargs,
     )
+    response = None
     try:
         response = service.analyze(request)
     except WBCDataVerificationError as exc:
@@ -128,18 +155,21 @@ def main():
         print()
         print("  Populate data/wbc_2026_authoritative_snapshot.json with official schedule, roster,")
         print("  starting pitchers, and lineups before running analysis again.")
-        return
+        if not (args.backtest or args.improve or args.research_cycle or args.scheduler):
+            return
     except DeploymentGateError as exc:
         print("  BLOCKED: deployment gate rejected the current model package.")
         for check in exc.report.checks:
             marker = "OK" if check.passed else "FAIL"
             print(f"    - [{marker}] {check.name}: {check.details}")
-        return
+        if not (args.backtest or args.improve or args.research_cycle or args.scheduler):
+            return
 
     # Print markdown report
-    print(response.markdown_report)
+    if response is not None:
+        print(response.markdown_report)
 
-    if args.json:
+    if args.json and response is not None:
         print()
         print("━" * 50)
         print("📋 JSON OUTPUT")
@@ -150,15 +180,23 @@ def main():
     if args.backtest:
         print()
         print("━" * 50)
-        print("📊 STEP 4: Full Backtest")
+        print("📊 STEP 4: Institutional Backtest")
         print("━" * 50)
-        from wbc_backend.evaluation.backtester import (
-            run_full_backtest,
-            format_backtest_report,
-        )
+        from wbc_backend.evaluation.institutional_backtest import run_wbc_2023_backtest
 
-        bt_results = run_full_backtest()
-        print(format_backtest_report(bt_results))
+        bt = run_wbc_2023_backtest(initial_bankroll=config.bankroll.initial_bankroll)
+        print(f"  Games: {bt.n_games_total}")
+        print(f"  Bets: {bt.n_bets_placed}")
+        print(f"  Accuracy: {bt.accuracy:.3f}")
+        print(f"  Brier: {bt.brier_score:.4f}")
+        print(f"  ROI: {bt.roi:.3%}")
+        print(f"  Sharpe: {bt.sharpe_ratio:.3f}")
+        print(f"  Max Drawdown: {bt.max_drawdown:.3%}")
+        print(f"  p-value (vs random): {bt.p_value_vs_random:.4f}")
+        if bt.p_value_vs_random < 0.05:
+            print("  Significance: PASS (p < 0.05)")
+        else:
+            print("  Significance: FAIL (p >= 0.05)")
 
     # ── Step 5: Self-Improvement ─────────────────────────
     if args.improve:

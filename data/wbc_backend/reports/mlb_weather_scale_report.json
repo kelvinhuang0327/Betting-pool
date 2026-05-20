@@ -1,0 +1,79 @@
+{
+  "coverage_growth": {
+    "before": 280,
+    "after": 2080,
+    "delta": 1800
+  },
+  "strict_valid_rate": 0.856,
+  "weather_batch_efficiency": {
+    "total_api_calls": 362,
+    "cache_hit_rate": 0.0,
+    "cache_hits": 0,
+    "cache_misses": 1800,
+    "avg_latency_ms": 1637.69,
+    "batches_run": 6
+  },
+  "status_distribution": {
+    "STRICT_VALID": 2080,
+    "RESEARCH_VALID": 350,
+    "INVALID": 0
+  },
+  "batch_history": [
+    {
+      "batch": 1,
+      "strict_valid_count": 580,
+      "strict_coverage_pct": 0.2387,
+      "added_games_this_batch": 300,
+      "remaining_weather_missing": 1850,
+      "cache_hit_rate": 0.0,
+      "estimated_batches_remaining_to_85pct": 5
+    },
+    {
+      "batch": 2,
+      "strict_valid_count": 880,
+      "strict_coverage_pct": 0.3621,
+      "added_games_this_batch": 300,
+      "remaining_weather_missing": 1550,
+      "cache_hit_rate": 0.0,
+      "estimated_batches_remaining_to_85pct": 4
+    },
+    {
+      "batch": 3,
+      "strict_valid_count": 1180,
+      "strict_coverage_pct": 0.4856,
+      "added_games_this_batch": 300,
+      "remaining_weather_missing": 1250,
+      "cache_hit_rate": 0.0,
+      "estimated_batches_remaining_to_85pct": 3
+    },
+    {
+      "batch": 4,
+      "strict_valid_count": 1480,
+      "strict_coverage_pct": 0.6091,
+      "added_games_this_batch": 300,
+      "remaining_weather_missing": 950,
+      "cache_hit_rate": 0.0,
+      "estimated_batches_remaining_to_85pct": 2
+    },
+    {
+      "batch": 5,
+      "strict_valid_count": 1780,
+      "strict_coverage_pct": 0.7325,
+      "added_games_this_batch": 300,
+      "remaining_weather_missing": 650,
+      "cache_hit_rate": 0.0,
+      "estimated_batches_remaining_to_85pct": 1
+    },
+    {
+      "batch": 6,
+      "strict_valid_count": 2080,
+      "strict_coverage_pct": 0.856,
+      "added_games_this_batch": 300,
+      "remaining_weather_missing": 350,
+      "cache_hit_rate": 0.0,
+      "estimated_batches_remaining_to_85pct": 0
+    }
+  ],
+  "top_remaining_blocker": "weather_missing",
+  "status": "TARGET_REACHED"
+}

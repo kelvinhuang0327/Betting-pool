@@ -1,0 +1,176 @@
+{
+  "blockers": [
+    "NO_REAL_HUMAN_APPROVAL_FORM",
+    "PRODUCTION_REGISTRY_NOT_ACCEPTED_FOR_REAL",
+    "PREVIEW_PREFLIGHT_NOT_ENABLEMENT",
+    "SEPARATE_ENABLEMENT_PHASE_REQUIRED",
+    "RUNTIME_PREFLIGHT_BLOCKED",
+    "OPERATOR_SIGNOFF_MISSING",
+    "UI_GATE_NOT_PASSED",
+    "PRODUCTION_MIGRATION_BLOCKED"
+  ],
+  "final_marker": "P39_STRATEGY_REPLAY_ENABLEMENT_STATUS_DASHBOARD_READY",
+  "human_action_required": true,
+  "next_action": "Collect a real human approval form before any enablement review.",
+  "phase_status": "NO_REAL_APPROVAL",
+  "phase_status_table": [
+    {
+      "phase": "approval",
+      "state": "NO_REAL_APPROVAL",
+      "status": "blocked"
+    },
+    {
+      "phase": "preview_lifecycle",
+      "state": "NO_REAL_APPROVAL",
+      "status": "blocked"
+    },
+    {
+      "phase": "runtime_preflight",
+      "state": "BLOCKED",
+      "status": "blocked"
+    },
+    {
+      "phase": "dry_run",
+      "state": "NO_OP",
+      "status": "pass"
+    },
+    {
+      "phase": "boundary",
+      "state": "NO_GO",
+      "status": "blocked"
+    }
+  ],
+  "production_actions_allowed": false,
+  "real_approval_summary": {
+    "acceptance_context_preview": null,
+    "accepted_context_is_preview_only": false,
+    "fake_approval": false,
+    "production_candidate_registry_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/00-BettingPlan/20260510/strategy_replay_metadata_registry.production_candidate.draft.json",
+    "production_enablement_allowed": false,
+    "production_metadata_registry_accepted": false,
+    "production_migration_allowed": false,
+    "real_approval": false,
+    "real_approval_intake_accepted": false,
+    "runtime_config_change_allowed": false,
+    "simulation_only": false,
+    "ui_launch_allowed": false
+  },
+  "simulation_summary": {
+    "acceptance_context_preview": null,
+    "accepted_context_is_preview_only": true,
+    "fake_approval": false,
+    "production_enablement_allowed": false,
+    "production_metadata_registry_accepted": false,
+    "production_migration_allowed": false,
+    "real_approval": false,
+    "real_approval_intake_accepted": false,
+    "runtime_config_change_allowed": false,
+    "simulation_context": {
+      "allowed_for_future_writes_only": true,
+      "allowed_for_historical_backfill": false,
+      "approval_timestamp": "2026-05-10T00:00:00Z",
+      "artifact_kind": "SIMULATION_ONLY",
+      "audit_evidence_refs": [
+        "00-BettingPlan/20260510/strategy_replay_runtime_metadata_e2e_fixture_validation_report.md",
+        "00-BettingPlan/20260510/strategy_replay_metadata_registry_acceptance_gate_report.md",
+        "00-BettingPlan/20260510/strategy_replay_metadata_registry_production_candidate_evidence_pack.md",
+        "00-BettingPlan/20260510/strategy_replay_metadata_registry_rollback_plan.draft.md",
+        "00-BettingPlan/20260510/strategy_replay_metadata_registry_human_review_package_report.md"
+      ],
+      "e2e_fixture_validation_passed": true,
+      "explicit_human_approval": true,
+      "lifecycle_source_refs": [
+        "wbc_backend/reporting/strategy_replay_metadata_registry.py",
+        "wbc_backend/reporting/strategy_replay_runtime_metadata.py",
+        "wbc_backend/reporting/strategy_replay_metadata_registry_acceptance.py"
+      ],
+      "non_production_example": false,
+      "production_candidate": true,
+      "production_enablement_allowed": false,
+      "production_migration_allowed": false,
+      "real_approval": false,
+      "registry_owner": "wbc_backend.reporting.strategy_registry",
+      "registry_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/00-BettingPlan/20260510/strategy_replay_metadata_registry.production_candidate.draft.json",
+      "reviewer": "SIMULATION_REVIEWER",
+      "rollback_plan_ref": "00-BettingPlan/20260510/strategy_replay_metadata_registry_rollback_plan.draft.md",
+      "runtime_config_change_allowed": false,
+      "runtime_injection_test_passed": true,
+      "ui_launch_allowed": false
+    },
+    "simulation_only": true,
+    "ui_launch_allowed": false
+  },
+  "source_reports": [
+    "00-BettingPlan/20260510/strategy_replay_production_enablement_phase_boundary_report.md",
+    "00-BettingPlan/20260510/strategy_replay_runtime_enablement_operator_handoff_binder.md",
+    "00-BettingPlan/20260510/strategy_replay_real_approval_intake_report.md",
+    "00-BettingPlan/20260510/strategy_replay_accepted_context_preview_lifecycle_report.md",
+    "00-BettingPlan/20260510/strategy_replay_runtime_enablement_dry_run_report.md",
+    "00-BettingPlan/20260510/strategy_replay_metadata_registry_acceptance_gate_report.md"
+  ],
+  "status_sources": {
+    "approval_summary": {
+      "acceptance_context_preview": null,
+      "accepted_context_is_preview_only": false,
+      "fake_approval": false,
+      "production_candidate_registry_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/00-BettingPlan/20260510/strategy_replay_metadata_registry.production_candidate.draft.json",
+      "production_enablement_allowed": false,
+      "production_metadata_registry_accepted": false,
+      "production_migration_allowed": false,
+      "real_approval": false,
+      "real_approval_intake_accepted": false,
+      "runtime_config_change_allowed": false,
+      "simulation_only": false,
+      "ui_launch_allowed": false
+    },
+    "boundary_summary": {
+      "boundary_state": "NO_GO",
+      "production_enablement_allowed": false
+    },
+    "dry_run_summary": {
+      "dry_run_config_preview_exists": true,
+      "dry_run_config_preview_is_no_op": true,
+      "dry_run_modified_production_config": false,
+      "dry_run_result_passed": true,
+      "historical_backfill_disabled": true,
+      "production_migration_blocked": true,
+      "ui_gate_passed": false
+    },
+    "lifecycle_summary": {
+      "accepted_context_is_preview_only": false,
+      "lifecycle_state": "NO_REAL_APPROVAL",
+      "production_enabled": false,
+      "production_enablement_allowed": false,
+      "production_migration_allowed": false,
+      "runtime_config_change_allowed": false,
+      "ui_launch_allowed": false
+    },
+    "preflight_summary": {
+      "blockers": [
+        "accepted registry gate must pass",
+        "operator_signoff must be true"
+      ],
+      "fixture_validation_rerun_passed": true,
+      "monitoring_audit_log_plan_ready": true,
+      "operator_signoff": false,
+      "rollback_switch_available": true,
+      "runtime_enablement_ready": false,
+      "strict_mode_enabled": true,
+      "synthetic_future_row_dry_run_passed": true
+    }
+  },
+  "summary": {
+    "accepted_context_preview_exists": false,
+    "accepted_context_preview_is_production_enablement": false,
+    "dry_run_config_preview_is_no_op": true,
+    "production_metadata_registry_accepted_for_real": false,
+    "production_migration_can_start": false,
+    "real_human_approval_exists": false,
+    "runtime_config_change_can_start": false,
+    "runtime_dry_run_passed": true,
+    "runtime_preflight_passed": false,
+    "runtime_production_enablement_can_start": false,
+    "separate_enablement_phase_required": true,
+    "ui_can_start": false
+  }
+}

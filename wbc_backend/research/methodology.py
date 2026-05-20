@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from math import exp
-from typing import Dict, List
 
 
 MANDATORY_METHODS = [
@@ -31,7 +30,7 @@ class MethodologySpec:
     validation_protocol: str
 
 
-def build_methodological_expansion() -> List[MethodologySpec]:
+def build_methodological_expansion() -> list[MethodologySpec]:
     return [
         MethodologySpec(
             method="Dynamic ensemble weighting",
@@ -120,17 +119,17 @@ def build_methodological_expansion() -> List[MethodologySpec]:
     ]
 
 
-def dynamic_ensemble_weights(model_scores: Dict[str, float], temperature: float = 4.0) -> Dict[str, float]:
+def dynamic_ensemble_weights(model_scores: dict[str, float], temperature: float = 4.0) -> dict[str, float]:
     if not model_scores:
         return {}
     max_score = max(model_scores.values())
     shifted = {k: v - max_score for k, v in model_scores.items()}
-    exps = {k: exp((temperature * s)) for k, s in shifted.items()}
+    exps = {k: exp(temperature * s) for k, s in shifted.items()}
     denom = sum(exps.values()) or 1.0
     return {k: v / denom for k, v in exps.items()}
 
 
-def bayesian_beta_update(alpha: float, beta: float, outcomes: List[int]) -> Dict[str, float]:
+def bayesian_beta_update(alpha: float, beta: float, outcomes: list[int]) -> dict[str, float]:
     a = max(1e-6, alpha) + sum(1 for x in outcomes if x == 1)
     b = max(1e-6, beta) + sum(1 for x in outcomes if x == 0)
     mean = a / (a + b)

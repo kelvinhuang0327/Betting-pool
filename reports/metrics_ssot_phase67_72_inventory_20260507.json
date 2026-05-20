@@ -1,0 +1,912 @@
+{
+  "run_timestamp_utc": "2026-05-07T05:59:29.659163Z",
+  "module_version": "metrics_ssot_v1",
+  "safety": {
+    "production_modified": false,
+    "candidate_patch_created": false,
+    "alpha_modified": false,
+    "diagnostic_only": true,
+    "no_edge_claim": true,
+    "no_profit_claim": true
+  },
+  "gate": "METRICS_SSOT_FOUNDATION_READY",
+  "gate_rationale": "SSOT module is built, tested, and exportable to future phases. Phase67–72 retain their private implementations (no regression risk). Inventory complete: 19 duplicate function instances identified across phases, 6 phases with segment schema gaps (documented). No production code modified. Refactor of Phase67–71 to use SSOT is recommended in a future governance phase, not required now.",
+  "ssot_module": {
+    "module": "orchestrator/metrics_ssot.py",
+    "version": "metrics_ssot_v1",
+    "public_functions": [
+      "calculate_brier_score",
+      "calculate_bss",
+      "calculate_ece",
+      "calculate_bucket_ece",
+      "calculate_residual_summary",
+      "calculate_segment_metrics",
+      "calculate_model_market_delta",
+      "bootstrap_ci",
+      "bootstrap_brier_delta_ci",
+      "build_negative_control_summary",
+      "build_gate_summary",
+      "validate_metrics_payload",
+      "ssot_to_dict"
+    ],
+    "canonical_dataclasses": [
+      "BrierResult",
+      "ECEBucket",
+      "ECEResult",
+      "ResidualSummary",
+      "SegmentMetricsSSO",
+      "BootstrapCISSO",
+      "NegativeControlSSO",
+      "GateSummarySSO",
+      "MetricsPayload"
+    ],
+    "safety_flags": {
+      "PRODUCTION_MODIFIED": false,
+      "CANDIDATE_PATCH_CREATED": false,
+      "ALPHA_MODIFIED": false,
+      "DIAGNOSTIC_ONLY": true,
+      "NO_EDGE_CLAIM": true,
+      "NO_PROFIT_CLAIM": true
+    }
+  },
+  "phase_scan_results": [
+    {
+      "phase_id": "phase67",
+      "filename": "phase67_context_failure_attribution.py",
+      "file_lines": 1330,
+      "brier_fn_found": [
+        "_brier_score"
+      ],
+      "bss_fn_found": [
+        "_bss_direct"
+      ],
+      "ece_fn_found": [
+        "_compute_ece"
+      ],
+      "bootstrap_fn_found": [
+        "_bootstrap_bss_vs_market"
+      ],
+      "duplicates_brier": true,
+      "duplicates_bss": true,
+      "duplicates_ece": true,
+      "duplicates_bootstrap": true,
+      "safety_flags_found": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "safety_flags_extended_found": [
+        "DIAGNOSTIC_ONLY"
+      ],
+      "missing_core_safety_flags": [],
+      "missing_extended_safety_flags": [
+        "PIT_SAFE_VALIDATION",
+        "PREDICTION_JSONL_OVERWRITTEN"
+      ],
+      "gate": "OVERFIT_RISK",
+      "naming_notes": [
+        "BootstrapResult uses 'observed_delta' (SSOT: 'observed')",
+        "BootstrapResult uses 'significant' (SSOT: 'ci_excludes_zero')",
+        "NegativeControl uses 'dim'+'segment' (SSOT: 'control_name'+'control_type')",
+        "NegativeControl missing 'control_type', 'n_permutations', 'seed', 'interpretation'",
+        "SegmentMetrics uses 'ece_blend' (SSOT: 'model_ece')",
+        "SegmentMetrics missing 'model_residual_mean', 'market_residual_mean', 'observed_win_rate'"
+      ],
+      "segment_class": "SegmentMetrics",
+      "segment_fields_present": [
+        "n",
+        "model_brier",
+        "market_brier",
+        "blend_brier",
+        "blend_bss_vs_market",
+        "model_bss_vs_market",
+        "fav_win_rate",
+        "win_rate",
+        "ece_blend"
+      ],
+      "bootstrap_class": "BootstrapResult",
+      "bootstrap_fields_present": [
+        "n",
+        "n_boot",
+        "observed_delta",
+        "ci_lower",
+        "ci_upper",
+        "prob_positive",
+        "significant"
+      ],
+      "nc_class": "NegativeControl",
+      "nc_fields_present": [
+        "dim",
+        "segment",
+        "real_blend_bss_delta",
+        "shuffled_mean_delta",
+        "shuffled_std_delta",
+        "null_rejected",
+        "overfit_risk"
+      ]
+    },
+    {
+      "phase_id": "phase68",
+      "filename": "phase68_model_architecture_ensemble_failure_audit.py",
+      "file_lines": 1129,
+      "brier_fn_found": [
+        "_brier"
+      ],
+      "bss_fn_found": [
+        "_bss_direct"
+      ],
+      "ece_fn_found": [
+        "_ece"
+      ],
+      "bootstrap_fn_found": [],
+      "duplicates_brier": true,
+      "duplicates_bss": true,
+      "duplicates_ece": true,
+      "duplicates_bootstrap": false,
+      "safety_flags_found": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "safety_flags_extended_found": [
+        "DIAGNOSTIC_ONLY"
+      ],
+      "missing_core_safety_flags": [],
+      "missing_extended_safety_flags": [
+        "PIT_SAFE_VALIDATION",
+        "PREDICTION_JSONL_OVERWRITTEN"
+      ],
+      "gate": "CALIBRATION_OBJECTIVE_REDESIGN_PROMISING",
+      "naming_notes": [
+        "NegativeControl uses 'real_bss' (SSOT: 'observed_gap')",
+        "NegativeControl uses 'null_bss_mean'/'null_bss_std' (SSOT: 'permuted_gap_mean'/'permuted_gap_std')",
+        "NegativeControl has 'overfit_threshold' (not in SSOT)",
+        "NegativeControl missing 'control_type', 'n_permutations', 'seed', 'interpretation'",
+        "SegmentMetrics uses 'ece_blend'/'ece_model'/'ece_market' (SSOT: 'model_ece'/'market_ece')",
+        "SegmentMetrics missing 'model_residual_mean', 'market_residual_mean', 'brier_delta', 'observed_win_rate'"
+      ],
+      "segment_class": "SegmentMetrics",
+      "segment_fields_present": [
+        "n",
+        "model_brier",
+        "market_brier",
+        "blend_brier",
+        "blend_bss_vs_market",
+        "model_bss_vs_market",
+        "fav_win_rate",
+        "ece_blend",
+        "ece_model",
+        "ece_market",
+        "mean_blend_fav_prob",
+        "mean_model_fav_prob",
+        "mean_mkt_fav_prob",
+        "data_limited"
+      ],
+      "bootstrap_class": "None (no BootstrapCI class in phase68)",
+      "bootstrap_fields_present": [],
+      "nc_class": "NegativeControl",
+      "nc_fields_present": [
+        "control_name",
+        "description",
+        "real_bss",
+        "null_bss_mean",
+        "null_bss_std",
+        "signal_gap",
+        "overfit_threshold",
+        "overfit_risk"
+      ]
+    },
+    {
+      "phase_id": "phase69",
+      "filename": "phase69_calibration_objective_redesign_counterfactual.py",
+      "file_lines": 1368,
+      "brier_fn_found": [
+        "_brier"
+      ],
+      "bss_fn_found": [
+        "_bss_direct"
+      ],
+      "ece_fn_found": [
+        "_ece"
+      ],
+      "bootstrap_fn_found": [
+        "_bootstrap_brier_delta"
+      ],
+      "duplicates_brier": true,
+      "duplicates_bss": true,
+      "duplicates_ece": true,
+      "duplicates_bootstrap": true,
+      "safety_flags_found": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "safety_flags_extended_found": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core_safety_flags": [],
+      "missing_extended_safety_flags": [],
+      "gate": "CALIBRATION_OBJECTIVE_NOT_PROMISING",
+      "naming_notes": [
+        "BootstrapCI adds 'method' (not in Phase70/71 SSOT canonical)",
+        "BootstrapCI missing 'seed', 'ci_width'",
+        "NegativeControlResult uses 'real_improvement' (SSOT: 'observed_gap')",
+        "NegativeControlResult uses 'null_improvement_mean' (SSOT: 'permuted_gap_mean')",
+        "NegativeControlResult missing 'control_type', 'seed', 'interpretation'",
+        "Phase69 uses CounterfactualMetrics (not SegmentMetricsSSO) — structurally different"
+      ],
+      "segment_class": "None (phase69 uses CounterfactualMetrics, not SegmentMetrics)",
+      "segment_fields_present": [
+        "segment",
+        "method",
+        "brier",
+        "bss_vs_market",
+        "bss_vs_original",
+        "ece",
+        "brier_delta_vs_original",
+        "ece_delta_vs_original"
+      ],
+      "bootstrap_class": "BootstrapCI",
+      "bootstrap_fields_present": [
+        "metric",
+        "method",
+        "segment",
+        "n",
+        "n_boot",
+        "observed",
+        "ci_lower",
+        "ci_upper",
+        "ci_excludes_zero",
+        "ci_stable",
+        "data_limited"
+      ],
+      "nc_class": "NegativeControlResult",
+      "nc_fields_present": [
+        "control_name",
+        "description",
+        "real_improvement",
+        "null_improvement_mean",
+        "null_improvement_std",
+        "signal_gap",
+        "overfit_risk",
+        "n_permutations"
+      ]
+    },
+    {
+      "phase_id": "phase70",
+      "filename": "phase70_strong_home_favorite_underconfidence_audit.py",
+      "file_lines": 1403,
+      "brier_fn_found": [
+        "_brier"
+      ],
+      "bss_fn_found": [
+        "_bss_direct"
+      ],
+      "ece_fn_found": [
+        "_ece"
+      ],
+      "bootstrap_fn_found": [
+        "_bootstrap_residual_ci",
+        "_compute_bootstrap_cis"
+      ],
+      "duplicates_brier": true,
+      "duplicates_bss": true,
+      "duplicates_ece": true,
+      "duplicates_bootstrap": true,
+      "safety_flags_found": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "safety_flags_extended_found": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core_safety_flags": [],
+      "missing_extended_safety_flags": [],
+      "gate": "MARKET_ONLY_SUPERIOR",
+      "naming_notes": [
+        "SegmentMetrics uses 'brier' (SSOT: 'model_brier')",
+        "SegmentMetrics uses 'predicted_mean_prob' (SSOT: 'model_mean_prob')",
+        "SegmentMetrics uses 'bss_vs_market' (compatible with SSOT)",
+        "SegmentMetrics has 'severe_underconfidence' (not in SSOT canonical)",
+        "BootstrapCI missing 'seed', 'ci_width' (vs SSOT)"
+      ],
+      "segment_class": "SegmentMetrics",
+      "segment_fields_present": [
+        "segment",
+        "n",
+        "brier",
+        "bss_vs_market",
+        "ece",
+        "residual_mean",
+        "residual_std",
+        "observed_win_rate",
+        "predicted_mean_prob",
+        "market_brier",
+        "market_residual_mean",
+        "market_mean_prob",
+        "model_minus_market_mean",
+        "market_beats_model_brier",
+        "severe_underconfidence",
+        "data_limited"
+      ],
+      "bootstrap_class": "BootstrapCI",
+      "bootstrap_fields_present": [
+        "metric",
+        "segment",
+        "n",
+        "n_boot",
+        "observed",
+        "ci_lower",
+        "ci_upper",
+        "ci_excludes_zero",
+        "ci_stable",
+        "data_limited"
+      ],
+      "nc_class": "NegativeControlResult",
+      "nc_fields_present": [
+        "control_name",
+        "description",
+        "n_permutations",
+        "observed_gap",
+        "permuted_gap_mean",
+        "permuted_gap_std",
+        "signal_gap",
+        "overfit_risk",
+        "interpretation"
+      ]
+    },
+    {
+      "phase_id": "phase71",
+      "filename": "phase71_market_dominance_model_derisk_audit.py",
+      "file_lines": 1803,
+      "brier_fn_found": [
+        "_brier"
+      ],
+      "bss_fn_found": [
+        "_bss_direct"
+      ],
+      "ece_fn_found": [
+        "_ece"
+      ],
+      "bootstrap_fn_found": [
+        "_bootstrap_ci",
+        "_compute_bootstrap_cis"
+      ],
+      "duplicates_brier": true,
+      "duplicates_bss": true,
+      "duplicates_ece": true,
+      "duplicates_bootstrap": true,
+      "safety_flags_found": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "safety_flags_extended_found": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core_safety_flags": [],
+      "missing_extended_safety_flags": [],
+      "gate": "MARKET_DE_RISK_GUARD_PROMISING",
+      "naming_notes": [
+        "Phase71 SegmentMetrics is closest to SSOT canonical",
+        "BootstrapCI missing 'seed', 'ci_width' (vs SSOT)",
+        "Phase71 is reference implementation for SSOT math"
+      ],
+      "segment_class": "SegmentMetrics",
+      "segment_fields_present": [
+        "segment",
+        "n",
+        "model_brier",
+        "model_ece",
+        "model_residual_mean",
+        "model_residual_std",
+        "observed_win_rate",
+        "model_mean_prob",
+        "market_brier",
+        "market_ece",
+        "market_residual_mean",
+        "market_mean_prob",
+        "brier_delta",
+        "model_minus_market_mean",
+        "bss_vs_market",
+        "market_superiority",
+        "data_limited"
+      ],
+      "bootstrap_class": "BootstrapCI",
+      "bootstrap_fields_present": [
+        "metric",
+        "segment",
+        "n",
+        "n_boot",
+        "observed",
+        "ci_lower",
+        "ci_upper",
+        "ci_excludes_zero",
+        "ci_stable",
+        "data_limited"
+      ],
+      "nc_class": "NegativeControlResult",
+      "nc_fields_present": [
+        "control_name",
+        "description",
+        "n_permutations",
+        "observed_gap",
+        "permuted_gap_mean",
+        "permuted_gap_std",
+        "signal_gap",
+        "overfit_risk",
+        "interpretation"
+      ]
+    },
+    {
+      "phase_id": "phase72",
+      "filename": "phase72_market_derisk_guard_proposal.py",
+      "file_lines": 1291,
+      "brier_fn_found": [],
+      "bss_fn_found": [],
+      "ece_fn_found": [],
+      "bootstrap_fn_found": [],
+      "duplicates_brier": false,
+      "duplicates_bss": false,
+      "duplicates_ece": false,
+      "duplicates_bootstrap": false,
+      "safety_flags_found": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "safety_flags_extended_found": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core_safety_flags": [],
+      "missing_extended_safety_flags": [],
+      "gate": "MARKET_DERISK_GUARD_SPEC_READY",
+      "naming_notes": [
+        "Phase72 is a paper-only guard proposal; no metrics calculation",
+        "Phase72 references Phase71 evidence as read-only constants",
+        "Phase72 safety flags are most complete (6 flags vs 3-4 in prior phases)"
+      ],
+      "segment_class": "N/A (guard spec only, no segment calculation)",
+      "segment_fields_present": [],
+      "bootstrap_class": "N/A",
+      "bootstrap_fields_present": [],
+      "nc_class": "N/A",
+      "nc_fields_present": []
+    }
+  ],
+  "schema_gaps": {
+    "segment_field_gaps": {
+      "phase67": [
+        "brier_delta",
+        "bss_vs_market",
+        "data_limited",
+        "market_ece",
+        "market_residual_mean",
+        "market_superiority",
+        "model_ece",
+        "model_residual_mean",
+        "observed_win_rate",
+        "segment_definition",
+        "segment_name"
+      ],
+      "phase68": [
+        "brier_delta",
+        "bss_vs_market",
+        "market_ece",
+        "market_residual_mean",
+        "market_superiority",
+        "model_ece",
+        "model_residual_mean",
+        "observed_win_rate",
+        "segment_definition",
+        "segment_name"
+      ],
+      "phase69": [
+        "brier_delta",
+        "data_limited",
+        "market_brier",
+        "market_ece",
+        "market_residual_mean",
+        "market_superiority",
+        "model_brier",
+        "model_ece",
+        "model_residual_mean",
+        "n",
+        "observed_win_rate",
+        "segment_definition",
+        "segment_name"
+      ],
+      "phase70": [
+        "brier_delta",
+        "market_ece",
+        "market_superiority",
+        "model_brier",
+        "model_ece",
+        "model_residual_mean",
+        "segment_definition",
+        "segment_name"
+      ],
+      "phase71": [
+        "segment_definition",
+        "segment_name"
+      ],
+      "phase72": [
+        "brier_delta",
+        "bss_vs_market",
+        "data_limited",
+        "market_brier",
+        "market_ece",
+        "market_residual_mean",
+        "market_superiority",
+        "model_brier",
+        "model_ece",
+        "model_residual_mean",
+        "n",
+        "observed_win_rate",
+        "segment_definition",
+        "segment_name"
+      ]
+    },
+    "bootstrap_field_gaps": {
+      "phase67": [
+        "ci_excludes_zero",
+        "ci_stable",
+        "ci_width",
+        "data_limited",
+        "metric",
+        "observed",
+        "seed",
+        "segment"
+      ],
+      "phase68": [
+        "ci_excludes_zero",
+        "ci_lower",
+        "ci_stable",
+        "ci_upper",
+        "ci_width",
+        "data_limited",
+        "metric",
+        "n",
+        "n_boot",
+        "observed",
+        "seed",
+        "segment"
+      ],
+      "phase69": [
+        "ci_width",
+        "seed"
+      ],
+      "phase70": [
+        "ci_width",
+        "seed"
+      ],
+      "phase71": [
+        "ci_width",
+        "seed"
+      ],
+      "phase72": [
+        "ci_excludes_zero",
+        "ci_lower",
+        "ci_stable",
+        "ci_upper",
+        "ci_width",
+        "data_limited",
+        "metric",
+        "n",
+        "n_boot",
+        "observed",
+        "seed",
+        "segment"
+      ]
+    },
+    "negative_control_field_gaps": {
+      "phase67": [
+        "control_name",
+        "control_type",
+        "description",
+        "interpretation",
+        "n_permutations",
+        "observed_gap",
+        "permuted_gap_mean",
+        "permuted_gap_std",
+        "seed",
+        "signal_gap"
+      ],
+      "phase68": [
+        "control_type",
+        "interpretation",
+        "n_permutations",
+        "observed_gap",
+        "permuted_gap_mean",
+        "permuted_gap_std",
+        "seed"
+      ],
+      "phase69": [
+        "control_type",
+        "interpretation",
+        "observed_gap",
+        "permuted_gap_mean",
+        "permuted_gap_std",
+        "seed"
+      ],
+      "phase70": [
+        "control_type",
+        "seed"
+      ],
+      "phase71": [
+        "control_type",
+        "seed"
+      ],
+      "phase72": [
+        "control_name",
+        "control_type",
+        "description",
+        "interpretation",
+        "n_permutations",
+        "observed_gap",
+        "overfit_risk",
+        "permuted_gap_mean",
+        "permuted_gap_std",
+        "seed",
+        "signal_gap"
+      ]
+    }
+  },
+  "duplicate_summary": {
+    "brier_fn": [
+      "phase67",
+      "phase68",
+      "phase69",
+      "phase70",
+      "phase71"
+    ],
+    "bss_fn": [
+      "phase67",
+      "phase68",
+      "phase69",
+      "phase70",
+      "phase71"
+    ],
+    "ece_fn": [
+      "phase67",
+      "phase68",
+      "phase69",
+      "phase70",
+      "phase71"
+    ],
+    "bootstrap_fn": [
+      "phase67",
+      "phase69",
+      "phase70",
+      "phase71"
+    ]
+  },
+  "naming_inconsistencies": [
+    {
+      "phase_id": "phase67",
+      "note": "BootstrapResult uses 'observed_delta' (SSOT: 'observed')"
+    },
+    {
+      "phase_id": "phase67",
+      "note": "BootstrapResult uses 'significant' (SSOT: 'ci_excludes_zero')"
+    },
+    {
+      "phase_id": "phase67",
+      "note": "NegativeControl uses 'dim'+'segment' (SSOT: 'control_name'+'control_type')"
+    },
+    {
+      "phase_id": "phase67",
+      "note": "NegativeControl missing 'control_type', 'n_permutations', 'seed', 'interpretation'"
+    },
+    {
+      "phase_id": "phase67",
+      "note": "SegmentMetrics uses 'ece_blend' (SSOT: 'model_ece')"
+    },
+    {
+      "phase_id": "phase67",
+      "note": "SegmentMetrics missing 'model_residual_mean', 'market_residual_mean', 'observed_win_rate'"
+    },
+    {
+      "phase_id": "phase68",
+      "note": "NegativeControl uses 'real_bss' (SSOT: 'observed_gap')"
+    },
+    {
+      "phase_id": "phase68",
+      "note": "NegativeControl uses 'null_bss_mean'/'null_bss_std' (SSOT: 'permuted_gap_mean'/'permuted_gap_std')"
+    },
+    {
+      "phase_id": "phase68",
+      "note": "NegativeControl has 'overfit_threshold' (not in SSOT)"
+    },
+    {
+      "phase_id": "phase68",
+      "note": "NegativeControl missing 'control_type', 'n_permutations', 'seed', 'interpretation'"
+    },
+    {
+      "phase_id": "phase68",
+      "note": "SegmentMetrics uses 'ece_blend'/'ece_model'/'ece_market' (SSOT: 'model_ece'/'market_ece')"
+    },
+    {
+      "phase_id": "phase68",
+      "note": "SegmentMetrics missing 'model_residual_mean', 'market_residual_mean', 'brier_delta', 'observed_win_rate'"
+    },
+    {
+      "phase_id": "phase69",
+      "note": "BootstrapCI adds 'method' (not in Phase70/71 SSOT canonical)"
+    },
+    {
+      "phase_id": "phase69",
+      "note": "BootstrapCI missing 'seed', 'ci_width'"
+    },
+    {
+      "phase_id": "phase69",
+      "note": "NegativeControlResult uses 'real_improvement' (SSOT: 'observed_gap')"
+    },
+    {
+      "phase_id": "phase69",
+      "note": "NegativeControlResult uses 'null_improvement_mean' (SSOT: 'permuted_gap_mean')"
+    },
+    {
+      "phase_id": "phase69",
+      "note": "NegativeControlResult missing 'control_type', 'seed', 'interpretation'"
+    },
+    {
+      "phase_id": "phase69",
+      "note": "Phase69 uses CounterfactualMetrics (not SegmentMetricsSSO) — structurally different"
+    },
+    {
+      "phase_id": "phase70",
+      "note": "SegmentMetrics uses 'brier' (SSOT: 'model_brier')"
+    },
+    {
+      "phase_id": "phase70",
+      "note": "SegmentMetrics uses 'predicted_mean_prob' (SSOT: 'model_mean_prob')"
+    },
+    {
+      "phase_id": "phase70",
+      "note": "SegmentMetrics uses 'bss_vs_market' (compatible with SSOT)"
+    },
+    {
+      "phase_id": "phase70",
+      "note": "SegmentMetrics has 'severe_underconfidence' (not in SSOT canonical)"
+    },
+    {
+      "phase_id": "phase70",
+      "note": "BootstrapCI missing 'seed', 'ci_width' (vs SSOT)"
+    },
+    {
+      "phase_id": "phase71",
+      "note": "Phase71 SegmentMetrics is closest to SSOT canonical"
+    },
+    {
+      "phase_id": "phase71",
+      "note": "BootstrapCI missing 'seed', 'ci_width' (vs SSOT)"
+    },
+    {
+      "phase_id": "phase71",
+      "note": "Phase71 is reference implementation for SSOT math"
+    },
+    {
+      "phase_id": "phase72",
+      "note": "Phase72 is a paper-only guard proposal; no metrics calculation"
+    },
+    {
+      "phase_id": "phase72",
+      "note": "Phase72 references Phase71 evidence as read-only constants"
+    },
+    {
+      "phase_id": "phase72",
+      "note": "Phase72 safety flags are most complete (6 flags vs 3-4 in prior phases)"
+    }
+  ],
+  "safety_flag_coverage": {
+    "phase67": {
+      "core_flags_present": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "extended_flags_present": [
+        "DIAGNOSTIC_ONLY"
+      ],
+      "missing_core": [],
+      "missing_extended": [
+        "PIT_SAFE_VALIDATION",
+        "PREDICTION_JSONL_OVERWRITTEN"
+      ]
+    },
+    "phase68": {
+      "core_flags_present": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "extended_flags_present": [
+        "DIAGNOSTIC_ONLY"
+      ],
+      "missing_core": [],
+      "missing_extended": [
+        "PIT_SAFE_VALIDATION",
+        "PREDICTION_JSONL_OVERWRITTEN"
+      ]
+    },
+    "phase69": {
+      "core_flags_present": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "extended_flags_present": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core": [],
+      "missing_extended": []
+    },
+    "phase70": {
+      "core_flags_present": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "extended_flags_present": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core": [],
+      "missing_extended": []
+    },
+    "phase71": {
+      "core_flags_present": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "extended_flags_present": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core": [],
+      "missing_extended": []
+    },
+    "phase72": {
+      "core_flags_present": [
+        "CANDIDATE_PATCH_CREATED",
+        "PRODUCTION_MODIFIED",
+        "ALPHA_MODIFIED"
+      ],
+      "extended_flags_present": [
+        "DIAGNOSTIC_ONLY",
+        "PREDICTION_JSONL_OVERWRITTEN",
+        "PIT_SAFE_VALIDATION"
+      ],
+      "missing_core": [],
+      "missing_extended": []
+    }
+  },
+  "summary": {
+    "total_phases_scanned": 6,
+    "phases_with_duplicate_brier_fn": 5,
+    "phases_with_duplicate_bss_fn": 5,
+    "phases_with_duplicate_ece_fn": 5,
+    "phases_with_duplicate_bootstrap_fn": 4,
+    "phases_with_segment_schema_gaps": 6,
+    "phases_with_bootstrap_schema_gaps": 6,
+    "phases_with_nc_schema_gaps": 6,
+    "total_naming_inconsistencies": 29,
+    "gate": "METRICS_SSOT_FOUNDATION_READY"
+  },
+  "completion_marker": "METRICS_SSOT_PHASE67_72_INVENTORY_VERIFIED"
+}

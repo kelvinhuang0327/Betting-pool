@@ -29,7 +29,4 @@ def load_high_confidence_odds_bands(path: str = "data/wbc_backend/model_artifact
 def is_odds_in_conf_band(market: str, odds: float, conf_bands: dict[str, list[tuple[float, float]]]) -> bool:
     if market not in conf_bands:
         return True
-    for lo, hi in conf_bands[market]:
-        if lo <= odds <= hi:
-            return True
-    return False
+    return any(lo <= odds <= hi for lo, hi in conf_bands[market])

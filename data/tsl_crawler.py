@@ -7,6 +7,8 @@ import json
 import time
 from typing import Dict, List, Optional
 from dataclasses import dataclass
+from data.fetch_status import write_tsl_fetch_status
+from data.tsl_snapshot import save_tsl_snapshot
 
 @dataclass
 class TSLOdds:
@@ -31,7 +33,14 @@ class TSLCrawler:
     def fetch_baseball_games(self) -> List[Dict]:
         """Fetch list of all baseball games and their odds."""
         if self.use_mock:
-            return self._get_mock_data()
+            games = self._get_mock_data()
+            write_tsl_fetch_status(
+                success=True,
+                games_count=len(games),
+                source="TSL_MOCK",
+                note="mock mode enabled",
+            )
+            return games
 
         endpoint = f"{self.base_url}/game/list"
         # sportId 1 = Baseball (MLB/WBC/NPB/CPBL)
@@ -47,8 +56,21 @@ class TSLCrawler:
             response = requests.post(endpoint, json=payload, headers=self.headers, timeout=10, verify=False)
             response.raise_for_status()
             data = response.json()
-            return data.get("data", [])
+            games = data.get("data", [])
+            save_tsl_snapshot(games=games, source="TSL_API_V1")
+            write_tsl_fetch_status(
+                success=True,
+                games_count=len(games),
+                source="TSL_API_V1",
+            )
+            return games
         except Exception as e:
+            write_tsl_fetch_status(
+                success=False,
+                games_count=0,
+                source="TSL_API_V1",
+                error=str(e),
+            )
             print(f"Error fetching TSL data: {e}")
             return []
 

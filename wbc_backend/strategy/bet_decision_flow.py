@@ -16,7 +16,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 from wbc_backend.domain.schemas import BetRecommendation, PredictionResult
 
@@ -45,7 +44,7 @@ class BetDecision:
     """Complete decision pipeline output for a single bet."""
     bet: BetRecommendation
     approved: bool
-    gates: List[GateDecision] = field(default_factory=list)
+    gates: list[GateDecision] = field(default_factory=list)
     final_stake_pct: float = 0.0
     final_stake_amount: float = 0.0
     timing: str = "IMMEDIATE"
@@ -57,7 +56,7 @@ class BetDecision:
 class DecisionContext:
     """All context needed for the decision pipeline."""
     prediction: PredictionResult
-    sub_model_probs: Dict[str, float]    # {model_name: home_win_prob}
+    sub_model_probs: dict[str, float]    # {model_name: home_win_prob}
     market_implied_prob: float            # market's implied probability
     model_prob: float                     # ensemble model probability
     odds: float                           # current decimal odds
@@ -65,9 +64,12 @@ class DecisionContext:
     daily_exposure_pct: float = 0.0
     peak_bankroll: float = 100_000.0
     consecutive_losses: int = 0
-    sharp_signals: List[str] = field(default_factory=list)
+    sharp_signals: list[str] = field(default_factory=list)
     steam_detected: bool = False
     market_efficiency: float = 0.5
+    home_code: str = ""
+    away_code: str = ""
+    market_support_state: str = "unknown"
 
 
 # ─── Configuration ───────────────────────────────────────────────────────────
@@ -98,6 +100,14 @@ HIGH_VOLATILITY_DELAY = 30          # wait when market is volatile
 
 # ─── Gate 1: Model Consensus Check ──────────────────────────────────────────
 
+def _bet_is_home_side(ctx: DecisionContext, bet: BetRecommendation) -> bool | None:
+    side = str(getattr(bet, "side", "")).strip().upper()
+    if side in {"HOME", str(ctx.home_code).upper()}:
+        return True
+    if side in {"AWAY", str(ctx.away_code).upper()}:
+        return False
+    return None
+
 def gate_consensus(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision:
     """
     Check that sufficient models agree on the bet direction.
@@ -111,23 +121,27 @@ def gate_consensus(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision
     if not probs:
         return GateDecision(
             gate="CONSENSUS",
-            result=GateResult.REJECT,
-            reason="No sub-model predictions available",
+            result=GateResult.PASS,
+            reason="No sub-model predictions available; consensus gate skipped",
+            confidence=0.8,
         )
 
-    # Determine bet side: is this bet on the favourite or underdog?
-    model_home = ctx.model_prob
-    bet_side = getattr(bet, "side", "home").lower()
-    bet_on_home = "home" in bet_side
+    # Determine bet side: if market is non-directional (e.g. OU/OE), skip the gate.
+    bet_on_home = _bet_is_home_side(ctx, bet)
+    if bet_on_home is None:
+        return GateDecision(
+            gate="CONSENSUS",
+            result=GateResult.PASS,
+            reason="Non-directional market; consensus gate skipped",
+            confidence=0.85,
+        )
 
     # Count models agreeing with bet direction
     agreeing = 0
     positive_ev = 0
     total = len(probs)
 
-    market_ip = 1.0 / max(ctx.odds, 1.01)
-
-    for name, home_p in probs.items():
+    for _name, home_p in probs.items():
         model_bet_side_prob = home_p if bet_on_home else (1.0 - home_p)
 
         # Agreement: model also favours this side
@@ -292,11 +306,13 @@ def gate_sizing(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision:
     Returns the stake percentage in modified_value.
     """
     model_prob = ctx.model_prob
-    bet_side = getattr(bet, "side", "home").lower()
-    if "away" in bet_side:
-        bet_prob = 1.0 - model_prob
-    else:
+    bet_on_home = _bet_is_home_side(ctx, bet)
+    if bet_on_home is None:
+        bet_prob = getattr(bet, "win_probability", model_prob)
+    elif bet_on_home:
         bet_prob = model_prob
+    else:
+        bet_prob = 1.0 - model_prob
 
     odds = ctx.odds
     if odds <= 1.0 or bet_prob <= 0.0:
@@ -340,6 +356,22 @@ def gate_timing(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision:
     IMMEDIATE — place now
     DELAY     — wait for line movement to settle
     """
+    if getattr(bet, "sportsbook", "") == "TSL" and ctx.market_support_state in {"tsl_unlisted_matchup", "tsl_unlisted_market"}:
+        return GateDecision(
+            gate="TIMING",
+            result=GateResult.MODIFY,
+            reason=f"TSL support state={ctx.market_support_state}. Delay 30min or route to international books.",
+            modified_value=HIGH_VOLATILITY_DELAY,
+        )
+
+    if getattr(bet, "sportsbook", "") == "TSL" and ctx.market_support_state == "tsl_stale":
+        return GateDecision(
+            gate="TIMING",
+            result=GateResult.MODIFY,
+            reason="TSL snapshot is stale. Delay 15min until Taiwan-market odds refresh.",
+            modified_value=STEAM_DELAY_MINUTES,
+        )
+
     if ctx.steam_detected:
         return GateDecision(
             gate="TIMING",
@@ -389,7 +421,7 @@ def run_decision_pipeline(
     A bet must survive all 5 gates. Each gate can reject, pass, or modify.
     Modifications accumulate (e.g., reduced confidence → smaller position).
     """
-    gates: List[GateDecision] = []
+    gates: list[GateDecision] = []
     confidence_multiplier = 1.0
     position_multiplier = 1.0
     timing = "IMMEDIATE"
@@ -455,14 +487,14 @@ def run_decision_pipeline(
 
 
 def run_batch_decisions(
-    bets: List[BetRecommendation],
+    bets: list[BetRecommendation],
     ctx: DecisionContext,
-) -> List[BetDecision]:
+) -> list[BetDecision]:
     """
     Run decision pipeline for multiple bets.
     Tracks cumulative exposure across bets.
     """
-    decisions: List[BetDecision] = []
+    decisions: list[BetDecision] = []
     cumulative_exposure = ctx.daily_exposure_pct
 
     for bet in bets:
@@ -480,7 +512,7 @@ def run_batch_decisions(
 
 def _build_rejected(
     bet: BetRecommendation,
-    gates: List[GateDecision],
+    gates: list[GateDecision],
     reason: str,
 ) -> BetDecision:
     return BetDecision(
@@ -491,7 +523,7 @@ def _build_rejected(
     )
 
 
-def _std(values: List[float]) -> float:
+def _std(values: list[float]) -> float:
     if len(values) < 2:
         return 0.0
     mean = sum(values) / len(values)

@@ -1,0 +1,13 @@
+{
+  "artifact_kind": "DRY_RUN_NO_OP",
+  "production_enabled": false,
+  "preview_only": true,
+  "preview_reason": "Runtime metadata enablement preview only; do not apply to production configuration.",
+  "env_preview": {
+    "STRATEGY_REPLAY_METADATA_REGISTRY_PATH": "preview://00-BettingPlan/20260510/strategy_replay_metadata_registry.production_candidate.draft.json",
+    "STRATEGY_REPLAY_METADATA_STRICT_MODE": "true",
+    "STRATEGY_REPLAY_METADATA_ENABLEMENT_MODE": "DRY_RUN",
+    "STRATEGY_REPLAY_METADATA_ROLLBACK_SWITCH": "preview://00-BettingPlan/20260510/strategy_replay_metadata_registry_rollback_plan.draft.md"
+  },
+  "notes": "No-op preview only. This file does not modify actual runtime config or enable production."
+}

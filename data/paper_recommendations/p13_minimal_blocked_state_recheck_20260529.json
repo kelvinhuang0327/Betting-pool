@@ -1,0 +1,43 @@
+{
+  "task": "P13-B",
+  "title": "Minimal Blocked-State Recheck",
+  "date": "2026-05-29T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "production_write": false,
+  "inputs": {
+    "p12_daily_monitor_source": "data/paper_recommendations/p12_daily_monitor_result_20260528.json",
+    "p12_cto_recommendation_source": "data/paper_recommendations/p12_cto_stop_continue_recommendation_20260528.json",
+    "p13_ceo_decision_file_checked": "data/paper_recommendations/p13_ceo_odds_source_decision_20260529.json",
+    "api_key_flag_file_checked": "data/paper_recommendations/api_key_readiness_flag.json",
+    "forward_readiness_source": "data/paper_recommendations/p11_forward_collection_readiness_20260527.json"
+  },
+  "new_ceo_decision_found": false,
+  "ceo_decision_status": "DEFER_DECISION",
+  "api_key_ready": false,
+  "forward_pairs": 0,
+  "forward_pairs_target": 200,
+  "forward_coverage_pct": 0.0,
+  "forward_accumulation_changed": false,
+  "current_clv_status": "BLOCKED_NO_CLOSING_LINE",
+  "is_blocked": true,
+  "blocked_reasons": [
+    "CEO_DECISION_PENDING",
+    "API_KEY_MISSING",
+    "FORWARD_ACCUMULATION_INSUFFICIENT",
+    "NO_CLOSING_LINE"
+  ],
+  "primary_blocker": "CEO_DECISION_PENDING",
+  "allowed_next_action": "CEO_FOLLOWUP",
+  "forbidden_next_action": "HISTORICAL_API_CALL_WITHOUT_APPROVAL",
+  "p13_classification": "P13_BLOCKED_MONITOR_ONLY",
+  "p14_allowed": false,
+  "promotion_frozen": true,
+  "fixed_edge_5pct_champion_preserved": true,
+  "carry_forward_from_p12": {
+    "recommendation": "STOP_ENGINEERING_EXPANSION",
+    "final_classification": "P12_BLOCKED_GOVERNANCE_READY_STOP_EXPANSION"
+  },
+  "annotation": "paper_only=true。P13-B 最小只讀重查。狀態與 P12 完全一致，無任何解鎖條件達成。不宣稱任何策略具獲利能力。"
+}

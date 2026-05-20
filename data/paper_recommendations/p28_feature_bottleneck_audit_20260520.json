@@ -1,0 +1,52 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "index_fallback_used": false,
+  "generated_at": "2026-05-20T05:00:36.506242+00:00",
+  "date": "2026-05-20",
+  "artifact": "P28_FEATURE_BOTTLENECK_AUDIT",
+  "alpha_signals_total_defined": 318,
+  "features_actually_used_in_walkforward": 7,
+  "gap": 311,
+  "feature_group_status": {
+    "starting_pitcher_strength": "PARTIAL (name known, quality not loaded)",
+    "bullpen_fatigue": "MISSING in walkforward",
+    "batting_rolling_form": "MISSING in walkforward",
+    "team_defense": "MISSING in walkforward",
+    "home_away_split": "AVAILABLE (market odds encode this)",
+    "rest_days": "MISSING in walkforward",
+    "travel_schedule_fatigue": "MISSING in walkforward",
+    "weather_park_factor": "MISSING in walkforward",
+    "odds_implied_baseline": "AVAILABLE (home_ml, away_ml)",
+    "injury_lineup_proxy": "PARTIAL (starter_known flag only)",
+    "run_line_signal": "MISSING (RL Home, RL Away in CSV but unused)",
+    "over_under_calibration": "PARTIAL (OU line used, Over/Under odds unused)",
+    "rolling_team_win_rate": "MISSING (computable from CSV within training window)",
+    "market_conviction": "MISSING (|prob - 0.5| signal unused)"
+  },
+  "available_from_csv_but_unused": [
+    "RL Home odds → implied probability (different dimension from ML)",
+    "Over/Under odds → calibrated over probability",
+    "Rolling team win rate (computable in-window)",
+    "Market conviction (|home_ml_p - 0.5|)",
+    "RL/ML probability differential"
+  ],
+  "root_cause_ranking": [
+    "1. Feature poverty: only market odds used, no genuine alpha",
+    "2. Market mirroring: model learns near-identity map of market odds",
+    "3. Missing pitcher quality signals beyond known/unknown binary",
+    "4. No rolling form features",
+    "5. Available data (run line, over/under odds) not utilized"
+  ],
+  "repair_candidates_designed": [
+    "A_temperature_scaling",
+    "B_feature_expansion",
+    "C_market_shrinkage"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "task": "P15-F",
+  "title": "CTO Minimal Action Recommendation v2",
+  "date": "2026-05-31T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "ceo_decision": "DEFER_DECISION",
+  "pair_count": 0,
+  "pair_target": 200,
+  "api_key_present": false,
+  "recommendation": "DAILY_MONITOR_ONLY",
+  "engineering_expansion_allowed": false,
+  "p16_allowed": false,
+  "p16_reason": "CEO pending AND pair_count=0 < 200. Dual block. No pathway to P16 without CEO decision or forward accumulation.",
+  "next_owner": "CEO",
+  "classification": "P15_DAILY_MONITOR_ONLY_NO_EXPANSION",
+  "allowed_until_ceo_decides": [
+    "Daily forward coverage read-only check",
+    "CEO decision watch",
+    "Report only",
+    "Paper only monitoring"
+  ],
+  "forbidden_until_ceo_decides": [
+    "Optimizer promotion",
+    "Production proposal",
+    "Live odds write",
+    "TSL crawler modification",
+    "Historical API call",
+    "Profitability claim",
+    "New roadmap expansion",
+    "New backfill without decision"
+  ],
+  "fixed_edge_5pct_champion_preserved": true,
+  "promotion_frozen": true,
+  "annotation": "paper_only=true。P15-F CTO Minimal Action Recommendation v2。不宣稱任何策略具獲利能力。Next owner: CEO。"
+}

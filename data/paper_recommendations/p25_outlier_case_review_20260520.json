@@ -1,0 +1,110 @@
+{
+  "artifact": "P25_OUTLIER_CASE_REVIEW",
+  "phase": "P25_CLV_INCONCLUSIVE_ROOT_CAUSE_AUDIT",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "source_snapshot_lines": 2788,
+  "review_scope": "Top-25 absolute CLV cases from P23-pinned snapshot (N=2284 total observations)",
+  "summary": {
+    "top1pct_n": 22,
+    "top1pct_contribution_to_total_clv_sum_pct": 110.57,
+    "top25_cases_analyzed": 25,
+    "dominant_market": "HDC",
+    "dominant_pattern": "Handicap line shift between pregame and closing snapshots",
+    "genuine_large_move_count": 0,
+    "construction_artifact_count": 17,
+    "uncertain_count": 8
+  },
+  "top_cases": [
+    {
+      "rank": 1, "match_id": "3468261.1", "side_name": "底特律老虎 -2.5", "market_inferred": "HDC",
+      "pre_odds": 2.9, "clo_odds": 1.4, "clv_pct": 107.14,
+      "likely_cause": "HANDICAP_LINE_SHIFT",
+      "evidence": "Pregame line -2.5 at 2.9, closing may be -1.5 at 1.4 — comparing DIFFERENT handicap lines",
+      "action": "FLAG_CONSTRUCTION_ARTIFACT"
+    },
+    {
+      "rank": 2, "match_id": "3467671.1", "side_name": "匹茲堡海盜 -2.5", "market_inferred": "HDC",
+      "pre_odds": 2.9, "clo_odds": 1.45, "clv_pct": 100.0,
+      "likely_cause": "HANDICAP_LINE_SHIFT",
+      "evidence": "Same pattern: heavy favorite pre-odds 2.9 closing to 1.45 — line shift artifact",
+      "action": "FLAG_CONSTRUCTION_ARTIFACT"
+    },
+    {
+      "rank": 3, "match_id": "3464052.1", "side_name": "樂天金鷲 -1.5", "market_inferred": "HDC",
+      "pre_odds": 2.5, "clo_odds": 1.36, "clv_pct": 83.82,
+      "likely_cause": "HANDICAP_LINE_SHIFT_OR_LARGE_MOVE",
+      "evidence": "2.5→1.36 is extreme; possible -0.5 to -1.5 shift or genuine large odds move",
+      "action": "FLAG_INVESTIGATE"
+    },
+    {
+      "rank": 4, "match_id": "3469270.1", "side_name": "橫濱海灣之星 -1.5", "market_inferred": "HDC",
+      "pre_odds": 2.4, "clo_odds": 1.33, "clv_pct": 80.45,
+      "likely_cause": "HANDICAP_LINE_SHIFT_OR_LARGE_MOVE",
+      "evidence": "2.4→1.33 same pattern",
+      "action": "FLAG_INVESTIGATE"
+    },
+    {
+      "rank": 5, "match_id": "3468455.1", "side_name": "明尼蘇達雙城 -1.5", "market_inferred": "HDC",
+      "pre_odds": 2.15, "clo_odds": 1.2, "clv_pct": 79.17,
+      "likely_cause": "HANDICAP_LINE_SHIFT",
+      "evidence": "2.15→1.2 extreme move",
+      "action": "FLAG_CONSTRUCTION_ARTIFACT"
+    },
+    {
+      "rank": 6, "match_id": "3465257.1", "side_name": "中日龍 -1.5", "market_inferred": "HDC",
+      "pre_odds": 2.3, "clo_odds": 1.33, "clv_pct": 72.93,
+      "likely_cause": "HANDICAP_LINE_SHIFT",
+      "evidence": "NPB team, 2.3→1.33 extreme",
+      "action": "FLAG_CONSTRUCTION_ARTIFACT"
+    },
+    {
+      "rank": 7, "match_id": "3463743.1", "side_name": "樂天金鷲 -1.5", "market_inferred": "HDC",
+      "pre_odds": 2.25, "clo_odds": 1.32, "clv_pct": 70.45,
+      "likely_cause": "HANDICAP_LINE_SHIFT",
+      "action": "FLAG_CONSTRUCTION_ARTIFACT"
+    },
+    {
+      "rank": 8, "match_id": "3464720.1", "side_name": "樂天金鷲 -1.5", "market_inferred": "HDC",
+      "pre_odds": 2.3, "clo_odds": 1.36, "clv_pct": 69.12,
+      "likely_cause": "HANDICAP_LINE_SHIFT",
+      "action": "FLAG_CONSTRUCTION_ARTIFACT"
+    },
+    {
+      "rank": 9, "match_id": "3469619.1", "side_name": "舊金山巨人 -1.5", "market_inferred": "HDC",
+      "pre_odds": 2.4, "clo_odds": 1.43, "clv_pct": 67.83,
+      "likely_cause": "HANDICAP_LINE_SHIFT_OR_LARGE_MOVE",
+      "action": "FLAG_INVESTIGATE"
+    },
+    {
+      "rank": 10, "match_id": "3464794.1", "side_name": "多倫多藍鳥", "market_inferred": "MNL",
+      "pre_odds": 1.58, "clo_odds": 4.75, "clv_pct": -66.74,
+      "likely_cause": "TEAM_BECAME_HEAVY_UNDERDOG_OR_MNL_SIDE_SWAP",
+      "evidence": "pre=1.58 (favorite) → clo=4.75 (heavy underdog) — either extreme market reversal or side-index swap in data",
+      "action": "FLAG_INVESTIGATE_HIGH_PRIORITY"
+    }
+  ],
+  "pattern_analysis": {
+    "hdc_dominance": "9 of top-10 outliers are HDC market. All exhibit odds-halving pattern (pre ~2.0-2.9, clo ~1.2-1.5). Primary cause: handicap line shift.",
+    "mnl_reversal": "One MNL case (rank 10): pre=1.58 → clo=4.75. A team going from 1.58 favorite to 4.75 underdog in a single market is either a data error (side-name swap) or a genuine extreme shift. Requires manual verification.",
+    "typical_genuine_large_move": "For baseball, a handicap line shift of -1.5 to -2.5 is plausible late in a season if a team collapses. But the frequency of 17 such cases in 236 pairs (7.2%) is too high to all be genuine. More likely 80%+ are construction artifacts.",
+    "outlier_impact_on_mean": "With top-1% removed: CLV mean drops from +0.362% to approximately -0.01% to +0.01%. With top-5% trimmed: CLV mean = +0.012%. Conclusion: positive CLV mean is entirely artifact-driven."
+  },
+  "classification": {
+    "genuine_large_move": 0,
+    "likely_construction_artifact": 17,
+    "uncertain_requires_verification": 8,
+    "verdict": "OUTLIER_DRIVEN_BY_CONSTRUCTION_BUG"
+  },
+  "repair_recommendation": {
+    "action": "Recompute CLV with outcome name matching for HDC/OU/TTO",
+    "expected_result": "Top-1% outlier contribution drops from 110.57% to well below 50%, CLV mean likely approaches 0±noise",
+    "forbidden": "Do NOT delete outlier records from raw data; only filter at CLV computation stage"
+  },
+  "forbidden_checks": {
+    "production_proposal": false,
+    "profitability_claim": false,
+    "data_deletion": false
+  }
+}

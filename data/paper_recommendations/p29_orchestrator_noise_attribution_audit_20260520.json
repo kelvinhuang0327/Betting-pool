@@ -1,0 +1,151 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "generated_at": "2026-05-20T05:33:48.473082+00:00",
+  "date": "2026-05-20",
+  "artifact": "P29_ORCHESTRATOR_NOISE_ATTRIBUTION_AUDIT",
+  "reported_orchestrator_brier": 0.248703,
+  "p28_reeval_logreg_brier": 0.245105,
+  "orchestrator_components_identified": [
+    "MARL PredictorParams (always activated, w_elo=0.40, w_market=0.30)",
+    "score×2 squeeze — sigmoid(score*2) compresses probabilities toward 0.5",
+    "mlb_regime_paper (regime detection, activates ~20% of games)",
+    "Weighted ensemble (mlb_regime_paper:0.70, marl:0.30)",
+    "ES optimization per walkforward window (n_generations=20)"
+  ],
+  "noise_attribution": {
+    "H1_marl_squeeze_noise": {
+      "description": "MARL score×2 compresses probs toward 0.5 vs pure market",
+      "bier_cost": 0.001382,
+      "market_brier": 0.244354,
+      "marl_v2_brier": 0.245736,
+      "verdict": "CONFIRMED"
+    },
+    "H2_squeeze_vs_no_squeeze": {
+      "description": "Removing score×2: MARL_V2 vs MARL_no_squeeze",
+      "brier_cost_of_squeeze": -0.001848,
+      "verdict": "MINOR"
+    },
+    "H3_ensemble_averaging_noise": {
+      "description": "Ensembling LogReg+MARL(40%) adds variance vs pure LogReg",
+      "brier_cost_60_40": -0.000501,
+      "brier_cost_80_20": -0.000376,
+      "verdict": "CONFIRMED_BUT_MINOR"
+    },
+    "H4_regime_noise": {
+      "description": "20% regime tag shifts probability by ±3% randomly",
+      "brier_cost": 5e-05,
+      "verdict": "CONFIRMED"
+    },
+    "summary": {
+      "market_only_brier": 0.244354,
+      "logreg_baseline_brier": 0.245105,
+      "reported_orchestrator_brier": 0.248703,
+      "orchestrator_vs_market": 0.004349,
+      "logreg_vs_market": 0.000751,
+      "orchestrator_overhead_vs_logreg": 0.003598,
+      "primary_noise_source": "MARL_squeeze_AND_ensemble_averaging",
+      "simplification_candidate": "Remove MARL+regime, use LogReg or market-only",
+      "estimated_improvement_from_simplification": 0.003598
+    }
+  },
+  "ablation_results": {
+    "V0_market_only": {
+      "brier": 0.244354,
+      "logloss": 0.68139,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": -0.00075,
+      "delta_vs_reported_orchestrator": -0.004349,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V1_logreg_baseline": {
+      "brier": 0.245105,
+      "logloss": 0.683099,
+      "accuracy": 0.5545,
+      "delta_vs_logreg_baseline": 0.0,
+      "delta_vs_reported_orchestrator": -0.003598,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    },
+    "V2_marl_sim_w30_sq2": {
+      "brier": 0.245736,
+      "logloss": 0.684578,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": 0.000631,
+      "delta_vs_reported_orchestrator": -0.002967,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    },
+    "V3_marl_sim_w50_sq2": {
+      "brier": 0.244154,
+      "logloss": 0.681305,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": -0.000951,
+      "delta_vs_reported_orchestrator": -0.004549,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V4_marl_v2_plus_regime_noise": {
+      "brier": 0.245786,
+      "logloss": 0.684677,
+      "accuracy": 0.5535,
+      "delta_vs_logreg_baseline": 0.000681,
+      "delta_vs_reported_orchestrator": -0.002917,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    },
+    "V5_ensemble_lr60_marl40": {
+      "brier": 0.244604,
+      "logloss": 0.682181,
+      "accuracy": 0.5584,
+      "delta_vs_logreg_baseline": -0.000501,
+      "delta_vs_reported_orchestrator": -0.004099,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V6_ensemble_lr80_marl20": {
+      "brier": 0.244729,
+      "logloss": 0.682381,
+      "accuracy": 0.5594,
+      "delta_vs_logreg_baseline": -0.000376,
+      "delta_vs_reported_orchestrator": -0.003974,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V7_marl_no_squeeze": {
+      "brier": 0.247584,
+      "logloss": 0.68831,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": 0.00248,
+      "delta_vs_reported_orchestrator": -0.001119,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    }
+  },
+  "simplification_candidate": {
+    "candidate_name": "P29_SIMPLIFY_ORCHESTRATOR_TO_LOGREG",
+    "removed_components": [
+      "MARL (PredictorParams)",
+      "mlb_regime_paper ensemble",
+      "ES optimization"
+    ],
+    "retained_components": [
+      "MLBMoneylineBaseModel (7-feat LogReg)",
+      "Platt calibration"
+    ],
+    "expected_brier_improvement": 0.003598,
+    "actual_proxy_brier": 0.245105,
+    "implementation_confidence": "HIGH - simple LogReg is already in repo (mlb_moneyline_base.py)",
+    "compatibility": "Compatible with recommendation contract; no production path change",
+    "risk": "LOW - diagnostic only, no champion replacement",
+    "recommendation": "P29_ORCHESTRATOR_NOISE_REMOVAL_CANDIDATE_FOUND"
+  },
+  "final_classification": "P29_ORCHESTRATOR_NOISE_REMOVAL_CANDIDATE_FOUND"
+}

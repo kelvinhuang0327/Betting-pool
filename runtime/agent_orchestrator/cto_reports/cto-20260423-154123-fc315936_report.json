@@ -1,0 +1,66 @@
+{
+  "run_id": "cto-20260423-154123-fc315936",
+  "generated_at": "2026-04-23T15:41:23.553400+00:00",
+  "analysis": {
+    "candidates": [
+      {
+        "task_id": 13,
+        "title": "WBC knockout calibration and regime comparison",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T15:39:17.826417+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 12,
+        "title": "Build 8 hour WBC research task",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T15:32:19.224920+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      }
+    ],
+    "findings": [
+      {
+        "finding_id": "finding-12-037b8651",
+        "task_id": 12,
+        "severity": "MEDIUM",
+        "urgency": "MEDIUM",
+        "category": "quality",
+        "title": "程式碼品質改進建議 - 任務 #12",
+        "description": "在任務 Build 8 hour WBC research task 中發現可以改進的程式碼品質問題",
+        "file_path": "models/pass-task.py",
+        "line_number": 42,
+        "impact_score": 60
+      }
+    ],
+    "summary": {
+      "total_tasks": 2,
+      "completed_tasks": 2,
+      "candidates_count": 2,
+      "findings_count": 1
+    }
+  },
+  "intelligence_blocks": {
+    "summary": {
+      "total_candidates": 2,
+      "total_findings": 1,
+      "risk_assessment": "LOW"
+    },
+    "recommendations": [
+      "繼續監控程式碼品質指標",
+      "建立自動化測試覆蓋率檢查",
+      "定期進行程式碼審查"
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "處理發現的品質問題",
+        "owner": "開發團隊",
+        "due_date": "2026-04-30T15:41:23.553400+00:00"
+      }
+    ]
+  }
+}

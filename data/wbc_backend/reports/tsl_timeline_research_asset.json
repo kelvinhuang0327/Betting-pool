@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-03-20T06:39:08.412389Z",
+  "scope": "TSL Spring 2026 MLB Games (tsl_odds_history.jsonl)",
+  "universe_note": "DOES NOT OVERLAP with 2025 MLB historical backtest universe (CSV). These are spring 2026 games.",
+  "source_path": "data/tsl_odds_history.jsonl",
+  "canonical_path": "data/wbc_backend/reports/tsl_spring2026_canonical.jsonl",
+  "total_mlb_games": 38,
+  "timeline_tier_breakdown": {
+    "strict_4plus_pregame": 4,
+    "timeline_3_pregame": 7,
+    "timeline_2_pregame": 18,
+    "closing_only_1_pregame": 9,
+    "no_pregame": 0
+  },
+  "games_with_actual_line_movement": 1,
+  "games_with_flat_odds": 37,
+  "movement_examples": [
+    {
+      "game_id": "MLB-2026_03_17-1_05_PM-ATLANTA_BRAVES-AT-BOSTON_RED_SOX",
+      "pregame_snapshot_count": 3,
+      "opening_home_ml": -189,
+      "closing_home_ml": -179,
+      "delta_home_ml": 10,
+      "snapshot_timestamps": [
+        "2026-03-17T06:15:22.403325Z",
+        "2026-03-17T06:31:40.741423Z",
+        "2026-03-17T07:46:38.922094Z"
+      ]
+    }
+  ],
+  "research_capability": {
+    "can_demonstrate_multi_snapshot": true,
+    "can_produce_non_zero_line_movement": true,
+    "usable_for_clv_research_on_subset": false,
+    "reason": "Spring 2026 spring training games; no result/outcome data available. Cannot train or evaluate CLV on this subset.",
+    "blocker": "No game outcomes recorded for spring training. Unsuitable for model evaluation."
+  },
+  "conclusion": "TSL spring 2026 data confirms multi-snapshot pipeline is technically operational. 1 game(s) show actual line movement. However, this data cannot bridge the 2025 historical backtest gap. MLB 2025 PAPER_ONLY status unchanged. True CLV research requires either: (a) external historical odds API for 2025 season, or (b) starting real-time TSL collection now for future 2026 regular season."
+}

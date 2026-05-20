@@ -1,0 +1,1576 @@
+{
+  "governance_flags": {
+    "execution_mode": "PAPER_ONLY",
+    "clv_mode": "SANDBOX_ONLY",
+    "decision_quality_scale": "UNAVAILABLE",
+    "live_recommendation": "disabled",
+    "live_sizing": "disabled",
+    "live_execution": "disabled",
+    "promotion_guard": "FROZEN_UNTIL_GENUINE_PREGAME_ODDS_AVAILABLE"
+  },
+  "guarded_paper_mode": {
+    "full_market_production_betting": "DISABLED",
+    "execution_mode": "PAPER_ONLY",
+    "whitelist": [
+      "favorites",
+      "small_edge",
+      "weak_starter_mismatch",
+      "heavy_bullpen_stress"
+    ],
+    "pipeline": [
+      "strict_validation",
+      "regime_classification",
+      "regime_specific_model_or_skip",
+      "paper_only_output"
+    ]
+  },
+  "regime_gate_design": {
+    "thresholds": {
+      "favorite_cutoff": 0.55,
+      "small_edge_band": 0.0745,
+      "weak_starter_cutoff": 1.4,
+      "heavy_bullpen_cutoff": 2.666
+    },
+    "classification_rules": {
+      "favorites": "market_home_prob >= favorite_cutoff",
+      "small_edge": "abs(market_home_prob - 0.5) <= small_edge_band",
+      "weak_starter_mismatch": "abs(starter_recent_ra_diff) < weak_starter_cutoff",
+      "heavy_bullpen_stress": "abs(bullpen_usage_diff) >= heavy_bullpen_cutoff"
+    },
+    "front_of_pipeline": true
+  },
+  "regime_specific_model_results": [
+    {
+      "regime": "favorites",
+      "selected_model": {
+        "regime": "favorites",
+        "model_family": "regularized_logistic",
+        "calibration": "raw",
+        "n_games": 1050,
+        "n_bets": 934,
+        "roi": 0.0535,
+        "brier": 0.2424,
+        "logloss": 0.6779,
+        "clv": 0.0654,
+        "fold_roi_std": 0.1081,
+        "sample_count": 1260,
+        "tradable": true,
+        "calibration_curve": [
+          {
+            "bucket": "0.3-0.4",
+            "n": 6,
+            "predicted_mean": 0.3607,
+            "actual_rate": 0.3333,
+            "abs_error": 0.0274
+          },
+          {
+            "bucket": "0.4-0.5",
+            "n": 128,
+            "predicted_mean": 0.4578,
+            "actual_rate": 0.5234,
+            "abs_error": 0.0656
+          },
+          {
+            "bucket": "0.5-0.6",
+            "n": 340,
+            "predicted_mean": 0.5532,
+            "actual_rate": 0.5294,
+            "abs_error": 0.0238
+          },
+          {
+            "bucket": "0.6-0.7",
+            "n": 325,
+            "predicted_mean": 0.6451,
+            "actual_rate": 0.5692,
+            "abs_error": 0.0759
+          },
+          {
+            "bucket": "0.7-0.8",
+            "n": 203,
+            "predicted_mean": 0.7426,
+            "actual_rate": 0.67,
+            "abs_error": 0.0727
+          },
+          {
+            "bucket": "0.8-0.9",
+            "n": 48,
+            "predicted_mean": 0.8334,
+            "actual_rate": 0.8125,
+            "abs_error": 0.0209
+          }
+        ]
+      },
+      "candidate_models": [
+        {
+          "regime": "favorites",
+          "model_family": "regularized_logistic",
+          "calibration": "raw",
+          "n_games": 1050,
+          "n_bets": 934,
+          "roi": 0.0535,
+          "brier": 0.2424,
+          "logloss": 0.6779,
+          "clv": 0.0654,
+          "fold_roi_std": 0.1081,
+          "sample_count": 1260,
+          "tradable": true,
+          "calibration_curve": [
+            {
+              "bucket": "0.3-0.4",
+              "n": 6,
+              "predicted_mean": 0.3607,
+              "actual_rate": 0.3333,
+              "abs_error": 0.0274
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 128,
+              "predicted_mean": 0.4578,
+              "actual_rate": 0.5234,
+              "abs_error": 0.0656
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 340,
+              "predicted_mean": 0.5532,
+              "actual_rate": 0.5294,
+              "abs_error": 0.0238
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 325,
+              "predicted_mean": 0.6451,
+              "actual_rate": 0.5692,
+              "abs_error": 0.0759
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 203,
+              "predicted_mean": 0.7426,
+              "actual_rate": 0.67,
+              "abs_error": 0.0727
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 48,
+              "predicted_mean": 0.8334,
+              "actual_rate": 0.8125,
+              "abs_error": 0.0209
+            }
+          ]
+        },
+        {
+          "regime": "favorites",
+          "model_family": "gradient_boosting",
+          "calibration": "platt",
+          "n_games": 1050,
+          "n_bets": 967,
+          "roi": -0.1127,
+          "brier": 0.2446,
+          "logloss": 0.6827,
+          "clv": 0.0805,
+          "fold_roi_std": 0.0769,
+          "sample_count": 1260,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.2-0.3",
+              "n": 2,
+              "predicted_mean": 0.2823,
+              "actual_rate": 0.0,
+              "abs_error": 0.2823
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 17,
+              "predicted_mean": 0.3746,
+              "actual_rate": 0.6471,
+              "abs_error": 0.2724
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 137,
+              "predicted_mean": 0.4704,
+              "actual_rate": 0.6131,
+              "abs_error": 0.1427
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 600,
+              "predicted_mean": 0.5576,
+              "actual_rate": 0.5467,
+              "abs_error": 0.011
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 262,
+              "predicted_mean": 0.6358,
+              "actual_rate": 0.6412,
+              "abs_error": 0.0054
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 25,
+              "predicted_mean": 0.7353,
+              "actual_rate": 0.56,
+              "abs_error": 0.1753
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 7,
+              "predicted_mean": 0.8158,
+              "actual_rate": 0.5714,
+              "abs_error": 0.2444
+            }
+          ]
+        },
+        {
+          "regime": "favorites",
+          "model_family": "tree_boost_style",
+          "calibration": "platt",
+          "n_games": 1050,
+          "n_bets": 933,
+          "roi": -0.1426,
+          "brier": 0.248,
+          "logloss": 0.6895,
+          "clv": 0.0843,
+          "fold_roi_std": 0.0827,
+          "sample_count": 1260,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.3-0.4",
+              "n": 19,
+              "predicted_mean": 0.3707,
+              "actual_rate": 0.6316,
+              "abs_error": 0.2609
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 136,
+              "predicted_mean": 0.4592,
+              "actual_rate": 0.5735,
+              "abs_error": 0.1143
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 710,
+              "predicted_mean": 0.5717,
+              "actual_rate": 0.569,
+              "abs_error": 0.0027
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 163,
+              "predicted_mean": 0.6267,
+              "actual_rate": 0.6196,
+              "abs_error": 0.0071
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 21,
+              "predicted_mean": 0.7445,
+              "actual_rate": 0.6667,
+              "abs_error": 0.0779
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 1,
+              "predicted_mean": 0.8182,
+              "actual_rate": 0.0,
+              "abs_error": 0.8182
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "regime": "small_edge",
+      "selected_model": {
+        "regime": "small_edge",
+        "model_family": "regularized_logistic",
+        "calibration": "raw",
+        "n_games": 1025,
+        "n_bets": 928,
+        "roi": 0.0022,
+        "brier": 0.2569,
+        "logloss": 0.7085,
+        "clv": 0.0793,
+        "fold_roi_std": 0.0892,
+        "sample_count": 1229,
+        "tradable": true,
+        "calibration_curve": [
+          {
+            "bucket": "0.3-0.4",
+            "n": 1,
+            "predicted_mean": 0.3167,
+            "actual_rate": 1.0,
+            "abs_error": 0.6833
+          },
+          {
+            "bucket": "0.4-0.5",
+            "n": 162,
+            "predicted_mean": 0.4726,
+            "actual_rate": 0.4753,
+            "abs_error": 0.0027
+          },
+          {
+            "bucket": "0.5-0.6",
+            "n": 647,
+            "predicted_mean": 0.5436,
+            "actual_rate": 0.5286,
+            "abs_error": 0.015
+          },
+          {
+            "bucket": "0.6-0.7",
+            "n": 166,
+            "predicted_mean": 0.6376,
+            "actual_rate": 0.4458,
+            "abs_error": 0.1918
+          },
+          {
+            "bucket": "0.7-0.8",
+            "n": 44,
+            "predicted_mean": 0.7374,
+            "actual_rate": 0.5455,
+            "abs_error": 0.1919
+          },
+          {
+            "bucket": "0.8-0.9",
+            "n": 5,
+            "predicted_mean": 0.8466,
+            "actual_rate": 0.4,
+            "abs_error": 0.4466
+          }
+        ]
+      },
+      "candidate_models": [
+        {
+          "regime": "small_edge",
+          "model_family": "regularized_logistic",
+          "calibration": "raw",
+          "n_games": 1025,
+          "n_bets": 928,
+          "roi": 0.0022,
+          "brier": 0.2569,
+          "logloss": 0.7085,
+          "clv": 0.0793,
+          "fold_roi_std": 0.0892,
+          "sample_count": 1229,
+          "tradable": true,
+          "calibration_curve": [
+            {
+              "bucket": "0.3-0.4",
+              "n": 1,
+              "predicted_mean": 0.3167,
+              "actual_rate": 1.0,
+              "abs_error": 0.6833
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 162,
+              "predicted_mean": 0.4726,
+              "actual_rate": 0.4753,
+              "abs_error": 0.0027
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 647,
+              "predicted_mean": 0.5436,
+              "actual_rate": 0.5286,
+              "abs_error": 0.015
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 166,
+              "predicted_mean": 0.6376,
+              "actual_rate": 0.4458,
+              "abs_error": 0.1918
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 44,
+              "predicted_mean": 0.7374,
+              "actual_rate": 0.5455,
+              "abs_error": 0.1919
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 5,
+              "predicted_mean": 0.8466,
+              "actual_rate": 0.4,
+              "abs_error": 0.4466
+            }
+          ]
+        },
+        {
+          "regime": "small_edge",
+          "model_family": "gradient_boosting",
+          "calibration": "platt",
+          "n_games": 1025,
+          "n_bets": 953,
+          "roi": -0.0514,
+          "brier": 0.2611,
+          "logloss": 0.7159,
+          "clv": 0.0923,
+          "fold_roi_std": 0.0371,
+          "sample_count": 1229,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.1-0.2",
+              "n": 1,
+              "predicted_mean": 0.1887,
+              "actual_rate": 0.0,
+              "abs_error": 0.1887
+            },
+            {
+              "bucket": "0.2-0.3",
+              "n": 5,
+              "predicted_mean": 0.2558,
+              "actual_rate": 0.2,
+              "abs_error": 0.0558
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 70,
+              "predicted_mean": 0.3692,
+              "actual_rate": 0.5143,
+              "abs_error": 0.1451
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 391,
+              "predicted_mean": 0.4615,
+              "actual_rate": 0.5422,
+              "abs_error": 0.0807
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 236,
+              "predicted_mean": 0.5472,
+              "actual_rate": 0.4534,
+              "abs_error": 0.0938
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 319,
+              "predicted_mean": 0.6363,
+              "actual_rate": 0.5078,
+              "abs_error": 0.1284
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 2,
+              "predicted_mean": 0.7482,
+              "actual_rate": 0.5,
+              "abs_error": 0.2482
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 1,
+              "predicted_mean": 0.8263,
+              "actual_rate": 1.0,
+              "abs_error": 0.1737
+            }
+          ]
+        },
+        {
+          "regime": "small_edge",
+          "model_family": "tree_boost_style",
+          "calibration": "platt",
+          "n_games": 1025,
+          "n_bets": 942,
+          "roi": -0.0573,
+          "brier": 0.2629,
+          "logloss": 0.7203,
+          "clv": 0.0849,
+          "fold_roi_std": 0.0591,
+          "sample_count": 1229,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.2-0.3",
+              "n": 22,
+              "predicted_mean": 0.2703,
+              "actual_rate": 0.4091,
+              "abs_error": 0.1388
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 67,
+              "predicted_mean": 0.3551,
+              "actual_rate": 0.4776,
+              "abs_error": 0.1225
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 317,
+              "predicted_mean": 0.4729,
+              "actual_rate": 0.5804,
+              "abs_error": 0.1076
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 461,
+              "predicted_mean": 0.5515,
+              "actual_rate": 0.4946,
+              "abs_error": 0.0569
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 129,
+              "predicted_mean": 0.64,
+              "actual_rate": 0.4341,
+              "abs_error": 0.2059
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 29,
+              "predicted_mean": 0.7341,
+              "actual_rate": 0.3793,
+              "abs_error": 0.3547
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "regime": "weak_starter_mismatch",
+      "selected_model": {
+        "regime": "weak_starter_mismatch",
+        "model_family": "gradient_boosting",
+        "calibration": "platt",
+        "n_games": 984,
+        "n_bets": 920,
+        "roi": -0.013,
+        "brier": 0.2536,
+        "logloss": 0.7011,
+        "clv": 0.0994,
+        "fold_roi_std": 0.0684,
+        "sample_count": 1180,
+        "tradable": false,
+        "calibration_curve": [
+          {
+            "bucket": "0.1-0.2",
+            "n": 1,
+            "predicted_mean": 0.1737,
+            "actual_rate": 1.0,
+            "abs_error": 0.8263
+          },
+          {
+            "bucket": "0.2-0.3",
+            "n": 18,
+            "predicted_mean": 0.2585,
+            "actual_rate": 0.3333,
+            "abs_error": 0.0748
+          },
+          {
+            "bucket": "0.3-0.4",
+            "n": 43,
+            "predicted_mean": 0.3606,
+            "actual_rate": 0.6279,
+            "abs_error": 0.2673
+          },
+          {
+            "bucket": "0.4-0.5",
+            "n": 192,
+            "predicted_mean": 0.4603,
+            "actual_rate": 0.4844,
+            "abs_error": 0.024
+          },
+          {
+            "bucket": "0.5-0.6",
+            "n": 445,
+            "predicted_mean": 0.5511,
+            "actual_rate": 0.5438,
+            "abs_error": 0.0073
+          },
+          {
+            "bucket": "0.6-0.7",
+            "n": 255,
+            "predicted_mean": 0.6312,
+            "actual_rate": 0.5333,
+            "abs_error": 0.0978
+          },
+          {
+            "bucket": "0.7-0.8",
+            "n": 30,
+            "predicted_mean": 0.7346,
+            "actual_rate": 0.7,
+            "abs_error": 0.0346
+          }
+        ]
+      },
+      "candidate_models": [
+        {
+          "regime": "weak_starter_mismatch",
+          "model_family": "regularized_logistic",
+          "calibration": "platt",
+          "n_games": 984,
+          "n_bets": 888,
+          "roi": -0.0495,
+          "brier": 0.2504,
+          "logloss": 0.6944,
+          "clv": 0.0803,
+          "fold_roi_std": 0.1478,
+          "sample_count": 1180,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.2-0.3",
+              "n": 1,
+              "predicted_mean": 0.2907,
+              "actual_rate": 1.0,
+              "abs_error": 0.7093
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 25,
+              "predicted_mean": 0.3707,
+              "actual_rate": 0.48,
+              "abs_error": 0.1093
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 268,
+              "predicted_mean": 0.4637,
+              "actual_rate": 0.4776,
+              "abs_error": 0.0139
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 372,
+              "predicted_mean": 0.5429,
+              "actual_rate": 0.5538,
+              "abs_error": 0.0109
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 304,
+              "predicted_mean": 0.6251,
+              "actual_rate": 0.5658,
+              "abs_error": 0.0594
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 13,
+              "predicted_mean": 0.7236,
+              "actual_rate": 0.5385,
+              "abs_error": 0.1852
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 1,
+              "predicted_mean": 0.8333,
+              "actual_rate": 0.0,
+              "abs_error": 0.8333
+            }
+          ]
+        },
+        {
+          "regime": "weak_starter_mismatch",
+          "model_family": "tree_boost_style",
+          "calibration": "platt",
+          "n_games": 984,
+          "n_bets": 915,
+          "roi": -0.0557,
+          "brier": 0.2512,
+          "logloss": 0.6959,
+          "clv": 0.0937,
+          "fold_roi_std": 0.1342,
+          "sample_count": 1180,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.3-0.4",
+              "n": 18,
+              "predicted_mean": 0.3771,
+              "actual_rate": 0.6111,
+              "abs_error": 0.234
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 146,
+              "predicted_mean": 0.4621,
+              "actual_rate": 0.4932,
+              "abs_error": 0.031
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 687,
+              "predicted_mean": 0.548,
+              "actual_rate": 0.5328,
+              "abs_error": 0.0152
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 116,
+              "predicted_mean": 0.6428,
+              "actual_rate": 0.5603,
+              "abs_error": 0.0824
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 17,
+              "predicted_mean": 0.7342,
+              "actual_rate": 0.7059,
+              "abs_error": 0.0283
+            }
+          ]
+        },
+        {
+          "regime": "weak_starter_mismatch",
+          "model_family": "gradient_boosting",
+          "calibration": "platt",
+          "n_games": 984,
+          "n_bets": 920,
+          "roi": -0.013,
+          "brier": 0.2536,
+          "logloss": 0.7011,
+          "clv": 0.0994,
+          "fold_roi_std": 0.0684,
+          "sample_count": 1180,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.1-0.2",
+              "n": 1,
+              "predicted_mean": 0.1737,
+              "actual_rate": 1.0,
+              "abs_error": 0.8263
+            },
+            {
+              "bucket": "0.2-0.3",
+              "n": 18,
+              "predicted_mean": 0.2585,
+              "actual_rate": 0.3333,
+              "abs_error": 0.0748
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 43,
+              "predicted_mean": 0.3606,
+              "actual_rate": 0.6279,
+              "abs_error": 0.2673
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 192,
+              "predicted_mean": 0.4603,
+              "actual_rate": 0.4844,
+              "abs_error": 0.024
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 445,
+              "predicted_mean": 0.5511,
+              "actual_rate": 0.5438,
+              "abs_error": 0.0073
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 255,
+              "predicted_mean": 0.6312,
+              "actual_rate": 0.5333,
+              "abs_error": 0.0978
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 30,
+              "predicted_mean": 0.7346,
+              "actual_rate": 0.7,
+              "abs_error": 0.0346
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "regime": "heavy_bullpen_stress",
+      "selected_model": {
+        "regime": "heavy_bullpen_stress",
+        "model_family": "regularized_logistic",
+        "calibration": "raw",
+        "n_games": 1010,
+        "n_bets": 839,
+        "roi": -0.0131,
+        "brier": 0.2487,
+        "logloss": 0.691,
+        "clv": 0.0436,
+        "fold_roi_std": 0.0712,
+        "sample_count": 1212,
+        "tradable": false,
+        "calibration_curve": [
+          {
+            "bucket": "0.2-0.3",
+            "n": 14,
+            "predicted_mean": 0.2686,
+            "actual_rate": 0.3571,
+            "abs_error": 0.0885
+          },
+          {
+            "bucket": "0.3-0.4",
+            "n": 47,
+            "predicted_mean": 0.362,
+            "actual_rate": 0.383,
+            "abs_error": 0.021
+          },
+          {
+            "bucket": "0.4-0.5",
+            "n": 157,
+            "predicted_mean": 0.4599,
+            "actual_rate": 0.5159,
+            "abs_error": 0.0561
+          },
+          {
+            "bucket": "0.5-0.6",
+            "n": 414,
+            "predicted_mean": 0.5588,
+            "actual_rate": 0.5386,
+            "abs_error": 0.0201
+          },
+          {
+            "bucket": "0.6-0.7",
+            "n": 320,
+            "predicted_mean": 0.6385,
+            "actual_rate": 0.6,
+            "abs_error": 0.0385
+          },
+          {
+            "bucket": "0.7-0.8",
+            "n": 53,
+            "predicted_mean": 0.7339,
+            "actual_rate": 0.5094,
+            "abs_error": 0.2244
+          },
+          {
+            "bucket": "0.8-0.9",
+            "n": 5,
+            "predicted_mean": 0.8297,
+            "actual_rate": 1.0,
+            "abs_error": 0.1703
+          }
+        ]
+      },
+      "candidate_models": [
+        {
+          "regime": "heavy_bullpen_stress",
+          "model_family": "regularized_logistic",
+          "calibration": "raw",
+          "n_games": 1010,
+          "n_bets": 839,
+          "roi": -0.0131,
+          "brier": 0.2487,
+          "logloss": 0.691,
+          "clv": 0.0436,
+          "fold_roi_std": 0.0712,
+          "sample_count": 1212,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.2-0.3",
+              "n": 14,
+              "predicted_mean": 0.2686,
+              "actual_rate": 0.3571,
+              "abs_error": 0.0885
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 47,
+              "predicted_mean": 0.362,
+              "actual_rate": 0.383,
+              "abs_error": 0.021
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 157,
+              "predicted_mean": 0.4599,
+              "actual_rate": 0.5159,
+              "abs_error": 0.0561
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 414,
+              "predicted_mean": 0.5588,
+              "actual_rate": 0.5386,
+              "abs_error": 0.0201
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 320,
+              "predicted_mean": 0.6385,
+              "actual_rate": 0.6,
+              "abs_error": 0.0385
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 53,
+              "predicted_mean": 0.7339,
+              "actual_rate": 0.5094,
+              "abs_error": 0.2244
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 5,
+              "predicted_mean": 0.8297,
+              "actual_rate": 1.0,
+              "abs_error": 0.1703
+            }
+          ]
+        },
+        {
+          "regime": "heavy_bullpen_stress",
+          "model_family": "gradient_boosting",
+          "calibration": "platt",
+          "n_games": 1010,
+          "n_bets": 941,
+          "roi": -0.0882,
+          "brier": 0.2483,
+          "logloss": 0.6899,
+          "clv": 0.0826,
+          "fold_roi_std": 0.0557,
+          "sample_count": 1212,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.3-0.4",
+              "n": 6,
+              "predicted_mean": 0.3778,
+              "actual_rate": 0.1667,
+              "abs_error": 0.2112
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 323,
+              "predicted_mean": 0.4702,
+              "actual_rate": 0.5077,
+              "abs_error": 0.0375
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 478,
+              "predicted_mean": 0.5431,
+              "actual_rate": 0.5607,
+              "abs_error": 0.0175
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 184,
+              "predicted_mean": 0.6318,
+              "actual_rate": 0.587,
+              "abs_error": 0.0448
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 18,
+              "predicted_mean": 0.7218,
+              "actual_rate": 0.5,
+              "abs_error": 0.2218
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 1,
+              "predicted_mean": 0.8163,
+              "actual_rate": 1.0,
+              "abs_error": 0.1837
+            }
+          ]
+        },
+        {
+          "regime": "heavy_bullpen_stress",
+          "model_family": "tree_boost_style",
+          "calibration": "platt",
+          "n_games": 1010,
+          "n_bets": 917,
+          "roi": -0.1014,
+          "brier": 0.2512,
+          "logloss": 0.6957,
+          "clv": 0.098,
+          "fold_roi_std": 0.0516,
+          "sample_count": 1212,
+          "tradable": false,
+          "calibration_curve": [
+            {
+              "bucket": "0.4-0.5",
+              "n": 274,
+              "predicted_mean": 0.477,
+              "actual_rate": 0.5292,
+              "abs_error": 0.0522
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 581,
+              "predicted_mean": 0.5457,
+              "actual_rate": 0.5508,
+              "abs_error": 0.0051
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 154,
+              "predicted_mean": 0.6275,
+              "actual_rate": 0.5519,
+              "abs_error": 0.0756
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 1,
+              "predicted_mean": 0.7068,
+              "actual_rate": 1.0,
+              "abs_error": 0.2932
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "paper_mode_reporting": {
+    "overall": {
+      "paper_roi": 0.0324,
+      "paper_clv": 0.0763,
+      "fold_stability": 0.1031,
+      "pick_count": 1666,
+      "skip_count": 300,
+      "sample_count": 1966
+    },
+    "by_regime": [
+      {
+        "regime": "favorites",
+        "selected_model_family": "regularized_logistic",
+        "selected_calibration": "raw",
+        "sample_count": 1260,
+        "n_games": 1050,
+        "pick_count": 855,
+        "skip_count": 93,
+        "paper_roi": 0.0596,
+        "clv": 0.0681,
+        "fold_stability": 0.1081,
+        "tradable": true
+      },
+      {
+        "regime": "small_edge",
+        "selected_model_family": "regularized_logistic",
+        "selected_calibration": "raw",
+        "sample_count": 1229,
+        "n_games": 1025,
+        "pick_count": 811,
+        "skip_count": 73,
+        "paper_roi": 0.0037,
+        "clv": 0.0849,
+        "fold_stability": 0.0892,
+        "tradable": true
+      },
+      {
+        "regime": "weak_starter_mismatch",
+        "selected_model_family": "gradient_boosting",
+        "selected_calibration": "platt",
+        "sample_count": 1180,
+        "n_games": 984,
+        "pick_count": 0,
+        "skip_count": 984,
+        "paper_roi": 0.0,
+        "clv": 0.0,
+        "fold_stability": 0.0684,
+        "tradable": false
+      },
+      {
+        "regime": "heavy_bullpen_stress",
+        "selected_model_family": "regularized_logistic",
+        "selected_calibration": "raw",
+        "sample_count": 1212,
+        "n_games": 1010,
+        "pick_count": 0,
+        "skip_count": 1010,
+        "paper_roi": 0.0,
+        "clv": 0.0,
+        "fold_stability": 0.0712,
+        "tradable": false
+      }
+    ],
+    "decision_samples": [
+      {
+        "game_id": "MLB-2025_04_25-10_10_PM-PITTSBURGH_PIRATES-AT-LOS_ANGELES_DODGERS",
+        "game_date": "2025-04-25",
+        "home_team": "Los Angeles Dodgers",
+        "away_team": "Pittsburgh Pirates",
+        "target": 0,
+        "market_home_prob": 0.6875,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.8823,
+        "edge_vs_market": 0.1948,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_25-10_15_PM-TEXAS_RANGERS-AT-SAN_FRANCISCO_GIANTS",
+        "game_date": "2025-04-25",
+        "home_team": "San Francisco Giants",
+        "away_team": "Texas Rangers",
+        "target": 0,
+        "market_home_prob": 0.5652173913043478,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6423,
+        "edge_vs_market": 0.0771,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-1_10_PM-BALTIMORE_ORIOLES-AT-DETROIT_TIGERS",
+        "game_date": "2025-04-26",
+        "home_team": "Detroit Tigers",
+        "away_team": "Baltimore Orioles",
+        "target": 1,
+        "market_home_prob": 0.5833333333333334,
+        "regime": "favorites",
+        "paper_side": "away",
+        "paper_prob": 0.5025,
+        "edge_vs_market": -0.0809,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-2_10_PM-LOS_ANGELES_ANGELS-AT-MINNESOTA_TWINS",
+        "game_date": "2025-04-26",
+        "home_team": "Minnesota Twins",
+        "away_team": "Los Angeles Angels",
+        "target": 1,
+        "market_home_prob": 0.574468085106383,
+        "regime": "small_edge",
+        "paper_side": "away",
+        "paper_prob": 0.4811,
+        "edge_vs_market": -0.0934,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-2_15_PM-MILWAUKEE_BREWERS-AT-ST_LOUIS_CARDINALS",
+        "game_date": "2025-04-26",
+        "home_team": "St. Louis Cardinals",
+        "away_team": "Milwaukee Brewers",
+        "target": 1,
+        "market_home_prob": 0.6,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6805,
+        "edge_vs_market": 0.0805,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-4_05_PM-CHICAGO_WHITE_SOX-AT-ATHLETICS",
+        "game_date": "2025-04-26",
+        "home_team": "Athletics",
+        "away_team": "Chicago White Sox",
+        "target": 0,
+        "market_home_prob": 0.6923076923076923,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.7243,
+        "edge_vs_market": 0.032,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-4_05_PM-TEXAS_RANGERS-AT-SAN_FRANCISCO_GIANTS",
+        "game_date": "2025-04-26",
+        "home_team": "San Francisco Giants",
+        "away_team": "Texas Rangers",
+        "target": 1,
+        "market_home_prob": 0.5833333333333334,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6464,
+        "edge_vs_market": 0.0631,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-8_10_PM-ATLANTA_BRAVES-AT-ARIZONA_DIAMONDBACKS",
+        "game_date": "2025-04-26",
+        "home_team": "Arizona Diamondbacks",
+        "away_team": "Atlanta Braves",
+        "target": 0,
+        "market_home_prob": 0.5555555555555556,
+        "regime": "small_edge",
+        "paper_side": "home",
+        "paper_prob": 0.603,
+        "edge_vs_market": 0.0475,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-8_40_PM-TAMPA_BAY_RAYS-AT-SAN_DIEGO_PADRES",
+        "game_date": "2025-04-26",
+        "home_team": "San Diego Padres",
+        "away_team": "Tampa Bay Rays",
+        "target": 0,
+        "market_home_prob": 0.6,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6625,
+        "edge_vs_market": 0.0625,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-9_10_PM-PITTSBURGH_PIRATES-AT-LOS_ANGELES_DODGERS",
+        "game_date": "2025-04-26",
+        "home_team": "Los Angeles Dodgers",
+        "away_team": "Pittsburgh Pirates",
+        "target": 1,
+        "market_home_prob": 0.7368421052631579,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.7902,
+        "edge_vs_market": 0.0533,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_26-9_40_PM-MIAMI_MARLINS-AT-SEATTLE_MARINERS",
+        "game_date": "2025-04-26",
+        "home_team": "Seattle Mariners",
+        "away_team": "Miami Marlins",
+        "target": 1,
+        "market_home_prob": 0.7101449275362319,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.7988,
+        "edge_vs_market": 0.0886,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-1_35_PM-TORONTO_BLUE_JAYS-AT-NEW_YORK_YANKEES",
+        "game_date": "2025-04-27",
+        "home_team": "New York Yankees",
+        "away_team": "Toronto Blue Jays",
+        "target": 1,
+        "market_home_prob": 0.6721311475409836,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.707,
+        "edge_vs_market": 0.0348,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-1_40_PM-BALTIMORE_ORIOLES-AT-DETROIT_TIGERS",
+        "game_date": "2025-04-27",
+        "home_team": "Detroit Tigers",
+        "away_team": "Baltimore Orioles",
+        "target": 1,
+        "market_home_prob": 0.7222222222222222,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.7734,
+        "edge_vs_market": 0.0512,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-1_40_PM-LOS_ANGELES_ANGELS-AT-MINNESOTA_TWINS",
+        "game_date": "2025-04-27",
+        "home_team": "Minnesota Twins",
+        "away_team": "Los Angeles Angels",
+        "target": 1,
+        "market_home_prob": 0.6428571428571429,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6968,
+        "edge_vs_market": 0.0539,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-1_40_PM-TORONTO_BLUE_JAYS-AT-NEW_YORK_YANKEES",
+        "game_date": "2025-04-27",
+        "home_team": "New York Yankees",
+        "away_team": "Toronto Blue Jays",
+        "target": 1,
+        "market_home_prob": 0.6226415094339622,
+        "regime": "favorites",
+        "paper_side": "skip",
+        "paper_prob": 0.6274,
+        "edge_vs_market": 0.0048,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "SKIP",
+        "pnl": 0.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-4_05_PM-CHICAGO_WHITE_SOX-AT-ATHLETICS",
+        "game_date": "2025-04-27",
+        "home_team": "Athletics",
+        "away_team": "Chicago White Sox",
+        "target": 1,
+        "market_home_prob": 0.6551724137931034,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6743,
+        "edge_vs_market": 0.0191,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-4_05_PM-TEXAS_RANGERS-AT-SAN_FRANCISCO_GIANTS",
+        "game_date": "2025-04-27",
+        "home_team": "San Francisco Giants",
+        "away_team": "Texas Rangers",
+        "target": 1,
+        "market_home_prob": 0.5833333333333334,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6339,
+        "edge_vs_market": 0.0506,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-4_10_PM-MIAMI_MARLINS-AT-SEATTLE_MARINERS",
+        "game_date": "2025-04-27",
+        "home_team": "Seattle Mariners",
+        "away_team": "Miami Marlins",
+        "target": 1,
+        "market_home_prob": 0.5833333333333334,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.6208,
+        "edge_vs_market": 0.0374,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-4_10_PM-PITTSBURGH_PIRATES-AT-LOS_ANGELES_DODGERS",
+        "game_date": "2025-04-27",
+        "home_team": "Los Angeles Dodgers",
+        "away_team": "Pittsburgh Pirates",
+        "target": 1,
+        "market_home_prob": 0.7777777777777778,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.847,
+        "edge_vs_market": 0.0692,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_27-7_10_PM-PHILADELPHIA_PHILLIES-AT-CHICAGO_CUBS",
+        "game_date": "2025-04-27",
+        "home_team": "Chicago Cubs",
+        "away_team": "Philadelphia Phillies",
+        "target": 0,
+        "market_home_prob": 0.5652173913043478,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.5865,
+        "edge_vs_market": 0.0212,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_28-6_10_PM-MINNESOTA_TWINS-AT-CLEVELAND_GUARDIANS",
+        "game_date": "2025-04-28",
+        "home_team": "Cleveland Guardians",
+        "away_team": "Minnesota Twins",
+        "target": 0,
+        "market_home_prob": 0.5555555555555556,
+        "regime": "small_edge",
+        "paper_side": "home",
+        "paper_prob": 0.7924,
+        "edge_vs_market": 0.2368,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": -1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_28-6_40_PM-ST_LOUIS_CARDINALS-AT-CINCINNATI_REDS",
+        "game_date": "2025-04-28",
+        "home_team": "Cincinnati Reds",
+        "away_team": "St. Louis Cardinals",
+        "target": 1,
+        "market_home_prob": 0.5555555555555556,
+        "regime": "small_edge",
+        "paper_side": "home",
+        "paper_prob": 0.7438,
+        "edge_vs_market": 0.1882,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_28-8_10_PM-DETROIT_TIGERS-AT-HOUSTON_ASTROS",
+        "game_date": "2025-04-28",
+        "home_team": "Houston Astros",
+        "away_team": "Detroit Tigers",
+        "target": 1,
+        "market_home_prob": 0.5555555555555556,
+        "regime": "small_edge",
+        "paper_side": "home",
+        "paper_prob": 0.7613,
+        "edge_vs_market": 0.2058,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_28-10_10_PM-MIAMI_MARLINS-AT-LOS_ANGELES_DODGERS",
+        "game_date": "2025-04-28",
+        "home_team": "Los Angeles Dodgers",
+        "away_team": "Miami Marlins",
+        "target": 1,
+        "market_home_prob": 0.7435897435897436,
+        "regime": "favorites",
+        "paper_side": "home",
+        "paper_prob": 0.7615,
+        "edge_vs_market": 0.0179,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      },
+      {
+        "game_id": "MLB-2025_04_29-6_10_PM-MINNESOTA_TWINS-AT-CLEVELAND_GUARDIANS",
+        "game_date": "2025-04-29",
+        "home_team": "Cleveland Guardians",
+        "away_team": "Minnesota Twins",
+        "target": 1,
+        "market_home_prob": 0.574468085106383,
+        "regime": "small_edge",
+        "paper_side": "home",
+        "paper_prob": 0.7079,
+        "edge_vs_market": 0.1334,
+        "execution_mode": "PAPER_ONLY",
+        "pick_or_skip": "PICK",
+        "pnl": 1.0,
+        "fold_id": 0
+      }
+    ]
+  },
+  "report_sections": {
+    "paper_modeling_metrics": {
+      "overall": {
+        "paper_roi": 0.0324,
+        "pick_count": 1666,
+        "skip_count": 300,
+        "sample_count": 1966
+      },
+      "by_regime": [
+        {
+          "regime": "favorites",
+          "selected_model_family": "regularized_logistic",
+          "selected_calibration": "raw",
+          "sample_count": 1260,
+          "n_games": 1050,
+          "pick_count": 855,
+          "skip_count": 93,
+          "paper_roi": 0.0596,
+          "clv": 0.0681,
+          "fold_stability": 0.1081,
+          "tradable": true
+        },
+        {
+          "regime": "small_edge",
+          "selected_model_family": "regularized_logistic",
+          "selected_calibration": "raw",
+          "sample_count": 1229,
+          "n_games": 1025,
+          "pick_count": 811,
+          "skip_count": 73,
+          "paper_roi": 0.0037,
+          "clv": 0.0849,
+          "fold_stability": 0.0892,
+          "tradable": true
+        },
+        {
+          "regime": "weak_starter_mismatch",
+          "selected_model_family": "gradient_boosting",
+          "selected_calibration": "platt",
+          "sample_count": 1180,
+          "n_games": 984,
+          "pick_count": 0,
+          "skip_count": 984,
+          "paper_roi": 0.0,
+          "clv": 0.0,
+          "fold_stability": 0.0684,
+          "tradable": false
+        },
+        {
+          "regime": "heavy_bullpen_stress",
+          "selected_model_family": "regularized_logistic",
+          "selected_calibration": "raw",
+          "sample_count": 1212,
+          "n_games": 1010,
+          "pick_count": 0,
+          "skip_count": 1010,
+          "paper_roi": 0.0,
+          "clv": 0.0,
+          "fold_stability": 0.0712,
+          "tradable": false
+        }
+      ]
+    },
+    "sandbox_clv_diagnostics": {
+      "paper_clv_proxy": 0.0763,
+      "scope": "strict_only_regime_paper",
+      "note": "CLV proxy uses edge_vs_market within paper sandbox; not full-universe 2025 CLV timeline."
+    },
+    "decision_quality_scale_status": {
+      "status": "UNAVAILABLE",
+      "reason": "2025_full_universe_clv_timeline_not_available"
+    }
+  },
+  "tradable_regimes": [
+    "favorites",
+    "small_edge"
+  ],
+  "paper_to_live_ready_regimes": [],
+  "notes": [
+    "MLB remains execution-blocked; all outputs are paper-only.",
+    "MLB live recommendation is disabled until 2025 historical odds timeline reaches governance coverage threshold.",
+    "small_edge is a front-gate proxy based on market-centering, not the old post-model edge bucket."
+  ]
+}

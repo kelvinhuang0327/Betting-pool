@@ -1,0 +1,155 @@
+{
+  "signal_state_type": "deep_research_calibration",
+  "generated_at": "2026-04-25T13:06:47Z",
+  "violations": [
+    {
+      "code": "brier_exceeds_settings_gate_small_edge",
+      "message": "[small_edge] Brier=0.2569 > settings.py DeploymentGateConfig.max_brier=0.255 但報告標記為 tradable=True; optimizer.py 使用 0.285 gate，gate 不一致",
+      "count": 1
+    },
+    {
+      "code": "overconfidence_high_bucket_small_edge",
+      "message": "[small_edge] 校準桶 abs_error=0.1918 (n=166) 嚴重過估勝率",
+      "count": 166
+    },
+    {
+      "code": "overconfidence_high_bucket_weak_starter_mismatch",
+      "message": "[weak_starter_mismatch] 校準桶 abs_error=0.2673 (n=43) 嚴重過估勝率",
+      "count": 43
+    },
+    {
+      "code": "overconfidence_high_bucket_heavy_bullpen_stress",
+      "message": "[heavy_bullpen_stress] 校準桶 abs_error=0.2244 (n=53) 嚴重過估勝率",
+      "count": 53
+    }
+  ],
+  "metrics": {
+    "baseline": {
+      "scope": "weighted_average_all_regimes",
+      "total_games": 4069,
+      "brier": 0.2503,
+      "logloss": 0.6945,
+      "ece": 0.0497
+    },
+    "candidate": {
+      "favorites": {
+        "brier": 0.2424,
+        "logloss": 0.6779,
+        "ece": 0.0544,
+        "roi": 0.0535,
+        "tradable": true,
+        "n_games": 1050,
+        "model_family": "regularized_logistic",
+        "calibration": "raw"
+      },
+      "small_edge": {
+        "brier": 0.2569,
+        "logloss": 0.7085,
+        "ece": 0.052,
+        "roi": 0.0022,
+        "tradable": true,
+        "n_games": 1025,
+        "model_family": "regularized_logistic",
+        "calibration": "raw"
+      },
+      "weak_starter_mismatch": {
+        "brier": 0.2536,
+        "logloss": 0.7011,
+        "ece": 0.0483,
+        "roi": -0.013,
+        "tradable": false,
+        "n_games": 984,
+        "model_family": "gradient_boosting",
+        "calibration": "platt"
+      },
+      "heavy_bullpen_stress": {
+        "brier": 0.2487,
+        "logloss": 0.691,
+        "ece": 0.044,
+        "roi": -0.0131,
+        "tradable": false,
+        "n_games": 1010,
+        "model_family": "regularized_logistic",
+        "calibration": "raw"
+      }
+    },
+    "delta": {
+      "favorites": {
+        "brier_vs_favorites": 0.0,
+        "logloss_vs_favorites": 0.0,
+        "ece_vs_favorites": 0.0,
+        "roi_vs_favorites": 0.0
+      },
+      "small_edge": {
+        "brier_vs_favorites": 0.0145,
+        "logloss_vs_favorites": 0.0306,
+        "ece_vs_favorites": -0.0024,
+        "roi_vs_favorites": -0.0513
+      },
+      "weak_starter_mismatch": {
+        "brier_vs_favorites": 0.0112,
+        "logloss_vs_favorites": 0.0232,
+        "ece_vs_favorites": -0.0061,
+        "roi_vs_favorites": -0.0665
+      },
+      "heavy_bullpen_stress": {
+        "brier_vs_favorites": 0.0063,
+        "logloss_vs_favorites": 0.0131,
+        "ece_vs_favorites": -0.0104,
+        "roi_vs_favorites": -0.0666
+      }
+    }
+  },
+  "regime_counts": {
+    "favorites": {
+      "n_games": 1050,
+      "rank_by_brier": 4,
+      "is_worst_3": false
+    },
+    "small_edge": {
+      "n_games": 1025,
+      "rank_by_brier": 1,
+      "is_worst_3": true
+    },
+    "weak_starter_mismatch": {
+      "n_games": 984,
+      "rank_by_brier": 2,
+      "is_worst_3": true
+    },
+    "heavy_bullpen_stress": {
+      "n_games": 1010,
+      "rank_by_brier": 3,
+      "is_worst_3": true
+    }
+  },
+  "worst_3_regimes": {
+    "by_brier": [
+      "small_edge",
+      "weak_starter_mismatch",
+      "heavy_bullpen_stress"
+    ],
+    "notes": {
+      "small_edge": "Brier=0.2569, LogLoss=0.7085, ECE=0.052, ROI=0.0022",
+      "weak_starter_mismatch": "Brier=0.2536, LogLoss=0.7011, ECE=0.0483, ROI=-0.013",
+      "heavy_bullpen_stress": "Brier=0.2487, LogLoss=0.691, ECE=0.044, ROI=-0.0131"
+    }
+  },
+  "leakage_detected": false,
+  "candidate_fix": [
+    {
+      "target_file": "wbc_backend/calibration/probability_calibrator.py",
+      "change_type": "apply_isotonic_or_platt_to_small_edge_regime",
+      "expected_metric": "small_edge Brier: 0.2569 → ≤ 0.255；高信心桶 abs_error ≤ 0.10"
+    },
+    {
+      "target_file": "wbc_backend/betting/optimizer.py",
+      "change_type": "align_brier_gate_to_0.255_matching_settings_py",
+      "expected_metric": "Brier gate 統一為 0.255（目前 optimizer.py=0.285，settings.py=0.255 不一致）"
+    },
+    {
+      "target_file": "wbc_backend/features/feature_selector.py",
+      "change_type": "add_confidence_dampening_for_weak_starter_low_prob_bucket",
+      "expected_metric": "weak_starter 0.3-0.4 桶 abs_error: 0.2673 → ≤ 0.12"
+    }
+  ]
+}

@@ -9,9 +9,9 @@ from __future__ import annotations
 
 import logging
 import os
+import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -26,14 +26,15 @@ class ValidationReport:
     source: str
     total_records: int = 0
     completeness_pct: float = 0.0
-    missing_fields: List[str] = field(default_factory=list)
+    missing_fields: list[str] = field(default_factory=list)
     date_gaps: int = 0
     pitcher_stats_coverage: float = 0.0
     batter_stats_coverage: float = 0.0
     statcast_coverage: float = 0.0
     has_postseason: bool = False
     is_valid: bool = False
-    issues: List[str] = field(default_factory=list)
+    issues: list[str] = field(default_factory=list)
+    provenance_verified: bool = False
 
 
 # ── Required columns per source ─────────────────────────────────────────────
@@ -41,6 +42,11 @@ class ValidationReport:
 MLB_REQUIRED_COLS = [
     "date", "home_team", "away_team", "home_score", "away_score",
     "home_starter", "away_starter",
+]
+MLB_PROVENANCE_COLS = [
+    "source_file",
+    "source_type",
+    "is_verified_real",
 ]
 MLB_PITCHER_COLS = [
     "era", "fip", "whip", "k_per_9", "bb_per_9", "ip", "stuff_plus",
@@ -67,9 +73,9 @@ CANONICAL_COLUMN_ALIASES = {
 }
 
 
-def validate_dataset(
+def validate_dataset(  # noqa: C901
     source: str,
-    config: Optional[AppConfig] = None,
+    config: AppConfig | None = None,
 ) -> ValidationReport:
     """
     Validate completeness of a data source.
@@ -110,6 +116,30 @@ def validate_dataset(
     if missing:
         report.missing_fields = list(missing)
         report.issues.append(f"Missing required columns: {missing}")
+
+    strict_provenance = _requires_strict_provenance(source, csv_path)
+    if strict_provenance:
+        provenance_missing = set(MLB_PROVENANCE_COLS) - all_cols
+        if provenance_missing:
+            report.issues.append(f"Missing provenance columns: {provenance_missing}")
+
+        meta = _load_metadata_sidecar(csv_path)
+        if not meta:
+            report.issues.append("Dataset metadata sidecar missing.")
+        else:
+            if not bool(meta.get("source_chain_verified", False)):
+                report.issues.append("Dataset provenance chain is not verified.")
+            else:
+                report.provenance_verified = True
+
+        if "is_verified_real" in df.columns:
+            verified_real = df["is_verified_real"].fillna(False).astype(bool)
+            if not verified_real.all():
+                report.issues.append("Rows flagged as not verified real exist in dataset.")
+    else:
+        # Allow temporary/ad-hoc MLB CSV validation (e.g., tests, exploratory checks)
+        # without weakening strict provenance enforcement for production datasets.
+        report.provenance_verified = True
 
     # ── Row completeness ─────────────────────────────────
     non_null_ratio = df[list(required & all_cols)].notna().mean().mean() if (required & all_cols) else 0.0
@@ -166,6 +196,7 @@ def validate_dataset(
         and len(report.missing_fields) == 0
         and report.total_records > 0
         and not any("Synthetic rows detected" in issue for issue in report.issues)
+        and report.provenance_verified
     )
 
     level = logging.INFO if report.is_valid else logging.WARNING
@@ -177,7 +208,7 @@ def validate_dataset(
 
 def auto_fetch_missing_data(
     source: str = "MLB_2025",
-    config: Optional[AppConfig] = None,
+    config: AppConfig | None = None,
     max_retries: int = 3,
 ) -> ValidationReport:
     """
@@ -207,7 +238,7 @@ def auto_fetch_missing_data(
 
 # ── Internal helpers ─────────────────────────────────────────────────────────
 
-def _resolve_path(source: str, config: AppConfig) -> Optional[str]:
+def _resolve_path(source: str, config: AppConfig) -> str | None:
     mapping = {
         "MLB_2025": config.sources.mlb_2025_csv,
         "MLB_2024": "data/mlb_2024/mlb-2024-asplayed.csv",
@@ -217,13 +248,23 @@ def _resolve_path(source: str, config: AppConfig) -> Optional[str]:
     return mapping.get(source.upper())
 
 
-def _read_csv_with_encoding(path: str) -> Tuple[Optional[pd.DataFrame], Optional[str]]:
+def _read_csv_with_encoding(path: str) -> tuple[pd.DataFrame | None, str | None]:
     for enc in ("utf-8", "utf-8-sig", "latin1", "cp1252"):
         try:
             return pd.read_csv(path, encoding=enc), enc
         except Exception:
             continue
     return None, None
+
+
+def _requires_strict_provenance(source: str, csv_path: str) -> bool:
+    if source.upper() != "MLB_2025":
+        return True
+    try:
+        resolved = Path(csv_path).resolve().as_posix().lower()
+    except Exception:
+        return True
+    return "/data/mlb_2025/" in resolved
 
 
 def _normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
@@ -256,15 +297,25 @@ def _normalize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return normalized
 
 
-def _safe_load(path: str) -> Optional[pd.DataFrame]:
+def _safe_load(path: str) -> pd.DataFrame | None:
     df, _ = _read_csv_with_encoding(path)
     if df is None:
         return None
     return _normalize_dataframe(df)
 
 
-def load_dataset_frame(path: str) -> Optional[pd.DataFrame]:
+def load_dataset_frame(path: str) -> pd.DataFrame | None:
     return _safe_load(path)
+
+
+def _load_metadata_sidecar(path: str) -> dict | None:
+    meta_path = Path(path).with_suffix(Path(path).suffix + ".metadata.json")
+    if not meta_path.exists():
+        return None
+    try:
+        return json.loads(meta_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
 
 
 def _patch_missing_values(csv_path: str, report: ValidationReport) -> None:

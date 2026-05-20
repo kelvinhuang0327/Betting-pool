@@ -1,0 +1,998 @@
+{
+  "feature_autopsy_by_regime": {
+    "small_edge": {
+      "sample_count": 1062,
+      "baseline_metrics": {
+        "n_games": 885,
+        "n_bets": 826,
+        "roi": -0.0048,
+        "brier": 0.26,
+        "logloss": 0.7159,
+        "clv": 0.086,
+        "fold_roi_std": 0.0614,
+        "win_rate": 0.4976,
+        "avg_abs_edge": 0.086,
+        "calibration": "raw"
+      },
+      "strongest_features": {
+        "rest_day_diff": 0.1442,
+        "bullpen_quality_diff": 0.1367,
+        "team_home_away_form_diff": 0.0921,
+        "market_abs_dev_50": 0.0833,
+        "environment_run_proxy": 0.0803
+      },
+      "weakest_features": {
+        "market_open_close_move": 0.0,
+        "market_close_alignment_proxy": 0.0,
+        "market_disagreement_proxy": 0.0,
+        "lineup_size_diff": 0.0,
+        "injury_count_diff": 0.0
+      },
+      "unstable_features": {
+        "environment_run_proxy": 0.1208,
+        "market_abs_dev_50": 0.0964,
+        "rest_day_diff": 0.0944,
+        "team_pitching_diff": 0.0836,
+        "team_home_away_form_diff": 0.0736
+      },
+      "redundant_pairs": [],
+      "dead_features": [
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "lineup_size_diff",
+        "injury_count_diff"
+      ],
+      "missing_domain_features": [
+        "true intraday odds path is unavailable (odds_history length is 1 for all games)",
+        "lineup confirmation timing is backfilled by feed fetch time, not pregame release time",
+        "public-vs-sharp order-flow features are absent"
+      ],
+      "why_clv_not_roi": [
+        "baseline ROI -0.0048 stays negative while CLV 0.086 remains positive, implying price direction without enough mispricing separation.",
+        "the current market microstructure block is effectively dead: open/current/close path features are all zero-variance in the dataset.",
+        "bets cluster near market-like probabilities, so slight positive CLV is not converting into high enough win-rate dispersion."
+      ]
+    },
+    "weak_starter_mismatch": {
+      "sample_count": 1013,
+      "baseline_metrics": {
+        "n_games": 845,
+        "n_bets": 783,
+        "roi": 0.0319,
+        "brier": 0.2564,
+        "logloss": 0.7147,
+        "clv": 0.0883,
+        "fold_roi_std": 0.2522,
+        "win_rate": 0.516,
+        "avg_abs_edge": 0.0883,
+        "calibration": "raw"
+      },
+      "strongest_features": {
+        "market_home_prob": 0.2938,
+        "bullpen_quality_diff": 0.1852,
+        "starter_workload_pressure_diff": 0.1804,
+        "starter_start_count_diff": 0.1658,
+        "market_abs_dev_50": 0.1009
+      },
+      "weakest_features": {
+        "starter_recent_ra_diff": 0.0342,
+        "lineup_vs_starter_interaction_diff": 0.0342,
+        "starter_quality_diff": 0.0172,
+        "starter_form_blend_diff": 0.0145,
+        "injury_count_diff": 0.0
+      },
+      "unstable_features": {
+        "starter_start_count_diff": 0.1791,
+        "starter_workload_pressure_diff": 0.1397,
+        "market_home_prob": 0.0817,
+        "starter_rest_diff": 0.0778,
+        "bullpen_quality_diff": 0.0713
+      },
+      "redundant_pairs": [
+        {
+          "a": "starter_recent_ra_diff",
+          "b": "lineup_vs_starter_interaction_diff",
+          "corr": 1.0
+        },
+        {
+          "a": "starter_quality_diff",
+          "b": "starter_form_blend_diff",
+          "corr": 0.9883
+        },
+        {
+          "a": "starter_start_count_diff",
+          "b": "starter_workload_pressure_diff",
+          "corr": 0.9606
+        },
+        {
+          "a": "starter_matchup_depth_diff",
+          "b": "team_offense_diff",
+          "corr": 0.9078
+        }
+      ],
+      "dead_features": [
+        "injury_count_diff"
+      ],
+      "missing_domain_features": [
+        "starter handedness depth is unavailable; platoon_splits are structurally empty",
+        "contact-quality stats (xwOBA / hard-hit / barrel) are absent from the strict frame",
+        "bullpen role-chain quality is missing; only usage and coarse quality proxy exist"
+      ],
+      "why_clv_not_roi": [
+        "baseline ROI 0.0319 is only marginal despite CLV 0.0883 > 0, which points to late-game resolution risk outside the shallow starter proxy set.",
+        "the regime gate is broad, so many games are tagged 'weak mismatch' even when bullpen bridge and contact-quality determine the outcome.",
+        "starter and lineup features currently capture level but not volatility/interaction depth, so the model follows market tension without separating the true winner."
+      ]
+    }
+  },
+  "redesigned_feature_families": {
+    "small_edge": {
+      "baseline": [
+        "market_abs_dev_50",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "team_offense_diff",
+        "team_pitching_diff",
+        "team_home_away_form_diff",
+        "team_recent_run_diff_delta",
+        "bullpen_quality_diff",
+        "lineup_size_diff",
+        "injury_count_diff",
+        "rest_day_diff",
+        "environment_run_proxy"
+      ],
+      "market_microstructure": [
+        "elo_diff",
+        "woba_diff",
+        "fip_adv_diff",
+        "rsi_diff",
+        "elo_home_prob",
+        "form_home_prob",
+        "skill_blend_home_prob",
+        "market_minus_elo_prob",
+        "market_minus_form_prob",
+        "market_minus_skill_blend_prob",
+        "market_total_pressure",
+        "market_form_pressure",
+        "market_injury_pressure",
+        "market_lineup_pressure",
+        "market_fundamental_dispersion"
+      ],
+      "starter_lineup_interaction": [
+        "starter_form_blend_diff",
+        "starter_recent_ra_volatility_diff",
+        "starter_quality_volatility_diff",
+        "lineup_vs_starter_interaction_diff",
+        "lineup_depth_pressure",
+        "injury_count_diff",
+        "rest_day_diff",
+        "starter_run_support_asymmetry"
+      ],
+      "bullpen_environment": [
+        "bullpen_usage_diff",
+        "bullpen_usage_intensity_diff",
+        "bullpen_quality_diff",
+        "bullpen_bridge_quality",
+        "environment_run_proxy",
+        "weather_temp_c",
+        "weather_wind_kmh",
+        "bullpen_environment_pressure"
+      ]
+    },
+    "weak_starter_mismatch": {
+      "baseline": [
+        "market_home_prob",
+        "market_abs_dev_50",
+        "starter_recent_ra_diff",
+        "starter_quality_diff",
+        "starter_rest_diff",
+        "starter_start_count_diff",
+        "starter_workload_pressure_diff",
+        "starter_form_blend_diff",
+        "starter_matchup_depth_diff",
+        "lineup_vs_starter_interaction_diff",
+        "team_offense_diff",
+        "bullpen_quality_diff",
+        "injury_count_diff",
+        "rest_day_diff"
+      ],
+      "market_microstructure": [
+        "elo_diff",
+        "woba_diff",
+        "fip_adv_diff",
+        "rsi_diff",
+        "elo_home_prob",
+        "skill_blend_home_prob",
+        "market_minus_elo_prob",
+        "market_minus_skill_blend_prob",
+        "starter_market_tension",
+        "market_fundamental_dispersion"
+      ],
+      "starter_lineup_interaction": [
+        "starter_recent_ra_diff",
+        "starter_quality_diff",
+        "starter_rest_diff",
+        "starter_workload_pressure_diff",
+        "starter_form_blend_diff",
+        "starter_matchup_depth_diff",
+        "starter_recent_ra_volatility_diff",
+        "starter_support_volatility_diff",
+        "starter_quality_volatility_diff",
+        "lineup_vs_starter_interaction_diff",
+        "starter_run_support_asymmetry",
+        "lineup_depth_pressure",
+        "contact_quality_proxy_diff",
+        "run_support_asymmetry"
+      ],
+      "bullpen_environment": [
+        "bullpen_usage_diff",
+        "bullpen_usage_intensity_diff",
+        "bullpen_quality_diff",
+        "bullpen_bridge_quality",
+        "bridge_starter_interaction",
+        "environment_run_proxy",
+        "weather_temp_c",
+        "weather_wind_kmh",
+        "starter_environment_stress",
+        "run_env_contact_interaction"
+      ]
+    }
+  },
+  "ablation_table": [
+    {
+      "regime": "small_edge",
+      "ablation": "baseline",
+      "feature_count": 14,
+      "n_games": 885,
+      "n_bets": 826,
+      "roi": -0.0048,
+      "brier": 0.26,
+      "logloss": 0.7159,
+      "clv": 0.086,
+      "fold_roi_std": 0.0614,
+      "win_rate": 0.4976,
+      "avg_abs_edge": 0.086,
+      "calibration": "raw"
+    },
+    {
+      "regime": "small_edge",
+      "ablation": "baseline_plus_market_micro",
+      "feature_count": 29,
+      "n_games": 885,
+      "n_bets": 827,
+      "roi": 0.023,
+      "brier": 0.2609,
+      "logloss": 0.719,
+      "clv": 0.0989,
+      "fold_roi_std": 0.0723,
+      "win_rate": 0.5115,
+      "avg_abs_edge": 0.0989,
+      "calibration": "raw"
+    },
+    {
+      "regime": "small_edge",
+      "ablation": "baseline_plus_starter_lineup",
+      "feature_count": 20,
+      "n_games": 885,
+      "n_bets": 815,
+      "roi": -0.0429,
+      "brier": 0.2619,
+      "logloss": 0.7203,
+      "clv": 0.0923,
+      "fold_roi_std": 0.0832,
+      "win_rate": 0.4785,
+      "avg_abs_edge": 0.0923,
+      "calibration": "raw"
+    },
+    {
+      "regime": "small_edge",
+      "ablation": "baseline_plus_bullpen_environment",
+      "feature_count": 20,
+      "n_games": 885,
+      "n_bets": 817,
+      "roi": -0.0037,
+      "brier": 0.2623,
+      "logloss": 0.7215,
+      "clv": 0.0922,
+      "fold_roi_std": 0.0673,
+      "win_rate": 0.4982,
+      "avg_abs_edge": 0.0922,
+      "calibration": "raw"
+    },
+    {
+      "regime": "small_edge",
+      "ablation": "full_redesign",
+      "feature_count": 41,
+      "n_games": 885,
+      "n_bets": 812,
+      "roi": 0.0025,
+      "brier": 0.2657,
+      "logloss": 0.7309,
+      "clv": 0.1131,
+      "fold_roi_std": 0.037,
+      "win_rate": 0.5012,
+      "avg_abs_edge": 0.1131,
+      "calibration": "raw"
+    },
+    {
+      "regime": "weak_starter_mismatch",
+      "ablation": "baseline",
+      "feature_count": 14,
+      "n_games": 845,
+      "n_bets": 783,
+      "roi": 0.0319,
+      "brier": 0.2564,
+      "logloss": 0.7147,
+      "clv": 0.0883,
+      "fold_roi_std": 0.2522,
+      "win_rate": 0.516,
+      "avg_abs_edge": 0.0883,
+      "calibration": "raw"
+    },
+    {
+      "regime": "weak_starter_mismatch",
+      "ablation": "baseline_plus_market_micro",
+      "feature_count": 24,
+      "n_games": 845,
+      "n_bets": 773,
+      "roi": 0.0142,
+      "brier": 0.258,
+      "logloss": 0.718,
+      "clv": 0.1033,
+      "fold_roi_std": 0.2429,
+      "win_rate": 0.5071,
+      "avg_abs_edge": 0.1033,
+      "calibration": "raw"
+    },
+    {
+      "regime": "weak_starter_mismatch",
+      "ablation": "baseline_plus_starter_lineup",
+      "feature_count": 21,
+      "n_games": 845,
+      "n_bets": 774,
+      "roi": 0.0207,
+      "brier": 0.2571,
+      "logloss": 0.72,
+      "clv": 0.0949,
+      "fold_roi_std": 0.0701,
+      "win_rate": 0.5103,
+      "avg_abs_edge": 0.0949,
+      "calibration": "raw"
+    },
+    {
+      "regime": "weak_starter_mismatch",
+      "ablation": "baseline_plus_bullpen_environment",
+      "feature_count": 23,
+      "n_games": 845,
+      "n_bets": 789,
+      "roi": 0.0494,
+      "brier": 0.2616,
+      "logloss": 0.7314,
+      "clv": 0.1159,
+      "fold_roi_std": 0.1573,
+      "win_rate": 0.5247,
+      "avg_abs_edge": 0.1159,
+      "calibration": "raw"
+    },
+    {
+      "regime": "weak_starter_mismatch",
+      "ablation": "full_redesign",
+      "feature_count": 40,
+      "n_games": 845,
+      "n_bets": 789,
+      "roi": 0.0621,
+      "brier": 0.2623,
+      "logloss": 0.7337,
+      "clv": 0.132,
+      "fold_roi_std": 0.2237,
+      "win_rate": 0.5311,
+      "avg_abs_edge": 0.132,
+      "calibration": "raw"
+    }
+  ],
+  "strict_only_results_after_redesign": {
+    "small_edge": {
+      "selected_ablation": "baseline_plus_market_micro",
+      "selected_feature_count": 29,
+      "selected_features": [
+        "market_abs_dev_50",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "team_offense_diff",
+        "team_pitching_diff",
+        "team_home_away_form_diff",
+        "team_recent_run_diff_delta",
+        "bullpen_quality_diff",
+        "lineup_size_diff",
+        "injury_count_diff",
+        "rest_day_diff",
+        "environment_run_proxy",
+        "elo_diff",
+        "woba_diff",
+        "fip_adv_diff",
+        "rsi_diff",
+        "elo_home_prob",
+        "form_home_prob",
+        "skill_blend_home_prob",
+        "market_minus_elo_prob",
+        "market_minus_form_prob",
+        "market_minus_skill_blend_prob",
+        "market_total_pressure",
+        "market_form_pressure",
+        "market_injury_pressure",
+        "market_lineup_pressure",
+        "market_fundamental_dispersion"
+      ],
+      "best_ablation_metrics_raw": {
+        "n_games": 885,
+        "n_bets": 827,
+        "roi": 0.023,
+        "brier": 0.2609,
+        "logloss": 0.719,
+        "clv": 0.0989,
+        "fold_roi_std": 0.0723,
+        "win_rate": 0.5115,
+        "avg_abs_edge": 0.0989,
+        "calibration": "raw"
+      },
+      "calibration_comparison": {
+        "raw": {
+          "n_games": 885,
+          "n_bets": 827,
+          "roi": 0.023,
+          "brier": 0.2609,
+          "logloss": 0.719,
+          "clv": 0.0989,
+          "fold_roi_std": 0.0723,
+          "win_rate": 0.5115,
+          "avg_abs_edge": 0.0989,
+          "calibration": "raw",
+          "calibration_curve": [
+            {
+              "bucket": "0.1-0.2",
+              "n": 2,
+              "predicted_mean": 0.154,
+              "actual_rate": 0.0,
+              "abs_error": 0.154
+            },
+            {
+              "bucket": "0.2-0.3",
+              "n": 10,
+              "predicted_mean": 0.2466,
+              "actual_rate": 0.4,
+              "abs_error": 0.1534
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 48,
+              "predicted_mean": 0.3692,
+              "actual_rate": 0.4583,
+              "abs_error": 0.0892
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 193,
+              "predicted_mean": 0.4581,
+              "actual_rate": 0.4922,
+              "abs_error": 0.0341
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 330,
+              "predicted_mean": 0.5485,
+              "actual_rate": 0.5242,
+              "abs_error": 0.0243
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 206,
+              "predicted_mean": 0.6397,
+              "actual_rate": 0.4951,
+              "abs_error": 0.1445
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 77,
+              "predicted_mean": 0.7407,
+              "actual_rate": 0.5325,
+              "abs_error": 0.2082
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 17,
+              "predicted_mean": 0.8323,
+              "actual_rate": 0.5294,
+              "abs_error": 0.3029
+            },
+            {
+              "bucket": "0.9-1.0",
+              "n": 2,
+              "predicted_mean": 0.9295,
+              "actual_rate": 0.5,
+              "abs_error": 0.4295
+            }
+          ]
+        },
+        "platt": {
+          "n_games": 885,
+          "n_bets": 800,
+          "roi": -0.0225,
+          "brier": 0.2611,
+          "logloss": 0.7163,
+          "clv": 0.0839,
+          "fold_roi_std": 0.0846,
+          "win_rate": 0.4888,
+          "avg_abs_edge": 0.0839,
+          "calibration": "platt",
+          "calibration_curve": [
+            {
+              "bucket": "0.2-0.3",
+              "n": 5,
+              "predicted_mean": 0.2793,
+              "actual_rate": 0.4,
+              "abs_error": 0.1207
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 48,
+              "predicted_mean": 0.365,
+              "actual_rate": 0.5,
+              "abs_error": 0.135
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 287,
+              "predicted_mean": 0.4575,
+              "actual_rate": 0.5052,
+              "abs_error": 0.0477
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 289,
+              "predicted_mean": 0.5435,
+              "actual_rate": 0.5294,
+              "abs_error": 0.0141
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 250,
+              "predicted_mean": 0.6433,
+              "actual_rate": 0.48,
+              "abs_error": 0.1633
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 6,
+              "predicted_mean": 0.7237,
+              "actual_rate": 0.5,
+              "abs_error": 0.2237
+            }
+          ]
+        },
+        "isotonic": {
+          "n_games": 885,
+          "n_bets": 824,
+          "roi": 0.0049,
+          "brier": 0.2697,
+          "logloss": 0.7695,
+          "clv": 0.1013,
+          "fold_roi_std": 0.0748,
+          "win_rate": 0.5024,
+          "avg_abs_edge": 0.1013,
+          "calibration": "isotonic",
+          "calibration_curve": [
+            {
+              "bucket": "0.0-0.1",
+              "n": 15,
+              "predicted_mean": 0.01,
+              "actual_rate": 0.6667,
+              "abs_error": 0.6567
+            },
+            {
+              "bucket": "0.1-0.2",
+              "n": 11,
+              "predicted_mean": 0.1667,
+              "actual_rate": 0.5455,
+              "abs_error": 0.3788
+            },
+            {
+              "bucket": "0.2-0.3",
+              "n": 5,
+              "predicted_mean": 0.248,
+              "actual_rate": 0.2,
+              "abs_error": 0.048
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 76,
+              "predicted_mean": 0.3727,
+              "actual_rate": 0.5263,
+              "abs_error": 0.1536
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 176,
+              "predicted_mean": 0.4539,
+              "actual_rate": 0.4716,
+              "abs_error": 0.0177
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 385,
+              "predicted_mean": 0.5632,
+              "actual_rate": 0.5325,
+              "abs_error": 0.0308
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 204,
+              "predicted_mean": 0.6448,
+              "actual_rate": 0.4804,
+              "abs_error": 0.1644
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 5,
+              "predicted_mean": 0.7623,
+              "actual_rate": 0.2,
+              "abs_error": 0.5623
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 2,
+              "predicted_mean": 0.8595,
+              "actual_rate": 0.0,
+              "abs_error": 0.8595
+            },
+            {
+              "bucket": "0.9-1.0",
+              "n": 6,
+              "predicted_mean": 0.99,
+              "actual_rate": 0.5,
+              "abs_error": 0.49
+            }
+          ]
+        }
+      },
+      "final_selected_calibration": "raw",
+      "final_metrics": {
+        "n_games": 885,
+        "n_bets": 827,
+        "roi": 0.023,
+        "brier": 0.2609,
+        "logloss": 0.719,
+        "clv": 0.0989,
+        "fold_roi_std": 0.0723,
+        "win_rate": 0.5115,
+        "avg_abs_edge": 0.0989,
+        "calibration": "raw"
+      },
+      "verdict": "OVERFIT_SIGNAL"
+    },
+    "weak_starter_mismatch": {
+      "selected_ablation": "full_redesign",
+      "selected_feature_count": 40,
+      "selected_features": [
+        "market_home_prob",
+        "market_abs_dev_50",
+        "starter_recent_ra_diff",
+        "starter_quality_diff",
+        "starter_rest_diff",
+        "starter_start_count_diff",
+        "starter_workload_pressure_diff",
+        "starter_form_blend_diff",
+        "starter_matchup_depth_diff",
+        "lineup_vs_starter_interaction_diff",
+        "team_offense_diff",
+        "bullpen_quality_diff",
+        "injury_count_diff",
+        "rest_day_diff",
+        "elo_diff",
+        "woba_diff",
+        "fip_adv_diff",
+        "rsi_diff",
+        "elo_home_prob",
+        "skill_blend_home_prob",
+        "market_minus_elo_prob",
+        "market_minus_skill_blend_prob",
+        "starter_market_tension",
+        "market_fundamental_dispersion",
+        "starter_recent_ra_volatility_diff",
+        "starter_support_volatility_diff",
+        "starter_quality_volatility_diff",
+        "starter_run_support_asymmetry",
+        "lineup_depth_pressure",
+        "contact_quality_proxy_diff",
+        "run_support_asymmetry",
+        "bullpen_usage_diff",
+        "bullpen_usage_intensity_diff",
+        "bullpen_bridge_quality",
+        "bridge_starter_interaction",
+        "environment_run_proxy",
+        "weather_temp_c",
+        "weather_wind_kmh",
+        "starter_environment_stress",
+        "run_env_contact_interaction"
+      ],
+      "best_ablation_metrics_raw": {
+        "n_games": 845,
+        "n_bets": 789,
+        "roi": 0.0621,
+        "brier": 0.2623,
+        "logloss": 0.7337,
+        "clv": 0.132,
+        "fold_roi_std": 0.2237,
+        "win_rate": 0.5311,
+        "avg_abs_edge": 0.132,
+        "calibration": "raw"
+      },
+      "calibration_comparison": {
+        "raw": {
+          "n_games": 845,
+          "n_bets": 789,
+          "roi": 0.0621,
+          "brier": 0.2623,
+          "logloss": 0.7337,
+          "clv": 0.132,
+          "fold_roi_std": 0.2237,
+          "win_rate": 0.5311,
+          "avg_abs_edge": 0.132,
+          "calibration": "raw",
+          "calibration_curve": [
+            {
+              "bucket": "0.0-0.1",
+              "n": 2,
+              "predicted_mean": 0.0025,
+              "actual_rate": 1.0,
+              "abs_error": 0.9975
+            },
+            {
+              "bucket": "0.1-0.2",
+              "n": 4,
+              "predicted_mean": 0.1536,
+              "actual_rate": 0.25,
+              "abs_error": 0.0964
+            },
+            {
+              "bucket": "0.2-0.3",
+              "n": 12,
+              "predicted_mean": 0.2633,
+              "actual_rate": 0.5,
+              "abs_error": 0.2367
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 66,
+              "predicted_mean": 0.3613,
+              "actual_rate": 0.4697,
+              "abs_error": 0.1084
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 146,
+              "predicted_mean": 0.4548,
+              "actual_rate": 0.4589,
+              "abs_error": 0.0041
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 201,
+              "predicted_mean": 0.5511,
+              "actual_rate": 0.5124,
+              "abs_error": 0.0387
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 194,
+              "predicted_mean": 0.65,
+              "actual_rate": 0.6186,
+              "abs_error": 0.0314
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 149,
+              "predicted_mean": 0.7435,
+              "actual_rate": 0.4698,
+              "abs_error": 0.2737
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 58,
+              "predicted_mean": 0.8438,
+              "actual_rate": 0.6379,
+              "abs_error": 0.2058
+            },
+            {
+              "bucket": "0.9-1.0",
+              "n": 13,
+              "predicted_mean": 0.9335,
+              "actual_rate": 0.9231,
+              "abs_error": 0.0104
+            }
+          ]
+        },
+        "platt": {
+          "n_games": 845,
+          "n_bets": 766,
+          "roi": 0.0,
+          "brier": 0.251,
+          "logloss": 0.6951,
+          "clv": 0.0932,
+          "fold_roi_std": 0.2321,
+          "win_rate": 0.5,
+          "avg_abs_edge": 0.0932,
+          "calibration": "platt",
+          "calibration_curve": [
+            {
+              "bucket": "0.1-0.2",
+              "n": 1,
+              "predicted_mean": 0.1847,
+              "actual_rate": 0.0,
+              "abs_error": 0.1847
+            },
+            {
+              "bucket": "0.2-0.3",
+              "n": 4,
+              "predicted_mean": 0.2854,
+              "actual_rate": 0.5,
+              "abs_error": 0.2146
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 39,
+              "predicted_mean": 0.3633,
+              "actual_rate": 0.4615,
+              "abs_error": 0.0982
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 167,
+              "predicted_mean": 0.4619,
+              "actual_rate": 0.5389,
+              "abs_error": 0.077
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 455,
+              "predicted_mean": 0.551,
+              "actual_rate": 0.5319,
+              "abs_error": 0.0191
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 163,
+              "predicted_mean": 0.6315,
+              "actual_rate": 0.5215,
+              "abs_error": 0.11
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 14,
+              "predicted_mean": 0.7343,
+              "actual_rate": 0.7143,
+              "abs_error": 0.02
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 2,
+              "predicted_mean": 0.8428,
+              "actual_rate": 1.0,
+              "abs_error": 0.1572
+            }
+          ]
+        },
+        "isotonic": {
+          "n_games": 845,
+          "n_bets": 796,
+          "roi": -0.0025,
+          "brier": 0.256,
+          "logloss": 0.7305,
+          "clv": 0.1074,
+          "fold_roi_std": 0.0845,
+          "win_rate": 0.4987,
+          "avg_abs_edge": 0.1074,
+          "calibration": "isotonic",
+          "calibration_curve": [
+            {
+              "bucket": "0.0-0.1",
+              "n": 1,
+              "predicted_mean": 0.01,
+              "actual_rate": 1.0,
+              "abs_error": 0.99
+            },
+            {
+              "bucket": "0.1-0.2",
+              "n": 10,
+              "predicted_mean": 0.1389,
+              "actual_rate": 0.5,
+              "abs_error": 0.3611
+            },
+            {
+              "bucket": "0.2-0.3",
+              "n": 2,
+              "predicted_mean": 0.235,
+              "actual_rate": 0.5,
+              "abs_error": 0.265
+            },
+            {
+              "bucket": "0.3-0.4",
+              "n": 3,
+              "predicted_mean": 0.3528,
+              "actual_rate": 0.3333,
+              "abs_error": 0.0195
+            },
+            {
+              "bucket": "0.4-0.5",
+              "n": 170,
+              "predicted_mean": 0.4291,
+              "actual_rate": 0.5118,
+              "abs_error": 0.0827
+            },
+            {
+              "bucket": "0.5-0.6",
+              "n": 575,
+              "predicted_mean": 0.558,
+              "actual_rate": 0.5252,
+              "abs_error": 0.0328
+            },
+            {
+              "bucket": "0.6-0.7",
+              "n": 34,
+              "predicted_mean": 0.6233,
+              "actual_rate": 0.5588,
+              "abs_error": 0.0645
+            },
+            {
+              "bucket": "0.7-0.8",
+              "n": 14,
+              "predicted_mean": 0.7536,
+              "actual_rate": 0.5,
+              "abs_error": 0.2536
+            },
+            {
+              "bucket": "0.8-0.9",
+              "n": 3,
+              "predicted_mean": 0.8389,
+              "actual_rate": 0.6667,
+              "abs_error": 0.1723
+            },
+            {
+              "bucket": "0.9-1.0",
+              "n": 33,
+              "predicted_mean": 0.9899,
+              "actual_rate": 0.7273,
+              "abs_error": 0.2626
+            }
+          ]
+        }
+      },
+      "final_selected_calibration": "platt",
+      "final_metrics": {
+        "n_games": 845,
+        "n_bets": 766,
+        "roi": 0.0,
+        "brier": 0.251,
+        "logloss": 0.6951,
+        "clv": 0.0932,
+        "fold_roi_std": 0.2321,
+        "win_rate": 0.5,
+        "avg_abs_edge": 0.0932,
+        "calibration": "platt"
+      },
+      "verdict": "WEAK_SIGNAL"
+    }
+  },
+  "tradable_regimes_after_redesign": [],
+  "final_recommendation": "continue paper mode",
+  "notes": [
+    "WBC path remains untouched.",
+    "MLB stays PAPER_ONLY regardless of redesign outcome in this sprint.",
+    "Missing domain features were not backfilled or simulated."
+  ]
+}

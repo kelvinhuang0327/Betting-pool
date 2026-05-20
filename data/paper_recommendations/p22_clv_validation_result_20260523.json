@@ -1,0 +1,97 @@
+{
+  "phase": "P22_CLV_VALIDATION_ONLY",
+  "task": "P22-D",
+  "date": "2026-05-23",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "valid_pairs_used": 236,
+  "total_outcome_observations": 2499,
+  "parse_errors": 0,
+  "markets_observed": {
+    "MNL": 236,
+    "OU": 230,
+    "TTO": 217,
+    "HDC": 229,
+    "OE": 230
+  },
+  "overall_clv_summary": {
+    "n": 2499,
+    "mean_clv_pct": 0.2332,
+    "median_clv_pct": 0.0,
+    "std_clv_pct": 8.7212,
+    "min_clv_pct": -66.7368,
+    "max_clv_pct": 107.1429,
+    "positive_count": 816,
+    "negative_count": 820,
+    "neutral_count": 863,
+    "positive_rate_pct": 32.65
+  },
+  "per_market_summary": {
+    "HDC": {
+      "n": 458,
+      "mean_clv_pct": 1.2103,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 16.7971,
+      "min_clv_pct": -53.871,
+      "max_clv_pct": 107.1429,
+      "positive_count": 182,
+      "negative_count": 182,
+      "neutral_count": 94,
+      "positive_rate_pct": 39.74
+    },
+    "MNL": {
+      "n": 687,
+      "mean_clv_pct": -0.249,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 5.4865,
+      "min_clv_pct": -66.7368,
+      "max_clv_pct": 13.3333,
+      "positive_count": 243,
+      "negative_count": 248,
+      "neutral_count": 196,
+      "positive_rate_pct": 35.37
+    },
+    "OE": {
+      "n": 460,
+      "mean_clv_pct": 0.0083,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 0.8364,
+      "min_clv_pct": -2.439,
+      "max_clv_pct": 2.5,
+      "positive_count": 72,
+      "negative_count": 72,
+      "neutral_count": 316,
+      "positive_rate_pct": 15.65
+    },
+    "OU": {
+      "n": 460,
+      "mean_clv_pct": 0.1158,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 4.69,
+      "min_clv_pct": -18.2609,
+      "max_clv_pct": 22.3404,
+      "positive_count": 176,
+      "negative_count": 175,
+      "neutral_count": 109,
+      "positive_rate_pct": 38.26
+    },
+    "TTO": {
+      "n": 434,
+      "mean_clv_pct": 0.3281,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 8.1888,
+      "min_clv_pct": -28.7805,
+      "max_clv_pct": 40.411,
+      "positive_count": 143,
+      "negative_count": 143,
+      "neutral_count": 148,
+      "positive_rate_pct": 32.95
+    }
+  },
+  "interpretation_note": "CLV statistics are descriptive only. Positive CLV means pregame odds > closing odds (beat the line). This is a paper-only academic validation. No profitability implied.",
+  "final_classification": "P22_CLV_VALIDATION_ONLY_COMPLETED"
+}

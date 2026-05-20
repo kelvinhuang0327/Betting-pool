@@ -61,7 +61,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -142,9 +141,9 @@ class LineMovementInput:
     total_line_moves: int = 0
 
     # ── Historical patterns ──
-    line_history: List[LineSnapshot] = field(default_factory=list)
+    line_history: list[LineSnapshot] = field(default_factory=list)
     # Previous games' line movement patterns for same teams
-    historical_closing_lines: List[float] = field(default_factory=list)
+    historical_closing_lines: list[float] = field(default_factory=list)
     # How this specific matchup has moved historically
     team_line_bias: float = 0.0        # Positive = line typically moves toward home
 
@@ -176,7 +175,7 @@ class LineMovementResult:
     expected_closing_implied: float = 0.50
 
     # ── Multi-horizon predictions ──
-    horizons: Dict[str, HorizonPrediction] = field(default_factory=dict)
+    horizons: dict[str, HorizonPrediction] = field(default_factory=dict)
 
     # ── Timing recommendation ──
     timing_recommendation: TimingAction = TimingAction.BET_NOW
@@ -188,7 +187,7 @@ class LineMovementResult:
     clv_confidence: float = 0.0
 
     # ── Feature diagnostics ──
-    feature_scores: Dict[str, float] = field(default_factory=dict)
+    feature_scores: dict[str, float] = field(default_factory=dict)
     velocity_score: float = 0.0
     pressure_score: float = 0.0
     regime_score: float = 0.0
@@ -205,9 +204,9 @@ def _implied_prob(decimal_odds: float) -> float:
     return 1.0 / decimal_odds
 
 
-def _compute_features(inp: LineMovementInput) -> Dict[str, float]:
+def _compute_features(inp: LineMovementInput) -> dict[str, float]:
     """Extract 28 time-series & microstructure features."""
-    f: Dict[str, float] = {}
+    f: dict[str, float] = {}
 
     # ── 1. Current market state ──
     open_imp = _implied_prob(inp.opening_home_odds)
@@ -319,7 +318,7 @@ def _compute_features(inp: LineMovementInput) -> Dict[str, float]:
 # SUB-MODEL 1: Velocity Model
 # ═══════════════════════════════════════════════════════════════
 
-def _velocity_model(f: Dict[str, float]) -> Tuple[float, float]:
+def _velocity_model(f: dict[str, float]) -> tuple[float, float]:
     """
     Predict movement based on current velocity + acceleration.
 
@@ -374,7 +373,7 @@ def _velocity_model(f: Dict[str, float]) -> Tuple[float, float]:
 # SUB-MODEL 2: Pressure Model
 # ═══════════════════════════════════════════════════════════════
 
-def _pressure_model(f: Dict[str, float]) -> Tuple[float, float]:
+def _pressure_model(f: dict[str, float]) -> tuple[float, float]:
     """
     Predict movement based on money flow pressure.
 
@@ -437,7 +436,7 @@ def _pressure_model(f: Dict[str, float]) -> Tuple[float, float]:
 # SUB-MODEL 3: Regime / Time-of-Day Model
 # ═══════════════════════════════════════════════════════════════
 
-def _regime_model(f: Dict[str, float]) -> Tuple[float, float]:
+def _regime_model(f: dict[str, float]) -> tuple[float, float]:
     """
     Predict movement based on market regime and temporal patterns.
 
@@ -487,9 +486,7 @@ def _regime_model(f: Dict[str, float]) -> Tuple[float, float]:
         direction_score += hist_bias * 0.2
 
     # 6. Books spread convergence
-    spread = f.get("odds_spread", 0.03)
-    # Wide spread = opinions diverge = more movement expected
-    # But direction is unclear
+    # Wide spread = opinions diverge = more movement expected; direction is unclear
 
     # Confidence
     confidence = min(100, max(0,
@@ -603,11 +600,11 @@ def _predict_horizon(
 # TIMING ENGINE
 # ═══════════════════════════════════════════════════════════════
 
-def _compute_timing(
+def _compute_timing(  # noqa: C901
     inp: LineMovementInput,
-    horizons: Dict[str, HorizonPrediction],
+    horizons: dict[str, HorizonPrediction],
     current_implied: float,
-) -> Tuple[TimingAction, str, float]:
+) -> tuple[TimingAction, str, float]:
     """
     Determine optimal bet timing based on movement predictions.
 
@@ -653,30 +650,29 @@ def _compute_timing(
         best_reason = f"favorable_5m_movement (conf={short.confidence:.0f}%)"
         optimal_window = 5.0
 
-    if medium and medium.direction == favorable_direction and medium.confidence > 55:
+    if medium and medium.direction == favorable_direction and medium.confidence > 55 and (
+        not short or short.confidence < medium.confidence
+    ):
         # Better improvement expected in 30m
-        if (not short or short.confidence < medium.confidence):
-            best_action = TimingAction.DELAY_MEDIUM
-            best_reason = f"favorable_30m_movement (conf={medium.confidence:.0f}%)"
-            optimal_window = 30.0
+        best_action = TimingAction.DELAY_MEDIUM
+        best_reason = f"favorable_30m_movement (conf={medium.confidence:.0f}%)"
+        optimal_window = 30.0
 
-    if long and long.direction == favorable_direction and long.confidence > 60:
-        if inp.minutes_to_game > 120:
-            best_action = TimingAction.DELAY_LONG
-            best_reason = f"favorable_2h_movement (conf={long.confidence:.0f}%)"
-            optimal_window = 120.0
+    if long and long.direction == favorable_direction and long.confidence > 60 and inp.minutes_to_game > 120:
+        best_action = TimingAction.DELAY_LONG
+        best_reason = f"favorable_2h_movement (conf={long.confidence:.0f}%)"
+        optimal_window = 120.0
 
-    if closing and closing.direction == favorable_direction and closing.confidence > 65:
-        if inp.minutes_to_game > 180:
-            best_action = TimingAction.WAIT_FOR_CLOSE
-            best_reason = f"closing_line_expected_favorable (conf={closing.confidence:.0f}%)"
-            optimal_window = inp.minutes_to_game
+    if closing and closing.direction == favorable_direction and closing.confidence > 65 and inp.minutes_to_game > 180:
+        best_action = TimingAction.WAIT_FOR_CLOSE
+        best_reason = f"closing_line_expected_favorable (conf={closing.confidence:.0f}%)"
+        optimal_window = inp.minutes_to_game
 
     # 3. Check for aggressive counter-movement
-    if closing and closing.direction != favorable_direction and closing.confidence > 70:
-        if closing.expected_odds_change and abs(closing.expected_odds_change) > 0.03:
+    if (closing and closing.direction != favorable_direction and closing.confidence > 70
+            and closing.expected_odds_change and abs(closing.expected_odds_change) > 0.03):
             best_action = TimingAction.BET_NOW
-            best_reason = f"strong_adverse_closing_movement → bet immediately"
+            best_reason = "strong_adverse_closing_movement → bet immediately"
             optimal_window = 0.0
 
     # 4. Too close to game → bet now
@@ -712,7 +708,7 @@ class LineMovementPredictor:
     """
 
     def __init__(self):
-        self._history: List[LineMovementResult] = []
+        self._history: list[LineMovementResult] = []
 
     def predict(self, inp: LineMovementInput) -> LineMovementResult:
         """Run full line movement prediction pipeline."""
@@ -728,7 +724,7 @@ class LineMovementPredictor:
         current_implied = _implied_prob(inp.current_home_odds)
 
         # ── Multi-horizon predictions ──
-        horizons: Dict[str, HorizonPrediction] = {}
+        horizons: dict[str, HorizonPrediction] = {}
         for horizon in PredictionHorizon:
             h_pred = _predict_horizon(
                 vel_score, pres_score, reg_score,

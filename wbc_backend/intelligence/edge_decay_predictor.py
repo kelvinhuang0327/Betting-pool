@@ -49,7 +49,6 @@ import random
 import statistics
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -66,7 +65,7 @@ class UrgencyLevel(Enum):
 
 
 # Urgency thresholds (seconds)
-_URGENCY_THRESHOLDS: List[Tuple[float, UrgencyLevel]] = [
+_URGENCY_THRESHOLDS: list[tuple[float, UrgencyLevel]] = [
     (180.0, UrgencyLevel.EXECUTE_IMMEDIATELY),
     (600.0, UrgencyLevel.EXECUTE_SOON),
     (3600.0, UrgencyLevel.MONITOR),
@@ -79,7 +78,7 @@ _HAZARD_WEIGHT = 0.35
 _VOLATILITY_WEIGHT = 0.25
 
 # League-level baseline decay profiles (median half-life in seconds)
-LEAGUE_DECAY_PROFILES: Dict[str, float] = {
+LEAGUE_DECAY_PROFILES: dict[str, float] = {
     "MLB": 1200.0,
     "NPB": 2400.0,
     "KBO": 2100.0,
@@ -120,7 +119,7 @@ class EdgeDecayInput:
 
     # ── Historical memory ─────────────────────────────────────
     past_similar_edges: int = 0           # count of past similar edge occurrences
-    historical_decay_times: Optional[List[float]] = None  # past half-lives (sec)
+    historical_decay_times: list[float] | None = None  # past half-lives (sec)
     league: str = "WBC"                   # league for baseline profile
 
     # ── Current edge magnitude ────────────────────────────────
@@ -128,14 +127,14 @@ class EdgeDecayInput:
     edge_score: float = 0.0               # composite score from edge_validator
 
     # ── Reproducibility ───────────────────────────────────────
-    seed: Optional[int] = None
+    seed: int | None = None
 
 
 @dataclass
 class EdgeDecayForecast:
     """Predicted edge decay timeline."""
     half_life_seconds: float = 0.0
-    decay_curve: List[float] = field(default_factory=list)   # len=DECAY_CURVE_STEPS, 1→0
+    decay_curve: list[float] = field(default_factory=list)   # len=DECAY_CURVE_STEPS, 1→0
     confidence_score: float = 0.0       # 0-100
     urgency_level: UrgencyLevel = UrgencyLevel.MONITOR
 
@@ -149,7 +148,7 @@ class EdgeDecayForecast:
     volatility_half_life: float = 0.0
 
     # Diagnostics
-    details: Dict[str, str] = field(default_factory=dict)
+    details: dict[str, str] = field(default_factory=dict)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -392,13 +391,13 @@ def _classify_urgency(half_life: float) -> UrgencyLevel:
     return UrgencyLevel.EXPIRED
 
 
-def _build_decay_curve(half_life: float, steps: int = DECAY_CURVE_STEPS) -> List[float]:
+def _build_decay_curve(half_life: float, steps: int = DECAY_CURVE_STEPS) -> list[float]:
     """
     Build an exponential decay curve from 1.0 → ~0.
     Each step covers (3 * half_life / steps) seconds.
     curve[i] = fraction of edge remaining at step i.
     """
-    curve: List[float] = []
+    curve: list[float] = []
     total_time = 3.0 * half_life   # cover ~3 half-lives (87.5 % decay)
     dt = total_time / max(steps, 1)
     decay_rate = math.log(2.0) / max(half_life, 1.0)

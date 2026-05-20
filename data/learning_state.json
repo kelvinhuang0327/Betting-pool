@@ -1,10 +1,10 @@
 {
   "model_weights": {
-    "elo": 0.174085,
-    "bayesian": 0.126667,
-    "poisson": 0.272791,
-    "gbm": 0.155083,
-    "monte_carlo": 0.271373
+    "elo": 0.120778,
+    "bayesian": 0.39338,
+    "poisson": 0.161947,
+    "gbm": 0.161947,
+    "monte_carlo": 0.161947
   },
   "game_log": [
     {
@@ -63,18 +63,1994 @@
         "gbm": 0.155083,
         "monte_carlo": 0.271373
       }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.143512,
+        "bayesian": 0.155356,
+        "poisson": 0.258751,
+        "gbm": 0.184524,
+        "monte_carlo": 0.257856
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.135915,
+        "bayesian": 0.17515,
+        "poisson": 0.245385,
+        "gbm": 0.198727,
+        "monte_carlo": 0.244823
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.134928,
+        "bayesian": 0.191662,
+        "poisson": 0.234444,
+        "gbm": 0.204879,
+        "monte_carlo": 0.234088
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.135493,
+        "bayesian": 0.206919,
+        "poisson": 0.225584,
+        "gbm": 0.206646,
+        "monte_carlo": 0.225357
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.136126,
+        "bayesian": 0.221583,
+        "poisson": 0.218235,
+        "gbm": 0.205968,
+        "monte_carlo": 0.218089
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.13643,
+        "bayesian": 0.235819,
+        "poisson": 0.211959,
+        "gbm": 0.203927,
+        "monte_carlo": 0.211864
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.136351,
+        "bayesian": 0.249614,
+        "poisson": 0.20647,
+        "gbm": 0.201157,
+        "monte_carlo": 0.206408
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.135933,
+        "bayesian": 0.262892,
+        "poisson": 0.201588,
+        "gbm": 0.19804,
+        "monte_carlo": 0.201547
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.135248,
+        "bayesian": 0.275564,
+        "poisson": 0.197202,
+        "gbm": 0.194812,
+        "monte_carlo": 0.197174
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.134371,
+        "bayesian": 0.287549,
+        "poisson": 0.193241,
+        "gbm": 0.191617,
+        "monte_carlo": 0.193221
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.133371,
+        "bayesian": 0.298782,
+        "poisson": 0.189656,
+        "gbm": 0.188546,
+        "monte_carlo": 0.189644
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.132305,
+        "bayesian": 0.309218,
+        "poisson": 0.186417,
+        "gbm": 0.185652,
+        "monte_carlo": 0.186408
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.131221,
+        "bayesian": 0.318835,
+        "poisson": 0.183494,
+        "gbm": 0.182963,
+        "monte_carlo": 0.183487
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.130154,
+        "bayesian": 0.327624,
+        "poisson": 0.180866,
+        "gbm": 0.180495,
+        "monte_carlo": 0.180861
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.129132,
+        "bayesian": 0.335602,
+        "poisson": 0.17851,
+        "gbm": 0.17825,
+        "monte_carlo": 0.178507
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.12817,
+        "bayesian": 0.342791,
+        "poisson": 0.176408,
+        "gbm": 0.176225,
+        "monte_carlo": 0.176406
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.127283,
+        "bayesian": 0.34923,
+        "poisson": 0.17454,
+        "gbm": 0.17441,
+        "monte_carlo": 0.174537
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.126473,
+        "bayesian": 0.354964,
+        "poisson": 0.172885,
+        "gbm": 0.172794,
+        "monte_carlo": 0.172884
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.125742,
+        "bayesian": 0.360043,
+        "poisson": 0.171427,
+        "gbm": 0.171362,
+        "monte_carlo": 0.171426
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.12509,
+        "bayesian": 0.364522,
+        "poisson": 0.170144,
+        "gbm": 0.170099,
+        "monte_carlo": 0.170144
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.124511,
+        "bayesian": 0.368454,
+        "poisson": 0.169022,
+        "gbm": 0.16899,
+        "monte_carlo": 0.169022
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.124001,
+        "bayesian": 0.371893,
+        "poisson": 0.168043,
+        "gbm": 0.16802,
+        "monte_carlo": 0.168043
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.123553,
+        "bayesian": 0.37489,
+        "poisson": 0.167191,
+        "gbm": 0.167174,
+        "monte_carlo": 0.167191
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.123164,
+        "bayesian": 0.377493,
+        "poisson": 0.166451,
+        "gbm": 0.16644,
+        "monte_carlo": 0.166451
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.122826,
+        "bayesian": 0.379749,
+        "poisson": 0.165811,
+        "gbm": 0.165803,
+        "monte_carlo": 0.165811
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.122533,
+        "bayesian": 0.381699,
+        "poisson": 0.165258,
+        "gbm": 0.165252,
+        "monte_carlo": 0.165258
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.12228,
+        "bayesian": 0.383381,
+        "poisson": 0.164781,
+        "gbm": 0.164777,
+        "monte_carlo": 0.164781
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.122062,
+        "bayesian": 0.384829,
+        "poisson": 0.16437,
+        "gbm": 0.164368,
+        "monte_carlo": 0.16437
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121875,
+        "bayesian": 0.386073,
+        "poisson": 0.164018,
+        "gbm": 0.164016,
+        "monte_carlo": 0.164018
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121714,
+        "bayesian": 0.387141,
+        "poisson": 0.163715,
+        "gbm": 0.163714,
+        "monte_carlo": 0.163715
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121576,
+        "bayesian": 0.388057,
+        "poisson": 0.163456,
+        "gbm": 0.163455,
+        "monte_carlo": 0.163456
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121457,
+        "bayesian": 0.38884,
+        "poisson": 0.163234,
+        "gbm": 0.163234,
+        "monte_carlo": 0.163234
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121358,
+        "bayesian": 0.389509,
+        "poisson": 0.163044,
+        "gbm": 0.163044,
+        "monte_carlo": 0.163044
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121272,
+        "bayesian": 0.390082,
+        "poisson": 0.162882,
+        "gbm": 0.162882,
+        "monte_carlo": 0.162882
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121198,
+        "bayesian": 0.390573,
+        "poisson": 0.162743,
+        "gbm": 0.162743,
+        "monte_carlo": 0.162743
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121135,
+        "bayesian": 0.390988,
+        "poisson": 0.162625,
+        "gbm": 0.162625,
+        "monte_carlo": 0.162625
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121082,
+        "bayesian": 0.391344,
+        "poisson": 0.162525,
+        "gbm": 0.162525,
+        "monte_carlo": 0.162525
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.121037,
+        "bayesian": 0.391648,
+        "poisson": 0.162439,
+        "gbm": 0.162439,
+        "monte_carlo": 0.162439
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120998,
+        "bayesian": 0.391905,
+        "poisson": 0.162366,
+        "gbm": 0.162366,
+        "monte_carlo": 0.162366
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120964,
+        "bayesian": 0.392125,
+        "poisson": 0.162304,
+        "gbm": 0.162304,
+        "monte_carlo": 0.162304
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120936,
+        "bayesian": 0.392312,
+        "poisson": 0.162251,
+        "gbm": 0.162251,
+        "monte_carlo": 0.162251
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120913,
+        "bayesian": 0.392472,
+        "poisson": 0.162205,
+        "gbm": 0.162205,
+        "monte_carlo": 0.162205
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120893,
+        "bayesian": 0.392608,
+        "poisson": 0.162166,
+        "gbm": 0.162166,
+        "monte_carlo": 0.162166
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120875,
+        "bayesian": 0.392725,
+        "poisson": 0.162133,
+        "gbm": 0.162133,
+        "monte_carlo": 0.162133
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120861,
+        "bayesian": 0.392822,
+        "poisson": 0.162106,
+        "gbm": 0.162106,
+        "monte_carlo": 0.162106
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120848,
+        "bayesian": 0.392906,
+        "poisson": 0.162082,
+        "gbm": 0.162082,
+        "monte_carlo": 0.162082
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120837,
+        "bayesian": 0.392977,
+        "poisson": 0.162062,
+        "gbm": 0.162062,
+        "monte_carlo": 0.162062
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120828,
+        "bayesian": 0.393036,
+        "poisson": 0.162045,
+        "gbm": 0.162045,
+        "monte_carlo": 0.162045
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120821,
+        "bayesian": 0.393089,
+        "poisson": 0.16203,
+        "gbm": 0.16203,
+        "monte_carlo": 0.16203
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120814,
+        "bayesian": 0.393134,
+        "poisson": 0.162017,
+        "gbm": 0.162017,
+        "monte_carlo": 0.162017
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120808,
+        "bayesian": 0.393171,
+        "poisson": 0.162007,
+        "gbm": 0.162007,
+        "monte_carlo": 0.162007
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120804,
+        "bayesian": 0.393203,
+        "poisson": 0.161998,
+        "gbm": 0.161998,
+        "monte_carlo": 0.161998
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120799,
+        "bayesian": 0.393228,
+        "poisson": 0.161991,
+        "gbm": 0.161991,
+        "monte_carlo": 0.161991
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120796,
+        "bayesian": 0.393252,
+        "poisson": 0.161984,
+        "gbm": 0.161984,
+        "monte_carlo": 0.161984
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120794,
+        "bayesian": 0.393272,
+        "poisson": 0.161978,
+        "gbm": 0.161978,
+        "monte_carlo": 0.161978
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120791,
+        "bayesian": 0.393288,
+        "poisson": 0.161974,
+        "gbm": 0.161974,
+        "monte_carlo": 0.161974
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120789,
+        "bayesian": 0.393302,
+        "poisson": 0.16197,
+        "gbm": 0.16197,
+        "monte_carlo": 0.16197
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120787,
+        "bayesian": 0.393314,
+        "poisson": 0.161966,
+        "gbm": 0.161966,
+        "monte_carlo": 0.161966
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120785,
+        "bayesian": 0.393324,
+        "poisson": 0.161964,
+        "gbm": 0.161964,
+        "monte_carlo": 0.161964
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120784,
+        "bayesian": 0.393332,
+        "poisson": 0.161961,
+        "gbm": 0.161961,
+        "monte_carlo": 0.161961
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120783,
+        "bayesian": 0.39334,
+        "poisson": 0.161959,
+        "gbm": 0.161959,
+        "monte_carlo": 0.161959
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120783,
+        "bayesian": 0.393344,
+        "poisson": 0.161958,
+        "gbm": 0.161958,
+        "monte_carlo": 0.161958
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120782,
+        "bayesian": 0.393349,
+        "poisson": 0.161956,
+        "gbm": 0.161956,
+        "monte_carlo": 0.161956
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120782,
+        "bayesian": 0.393354,
+        "poisson": 0.161955,
+        "gbm": 0.161955,
+        "monte_carlo": 0.161955
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120781,
+        "bayesian": 0.393358,
+        "poisson": 0.161954,
+        "gbm": 0.161954,
+        "monte_carlo": 0.161954
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.12078,
+        "bayesian": 0.393361,
+        "poisson": 0.161953,
+        "gbm": 0.161953,
+        "monte_carlo": 0.161953
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.12078,
+        "bayesian": 0.393364,
+        "poisson": 0.161952,
+        "gbm": 0.161952,
+        "monte_carlo": 0.161952
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.12078,
+        "bayesian": 0.393367,
+        "poisson": 0.161951,
+        "gbm": 0.161951,
+        "monte_carlo": 0.161951
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.12078,
+        "bayesian": 0.393369,
+        "poisson": 0.16195,
+        "gbm": 0.16195,
+        "monte_carlo": 0.16195
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120779,
+        "bayesian": 0.393372,
+        "poisson": 0.16195,
+        "gbm": 0.16195,
+        "monte_carlo": 0.16195
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120779,
+        "bayesian": 0.393373,
+        "poisson": 0.161949,
+        "gbm": 0.161949,
+        "monte_carlo": 0.161949
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120779,
+        "bayesian": 0.393375,
+        "poisson": 0.161948,
+        "gbm": 0.161948,
+        "monte_carlo": 0.161948
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.393377,
+        "poisson": 0.161948,
+        "gbm": 0.161948,
+        "monte_carlo": 0.161948
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.393377,
+        "poisson": 0.161948,
+        "gbm": 0.161948,
+        "monte_carlo": 0.161948
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.393377,
+        "poisson": 0.161948,
+        "gbm": 0.161948,
+        "monte_carlo": 0.161948
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.393379,
+        "poisson": 0.161948,
+        "gbm": 0.161948,
+        "monte_carlo": 0.161948
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
+    },
+    {
+      "game_id": "C09",
+      "actual_winner": "KOR",
+      "actual_score": "7-2",
+      "errors": {
+        "elo": 0.139353,
+        "bayesian": 0.05939,
+        "neural_net": 0.058516
+      },
+      "updated_weights": {
+        "elo": 0.120778,
+        "bayesian": 0.39338,
+        "poisson": 0.161947,
+        "gbm": 0.161947,
+        "monte_carlo": 0.161947
+      }
     }
   ],
   "cumulative_error": {
     "elo": [
       0.068644,
       0.051076,
-      0.0441
+      0.0441,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353,
+      0.139353
     ],
     "bayesian": [
       0.131044,
       0.069169,
-      0.061009
+      0.061009,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939,
+      0.05939
     ],
     "poisson": [
       0.047961,
@@ -90,6 +2066,120 @@
       0.059536,
       0.019044,
       0.005329
+    ],
+    "neural_net": [
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516,
+      0.058516
     ]
+  },
+  "ema_brier": {
+    "elo": 0.13935292,
+    "bayesian": 0.05938972,
+    "poisson": 0.25,
+    "gbm": 0.25,
+    "monte_carlo": 0.25,
+    "neural_net": 0.05851564
   }
 }

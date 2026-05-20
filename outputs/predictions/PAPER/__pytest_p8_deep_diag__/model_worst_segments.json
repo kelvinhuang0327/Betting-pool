@@ -1,0 +1,109 @@
+{
+  "worst_segments": [
+    {
+      "segment": "low_conf_<0.55",
+      "segment_by": "confidence_bucket",
+      "row_count": 6,
+      "bss": -0.006345,
+      "ece": 0.4675,
+      "avg_edge": -0.001398,
+      "avg_model_prob": 0.5325,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.474544,
+      "rank_reason": "negative_bss=-0.0063; high_ece=0.4675"
+    },
+    {
+      "segment": "neutral_-0.02-0.02",
+      "segment_by": "home_bias_bucket",
+      "row_count": 7,
+      "bss": 0.004261,
+      "ece": 0.465,
+      "avg_edge": 0.001102,
+      "avg_model_prob": 0.535,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.46129,
+      "rank_reason": "high_ece=0.4650"
+    },
+    {
+      "segment": "2025-05",
+      "segment_by": "month",
+      "row_count": 20,
+      "bss": 0.135158,
+      "ece": 0.4325,
+      "avg_edge": 0.033602,
+      "avg_model_prob": 0.5675,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.314143,
+      "rank_reason": "high_ece=0.4325"
+    },
+    {
+      "segment": "home_fav",
+      "segment_by": "favorite_side",
+      "row_count": 20,
+      "bss": 0.135158,
+      "ece": 0.4325,
+      "avg_edge": 0.033602,
+      "avg_model_prob": 0.5675,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.314143,
+      "rank_reason": "high_ece=0.4325"
+    },
+    {
+      "segment": "med_conf_0.55-0.60",
+      "segment_by": "confidence_bucket",
+      "row_count": 10,
+      "bss": 0.157828,
+      "ece": 0.4275,
+      "avg_edge": 0.038602,
+      "avg_model_prob": 0.5725,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.288973,
+      "rank_reason": "high_ece=0.4275"
+    },
+    {
+      "segment": "mild_home_bias_0.02-0.08",
+      "segment_by": "home_bias_bucket",
+      "row_count": 12,
+      "bss": 0.196301,
+      "ece": 0.4175,
+      "avg_edge": 0.048602,
+      "avg_model_prob": 0.5825,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.2455,
+      "rank_reason": "high_ece=0.4175"
+    },
+    {
+      "segment": "med_hi_conf_0.60-0.65",
+      "segment_by": "confidence_bucket",
+      "row_count": 4,
+      "bss": 0.290739,
+      "ece": 0.3925,
+      "avg_edge": 0.073602,
+      "avg_model_prob": 0.6075,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.138562,
+      "rank_reason": "high_ece=0.3925; high_home_bias_edge=0.0736"
+    },
+    {
+      "segment": "strong_home_bias_0.08-0.15",
+      "segment_by": "home_bias_bucket",
+      "row_count": 1,
+      "bss": 0.317724,
+      "ece": 0.385,
+      "avg_edge": 0.081102,
+      "avg_model_prob": 0.615,
+      "avg_market_prob": 0.533898,
+      "avg_outcome": 1.0,
+      "rank_score": 0.107827,
+      "rank_reason": "high_ece=0.3850; high_home_bias_edge=0.0811"
+    }
+  ],
+  "generated_at": "2026-05-20T09:54:06.814770+00:00"
+}

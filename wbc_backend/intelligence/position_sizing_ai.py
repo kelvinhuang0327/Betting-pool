@@ -26,7 +26,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ─── Sizing Strategies ─────────────────────────────────────────────────────
@@ -92,7 +91,7 @@ class SizingInput:
     current_drawdown: float = 0.0      # 0 = no drawdown, 0.1 = 10% dd
 
     # Recent performance
-    recent_pnl: List[float] = field(default_factory=list)  # last N P&L as %
+    recent_pnl: list[float] = field(default_factory=list)  # last N P&L as %
 
 
 @dataclass
@@ -102,8 +101,8 @@ class SizingResult:
     bet_size_pct: float = 0.01         # % of bankroll
     bet_amount: float = 100.0          # absolute amount
     raw_kelly: float = 0.0
-    all_strategies: Dict[str, float] = field(default_factory=dict)
-    strategy_scores: Dict[str, float] = field(default_factory=dict)
+    all_strategies: dict[str, float] = field(default_factory=dict)
+    strategy_scores: dict[str, float] = field(default_factory=dict)
     reasoning: str = ""
     capped: bool = False
     cap_reason: str = ""
@@ -206,10 +205,10 @@ _STRATEGY_FUNCS = {
 # ─── Strategy Selection ────────────────────────────────────────────────────
 
 def _evaluate_strategies_trailing(
-    recent_pnl: List[float],
-    recent_sizes: List[float],
-    recent_strategies: List[str],
-) -> Dict[str, float]:
+    recent_pnl: list[float],
+    recent_sizes: list[float],
+    recent_strategies: list[str],
+) -> dict[str, float]:
     """
     Evaluate each strategy's trailing risk-adjusted performance.
     Returns a score for each strategy (higher = better).
@@ -241,7 +240,7 @@ def _evaluate_strategies_trailing(
 
 def _select_best_strategy(
     inp: SizingInput,
-    trailing_scores: Optional[Dict[str, float]] = None,
+    trailing_scores: dict[str, float] | None = None,
 ) -> SizingStrategy:
     """
     Select the best sizing strategy based on current conditions and
@@ -251,7 +250,7 @@ def _select_best_strategy(
         trailing_scores = {s.value: 0.5 for s in SizingStrategy}
 
     # Condition-based priors
-    priors: Dict[SizingStrategy, float] = {}
+    priors: dict[SizingStrategy, float] = {}
 
     # High drawdown → prefer drawdown Kelly
     if inp.current_drawdown > 0.10:
@@ -302,9 +301,9 @@ def _select_best_strategy(
 
 def compute_position_size(
     inp: SizingInput,
-    trailing_pnl: Optional[List[float]] = None,
-    trailing_sizes: Optional[List[float]] = None,
-    trailing_strategies: Optional[List[str]] = None,
+    trailing_pnl: list[float] | None = None,
+    trailing_sizes: list[float] | None = None,
+    trailing_strategies: list[str] | None = None,
 ) -> SizingResult:
     """
     Compute the optimal position size for a bet.

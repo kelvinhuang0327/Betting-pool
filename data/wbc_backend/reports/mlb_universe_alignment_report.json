@@ -1,0 +1,46 @@
+{
+  "prediction_universe_games": 2430,
+  "timeline_universe_games": 38,
+  "overlap_games": 0,
+  "mapping_success_rate": 0.0,
+  "coverage_pct_vs_prediction_universe": 0.0156,
+  "providers_ready": {
+    "the_odds_api": false,
+    "sportsdataio": false
+  },
+  "strategy_options": [
+    {
+      "name": "expand_timeline_to_2025_full_universe",
+      "target": ">=80% overlap",
+      "feasibility_now": "blocked",
+      "pros": "keeps current research/backtest universe unchanged",
+      "cons": "requires paid historical odds provider with timestamped snapshots"
+    },
+    {
+      "name": "shrink_eval_universe_to_timeline_supported_subset",
+      "target": "100% of subset has timeline",
+      "feasibility_now": "limited",
+      "pros": "immediate CLV pipeline validation on supported games",
+      "cons": "currently 0 overlap with 2025 prediction universe"
+    },
+    {
+      "name": "hybrid_mode_debug_plus_production",
+      "target": "separate debug universe and production universe",
+      "feasibility_now": "ready",
+      "pros": "unblocks asset QA now while preserving strict production gate",
+      "cons": "does not solve scale until external 2025 timeline ingestion is connected"
+    }
+  ],
+  "chosen_strategy": "hybrid_mode_debug_plus_production",
+  "next_blocker": "missing_historical_2025_timestamped_odds_provider",
+  "sandbox_validation": {
+    "timeline_games": 38,
+    "timeline_clv_distribution": {
+      "positive": 0,
+      "zero": 38,
+      "negative": 0,
+      "unavailable": 0
+    },
+    "decision_label_behavior_verification": "covered_by_unit_tests_only (rule-path valid, full label eval needs real outcomes + model predictions on same universe)"
+  }
+}

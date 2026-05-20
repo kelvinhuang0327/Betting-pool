@@ -1,0 +1,71 @@
+{
+  "phase": "P23_REGRESSION_RERUN",
+  "task": "P23-D",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "environment": {
+    "platform": "darwin",
+    "python": "3.13.8",
+    "pytest": "9.0.3",
+    "pluggy": "1.6.0",
+    "venv": ".venv/bin/python",
+    "rootdir": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "configfile": "pytest.ini"
+  },
+  "p17_standalone": {
+    "command": "pytest tests/ -k 'p17' -v --tb=short --ignore=tests/test_agent_orchestrator.py",
+    "total_collected": 69,
+    "passed": 69,
+    "failed": 0,
+    "errors": 0,
+    "duration_seconds": 2.28,
+    "result": "ALL_PASS"
+  },
+  "p12_to_p17_regression": {
+    "command": "pytest tests/ -k 'p12 or p13 or p14 or p15 or p16 or p17' -v --tb=short --ignore=tests/test_agent_orchestrator.py",
+    "total_collected": 323,
+    "passed": 323,
+    "failed": 0,
+    "errors": 0,
+    "duration_seconds": 3.34,
+    "result": "ALL_PASS",
+    "test_files_included": [
+      "tests/test_blocked_state_daily_monitor_p12.py",
+      "tests/test_blocked_state_governance.py (partial: 5/29 matching filter)",
+      "tests/test_p13_minimal_monitor.py",
+      "tests/test_p14_no_expansion_guard.py",
+      "tests/test_p15_no_expansion_watch.py",
+      "tests/test_p16_no_expansion_hold.py",
+      "tests/test_p17_hold_state_continuity.py"
+    ]
+  },
+  "full_suite_baseline": {
+    "command": "pytest tests/ --tb=short -q --ignore=tests/test_agent_orchestrator.py",
+    "total_passed": 5843,
+    "total_failed": 97,
+    "total_skipped": 15,
+    "total_warnings": 178,
+    "duration_seconds": 278.26,
+    "note": "Full suite failures are in unrelated modules (strategy_replay_ui, task_quality_gate, tsl_feed_status). P12-P17 scope: 323/323 PASS."
+  },
+  "excluded_file": {
+    "file": "tests/test_agent_orchestrator.py",
+    "reason": "ImportError: cannot import name 'load_project_profile' from 'orchestrator.common'",
+    "test_count_in_file": 3,
+    "excluded_from_all_runs": true
+  },
+  "p22_comparison": {
+    "p22_claimed": "347/347 PASS",
+    "p23_rerun_p12_p17": "323/323 PASS",
+    "delta": 24,
+    "delta_explanation": "P22 regression run included ALL 29 tests in test_blocked_state_governance.py (run separately or with broader filter). P23 rerun used -k 'p12 or p13 or p14...' which selects only 5 of 29 tests in that file. Delta = 29 - 5 = 24. No regressions detected. All P12-P17 governance tests pass.",
+    "regression_detected": false,
+    "p22_claim_validity": "CONSISTENT_WITH_RERUN"
+  },
+  "overall_result": "REGRESSION_SUITE_PASS",
+  "p17_standalone_result": "PASS_69_69",
+  "p12_p17_result": "PASS_323_323"
+}

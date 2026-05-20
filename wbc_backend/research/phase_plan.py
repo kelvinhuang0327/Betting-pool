@@ -1,21 +1,20 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List
 
 
 @dataclass(frozen=True)
 class PhaseBlueprint:
     phase: str
-    objectives: List[str]
-    files: List[str]
-    algorithms: List[str]
-    pseudocode: List[str]
-    testing_strategy: List[str]
-    validation_metrics: List[str]
+    objectives: list[str]
+    files: list[str]
+    algorithms: list[str]
+    pseudocode: list[str]
+    testing_strategy: list[str]
+    validation_metrics: list[str]
 
 
-def build_v3_phase_plan() -> List[PhaseBlueprint]:
+def build_v3_phase_plan() -> list[PhaseBlueprint]:
     return [
         PhaseBlueprint(
             phase="Phase 1 - Functional Audit and Stability Hardening",

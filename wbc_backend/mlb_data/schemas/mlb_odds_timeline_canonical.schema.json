@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MLB Odds Timeline Canonical Record",
+  "type": "object",
+  "required": [
+    "game_id",
+    "source",
+    "book",
+    "market_type",
+    "opening_home_ml",
+    "decision_home_ml",
+    "latest_pregame_home_ml",
+    "closing_home_ml",
+    "fetched_at"
+  ],
+  "properties": {
+    "game_id": {"type": "string"},
+    "source": {"type": "string"},
+    "book": {"type": "string"},
+    "market_type": {"type": "string"},
+    "opening_home_ml": {"type": ["integer", "null"]},
+    "opening_away_ml": {"type": ["integer", "null"]},
+    "decision_home_ml": {"type": ["integer", "null"]},
+    "decision_away_ml": {"type": ["integer", "null"]},
+    "latest_pregame_home_ml": {"type": ["integer", "null"]},
+    "latest_pregame_away_ml": {"type": ["integer", "null"]},
+    "closing_home_ml": {"type": ["integer", "null"]},
+    "closing_away_ml": {"type": ["integer", "null"]},
+    "opening_ts": {"type": ["string", "null"]},
+    "decision_ts": {"type": ["string", "null"]},
+    "latest_pregame_ts": {"type": ["string", "null"]},
+    "closing_ts": {"type": ["string", "null"]},
+    "fetched_at": {"type": "string"},
+    "snapshot_count": {"type": "integer"},
+    "pregame_snapshot_count": {"type": "integer"},
+    "unavailable_fields": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "odds_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ts", "home_ml", "away_ml"],
+        "properties": {
+          "ts": {"type": "string"},
+          "home_ml": {"type": ["integer", "null"]},
+          "away_ml": {"type": ["integer", "null"]},
+          "source": {"type": ["string", "null"]},
+          "book": {"type": ["string", "null"]},
+          "snapshot_type": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

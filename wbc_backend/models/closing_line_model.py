@@ -6,11 +6,8 @@ Closing Line Prediction Model — § 四 CLV Alpha 預測器
 from __future__ import annotations
 
 import logging
-import pickle
 from pathlib import Path
-from typing import Dict, List, Optional
 
-import numpy as np
 
 from wbc_backend.config.settings import ModelConfig
 
@@ -18,10 +15,10 @@ logger = logging.getLogger(__name__)
 
 class ClosingLineModel:
     """
-    Predicts the expected closing price (fair market price) 
+    Predicts the expected closing price (fair market price)
     by analyzing current line movement and sharp indicators.
     """
-    def __init__(self, config: Optional[ModelConfig] = None):
+    def __init__(self, config: ModelConfig | None = None):
         self.config = config or ModelConfig()
         self.artifact_path = Path("data/wbc_backend/artifacts/clv_model.pkl")
         self.model = None
@@ -36,35 +33,35 @@ class ClosingLineModel:
     ) -> float:
         """
         Estimate the closing decimal odds.
-        
+
         Alpha Logic:
-        - If steam signals are high (e.g. Sharp money coming in), 
+        - If steam signals are high (e.g. Sharp money coming in),
           the line is likely to move further in that direction.
-        - As time approaches start, the current market consensus 
+        - As time approaches start, the current market consensus
           becomes a stronger prior for the closing price.
         """
         # Feature vector for professional estimation
         # In production, this is a regression model.
         # Here we implement the institutional alpha logic:
-        
+
         bias = 0.0
         # Steam signals strongly pull the closing line
         if steam_signal_count >= 2:
             bias -= 0.05 * steam_signal_count # Expect odds to drop (favoured by sharps)
         elif steam_signal_count <= -2:
             bias += 0.05 * abs(steam_signal_count) # Expect odds to rise
-            
+
         # Consensus pull: Market tends towards the sharpest books (e.g. Pinnacle)
         consensus_drift = (market_consensus_odds - current_odds) * 0.4
-        
+
         # Time decay impact on drift
         time_weight = max(0.2, 1.0 - time_to_start_hours / 24.0)
-        
+
         expected_closing = current_odds + (bias + consensus_drift) * time_weight
-        
+
         # Risk floor/ceiling
         expected_closing = max(1.01, min(20.0, expected_closing))
-        
+
         return round(expected_closing, 3)
 
     def assess_clv_opportunity(
@@ -80,7 +77,7 @@ class ClosingLineModel:
         """
         clv_edge = (current_odds / predicted_closing) - 1.0
         return clv_edge >= threshold
-        
+
     def get_market_efficiency_score(
         self,
         bookie_variance: float,
@@ -88,7 +85,7 @@ class ClosingLineModel:
     ) -> float:
         """
         P1.5: Market Efficiency Scorer.
-        Returns a score (0-1). 
+        Returns a score (0-1).
         1.0 = High efficiency (Hard to beat), 0.0 = Low efficiency (More errors).
         """
         # Low variance among books + high liquidity = high efficiency

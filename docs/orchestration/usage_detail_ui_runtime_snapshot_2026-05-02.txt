@@ -1,0 +1,44 @@
+=== HEADLESS BROWSER SIMULATION ===
+Timestamp: 2026-05-02T09:45:34.665Z
+Priority 1 skipped — today window calls=0 (calendar UTC day, data is from yesterday)
+Priority 2: /api/orchestrator/usage?hours=24&tail=50
+Priority 2 used — recent rows: 4
+
+--- ROLE CARDS (Today Mode) ---
+  planner: 今日尚無 LLM 呼叫紀錄
+  worker: 呼叫 4 次 | 允許 3 | 封鎖 1
+    → Claude: 1 次
+    → Copilot-Daemon: 2 次
+  cto: 今日尚無 LLM 呼叫紀錄
+
+--- RECENT TABLE (up to 10 rows) ---
+  #  Time      Role    Provider       Blocked   Block Reason
+  --------------------------------------------------------------------
+  0  21:05:31  worker  Claude         allowed   
+  1  21:05:31  worker  Copilot-Daemon allowed   
+  2  21:05:33  worker  Copilot-Daemon allowed   
+  3  21:05:33  worker  Copilot-Daemon BLOCKED   hard-off
+
+--- ALL-TIME MODE ---
+  planner: 呼叫 2 次 | 允許 0 | 封鎖 2
+    → （無 provider 明細）
+  worker: 呼叫 26 次 | 允許 20 | 封鎖 6
+    → Copilot-Daemon: 14 次
+    → Claude: 6 次
+  unknown: 呼叫 2 次 | 允許 1 | 封鎖 1
+    → （無 provider 明細）
+
+--- VALIDATION CHECKS ---
+  ✅ Proxy serves updated HTML (Usage 詳細)
+  ✅ Worker today calls > 0
+  ✅ Worker today has Copilot-Daemon
+  ✅ Worker today has Claude
+  ✅ Worker NOT "無 provider 明細"
+  ✅ Recent table has rows
+  ✅ Recent rows have provider field (not "—")
+  ✅ All-time worker Copilot-Daemon exists
+  ✅ All-time worker Claude exists
+  ✅ All-time worker Copilot-Daemon count matches CLI worker-only (14)
+  ✅ All-time worker Claude count matches CLI (6)
+
+✅ ALL CHECKS PASSED — USAGE_DETAIL_BROWSER_RUNTIME_VERIFIED

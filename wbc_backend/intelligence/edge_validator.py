@@ -27,7 +27,6 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
 
 # ─── Configuration ───────────────────────────────────────────────────────────
@@ -63,13 +62,13 @@ class EdgeReport:
     market_deviation: float = 0.0
     model_agreement_pct: float = 0.0
     n_models_positive_ev: int = 0
-    details: Dict[str, float] = field(default_factory=dict)
+    details: dict[str, float] = field(default_factory=dict)
 
 
 # ─── Scoring Functions ──────────────────────────────────────────────────────
 
 def _score_consensus_variance(
-    sub_model_probs: Dict[str, float],
+    sub_model_probs: dict[str, float],
     ensemble_prob: float,
 ) -> tuple[float, float, float]:
     """
@@ -216,7 +215,7 @@ def _score_market_efficiency(
 # ─── Main Engine ────────────────────────────────────────────────────────────
 
 def compute_edge_score(
-    sub_model_probs: Dict[str, float],
+    sub_model_probs: dict[str, float],
     ensemble_prob: float,
     market_odds: float,
     model_brier: float = 0.248,
@@ -224,7 +223,7 @@ def compute_edge_score(
     calibration_b: float = -0.019,
     sharp_signals: int = 0,
     line_movements: int = 0,
-    odds_band_roi: Optional[float] = None,
+    odds_band_roi: float | None = None,
 ) -> EdgeReport:
     """
     Compute the Edge Validity Score (0-100).
@@ -346,7 +345,7 @@ def compute_edge_score(
     return report
 
 
-def get_odds_band_roi(odds: float) -> Optional[float]:
+def get_odds_band_roi(odds: float) -> float | None:
     """
     Return historical ROI for the given odds band.
     Based on walk-forward backtest results (model_artifacts.json).

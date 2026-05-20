@@ -7,6 +7,7 @@ import tempfile
 import unittest
 from dataclasses import replace
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -261,3 +262,39 @@ class TestWBCDataVerificationGate(unittest.TestCase):
         )
         self.assertEqual(result.status, "VERIFIED_WITH_FALLBACK")
         self.assertTrue(result.used_fallback_lineup)
+
+    @patch("wbc_backend.pipeline.service.evaluate_deployment_gate")
+    @patch("wbc_backend.pipeline.service.auto_fetch_missing_data")
+    @patch("wbc_backend.pipeline.service.validate_dataset")
+    def test_prediction_service_uses_wbc_2026_validation_source(
+        self,
+        mock_validate_dataset,
+        mock_auto_fetch_missing_data,
+        mock_evaluate_deployment_gate,
+    ):
+        report = type("ValidationReportStub", (), {})()
+        report.source = "WBC_2026"
+        report.total_records = 0
+        report.completeness_pct = 0.42
+        report.is_valid = False
+        report.missing_fields = []
+        report.date_gaps = 0
+        report.pitcher_stats_coverage = 0.0
+        report.batter_stats_coverage = 0.0
+        report.statcast_coverage = 0.0
+        report.has_postseason = False
+        report.issues = []
+        report.provenance_verified = False
+
+        mock_validate_dataset.return_value = report
+        mock_auto_fetch_missing_data.return_value = report
+        mock_evaluate_deployment_gate.side_effect = RuntimeError("stop-after-validation")
+
+        service = PredictionService(self.config)
+        request = type("Req", (), {"game_id": "WBC2026_TPE_JPN_001"})()
+
+        with self.assertRaises(RuntimeError):
+            service.analyze(request)
+
+        mock_validate_dataset.assert_called_once_with("WBC_2026", self.config)
+        mock_auto_fetch_missing_data.assert_called_once_with("WBC_2026", self.config)

@@ -1,0 +1,69 @@
+{
+  "artifact": "P24_OUTLIER_SENSITIVITY",
+  "phase": "P24_CLV_ROBUSTNESS_DIAGNOSTIC_ONLY",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "production_proposal": false,
+  "baseline": {
+    "n": 2284,
+    "mean_clv_pct": 0.3622,
+    "std_clv_pct": 9.6231,
+    "median_clv_pct": 0.0,
+    "bootstrap_ci_95": {"lo": -0.0186, "hi": 0.7764, "crosses_zero": true}
+  },
+  "outlier_removal_tests": {
+    "top1pct_removed": {
+      "n_removed": 22,
+      "n_remaining": 2262,
+      "mean_after_removal": -0.0387,
+      "sign_flipped": true,
+      "interpretation": "Removing top 1% (22 extreme observations) flips mean from +0.36% to -0.04%. The positive gross mean is entirely manufactured by ~1% of observations."
+    },
+    "top5pct_removed": {
+      "n_removed": 114,
+      "n_remaining": 2170,
+      "mean_after_removal": -0.0068,
+      "bootstrap_ci_95": {"lo": -0.1389, "hi": 0.1255},
+      "sign_flipped": false,
+      "crosses_zero": true,
+      "interpretation": "After removing top 5% (114 obs), mean approaches zero (-0.007%). CI width collapses but remains zero-crossing. No signal survives."
+    }
+  },
+  "winsorization": {
+    "p5_bound": -6.6667,
+    "p95_bound": 6.7901,
+    "n": 2284,
+    "mean_winsorized": 0.0168,
+    "bootstrap_ci_95": {"lo": -0.1156, "hi": 0.1409, "crosses_zero": true},
+    "interpretation": "Winsorized mean (cap at 5th/95th percentile) = +0.017%. CI [-0.12, 0.14] crosses zero. Winsorized distribution shows no edge."
+  },
+  "trimmed_means": {
+    "gross_mean": 0.3622,
+    "trimmed_5pct": 0.0118,
+    "trimmed_10pct": 0.0072,
+    "interpretation": "5% trim removes gross mean from 0.36% to 0.01%. 10% trim → 0.007%. Progressive trimming confirms CLV is tail-driven noise."
+  },
+  "outlier_concentration": {
+    "top1pct_contribution_to_total_sum_pct": 110.57,
+    "top5pct_contribution_to_total_sum_pct": 101.79,
+    "interpretation": "Top 1% of observations (by absolute value) contribute 110.57% of total CLV sum — i.e., all other 99% of observations are net negative. The overall positive mean is a concentration artifact of extreme outliers. This is a textbook outlier-dominated distribution."
+  },
+  "distributional_analysis": {
+    "min": -62.1538,
+    "max": 158.3333,
+    "range": 220.4871,
+    "p5": -6.6667,
+    "p95": 6.7901,
+    "iqr_approximate": "approximately -2.5 to +2.5 (median=0.0, std=9.6)",
+    "neutral_mass_pct": 27.7,
+    "interpretation": "The central 90% of observations lie within [-6.7, +6.8]. The 10% tails drive all signal. With 27.7% neutral observations, the distribution is three-mass: zero-locked / small-movement / extreme-outlier."
+  },
+  "sensitivity_verdict": "The CLV signal DOES NOT survive ANY outlier robustness check. Gross mean collapses from +0.36% to ≤+0.017% under all three removal methods (trim/winsorize/exclusion). Mean sign flips to negative when top 1% removed. Classification: INCONCLUSIVE — outlier dominated, not a stable edge.",
+  "final_classification": "P24_OUTLIER_SENSITIVITY_COMPLETED"
+}

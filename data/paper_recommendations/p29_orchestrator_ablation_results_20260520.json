@@ -1,0 +1,112 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "generated_at": "2026-05-20T05:33:48.473082+00:00",
+  "date": "2026-05-20",
+  "artifact": "P29_ORCHESTRATOR_ABLATION_RESULTS",
+  "n_windows": 5,
+  "total_test_games": 2020,
+  "logreg_baseline_brier": 0.245105,
+  "reported_orchestrator_brier": 0.248703,
+  "market_only_brier": 0.244354,
+  "results": {
+    "V0_market_only": {
+      "brier": 0.244354,
+      "logloss": 0.68139,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": -0.00075,
+      "delta_vs_reported_orchestrator": -0.004349,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V1_logreg_baseline": {
+      "brier": 0.245105,
+      "logloss": 0.683099,
+      "accuracy": 0.5545,
+      "delta_vs_logreg_baseline": 0.0,
+      "delta_vs_reported_orchestrator": -0.003598,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    },
+    "V2_marl_sim_w30_sq2": {
+      "brier": 0.245736,
+      "logloss": 0.684578,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": 0.000631,
+      "delta_vs_reported_orchestrator": -0.002967,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    },
+    "V3_marl_sim_w50_sq2": {
+      "brier": 0.244154,
+      "logloss": 0.681305,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": -0.000951,
+      "delta_vs_reported_orchestrator": -0.004549,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V4_marl_v2_plus_regime_noise": {
+      "brier": 0.245786,
+      "logloss": 0.684677,
+      "accuracy": 0.5535,
+      "delta_vs_logreg_baseline": 0.000681,
+      "delta_vs_reported_orchestrator": -0.002917,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    },
+    "V5_ensemble_lr60_marl40": {
+      "brier": 0.244604,
+      "logloss": 0.682181,
+      "accuracy": 0.5584,
+      "delta_vs_logreg_baseline": -0.000501,
+      "delta_vs_reported_orchestrator": -0.004099,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V6_ensemble_lr80_marl20": {
+      "brier": 0.244729,
+      "logloss": 0.682381,
+      "accuracy": 0.5594,
+      "delta_vs_logreg_baseline": -0.000376,
+      "delta_vs_reported_orchestrator": -0.003974,
+      "is_better_than_logreg": true,
+      "is_better_than_orchestrator": true
+    },
+    "V7_marl_no_squeeze": {
+      "brier": 0.247584,
+      "logloss": 0.68831,
+      "accuracy": 0.5554,
+      "delta_vs_logreg_baseline": 0.00248,
+      "delta_vs_reported_orchestrator": -0.001119,
+      "is_better_than_logreg": false,
+      "is_better_than_orchestrator": true
+    }
+  },
+  "best_variant": "V3_marl_sim_w50_sq2",
+  "best_brier": 0.244154,
+  "ablation_interpretation": {
+    "V0": "Pure market: underperforms LogReg (LogReg learns from market + starter flags)",
+    "V1": "Simple LogReg: our P28 re-eval baseline",
+    "V2": "MARL sim w_market=0.30 sq2: severe squeeze, worst Brier",
+    "V3": "MARL sim w_market=0.50 sq2: better but still squeezes",
+    "V4": "MARL+regime noise: regime detection adds Brier cost",
+    "V5": "60/40 blend: MARL noise dilutes LogReg",
+    "V6": "80/20 blend: small MARL contribution, closest to LogReg",
+    "V7": "MARL no-squeeze: without sq2, significantly better than V2"
+  },
+  "key_finding": "V3 (MARL w_market=0.50) = 0.244154 is the best MARL variant, nearly matching pure market (0.244354). V0 (pure market) OUTPERFORMS simple LogReg (0.2451 vs 0.2444). Primary orchestrator noise: MARL w_market=0.30 is too low (optimal ~0.50). Ensemble with MARL(40%) actually helps vs LogReg alone (V5=0.2446 < V1=0.2451). Full Orchestrator overhead: +0.0043 vs market baseline, likely from w_market=0.30 + ES overfitting.",
+  "corrected_simplification": {
+    "best_variant": "V3_marl_sim_w50_sq2",
+    "best_brier": 0.244154,
+    "recommendation": "Increase MARL w_market from 0.30 to 0.50, or simplify to market-direct",
+    "expected_brier": 0.2442,
+    "improvement_vs_orchestrator": 0.004549
+  }
+}

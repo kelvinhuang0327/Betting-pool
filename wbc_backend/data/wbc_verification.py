@@ -15,7 +15,8 @@ import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any
+from collections.abc import Iterable
 
 from wbc_backend.config.settings import AppConfig
 from wbc_backend.domain.schemas import BatterSnapshot, Matchup, PitcherSnapshot
@@ -25,7 +26,7 @@ def _normalize_name(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", value.lower())
 
 
-def _parse_dt(value: str | None) -> Optional[datetime]:
+def _parse_dt(value: str | None) -> datetime | None:
     if not value:
         return None
     text = value.strip()
@@ -40,7 +41,7 @@ def _parse_dt(value: str | None) -> Optional[datetime]:
     return parsed.astimezone(timezone.utc)
 
 
-def _coerce_now(now: Optional[datetime] = None) -> datetime:
+def _coerce_now(now: datetime | None = None) -> datetime:
     if now is None:
         return datetime.now(timezone.utc)
     if now.tzinfo is None:
@@ -48,16 +49,16 @@ def _coerce_now(now: Optional[datetime] = None) -> datetime:
     return now.astimezone(timezone.utc)
 
 
-def _list_names(players: Optional[Iterable[Dict[str, Any]]]) -> List[str]:
-    names: List[str] = []
+def _list_names(players: Iterable[dict[str, Any]] | None) -> list[str]:
+    names: list[str] = []
     for player in players or []:
         if isinstance(player, dict) and player.get("name"):
             names.append(str(player["name"]))
     return names
 
 
-def _lineup_names(lineup: Optional[Iterable[Any]]) -> List[str]:
-    names: List[str] = []
+def _lineup_names(lineup: Iterable[Any] | None) -> list[str]:
+    names: list[str] = []
     for player in lineup or []:
         name = getattr(player, "name", None)
         if name:
@@ -65,11 +66,11 @@ def _lineup_names(lineup: Optional[Iterable[Any]]) -> List[str]:
     return names
 
 
-def _compare_name_lists(expected: List[str], actual: List[str]) -> bool:
+def _compare_name_lists(expected: list[str], actual: list[str]) -> bool:
     return [_normalize_name(n) for n in expected] == [_normalize_name(n) for n in actual]
 
 
-def _freshness_window_hours(game_time_utc: Optional[str], verification: Dict[str, Any]) -> float:
+def _freshness_window_hours(game_time_utc: str | None, verification: dict[str, Any]) -> float:
     explicit = verification.get("max_age_hours")
     if explicit is not None:
         return float(explicit)
@@ -97,17 +98,17 @@ class VerificationIssue:
 @dataclass
 class VerificationResult:
     requested_game_id: str
-    canonical_game_id: Optional[str] = None
+    canonical_game_id: str | None = None
     status: str = "REJECTED"
-    issues: List[VerificationIssue] = field(default_factory=list)
-    snapshot_game: Optional[Dict[str, Any]] = None
+    issues: list[VerificationIssue] = field(default_factory=list)
+    snapshot_game: dict[str, Any] | None = None
     used_fallback_lineup: bool = False
 
     @property
     def blocking(self) -> bool:
         return any(issue.severity == "ERROR" for issue in self.issues)
 
-    def ensure_verified(self) -> "VerificationResult":
+    def ensure_verified(self) -> VerificationResult:
         if self.blocking:
             raise WBCDataVerificationError(self)
         return self
@@ -125,13 +126,13 @@ class WBCAuthoritativeSnapshot:
         self.snapshot_path = Path(snapshot_path)
         self.payload = self._load()
 
-    def _load(self) -> Dict[str, Any]:
+    def _load(self) -> dict[str, Any]:
         if not self.snapshot_path.exists():
             return {"games": []}
         with self.snapshot_path.open("r", encoding="utf-8") as fh:
             return json.load(fh)
 
-    def find_game(self, game_id: str) -> Optional[Dict[str, Any]]:
+    def find_game(self, game_id: str) -> dict[str, Any] | None:
         target = game_id.upper()
         for game in self.payload.get("games", []):
             keys = {
@@ -143,13 +144,13 @@ class WBCAuthoritativeSnapshot:
                 return game
         return None
 
-    def find_game_by_matchup(
+    def find_game_by_matchup(  # NOSONAR
         self,
         *,
-        home: Optional[str],
-        away: Optional[str],
-        game_time: Optional[str],
-    ) -> Optional[Dict[str, Any]]:
+        home: str | None,
+        away: str | None,
+        game_time: str | None,
+    ) -> dict[str, Any] | None:
         expected_time = _parse_dt(game_time)
         for game in self.payload.get("games", []):
             if home and str(game.get("home", "")).upper() != home.upper():
@@ -165,8 +166,8 @@ class WBCAuthoritativeSnapshot:
             return game
         return None
 
-    def to_schedule_rows(self) -> List[Dict[str, Any]]:
-        rows: List[Dict[str, Any]] = []
+    def to_schedule_rows(self) -> list[dict[str, Any]]:
+        rows: list[dict[str, Any]] = []
         for game in self.payload.get("games", []):
             verification = game.get("verification", {})
             rows.append(
@@ -199,7 +200,7 @@ class WBCAuthoritativeSnapshot:
         return rows
 
 
-def _build_pitcher(record: Optional[Dict[str, Any]], fallback_team: str) -> Optional[PitcherSnapshot]:
+def _build_pitcher(record: dict[str, Any] | None, fallback_team: str) -> PitcherSnapshot | None:
     if not record or not record.get("name"):
         return None
     era = float(record.get("era", 3.80))
@@ -233,7 +234,7 @@ def _build_pitcher(record: Optional[Dict[str, Any]], fallback_team: str) -> Opti
     )
 
 
-def _build_batter(record: Dict[str, Any], fallback_team: str) -> BatterSnapshot:
+def _build_batter(record: dict[str, Any], fallback_team: str) -> BatterSnapshot:
     avg = float(record.get("avg", 0.250))
     obp = float(record.get("obp", avg + 0.070))
     slg = float(record.get("slg", avg + 0.150))
@@ -253,7 +254,7 @@ def _build_batter(record: Dict[str, Any], fallback_team: str) -> BatterSnapshot:
     )
 
 
-def _resolved_lineup(snapshot_game: Dict[str, Any], side: str) -> tuple[List[Dict[str, Any]], bool]:
+def _resolved_lineup(snapshot_game: dict[str, Any], side: str) -> tuple[list[dict[str, Any]], bool]:
     official = snapshot_game.get(f"{side}_lineup", [])
     if len(official) == 9:
         return official, False
@@ -263,7 +264,7 @@ def _resolved_lineup(snapshot_game: Dict[str, Any], side: str) -> tuple[List[Dic
     return official or previous or [], False
 
 
-def hydrate_matchup_from_snapshot(matchup: Matchup, snapshot_game: Dict[str, Any]) -> Matchup:
+def hydrate_matchup_from_snapshot(matchup: Matchup, snapshot_game: dict[str, Any]) -> Matchup:
     matchup.game_id = str(snapshot_game.get("canonical_game_id") or matchup.game_id)
     matchup.tournament = str(snapshot_game.get("tournament", matchup.tournament))
     matchup.game_time_utc = str(snapshot_game.get("game_time_utc", matchup.game_time_utc))
@@ -295,19 +296,19 @@ def hydrate_matchup_from_snapshot(matchup: Matchup, snapshot_game: Dict[str, Any
     return matchup
 
 
-def verify_game_artifact(
+def verify_game_artifact(  # NOSONAR  # noqa: C901
     *,
     game_id: str,
-    expected_home: Optional[str],
-    expected_away: Optional[str],
-    expected_game_time: Optional[str],
-    expected_home_sp: Optional[str],
-    expected_away_sp: Optional[str],
-    expected_home_lineup: Optional[List[str]],
-    expected_away_lineup: Optional[List[str]],
+    expected_home: str | None,
+    expected_away: str | None,
+    expected_game_time: str | None,
+    expected_home_sp: str | None,
+    expected_away_sp: str | None,
+    expected_home_lineup: list[str] | None,
+    expected_away_lineup: list[str] | None,
     data_source: str = "",
-    snapshot_path: Optional[str] = None,
-    now: Optional[datetime] = None,
+    snapshot_path: str | None = None,
+    now: datetime | None = None,
 ) -> VerificationResult:
     config = AppConfig()
     repo = WBCAuthoritativeSnapshot(snapshot_path or config.sources.wbc_authoritative_snapshot_json)
@@ -412,8 +413,8 @@ def verify_game_artifact(
                 )
             )
 
-    home_roster = set(_normalize_name(name) for name in snapshot_game.get("home_roster", []))
-    away_roster = set(_normalize_name(name) for name in snapshot_game.get("away_roster", []))
+    home_roster = {_normalize_name(name) for name in snapshot_game.get("home_roster", [])}
+    away_roster = {_normalize_name(name) for name in snapshot_game.get("away_roster", [])}
 
     snapshot_home_sp = str(snapshot_game.get("home_sp", {}).get("name", ""))
     snapshot_away_sp = str(snapshot_game.get("away_sp", {}).get("name", ""))
@@ -500,7 +501,7 @@ def verify_game_artifact(
     return result
 
 
-def verify_matchup(matchup: Matchup, snapshot_path: Optional[str] = None) -> VerificationResult:
+def verify_matchup(matchup: Matchup, snapshot_path: str | None = None) -> VerificationResult:
     return verify_game_artifact(
         game_id=matchup.game_id,
         expected_home=matchup.home.team,

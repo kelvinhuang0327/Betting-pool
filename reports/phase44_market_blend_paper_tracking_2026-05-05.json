@@ -1,0 +1,92 @@
+{
+  "run_id": "c4cabb6d-9027-4955-b90e-2c298c058755",
+  "generated_at": "2026-05-05T03:10:45.601361Z",
+  "input_prediction_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/mlb_2025_per_game_predictions.jsonl",
+  "sample_size": 2025,
+  "date_start": "2025-04-27",
+  "date_end": "2025-09-28",
+  "alpha": 0.4,
+  "raw_brier": 0.2447056303111111,
+  "raw_bss": -0.0038936646568938915,
+  "raw_ece": 0.03109671,
+  "market_brier": 0.24375652414814813,
+  "market_ece": 0.03011129,
+  "blend_brier": 0.2432294171354074,
+  "blend_bss": 0.00216243242958436,
+  "blend_ece": 0.02808486,
+  "brier_delta": -0.000527107012740724,
+  "bss_vs_market": 0.00216243242958436,
+  "segment_summary": {
+    "confidence_bucket": "WEAK_VALUE",
+    "disagreement_bucket": "WEAK_VALUE",
+    "month": "CONDITIONAL_VALUE",
+    "odds_bucket": "CONDITIONAL_VALUE"
+  },
+  "bootstrap": {
+    "significance": "NOT_SIGNIFICANT",
+    "ci_lower": -0.0015,
+    "ci_upper": 0.0006,
+    "prob_improvement": 0.81,
+    "n_bootstrap": 1000,
+    "source": "phase43"
+  },
+  "gate_state": "PAPER_ONLY",
+  "candidate_patch_created": false,
+  "gate_criteria": {
+    "sample_size_met": false,
+    "bootstrap_significant": false,
+    "blend_bss_consistently_positive": true,
+    "ece_not_deteriorated": true,
+    "folds_positive_met": true,
+    "human_review_approved": false,
+    "summary": "PARTIALLY_MET"
+  },
+  "gate_criteria_summary": "PARTIALLY_MET",
+  "phase43_evidence": {
+    "gate_recommendation": "MARKET_BLEND_PAPER_ONLY",
+    "fold_stability": "STABLE",
+    "folds_positive": 4,
+    "folds_total": 5,
+    "bootstrap_significance": "NOT_SIGNIFICANT",
+    "bootstrap_ci": [
+      -0.0015,
+      0.0006
+    ],
+    "bootstrap_prob_improvement": 0.81,
+    "overall_raw_bss": -0.0039,
+    "overall_blend_bss": 0.0022,
+    "overall_raw_brier": 0.2447,
+    "overall_market_brier": 0.2438,
+    "overall_blend_brier": 0.2432,
+    "overall_raw_ece": 0.0311,
+    "overall_blend_ece": 0.0281,
+    "segment_value": {
+      "month": "CONDITIONAL_VALUE",
+      "odds_bucket": "CONDITIONAL_VALUE",
+      "confidence_bucket": "WEAK_VALUE",
+      "disagreement_bucket": "WEAK_VALUE"
+    },
+    "sample_size": 2025,
+    "date_range": [
+      "2025-04-27",
+      "2025-09-28"
+    ],
+    "audit_completed_at": "2026-05-05"
+  },
+  "risk_notes": [
+    "α=0.4 blend shows +0.22% BSS vs market overall but CI crosses 0 — statistically NOT_SIGNIFICANT",
+    "Best-per-fold alpha varies (0.1–1.0) — diagnostic_only; do NOT use per-fold alpha in production",
+    "CONDITIONAL_VALUE only in month + odds_bucket segments; high_conf segment shows NO_VALUE",
+    "Paper-only: track BSS/ECE/sample metrics for >= 3 periods before re-evaluating gate",
+    "Do NOT deploy to production without PATCH_GATE_RECHECK from BSS Safety Gate"
+  ],
+  "next_gate_criteria": [
+    "sample_size >= 3000 OR +30 days new rolling data since Phase 43 (2026-05-05)",
+    "bootstrap CI does not cross 0 (SIGNIFICANT at 95% level)",
+    "blend_bss consistently > 0 across >= 3 consecutive evaluation periods",
+    "ECE not clearly deteriorated: blend_ece <= market_ece + 0.01",
+    ">= 4/5 folds or rolling windows have positive blend_bss",
+    "human review approved (via review_queue system)"
+  ],
+  "audit_hash": "593b85dd0561e0a1cfe02d0216d2408229c6338a00899176c57793b921eafc60"
+}

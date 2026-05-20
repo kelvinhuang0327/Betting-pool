@@ -1,0 +1,48 @@
+{
+  "strict_valid_rate": 0.0,
+  "promotable": false,
+  "moneyline_strict": {
+    "model_name": "mlb_moneyline",
+    "n_games": 0,
+    "n_bets": 0,
+    "roi": 0.0,
+    "brier": 1.0,
+    "logloss": 1.0,
+    "clv": 0.0,
+    "threshold_pass": false,
+    "fold_roi_std": 0.0,
+    "tier": "STRICT_VALID"
+  },
+  "moneyline_research": {
+    "model_name": "mlb_moneyline",
+    "n_games": 2430,
+    "n_bets": 1017,
+    "roi": -0.10127826941986234,
+    "brier": 0.24200116635145497,
+    "logloss": 0.6766955009228514,
+    "clv": 0.00012732853067884935,
+    "threshold_pass": false,
+    "fold_roi_std": 0.0347613453232744,
+    "tier": "RESEARCH_VALID"
+  },
+  "f5_moneyline": {
+    "model": "mlb_f5_moneyline",
+    "status": "rejected",
+    "reason": "missing_required_labels:Away F5 Score,Home F5 Score",
+    "n_games": 0,
+    "roi": null,
+    "brier": null,
+    "logloss": null,
+    "clv": null
+  },
+  "team_total": {
+    "model": "mlb_team_total",
+    "status": "blocked",
+    "reason": "missing_required_market_lines:Away Team Total Line,Home Team Total Line",
+    "n_games": 0,
+    "roi": null,
+    "brier": null,
+    "logloss": null,
+    "clv": null
+  }
+}

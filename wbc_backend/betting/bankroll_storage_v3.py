@@ -9,7 +9,6 @@ from __future__ import annotations
 import json
 import os
 import sqlite3
-from typing import Dict, List, Optional
 
 from wbc_backend.betting.risk_control import BankrollState
 
@@ -150,7 +149,7 @@ class BankrollStorageV3:
         pnl: float,
         won: bool,
         bankroll_after: float,
-        metadata: Optional[Dict] = None,
+        metadata: dict | None = None,
     ) -> None:
         with self._connect() as conn:
             conn.execute("""
@@ -164,7 +163,7 @@ class BankrollStorageV3:
                 json.dumps(metadata) if metadata else None,
             ))
 
-    def get_bet_history(self, limit: int = 100) -> List[Dict]:
+    def get_bet_history(self, limit: int = 100) -> list[dict]:
         with self._connect() as conn:
             conn.row_factory = sqlite3.Row
             rows = conn.execute(

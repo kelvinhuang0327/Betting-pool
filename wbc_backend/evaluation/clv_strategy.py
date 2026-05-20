@@ -14,10 +14,8 @@ CLV 反向策略 — Closing Line Value 打敗市場
 """
 from __future__ import annotations
 
-import math
 import warnings
 from collections import defaultdict
-from typing import Dict, List
 
 import numpy as np
 import pandas as pd
@@ -52,17 +50,17 @@ def load_data() -> pd.DataFrame:
 
 class Tracker:
     def __init__(self):
-        self.runs_for: Dict[str, List[int]] = defaultdict(list)
-        self.runs_against: Dict[str, List[int]] = defaultdict(list)
-        self.results: Dict[str, List[int]] = defaultdict(list)
-        self.margins: Dict[str, List[int]] = defaultdict(list)
-        self.sp_wins: Dict[str, List[int]] = defaultdict(list)
-        self.sp_runs: Dict[str, List[int]] = defaultdict(list)
-        self.sp_starts: Dict[str, int] = defaultdict(int)
-        self.elo: Dict[str, float] = defaultdict(lambda: 1500.0)
-        self.home_results: Dict[str, List[int]] = defaultdict(list)
-        self.away_results: Dict[str, List[int]] = defaultdict(list)
-        self.vs_market: Dict[str, List[float]] = defaultdict(list)  # actual - implied
+        self.runs_for: dict[str, list[int]] = defaultdict(list)
+        self.runs_against: dict[str, list[int]] = defaultdict(list)
+        self.results: dict[str, list[int]] = defaultdict(list)
+        self.margins: dict[str, list[int]] = defaultdict(list)
+        self.sp_wins: dict[str, list[int]] = defaultdict(list)
+        self.sp_runs: dict[str, list[int]] = defaultdict(list)
+        self.sp_starts: dict[str, int] = defaultdict(int)
+        self.elo: dict[str, float] = defaultdict(lambda: 1500.0)
+        self.home_results: dict[str, list[int]] = defaultdict(list)
+        self.away_results: dict[str, list[int]] = defaultdict(list)
+        self.vs_market: dict[str, list[float]] = defaultdict(list)  # actual - implied
 
     def _avg(self, data: list, w: int) -> float:
         d = data[-w:] if data else []
@@ -70,12 +68,13 @@ class Tracker:
 
     def _std(self, data: list, w: int) -> float:
         d = data[-w:]
-        if len(d) < 2: return 0.0
+        if len(d) < 2:
+            return 0.0
         m = sum(d) / len(d)
         return (sum((x - m) ** 2 for x in d) / len(d)) ** 0.5
 
     def build_edge_features(self, home: str, away: str, home_sp: str, away_sp: str,
-                             home_fair: float, ou_line: float) -> Dict[str, float]:
+                             home_fair: float, ou_line: float) -> dict[str, float]:
         """Build features focused on where market might be wrong."""
         f = {}
 
@@ -201,7 +200,7 @@ class Tracker:
         self.elo[away] -= delta
 
 
-def run_clv_strategy():
+def run_clv_strategy():  # noqa: C901
     print()
     print("=" * 70)
     print("💎 CLV 反向策略 — 找出市場定價偏差")
@@ -262,17 +261,16 @@ def run_clv_strategy():
         X_row = np.array([feat.get(f, 0.0) for f in feature_names]).reshape(1, -1)
 
         # Retrain every 40 games
-        if model is None or (idx - warm_up) % 40 == 0:
-            if len(all_features) >= 80:
-                X_train = np.array([[f.get(fn, 0.0) for fn in feature_names] for f in all_features[-800:]])
-                y_train = np.array(all_labels[-800:])
-                model = lgb.LGBMClassifier(
-                    n_estimators=200, max_depth=3, learning_rate=0.03,
-                    subsample=0.85, colsample_bytree=0.75, min_child_weight=10,
-                    reg_alpha=0.5, reg_lambda=2.0, random_state=42,
-                    num_leaves=8, verbose=-1,
-                )
-                model.fit(X_train, y_train)
+        if (model is None or (idx - warm_up) % 40 == 0) and len(all_features) >= 80:
+            X_train = np.array([[f.get(fn, 0.0) for fn in feature_names] for f in all_features[-800:]])
+            y_train = np.array(all_labels[-800:])
+            model = lgb.LGBMClassifier(
+                n_estimators=200, max_depth=3, learning_rate=0.03,
+                subsample=0.85, colsample_bytree=0.75, min_child_weight=10,
+                reg_alpha=0.5, reg_lambda=2.0, random_state=42,
+                num_leaves=8, verbose=-1,
+            )
+            model.fit(X_train, y_train)
 
         if model is not None:
             prob_home = float(model.predict_proba(X_row)[0, 1])

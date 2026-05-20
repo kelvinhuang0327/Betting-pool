@@ -11,9 +11,7 @@ WBC 2023 回測 v2 — 套用優化後的 Elo-Heavy 權重
 """
 from __future__ import annotations
 
-import math
 from collections import defaultdict
-from typing import Dict, List
 
 import numpy as np
 
@@ -104,16 +102,18 @@ def poisson_wp(lam_h, lam_a):
 
 
 def pythag(rpg, rapg):
-    if rpg + rapg <= 0: return 0.5
+    if rpg + rapg <= 0:
+        return 0.5
     return rpg ** 1.83 / (rpg ** 1.83 + rapg ** 1.83)
 
 
 def log5(pa, pb):
-    if pa + pb == 0: return 0.5
+    if pa + pb == 0:
+        return 0.5
     return pa * (1 - pb) / (pa * (1 - pb) + pb * (1 - pa))
 
 
-def run():
+def run():  # noqa: C901
     print()
     print("=" * 70)
     print("🏆 WBC 2023 回測 v2 (Elo-Heavy 優化版)")
@@ -235,7 +235,6 @@ def run():
         edge_a = (1 - p) - (1 - market_fair)
 
         bet_side = None
-        max_p = max(p, 1 - p)
 
         if edge_h >= 0.05 and p >= 0.58:
             bet_side = "home"
@@ -261,11 +260,11 @@ def run():
                 total_staked += stake
                 total_pnl += pnl
                 bet_count += 1
-                if won: bet_wins += 1
+                if won:
+                    bet_wins += 1
                 peak = max(peak, bankroll)
                 max_dd = max(max_dd, (peak - bankroll) / peak)
 
-                winner = home if actual_hw else away
                 marker = "✅" if won else "❌"
                 bet_details.append(
                     f"  {marker} {away}@{home} → bet {bet_side.upper()} "
@@ -330,7 +329,7 @@ def run():
     print()
 
     print("=" * 70)
-    print(f"📋 總結:")
+    print("📋 總結:")
     print(f"  ✅ 整體: {accuracy:.1%} ({correct}/{total})")
     print(f"  ✅ 淘汰賽: {ko}/{ko_t} = {ko/ko_t:.0%}" if ko_t else "")
     if bet_count:

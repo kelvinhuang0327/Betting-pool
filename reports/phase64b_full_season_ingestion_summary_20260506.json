@@ -1,0 +1,22 @@
+{
+  "module_version": "phase64b_full_season_ingestion_v1",
+  "run_timestamp": "2026-05-06T06:45:57.213922+00:00",
+  "dry_run": true,
+  "live_api_enabled": false,
+  "n_bull_3d_rows": 2430,
+  "n_parseable_games": 2430,
+  "n_team_artifacts": 4694,
+  "n_3d_available": 4694,
+  "n_1d_available": 0,
+  "n_5d_available": 0,
+  "n_b2b_available": 0,
+  "n_3in4_available": 0,
+  "n_closer_available": 0,
+  "n_phase63_artifacts": 4,
+  "n_phase63_consistent": 0,
+  "ssot_output_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/reports/phase64b_bullpen_ssot_features_20260506.jsonl",
+  "appearances_output_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/reports/phase64b_bullpen_relief_appearances_20260506.jsonl",
+  "coverage_rate_3d": 1.0,
+  "ready_for_attribution": true,
+  "phase64b_ingestion_verified": true
+}

@@ -1,0 +1,39 @@
+{
+  "window": "8h",
+  "since": "2026-04-30T02:17:42.869777+00:00",
+  "generated_at": "2026-04-30T10:17:42.870041+00:00",
+  "classification": "BLOCKED",
+  "tasks_created": 0,
+  "tasks_completed": 0,
+  "tasks_queued": 0,
+  "tasks_running": 0,
+  "tasks_failed": 0,
+  "tasks_archived": 0,
+  "tasks_cancelled": 0,
+  "tasks_rejected": 0,
+  "governance_blocked": 0,
+  "consecutive_skips": 96,
+  "patches_validated": 0,
+  "patches_kept": 0,
+  "patches_rejected": 0,
+  "clv_computed": 0,
+  "clv_pending": 14,
+  "strategy_reinforcements": 0,
+  "top_improvements": [],
+  "tasks_without_dimension": [],
+  "system_reliability_issues": [
+    "all_clv_pending: 14 PENDING_CLOSING, 0 COMPUTED"
+  ],
+  "optimization_state": "DATA_WAITING",
+  "optimization_blocked_families": [
+    "strategy-reinforcement",
+    "model-validation-atomic",
+    "model-patch-atomic",
+    "feedback-atomic"
+  ],
+  "next_recommended_focus": "Unblock governance first: all_clv_pending: 14 PENDING_CLOSING, 0 COMPUTED",
+  "difficulty_level": 2,
+  "consecutive_failures": 0,
+  "consecutive_successes": 1,
+  "scheduler_runs": 96
+}

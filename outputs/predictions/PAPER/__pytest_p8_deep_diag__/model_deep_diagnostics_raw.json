@@ -1,0 +1,197 @@
+{
+  "row_count": 20,
+  "usable_count": 20,
+  "model_brier": 0.15155,
+  "market_brier": 0.217251,
+  "brier_skill_score": 0.30242,
+  "ece": 0.385,
+  "avg_model_prob": 0.615,
+  "avg_market_prob": 0.533898,
+  "avg_home_win_rate": 1.0,
+  "avg_model_minus_market": 0.081102,
+  "orientation_diagnostics": {
+    "bss_normal": 0.302419,
+    "bss_inverted_model": -0.756265,
+    "bss_swapped_home_away": -0.756265,
+    "best_orientation": "normal",
+    "orientation_warning": null
+  },
+  "join_diagnostics": {
+    "missing_game_id_count": 20,
+    "duplicate_game_id_count": 0,
+    "duplicate_date_team_count": 0,
+    "missing_home_team_count": 0,
+    "missing_away_team_count": 0,
+    "suspicious_same_team_count": 0
+  },
+  "outcome_diagnostics": {
+    "outcome_zero_count": 0,
+    "outcome_one_count": 20,
+    "outcome_null_count": 0,
+    "outcome_balance": 1.0
+  },
+  "probability_diagnostics": {
+    "model_prob_min": 0.52,
+    "model_prob_max": 0.71,
+    "model_prob_std": 0.059161,
+    "market_prob_min": 0.533898,
+    "market_prob_max": 0.533898,
+    "market_prob_std": 0.0,
+    "overconfident_count": 13,
+    "underconfident_count": 0
+  },
+  "segment_summary": {
+    "by_month": [
+      {
+        "segment": "2025-05",
+        "segment_by": "month",
+        "row_count": 20,
+        "model_brier": 0.15155,
+        "market_brier": 0.217251,
+        "bss": 0.302419,
+        "ece": 0.385,
+        "avg_edge": 0.081102,
+        "avg_model_prob": 0.615,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ],
+    "by_confidence_bucket": [
+      {
+        "segment": "low_conf_<0.55",
+        "segment_by": "confidence_bucket",
+        "row_count": 3,
+        "model_brier": 0.220967,
+        "market_brier": 0.217251,
+        "bss": -0.017104,
+        "ece": 0.47,
+        "avg_edge": -0.003898,
+        "avg_model_prob": 0.53,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "med_conf_0.55-0.60",
+        "segment_by": "confidence_bucket",
+        "row_count": 5,
+        "model_brier": 0.1851,
+        "market_brier": 0.217251,
+        "bss": 0.147989,
+        "ece": 0.43,
+        "avg_edge": 0.036102,
+        "avg_model_prob": 0.57,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "med_hi_conf_0.60-0.65",
+        "segment_by": "confidence_bucket",
+        "row_count": 5,
+        "model_brier": 0.1446,
+        "market_brier": 0.217251,
+        "bss": 0.33441,
+        "ece": 0.38,
+        "avg_edge": 0.086102,
+        "avg_model_prob": 0.62,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "hi_conf_>=0.65",
+        "segment_by": "confidence_bucket",
+        "row_count": 5,
+        "model_brier": 0.1091,
+        "market_brier": 0.217251,
+        "bss": 0.497815,
+        "ece": 0.33,
+        "avg_edge": 0.136102,
+        "avg_model_prob": 0.67,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "very_hi_conf_>=0.70",
+        "segment_by": "confidence_bucket",
+        "row_count": 2,
+        "model_brier": 0.08705,
+        "market_brier": 0.217251,
+        "bss": 0.599311,
+        "ece": 0.295,
+        "avg_edge": 0.171102,
+        "avg_model_prob": 0.705,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ],
+    "by_favorite_side": [
+      {
+        "segment": "home_fav",
+        "segment_by": "favorite_side",
+        "row_count": 20,
+        "model_brier": 0.15155,
+        "market_brier": 0.217251,
+        "bss": 0.302419,
+        "ece": 0.385,
+        "avg_edge": 0.081102,
+        "avg_model_prob": 0.615,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ],
+    "by_home_bias_bucket": [
+      {
+        "segment": "neutral_-0.02-0.02",
+        "segment_by": "home_bias_bucket",
+        "row_count": 4,
+        "model_brier": 0.21635,
+        "market_brier": 0.217251,
+        "bss": 0.004146,
+        "ece": 0.465,
+        "avg_edge": 0.001102,
+        "avg_model_prob": 0.535,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "mild_home_bias_0.02-0.08",
+        "segment_by": "home_bias_bucket",
+        "row_count": 6,
+        "model_brier": 0.172517,
+        "market_brier": 0.217251,
+        "bss": 0.20591,
+        "ece": 0.415,
+        "avg_edge": 0.051102,
+        "avg_model_prob": 0.585,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "strong_home_bias_0.08-0.15",
+        "segment_by": "home_bias_bucket",
+        "row_count": 7,
+        "model_brier": 0.1229,
+        "market_brier": 0.217251,
+        "bss": 0.434294,
+        "ece": 0.35,
+        "avg_edge": 0.116102,
+        "avg_model_prob": 0.65,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "extreme_home_bias_>=0.15",
+        "segment_by": "home_bias_bucket",
+        "row_count": 3,
+        "model_brier": 0.090067,
+        "market_brier": 0.217251,
+        "bss": 0.585425,
+        "ece": 0.3,
+        "avg_edge": 0.166102,
+        "avg_model_prob": 0.7,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ]
+  },
+  "generated_at": "2026-05-20T09:54:06.814770+00:00"
+}

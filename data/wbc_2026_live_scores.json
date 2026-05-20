@@ -1,0 +1,480 @@
+{
+  "source": "MLB Stats API",
+  "sport_id": 51,
+  "start_date": "2026-03-05",
+  "end_date": "2026-03-18",
+  "fetched_at_utc": "2026-03-18T13:56:46.599835Z",
+  "games_count": 47,
+  "games": [
+    {
+      "date": "2026-03-05",
+      "game_id": 788120,
+      "status": "Final",
+      "away": "Chinese Taipei",
+      "away_score": 0,
+      "home": "Australia",
+      "home_score": 3,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-05",
+      "game_id": 788115,
+      "status": "Final",
+      "away": "Czechia",
+      "away_score": 4,
+      "home": "Korea",
+      "home_score": 11,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788116,
+      "status": "Final",
+      "away": "Australia",
+      "away_score": 5,
+      "home": "Czechia",
+      "home_score": 1,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788114,
+      "status": "Completed Early",
+      "away": "Japan",
+      "away_score": 13,
+      "home": "Chinese Taipei",
+      "home_score": 0,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788139,
+      "status": "Final",
+      "away": "Cuba",
+      "away_score": 3,
+      "home": "Panama",
+      "home_score": 1,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788110,
+      "status": "Final",
+      "away": "Kingdom of the Netherlands",
+      "away_score": 2,
+      "home": "Venezuela",
+      "home_score": 6,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788129,
+      "status": "Final",
+      "away": "Mexico",
+      "away_score": 8,
+      "home": "Great Britain",
+      "home_score": 2,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788136,
+      "status": "Final",
+      "away": "Puerto Rico",
+      "away_score": 5,
+      "home": "Colombia",
+      "home_score": 0,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788105,
+      "status": "Final",
+      "away": "Nicaragua",
+      "away_score": 3,
+      "home": "Dominican Republic",
+      "home_score": 12,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-06",
+      "game_id": 788128,
+      "status": "Final",
+      "away": "United States",
+      "away_score": 15,
+      "home": "Brazil",
+      "home_score": 5,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788117,
+      "status": "Completed Early",
+      "away": "Chinese Taipei",
+      "away_score": 14,
+      "home": "Czechia",
+      "home_score": 0,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788118,
+      "status": "Final",
+      "away": "Korea",
+      "away_score": 6,
+      "home": "Japan",
+      "home_score": 8,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788138,
+      "status": "Final",
+      "away": "Colombia",
+      "away_score": 2,
+      "home": "Canada",
+      "home_score": 8,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788108,
+      "status": "Final",
+      "away": "Nicaragua",
+      "away_score": 3,
+      "home": "Kingdom of the Netherlands",
+      "home_score": 4,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788126,
+      "status": "Final",
+      "away": "Brazil",
+      "away_score": 0,
+      "home": "Italy",
+      "home_score": 8,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788137,
+      "status": "Final",
+      "away": "Panama",
+      "away_score": 3,
+      "home": "Puerto Rico",
+      "home_score": 4,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788107,
+      "status": "Final",
+      "away": "Israel",
+      "away_score": 3,
+      "home": "Venezuela",
+      "home_score": 11,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-07",
+      "game_id": 788127,
+      "status": "Final",
+      "away": "Great Britain",
+      "away_score": 1,
+      "home": "United States",
+      "home_score": 9,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788113,
+      "status": "Final",
+      "away": "Chinese Taipei",
+      "away_score": 5,
+      "home": "Korea",
+      "home_score": 4,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788109,
+      "status": "Final",
+      "away": "Australia",
+      "away_score": 3,
+      "home": "Japan",
+      "home_score": 4,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788135,
+      "status": "Final",
+      "away": "Colombia",
+      "away_score": 4,
+      "home": "Cuba",
+      "home_score": 7,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788106,
+      "status": "Completed Early",
+      "away": "Kingdom of the Netherlands",
+      "away_score": 1,
+      "home": "Dominican Republic",
+      "home_score": 12,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788124,
+      "status": "Final",
+      "away": "Great Britain",
+      "away_score": 4,
+      "home": "Italy",
+      "home_score": 7,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788104,
+      "status": "Final",
+      "away": "Nicaragua",
+      "away_score": 0,
+      "home": "Israel",
+      "home_score": 5,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788134,
+      "status": "Final",
+      "away": "Panama",
+      "away_score": 4,
+      "home": "Canada",
+      "home_score": 3,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-08",
+      "game_id": 788125,
+      "status": "Completed Early",
+      "away": "Brazil",
+      "away_score": 0,
+      "home": "Mexico",
+      "home_score": 16,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-09",
+      "game_id": 788112,
+      "status": "Final",
+      "away": "Korea",
+      "away_score": 7,
+      "home": "Australia",
+      "home_score": 2,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-09",
+      "game_id": 788103,
+      "status": "Final",
+      "away": "Dominican Republic",
+      "away_score": 10,
+      "home": "Israel",
+      "home_score": 1,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-09",
+      "game_id": 788133,
+      "status": "Final",
+      "away": "Colombia",
+      "away_score": 4,
+      "home": "Panama",
+      "home_score": 3,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-09",
+      "game_id": 788123,
+      "status": "Final",
+      "away": "Brazil",
+      "away_score": 1,
+      "home": "Great Britain",
+      "home_score": 8,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-09",
+      "game_id": 788131,
+      "status": "Final",
+      "away": "Cuba",
+      "away_score": 1,
+      "home": "Puerto Rico",
+      "home_score": 4,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-09",
+      "game_id": 788099,
+      "status": "Final",
+      "away": "Venezuela",
+      "away_score": 4,
+      "home": "Nicaragua",
+      "home_score": 0,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-09",
+      "game_id": 788122,
+      "status": "Final",
+      "away": "Mexico",
+      "away_score": 3,
+      "home": "United States",
+      "home_score": 5,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-10",
+      "game_id": 788111,
+      "status": "Final",
+      "away": "Czechia",
+      "away_score": 0,
+      "home": "Japan",
+      "home_score": 9,
+      "venue": "Tokyo Dome"
+    },
+    {
+      "date": "2026-03-10",
+      "game_id": 788102,
+      "status": "Final",
+      "away": "Israel",
+      "away_score": 6,
+      "home": "Kingdom of the Netherlands",
+      "home_score": 2,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-10",
+      "game_id": 788132,
+      "status": "Final",
+      "away": "Canada",
+      "away_score": 3,
+      "home": "Puerto Rico",
+      "home_score": 2,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-10",
+      "game_id": 788119,
+      "status": "Final",
+      "away": "Italy",
+      "away_score": 8,
+      "home": "United States",
+      "home_score": 6,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-11",
+      "game_id": 788130,
+      "status": "Final",
+      "away": "Canada",
+      "away_score": 7,
+      "home": "Cuba",
+      "home_score": 2,
+      "venue": "Hiram Bithorn Stadium"
+    },
+    {
+      "date": "2026-03-11",
+      "game_id": 788121,
+      "status": "Final",
+      "away": "Italy",
+      "away_score": 9,
+      "home": "Mexico",
+      "home_score": 1,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-11",
+      "game_id": 788101,
+      "status": "Final",
+      "away": "Dominican Republic",
+      "away_score": 7,
+      "home": "Venezuela",
+      "home_score": 5,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-13",
+      "game_id": 788095,
+      "status": "Completed Early",
+      "away": "Korea",
+      "away_score": 0,
+      "home": "Dominican Republic",
+      "home_score": 10,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-13",
+      "game_id": 788100,
+      "status": "Final",
+      "away": "United States",
+      "away_score": 5,
+      "home": "Canada",
+      "home_score": 3,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-14",
+      "game_id": 788098,
+      "status": "Final",
+      "away": "Puerto Rico",
+      "away_score": 6,
+      "home": "Italy",
+      "home_score": 8,
+      "venue": "Daikin Park"
+    },
+    {
+      "date": "2026-03-14",
+      "game_id": 788097,
+      "status": "Final",
+      "away": "Venezuela",
+      "away_score": 8,
+      "home": "Japan",
+      "home_score": 5,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-15",
+      "game_id": 788096,
+      "status": "Final",
+      "away": "United States",
+      "away_score": 2,
+      "home": "Dominican Republic",
+      "home_score": 1,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-16",
+      "game_id": 788093,
+      "status": "Final",
+      "away": "Venezuela",
+      "away_score": 4,
+      "home": "Italy",
+      "home_score": 2,
+      "venue": "loanDepot park"
+    },
+    {
+      "date": "2026-03-17",
+      "game_id": 788094,
+      "status": "Final",
+      "away": "Venezuela",
+      "away_score": 3,
+      "home": "United States",
+      "home_score": 2,
+      "venue": "loanDepot park"
+    }
+  ]
+}

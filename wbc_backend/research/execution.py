@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List
 
 import numpy as np
 
@@ -26,7 +25,7 @@ class PhaseExecutionResult:
     phase: str
     passed: bool
     summary: str
-    metrics: Dict[str, float]
+    metrics: dict[str, float]
 
 
 class V3ResearchExecutor:
@@ -178,7 +177,7 @@ class V3ResearchExecutor:
             metrics={"phase_count": float(len(phases))},
         )
 
-    def execute_all(self) -> List[PhaseExecutionResult]:
+    def execute_all(self) -> list[PhaseExecutionResult]:
         phases = [
             self._phase_1_audit,
             self._phase_2_feature_expansion,
@@ -187,7 +186,7 @@ class V3ResearchExecutor:
             self._phase_5_research_infra,
             self._phase_6_plan,
         ]
-        results: List[PhaseExecutionResult] = []
+        results: list[PhaseExecutionResult] = []
         for phase_fn in phases:
             result = phase_fn()
             results.append(result)

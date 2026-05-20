@@ -1,0 +1,131 @@
+{
+  "artifact": "P25_MARKET_MAPPING_AUDIT",
+  "phase": "P25_CLV_INCONCLUSIVE_ROOT_CAUSE_AUDIT",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "source_snapshot_lines": 2788,
+  "valid_pairs": 236,
+  "audit_scope": "All 5 TSL market codes: MNL/HDC/OU/OE/TTO — outcome name mapping, side alignment, line-shift detection",
+  "market_results": {
+    "MNL": {
+      "status": "RISK",
+      "n_pairs": 236,
+      "n_clv_obs": 472,
+      "market_type": "Moneyline (Winner)",
+      "expected_outcomes": "3-way: HomeTeam / Draw / AwayTeam",
+      "actual_outcome_variety": "165 unique outcome name patterns (team names vary per game)",
+      "mixed_market_type": {
+        "two_way_count": 21,
+        "three_way_count": 215,
+        "note": "21 pairs have 2-outcome MNL (likely NPB/MLB without draw). CLV formula uses index 0,1 — for 3-way MNL, index 1 = draw. For 2-way MNL, index 1 = away. These are measuring DIFFERENT sides."
+      },
+      "name_mismatch_pairs": 3,
+      "name_mismatch_rate_pct": 1.3,
+      "max_abs_clv_pct": 66.74,
+      "extreme_clv_count_gt50pct": 3,
+      "risk_flags": [
+        "NAME_MISMATCH:3 — pregame/closing outcome name differs for 3 pairs",
+        "OUTCOME_COUNT_VARIES — 21 two-way vs 215 three-way",
+        "MIXED_MNL_MARKETS — index-1 maps to different side depending on market type"
+      ],
+      "side_mapping_assessment": "PARTIAL_RISK — draw is excluded in 3-way (acceptable if measuring home/away only), but 2-way vs 3-way mixing means index-1 inconsistency",
+      "min_odds": 1.04,
+      "max_odds_pre": 18.0
+    },
+    "HDC": {
+      "status": "RISK",
+      "n_pairs": 229,
+      "n_clv_obs": 458,
+      "market_type": "Handicap (Asian Handicap / Run Line)",
+      "expected_outcomes": "2-way: HomeTeam+spread / AwayTeam+spread",
+      "actual_outcome_variety": "175 unique outcome name patterns",
+      "name_mismatch_pairs": 28,
+      "name_mismatch_rate_pct": 12.2,
+      "note": "Outcome names include the handicap spread (e.g., '底特律老虎 -2.5', '密爾瓦基釀酒人 +2.5'). A name mismatch between pregame and closing = the spread line CHANGED between snapshots. CLV formula compares by index position regardless — this computes CLV ACROSS DIFFERENT HANDICAP LINES. This is the PRIMARY outlier driver.",
+      "line_shift_examples": [
+        "pregame: '底特律老虎 -2.5' / closing: '底特律老虎 -1.5' → CLV formula: odds_on_-2.5_pre vs odds_on_-1.5_close = meaningless comparison",
+        "pregame: '樂天金鷲 -1.5' / closing: '樂天金鷲 -2.5' → same issue"
+      ],
+      "extreme_clv_count_gt50pct": 17,
+      "max_abs_clv_pct": 107.14,
+      "risk_flags": [
+        "NAME_MISMATCH:28 — CRITICAL: 12.2% of HDC pairs have different outcome names = line shifts",
+        "EXTREME_CLV_CASES:17 — 17 observations with |CLV|>50%, almost all from HDC line shifts",
+        "HIGH_OUTCOME_VARIETY:175 — valid (team names + spreads), not inherently a bug"
+      ],
+      "verdict": "CRITICAL_CONSTRUCTION_BUG",
+      "fix_required": "Match outcomes by name, not by index, before computing CLV. Discard any pair where pre_name != clo_name."
+    },
+    "OU": {
+      "status": "RISK",
+      "n_pairs": 230,
+      "n_clv_obs": 460,
+      "market_type": "Over/Under (Total Runs)",
+      "expected_outcomes": "2-way: Over X.X / Under X.X",
+      "actual_outcome_variety": "8 unique patterns (大/小 with different totals: 7.5/8.5/9.5/10.5/11.5/12.5/13.5/others)",
+      "name_mismatch_pairs": 21,
+      "name_mismatch_rate_pct": 9.1,
+      "note": "OU outcome names include the total line (e.g., '大 7.5', '小 7.5'). A name mismatch = the total line shifted. Same cross-line CLV comparison risk as HDC. Less extreme (max |CLV|=22.34%) because total line shifts are smaller than handicap line shifts.",
+      "extreme_clv_count_gt50pct": 0,
+      "max_abs_clv_pct": 22.34,
+      "risk_flags": [
+        "NAME_MISMATCH:21 — 9.1% of OU pairs have total line shifts",
+        "HIGH_OUTCOME_VARIETY:8 — different total values across games"
+      ],
+      "verdict": "MODERATE_CONSTRUCTION_RISK",
+      "fix_required": "Match outcomes by name (total line) before computing CLV. Discard any pair where pre_name != clo_name."
+    },
+    "OE": {
+      "status": "PASS",
+      "n_pairs": 230,
+      "n_clv_obs": 460,
+      "market_type": "Odd/Even (Total Runs Parity)",
+      "expected_outcomes": "2-way: 單 (Odd) / 雙 (Even)",
+      "actual_outcome_variety": "1 unique pattern (fixed: 單/雙)",
+      "name_mismatch_pairs": 0,
+      "name_mismatch_rate_pct": 0.0,
+      "extreme_clv_count_gt50pct": 0,
+      "max_abs_clv_pct": 2.5,
+      "risk_flags": [],
+      "verdict": "PASS_BUT_NON_INFORMATIVE",
+      "note": "Outcome names never change (single/double is absolute). No construction risk. However: OE odds rarely move — std=0.84%, 68.7% of observations have near-zero CLV. Market is structurally non-informative for CLV analysis. Should be excluded from aggregate CLV statistics as it dilutes mean toward zero artificially."
+    },
+    "TTO": {
+      "status": "RISK",
+      "n_pairs": 217,
+      "n_clv_obs": 434,
+      "market_type": "Team Total (Over/Under per team)",
+      "expected_outcomes": "2-way: Over X.X / Under X.X (for home or away team)",
+      "actual_outcome_variety": "5 unique patterns (大/小 with 4.5/5.5/1.5/2.5/3.5)",
+      "name_mismatch_pairs": 32,
+      "name_mismatch_rate_pct": 14.7,
+      "note": "TTO outcome names include team total line (e.g., '大 4.5'). 32/217 pairs have line shifts (14.7% — highest rate of all markets). Same construction risk as HDC/OU. Max |CLV|=40.41%.",
+      "extreme_clv_count_gt50pct": 0,
+      "max_abs_clv_pct": 40.41,
+      "risk_flags": [
+        "NAME_MISMATCH:32 — HIGHEST rate: 14.7% of TTO pairs have line shifts"
+      ],
+      "verdict": "HIGH_CONSTRUCTION_RISK",
+      "fix_required": "Match outcomes by name before computing CLV. Discard any pair where pre_name != clo_name."
+    }
+  },
+  "aggregate_impact": {
+    "total_mismatch_pairs_across_markets": 84,
+    "total_clv_obs_from_mismatched_markets": "~168 (2 obs per mismatch pair)",
+    "pct_of_total_clv_obs_affected": 7.4,
+    "extreme_clv_obs_from_construction_bug": 20,
+    "note": "84 mismatch pairs across HDC/OU/TTO account for the majority of extreme CLV outliers. Top-1% outliers (n=22) are dominated by HDC line-shift artifacts."
+  },
+  "recommended_fix": {
+    "immediate": "Recompute CLV using outcome NAME matching (not index matching) for HDC/OU/TTO",
+    "filter_rule": "If any pre_outcome_name[i] != clo_outcome_name[i] for the chosen side, discard that pair for that market",
+    "expected_impact": "Elimination of top-1% outlier artifact; CLV mean likely to drop closer to 0 (neutral), confirming no market efficiency advantage"
+  },
+  "forbidden_checks": {
+    "production_proposal": false,
+    "champion_replacement": false,
+    "profitability_claim": false,
+    "live_api_call": false
+  }
+}

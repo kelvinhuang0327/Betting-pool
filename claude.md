@@ -1,130 +1,44 @@
-# Role: 專業棒球數據科學家與 2026 WBC 運彩分析專家
+# ⚾️ Betting-pool: Lottery AI Quant Research Platform
 
-# Task: 建立 2026 WBC 經典賽預測模型並產出包含「台灣運彩」下注策略的分析報告。
+由 AI 驅動的自動化彩票 (WBC/Lottery) 預測量化研究平台，核心理念是「統計驗證、數據隔離、持續探索」。
 
----
+## 🛠 技術棧 (Tech Stack)
+- **核心語言**: Python 3.10+
+- **數據分析**: Pandas >= 2.0, NumPy, SciPy
+- **機器學習**: XGBoost, LightGBM, CatBoost, Scikit-learn
+- **API 通訊**: Requests, Telethon (Telegram)
+- **測試框架**: Pytest
 
-# WBC 賽事特殊規則（必須納入模型）
+## 📁 專案架構 (Project Structure)
+- `models/`: 特徵工程與 ML 模型實作。
+- `wbc_backend/`: WBC 賽事領域邏輯 (Schemas, Models)。
+- `strategy/`: 下注策略與 Kelly 準則管理。
+- `telegram_bot/`: 通知與交易指令對話介面。
+- `tests/`: 回測腳本與單元測試。
+- `data/`: 存放各階段資料 (依 raw, processed, snapshot 分層管理)。
+- `rejected/`: 資料夾存檔未通過驗證的策略邏輯。
 
-## 用球數限制 (Pitch Count Limits)
-| 賽程階段         | 單場上限 | 隔場限制                                |
-|------------------|---------|----------------------------------------|
-| 預賽 (Pool)      | 65 球   | ≥30球 → 休1天; ≥50球 → 休4天             |
-| 複賽 (2nd Round) | 80 球   | ≥30球 → 休1天; ≥50球 → 休4天             |
-| 準決賽/決賽      | 95 球   | ≥30球 → 休1天; ≥50球 → 休4天             |
+## 📜 開發規範 (Dev Standards)
+- **命名規範**: 檔案及變數使用 `snake_case`；類別使用 `PascalCase`。
+- **強型別**: 強制在 Python 中標註 `type hints` 確保數據流正確性。
+- **數據隔離**: 所有的預測函數必須經過「開賽前狀態」隔離，絕不容許數據滲透 (Look-ahead Leakage)。
+- **Simplicity First**: 若統計提升不顯著，優先選擇簡單的特徵集與模型架構。
 
-## 模型影響
-- 先發投手在預賽僅能投 **3~4 局**（約 15~18 球/局），牛棚實質主導 60%+ 比賽。
-- **第二先發 (Piggyback Starter)** 的品質成為隱藏關鍵。
-- 連續賽程下的牛棚疲勞度累積速度遠高於常規賽。
-- 教練團調度策略（提前換投）直接影響「後半段比分」與「大小分」。
+## 🚀 常用指令 (Common Commands)
+- `pytest tests/`: 執行單元測試
+- `python main.py --game=C01`: 執行指定場次分析
+- `python telegram_bot/bot.py`: 啟動 Telegram Bot (需先設定 .env)
 
----
+## 💬 回應與溝通 (Communication)
+- **預設語言**: 一律使用 **繁體中文** (Traditional Chinese) 回應使用者。
+- **Commit 描述**: Conventional Commits + 繁體中文說明。
+- **錯誤處理**: API 呼叫必須使用 try-catch 包裹，並詳細紀錄其失敗軌跡。
 
-# Data Requirements
-
-## 1. 數據時間範圍與權重
-| 數據期間                | 權重   | 說明                                     |
-|------------------------|--------|------------------------------------------|
-| 2025 世界12強賽成績     | **30%** | 最近的國際賽短期數據，直接可比             |
-| 2025 MLB/NPB/KBO 球季  | **35%** | 過去一年的完整球季表現                    |
-| 2026 春訓 & 熱身賽      | **25%** | 當下狀態 (2-3月)，反映球員即時手感         |
-| 歷屆 WBC 表現           | **10%** | 國際賽歷史大賽經驗加成                    |
-
-> **關鍵原則**: 球員「此刻」的狀態 (spring training + 近期熱身賽) 權重應高於
-> 去年完整球季數據，因為 WBC 在 2-3 月舉行，春訓狀態直接反映比賽表現。
-
-## 2. 核心指標
-- **打者**: wOBA / OPS+ / 高速球揮空率 (SwStr% vs 98mph+) / 高壓情境 OPS
-- **投手**: FIP / WHIP / Stuff+ / K/9 / 左右打 Split
-- **球隊**: 防守效率 (DER) / 盜壘成功率 / 打線串連度 (Clutch wOBA)
-
-## 3. 陣容變動 (Roster Volatility)
-- WBC 國家隊 **非職業球團**，球員間默契/磨合度有限。
-- **核心球星參賽狀態**（如大谷翔平、佐佐木朗希、古林睿煬等）對勝率影響極大。
-- 需偵測各隊官方 30 人名單中的：
-  - 核心球員傷病 & 是否確定參賽
-  - 球團限制（MLB 球團可能限制投手參賽）
-  - 陣容完整度評分 (Roster Strength Index: 0-100)
-
----
-
-# Methodology (Hybrid Ensemble Model)
-
-1. **Team Rating**: Elo Rating + BaseRuns (預期勝率) 建立實力基底
-2. **Bayesian Team Strength**: 先驗+觀測的後驗推斷
-3. **Poisson Run Simulation**: 雙 Poisson 建模每隊得分
-4. **Gradient Boosting**: 特徵工程的機器學習代理模型
-5. **Monte Carlo Simulation**: 10,000 次全場比賽模擬
-6. **WBC 修正引擎**: 套用用球數限制、牛棚加重、短賽隨機性、國際賽陌生度
-
----
-
-# Output Analysis Report Format
-
-## [對戰組合：隊伍 A vs 隊伍 B]
-
-### 1. 核心指標對比
-- 戰力雷達圖數據（投、打、守、跑、牛棚）
-- 先發投手對決分析（Expected FIP vs Opponent OPS）
-- **WBC 用球數限制**: 標注先發預計投幾局、何時進入牛棚
-
-### 2. 比分預測與機率
-- **最可能比分** (Most Likely Score)
-- **比分區間** (Score Range)
-- **總分分佈**: 預測總得分超過或低於台灣運彩開盤點（7.5, 8.5 等）的機率
-- **延長賽機率**: 基於兩隊得分變異數推算
-
-### 3. 台灣運彩 (TSL) 下注建議
-所有建議皆計算 **預期價值 (EV%)**，並標註信心等級。
-
-| 台灣運彩玩法       | 英文對照        | 分析內容                                |
-|--------------------|-----------------|-----------------------------------------|
-| **不讓分（獨贏）** | Money Line (ML) | 勝率%、盤口價值點、是否適合做串關基石     |
-| **讓分**           | Run Line (RL)   | 強隊穿盤能力（依據打線串連度 & 牛棚深度） |
-| **大小分**         | Over/Under (OU) | 結合球場維度、氣候、投手特性              |
-| **單雙**           | Odd/Even (OE)   | 總分奇偶機率分析                         |
-| **前五局獨贏**     | First 5 (F5)    | 先發投手主導的前半段勝負                  |
-
-### 4. 關鍵變數 (X-Factors)
-- **用球數限制影響**: 先發投手何時下場、第二先發品質
-- **牛棚疲勞度**: 近 3 日累積用球數與可用人數
-- **打線核心對決**: 頂級打者 vs 對方先發的對戰分析
-- **球星效應**: 如大谷翔平的雙刀 (二刀流) 影響
-
-### 5. 陣容完整度 (Roster Strength)
-- 各隊 Roster Strength Index (RSI) 對比
-- 缺席關鍵球員對勝率的影響量化
-
-# Visualization:
-- Markdown 表格呈現兩隊各位置的戰力數值對比
-- 投手用球數限制時間軸圖示
-
----
-
-# 開發與回測核心規範 (Mandatory Guidelines)
-
-## 🚨 核心規範 01：回測數據隔離 (Data Isolation & No Look-ahead Bias)
-
-**回測最核心的準則：預測數據必須與訓練/特徵數據完全隔離。**
-
-1.  **禁止數據污染 (Data Contamination)**:
-    *   在進行歷史回測時，輸入模型的所有特徵（如投手 ERA、球隊 Elo、打擊 wOBA）必須是該場賽事「開賽前」的已知數據。
-    *   **絕對禁止**使用包含該場賽事結果的統計數據（如預測 2023/3/22 的決賽，輸入特徵不能包含決賽後的數據）來進行預測。
-
-2.  **預測執行順序 (Prediction Sequence)**:
-    *   第一步：準備開賽前的特徵數據。
-    *   第二步：執行模型預測（此時模型對結果一無所知）。
-    *   第三步：獲取預測結果後，才可引入「實際比賽結果 (Actual Outcome)」進行比對。
-
-3.  **回測系統實作規範 (Implementation Rule)**:
-    *   回測腳本中，負責預測的函數 `ensemble.predict()` 僅能接收 `MatchData` 對象。
-    *   包含比賽結果的數據（如 `actual_score`）應保存在獨立的數據源中，且僅在 `ensemble.predict()` 完成後用於損益計算。
-
-## 🧪 核心規範 02：統計顯著性 (Statistical Significance)
-
-*   初步回測樣本數必須 ≥ 10 場，正式驗證樣本數建議 ≥ 50 場，以排除隨機性帶來的獲利假象。
-
-## 💰 核心規範 03：風險控制 (Risk Management)
-
-*   所有預測結果必須經過 `strategy/kelly_criterion.py` 進行倉位管理，嚴禁在回測系統外使用固定的「全押 (All-in)」策略。
+## 🔄 常見任務 SOP (Common Tasks)
+- **新增一個新的 WBC 預測模組**:
+  1. 在 `wbc_backend/models/` 加入對應的特徵邏輯。
+  2. 通過 `tests/` 中的 backtest 驗證 (樣本數需 >= 1500)。
+  3. 產出 `backtest_report.md` 供審核。
+- **添加新特徵**:
+  1. 確保該特徵不含未來資訊。
+  2. 進行特徵不穩定性與顯著性測試。

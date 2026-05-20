@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
 from wbc_backend.domain.schemas import (
     BatterSnapshot, Matchup, PitcherSnapshot, TeamSnapshot,
@@ -62,10 +61,10 @@ class AdvancedFeatures:
     away_spin_rate_zscore: float = 0.0
 
     # Raw feature dict for ML models
-    feature_dict: Dict[str, float] = field(default_factory=dict)
+    feature_dict: dict[str, float] = field(default_factory=dict)
 
 
-def compute_pitcher_fatigue(pitcher: Optional[PitcherSnapshot]) -> float:
+def compute_pitcher_fatigue(pitcher: PitcherSnapshot | None) -> float:
     """
     Nonlinear pitcher fatigue score (0–1) using exponential decay (§ P1).
 
@@ -84,7 +83,7 @@ def compute_pitcher_fatigue(pitcher: Optional[PitcherSnapshot]) -> float:
     return min(1.0, base + 0.3 * era_penalty)
 
 
-def compute_bullpen_fatigue(bullpen: List[PitcherSnapshot]) -> float:
+def compute_bullpen_fatigue(bullpen: list[PitcherSnapshot]) -> float:
     """
     Average nonlinear fatigue across bullpen with cascade effect.
 
@@ -104,8 +103,8 @@ def compute_bullpen_fatigue(bullpen: List[PitcherSnapshot]) -> float:
 
 
 def compute_matchup_edge(
-    lineup: List[BatterSnapshot],
-    opposing_sp: Optional[PitcherSnapshot],
+    lineup: list[BatterSnapshot],
+    opposing_sp: PitcherSnapshot | None,
 ) -> float:
     """
     Compute batter vs. pitcher matchup edge using:
@@ -139,7 +138,7 @@ def compute_matchup_edge(
 
 def compute_bullpen_stress(
     team: TeamSnapshot,
-    bullpen: List[PitcherSnapshot],
+    bullpen: list[PitcherSnapshot],
 ) -> float:
     """
     Bullpen Stress Score = workload_factor × inverse_depth × era_weight
@@ -159,7 +158,7 @@ def compute_bullpen_stress(
 
 def compute_clutch_index(
     team: TeamSnapshot,
-    lineup: List[BatterSnapshot],
+    lineup: list[BatterSnapshot],
 ) -> float:
     """
     Clutch Index: team's ability to perform in high-leverage situations.
@@ -208,7 +207,7 @@ def get_umpire_profile(umpire_id: str) -> float:
 
 # ── High-Value Pitcher Features (§ P2) ──────────────────
 
-def compute_pitch_arsenal_entropy(pitch_mix: Dict[str, float]) -> float:
+def compute_pitch_arsenal_entropy(pitch_mix: dict[str, float]) -> float:
     """
     Pitch Arsenal Entropy — unpredictability of pitch selection.
     Higher entropy = harder for batters to sit on one pitch type.
@@ -228,7 +227,7 @@ def compute_pitch_arsenal_entropy(pitch_mix: Dict[str, float]) -> float:
 
 
 def compute_velocity_trend(
-    recent_velo: List[float],
+    recent_velo: list[float],
     career_velo: float,
 ) -> float:
     """
@@ -280,7 +279,7 @@ def compute_climate_adjustment(
     wind_direction: str = "none",
     altitude_m: float = 0.0,
     is_dome: bool = False,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Climate-based run-scoring adjustment (§ P1 氣候特徵).
 
@@ -409,10 +408,10 @@ def build_advanced_features(matchup: Matchup) -> AdvancedFeatures:
 
     # ── Travel & Environment ─────────────────────────────
     # Mock current venue TZ offset for calculation (e.g. Tokyo = +9)
-    current_venue_tz = 9.0 
+    current_venue_tz = 9.0
     feats.home_travel_fatigue = compute_travel_fatigue(matchup.home, current_venue_tz)
     feats.away_travel_fatigue = compute_travel_fatigue(matchup.away, current_venue_tz)
-    
+
     # Elevation: +10% park factor per 1000m elevation
     feats.park_factor = 1.0 + (matchup.elevation_m / 10000.0)
     feats.umpire_bias = get_umpire_profile(matchup.umpire_id)

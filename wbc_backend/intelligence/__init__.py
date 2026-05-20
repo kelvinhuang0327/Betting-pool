@@ -17,26 +17,26 @@ Modules:
   7.  risk_engine            — Institutional risk limits
   8.  decision_engine        — Master orchestrator → Decision Report
 """
-from wbc_backend.intelligence.decision_engine import (
+from wbc_backend.intelligence.decision_engine import (  # noqa: F401
     InstitutionalDecisionEngine,
     DecisionReport,
     format_decision_report,
 )
-from wbc_backend.intelligence.edge_realism_filter import (
+from wbc_backend.intelligence.edge_realism_filter import (  # noqa: F401
     assess_edge_realism,
     RealismInput,
     RealismReport,
     RealEdgeLabel,
     REALISM_THRESHOLD,
 )
-from wbc_backend.intelligence.edge_decay_predictor import (
+from wbc_backend.intelligence.edge_decay_predictor import (  # noqa: F401
     predict_edge_decay,
     EdgeDecayInput,
     EdgeDecayForecast,
     UrgencyLevel,
     LEAGUE_DECAY_PROFILES,
 )
-from wbc_backend.intelligence.market_impact_simulator import (
+from wbc_backend.intelligence.market_impact_simulator import (  # noqa: F401
     simulate_market_impact,
     MarketImpactInput,
     MarketImpactReport,

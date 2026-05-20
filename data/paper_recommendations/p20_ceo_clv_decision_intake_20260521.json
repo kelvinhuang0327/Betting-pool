@@ -1,0 +1,42 @@
+{
+  "task": "P20-B",
+  "title": "P20 CEO CLV Decision Intake",
+  "date": "2026-05-21T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "decision_file_checked": "data/paper_recommendations/p20_ceo_clv_validation_decision_20260521.json",
+  "decision_file_exists": false,
+  "decision_status": "DEFER_DECISION",
+  "decision_source": "file_not_found",
+  "supported_decisions": [
+    "APPROVE_CLV_VALIDATION_ONLY",
+    "REQUIRE_MANUAL_PAIR_REVIEW",
+    "KEEP_HOLD_NO_EXPANSION",
+    "DEFER_DECISION"
+  ],
+  "intake_result": {
+    "clv_validation_allowed": false,
+    "promotion_allowed": false,
+    "p21_allowed": false,
+    "next_owner": "CEO",
+    "hold_maintained": true,
+    "champion_preserved": true,
+    "champion": "fixed_edge_5pct",
+    "promotion_status": "FROZEN"
+  },
+  "p20_c_executed": false,
+  "p20_c_skip_reason": "CEO decision file not found; decision = DEFER_DECISION",
+  "p20_d_executed": false,
+  "p20_d_skip_reason": "P20-C skipped; requires CEO APPROVE_CLV_VALIDATION_ONLY",
+  "background": {
+    "valid_clv_pairs_confirmed": 233,
+    "pair_target": 200,
+    "pair_coverage_pct": 116.5,
+    "p17_stale_artifact_corrected": true,
+    "p19_classification": "P19_CLV_DATA_SUFFICIENT_CEO_UNBLOCK_REQUIRED"
+  },
+  "profitability_claim": false,
+  "final_classification": "P20_CEO_CLV_DECISION_REQUIRED",
+  "annotation": "paper_only=true。P20-B CEO CLV Decision Intake。CEO decision file not found。決策維持 DEFER_DECISION。CLV validation 未批准。p21_allowed=false。Champion fixed_edge_5pct PRESERVED。Promotion FROZEN。"
+}

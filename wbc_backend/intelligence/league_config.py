@@ -20,8 +20,7 @@ Usage:
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Dict, Optional
+from dataclasses import dataclass
 
 
 # ─── Configuration Dataclass ───────────────────────────────────────────────
@@ -66,7 +65,7 @@ class LeagueConfig:
     default_vig: float = 0.08
 
     # ── Band ROI (override for leagues without MLB data) ──────
-    band_roi_override: Optional[Dict[str, float]] = None
+    band_roi_override: dict[str, float] | None = None
 
 
 # ─── Predefined Configurations ─────────────────────────────────────────────
@@ -175,7 +174,7 @@ KBO_CONFIG = LeagueConfig(
 
 # ─── Registry ──────────────────────────────────────────────────────────────
 
-_LEAGUE_CONFIGS: Dict[str, LeagueConfig] = {
+_LEAGUE_CONFIGS: dict[str, LeagueConfig] = {
     "MLB": MLB_CONFIG,
     "WBC_POOL": WBC_POOL_CONFIG,
     "WBC_KO": WBC_KO_CONFIG,
@@ -184,7 +183,7 @@ _LEAGUE_CONFIGS: Dict[str, LeagueConfig] = {
 }
 
 # WBC round → config key mapping
-_WBC_ROUND_MAP: Dict[str, str] = {
+_WBC_ROUND_MAP: dict[str, str] = {
     "Pool A": "WBC_POOL",
     "Pool B": "WBC_POOL",
     "Pool C": "WBC_POOL",
@@ -234,7 +233,7 @@ def register_league_config(key: str, config: LeagueConfig) -> None:
     _LEAGUE_CONFIGS[key.upper()] = config
 
 
-def list_leagues() -> List[str]:
+def list_leagues() -> list[str]:
     """List all registered league configs."""
     return list(_LEAGUE_CONFIGS.keys())
 
@@ -292,5 +291,5 @@ if __name__ == "__main__":
     print("  ✅ PASSED")
 
     print(f"\n{'=' * 60}")
-    print(f"✅ All 5 smoke tests passed")
+    print("✅ All 5 smoke tests passed")
     print(f"{'=' * 60}")

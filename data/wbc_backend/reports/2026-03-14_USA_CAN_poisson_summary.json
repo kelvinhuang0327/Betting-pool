@@ -1,0 +1,38 @@
+{
+  "date_tpe": "2026-03-14",
+  "starters": {
+    "game_pk": 788100,
+    "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788100/feed/live",
+    "away_sp": {
+      "name": "Logan Webb",
+      "team": "USA",
+      "stats_source": "https://statsapi.mlb.com/api/v1/people/657277/stats?stats=season&group=pitching&season=2025",
+      "era": 3.22,
+      "whip": 1.24,
+      "k_per_9": 9.74,
+      "bb_per_9": 2.0
+    },
+    "home_sp": {
+      "name": "Michael Soroka",
+      "team": "CAN",
+      "stats_source": "https://statsapi.mlb.com/api/v1/people/647336/stats?stats=season&group=pitching&season=2025",
+      "era": 4.52,
+      "whip": 1.13,
+      "k_per_9": 9.54,
+      "bb_per_9": 2.91
+    }
+  },
+  "base_lambda_a": 5.5,
+  "base_lambda_b": 4.4,
+  "lambda_a": 5.45484775,
+  "lambda_b": 4.2663808,
+  "a_win_9": 0.5848952338242435,
+  "b_win_9": 0.29348738360022986,
+  "tie_9": 0.12161738257552666,
+  "a_full": 0.6457039251120068,
+  "b_full": 0.3542960748879932,
+  "special_matchup_weight": "無資料",
+  "odds": "無資料",
+  "model_artifacts_has_team_weights": false,
+  "matrix_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/2026-03-14_USA_CAN_poisson_matrix.csv"
+}

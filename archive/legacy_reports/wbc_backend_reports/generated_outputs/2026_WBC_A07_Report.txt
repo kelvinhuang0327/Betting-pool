@@ -1,0 +1,276 @@
+⚠️  Verification Warning (Bypassed): WBC data verification failed for A07: Starting pitchers have not been officially verified.; Official starting lineup missing; using previous-game lineup fallback.; Snapshot home SP  != model home SP Javy Guerra.; Snapshot away SP  != model away SP Jose Quintana.; Home lineup does not match the verified starting lineup.; Away lineup does not match the verified starting lineup.; Home lineup player Jose Caballero is not present in the verified home roster.; Home lineup player Ivan Herrera is not present in the verified home roster.; Home lineup player Jonathan Arauz is not present in the verified home roster.; Home lineup player Leo Jimenez is not present in the verified home roster.; Away lineup player Harold Ramirez is not present in the verified away roster.; Away lineup player Elias Diaz is not present in the verified away roster.; Model input still declares MOCK/SEED source. Treat this as unsafe until the authoritative snapshot fully replaces the seed path.
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool A  |  Estadio Hiram Bithorn, San Juan
+  2026-03-09T12:00:00-04:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Colombia (COL) vs Panama (PAN)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    COL     |    PAN     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    4.28    |    4.20    |     PAN     |
+| 打擊 wRC+          |     80     |     85     |     PAN     |
+| 打線 wOBA          |   0.290    |   0.298    |     PAN     |
+| 守備 DER           |   0.690    |   0.698    |     PAN     |
+| 跑壘 SB%           |    68%     |    70%     |     PAN     |
+| 牛棚 ERA           |    4.80    |    4.50    |     PAN     |
+| 高壓 Clutch wOBA   |   0.280    |   0.288    |     PAN     |
+| Elo Rating         |    1280    |    1320    |     PAN     |
+
+#### 先發投手對決
+
+| 指標           |     Jose Quintana      |      Javy Guerra       |
+|----------------|------------------------|------------------------|
+| ERA            |          3.75          |          3.90          |
+| FIP            |          3.90          |          4.10          |
+| WHIP           |          1.25          |          1.30          |
+| K/9            |          7.5           |          8.0           |
+| BB/9           |          2.8           |          3.0           |
+| Stuff+         |          100           |          100           |
+| 均速 (mph)     |          91.5          |          93.5          |
+| 春訓 ERA       |          3.40          |          3.50          |
+| 近3場 ERA      |          3.50          |          3.60          |
+| vs LHB BA      |         0.240          |         0.252          |
+| vs RHB BA      |         0.248          |         0.245          |
+| 高壓 ERA       |          3.90          |          4.20          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool A
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      COL       |      PAN       |
+|--------|----------------|----------------|
+|  1局   |  SP Quintana   |   SP Guerra    |
+|  2局   |  SP Quintana   |   SP Guerra    |
+|  3局   |  SP Quintana   |   SP Guerra    |
+|  4局   |   PB Patiño    |   PB Espino    |
+|  5局   |   PB Patiño    |   PB Espino    |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Luis Patiño       |      Paolo Espino      |
+|--------------|------------------------|------------------------|
+| ERA          |          4.20          |          4.80          |
+| FIP          |          4.10          |          4.90          |
+| Stuff+       |          108           |           85           |
+| 春訓 ERA     |          3.80          |          4.30          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      COL |      PAN |
+|---------------|----------|----------|
+| elo           |    44.3% |    55.7% |
+| bayesian      |    44.0% |    56.0% |
+| poisson       |    44.4% |    55.6% |
+| gbm           |    44.5% |    55.5% |
+| monte_carlo   |    47.6% |    52.4% |
+|---------------|----------|----------|
+| **Ensemble**  | **45.4%** | **54.6%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Luis Patiño`
+- piggyback_home: `Paolo Espino`
+- piggyback_adjustment: `0.0011`
+- bullpen_fatigue_away_3d: `128`
+- bullpen_fatigue_home_3d: `128`
+- bp_penalty_away: `0.0128`
+- bp_penalty_home: `0.0128`
+- roster_strength_away: `58`
+- roster_strength_home: `60`
+- rsi_adjustment: `-0.0008`
+- collapse_shift: `0.0`
+- chemistry_bonus: `-0.0006`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.4482`
+- pre_adjust_home: `0.5518`
+- post_adjust_away: `0.4535`
+- post_adjust_home: `0.5465`
+
+#### 比分預測
+
+| 排名 | 比分 (COL-PAN) | 機率     |
+|------|----------------------|----------|
+|  1   |         4-3          |     4.7% |
+|  2   |         3-4          |     4.4% |
+|  3   |         2-3          |     4.1% |
+|  4   |         3-5          |     4.0% |
+|  5   |         5-4          |     3.6% |
+
+**最可能比分 (Most Likely Score):** `4-3` (COL-PAN)
+
+**預測總分:** 8.7 分
+
+#### 多維度情境分析 (Multi-Scenario Analysis)
+
+> [!NOTE]
+> 基於 WBC 2026 模擬引擎輸出的三種情境預案：
+
+| 情境 (Scenario) | 預計總分 | 特徵描述 |
+|:---|:---:|:---|
+| **中性基準 (Baseline)** | 9 | 雙方發揮正常，符合實力常態分佈。 |
+| **投手戰 (Pitching Duel)** | 6 | 先發投手壓制力極大化，且牛棚銜接完美。 |
+| **打線爆發 (Explosion)** | 13 | 觸發連續得分鏈，弱方防禦體系崩潰。 |
+
+**模擬平均局數:** 9.2 局 (含 Mercy Rule 影響)
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     75.4% |      24.6% |
+|         7.5 |     61.1% |      38.9% |
+|         8.5 |     50.1% |      49.9% |
+|         9.5 |     36.9% |      63.1% |
+
+**延長賽機率 (Extra Innings):** 14.9%
+
+**爆冷機率 (COL 獲勝):** 45.4%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ❌ **PAN** @ 1.78 (TSL)
+  - 隱含機率: 56.2% | 模型真實機率: 54.6%
+  - 期望值 (EV): -2.7% → **PASS**
+- ❌ **COL** @ 2.10 (TSL)
+  - 隱含機率: 47.6% | 模型真實機率: 45.4%
+  - 期望值 (EV): -4.8% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **PAN (+1.5)** @ 1.68 (TSL)
+  - 隱含機率: 59.5% | 模型真實機率: 73.8%
+  - 期望值 (EV): +23.9% → **MEDIUM (Market Restricted)**
+- ❌ **COL (-1.5)** @ 2.20 (TSL)
+  - 隱含機率: 45.5% | 模型真實機率: 30.7%
+  - 期望值 (EV): -32.4% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 7.5** @ 1.85 (TSL)
+  - EV: +13.0% → **MEDIUM (Market Restricted)**
+- ❌ **Under 7.5** @ 1.95 (TSL)
+  - EV: -25.8% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ❌ **PAN** @ 1.80 (TSL)
+  - 隱含機率: 55.6% | 模型真實機率: 53.3%
+  - 期望值 (EV): -4.1% → **PASS**
+- ❌ **COL** @ 2.05 (TSL)
+  - 隱含機率: 48.8% | 模型真實機率: 46.7%
+  - 期望值 (EV): -4.2% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT PAN_Over 3.5** @ 1.85 (TSL)
+  - EV: +7.6% → **STRONG**
+- ✅ **TT COL_Over 3.5** @ 1.85 (TSL)
+  - EV: +5.5% → **MEDIUM**
+- ❌ **TT COL_Under 3.5** @ 1.95 (TSL)
+  - EV: -16.3% → **PASS**
+- ❌ **TT PAN_Under 3.5** @ 1.95 (TSL)
+  - EV: -18.4% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL PAN (1.5) @ 1.68 (TSL)
+- True Probability: 73.8%
+- Implied Probability: 59.5%
+- **EV: +23.9%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3517 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 PAN 為優勢方 (54.6%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool A，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: PAN、COL 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: COL 陣容完整度僅 58%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 📉 **牛棚疲勞**: COL 牛棚近三日用球量過高，模型已加入 19.2% 的失分懲罰係數。
+- ⚖️ **盤口建議 (讓分)**: 模擬顯示兩隊分差僅 0.0 分，強隊穿盤 (-1.5) 風險較高，建議優先考慮 **受讓方 (+1.5)**。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 8.7 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: TT PAN_Over 賠率為 1.85，隱含勝率僅 54.0%，但 AI 計算結果為 58.1%，存在 7.6% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool A 階段上限 65 球，Jose Quintana 與 Javy Guerra 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Luis Patiño (ERA 4.20) vs Paolo Espino (ERA 4.80) — COL 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: COL 近 3 日牛棚用球數較高 (COL: 128, PAN: 128)，後段比賽可能出現失分風險。
+5. 🔑 **打線核心對決**: Dayan Frias (wOBA 0.319, SwStr% vs 98mph+ 34.0%) vs Jose Ramos (wOBA 0.327, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Jose Quintana, Gio Urshela, Javy Guerra, Christian Bethancourt，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: PAN 高出 40 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      COL       |      PAN       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       58       |       60       |
+| MLB 球員數        |       3        |       3        |
+| 磨合度 Chemistry  |      0.75      |      0.78      |
+
+**COL 確認出賽球星**: Jose Quintana, Gio Urshela
+**COL 待確認球星**:  Julio Teheran
+
+**PAN 確認出賽球星**: Javy Guerra, Christian Bethancourt
+**PAN 待確認球星**:  Edmundo Sosa
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 3.32% of bankroll ($3,315)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +10.3%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | PAN | 1.68 | +23.9% | 0.50% | $500 |
+| 2 | OU | Over | 1.85 | +13.0% | 0.50% | $500 |
+| 3 | TT | PAN_Over | 1.85 | +7.6% | 1.33% | $1,334 |
+| 4 | TT | COL_Over | 1.85 | +5.5% | 0.98% | $981 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

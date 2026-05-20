@@ -1,0 +1,32 @@
+{
+  "build_summary": {
+    "source_records": 125,
+    "mlb_candidate_records": 82,
+    "canonical_games_written": 38,
+    "snapshots_written": 82,
+    "games_with_opening": 38,
+    "games_with_decision": 38,
+    "games_with_latest_pregame": 38,
+    "games_with_closing": 38,
+    "decision_lead_minutes": 60,
+    "output_path": "data/mlb_context_sources/odds_timeline_canonical.jsonl"
+  },
+  "qa": {
+    "total_games": 38,
+    "availability": {
+      "opening_rate": 1.0,
+      "decision_rate": 1.0,
+      "latest_pregame_rate": 1.0,
+      "closing_rate": 1.0,
+      "opening_count": 38,
+      "decision_count": 38,
+      "latest_pregame_count": 38,
+      "closing_count": 38
+    },
+    "timestamp_monotonic_failures": 0,
+    "duplicate_snapshot_rows": 0,
+    "mapping_success_rate_to_csv": 0.0,
+    "mapped_games_to_csv": 0,
+    "unmapped_games_to_csv": 38
+  }
+}

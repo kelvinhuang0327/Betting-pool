@@ -1,0 +1,35 @@
+# Betting-pool: 2026 WBC & 棒球量化預測平台專屬規則
+
+根據 [Ray 的建議](https://israynotarray.com/ai/20260310/3737444063/) 與專案核心需求整理。
+
+## 🛠 技術棧與環境 (Tech Stack)
+- **語言**: Python 3.10+
+- **核心庫**: Pandas (>= 2.0), NumPy, SciPy, XGBoost, LightGBM, CatBoost, Scikit-learn, Requests, Telegram Bot API.
+- **專案目標**: 建立 2026 WBC 經典賽預測模型與下注策略分析。
+
+## 📁 專案架構導覽 (Project Structure)
+- `/models/`: 特徵工程與機器學習模型（核心邏輯）。
+- `/wbc_backend/`: WBC 專屬後端領域邏輯、Schema 與模型。
+- `/strategy/`: 策略管理（Kelly 準則、下注建議邏輯）。
+- `/telegram_bot/`: Telegram 通知與互動系統。
+- `/tests/`: 單元測試、整合測試與回測腳本。
+- `/data/`: 數據存放（從 raw 到 processed 的階段性儲存）。
+- `/rejected/`: 存檔未通過統計驗證的策略（嚴禁刪除）。
+
+## 📜 開發規範 (Dev Standards)
+- **命名規範**: Python 遵循 PEP 8 (`snake_case`)，類別使用 `PascalCase`，常數 `UPPER_SNAKE_CASE`。
+- **強型別**: Python 代碼強制標註 Type Hints。
+- **溝通規範**: 一律使用 **繁體中文** (Traditional Chinese) 回應。
+- **Commit**: 使用 Conventional Commits 格式。
+
+## 📍 引用專屬規則檔案 (Sub-rules)
+為了讓各別模組維持精簡，細節規範請參考：
+
+1.  **[平台核心規範 (platform_core.md)](file:///Users/kelvin/Kelvin-WorkSpace/Betting-pool/.cursor/rules/platform_core.md)**
+    - 內容：策略生命週期、1500 場歷史數據驗證標準、策略評分公式、過擬合防止。
+2.  **[WBC 領域規則 (betting.md)](file:///Users/kelvin/Kelvin-WorkSpace/Betting-pool/.cursor/rules/betting.md)**
+    - 內容：Pitch Count 限制、2026 WBC 數據權重、棒球核心指標 (wOBA/FIP)、報告模板。
+3.  **[模型與統計規範 (stats_rules.md)](file:///Users/kelvin/Kelvin-WorkSpace/Betting-pool/.cursor/rules/stats_rules.md)**
+    - 內容：實施 Simplicity First 原則、路徑特定規則 (`models/`)。
+4.  **[Telegram Bot 規範 (bot_rules.md)](file:///Users/kelvin/Kelvin-WorkSpace/Betting-pool/.cursor/rules/bot_rules.md)**
+    - 內容：安全性規範、訊息 Markdown 格式、推送頻率限制。

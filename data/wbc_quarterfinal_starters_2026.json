@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-03-13T04:15:00Z",
+  "source": "Official MLB Stats API probablePitchers + season pitching stats",
+  "games": {
+    "2026-03-14_KOR_DOM": {
+      "game_pk": 788095,
+      "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788095/feed/live",
+      "away_sp": {
+        "name": "Hyun Jin Ryu",
+        "team": "KOR",
+        "stats_source": "local_catalog",
+        "era": 4.2,
+        "fip": 4.0,
+        "whip": 1.28,
+        "k_per_9": 7.2,
+        "bb_per_9": 2.0,
+        "fastball_velo": 89.5
+      },
+      "home_sp": {
+        "name": "Cristopher Sánchez",
+        "team": "DOM",
+        "stats_source": "https://statsapi.mlb.com/api/v1/people/650911/stats?stats=season&group=pitching&season=2025",
+        "era": 2.5,
+        "whip": 1.06,
+        "k_per_9": 9.45,
+        "bb_per_9": 1.96
+      }
+    },
+    "2026-03-14_USA_CAN": {
+      "game_pk": 788100,
+      "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788100/feed/live",
+      "away_sp": {
+        "name": "Logan Webb",
+        "team": "USA",
+        "stats_source": "https://statsapi.mlb.com/api/v1/people/657277/stats?stats=season&group=pitching&season=2025",
+        "era": 3.22,
+        "whip": 1.24,
+        "k_per_9": 9.74,
+        "bb_per_9": 2.0
+      },
+      "home_sp": {
+        "name": "Michael Soroka",
+        "team": "CAN",
+        "stats_source": "https://statsapi.mlb.com/api/v1/people/647336/stats?stats=season&group=pitching&season=2025",
+        "era": 4.52,
+        "whip": 1.13,
+        "k_per_9": 9.54,
+        "bb_per_9": 2.91
+      }
+    },
+    "2026-03-15_PUR_ITA": {
+      "game_pk": 788098,
+      "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788098/feed/live",
+      "away_sp": {
+        "name": "Seth Lugo",
+        "team": "PUR",
+        "stats_source": "https://statsapi.mlb.com/api/v1/people/607625/stats?stats=season&group=pitching&season=2025",
+        "era": 4.15,
+        "whip": 1.29,
+        "k_per_9": 7.74,
+        "bb_per_9": 3.41
+      },
+      "home_sp": null
+    },
+    "2026-03-15_VEN_JPN": {
+      "game_pk": 788097,
+      "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788097/feed/live",
+      "away_sp": {
+        "name": "Ranger Suarez",
+        "team": "VEN",
+        "stats_source": "https://statsapi.mlb.com/api/v1/people/624133/stats?stats=season&group=pitching&season=2025",
+        "era": 3.2,
+        "whip": 1.22,
+        "k_per_9": 8.64,
+        "bb_per_9": 2.17
+      },
+      "home_sp": {
+        "name": "Yoshinobu Yamamoto",
+        "team": "JPN",
+        "stats_source": "https://statsapi.mlb.com/api/v1/people/808967/stats?stats=season&group=pitching&season=2025",
+        "era": 2.49,
+        "whip": 0.99,
+        "k_per_9": 10.42,
+        "bb_per_9": 3.06
+      }
+    }
+  }
+}

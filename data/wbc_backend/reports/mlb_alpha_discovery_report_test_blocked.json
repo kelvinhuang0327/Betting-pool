@@ -1,0 +1,561 @@
+{
+  "report_summary": {
+    "mode": "PAPER_ONLY",
+    "safety": "NO BETTING",
+    "scope": "historical 2025 MLB",
+    "status": "RESEARCH_VALID",
+    "next_step": "Review the model classes and paper-only benchmark outputs.",
+    "open_file": "data/wbc_backend/reports/mlb_alpha_discovery_report.json",
+    "purpose": "single-snapshot benchmark alpha research"
+  },
+  "report_header": {
+    "title": "MLB ALPHA DISCOVERY REPORT",
+    "mode": "PAPER_ONLY",
+    "safety": "NO BETTING",
+    "purpose": "single-snapshot benchmark alpha research",
+    "scope": "historical 2025 MLB",
+    "source": "wbc_backend/research/mlb_alpha_lab.py",
+    "status": "RESEARCH_VALID",
+    "generated_at": "2026-05-20T09:47:41.569496Z"
+  },
+  "research_scope": {
+    "framing": "single_snapshot_benchmark",
+    "clv_available": false,
+    "data_tier": "post_game_proxy_only",
+    "note": "This report measures model performance vs a single canonical market snapshot. CLV research requires independent pre-game decision + closing timestamps. 2025 MLB data: post-season single scrape only — genuine CLV is structurally unavailable. Alpha classes (TRUE_ALPHA/WEAK_ALPHA) are based on mean_bet_edge (model vs snapshot edge), not true Closing Line Value."
+  },
+  "feature_impact_table": [
+    {
+      "name": "base_only",
+      "groups": [
+        "base"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 1245,
+      "roi": -0.12289156626506025,
+      "brier": 0.24242906133547915,
+      "logloss": 0.6775751830972098,
+      "clv": 0.004767583540725343,
+      "mean_bet_edge": 0.004767583540725343,
+      "fold_roi_std": 0.33218867937367536,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced",
+      "groups": [
+        "base",
+        "advanced"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 868,
+      "roi": -0.013824884792626729,
+      "brier": 0.24263178036753735,
+      "logloss": 0.6779998810624379,
+      "clv": 0.00014646507997544472,
+      "mean_bet_edge": 0.00014646507997544472,
+      "fold_roi_std": 0.3881313772282964,
+      "alpha_class": "OVERFIT_SIGNAL"
+    },
+    {
+      "name": "base_plus_market",
+      "groups": [
+        "base",
+        "market"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 1213,
+      "roi": -0.10469909315746084,
+      "brier": 0.24221519878063827,
+      "logloss": 0.677109911067329,
+      "clv": 0.0042066924528634895,
+      "mean_bet_edge": 0.0042066924528634895,
+      "fold_roi_std": 0.3400185307115242,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_context",
+      "groups": [
+        "base",
+        "context"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 1275,
+      "roi": -0.12627450980392158,
+      "brier": 0.24271151717166953,
+      "logloss": 0.6781718771622068,
+      "clv": 0.0069694490262953625,
+      "mean_bet_edge": 0.0069694490262953625,
+      "fold_roi_std": 0.32985049224035906,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced_market",
+      "groups": [
+        "base",
+        "advanced",
+        "market"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 873,
+      "roi": -0.030927835051546393,
+      "brier": 0.24262757234127194,
+      "logloss": 0.6779868354746713,
+      "clv": 0.00019058736787877522,
+      "mean_bet_edge": 0.00019058736787877522,
+      "fold_roi_std": 0.38074608925974573,
+      "alpha_class": "OVERFIT_SIGNAL"
+    },
+    {
+      "name": "base_plus_advanced_context",
+      "groups": [
+        "base",
+        "advanced",
+        "context"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 909,
+      "roi": -0.007700770077007701,
+      "brier": 0.242810933122421,
+      "logloss": 0.678402050956355,
+      "clv": 0.0015048308598364986,
+      "mean_bet_edge": 0.0015048308598364986,
+      "fold_roi_std": 0.38628083693323767,
+      "alpha_class": "OVERFIT_SIGNAL"
+    },
+    {
+      "name": "base_plus_market_context",
+      "groups": [
+        "base",
+        "market",
+        "context"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 1255,
+      "roi": -0.12191235059760956,
+      "brier": 0.24251133484445436,
+      "logloss": 0.6777385097638505,
+      "clv": 0.0068302485425290205,
+      "mean_bet_edge": 0.0068302485425290205,
+      "fold_roi_std": 0.33180629674312917,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced_market_context",
+      "groups": [
+        "base",
+        "advanced",
+        "market",
+        "context"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 922,
+      "roi": -0.0021691973969631237,
+      "brier": 0.24280897025642964,
+      "logloss": 0.678394388297853,
+      "clv": 0.0015755864556708057,
+      "mean_bet_edge": 0.0015755864556708057,
+      "fold_roi_std": 0.38795814392232353,
+      "alpha_class": "OVERFIT_SIGNAL"
+    },
+    {
+      "name": "base_plus_advanced_market_context",
+      "groups": [
+        "base",
+        "advanced",
+        "market",
+        "context"
+      ],
+      "tier": "RESEARCH_VALID",
+      "n_games": 2396,
+      "n_bets": 922,
+      "roi": -0.0021691973969631237,
+      "brier": 0.24280897025642964,
+      "logloss": 0.678394388297853,
+      "clv": 0.0015755864556708057,
+      "mean_bet_edge": 0.0015755864556708057,
+      "fold_roi_std": 0.38795814392232353,
+      "alpha_class": "OVERFIT_SIGNAL"
+    }
+  ],
+  "alpha_ranking": {
+    "TRUE_ALPHA": [],
+    "WEAK_ALPHA": [],
+    "NOISE": [
+      "base_only",
+      "base_plus_market",
+      "base_plus_context",
+      "base_plus_market_context"
+    ],
+    "OVERFIT_SIGNAL": [
+      "base_plus_advanced",
+      "base_plus_advanced_market",
+      "base_plus_advanced_context",
+      "base_plus_advanced_market_context",
+      "base_plus_advanced_market_context"
+    ]
+  },
+  "clv_analysis": {
+    "clv_note": "Values labeled 'clv' in this section are mean_bet_edge (mean edge on selected bets). Genuine CLV is UNAVAILABLE for 2025 MLB (single post-game snapshot only). Research framing: single-snapshot benchmark, not CLV research.",
+    "current_base_clv": 0.004767583540725343,
+    "current_base_mean_bet_edge": 0.004767583540725343,
+    "best_research_clv": 0.0069694490262953625,
+    "top_clv_models": [
+      {
+        "name": "base_plus_context",
+        "groups": [
+          "base",
+          "context"
+        ],
+        "tier": "RESEARCH_VALID",
+        "n_games": 2396,
+        "n_bets": 1275,
+        "roi": -0.12627450980392158,
+        "brier": 0.24271151717166953,
+        "logloss": 0.6781718771622068,
+        "clv": 0.0069694490262953625,
+        "mean_bet_edge": 0.0069694490262953625,
+        "fold_roi_std": 0.32985049224035906,
+        "alpha_class": "NOISE"
+      },
+      {
+        "name": "base_plus_market_context",
+        "groups": [
+          "base",
+          "market",
+          "context"
+        ],
+        "tier": "RESEARCH_VALID",
+        "n_games": 2396,
+        "n_bets": 1255,
+        "roi": -0.12191235059760956,
+        "brier": 0.24251133484445436,
+        "logloss": 0.6777385097638505,
+        "clv": 0.0068302485425290205,
+        "mean_bet_edge": 0.0068302485425290205,
+        "fold_roi_std": 0.33180629674312917,
+        "alpha_class": "NOISE"
+      },
+      {
+        "name": "base_only",
+        "groups": [
+          "base"
+        ],
+        "tier": "RESEARCH_VALID",
+        "n_games": 2396,
+        "n_bets": 1245,
+        "roi": -0.12289156626506025,
+        "brier": 0.24242906133547915,
+        "logloss": 0.6775751830972098,
+        "clv": 0.004767583540725343,
+        "mean_bet_edge": 0.004767583540725343,
+        "fold_roi_std": 0.33218867937367536,
+        "alpha_class": "NOISE"
+      },
+      {
+        "name": "base_plus_market",
+        "groups": [
+          "base",
+          "market"
+        ],
+        "tier": "RESEARCH_VALID",
+        "n_games": 2396,
+        "n_bets": 1213,
+        "roi": -0.10469909315746084,
+        "brier": 0.24221519878063827,
+        "logloss": 0.677109911067329,
+        "clv": 0.0042066924528634895,
+        "mean_bet_edge": 0.0042066924528634895,
+        "fold_roi_std": 0.3400185307115242,
+        "alpha_class": "NOISE"
+      },
+      {
+        "name": "base_plus_advanced_market_context",
+        "groups": [
+          "base",
+          "advanced",
+          "market",
+          "context"
+        ],
+        "tier": "RESEARCH_VALID",
+        "n_games": 2396,
+        "n_bets": 922,
+        "roi": -0.0021691973969631237,
+        "brier": 0.24280897025642964,
+        "logloss": 0.678394388297853,
+        "clv": 0.0015755864556708057,
+        "mean_bet_edge": 0.0015755864556708057,
+        "fold_roi_std": 0.38795814392232353,
+        "alpha_class": "OVERFIT_SIGNAL"
+      }
+    ]
+  },
+  "model_diagnosis": {
+    "tier": "RESEARCH_VALID",
+    "calibration_buckets": [
+      {
+        "bucket": "0.3-0.4",
+        "n": 53,
+        "pred_mean": 0.37058561872288887,
+        "actual_rate": 0.32075471698113206
+      },
+      {
+        "bucket": "0.4-0.5",
+        "n": 449,
+        "pred_mean": 0.4728176284124044,
+        "actual_rate": 0.46325167037861914
+      },
+      {
+        "bucket": "0.5-0.6",
+        "n": 1570,
+        "pred_mean": 0.5507396762097713,
+        "actual_rate": 0.5394904458598726
+      },
+      {
+        "bucket": "0.6-0.7",
+        "n": 323,
+        "pred_mean": 0.6277937418135643,
+        "actual_rate": 0.7120743034055728
+      },
+      {
+        "bucket": "0.7-0.8",
+        "n": 1,
+        "pred_mean": 0.706829788529389,
+        "actual_rate": 1.0
+      }
+    ],
+    "entropy_mean": 0.682895205410258,
+    "sharpness": 0.058518091441639816
+  },
+  "production_gap_map": {
+    "strict_valid_rate": 0.0,
+    "research_valid_count": 2396,
+    "status_distribution": {
+      "STRICT_VALID": 0,
+      "RESEARCH_VALID": 2396,
+      "INVALID": 34
+    },
+    "odds_tier_summary": {
+      "strict_timeline": 0,
+      "closing_only": 2396,
+      "no_odds_data": 34,
+      "closing_coverage_rate": 0.986,
+      "strict_clv_coverage_rate": 0.0,
+      "note": "closing_only games use a single post-game snapshot as market reference. CLV is UNAVAILABLE (not a proxy — same snapshot cannot produce meaningful CLV). Research framing: single-snapshot benchmark. True CLV requires strict_timeline (opening < decision < closing, all pregame)."
+    },
+    "context_gap_priority": {
+      "confirmed_lineups": {
+        "present_rate": 0.9753,
+        "missing_rate": 0.0247,
+        "priority": "negligible"
+      },
+      "bullpen_usage_3d": {
+        "present_rate": 0.9654,
+        "missing_rate": 0.0346,
+        "priority": "negligible"
+      },
+      "odds_timeline": {
+        "present_rate": 1.0,
+        "missing_rate": 0.0,
+        "priority": "negligible"
+      },
+      "weather_wind": {
+        "present_rate": 0.856,
+        "missing_rate": 0.144,
+        "priority": "optional"
+      },
+      "injury_rest": {
+        "present_rate": 0.9255,
+        "missing_rate": 0.0745,
+        "priority": "negligible"
+      }
+    }
+  },
+  "data_tier_summary": {
+    "total_games": 2430,
+    "research_valid_games": 2396,
+    "strict_valid_games": 0,
+    "strict_timeline_games": 0,
+    "closing_only_games": 2396,
+    "no_odds_games": 34,
+    "clv_pipeline_status": "single_snapshot_benchmark_only",
+    "subset_inference_warning": "Research conclusions based on RESEARCH_VALID subset only. CLV is UNAVAILABLE for all 2025 games (single post-game snapshot, no pregame data). Metrics measure model edge vs single market snapshot — NOT closing line value. Genuine CLV requires multi-timepoint pregame data from an external API."
+  },
+  "implementation_summary": {
+    "mlb_research_mode": "NON_TRADABLE",
+    "experiments_run": 9,
+    "strict_gate": {
+      "status": "BLOCKED BY DATA LAYER",
+      "promotable": false
+    }
+  },
+  "final_verdict": "PARTIAL READY (RESEARCH_VALID)",
+  "strict_results": [
+    {
+      "name": "base_only",
+      "groups": [
+        "base"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced",
+      "groups": [
+        "base",
+        "advanced"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_market",
+      "groups": [
+        "base",
+        "market"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_context",
+      "groups": [
+        "base",
+        "context"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced_market",
+      "groups": [
+        "base",
+        "advanced",
+        "market"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced_context",
+      "groups": [
+        "base",
+        "advanced",
+        "context"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_market_context",
+      "groups": [
+        "base",
+        "market",
+        "context"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced_market_context",
+      "groups": [
+        "base",
+        "advanced",
+        "market",
+        "context"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    },
+    {
+      "name": "base_plus_advanced_market_context",
+      "groups": [
+        "base",
+        "advanced",
+        "market",
+        "context"
+      ],
+      "tier": "STRICT_VALID",
+      "n_games": 0,
+      "n_bets": 0,
+      "roi": 0.0,
+      "brier": 1.0,
+      "logloss": 1.0,
+      "clv": 0.0,
+      "mean_bet_edge": 0.0,
+      "fold_roi_std": 0.0,
+      "alpha_class": "NOISE"
+    }
+  ]
+}

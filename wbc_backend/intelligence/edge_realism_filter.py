@@ -32,7 +32,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 
 # ─── Labels ─────────────────────────────────────────────────────────────────
@@ -88,11 +87,11 @@ class RealismInput:
     reverse_line_moves: int = 0
 
     # CLV history
-    closing_line_history: List[float] = field(default_factory=list)
+    closing_line_history: list[float] = field(default_factory=list)
     # list of historical CLV values from previous bets (positive = beat close)
 
     # Prediction stability
-    recent_model_probs: List[float] = field(default_factory=list)
+    recent_model_probs: list[float] = field(default_factory=list)
     # the same model's prob snapshots over the last N hours
 
     # Execution
@@ -116,13 +115,13 @@ class RealismReport:
     is_tradeable: bool = False
 
     # Diagnostics
-    details: Dict[str, str] = field(default_factory=dict)
+    details: dict[str, str] = field(default_factory=dict)
     blocking_reason: str = ""
 
 
 # ─── Component 1: Edge Stability ────────────────────────────────────────────
 
-def _score_edge_stability(inp: RealismInput) -> Tuple[float, str]:
+def _score_edge_stability(inp: RealismInput) -> tuple[float, str]:
     """
     Is the model's prediction stable or oscillating wildly?
 
@@ -162,7 +161,7 @@ def _score_edge_stability(inp: RealismInput) -> Tuple[float, str]:
 
 # ─── Component 2: Market Absorption ─────────────────────────────────────────
 
-def _score_market_absorption(inp: RealismInput) -> Tuple[float, str]:
+def _score_market_absorption(inp: RealismInput) -> tuple[float, str]:
     """
     Can the market absorb a bet without the line moving?
 
@@ -204,7 +203,7 @@ def _score_market_absorption(inp: RealismInput) -> Tuple[float, str]:
 
 # ─── Component 3: Sharp Alignment ───────────────────────────────────────────
 
-def _score_sharp_alignment(inp: RealismInput) -> Tuple[float, str]:
+def _score_sharp_alignment(inp: RealismInput) -> tuple[float, str]:
     """
     Is smart money on the same side as our model?
 
@@ -245,7 +244,7 @@ def _score_sharp_alignment(inp: RealismInput) -> Tuple[float, str]:
 
 # ─── Component 4: CLV Potential ──────────────────────────────────────────────
 
-def _score_clv_potential(inp: RealismInput) -> Tuple[float, str]:
+def _score_clv_potential(inp: RealismInput) -> tuple[float, str]:  # noqa: C901
     """
     Based on historical closing-line-value and current market timing,
     can we still extract CLV?
@@ -314,7 +313,7 @@ def _score_clv_potential(inp: RealismInput) -> Tuple[float, str]:
 
 # ─── Component 5: Execution Feasibility ─────────────────────────────────────
 
-def _score_execution_feasibility(inp: RealismInput) -> Tuple[float, str]:
+def _score_execution_feasibility(inp: RealismInput) -> tuple[float, str]:
     """
     Will the intended bet size move the line against us?
 

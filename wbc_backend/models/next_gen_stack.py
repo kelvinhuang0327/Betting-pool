@@ -14,7 +14,6 @@ from __future__ import annotations
 import math
 import random
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
 
 
 # ─── Data Structures ─────────────────────────────────────────────────────────
@@ -25,15 +24,15 @@ class MetaPrediction:
     home_win_prob: float
     away_win_prob: float
     confidence: float
-    model_weights: Dict[str, float]
+    model_weights: dict[str, float]
     strategy: str
-    diagnostics: Dict[str, float] = field(default_factory=dict)
+    diagnostics: dict[str, float] = field(default_factory=dict)
 
 
 @dataclass
 class OnlineState:
     """Persistent state for online learning model."""
-    weights: List[float] = field(default_factory=list)
+    weights: list[float] = field(default_factory=list)
     bias: float = 0.0
     learning_rate: float = 0.01
     n_updates: int = 0
@@ -52,7 +51,7 @@ class MetaLearner:
     simple gradient descent.
     """
 
-    def __init__(self, model_names: List[str], context_features: int = 5):
+    def __init__(self, model_names: list[str], context_features: int = 5):
         self.model_names = model_names
         self.n_models = len(model_names)
         self.n_context = context_features
@@ -67,9 +66,9 @@ class MetaLearner:
 
     def _build_features(
         self,
-        sub_preds: Dict[str, float],
-        context: Dict[str, float],
-    ) -> List[float]:
+        sub_preds: dict[str, float],
+        context: dict[str, float],
+    ) -> list[float]:
         """
         Build meta-feature vector:
           [model_1_pred, ..., model_n_pred,
@@ -96,9 +95,9 @@ class MetaLearner:
 
     def fit(
         self,
-        sub_predictions: List[Dict[str, float]],
-        contexts: List[Dict[str, float]],
-        targets: List[int],
+        sub_predictions: list[dict[str, float]],
+        contexts: list[dict[str, float]],
+        targets: list[int],
         learning_rate: float = 0.01,
         epochs: int = 100,
     ):
@@ -152,8 +151,8 @@ class MetaLearner:
 
     def predict(
         self,
-        sub_preds: Dict[str, float],
-        context: Dict[str, float],
+        sub_preds: dict[str, float],
+        context: dict[str, float],
     ) -> MetaPrediction:
         """
         Generate calibrated prediction from sub-model outputs.
@@ -211,7 +210,7 @@ class BayesianEnsemble:
     Posterior: E[wᵢ] = αᵢ / Σα
     """
 
-    def __init__(self, model_names: List[str], prior_strength: float = 10.0):
+    def __init__(self, model_names: list[str], prior_strength: float = 10.0):
         self.model_names = model_names
         # Uniform Dirichlet prior: all αᵢ = prior_strength / n
         self.alphas = {
@@ -221,7 +220,7 @@ class BayesianEnsemble:
 
     def update(
         self,
-        model_predictions: Dict[str, float],
+        model_predictions: dict[str, float],
         actual: int,
     ):
         """
@@ -239,14 +238,14 @@ class BayesianEnsemble:
 
         self.n_updates += 1
 
-    def get_weights(self) -> Dict[str, float]:
+    def get_weights(self) -> dict[str, float]:
         """Current posterior mean weights (E[Dirichlet])."""
         total = sum(self.alphas.values())
         return {k: v / total for k, v in self.alphas.items()}
 
     def predict(
         self,
-        sub_preds: Dict[str, float],
+        sub_preds: dict[str, float],
     ) -> MetaPrediction:
         """Posterior-weighted ensemble prediction."""
         weights = self.get_weights()
@@ -287,19 +286,19 @@ class DynamicWeightLearner:
 
     def __init__(
         self,
-        model_names: List[str],
+        model_names: list[str],
         decay: float = 0.95,
         min_weight: float = 0.03,
     ):
         self.model_names = model_names
         self.decay = decay
         self.min_weight = min_weight
-        self.ewma_accuracy: Dict[str, float] = {name: 0.5 for name in model_names}
+        self.ewma_accuracy: dict[str, float] = {name: 0.5 for name in model_names}
         self.n_updates = 0
 
     def update(
         self,
-        model_predictions: Dict[str, float],
+        model_predictions: dict[str, float],
         actual: int,
     ):
         """Update EWMA accuracy after observing result."""
@@ -314,7 +313,7 @@ class DynamicWeightLearner:
             )
         self.n_updates += 1
 
-    def get_weights(self) -> Dict[str, float]:
+    def get_weights(self) -> dict[str, float]:
         """Convert EWMA accuracy to normalised weights."""
         # Softmax-like transformation
         scores = {}
@@ -325,7 +324,7 @@ class DynamicWeightLearner:
         total = sum(scores.values())
         return {k: v / total for k, v in scores.items()}
 
-    def predict(self, sub_preds: Dict[str, float]) -> MetaPrediction:
+    def predict(self, sub_preds: dict[str, float]) -> MetaPrediction:
         """Dynamic-weight prediction."""
         weights = self.get_weights()
         home_wp = sum(
@@ -382,7 +381,7 @@ class OnlineLearningModel:
         """Adaptive learning rate: lr_0 / sqrt(1 + t)."""
         return self.initial_lr / math.sqrt(1 + self.n_updates)
 
-    def predict_proba(self, features: List[float]) -> float:
+    def predict_proba(self, features: list[float]) -> float:
         """Predict P(home_win) from feature vector."""
         if len(features) != self.n_features:
             return 0.5
@@ -392,7 +391,7 @@ class OnlineLearningModel:
         )
         return _sigmoid(logit)
 
-    def update(self, features: List[float], actual: int):
+    def update(self, features: list[float], actual: int):
         """
         Single-step SGD update.
 
@@ -453,7 +452,7 @@ class SuperEnsemble:
     to allocate weight to each meta-strategy.
     """
 
-    def __init__(self, model_names: List[str]):
+    def __init__(self, model_names: list[str]):
         self.model_names = model_names
         self.meta = MetaLearner(model_names)
         self.bayesian = BayesianEnsemble(model_names)
@@ -461,13 +460,13 @@ class SuperEnsemble:
 
         # UCB1 tracking
         self.strategy_names = ["meta", "bayesian", "dynamic", "consensus"]
-        self.rewards: Dict[str, List[float]] = {s: [] for s in self.strategy_names}
-        self.n_plays: Dict[str, int] = {s: 0 for s in self.strategy_names}
+        self.rewards: dict[str, list[float]] = {s: [] for s in self.strategy_names}
+        self.n_plays: dict[str, int] = {s: 0 for s in self.strategy_names}
 
     def predict(
         self,
-        sub_preds: Dict[str, float],
-        context: Optional[Dict[str, float]] = None,
+        sub_preds: dict[str, float],
+        context: dict[str, float] | None = None,
     ) -> MetaPrediction:
         """
         Generate prediction using UCB1-selected strategy.
@@ -516,7 +515,7 @@ class SuperEnsemble:
             home_wp = sum(
                 weights[k] * strategy_outputs[k] for k in self.strategy_names
             )
-            strategy = f"SUPER_UCB1"
+            strategy = "SUPER_UCB1"
 
         home_wp = max(0.01, min(0.99, home_wp))
 
@@ -534,7 +533,7 @@ class SuperEnsemble:
             },
         )
 
-    def update(self, model_predictions: Dict[str, float], actual: int):
+    def update(self, model_predictions: dict[str, float], actual: int):
         """Update all sub-strategies after observing result."""
         self.bayesian.update(model_predictions, actual)
         self.dynamic.update(model_predictions, actual)
@@ -565,7 +564,7 @@ def _sigmoid(x: float) -> float:
     return ez / (1.0 + ez)
 
 
-def _std(values: List[float]) -> float:
+def _std(values: list[float]) -> float:
     if len(values) < 2:
         return 0.0
     mean = sum(values) / len(values)

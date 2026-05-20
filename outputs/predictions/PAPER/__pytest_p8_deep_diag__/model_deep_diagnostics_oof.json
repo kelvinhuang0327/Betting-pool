@@ -1,0 +1,158 @@
+{
+  "row_count": 20,
+  "usable_count": 20,
+  "model_brier": 0.187887,
+  "market_brier": 0.217251,
+  "brier_skill_score": 0.135162,
+  "ece": 0.4325,
+  "avg_model_prob": 0.5675,
+  "avg_market_prob": 0.533898,
+  "avg_home_win_rate": 1.0,
+  "avg_model_minus_market": 0.033602,
+  "orientation_diagnostics": {
+    "bss_normal": 0.135158,
+    "bss_inverted_model": -0.486243,
+    "bss_swapped_home_away": -0.486243,
+    "best_orientation": "normal",
+    "orientation_warning": null
+  },
+  "join_diagnostics": {
+    "missing_game_id_count": 20,
+    "duplicate_game_id_count": 0,
+    "duplicate_date_team_count": 0,
+    "missing_home_team_count": 0,
+    "missing_away_team_count": 0,
+    "suspicious_same_team_count": 0
+  },
+  "outcome_diagnostics": {
+    "outcome_zero_count": 0,
+    "outcome_one_count": 20,
+    "outcome_null_count": 0,
+    "outcome_balance": 1.0
+  },
+  "probability_diagnostics": {
+    "model_prob_min": 0.52,
+    "model_prob_max": 0.615,
+    "model_prob_std": 0.02958,
+    "market_prob_min": 0.533898,
+    "market_prob_max": 0.533898,
+    "market_prob_std": 0.0,
+    "overconfident_count": 7,
+    "underconfident_count": 0
+  },
+  "segment_summary": {
+    "by_month": [
+      {
+        "segment": "2025-05",
+        "segment_by": "month",
+        "row_count": 20,
+        "model_brier": 0.187887,
+        "market_brier": 0.217251,
+        "bss": 0.135158,
+        "ece": 0.4325,
+        "avg_edge": 0.033602,
+        "avg_model_prob": 0.5675,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ],
+    "by_confidence_bucket": [
+      {
+        "segment": "low_conf_<0.55",
+        "segment_by": "confidence_bucket",
+        "row_count": 6,
+        "model_brier": 0.218629,
+        "market_brier": 0.217251,
+        "bss": -0.006345,
+        "ece": 0.4675,
+        "avg_edge": -0.001398,
+        "avg_model_prob": 0.5325,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "med_conf_0.55-0.60",
+        "segment_by": "confidence_bucket",
+        "row_count": 10,
+        "model_brier": 0.182962,
+        "market_brier": 0.217251,
+        "bss": 0.157828,
+        "ece": 0.4275,
+        "avg_edge": 0.038602,
+        "avg_model_prob": 0.5725,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "med_hi_conf_0.60-0.65",
+        "segment_by": "confidence_bucket",
+        "row_count": 4,
+        "model_brier": 0.154088,
+        "market_brier": 0.217251,
+        "bss": 0.290739,
+        "ece": 0.3925,
+        "avg_edge": 0.073602,
+        "avg_model_prob": 0.6075,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ],
+    "by_favorite_side": [
+      {
+        "segment": "home_fav",
+        "segment_by": "favorite_side",
+        "row_count": 20,
+        "model_brier": 0.187887,
+        "market_brier": 0.217251,
+        "bss": 0.135158,
+        "ece": 0.4325,
+        "avg_edge": 0.033602,
+        "avg_model_prob": 0.5675,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ],
+    "by_home_bias_bucket": [
+      {
+        "segment": "neutral_-0.02-0.02",
+        "segment_by": "home_bias_bucket",
+        "row_count": 7,
+        "model_brier": 0.216325,
+        "market_brier": 0.217251,
+        "bss": 0.004261,
+        "ece": 0.465,
+        "avg_edge": 0.001102,
+        "avg_model_prob": 0.535,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "mild_home_bias_0.02-0.08",
+        "segment_by": "home_bias_bucket",
+        "row_count": 12,
+        "model_brier": 0.174604,
+        "market_brier": 0.217251,
+        "bss": 0.196301,
+        "ece": 0.4175,
+        "avg_edge": 0.048602,
+        "avg_model_prob": 0.5825,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      },
+      {
+        "segment": "strong_home_bias_0.08-0.15",
+        "segment_by": "home_bias_bucket",
+        "row_count": 1,
+        "model_brier": 0.148225,
+        "market_brier": 0.217251,
+        "bss": 0.317724,
+        "ece": 0.385,
+        "avg_edge": 0.081102,
+        "avg_model_prob": 0.615,
+        "avg_market_prob": 0.533898,
+        "avg_outcome": 1.0
+      }
+    ]
+  },
+  "generated_at": "2026-05-20T09:54:06.814770+00:00"
+}

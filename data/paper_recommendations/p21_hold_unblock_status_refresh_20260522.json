@@ -1,0 +1,49 @@
+{
+  "phase": "P21_CEO_CLV_DECISION_FOLLOWUP_GATE",
+  "task": "P21-E",
+  "date": "2026-05-22",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+
+  "data_layer": {
+    "valid_clv_pairs": 233,
+    "pair_target": 200,
+    "pair_coverage_pct": 116.5,
+    "data_gate": "PASS",
+    "timestamp_parse_errors": 0,
+    "closing_line_available": true
+  },
+
+  "ceo_decision_layer": {
+    "decision_file_exists": false,
+    "decision_status": "DEFER_DECISION",
+    "ceo_gate": "BLOCKED"
+  },
+
+  "p22_gate": {
+    "p22_allowed": false,
+    "p22_scope": null,
+    "clv_validation_allowed": false,
+    "promotion_allowed": false,
+    "promotion_frozen": true,
+    "champion": "fixed_edge_5pct",
+    "champion_status": "PRESERVED",
+    "next_owner": "CEO",
+    "hold_status": "HOLD_NO_EXPANSION_MAINTAINED"
+  },
+
+  "p21_c_executed": false,
+  "p21_d_executed": false,
+  "skip_reason": "CEO has not placed decision file",
+
+  "unblock_condition": {
+    "file_to_create": "data/paper_recommendations/p21_ceo_clv_validation_decision_20260522.json",
+    "required_field": "decision",
+    "required_value": "APPROVE_CLV_VALIDATION_ONLY"
+  },
+
+  "final_classification": "P21_CEO_CLV_DECISION_REQUIRED"
+}

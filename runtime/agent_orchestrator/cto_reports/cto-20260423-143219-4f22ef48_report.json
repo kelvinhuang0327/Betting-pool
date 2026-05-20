@@ -1,0 +1,84 @@
+{
+  "run_id": "cto-20260423-143219-4f22ef48",
+  "generated_at": "2026-04-23T14:32:19.290943+00:00",
+  "analysis": {
+    "candidates": [
+      {
+        "task_id": 5,
+        "title": "優化特徵選擇器的 SHAP 重要性評估",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:23:55.053405+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 4,
+        "title": "更新彩票數據抓取流程",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:19:04.049322+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 3,
+        "title": "優化 WBC 預測模型準確率",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:13:43.642219+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 2,
+        "title": "修復回測系統中的數據滲透問題",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:02:05.438058+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      }
+    ],
+    "findings": [
+      {
+        "finding_id": "finding-3-46c683ff",
+        "task_id": 3,
+        "severity": "MEDIUM",
+        "urgency": "MEDIUM",
+        "category": "quality",
+        "title": "程式碼品質改進建議 - 任務 #3",
+        "description": "在任務 優化 WBC 預測模型準確率 中發現可以改進的程式碼品質問題",
+        "file_path": "models/20260423141041-task.py",
+        "line_number": 42,
+        "impact_score": 60
+      }
+    ],
+    "summary": {
+      "total_tasks": 6,
+      "completed_tasks": 4,
+      "candidates_count": 4,
+      "findings_count": 1
+    }
+  },
+  "intelligence_blocks": {
+    "summary": {
+      "total_candidates": 4,
+      "total_findings": 1,
+      "risk_assessment": "LOW"
+    },
+    "recommendations": [
+      "繼續監控程式碼品質指標",
+      "建立自動化測試覆蓋率檢查",
+      "定期進行程式碼審查"
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "處理發現的品質問題",
+        "owner": "開發團隊",
+        "due_date": "2026-04-30T14:32:19.290943+00:00"
+      }
+    ]
+  }
+}

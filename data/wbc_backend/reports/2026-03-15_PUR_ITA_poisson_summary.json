@@ -1,0 +1,30 @@
+{
+  "date_tpe": "2026-03-15",
+  "starters": {
+    "game_pk": 788098,
+    "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788098/feed/live",
+    "away_sp": {
+      "name": "Seth Lugo",
+      "team": "PUR",
+      "stats_source": "https://statsapi.mlb.com/api/v1/people/607625/stats?stats=season&group=pitching&season=2025",
+      "era": 4.15,
+      "whip": 1.29,
+      "k_per_9": 7.74,
+      "bb_per_9": 3.41
+    },
+    "home_sp": null
+  },
+  "base_lambda_a": 3.25,
+  "base_lambda_b": 4.875,
+  "lambda_a": 3.25,
+  "lambda_b": 4.919616,
+  "a_win_9": 0.22166469849418635,
+  "b_win_9": 0.6573814883046329,
+  "tie_9": 0.12095381320118075,
+  "a_full": 0.2821416050947767,
+  "b_full": 0.7178583949052233,
+  "special_matchup_weight": "無資料",
+  "odds": "無資料",
+  "model_artifacts_has_team_weights": false,
+  "matrix_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/2026-03-15_PUR_ITA_poisson_matrix.csv"
+}

@@ -1,0 +1,44 @@
+{
+  "run_id": "cto-20260423-155301-a593706d",
+  "generated_at": "2026-04-23T15:53:01.831628+00:00",
+  "analysis": {
+    "candidates": [
+      {
+        "task_id": 22,
+        "title": "WBC knockout calibration and regime comparison",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T15:52:56.478575+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      }
+    ],
+    "findings": [],
+    "summary": {
+      "total_tasks": 1,
+      "completed_tasks": 1,
+      "candidates_count": 1,
+      "findings_count": 0
+    }
+  },
+  "intelligence_blocks": {
+    "summary": {
+      "total_candidates": 1,
+      "total_findings": 0,
+      "risk_assessment": "LOW"
+    },
+    "recommendations": [
+      "繼續監控程式碼品質指標",
+      "建立自動化測試覆蓋率檢查",
+      "定期進行程式碼審查"
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "處理發現的品質問題",
+        "owner": "開發團隊",
+        "due_date": "2026-04-30T15:53:01.831628+00:00"
+      }
+    ]
+  }
+}

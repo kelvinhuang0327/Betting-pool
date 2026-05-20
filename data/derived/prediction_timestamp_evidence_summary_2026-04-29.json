@@ -1,0 +1,17 @@
+{
+  "schema_version": "6n-1.0",
+  "run_date": "2026-04-30",
+  "model_output_rows": 2986,
+  "rows_missing_prediction_time_utc": 2986,
+  "evidence_sources_scanned": 180,
+  "candidate_timestamp_events": 293,
+  "pre_match_evidence_events": 0,
+  "post_match_evidence_events": 0,
+  "file_metadata_events": 4,
+  "historical_recovery_decision": "HISTORICAL_RECOVERY_NOT_POSSIBLE",
+  "can_update_model_outputs_safely": false,
+  "recommended_next_step": "Phase 6O: Future Native Timestamp Capture Design \u2014 model pipeline must record prediction_time_utc at inference time",
+  "source_data_modified": false,
+  "model_outputs_modified": false,
+  "formal_clv_validation_run": false
+}

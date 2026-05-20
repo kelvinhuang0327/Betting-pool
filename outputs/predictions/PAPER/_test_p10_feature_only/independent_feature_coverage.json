@@ -1,0 +1,77 @@
+{
+  "input_count": 2402,
+  "feature_count": 2402,
+  "coverage_by_feature": {
+    "bullpen_proxy": {
+      "hit": 2346,
+      "total": 2402,
+      "pct": 0.9767
+    },
+    "home_recent_win_rate": {
+      "hit": 2387,
+      "total": 2402,
+      "pct": 0.9938
+    },
+    "away_recent_win_rate": {
+      "hit": 2387,
+      "total": 2402,
+      "pct": 0.9938
+    },
+    "home_rest_days": {
+      "hit": 2284,
+      "total": 2402,
+      "pct": 0.9509
+    },
+    "away_rest_days": {
+      "hit": 2287,
+      "total": 2402,
+      "pct": 0.9521
+    },
+    "wind_kmh": {
+      "hit": 2080,
+      "total": 2402,
+      "pct": 0.8659
+    },
+    "temp_c": {
+      "hit": 2080,
+      "total": 2402,
+      "pct": 0.8659
+    },
+    "starter_era_proxy_away": {
+      "hit": 2058,
+      "total": 2402,
+      "pct": 0.8568
+    },
+    "starter_era_proxy_home": {
+      "hit": 2080,
+      "total": 2402,
+      "pct": 0.8659
+    }
+  },
+  "missing_feature_reasons": [
+    "starter_era_proxy: 322/2402 rows missing (requires ≥2 prior starts in as-played data)"
+  ],
+  "leakage_safe": true,
+  "lookback_games": 15,
+  "feature_version": "p11_context_reconciled_v1",
+  "bullpen_context_rows": 19272,
+  "rest_context_rows": 19272,
+  "weather_context_rows": 19272,
+  "asplayed_rows": 2430,
+  "starter_era_proxy_available": true,
+  "context_hit_count": 2402,
+  "context_miss_count": 0,
+  "context_hit_rate": 1.0,
+  "context_key_examples": [],
+  "context_match_strategies": [],
+  "date_col_resolved": "Date",
+  "home_col_resolved": "Home",
+  "away_col_resolved": "Away",
+  "home_starter_col_resolved": "Home Starter",
+  "away_starter_col_resolved": "Away Starter",
+  "candidate_mode": "feature_only",
+  "paper_only": true,
+  "run_at_utc": "2026-05-20T09:54:05.692036+00:00",
+  "input_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/outputs/predictions/PAPER/2026-05-11/mlb_odds_with_repaired_features.csv",
+  "output_dir": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/outputs/predictions/PAPER/_test_p10_feature_only"
+}

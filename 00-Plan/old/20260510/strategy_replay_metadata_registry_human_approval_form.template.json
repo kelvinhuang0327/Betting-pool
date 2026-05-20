@@ -1,0 +1,15 @@
+{
+  "reviewer": "",
+  "approval_timestamp": null,
+  "explicit_human_approval": false,
+  "approval_decision": "REJECT",
+  "approval_reason": "",
+  "rollback_plan_ref": "",
+  "reviewed_registry_path": "",
+  "reviewed_acceptance_context_path": "",
+  "reviewed_evidence_pack_path": "",
+  "reviewed_test_results": [],
+  "reviewer_notes": "",
+  "review_status": "draft_only",
+  "production_metadata_registry_accepted": false
+}

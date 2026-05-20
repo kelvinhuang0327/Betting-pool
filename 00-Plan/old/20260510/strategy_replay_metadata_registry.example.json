@@ -1,0 +1,36 @@
+{
+  "registry_kind": "example_non_production",
+  "registry_purpose": "Strategy Replay metadata registry skeleton example only",
+  "non_production": true,
+  "production_ready": false,
+  "records": [
+    {
+      "strategy_id": "strategy.pool_c.ml_v1",
+      "strategy_name": "Pool C ML v1",
+      "current_lifecycle_state": "online",
+      "lifecycle_state_source": "explicit_registry",
+      "lifecycle_state_updated_at": "2026-05-10T08:00:00Z",
+      "owner_module": "wbc_backend.reporting.strategy_registry",
+      "audit_source": "strategy_registry_seed",
+      "allowed_for_future_writes": true,
+      "allowed_for_historical_backfill": false,
+      "metadata_version": "p28a-1.0",
+      "notes": "Example only; not loaded automatically by runtime.",
+      "source_kind": "registry"
+    },
+    {
+      "strategy_id": "strategy.pool_d.ml_v1",
+      "strategy_name": "Pool D ML v1",
+      "current_lifecycle_state": "offline",
+      "lifecycle_state_source": "explicit_registry",
+      "lifecycle_state_updated_at": "2026-05-10T08:00:00Z",
+      "owner_module": "wbc_backend.reporting.strategy_registry",
+      "audit_source": "strategy_registry_seed",
+      "allowed_for_future_writes": true,
+      "allowed_for_historical_backfill": false,
+      "metadata_version": "p28a-1.0",
+      "notes": "Example only; not loaded automatically by runtime.",
+      "source_kind": "registry"
+    }
+  ]
+}

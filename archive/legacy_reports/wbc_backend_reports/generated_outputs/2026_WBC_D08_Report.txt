@@ -1,0 +1,278 @@
+⚠️  Verification Warning (Bypassed): WBC data verification failed for D08: Starting pitchers have not been officially verified.; Official starting lineup missing; using previous-game lineup fallback.; Snapshot home SP  != model home SP Jonathan Loáisiga.; Snapshot away SP  != model away SP Carlos Carrasco.; Home SP Jonathan Loáisiga is not present in the verified home roster.; Away SP Carlos Carrasco is not present in the verified away roster.; Home lineup does not match the verified starting lineup.; Away lineup does not match the verified starting lineup.; Away lineup player Jose Altuve is not present in the verified away roster.; Away lineup player Andres Gimenez is not present in the verified away roster.; Model input still declares MOCK/SEED source. Treat this as unsafe until the authoritative snapshot fully replaces the seed path.
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool D  |  LoanDepot Park, Miami
+  2026-03-09T19:00:00-04:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Venezuela (VEN) vs Nicaragua (NIC)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    VEN     |    NIC     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    3.60    |    4.25    |     VEN     |
+| 打擊 wRC+          |    128     |     70     |     VEN     |
+| 打線 wOBA          |   0.352    |   0.278    |     VEN     |
+| 守備 DER           |   0.715    |   0.680    |     VEN     |
+| 跑壘 SB%           |    78%     |    67%     |     VEN     |
+| 牛棚 ERA           |    3.00    |    5.00    |     VEN     |
+| 高壓 Clutch wOBA   |   0.345    |   0.268    |     VEN     |
+| Elo Rating         |    1540    |    1260    |     VEN     |
+
+#### 先發投手對決
+
+| 指標           |    Carlos Carrasco     |   Jonathan Loáisiga    |
+|----------------|------------------------|------------------------|
+| ERA            |          4.20          |          3.50          |
+| FIP            |          4.30          |          3.40          |
+| WHIP           |          1.28          |          1.15          |
+| K/9            |          7.5           |          9.0           |
+| BB/9           |          2.5           |          3.5           |
+| Stuff+         |           95           |          115           |
+| 均速 (mph)     |          92.0          |          97.5          |
+| 春訓 ERA       |          3.80          |          3.00          |
+| 近3場 ERA      |          4.00          |          3.20          |
+| vs LHB BA      |         0.248          |         0.220          |
+| vs RHB BA      |         0.240          |         0.215          |
+| 高壓 ERA       |          4.40          |          3.30          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool D
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      VEN       |      NIC       |
+|--------|----------------|----------------|
+|  1局   |  SP Carrasco   |  SP Loáisiga   |
+|  2局   |  SP Carrasco   |  SP Loáisiga   |
+|  3局   |  SP Carrasco   |  SP Loáisiga   |
+|  4局   |   PB Pressly   |    PB Cruz     |
+|  5局   |   PB Pressly   |    PB Cruz     |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Ryan Pressly      |   Sandor De La Cruz    |
+|--------------|------------------------|------------------------|
+| ERA          |          2.80          |          5.20          |
+| FIP          |          2.70          |          5.30          |
+| Stuff+       |          120           |           80           |
+| 春訓 ERA     |          2.40          |          4.80          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      VEN |      NIC |
+|---------------|----------|----------|
+| elo           |    83.4% |    16.6% |
+| bayesian      |    83.2% |    16.8% |
+| poisson       |    82.2% |    17.8% |
+| gbm           |    81.9% |    18.1% |
+| monte_carlo   |    64.2% |    35.8% |
+|---------------|----------|----------|
+| **Ensemble**  | **79.1%** | **20.9%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Ryan Pressly`
+- piggyback_home: `Sandor De La Cruz`
+- piggyback_adjustment: `0.0043`
+- bullpen_fatigue_away_3d: `128`
+- bullpen_fatigue_home_3d: `128`
+- bp_penalty_away: `0.0128`
+- bp_penalty_home: `0.0128`
+- roster_strength_away: `92`
+- roster_strength_home: `42`
+- rsi_adjustment: `0.035`
+- collapse_shift: `0.015`
+- chemistry_bonus: `0.0008`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.7814`
+- pre_adjust_home: `0.2186`
+- post_adjust_away: `0.7905`
+- post_adjust_home: `0.2095`
+
+#### 比分預測
+
+| 排名 | 比分 (VEN-NIC) | 機率     |
+|------|----------------------|----------|
+|  1   |         4-3          |     4.3% |
+|  2   |         5-4          |     4.1% |
+|  3   |         4-5          |     4.0% |
+|  4   |         5-3          |     3.9% |
+|  5   |         3-4          |     3.6% |
+
+**最可能比分 (Most Likely Score):** `4-3` (VEN-NIC)
+
+**預測總分:** 8.9 分
+
+#### 多維度情境分析 (Multi-Scenario Analysis)
+
+> [!NOTE]
+> 基於 WBC 2026 模擬引擎輸出的三種情境預案：
+
+| 情境 (Scenario) | 預計總分 | 特徵描述 |
+|:---|:---:|:---|
+| **中性基準 (Baseline)** | 9 | 雙方發揮正常，符合實力常態分佈。 |
+| **投手戰 (Pitching Duel)** | 6 | 先發投手壓制力極大化，且牛棚銜接完美。 |
+| **打線爆發 (Explosion)** | 13 | 觸發連續得分鏈，弱方防禦體系崩潰。 |
+
+**模擬平均局數:** 9.2 局 (含 Mercy Rule 影響)
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     77.8% |      22.2% |
+|         7.5 |     62.7% |      37.3% |
+|         8.5 |     53.4% |      46.6% |
+|         9.5 |     39.1% |      60.9% |
+
+**延長賽機率 (Extra Innings):** 10.5%
+
+**爆冷機率 (NIC 獲勝):** 20.9%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ❌ **VEN** @ 1.25 (TSL)
+  - 隱含機率: 80.0% | 模型真實機率: 79.0%
+  - 期望值 (EV): -1.2% → **PASS**
+- ❌ **NIC** @ 4.20 (TSL)
+  - 隱含機率: 23.8% | 模型真實機率: 20.9%
+  - 期望值 (EV): -12.0% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **NIC (+2.5)** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型真實機率: 66.2%
+  - 期望值 (EV): +25.8% → **MEDIUM (Market Restricted)**
+- ❌ **VEN (-2.5)** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型真實機率: 38.5%
+  - 期望值 (EV): -26.8% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 7.5** @ 1.85 (TSL)
+  - EV: +16.0% → **MEDIUM (Market Restricted)**
+- ❌ **Under 7.5** @ 1.95 (TSL)
+  - EV: -26.1% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **VEN** @ 1.30 (TSL)
+  - 隱含機率: 76.9% | 模型真實機率: 81.4%
+  - 期望值 (EV): +5.9% → **MEDIUM**
+- ❌ **NIC** @ 3.80 (TSL)
+  - 隱含機率: 26.3% | 模型真實機率: 18.6%
+  - 期望值 (EV): -29.4% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT NIC_Over 2.5** @ 1.85 (TSL)
+  - EV: +24.7% → **STRONG**
+- ❌ **TT VEN_Over 4.5** @ 1.85 (TSL)
+  - EV: -5.0% → **PASS**
+- ❌ **TT VEN_Under 4.5** @ 1.95 (TSL)
+  - EV: -5.1% → **PASS**
+- ❌ **TT NIC_Under 2.5** @ 1.95 (TSL)
+  - EV: -27.0% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL NIC (2.5) @ 1.90 (TSL)
+- True Probability: 66.2%
+- Implied Probability: 52.6%
+- **EV: +25.8%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.2867 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 VEN 為優勢方 (79.1%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool D，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: NIC、VEN 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: NIC 陣容完整度僅 42%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 📉 **牛棚疲勞**: VEN 牛棚近三日用球量過高，模型已加入 19.2% 的失分懲罰係數。
+- ⚖️ **盤口建議 (讓分)**: 模擬顯示兩隊分差僅 1.2 分，強隊穿盤 (-1.5) 風險較高，建議優先考慮 **受讓方 (+1.5)**。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 8.9 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: TT NIC_Over 賠率為 1.85，隱含勝率僅 54.0%，但 AI 計算結果為 67.4%，存在 24.7% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool D 階段上限 65 球，Carlos Carrasco 與 Jonathan Loáisiga 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Ryan Pressly (ERA 2.80) vs Sandor De La Cruz (ERA 5.20) — VEN 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: VEN 近 3 日牛棚用球數較高 (VEN: 128, NIC: 128)，後段比賽可能出現失分風險。
+5. 🔑 **打線核心對決**: Gleyber Torres (wOBA 0.381, SwStr% vs 98mph+ 34.0%) vs Freddy Zamora (wOBA 0.307, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Ronald Acuña Jr., José Altuve, Luis Arraez, Andrés Giménez, José Ramírez, Miguel Cabrera 等 8 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: VEN 高出 280 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      VEN       |      NIC       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       92       |       42       |
+| MLB 球員數        |       24       |       2        |
+| 磨合度 Chemistry  |      0.86      |      0.82      |
+
+**VEN 確認出賽球星**: Ronald Acuña Jr., José Altuve, Luis Arraez, Andrés Giménez, José Ramírez, Miguel Cabrera
+**VEN 待確認球星**:  Luis Castillo
+
+**NIC 確認出賽球星**: Erasmo Ramírez, Jonathan Loáisiga
+
+> ⚠️ **陣容差距**: VEN RSI 高出 50 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +16.7%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | NIC | 1.90 | +25.8% | 0.50% | $500 |
+| 2 | TT | NIC_Over | 1.85 | +24.7% | 1.50% | $1,500 |
+| 3 | OU | Over | 1.85 | +16.0% | 0.50% | $500 |
+| 4 | F5 | VEN | 1.30 | +5.9% | 1.50% | $1,500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

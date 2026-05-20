@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List
 
 
 MANDATORY_FEATURE_DOMAINS = [
@@ -33,7 +32,7 @@ class FeatureDomainSpec:
     validation_method: str
 
 
-def build_feature_space_expansion() -> List[FeatureDomainSpec]:
+def build_feature_space_expansion() -> list[FeatureDomainSpec]:
     specs = [
         FeatureDomainSpec(
             domain="Team strength features",
@@ -159,7 +158,7 @@ def build_feature_space_expansion() -> List[FeatureDomainSpec]:
     return specs
 
 
-def domain_coverage(specs: List[FeatureDomainSpec]) -> Dict[str, int]:
+def domain_coverage(specs: list[FeatureDomainSpec]) -> dict[str, int]:
     coverage = {domain: 0 for domain in MANDATORY_FEATURE_DOMAINS}
     for item in specs:
         if item.domain in coverage:

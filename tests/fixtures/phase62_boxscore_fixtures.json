@@ -1,0 +1,378 @@
+{
+  "description": "Phase 62 — MLB StatsAPI /game/{pk}/boxscore fixture set. NOT real API data — constructed to test per-pitcher ingestion logic, PIT safety, starter/reliever classification, back-to-back detection, and opener handling.",
+  "schema_version": "phase62_fixture_v1",
+  "fixtures": [
+    {
+      "fixture_id": "NORMAL_GAME_1",
+      "meta": {
+        "game_id": "MLB-20250501-1_05_PM-BOSTON_RED_SOX-AT-NEW_YORK_YANKEES",
+        "game_date": "2025-05-01",
+        "game_pk": 100001,
+        "home_team": "New York Yankees",
+        "away_team": "Boston Red Sox",
+        "scenario": "Normal game: SP 6+ IP, setup, closer"
+      },
+      "boxscore": {
+        "teams": {
+          "home": {
+            "pitchers": [700001, 700002, 700003],
+            "players": {
+              "ID700001": {
+                "person": {"id": 700001, "fullName": "Gerrit Cole"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "6.0",
+                    "numberOfPitches": 95,
+                    "strikes": 62
+                  }
+                }
+              },
+              "ID700002": {
+                "person": {"id": 700002, "fullName": "Clay Holmes"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "2.0",
+                    "numberOfPitches": 28,
+                    "strikes": 19
+                  }
+                }
+              },
+              "ID700003": {
+                "person": {"id": 700003, "fullName": "Luke Weaver"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 15,
+                    "strikes": 9
+                  }
+                }
+              }
+            }
+          },
+          "away": {
+            "pitchers": [700011, 700012, 700013, 700014],
+            "players": {
+              "ID700011": {
+                "person": {"id": 700011, "fullName": "Brayan Bello"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "5.1",
+                    "numberOfPitches": 88,
+                    "strikes": 56
+                  }
+                }
+              },
+              "ID700012": {
+                "person": {"id": 700012, "fullName": "Luis Garcia"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "0.2",
+                    "numberOfPitches": 12,
+                    "strikes": 7
+                  }
+                }
+              },
+              "ID700013": {
+                "person": {"id": 700013, "fullName": "Greg Weissert"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 14,
+                    "strikes": 8
+                  }
+                }
+              },
+              "ID700014": {
+                "person": {"id": 700014, "fullName": "Aroldis Chapman"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 18,
+                    "strikes": 12
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": "NORMAL_GAME_2",
+      "meta": {
+        "game_id": "MLB-20250502-1_05_PM-BOSTON_RED_SOX-AT-NEW_YORK_YANKEES",
+        "game_date": "2025-05-02",
+        "game_pk": 100002,
+        "home_team": "New York Yankees",
+        "away_team": "Boston Red Sox",
+        "scenario": "Day 2: Clay Holmes and Luke Weaver appear again (B2B detection test)"
+      },
+      "boxscore": {
+        "teams": {
+          "home": {
+            "pitchers": [700021, 700002, 700003],
+            "players": {
+              "ID700021": {
+                "person": {"id": 700021, "fullName": "Marcus Stroman"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "7.0",
+                    "numberOfPitches": 102,
+                    "strikes": 68
+                  }
+                }
+              },
+              "ID700002": {
+                "person": {"id": 700002, "fullName": "Clay Holmes"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 16,
+                    "strikes": 10
+                  }
+                }
+              },
+              "ID700003": {
+                "person": {"id": 700003, "fullName": "Luke Weaver"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 14,
+                    "strikes": 9
+                  }
+                }
+              }
+            }
+          },
+          "away": {
+            "pitchers": [700031, 700013, 700014],
+            "players": {
+              "ID700031": {
+                "person": {"id": 700031, "fullName": "Tanner Houck"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "7.0",
+                    "numberOfPitches": 98,
+                    "strikes": 65
+                  }
+                }
+              },
+              "ID700013": {
+                "person": {"id": 700013, "fullName": "Greg Weissert"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 15,
+                    "strikes": 8
+                  }
+                }
+              },
+              "ID700014": {
+                "person": {"id": 700014, "fullName": "Aroldis Chapman"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 17,
+                    "strikes": 11
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": "NORMAL_GAME_3",
+      "meta": {
+        "game_id": "MLB-20250503-1_05_PM-BOSTON_RED_SOX-AT-NEW_YORK_YANKEES",
+        "game_date": "2025-05-03",
+        "game_pk": 100003,
+        "home_team": "New York Yankees",
+        "away_team": "Boston Red Sox",
+        "scenario": "Day 3: Luke Weaver appears 3rd day in a row (3-in-3 detection test); Chapman also appears 3rd day"
+      },
+      "boxscore": {
+        "teams": {
+          "home": {
+            "pitchers": [700041, 700042, 700003],
+            "players": {
+              "ID700041": {
+                "person": {"id": 700041, "fullName": "Clarke Schmidt"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "5.2",
+                    "numberOfPitches": 86,
+                    "strikes": 55
+                  }
+                }
+              },
+              "ID700042": {
+                "person": {"id": 700042, "fullName": "Tommy Kahnle"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.1",
+                    "numberOfPitches": 22,
+                    "strikes": 14
+                  }
+                }
+              },
+              "ID700003": {
+                "person": {"id": 700003, "fullName": "Luke Weaver"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "2.0",
+                    "numberOfPitches": 28,
+                    "strikes": 18
+                  }
+                }
+              }
+            }
+          },
+          "away": {
+            "pitchers": [700051, 700052, 700014],
+            "players": {
+              "ID700051": {
+                "person": {"id": 700051, "fullName": "Nick Pivetta"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "6.0",
+                    "numberOfPitches": 92,
+                    "strikes": 60
+                  }
+                }
+              },
+              "ID700052": {
+                "person": {"id": 700052, "fullName": "Josh Winckowski"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "2.0",
+                    "numberOfPitches": 25,
+                    "strikes": 16
+                  }
+                }
+              },
+              "ID700014": {
+                "person": {"id": 700014, "fullName": "Aroldis Chapman"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 16,
+                    "strikes": 10
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": "OPENER_GAME",
+      "meta": {
+        "game_id": "MLB-20250504-7_05_PM-TAMPA_BAY_RAYS-AT-HOUSTON_ASTROS",
+        "game_date": "2025-05-04",
+        "game_pk": 100004,
+        "home_team": "Houston Astros",
+        "away_team": "Tampa Bay Rays",
+        "scenario": "Opener game: pitchers[0] throws only 1.1 IP (< 2.0 threshold) → treated as reliever not starter"
+      },
+      "boxscore": {
+        "teams": {
+          "home": {
+            "pitchers": [800001, 800002, 800003, 800004],
+            "players": {
+              "ID800001": {
+                "person": {"id": 800001, "fullName": "Ryan Pressly"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.1",
+                    "numberOfPitches": 22,
+                    "strikes": 14
+                  }
+                }
+              },
+              "ID800002": {
+                "person": {"id": 800002, "fullName": "Hunter Brown"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "4.2",
+                    "numberOfPitches": 72,
+                    "strikes": 48
+                  }
+                }
+              },
+              "ID800003": {
+                "person": {"id": 800003, "fullName": "Bryan Abreu"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 15,
+                    "strikes": 10
+                  }
+                }
+              },
+              "ID800004": {
+                "person": {"id": 800004, "fullName": "Hector Neris"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "2.0",
+                    "numberOfPitches": 28,
+                    "strikes": 18
+                  }
+                }
+              }
+            }
+          },
+          "away": {
+            "pitchers": [800011, 800012, 800013],
+            "players": {
+              "ID800011": {
+                "person": {"id": 800011, "fullName": "Zack Littell"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "6.0",
+                    "numberOfPitches": 88,
+                    "strikes": 58
+                  }
+                }
+              },
+              "ID800012": {
+                "person": {"id": 800012, "fullName": "Pete Fairbanks"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "2.0",
+                    "numberOfPitches": 26,
+                    "strikes": 17
+                  }
+                }
+              },
+              "ID800013": {
+                "person": {"id": 800013, "fullName": "Edwin Uceta"},
+                "stats": {
+                  "pitching": {
+                    "inningsPitched": "1.0",
+                    "numberOfPitches": 14,
+                    "strikes": 8
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "fixture_id": "MISSING_BOXSCORE",
+      "meta": {
+        "game_id": "MLB-20250505-1_05_PM-BOSTON_RED_SOX-AT-NEW_YORK_YANKEES",
+        "game_date": "2025-05-05",
+        "game_pk": 100005,
+        "home_team": "New York Yankees",
+        "away_team": "Boston Red Sox",
+        "scenario": "No boxscore available (postponed / API failure) → all features MISSING, not DATA_LIMITED"
+      },
+      "boxscore": null
+    }
+  ]
+}

@@ -1,18 +1,18 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Tuple
+from collections.abc import Iterable
 
 import numpy as np
 
 
 @dataclass(frozen=True)
 class PortfolioOptimizationResult:
-    weights: List[float]
+    weights: list[float]
     expected_return: float
     cvar_95: float
     gross_exposure: float
-    stress_cvar: Dict[str, float]
+    stress_cvar: dict[str, float]
 
 
 def _ensure_2d(arr: np.ndarray) -> np.ndarray:
@@ -75,7 +75,7 @@ def _evaluate_candidate(
     expected_edges: np.ndarray,
     scenario_returns: np.ndarray,
     alpha: float = 0.95,
-) -> Tuple[float, float]:
+) -> tuple[float, float]:
     exp_ret = float(np.dot(weights, expected_edges))
     scenario_pnl = scenario_returns @ weights
     losses = -scenario_pnl
@@ -138,12 +138,12 @@ def drawdown_adaptive_sizing(drawdown_pct: float) -> float:
 def stress_scenario_simulation(
     weights: Iterable[float],
     scenario_returns: Iterable[Iterable[float]],
-    shock_grid: Tuple[float, ...] = (-0.01, -0.03, -0.05),
-) -> Dict[str, float]:
+    shock_grid: tuple[float, ...] = (-0.01, -0.03, -0.05),
+) -> dict[str, float]:
     w = np.asarray(list(weights), dtype=float)
     scenarios = _ensure_2d(np.asarray(list(scenario_returns), dtype=float))
     base_losses = -(scenarios @ w)
-    stats: Dict[str, float] = {"base_cvar_95": portfolio_cvar(base_losses, 0.95)}
+    stats: dict[str, float] = {"base_cvar_95": portfolio_cvar(base_losses, 0.95)}
 
     for shock in shock_grid:
         shocked = scenarios + shock

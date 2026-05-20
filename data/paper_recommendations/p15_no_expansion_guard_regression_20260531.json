@@ -1,0 +1,46 @@
+{
+  "task": "P15-D",
+  "title": "No-Expansion Guard Regression",
+  "date": "2026-05-31T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "is_blocked": true,
+  "blocked_reasons": [
+    "CEO_DECISION_PENDING",
+    "API_KEY_MISSING",
+    "NO_CLOSING_LINE",
+    "FORWARD_ACCUMULATION_INSUFFICIENT",
+    "CLV_NOT_READY",
+    "PROMOTION_FROZEN"
+  ],
+  "forbidden_actions_check": {
+    "OPTIMIZER_PROMOTION": true,
+    "PRODUCTION_PROPOSAL": true,
+    "LIVE_ODDS_WRITE": true,
+    "TSL_CRAWLER_MODIFICATION": true,
+    "HISTORICAL_API_CALL_WITHOUT_APPROVAL": true,
+    "PROFITABILITY_CLAIM": true,
+    "NEW_ROADMAP_EXPANSION": true,
+    "NEW_BACKFILL_WITHOUT_DECISION": true
+  },
+  "all_forbidden_actions_blocked": true,
+  "allowed_actions_check": {
+    "CEO_FOLLOWUP": true,
+    "PAPER_ONLY_MONITORING": true,
+    "FORWARD_COVERAGE_READINESS_CHECK": true,
+    "API_KEY_READINESS_CHECK": true,
+    "REPORT_ONLY": true
+  },
+  "all_allowed_actions_permitted": true,
+  "forbidden_count": 8,
+  "allowed_count": 5,
+  "p14_allowed": false,
+  "p15_allowed": false,
+  "p16_allowed": false,
+  "promotion_frozen": true,
+  "fixed_edge_5pct_champion_preserved": true,
+  "enforcement_result": "PASS",
+  "regression_vs_p14": "NO_CHANGE",
+  "annotation": "paper_only=true。P15-D No-Expansion Guard Regression。8/8 forbidden 仍禁止。5/5 allowed 仍允許。不宣稱任何策略具獲利能力。"
+}

@@ -1,0 +1,29 @@
+{
+  "task": "P12-D",
+  "title": "Blocked-State Daily Monitor Result",
+  "run_date": "2026-05-19T14:40:43.866945+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "ceo_decision_status": "DEFER_DECISION",
+  "api_key_ready": true,
+  "forward_pairs": 0,
+  "forward_pairs_target": 200,
+  "forward_coverage_pct": 0.0,
+  "forward_clv_status": "ACCUMULATION_INSUFFICIENT",
+  "current_clv_status": "BLOCKED_NO_CLOSING_LINE",
+  "is_blocked": true,
+  "blocked_reasons": [
+    "CEO_DECISION_PENDING",
+    "FORWARD_ACCUMULATION_INSUFFICIENT",
+    "CLV_NOT_READY",
+    "PROMOTION_FROZEN"
+  ],
+  "primary_blocker": "CEO_DECISION_PENDING",
+  "allowed_next_action": "CEO_FOLLOWUP",
+  "forbidden_next_action": "HISTORICAL_API_CALL_WITHOUT_APPROVAL",
+  "p13_allowed": false,
+  "promotion_frozen": true,
+  "fixed_edge_5pct_champion_preserved": true,
+  "annotation": "paper_only=true。此為 P12-D 每日 blocked-state monitor 快照。不代表任何實盤獲利能力。TSL crawler 未修改。無網路呼叫。"
+}

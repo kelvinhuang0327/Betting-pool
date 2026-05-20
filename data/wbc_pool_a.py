@@ -19,13 +19,14 @@ from data.wbc_data import (
     _build_bullpen, _build_lineup,
 )
 from data.tsl_crawler import TSLCrawler
+from data.tsl_snapshot import get_tsl_odds_lines
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # ODDS HELPER (shared pattern)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def _std_odds(away: str, home: str, ts: str,
+def _std_odds(away: str, home: str, ts: str,  # NOSONAR
               ml_away: float, ml_home: float,
               rl_spread: float, rl_fav: str, rl_fav_odds: float, rl_dog_odds: float,
               ou_line: float, ou_over: float, ou_under: float,
@@ -614,6 +615,7 @@ def list_wbc_matches_a() -> List[dict]:
 
 def fetch_wbc_match_a(game_id: str, live: bool = False,
                       use_mock: bool = False) -> MatchData:
+    _ = (live, use_mock)
     game = None
     for g in _POOL_A_SCHEDULE:
         if g["game_id"] == game_id.upper():
@@ -633,9 +635,13 @@ def fetch_wbc_match_a(game_id: str, live: bool = False,
                              rest_after_30=1, rest_after_50=4,
                              expected_sp_innings=3.5)
 
-    ts = game["game_time"]
-    p = game["odds_params"]
-    odds = _std_odds(away_code, home_code, ts, **p)
+    odds: List[OddsLine] = []
+    if live:
+        try:
+            TSLCrawler(use_mock=use_mock).fetch_baseball_games()
+        except Exception:
+            pass
+    odds = get_tsl_odds_lines(away_code, home_code)
 
     away_sp = away_pitchers[game["away_sp"]]
     home_sp = home_pitchers[game["home_sp"]]
@@ -667,4 +673,6 @@ def fetch_wbc_match_a(game_id: str, live: bool = False,
         venue="Estadio Hiram Bithorn, San Juan",
         round_name="Pool A",
         neutral_site=game["neutral_site"],
+        data_source="REAL_ONLY_PENDING_VERIFICATION" if odds else "REAL_ONLY_NO_ODDS",
+        liquidity_level="KNOWN" if odds else "NO_REAL_ODDS",
     )

@@ -14,12 +14,11 @@ an optimization report with all changes applied.
 from __future__ import annotations
 
 import json
-import math
 import random
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from wbc_backend.strategy.live_retrainer import (
     ModelPerformance, evaluate_model_health, load_state, save_state
@@ -45,13 +44,13 @@ class OptimizationAction:
 class OptimizationReport:
     """Complete optimization cycle report."""
     timestamp: float = 0.0
-    actions: List[OptimizationAction] = field(default_factory=list)
+    actions: list[OptimizationAction] = field(default_factory=list)
     model_health: str = "HEALTHY"
     drift_detected: bool = False
     features_added: int = 0
     features_removed: int = 0
     models_retired: int = 0
-    weight_changes: Dict[str, Tuple[float, float]] = field(default_factory=dict)
+    weight_changes: dict[str, tuple[float, float]] = field(default_factory=dict)
     strategy_recommendation: str = ""
     estimated_improvement: float = 0.0
     summary: str = ""
@@ -71,8 +70,8 @@ FEATURE_IMPORTANCE_FLOOR = 0.005 # features below this get removed
 # ─── 1. Model Selection ─────────────────────────────────────────────────────
 
 def optimize_model_selection(
-    performances: Dict[str, ModelPerformance],
-) -> List[OptimizationAction]:
+    performances: dict[str, ModelPerformance],
+) -> list[OptimizationAction]:
     """
     Assess all models and decide: KEEP, WARN, or RETIRE.
 
@@ -81,7 +80,7 @@ def optimize_model_selection(
       - Consistent degradation trend
       - Adding noise to ensemble (high variance, low accuracy)
     """
-    actions: List[OptimizationAction] = []
+    actions: list[OptimizationAction] = []
 
     for name, perf in performances.items():
         if perf.sample_size < MIN_SAMPLE_FOR_DECISION:
@@ -123,16 +122,16 @@ def optimize_model_selection(
 @dataclass
 class HyperparamSearchResult:
     """Result from a single hyperparameter trial."""
-    params: Dict[str, float]
+    params: dict[str, float]
     score: float
     trial_id: int
 
 
 def optimize_hyperparameters(
-    current_params: Dict[str, float],
-    eval_fn: Optional[Any] = None,
+    current_params: dict[str, float],
+    eval_fn: Any | None = None,
     n_trials: int = 20,
-) -> List[OptimizationAction]:
+) -> list[OptimizationAction]:
     """
     Bayesian-inspired hyperparameter search.
 
@@ -146,7 +145,7 @@ def optimize_hyperparameters(
       - ev_threshold
       - lookback window
     """
-    actions: List[OptimizationAction] = []
+    actions: list[OptimizationAction] = []
 
     # Define parameter space
     param_space = {
@@ -192,7 +191,7 @@ def optimize_hyperparameters(
     return actions
 
 
-def _evaluate_params(params: Dict[str, float], eval_fn: Optional[Any]) -> float:
+def _evaluate_params(params: dict[str, float], eval_fn: Any | None) -> float:
     """Evaluate parameters. If no eval_fn, return surrogate score."""
     if eval_fn is not None:
         try:
@@ -213,12 +212,12 @@ def _evaluate_params(params: Dict[str, float], eval_fn: Optional[Any]) -> float:
 # ─── 3. Feature Selection ───────────────────────────────────────────────────
 
 def optimize_features(
-    alpha_report: Optional[AlphaReport] = None,
-) -> List[OptimizationAction]:
+    alpha_report: AlphaReport | None = None,
+) -> list[OptimizationAction]:
     """
     Feature pruning and expansion based on alpha discovery results.
     """
-    actions: List[OptimizationAction] = []
+    actions: list[OptimizationAction] = []
 
     if alpha_report is None:
         return actions
@@ -245,16 +244,16 @@ def optimize_features(
 # ─── 4. Weight Adjustment ───────────────────────────────────────────────────
 
 def optimize_weights(
-    current_weights: Dict[str, float],
-    performances: Dict[str, ModelPerformance],
-) -> Tuple[Dict[str, float], List[OptimizationAction]]:
+    current_weights: dict[str, float],
+    performances: dict[str, ModelPerformance],
+) -> tuple[dict[str, float], list[OptimizationAction]]:
     """
     Adjust ensemble weights based on recent model performance.
 
     Uses inverse-Brier weighting with smooth transition
     (max change per cycle capped at WEIGHT_CHANGE_MAX).
     """
-    actions: List[OptimizationAction] = []
+    actions: list[OptimizationAction] = []
     new_weights = dict(current_weights)
 
     if not performances:
@@ -305,18 +304,18 @@ def optimize_strategy(
     recent_roi: float,
     recent_sharpe: float,
     market_efficiency: float,
-) -> List[OptimizationAction]:
+) -> list[OptimizationAction]:
     """
     Meta-strategy selection based on recent performance and market conditions.
     """
-    actions: List[OptimizationAction] = []
+    actions: list[OptimizationAction] = []
 
     # Determine recommended strategy
     if recent_roi < -0.03:
         # Losing: switch to conservative
         actions.append(OptimizationAction(
             category="STRATEGY",
-            action="Switch to RISK_PARITY: negative ROI (-{:.1%})".format(recent_roi),
+            action=f"Switch to RISK_PARITY: negative ROI (-{recent_roi:.1%})",
             before="KELLY_DYNAMIC",
             after="RISK_PARITY",
             impact_estimate=0.01,
@@ -347,10 +346,10 @@ def optimize_strategy(
 # ─── Master Optimization Loop ───────────────────────────────────────────────
 
 def run_master_optimization(
-    feature_matrix: Optional[List[Dict[str, float]]] = None,
-    targets: Optional[List[int]] = None,
-    backtest_results: Optional[List[Dict[str, Any]]] = None,
-    current_params: Optional[Dict[str, float]] = None,
+    feature_matrix: list[dict[str, float]] | None = None,
+    targets: list[int] | None = None,
+    backtest_results: list[dict[str, Any]] | None = None,
+    current_params: dict[str, float] | None = None,
     recent_roi: float = 0.0,
     recent_sharpe: float = 0.0,
     market_efficiency: float = 0.5,
@@ -368,7 +367,7 @@ def run_master_optimization(
       7. Persist changes & report
     """
     report = OptimizationReport(timestamp=time.time())
-    all_actions: List[OptimizationAction] = []
+    all_actions: list[OptimizationAction] = []
 
     # ── Step 1: Load state ────────────────────────────────
     performances, current_weights = load_state()

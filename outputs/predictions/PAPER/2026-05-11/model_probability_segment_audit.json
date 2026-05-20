@@ -1,0 +1,232 @@
+{
+  "month": [
+    {
+      "segment": "2025-03",
+      "segment_by": "month",
+      "row_count": 0,
+      "model_brier": null,
+      "market_brier": null,
+      "bss": null,
+      "ece": null,
+      "avg_edge": null
+    },
+    {
+      "segment": "2025-04",
+      "segment_by": "month",
+      "row_count": 54,
+      "model_brier": 0.22686,
+      "market_brier": 0.215191,
+      "bss": -0.054226,
+      "ece": 0.099444,
+      "avg_edge": 0.10813
+    },
+    {
+      "segment": "2025-05",
+      "segment_by": "month",
+      "row_count": 244,
+      "model_brier": 0.273974,
+      "market_brier": 0.258429,
+      "bss": -0.060152,
+      "ece": 0.147277,
+      "avg_edge": 0.120785
+    },
+    {
+      "segment": "2025-06",
+      "segment_by": "month",
+      "row_count": 264,
+      "model_brier": 0.24963,
+      "market_brier": 0.245288,
+      "bss": -0.017702,
+      "ece": 0.054179,
+      "avg_edge": 0.042607
+    },
+    {
+      "segment": "2025-07",
+      "segment_by": "month",
+      "row_count": 254,
+      "model_brier": 0.254035,
+      "market_brier": 0.254468,
+      "bss": 0.001702,
+      "ece": 0.071487,
+      "avg_edge": 0.017151
+    },
+    {
+      "segment": "2025-08",
+      "segment_by": "month",
+      "row_count": 271,
+      "model_brier": 0.257149,
+      "market_brier": 0.24353,
+      "bss": -0.055923,
+      "ece": 0.05833,
+      "avg_edge": 0.023309
+    },
+    {
+      "segment": "2025-09",
+      "segment_by": "month",
+      "row_count": 254,
+      "model_brier": 0.248198,
+      "market_brier": 0.240815,
+      "bss": -0.030658,
+      "ece": 0.050651,
+      "avg_edge": 0.027862
+    }
+  ],
+  "confidence_bucket": [
+    {
+      "segment": "__unassigned__",
+      "segment_by": "confidence_bucket",
+      "row_count": 0,
+      "model_brier": null,
+      "market_brier": null,
+      "bss": null,
+      "ece": null,
+      "avg_edge": null
+    },
+    {
+      "segment": "hi_conf_<0.65",
+      "segment_by": "confidence_bucket",
+      "row_count": 347,
+      "model_brier": 0.251421,
+      "market_brier": 0.251406,
+      "bss": -6e-05,
+      "ece": 0.066112,
+      "avg_edge": 0.06521
+    },
+    {
+      "segment": "low_conf_<0.55",
+      "segment_by": "confidence_bucket",
+      "row_count": 428,
+      "model_brier": 0.250017,
+      "market_brier": 0.245678,
+      "bss": -0.017661,
+      "ece": 0.020729,
+      "avg_edge": -0.002645
+    },
+    {
+      "segment": "med_conf_<0.60",
+      "segment_by": "confidence_bucket",
+      "row_count": 348,
+      "model_brier": 0.247115,
+      "market_brier": 0.245083,
+      "bss": -0.008291,
+      "ece": 0.019799,
+      "avg_edge": 0.026259
+    },
+    {
+      "segment": "very_hi_conf_>=0.65",
+      "segment_by": "confidence_bucket",
+      "row_count": 218,
+      "model_brier": 0.284451,
+      "market_brier": 0.245665,
+      "bss": -0.157882,
+      "ece": 0.192101,
+      "avg_edge": 0.154472
+    }
+  ],
+  "market_prob_bucket": [
+    {
+      "segment": "__unassigned__",
+      "segment_by": "market_prob_bucket",
+      "row_count": 0,
+      "model_brier": null,
+      "market_brier": null,
+      "bss": null,
+      "ece": null,
+      "avg_edge": null
+    },
+    {
+      "segment": "heavy_fav_>=0.60",
+      "segment_by": "market_prob_bucket",
+      "row_count": 192,
+      "model_brier": 0.247402,
+      "market_brier": 0.236927,
+      "bss": -0.044212,
+      "ece": 0.059193,
+      "avg_edge": -0.073644
+    },
+    {
+      "segment": "slight_fav_0.50-0.60",
+      "segment_by": "market_prob_bucket",
+      "row_count": 620,
+      "model_brier": 0.254318,
+      "market_brier": 0.249076,
+      "bss": -0.021046,
+      "ece": 0.07111,
+      "avg_edge": 0.037723
+    },
+    {
+      "segment": "slight_underdog_0.40-0.50",
+      "segment_by": "market_prob_bucket",
+      "row_count": 467,
+      "model_brier": 0.257883,
+      "market_brier": 0.249812,
+      "bss": -0.032308,
+      "ece": 0.0788,
+      "avg_edge": 0.095948
+    },
+    {
+      "segment": "underdog_home_<0.40",
+      "segment_by": "market_prob_bucket",
+      "row_count": 62,
+      "model_brier": 0.268506,
+      "market_brier": 0.236334,
+      "bss": -0.136129,
+      "ece": 0.184191,
+      "avg_edge": 0.165364
+    }
+  ],
+  "favorite_side": [
+    {
+      "segment": "__unassigned__",
+      "segment_by": "favorite_side",
+      "row_count": 0,
+      "model_brier": null,
+      "market_brier": null,
+      "bss": null,
+      "ece": null,
+      "avg_edge": null
+    },
+    {
+      "segment": "away_fav",
+      "segment_by": "favorite_side",
+      "row_count": 529,
+      "model_brier": 0.259128,
+      "market_brier": 0.248232,
+      "bss": -0.043894,
+      "ece": 0.090023,
+      "avg_edge": 0.104083
+    },
+    {
+      "segment": "home_fav",
+      "segment_by": "favorite_side",
+      "row_count": 812,
+      "model_brier": 0.252682,
+      "market_brier": 0.246203,
+      "bss": -0.026316,
+      "ece": 0.067665,
+      "avg_edge": 0.01139
+    }
+  ],
+  "probability_source": [
+    {
+      "segment": "calibrated_model",
+      "segment_by": "probability_source",
+      "row_count": 1341,
+      "model_brier": 0.255225,
+      "market_brier": 0.247004,
+      "bss": -0.033283,
+      "ece": 0.059493,
+      "avg_edge": 0.047956
+    },
+    {
+      "segment": "unknown",
+      "segment_by": "probability_source",
+      "row_count": 0,
+      "model_brier": null,
+      "market_brier": null,
+      "bss": null,
+      "ece": null,
+      "avg_edge": null
+    }
+  ]
+}

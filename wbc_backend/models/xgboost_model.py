@@ -9,7 +9,6 @@ from __future__ import annotations
 import logging
 import pickle
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import numpy as np
 
@@ -36,7 +35,7 @@ def _get_xgb():
 
 
 class XGBoostModel:
-    def __init__(self, config: Optional[ModelConfig] = None):
+    def __init__(self, config: ModelConfig | None = None):
         self.config = config or ModelConfig()
         self.model = None
         self.feature_names = FEATURE_NAMES
@@ -53,7 +52,7 @@ class XGBoostModel:
             return payload["model"], payload.get("feature_count")
         return payload, None
 
-    def _infer_model_feature_count(self, model) -> Optional[int]:
+    def _infer_model_feature_count(self, model) -> int | None:
         for attr in ("n_features_in_", "feature_count_"):
             value = getattr(model, attr, None)
             if isinstance(value, (int, np.integer)):
@@ -126,7 +125,7 @@ class XGBoostModel:
             return np.full(len(X), 0.5)  # fallback
         return self.model.predict_proba(X)[:, 1]
 
-    def predict_single(self, feature_dict: Dict[str, float]) -> SubModelResult:
+    def predict_single(self, feature_dict: dict[str, float]) -> SubModelResult:
         """Predict for a single matchup using feature dict."""
         features = np.array([[feature_dict.get(f, 0.0) for f in self.feature_names]])
         prob = float(self.predict_proba(features)[0])

@@ -1,0 +1,307 @@
+{
+  "module_version": "mlb_daily_advisory_v1",
+  "run_timestamp_utc": "2026-05-07T08:46:02.772312+00:00",
+  "requested_date": "2026-05-07",
+  "requested_mode": "today",
+  "effective_mode": "today",
+  "actual_today_schedule_unavailable": false,
+  "actual_date_used": "2026-05-07",
+  "data_source": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+  "limit_applied": 15,
+  "total_games_loaded": 4,
+  "total_advisories": 4,
+  "total_ledger_entries_written": 0,
+  "duplicated_skipped_count": 0,
+  "safety": {
+    "production_modified": false,
+    "candidate_patch_created": false,
+    "alpha_modified": false,
+    "prediction_jsonl_overwritten": false,
+    "no_edge_claim": true,
+    "no_profit_claim": true,
+    "diagnostic_only": true,
+    "paper_only": true,
+    "no_real_bet": true
+  },
+  "phase_chain": {
+    "phase69_gate": "CALIBRATION_OBJECTIVE_NOT_PROMISING",
+    "phase70_gate": "MARKET_ONLY_SUPERIOR",
+    "phase71_gate": "MARKET_DE_RISK_GUARD_PROMISING",
+    "phase72_gate": "MARKET_DERISK_GUARD_SPEC_READY",
+    "metrics_ssot_gate": "METRICS_SSOT_FOUNDATION_READY"
+  },
+  "market_coverage_matrix_summary": {
+    "source_name": "fixture",
+    "source_mode": "fixture",
+    "fixture_source_used": true,
+    "current_source_reachable": false,
+    "model_prediction_available": true,
+    "moneyline_available": true,
+    "runline_available": false,
+    "total_available": false,
+    "result_available": false,
+    "odds_available": true,
+    "market_home_prob_available": true,
+    "closing_market_available": false,
+    "coverage_notes": [
+      "moneyline: available via model_home_prob + market_home_prob_no_vig",
+      "runline: UNAVAILABLE — run line spread/odds not in prediction JSONL",
+      "total: UNAVAILABLE — totals line/odds not in prediction JSONL",
+      "closing_line: UNAVAILABLE — no separate closing odds data source",
+      "odds (raw): fixture American odds available",
+      "source_mode: fixture",
+      "fixture_source_used: True"
+    ]
+  },
+  "thresholds": {
+    "lean_threshold": 0.1,
+    "watch_threshold": 0.05,
+    "derisk_band_low": 0.65,
+    "derisk_band_high": 0.7
+  },
+  "advisories": [
+    {
+      "advisory_id": "ADV_c8b55cba913f",
+      "game_id": "MLB2026_FIXTURE_NYY_BOS",
+      "game_date": "2026-05-07",
+      "home_team": "Boston Red Sox",
+      "away_team": "New York Yankees",
+      "probable_home_pitcher": null,
+      "probable_away_pitcher": null,
+      "model_home_prob": 0.5,
+      "market_home_prob": 0.542744,
+      "model_minus_market": -0.0427,
+      "confidence_band": "SLIGHT_HOME_0.50_0.55",
+      "favorite_side": "PICK",
+      "favorite_prob": 0.5,
+      "phase71_market_derisk_flag": false,
+      "phase72_guard_candidate_applied": null,
+      "moneyline_recommendation": "PASS",
+      "moneyline_paper_selection": null,
+      "runline_recommendation": "UNAVAILABLE",
+      "total_recommendation": "UNAVAILABLE",
+      "recommendation_reason": "model_prediction_unavailable: market-only advisory card; no model prediction for this game; LEAN not allowed",
+      "risk_flags": [
+        "SP_FIP_DELTA_UNAVAILABLE",
+        "PARK_FACTOR_UNAVAILABLE"
+      ],
+      "unavailable_fields": [
+        "runline_spread",
+        "runline_odds_home",
+        "runline_odds_away",
+        "total_line",
+        "total_odds_over",
+        "total_odds_under"
+      ],
+      "market_coverage_matrix": {
+        "moneyline_available": true,
+        "runline_available": false,
+        "total_available": false,
+        "result_available": false,
+        "odds_available": false,
+        "market_home_prob_available": true,
+        "closing_market_available": false
+      },
+      "model_prediction_available": false,
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "advisory_id": "ADV_f681652a4403",
+      "game_id": "MLB2026_FIXTURE_HOU_LAD",
+      "game_date": "2026-05-07",
+      "home_team": "Los Angeles Dodgers",
+      "away_team": "Houston Astros",
+      "probable_home_pitcher": null,
+      "probable_away_pitcher": null,
+      "model_home_prob": 0.5,
+      "market_home_prob": 0.582993,
+      "model_minus_market": -0.083,
+      "confidence_band": "SLIGHT_HOME_0.50_0.55",
+      "favorite_side": "PICK",
+      "favorite_prob": 0.5,
+      "phase71_market_derisk_flag": false,
+      "phase72_guard_candidate_applied": null,
+      "moneyline_recommendation": "PASS",
+      "moneyline_paper_selection": null,
+      "runline_recommendation": "UNAVAILABLE",
+      "total_recommendation": "UNAVAILABLE",
+      "recommendation_reason": "model_prediction_unavailable: market-only advisory card; no model prediction for this game; LEAN not allowed",
+      "risk_flags": [
+        "SP_FIP_DELTA_UNAVAILABLE",
+        "PARK_FACTOR_UNAVAILABLE"
+      ],
+      "unavailable_fields": [
+        "runline_spread",
+        "runline_odds_home",
+        "runline_odds_away",
+        "total_line",
+        "total_odds_over",
+        "total_odds_under"
+      ],
+      "market_coverage_matrix": {
+        "moneyline_available": true,
+        "runline_available": false,
+        "total_available": false,
+        "result_available": false,
+        "odds_available": false,
+        "market_home_prob_available": true,
+        "closing_market_available": false
+      },
+      "model_prediction_available": false,
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "advisory_id": "ADV_b5b948f76043",
+      "game_id": "MLB2026_FIXTURE_CHC_ATL",
+      "game_date": "2026-05-07",
+      "home_team": "Atlanta Braves",
+      "away_team": "Chicago Cubs",
+      "probable_home_pitcher": null,
+      "probable_away_pitcher": null,
+      "model_home_prob": 0.5,
+      "market_home_prob": 0.510529,
+      "model_minus_market": -0.0105,
+      "confidence_band": "SLIGHT_HOME_0.50_0.55",
+      "favorite_side": "PICK",
+      "favorite_prob": 0.5,
+      "phase71_market_derisk_flag": false,
+      "phase72_guard_candidate_applied": null,
+      "moneyline_recommendation": "PASS",
+      "moneyline_paper_selection": null,
+      "runline_recommendation": "UNAVAILABLE",
+      "total_recommendation": "UNAVAILABLE",
+      "recommendation_reason": "model_prediction_unavailable: market-only advisory card; no model prediction for this game; LEAN not allowed",
+      "risk_flags": [
+        "MODEL_MARKET_NEAR_IDENTICAL",
+        "SP_FIP_DELTA_UNAVAILABLE",
+        "PARK_FACTOR_UNAVAILABLE"
+      ],
+      "unavailable_fields": [
+        "runline_spread",
+        "runline_odds_home",
+        "runline_odds_away",
+        "total_line",
+        "total_odds_over",
+        "total_odds_under"
+      ],
+      "market_coverage_matrix": {
+        "moneyline_available": true,
+        "runline_available": false,
+        "total_available": false,
+        "result_available": false,
+        "odds_available": false,
+        "market_home_prob_available": true,
+        "closing_market_available": false
+      },
+      "model_prediction_available": false,
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "advisory_id": "ADV_0e6307333fab",
+      "game_id": "MLB2026_FIXTURE_SEA_OAK",
+      "game_date": "2026-05-07",
+      "home_team": "Oakland Athletics",
+      "away_team": "Seattle Mariners",
+      "probable_home_pitcher": null,
+      "probable_away_pitcher": null,
+      "model_home_prob": 0.5,
+      "market_home_prob": 0.5,
+      "model_minus_market": 0.0,
+      "confidence_band": "SLIGHT_HOME_0.50_0.55",
+      "favorite_side": "PICK",
+      "favorite_prob": 0.5,
+      "phase71_market_derisk_flag": false,
+      "phase72_guard_candidate_applied": null,
+      "moneyline_recommendation": "PASS",
+      "moneyline_paper_selection": null,
+      "runline_recommendation": "UNAVAILABLE",
+      "total_recommendation": "UNAVAILABLE",
+      "recommendation_reason": "model_prediction_unavailable: market-only advisory card; no model prediction for this game; LEAN not allowed",
+      "risk_flags": [
+        "MODEL_MARKET_NEAR_IDENTICAL",
+        "SP_FIP_DELTA_UNAVAILABLE",
+        "PARK_FACTOR_UNAVAILABLE"
+      ],
+      "unavailable_fields": [
+        "runline_spread",
+        "runline_odds_home",
+        "runline_odds_away",
+        "total_line",
+        "total_odds_over",
+        "total_odds_under"
+      ],
+      "market_coverage_matrix": {
+        "moneyline_available": true,
+        "runline_available": false,
+        "total_available": false,
+        "result_available": false,
+        "odds_available": false,
+        "market_home_prob_available": true,
+        "closing_market_available": false
+      },
+      "model_prediction_available": false,
+      "paper_only": true,
+      "no_real_bet": true
+    }
+  ],
+  "ledger_entries_this_run": [],
+  "ledger_path": "reports/mlb_paper_betting_ledger.jsonl",
+  "review_summary": {
+    "total_advisories": 4,
+    "total_paper_bets": 0,
+    "pass_count": 4,
+    "watch_only_count": 0,
+    "lean_count": 0,
+    "market_only_shadow_count": 0,
+    "pending_result_count": 0,
+    "reviewed_count": 0,
+    "win_loss_push_summary": {
+      "won": 0,
+      "lost": 0,
+      "push": 0,
+      "unknown": 0
+    },
+    "brier_by_market_type": {
+      "moneyline": null,
+      "runline": null,
+      "total": null
+    },
+    "recommendation_accuracy": {
+      "lean_count": 0,
+      "lean_correct": 0,
+      "lean_accuracy": null
+    },
+    "clv_summary": null,
+    "metrics_ssot_used": true,
+    "metrics_ssot_module": "orchestrator.metrics_ssot"
+  },
+  "failure_notes": {
+    "observation": [
+      "No significant failure pattern detected in this session"
+    ],
+    "suspected_failure_mode": [
+      "Insufficient sample to determine failure mode"
+    ],
+    "proposed_next_audit": [
+      "Accumulate 30+ replay sessions to evaluate lean accuracy stability",
+      "Cross-reference LEAN outcomes with Phase71 market superiority segments",
+      "Monitor MARKET_ONLY_SHADOW outcomes vs LEAN outcomes across sessions",
+      "Evaluate whether model-market gap > 0.10 is predictive in out-of-band games"
+    ],
+    "blocked_auto_change_reason": "human_review_required: governance rules prohibit auto-modification of model, alpha, or stake sizing based on dry-run advisory results",
+    "human_review_required": true,
+    "alpha_change_blocked": true,
+    "model_change_blocked": true,
+    "stake_change_blocked": true
+  },
+  "source_mode": "fixture",
+  "fixture_source_used": true,
+  "current_source_reachable": false,
+  "model_prediction_available": true,
+  "gate": "MLB_DAILY_ADVISORY_DRY_RUN_READY",
+  "gate_rationale": "Daily advisory operational; all games returned PASS (no ledger entries written)",
+  "completion_marker": "MLB_DAILY_ADVISORY_REPLAY_LEDGER_VERIFIED"
+}

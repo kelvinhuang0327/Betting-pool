@@ -1,0 +1,162 @@
+{
+  "run_id": "cto-20260423-152407-fe6c6919",
+  "generated_at": "2026-04-23T15:24:07.840404+00:00",
+  "analysis": {
+    "candidates": [
+      {
+        "task_id": 11,
+        "title": "更新 MLB 2025 歷史數據回測報告",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T15:15:16.653482+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 10,
+        "title": "驗證 TSL 台彩爬蟲數據完整性",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T15:12:20.013839+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 9,
+        "title": "檢查 WBC 2026 四強賽預測模型校準狀態",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T15:02:19.831619+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 8,
+        "title": "優化蒙特卡洛模擬中的 Gamma-Poisson 參數",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:52:19.712858+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 7,
+        "title": "驗證 TSL 台彩爬蟲數據完整性",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:42:19.527839+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 6,
+        "title": "更新 MLB 2025 歷史數據回測報告",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:32:19.294177+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 5,
+        "title": "優化特徵選擇器的 SHAP 重要性評估",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:23:55.053405+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 4,
+        "title": "更新彩票數據抓取流程",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:19:04.049322+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 3,
+        "title": "優化 WBC 預測模型準確率",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:13:43.642219+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      },
+      {
+        "task_id": 2,
+        "title": "修復回測系統中的數據滲透問題",
+        "status": "COMPLETED",
+        "completed_at": "2026-04-23T14:02:05.438058+00:00",
+        "review_status": "pending",
+        "quality_score": 85,
+        "risk_level": "low"
+      }
+    ],
+    "findings": [
+      {
+        "finding_id": "finding-9-25035ff7",
+        "task_id": 9,
+        "severity": "MEDIUM",
+        "urgency": "MEDIUM",
+        "category": "quality",
+        "title": "程式碼品質改進建議 - 任務 #9",
+        "description": "在任務 檢查 WBC 2026 四強賽預測模型校準狀態 中發現可以改進的程式碼品質問題",
+        "file_path": "models/20260423145219-task.py",
+        "line_number": 42,
+        "impact_score": 60
+      },
+      {
+        "finding_id": "finding-6-af5f220e",
+        "task_id": 6,
+        "severity": "MEDIUM",
+        "urgency": "MEDIUM",
+        "category": "quality",
+        "title": "程式碼品質改進建議 - 任務 #6",
+        "description": "在任務 更新 MLB 2025 歷史數據回測報告 中發現可以改進的程式碼品質問題",
+        "file_path": "models/20260423142355-task.py",
+        "line_number": 42,
+        "impact_score": 60
+      },
+      {
+        "finding_id": "finding-3-a9fc3a44",
+        "task_id": 3,
+        "severity": "MEDIUM",
+        "urgency": "MEDIUM",
+        "category": "quality",
+        "title": "程式碼品質改進建議 - 任務 #3",
+        "description": "在任務 優化 WBC 預測模型準確率 中發現可以改進的程式碼品質問題",
+        "file_path": "models/20260423141041-task.py",
+        "line_number": 42,
+        "impact_score": 60
+      }
+    ],
+    "summary": {
+      "total_tasks": 10,
+      "completed_tasks": 10,
+      "candidates_count": 10,
+      "findings_count": 3
+    }
+  },
+  "intelligence_blocks": {
+    "summary": {
+      "total_candidates": 10,
+      "total_findings": 3,
+      "risk_assessment": "MEDIUM"
+    },
+    "recommendations": [
+      "繼續監控程式碼品質指標",
+      "建立自動化測試覆蓋率檢查",
+      "定期進行程式碼審查"
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "處理發現的品質問題",
+        "owner": "開發團隊",
+        "due_date": "2026-04-30T15:24:07.840404+00:00"
+      }
+    ]
+  }
+}

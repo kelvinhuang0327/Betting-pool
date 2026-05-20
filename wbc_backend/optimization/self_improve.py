@@ -14,19 +14,18 @@ from __future__ import annotations
 import logging
 import json
 from pathlib import Path
-from typing import Dict, List, Optional
 
-import numpy as np
 
 from wbc_backend.config.settings import AppConfig, SelfImproveConfig
 from wbc_backend.domain.schemas import TrainingResult
+from wbc_backend.optimization.continuous_learning import ContinuousLearningSystem
 
 logger = logging.getLogger(__name__)
 
 IMPROVEMENT_LOG_PATH = Path("data/wbc_backend/artifacts/improvement_log.json")
 
 
-def _load_improvement_history() -> List[Dict]:
+def _load_improvement_history() -> list[dict]:
     if IMPROVEMENT_LOG_PATH.exists():
         try:
             return json.loads(IMPROVEMENT_LOG_PATH.read_text())
@@ -35,23 +34,23 @@ def _load_improvement_history() -> List[Dict]:
     return []
 
 
-def _save_improvement_history(history: List[Dict]):
+def _save_improvement_history(history: list[dict]):
     IMPROVEMENT_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
     IMPROVEMENT_LOG_PATH.write_text(json.dumps(history, indent=2))
 
 
 def auto_feature_selection(
-    training_results: List[TrainingResult],
+    training_results: list[TrainingResult],
     config: SelfImproveConfig,
-) -> Dict[str, bool]:
+) -> dict[str, bool]:
     """
     Identify features to keep/drop based on aggregate importance.
 
     Returns dict {feature_name: keep (True/False)}
     """
     # Aggregate feature importance across all models
-    agg_importance: Dict[str, float] = {}
-    count: Dict[str, int] = {}
+    agg_importance: dict[str, float] = {}
+    count: dict[str, int] = {}
 
     for result in training_results:
         for feat, imp in result.feature_importance.items():
@@ -86,9 +85,9 @@ def auto_feature_selection(
 
 
 def model_elimination(
-    training_results: List[TrainingResult],
+    training_results: list[TrainingResult],
     brier_threshold: float = 0.30,
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """
     Identify models to eliminate or flag.
 
@@ -115,9 +114,9 @@ def model_elimination(
 
 
 def weight_redistribution(
-    training_results: List[TrainingResult],
-    model_status: Dict[str, str],
-) -> Dict[str, float]:
+    training_results: list[TrainingResult],
+    model_status: dict[str, str],
+) -> dict[str, float]:
     """
     Redistribute stacking weights based on model performance.
 
@@ -154,9 +153,9 @@ def weight_redistribution(
 
 
 def self_improve(
-    training_results: Optional[List[TrainingResult]] = None,
-    config: Optional[AppConfig] = None,
-) -> Dict:
+    training_results: list[TrainingResult] | None = None,
+    config: AppConfig | None = None,
+) -> dict:
     """
     Run the full self-improvement pipeline:
       1. Auto feature selection
@@ -217,6 +216,13 @@ def self_improve(
         "new_weights": new_weights,
         "cycle_number": len(history),
     }
+
+    # Attach continuous learning system health snapshot (Phase 8 runtime integration).
+    try:
+        cl = ContinuousLearningSystem()
+        summary["continuous_learning"] = cl.get_system_report()
+    except Exception as exc:
+        logger.warning("Continuous learning snapshot unavailable: %s", exc)
 
     logger.info("Self-improvement cycle #%d complete.", len(history))
     logger.info("  Features: %d kept, %d dropped",

@@ -1,0 +1,73 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "index_fallback_used": false,
+  "source_snapshot_lines_used": 2788,
+  "source_snapshot_sha256_expected": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+  "source_snapshot_drift_detected": true,
+  "current_snapshot_lines": 2808,
+  "drift_action": "RECORDED_ONLY_NOT_OVERWRITTEN",
+  "generated_at": "2026-05-20T04:48:56.142623+00:00",
+  "date": "2026-05-20",
+  "artifact": "P27_MARKET_READINESS_DECISION",
+  "market_classifications": {
+    "MNL": "MARKET_CLEAN_INCONCLUSIVE",
+    "HDC": "MARKET_CLEAN_INCONCLUSIVE",
+    "OU": "MARKET_CLEAN_INCONCLUSIVE",
+    "OE": "MARKET_CLEAN_INCONCLUSIVE",
+    "TTO": "MARKET_CLEAN_INCONCLUSIVE"
+  },
+  "any_robust": false,
+  "any_weak_stable": false,
+  "any_sample_limited": false,
+  "all_inconclusive": true,
+  "oe_exclusion_result": "P27_OE_EXCLUSION_NO_SIGNAL_RECOVERY",
+  "per_market_ci": {
+    "MNL": {
+      "ci_lo": -0.2196,
+      "ci_hi": 0.298,
+      "ci_crosses_zero": true,
+      "mean": 0.0449,
+      "n": 681
+    },
+    "HDC": {
+      "ci_lo": -0.3239,
+      "ci_hi": 0.322,
+      "ci_crosses_zero": true,
+      "mean": -0.0027,
+      "n": 402
+    },
+    "OU": {
+      "ci_lo": -0.2542,
+      "ci_hi": 0.3325,
+      "ci_crosses_zero": true,
+      "mean": 0.0377,
+      "n": 418
+    },
+    "OE": {
+      "ci_lo": -0.0692,
+      "ci_hi": 0.0862,
+      "ci_crosses_zero": true,
+      "mean": 0.0083,
+      "n": 460
+    },
+    "TTO": {
+      "ci_lo": -0.309,
+      "ci_hi": 0.4742,
+      "ci_crosses_zero": true,
+      "mean": 0.0815,
+      "n": 370
+    }
+  },
+  "next_round_recommendation": "model_quality_repair_and_data_accumulation",
+  "champion": "fixed_edge_5pct",
+  "champion_status": "PRESERVED",
+  "promotion_frozen": true,
+  "final_classification": "P27_ALL_MARKETS_CLEAN_CLV_INCONCLUSIVE"
+}

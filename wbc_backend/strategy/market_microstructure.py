@@ -12,10 +12,7 @@ problem, applying concepts from market-making theory to sports betting.
 """
 from __future__ import annotations
 
-import math
-import time
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
 
 from wbc_backend.domain.schemas import OddsLine, OddsTimeSeries
 
@@ -72,10 +69,10 @@ class BookmakerBias:
 @dataclass
 class MicrostructureReport:
     """Complete microstructure analysis for a game."""
-    line_movements: List[LineMovement] = field(default_factory=list)
-    liquidity: List[LiquidityEstimate] = field(default_factory=list)
-    sharp_signals: List[SharpSignal] = field(default_factory=list)
-    book_biases: List[BookmakerBias] = field(default_factory=list)
+    line_movements: list[LineMovement] = field(default_factory=list)
+    liquidity: list[LiquidityEstimate] = field(default_factory=list)
+    sharp_signals: list[SharpSignal] = field(default_factory=list)
+    book_biases: list[BookmakerBias] = field(default_factory=list)
     overall_market_efficiency: float = 0.0   # 0-1 (1 = perfectly efficient)
     recommended_timing: str = "IMMEDIATE"    # or "WAIT" or "FADE"
     summary: str = ""
@@ -98,7 +95,7 @@ VIG_ESTIMATES = {
 
 # ─── Line Movement Velocity ──────────────────────────────────────────────────
 
-def compute_line_movements(time_series: List[OddsTimeSeries]) -> List[LineMovement]:
+def compute_line_movements(time_series: list[OddsTimeSeries]) -> list[LineMovement]:
     """
     Compute the velocity and magnitude of line movements from snapshots.
 
@@ -111,7 +108,7 @@ def compute_line_movements(time_series: List[OddsTimeSeries]) -> List[LineMoveme
     -------
     list of LineMovement
     """
-    movements: List[LineMovement] = []
+    movements: list[LineMovement] = []
 
     for ts in time_series:
         if not hasattr(ts, "snapshots") or len(getattr(ts, "snapshots", [])) < 2:
@@ -150,17 +147,17 @@ def compute_line_movements(time_series: List[OddsTimeSeries]) -> List[LineMoveme
 # ─── Liquidity Estimation ────────────────────────────────────────────────────
 
 def estimate_liquidity(
-    odds_lines: List[OddsLine],
-    movements: List[LineMovement],
+    odds_lines: list[OddsLine],
+    movements: list[LineMovement],
     window_hours: float = 2.0,
-) -> List[LiquidityEstimate]:
+) -> list[LiquidityEstimate]:
     """
     Estimate market liquidity per market type using spread & movement freq.
 
     Wider spreads → thinner markets.
     More movements → more price discovery → potentially deeper.
     """
-    by_market: Dict[str, List[OddsLine]] = {}
+    by_market: dict[str, list[OddsLine]] = {}
     for ol in odds_lines:
         mkey = getattr(ol, "market", "ML")
         by_market.setdefault(mkey, []).append(ol)
@@ -209,10 +206,10 @@ def estimate_liquidity(
 
 # ─── Sharp Money Detection ───────────────────────────────────────────────────
 
-def detect_sharp_money(
-    movements: List[LineMovement],
-    odds_lines: List[OddsLine],
-) -> List[SharpSignal]:
+def detect_sharp_money(  # noqa: C901
+    movements: list[LineMovement],
+    odds_lines: list[OddsLine],
+) -> list[SharpSignal]:
     """
     Identify sharp-money patterns from line movement data.
 
@@ -222,7 +219,7 @@ def detect_sharp_money(
       WHALE    — single large move (5%+ implied-prob)
       SYNDICATE — coordinated small moves within tight time window
     """
-    signals: List[SharpSignal] = []
+    signals: list[SharpSignal] = []
 
     # ── WHALE detection ──
     for mv in movements:
@@ -282,8 +279,7 @@ def detect_sharp_money(
     for i, m1 in enumerate(movements):
         cluster = [m1]
         for m2 in movements[i + 1:]:
-            if abs(m2.timestamp - m1.timestamp) <= SYNDICATE_PATTERN_WINDOW * 60:
-                if m2.market == m1.market:
+            if abs(m2.timestamp - m1.timestamp) <= SYNDICATE_PATTERN_WINDOW * 60 and m2.market == m1.market:
                     cluster.append(m2)
         if len(cluster) >= 3:
             total_shift = sum(m.magnitude for m in cluster)
@@ -306,34 +302,33 @@ def detect_sharp_money(
 # ─── Bookmaker Bias Model ────────────────────────────────────────────────────
 
 def analyze_bookmaker_bias(
-    odds_lines: List[OddsLine],
+    odds_lines: list[OddsLine],
     fair_prob_home: float,
-) -> List[BookmakerBias]:
+) -> list[BookmakerBias]:
     """
     Detect systematic pricing biases per bookmaker.
 
     Compares each book's implied probability (vig-removed) against
     the model's fair probability to find consistent over/under-pricing.
     """
-    biases: List[BookmakerBias] = []
+    biases: list[BookmakerBias] = []
 
-    by_book: Dict[str, List[OddsLine]] = {}
+    by_book: dict[str, list[OddsLine]] = {}
     for ol in odds_lines:
         book = getattr(ol, "sportsbook", getattr(ol, "book", "unknown"))
         by_book.setdefault(book, []).append(ol)
 
     for book, lines in by_book.items():
-        vig = VIG_ESTIMATES.get(book, VIG_ESTIMATES["default"])
-        ml_lines = [l for l in lines if getattr(l, "market", "") == "ML"]
+        ml_lines = [ln for ln in lines if getattr(ln, "market", "") == "ML"]
 
         if len(ml_lines) < 2:
             continue
 
         # Get home and away implied
-        home_odds = [getattr(l, "decimal_odds", 1.9) for l in ml_lines
-                     if "home" in getattr(l, "side", "").lower()]
-        away_odds = [getattr(l, "decimal_odds", 2.0) for l in ml_lines
-                     if "away" in getattr(l, "side", "").lower()]
+        home_odds = [getattr(ln, "decimal_odds", 1.9) for ln in ml_lines
+                     if "home" in getattr(ln, "side", "").lower()]
+        away_odds = [getattr(ln, "decimal_odds", 2.0) for ln in ml_lines
+                     if "away" in getattr(ln, "side", "").lower()]
 
         if not home_odds or not away_odds:
             continue
@@ -343,7 +338,6 @@ def analyze_bookmaker_bias(
         total_ip = ip_home + ip_away
         # Remove vig proportionally
         fair_home_book = ip_home / total_ip
-        fair_away_book = ip_away / total_ip
 
         # Compare against model
         model_home = fair_prob_home
@@ -374,9 +368,9 @@ def analyze_bookmaker_bias(
 # ─── Market Efficiency Score ─────────────────────────────────────────────────
 
 def compute_market_efficiency(
-    liquidity: List[LiquidityEstimate],
-    sharp_signals: List[SharpSignal],
-    book_biases: List[BookmakerBias],
+    liquidity: list[LiquidityEstimate],
+    sharp_signals: list[SharpSignal],
+    book_biases: list[BookmakerBias],
 ) -> float:
     """
     Composite market efficiency score 0–1.
@@ -407,7 +401,7 @@ def compute_market_efficiency(
 # ─── Timing Recommendation ──────────────────────────────────────────────────
 
 def recommend_timing(
-    sharp_signals: List[SharpSignal],
+    sharp_signals: list[SharpSignal],
     efficiency: float,
 ) -> str:
     """
@@ -431,8 +425,8 @@ def recommend_timing(
 # ─── Full Analysis Entrypoint ────────────────────────────────────────────────
 
 def analyze_microstructure(
-    odds_lines: List[OddsLine],
-    time_series: Optional[List[OddsTimeSeries]] = None,
+    odds_lines: list[OddsLine],
+    time_series: list[OddsTimeSeries] | None = None,
     model_home_prob: float = 0.5,
 ) -> MicrostructureReport:
     """

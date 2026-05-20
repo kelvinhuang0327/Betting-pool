@@ -1,0 +1,797 @@
+[
+  {
+    "variant_name": "all_features",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "bullpen",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "Baseline: all feature families enabled",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "all_features",
+      "enabled_families": [
+        "base_model",
+        "bullpen",
+        "market",
+        "recent_form",
+        "rest",
+        "starter",
+        "weather"
+      ],
+      "disabled_families": [],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_all_features.csv",
+    "oof_bss": -0.027668,
+    "oof_ece": 0.042928,
+    "original_bss": -0.050579,
+    "delta_bss": 0.022911,
+    "oof_row_count": 1949,
+    "oof_recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NEGATIVE_BSS",
+    "gate_reasons": [
+      "Brier Skill Score = -0.0277 < 0. Model underperforms market baseline. require_positive_bss=True blocks this strategy."
+    ],
+    "roi_pct": 0.648,
+    "bet_count": 1127,
+    "sample_size": 1949,
+    "bss_sim": -0.027668,
+    "ece_sim": 0.042928,
+    "sim_error": null
+  },
+  {
+    "variant_name": "recent_only",
+    "enabled_families": [
+      "recent_form",
+      "base_model"
+    ],
+    "description": "Only recent form features enabled",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "recent_only",
+      "enabled_families": [
+        "base_model",
+        "recent_form"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "market",
+        "rest",
+        "starter",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_recent_only.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "rest_only",
+    "enabled_families": [
+      "rest",
+      "base_model"
+    ],
+    "description": "Only rest days features enabled",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "rest_only",
+      "enabled_families": [
+        "base_model",
+        "rest"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "market",
+        "recent_form",
+        "starter",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_rest_only.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "bullpen_only",
+    "enabled_families": [
+      "bullpen",
+      "base_model"
+    ],
+    "description": "Only bullpen proxy features enabled",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "bullpen_only",
+      "enabled_families": [
+        "base_model",
+        "bullpen"
+      ],
+      "disabled_families": [
+        "market",
+        "recent_form",
+        "rest",
+        "starter",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_bullpen_only.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "starter_only",
+    "enabled_families": [
+      "starter",
+      "base_model"
+    ],
+    "description": "Only starter ERA proxy features enabled",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "starter_only",
+      "enabled_families": [
+        "base_model",
+        "starter"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "market",
+        "recent_form",
+        "rest",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_starter_only.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "weather_only",
+    "enabled_families": [
+      "weather",
+      "base_model"
+    ],
+    "description": "Only weather features enabled (no logit contribution)",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "weather_only",
+      "enabled_families": [
+        "base_model",
+        "weather"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "market",
+        "recent_form",
+        "rest",
+        "starter"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_weather_only.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "no_recent",
+    "enabled_families": [
+      "rest",
+      "bullpen",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except recent form",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "no_recent",
+      "enabled_families": [
+        "base_model",
+        "bullpen",
+        "market",
+        "rest",
+        "starter",
+        "weather"
+      ],
+      "disabled_families": [
+        "recent_form"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_recent.csv",
+    "oof_bss": -0.029878,
+    "oof_ece": 0.041103,
+    "original_bss": -0.052418,
+    "delta_bss": 0.022541,
+    "oof_row_count": 1949,
+    "oof_recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NEGATIVE_BSS",
+    "gate_reasons": [
+      "Brier Skill Score = -0.0299 < 0. Model underperforms market baseline. require_positive_bss=True blocks this strategy."
+    ],
+    "roi_pct": -0.4957,
+    "bet_count": 1116,
+    "sample_size": 1949,
+    "bss_sim": -0.029878,
+    "ece_sim": 0.041103,
+    "sim_error": null
+  },
+  {
+    "variant_name": "no_rest",
+    "enabled_families": [
+      "recent_form",
+      "bullpen",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except rest days",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "no_rest",
+      "enabled_families": [
+        "base_model",
+        "bullpen",
+        "market",
+        "recent_form",
+        "starter",
+        "weather"
+      ],
+      "disabled_families": [
+        "rest"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_rest.csv",
+    "oof_bss": -0.027537,
+    "oof_ece": 0.0424,
+    "original_bss": -0.050585,
+    "delta_bss": 0.023049,
+    "oof_row_count": 1949,
+    "oof_recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NEGATIVE_BSS",
+    "gate_reasons": [
+      "Brier Skill Score = -0.0275 < 0. Model underperforms market baseline. require_positive_bss=True blocks this strategy."
+    ],
+    "roi_pct": 0.7453,
+    "bet_count": 1126,
+    "sample_size": 1949,
+    "bss_sim": -0.027537,
+    "ece_sim": 0.0424,
+    "sim_error": null
+  },
+  {
+    "variant_name": "no_bullpen",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except bullpen proxy",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "no_bullpen",
+      "enabled_families": [
+        "base_model",
+        "market",
+        "recent_form",
+        "rest",
+        "starter",
+        "weather"
+      ],
+      "disabled_families": [
+        "bullpen"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_bullpen.csv",
+    "oof_bss": -0.027668,
+    "oof_ece": 0.042928,
+    "original_bss": -0.050579,
+    "delta_bss": 0.022911,
+    "oof_row_count": 1949,
+    "oof_recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NEGATIVE_BSS",
+    "gate_reasons": [
+      "Brier Skill Score = -0.0277 < 0. Model underperforms market baseline. require_positive_bss=True blocks this strategy."
+    ],
+    "roi_pct": 0.648,
+    "bet_count": 1127,
+    "sample_size": 1949,
+    "bss_sim": -0.027668,
+    "ece_sim": 0.042928,
+    "sim_error": null
+  },
+  {
+    "variant_name": "no_starter",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "bullpen",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except starter ERA proxy",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "no_starter",
+      "enabled_families": [
+        "base_model",
+        "bullpen",
+        "market",
+        "recent_form",
+        "rest",
+        "weather"
+      ],
+      "disabled_families": [
+        "starter"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_starter.csv",
+    "oof_bss": -0.029118,
+    "oof_ece": 0.032473,
+    "original_bss": -0.055607,
+    "delta_bss": 0.026489,
+    "oof_row_count": 1949,
+    "oof_recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NEGATIVE_BSS",
+    "gate_reasons": [
+      "Brier Skill Score = -0.0291 < 0. Model underperforms market baseline. require_positive_bss=True blocks this strategy."
+    ],
+    "roi_pct": 0.1557,
+    "bet_count": 1082,
+    "sample_size": 1949,
+    "bss_sim": -0.029121,
+    "ece_sim": 0.032473,
+    "sim_error": null
+  },
+  {
+    "variant_name": "no_weather",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "bullpen",
+      "starter",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except weather",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "no_weather",
+      "enabled_families": [
+        "base_model",
+        "bullpen",
+        "market",
+        "recent_form",
+        "rest",
+        "starter"
+      ],
+      "disabled_families": [
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_weather.csv",
+    "oof_bss": -0.027668,
+    "oof_ece": 0.042928,
+    "original_bss": -0.050579,
+    "delta_bss": 0.022911,
+    "oof_row_count": 1949,
+    "oof_recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NEGATIVE_BSS",
+    "gate_reasons": [
+      "Brier Skill Score = -0.0277 < 0. Model underperforms market baseline. require_positive_bss=True blocks this strategy."
+    ],
+    "roi_pct": 0.648,
+    "bet_count": 1127,
+    "sample_size": 1949,
+    "bss_sim": -0.027668,
+    "ece_sim": 0.042928,
+    "sim_error": null
+  },
+  {
+    "variant_name": "no_context_features",
+    "enabled_families": [
+      "base_model",
+      "market"
+    ],
+    "description": "Base model + market only, all context features disabled",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "no_context_features",
+      "enabled_families": [
+        "base_model",
+        "market"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "recent_form",
+        "rest",
+        "starter",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_context_features.csv",
+    "oof_bss": -0.028331,
+    "oof_ece": 0.035182,
+    "original_bss": -0.057965,
+    "delta_bss": 0.029634,
+    "oof_row_count": 1949,
+    "oof_recommendation": "OOF_IMPROVED_BUT_STILL_BLOCKED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NEGATIVE_BSS",
+    "gate_reasons": [
+      "Brier Skill Score = -0.0283 < 0. Model underperforms market baseline. require_positive_bss=True blocks this strategy."
+    ],
+    "roi_pct": 0.1991,
+    "bet_count": 1076,
+    "sample_size": 1949,
+    "bss_sim": -0.028331,
+    "ece_sim": 0.035182,
+    "sim_error": null
+  },
+  {
+    "variant_name": "recent_plus_rest",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "base_model"
+    ],
+    "description": "Recent form + rest days only",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "recent_plus_rest",
+      "enabled_families": [
+        "base_model",
+        "recent_form",
+        "rest"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "market",
+        "starter",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_recent_plus_rest.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "starter_plus_bullpen",
+    "enabled_families": [
+      "starter",
+      "bullpen",
+      "base_model"
+    ],
+    "description": "Starter ERA + bullpen proxy only",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "starter_plus_bullpen",
+      "enabled_families": [
+        "base_model",
+        "bullpen",
+        "starter"
+      ],
+      "disabled_families": [
+        "market",
+        "recent_form",
+        "rest",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_starter_plus_bullpen.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "recent_rest_starter",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "starter",
+      "base_model"
+    ],
+    "description": "Recent form + rest + starter ERA (no bullpen, no weather)",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "recent_rest_starter",
+      "enabled_families": [
+        "base_model",
+        "recent_form",
+        "rest",
+        "starter"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "market",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_recent_rest_starter.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  },
+  {
+    "variant_name": "market_or_base_only_baseline",
+    "enabled_families": [
+      "base_model"
+    ],
+    "description": "Pure base model only, no feature adjustments at all",
+    "input_rows": 2402,
+    "paper_only": true,
+    "build_meta": {
+      "variant_name": "market_or_base_only_baseline",
+      "enabled_families": [
+        "base_model"
+      ],
+      "disabled_families": [
+        "bullpen",
+        "market",
+        "recent_form",
+        "rest",
+        "starter",
+        "weather"
+      ],
+      "unknown_requested_families": [],
+      "total_input_rows": 2402,
+      "recomputed_count": 2402,
+      "fallback_count": 0,
+      "probability_col": "model_prob_home"
+    },
+    "variant_rows_count": 2402,
+    "variant_csv": "outputs/predictions/PAPER/2026-05-11/ablation/variant_market_or_base_only_baseline.csv",
+    "oof_bss": null,
+    "oof_ece": null,
+    "original_bss": null,
+    "delta_bss": null,
+    "oof_row_count": 0,
+    "oof_recommendation": "OOF_REJECTED",
+    "oof_error": null,
+    "gate_status": "BLOCKED_NO_MARKET_DATA",
+    "gate_reasons": [
+      "All 1951 rows missing market odds (Home ML / Away ML)."
+    ],
+    "roi_pct": null,
+    "bet_count": 0,
+    "sample_size": 0,
+    "bss_sim": null,
+    "ece_sim": null,
+    "sim_error": null
+  }
+]

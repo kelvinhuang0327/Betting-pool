@@ -11,14 +11,13 @@ from __future__ import annotations
 import logging
 import pickle
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import numpy as np
 from scipy.optimize import minimize
 from scipy.special import expit
 
 from wbc_backend.domain.schemas import SubModelResult
-from wbc_backend.intelligence.regime_classifier import RegimeClassifier, TournamentRegime
+from wbc_backend.intelligence.regime_classifier import RegimeClassifier
 
 logger = logging.getLogger(__name__)
 
@@ -32,16 +31,16 @@ class StackingModel:
     """
 
     def __init__(self):
-        self.weights: Optional[np.ndarray] = None
+        self.weights: np.ndarray | None = None
         self.bias: float = 0.0
-        self.model_names: List[str] = []
+        self.model_names: list[str] = []
         self.artifact_path = Path("data/wbc_backend/artifacts/stacking_model.pkl")
 
     def fit(
         self,
-        base_predictions: Dict[str, np.ndarray],
+        base_predictions: dict[str, np.ndarray],
         y: np.ndarray,
-    ) -> Dict[str, float]:
+    ) -> dict[str, float]:
         """
         Learn stacking weights from base model predictions.
 
@@ -90,7 +89,7 @@ class StackingModel:
         logger.info("Stacking weights learned: %s", weight_dict)
         return weight_dict
 
-    def predict(self, sub_results: List[SubModelResult]) -> tuple[float, float, float]:
+    def predict(self, sub_results: list[SubModelResult]) -> tuple[float, float, float]:
         """
         Blend sub-model predictions using learned weights.
 
@@ -120,12 +119,12 @@ class StackingModel:
 
         logit = float(X_logit @ self.weights + self.bias)
         home_wp = float(expit(logit))
-        
+
         # ── P1.1: Institutional Calibration (Platt-style) ──
         # Protect against overconfidence in small sample WBC datasets
         calibration_alpha = 0.94
         home_wp = calibration_alpha * home_wp + (1 - calibration_alpha) * 0.5
-        
+
         home_wp = max(0.02, min(0.98, home_wp))
 
         # ── P1.8: Regime-Aware Adjustments ─────────────────
@@ -140,7 +139,7 @@ class StackingModel:
         return home_wp, 1.0 - home_wp, confidence
 
     @staticmethod
-    def _fallback_predict(sub_results: List[SubModelResult]) -> tuple[float, float, float]:
+    def _fallback_predict(sub_results: list[SubModelResult]) -> tuple[float, float, float]:
         probs = [r.home_win_prob for r in sub_results]
         if not probs:
             return 0.5, 0.5, 0.5
@@ -160,10 +159,10 @@ class StackingModel:
 
     def update_online(
         self,
-        sub_results: List[SubModelResult],
+        sub_results: list[SubModelResult],
         actual_home_win: int,
         learning_rate: float = 0.012,
-    ) -> Dict[str, float]:
+    ) -> dict[str, float]:
         """
         P0.3 Upgrade: Online SGD Meta-learner.
         Performs a single SGD step based on the prediction error of the current match.
@@ -191,9 +190,9 @@ class StackingModel:
         self.bias -= learning_rate * grad_b
 
         self._save()
-        
+
         updated_weights = {
-            name: round(float(w), 4) 
+            name: round(float(w), 4)
             for name, w in zip(self.model_names, self.weights)
         }
         logger.info("[ONLINE] Weights updated for %s models | error=%.3f", len(self.weights), error)
@@ -221,7 +220,7 @@ class StackingModel:
                 logger.warning("Failed to load stacking model: %s", e)
 
 
-    def record_performance(self, sub_results: List[SubModelResult], actual_home_win: int):
+    def record_performance(self, sub_results: list[SubModelResult], actual_home_win: int):
         """
         Record the accuracy (Brier score) of each sub-model.
         """
@@ -230,16 +229,17 @@ class StackingModel:
         if history_path.exists():
             with open(history_path, "rb") as f:
                 history = pickle.load(f)
-        
+
         for res in sub_results:
             model_name = res.model_name
-            if model_name not in history: history[model_name] = []
-            
+            if model_name not in history:
+                history[model_name] = []
+
             error_sq = (res.home_win_prob - actual_home_win) ** 2
             history[model_name].append(error_sq)
             # Keep only last 50 matches for moving average
             history[model_name] = history[model_name][-50:]
-            
+
         with open(history_path, "wb") as f:
             pickle.dump(history, f)
 
@@ -248,14 +248,16 @@ class StackingModel:
         P2.7 Upgrade: Model Tournament Engine.
         Penalize models with high recent Brier scores.
         """
-        if self.weights is None: return
-        
+        if self.weights is None:
+            return
+
         history_path = Path("data/wbc_backend/artifacts/model_performance.pkl")
-        if not history_path.exists(): return
-        
+        if not history_path.exists():
+            return
+
         with open(history_path, "rb") as f:
             history = pickle.load(f)
-            
+
         for i, name in enumerate(self.model_names):
             if name in history and len(history[name]) >= 10:
                 avg_brier = np.mean(history[name])
@@ -264,5 +266,5 @@ class StackingModel:
                     penalty = (avg_brier - 0.25) * 2.0
                     self.weights[i] *= max(0.2, 1.0 - penalty)
                     logger.info("[TOURNAMENT] Penalizing model %s (Brier=%.4f)", name, avg_brier)
-        
+
         self._save()

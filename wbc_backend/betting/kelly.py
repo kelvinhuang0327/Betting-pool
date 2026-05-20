@@ -55,24 +55,24 @@ def fractional_kelly(prob: float, odds: float, fraction: float = 0.25) -> float:
 
 
 def bayesian_kelly(
-    prob: float, 
-    odds: float, 
-    confidence: float = 0.5, 
+    prob: float,
+    odds: float,
+    confidence: float = 0.5,
     base_fraction: float = 0.25
 ) -> float:
     """
     P2.6 Upgrade: Bayesian Kelly with confidence interval adjustment.
-    
-    Adjusts the fractional Kelly stake based on the statistical confidence 
+
+    Adjusts the fractional Kelly stake based on the statistical confidence
     of the prediction. Lower confidence -> sharper stake reduction.
     """
     f_star = calculate_kelly_bet(prob, odds)
-    
+
     # Square the confidence to penalize low-confidence signals more heavily
     # Confidence 1.0 -> 100% of base_fraction
     # Confidence 0.5 -> 25% of base_fraction
     dynamic_fraction = base_fraction * (confidence ** 2)
-    
+
     return f_star * dynamic_fraction
 
 

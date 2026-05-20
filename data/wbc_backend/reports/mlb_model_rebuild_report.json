@@ -1,0 +1,481 @@
+{
+  "model_autopsy": {
+    "feature_list": [
+      "market_home_prob",
+      "market_gap",
+      "ou_line",
+      "starter_start_count_diff",
+      "rest_day_diff",
+      "dome_flag"
+    ],
+    "strongest_features": {
+      "market_gap": 0.1946,
+      "dome_flag": 0.1861,
+      "market_home_prob": 0.1736
+    },
+    "weakest_features": {
+      "ou_line": 0.1432,
+      "rest_day_diff": 0.1158,
+      "starter_start_count_diff": 0.0489
+    },
+    "feature_instability": {
+      "rest_day_diff": 0.0586,
+      "starter_start_count_diff": 0.0483,
+      "market_home_prob": 0.0443
+    },
+    "redundancy_pairs": [
+      {
+        "a": "market_home_prob",
+        "b": "market_gap",
+        "corr": 0.9999
+      }
+    ],
+    "probability_sharpness": 0.1022,
+    "sub_regime_behavior": {
+      "favorite_roi": -0.0297,
+      "underdog_roi": 0.084
+    },
+    "suspected_broken_assumptions": [
+      "Market prior dominates the baseline stack and limits non-market signal formation.",
+      "Starter availability proxies are too shallow; current baseline has little pitcher-specific separation.",
+      "Environment and rest effects are mostly absent in the baseline, so game-context variance is under-modeled."
+    ]
+  },
+  "reconstructed_feature_families": {
+    "market": [
+      "market_home_prob",
+      "ou_line",
+      "market_gap",
+      "market_open_current_move",
+      "market_open_close_move",
+      "market_close_alignment_proxy",
+      "market_disagreement_proxy"
+    ],
+    "team": [
+      "team_offense_diff",
+      "team_pitching_diff",
+      "team_home_away_form_diff",
+      "team_recent_run_diff_delta",
+      "team_win_pct_diff",
+      "team_posterior_diff"
+    ],
+    "starter": [
+      "starter_recent_ra_diff",
+      "starter_support_diff",
+      "starter_quality_diff",
+      "starter_rest_diff",
+      "starter_start_count_diff"
+    ],
+    "bullpen": [
+      "bullpen_usage_diff",
+      "bullpen_usage_intensity_diff",
+      "bullpen_quality_diff"
+    ],
+    "lineup_context": [
+      "lineup_size_diff",
+      "lineup_missing_slots_diff",
+      "injury_count_diff",
+      "rest_day_diff",
+      "platoon_balance_diff"
+    ],
+    "environment": [
+      "weather_temp_c",
+      "weather_wind_kmh",
+      "environment_run_proxy",
+      "dome_flag",
+      "open_air_flag"
+    ]
+  },
+  "ablation_table": [
+    {
+      "family_test": "market_only",
+      "features": [
+        "market_home_prob",
+        "ou_line",
+        "market_gap",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy"
+      ],
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1568,
+      "roi": 0.0242,
+      "brier": 0.2445,
+      "logloss": 0.6816,
+      "clv": 0.0405,
+      "fold_roi_std": 0.3788,
+      "sharpness": 0.0987,
+      "notes": ""
+    },
+    {
+      "family_test": "market_plus_team",
+      "features": [
+        "market_home_prob",
+        "ou_line",
+        "market_gap",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "team_offense_diff",
+        "team_pitching_diff",
+        "team_home_away_form_diff",
+        "team_recent_run_diff_delta",
+        "team_win_pct_diff",
+        "team_posterior_diff"
+      ],
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1677,
+      "roi": 0.0304,
+      "brier": 0.245,
+      "logloss": 0.6828,
+      "clv": 0.0438,
+      "fold_roi_std": 0.0569,
+      "sharpness": 0.1002,
+      "notes": ""
+    },
+    {
+      "family_test": "market_plus_starter",
+      "features": [
+        "market_home_prob",
+        "ou_line",
+        "market_gap",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "starter_recent_ra_diff",
+        "starter_support_diff",
+        "starter_quality_diff",
+        "starter_rest_diff",
+        "starter_start_count_diff"
+      ],
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1697,
+      "roi": -0.0513,
+      "brier": 0.2508,
+      "logloss": 0.6967,
+      "clv": 0.0583,
+      "fold_roi_std": 0.3979,
+      "sharpness": 0.1066,
+      "notes": ""
+    },
+    {
+      "family_test": "market_plus_bullpen",
+      "features": [
+        "market_home_prob",
+        "ou_line",
+        "market_gap",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "bullpen_usage_diff",
+        "bullpen_usage_intensity_diff",
+        "bullpen_quality_diff"
+      ],
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1625,
+      "roi": 0.0302,
+      "brier": 0.2444,
+      "logloss": 0.6816,
+      "clv": 0.0422,
+      "fold_roi_std": 0.3759,
+      "sharpness": 0.0993,
+      "notes": ""
+    },
+    {
+      "family_test": "market_plus_lineup_context",
+      "features": [
+        "market_home_prob",
+        "ou_line",
+        "market_gap",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "lineup_size_diff",
+        "lineup_missing_slots_diff",
+        "injury_count_diff",
+        "rest_day_diff",
+        "platoon_balance_diff"
+      ],
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1573,
+      "roi": 0.0273,
+      "brier": 0.2447,
+      "logloss": 0.6822,
+      "clv": 0.0421,
+      "fold_roi_std": 0.3795,
+      "sharpness": 0.0989,
+      "notes": ""
+    },
+    {
+      "family_test": "market_plus_environment",
+      "features": [
+        "market_home_prob",
+        "ou_line",
+        "market_gap",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "weather_temp_c",
+        "weather_wind_kmh",
+        "environment_run_proxy",
+        "dome_flag",
+        "open_air_flag"
+      ],
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1675,
+      "roi": 0.0161,
+      "brier": 0.2462,
+      "logloss": 0.6854,
+      "clv": 0.0479,
+      "fold_roi_std": 0.3741,
+      "sharpness": 0.1041,
+      "notes": ""
+    },
+    {
+      "family_test": "full_logistic_family_stack",
+      "features": [
+        "market_home_prob",
+        "ou_line",
+        "market_gap",
+        "market_open_current_move",
+        "market_open_close_move",
+        "market_close_alignment_proxy",
+        "market_disagreement_proxy",
+        "team_offense_diff",
+        "team_pitching_diff",
+        "team_home_away_form_diff",
+        "team_recent_run_diff_delta",
+        "team_win_pct_diff",
+        "team_posterior_diff",
+        "starter_recent_ra_diff",
+        "starter_support_diff",
+        "starter_quality_diff",
+        "starter_rest_diff",
+        "starter_start_count_diff",
+        "bullpen_usage_diff",
+        "bullpen_usage_intensity_diff",
+        "bullpen_quality_diff",
+        "lineup_size_diff",
+        "lineup_missing_slots_diff",
+        "injury_count_diff",
+        "rest_day_diff",
+        "platoon_balance_diff",
+        "weather_temp_c",
+        "weather_wind_kmh",
+        "environment_run_proxy",
+        "dome_flag",
+        "open_air_flag"
+      ],
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1764,
+      "roi": -0.0351,
+      "brier": 0.2528,
+      "logloss": 0.7017,
+      "clv": 0.0695,
+      "fold_roi_std": 0.0719,
+      "sharpness": 0.1152,
+      "notes": ""
+    }
+  ],
+  "model_family_comparison": [
+    {
+      "model_name": "regularized_logistic",
+      "n_games": 1997,
+      "n_bets": 1764,
+      "roi": -0.0351,
+      "brier": 0.2528,
+      "logloss": 0.7017,
+      "clv": 0.0695,
+      "fold_roi_std": 0.0719,
+      "sharpness": 0.1152,
+      "notes": "",
+      "classification": "NOISE"
+    },
+    {
+      "model_name": "gradient_boosting",
+      "n_games": 1997,
+      "n_bets": 1799,
+      "roi": -0.0172,
+      "brier": 0.2566,
+      "logloss": 0.7096,
+      "clv": 0.0856,
+      "fold_roi_std": 0.3724,
+      "sharpness": 0.1057,
+      "notes": "",
+      "classification": "NOISE"
+    },
+    {
+      "model_name": "tree_boost_style",
+      "n_games": 1997,
+      "n_bets": 1821,
+      "roi": -0.0126,
+      "brier": 0.2574,
+      "logloss": 0.7132,
+      "clv": 0.0995,
+      "fold_roi_std": 0.0748,
+      "sharpness": 0.1199,
+      "notes": "",
+      "classification": "NOISE"
+    },
+    {
+      "model_name": "hierarchical_bayesian",
+      "n_games": 1997,
+      "n_bets": 1756,
+      "roi": -0.0729,
+      "brier": 0.2439,
+      "logloss": 0.6805,
+      "clv": 0.0543,
+      "fold_roi_std": 0.3469,
+      "sharpness": 0.075,
+      "notes": "",
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "model_name": "stacked_ensemble",
+      "n_games": 1665,
+      "n_bets": 1506,
+      "roi": -0.089,
+      "brier": 0.2482,
+      "logloss": 0.6894,
+      "clv": 0.0758,
+      "fold_roi_std": null,
+      "sharpness": 0.0389,
+      "notes": "stacked from 4 base models via logistic meta-learner",
+      "classification": "NOISE"
+    }
+  ],
+  "regime_segmentation_results": [
+    {
+      "regime": "favorites",
+      "n_games": 1043,
+      "n_bets": 943,
+      "roi": 0.0095,
+      "clv": 0.0942,
+      "fold_roi_std": 0.095,
+      "classification": "TRADABLE_SIGNAL"
+    },
+    {
+      "regime": "underdogs",
+      "n_games": 282,
+      "n_bets": 260,
+      "roi": -0.0385,
+      "clv": 0.1211,
+      "fold_roi_std": 0.0927,
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "regime": "small_edge",
+      "n_games": 998,
+      "n_bets": 822,
+      "roi": -0.0268,
+      "clv": 0.0387,
+      "fold_roi_std": 0.3688,
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "regime": "large_edge",
+      "n_games": 999,
+      "n_bets": 999,
+      "roi": -0.001,
+      "clv": 0.1495,
+      "fold_roi_std": 0.1442,
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "regime": "home_bias",
+      "n_games": 1043,
+      "n_bets": 956,
+      "roi": 0.0565,
+      "clv": 0.1047,
+      "fold_roi_std": 0.2043,
+      "classification": "OVERFIT_SIGNAL"
+    },
+    {
+      "regime": "away_bias",
+      "n_games": 954,
+      "n_bets": 865,
+      "roi": -0.089,
+      "clv": 0.0937,
+      "fold_roi_std": 0.0598,
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "regime": "strong_starter_mismatch",
+      "n_games": 1018,
+      "n_bets": 925,
+      "roi": -0.0422,
+      "clv": 0.1004,
+      "fold_roi_std": 0.377,
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "regime": "weak_starter_mismatch",
+      "n_games": 979,
+      "n_bets": 896,
+      "roi": 0.0179,
+      "clv": 0.0986,
+      "fold_roi_std": 0.3577,
+      "classification": "OVERFIT_SIGNAL"
+    },
+    {
+      "regime": "high_total",
+      "n_games": 1222,
+      "n_bets": 1113,
+      "roi": -0.035,
+      "clv": 0.1031,
+      "fold_roi_std": 0.1451,
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "regime": "low_total",
+      "n_games": 775,
+      "n_bets": 708,
+      "roi": 0.0226,
+      "clv": 0.0938,
+      "fold_roi_std": 0.364,
+      "classification": "OVERFIT_SIGNAL"
+    },
+    {
+      "regime": "heavy_bullpen_stress",
+      "n_games": 1019,
+      "n_bets": 934,
+      "roi": -0.0043,
+      "clv": 0.1032,
+      "fold_roi_std": 0.085,
+      "classification": "WEAK_SIGNAL"
+    },
+    {
+      "regime": "normal_bullpen_stress",
+      "n_games": 978,
+      "n_bets": 887,
+      "roi": -0.0214,
+      "clv": 0.0955,
+      "fold_roi_std": 0.0841,
+      "classification": "WEAK_SIGNAL"
+    }
+  ],
+  "signal_classification": {
+    "regularized_logistic": "NOISE",
+    "gradient_boosting": "NOISE",
+    "tree_boost_style": "NOISE",
+    "hierarchical_bayesian": "WEAK_SIGNAL",
+    "stacked_ensemble": "NOISE"
+  },
+  "final_diagnosis": "EDGE EXISTS ONLY IN SUBSET REGIMES",
+  "recommended_production_path": "Deploy only regime-gated MLB moneyline recommendations with hard whitelist rules.",
+  "stacking_status": "run",
+  "best_model": "tree_boost_style"
+}

@@ -14,7 +14,6 @@ import math
 import numpy as np
 import pandas as pd
 from collections import defaultdict
-from typing import Dict, List
 
 
 # ─── Load MLB 2025 Real Data ─────────────────────────────────────────────────
@@ -39,7 +38,7 @@ def load_mlb_2025() -> pd.DataFrame:
 
 class EloSystem:
     def __init__(self, k: float = 6.0, home_advantage: float = 24.0):
-        self.ratings: Dict[str, float] = defaultdict(lambda: 1500.0)
+        self.ratings: dict[str, float] = defaultdict(lambda: 1500.0)
         self.k = k
         self.home_adv = home_advantage
 
@@ -62,9 +61,9 @@ class EloSystem:
 class TeamTracker:
     def __init__(self, window: int = 30):
         self.window = window
-        self.runs_scored: Dict[str, list] = defaultdict(list)
-        self.runs_allowed: Dict[str, list] = defaultdict(list)
-        self.results: Dict[str, list] = defaultdict(list)
+        self.runs_scored: dict[str, list] = defaultdict(list)
+        self.runs_allowed: dict[str, list] = defaultdict(list)
+        self.results: dict[str, list] = defaultdict(list)
 
     def update(self, team: str, scored: int, allowed: int, won: bool):
         self.runs_scored[team].append(scored)
@@ -117,7 +116,7 @@ def log5(pa: float, pb: float) -> float:
 
 # ─── Main Backtest ───────────────────────────────────────────────────────────
 
-def run_real_backtest():
+def run_real_backtest():  # noqa: C901
     print()
     print("=" * 70)
     print("📊 MLB 2025 真實回測 (Walk-Forward)")
@@ -153,7 +152,7 @@ def run_real_backtest():
     total_pnl = 0.0
     bet_count = 0
     bet_wins = 0
-    bet_pnls: List[float] = []
+    bet_pnls: list[float] = []
 
     # Per-confidence-band tracking
     conf_bands = {
@@ -293,19 +292,15 @@ def run_real_backtest():
         bet_side = None
         bet_prob = 0.0
         bet_odds = 1.0
-        edge = 0.0
 
         if our_edge_home > 0.03 and p > 0.52:
             bet_side = "home"
             bet_prob = p
             bet_odds = market_odds_home
-            edge = our_edge_home
         elif our_edge_away > 0.03 and (1 - p) > 0.52:
             bet_side = "away"
             bet_prob = 1 - p
             bet_odds = market_odds_away
-            edge = our_edge_away
-
         if bet_side and bet_odds > 1.0:
             # Quarter Kelly
             b = bet_odds - 1
@@ -354,9 +349,9 @@ def run_real_backtest():
 
     # 跟基線比較
     baseline_acc = df['home_win'].mean()
-    print(f"  📌 基線比較:")
+    print("  📌 基線比較:")
     print(f"     永遠猜主場贏:  {baseline_acc:.1%}")
-    print(f"     隨機猜:        50.0%")
+    print("     隨機猜:        50.0%")
     print(f"     本模型:        {accuracy:.1%}  (+{(accuracy - 0.5) * 100:.1f}pp vs 隨機)")
     print(f"     Information Gain: {0.6931 - logloss:.4f} nats")
     print()

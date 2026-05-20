@@ -9,7 +9,6 @@ from __future__ import annotations
 import logging
 import pickle
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import numpy as np
 from scipy.special import expit
@@ -27,14 +26,14 @@ class RealGBMStack:
     """
     Sub-ensemble of tree models (XGB+LGB+CAT) with a logistic meta-learner.
     """
-    def __init__(self, config: Optional[ModelConfig] = None):
+    def __init__(self, config: ModelConfig | None = None):
         self.config = config or ModelConfig()
         self.models = {
             "xgboost": XGBoostModel(self.config),
             "lightgbm": LightGBMModel(self.config),
             "catboost": CatBoostModel(self.config),
         }
-        self.weights: Optional[np.ndarray] = None
+        self.weights: np.ndarray | None = None
         self.bias: float = 0.0
         self.artifact_path = Path("data/wbc_backend/artifacts/gbm_stack_meta.pkl")
 
@@ -44,11 +43,11 @@ class RealGBMStack:
         """
         import time
         start = time.time()
-        
+
         # 1. Train sub-models (Individual GBMs)
         sub_training_results = []
         oof_preds = {} # Out-of-fold predictions
-        
+
         for name, model in self.models.items():
             res = model.train(X, y)
             sub_training_results.append(res)
@@ -83,7 +82,7 @@ class RealGBMStack:
 
         elapsed = time.time() - start
         logger.info("RealGBMStack trained: acc=%.4f, brier=%.4f, time=%.1fs", accuracy, brier, elapsed)
-        
+
         return TrainingResult(
             model_name="real_gbm_stack",
             accuracy=round(accuracy, 4),
@@ -93,17 +92,18 @@ class RealGBMStack:
             n_samples=len(y)
         )
 
-    def predict_single(self, feature_dict: Dict[str, float]) -> SubModelResult:
+    def predict_single(self, feature_dict: dict[str, float]) -> SubModelResult:
         """Prediction with meta-learnt blending."""
-        if self.weights is None: self._load()
-        
+        if self.weights is None:
+            self._load()
+
         # Gather sub-model predictions
         sub_probs = []
         names = sorted(self.models.keys())
         for name in names:
             res = self.models[name].predict_single(feature_dict)
             sub_probs.append(res.home_win_prob)
-        
+
         X = np.array(sub_probs)
         if self.weights is None: # Fallback to mean
             p = float(np.mean(X))
@@ -111,7 +111,7 @@ class RealGBMStack:
             clipped = np.clip(X, 1e-6, 1 - 1e-6)
             X_logit = np.log(clipped / (1 - clipped))
             p = float(expit(X_logit @ self.weights + self.bias))
-            
+
         p = max(0.01, min(0.99, p))
         return SubModelResult(
             model_name="real_gbm_stack",
@@ -122,7 +122,8 @@ class RealGBMStack:
         )
 
     def _combine_probs(self, X_logit: np.ndarray) -> np.ndarray:
-        if self.weights is None: return np.full(len(X_logit), 0.5)
+        if self.weights is None:
+            return np.full(len(X_logit), 0.5)
         return expit(X_logit @ self.weights + self.bias)
 
     def _save(self):

@@ -23,13 +23,14 @@ from data.wbc_data import (
     _build_bullpen, _build_lineup,
 )
 from data.tsl_crawler import TSLCrawler
+from data.tsl_snapshot import get_tsl_odds_lines
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # ODDS HELPER
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def _std_odds(away: str, home: str, ts: str,
+def _std_odds(away: str, home: str, ts: str,  # NOSONAR
               ml_away: float, ml_home: float,
               rl_spread: float, rl_fav: str, rl_fav_odds: float, rl_dog_odds: float,
               ou_line: float, ou_over: float, ou_under: float,
@@ -743,7 +744,7 @@ def list_wbc_matches() -> List[dict]:
     ]
 
 
-def fetch_wbc_match(game_id: str,
+def fetch_wbc_match(game_id: str,  # NOSONAR
                     live: bool = False,
                     use_mock: bool = False) -> MatchData:
     """Fetch a specific WBC 2026 Pool C game by game_id (C01–C10).
@@ -794,17 +795,7 @@ def fetch_wbc_match(game_id: str,
     )
 
     # ── Build odds ──
-    ts = game["game_time"].replace("+09:00", "Z").replace("T", "T")
-    p = game["odds_params"]
-    odds = _std_odds(
-        away_code, home_code, ts,
-        ml_away=p["ml_away"], ml_home=p["ml_home"],
-        rl_spread=p["rl_spread"], rl_fav=p["rl_fav"],
-        rl_fav_odds=p["rl_fav_odds"], rl_dog_odds=p["rl_dog_odds"],
-        ou_line=p["ou_line"], ou_over=p["ou_over"], ou_under=p["ou_under"],
-        f5_away=p["f5_away"], f5_home=p["f5_home"],
-        tt_away_line=p["tt_away_line"], tt_home_line=p["tt_home_line"],
-    )
+    odds: List[OddsLine] = []
 
     # ── Live odds override ──
     if live:
@@ -812,25 +803,10 @@ def fetch_wbc_match(game_id: str,
         home_cn = _CODE_TO_CHINESE.get(home_code, home_code)
         try:
             crawler = TSLCrawler(use_mock=use_mock)
-            live_match = crawler.parse_wbc_match(home_cn, away_cn)
-            if live_match:
-                new_odds = []
-                for m_type, outcomes in live_match.markets.items():
-                    for side, details in outcomes.items():
-                        side_code = _CHINESE_TEAM_NAMES.get(side, side)
-                        if side == "大": side_code = "Over"
-                        elif side == "小": side_code = "Under"
-                        elif side == "單": side_code = "Odd"
-                        elif side == "雙": side_code = "Even"
-                        new_odds.append(OddsLine(
-                            book="TSL", market=m_type, side=side_code,
-                            price=details["price"], line=details.get("line"),
-                            timestamp=datetime.datetime.now().isoformat(),
-                        ))
-                if new_odds:
-                    odds = new_odds
+            crawler.fetch_baseball_games()
         except Exception:
-            pass  # fallback to seed odds
+            pass
+    odds = get_tsl_odds_lines(away_code, home_code)
 
     # ── Resolve SP / PB ──
     away_sp = away_pitchers[game["away_sp"]]
@@ -839,11 +815,6 @@ def fetch_wbc_match(game_id: str,
     home_pb = home_pitchers.get(game.get("home_pb"))
 
     # ── Build bullpens & lineups ──
-    away_bp_stuff = 100.0
-    home_bp_stuff = 100.0
-    if away_code == "JPN": away_bp_stuff = 120.0
-    elif away_code == "KOR": away_bp_stuff = 110.0
-    elif away_code == "CZE": away_bp_stuff = 78.0
     stuff = {
         "JPN": 120.0,
         "KOR": 110.0,
@@ -883,8 +854,8 @@ def fetch_wbc_match(game_id: str,
         venue="Tokyo Dome, Tokyo",
         round_name="Pool C",
         neutral_site=game["neutral_site"],
-        data_source= "MIXED (Pinnacle 國際盤 + 陣容 Seed)" if game_id.upper() == "C01" else "MOCK/SEED (人工建置模擬賽前盤口)",
-        liquidity_level= "HIGH (國際主流盤口水流)" if game_id.upper() == "C01" else "LOW (尚未開盤)"
+        data_source="REAL_ONLY_PENDING_VERIFICATION" if odds else "REAL_ONLY_NO_ODDS",
+        liquidity_level="KNOWN" if odds else "NO_REAL_ODDS",
     )
 
 

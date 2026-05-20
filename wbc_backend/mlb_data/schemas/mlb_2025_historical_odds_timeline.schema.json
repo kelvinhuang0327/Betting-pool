@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MLB 2025 Historical Odds Timeline Canonical",
+  "type": "object",
+  "required": [
+    "game_id",
+    "market_type",
+    "odds_history",
+    "unavailable_fields",
+    "validation_flags",
+    "fetched_at",
+    "strict_valid"
+  ],
+  "properties": {
+    "game_id": {"type": "string"},
+    "source": {"type": "string"},
+    "bookmaker": {"type": "string"},
+    "market_type": {"type": "string", "enum": ["moneyline"]},
+    "opening_home_ml": {"type": ["integer", "null"]},
+    "opening_away_ml": {"type": ["integer", "null"]},
+    "decision_home_ml": {"type": ["integer", "null"]},
+    "decision_away_ml": {"type": ["integer", "null"]},
+    "latest_pregame_home_ml": {"type": ["integer", "null"]},
+    "latest_pregame_away_ml": {"type": ["integer", "null"]},
+    "closing_home_ml": {"type": ["integer", "null"]},
+    "closing_away_ml": {"type": ["integer", "null"]},
+    "opening_ts": {"type": ["string", "null"]},
+    "decision_ts": {"type": ["string", "null"]},
+    "latest_pregame_ts": {"type": ["string", "null"]},
+    "closing_ts": {"type": ["string", "null"]},
+    "odds_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ts", "market_type"],
+        "properties": {
+          "ts": {"type": "string"},
+          "home_ml": {"type": ["integer", "null"]},
+          "away_ml": {"type": ["integer", "null"]},
+          "bookmaker": {"type": ["string", "null"]},
+          "market_type": {"type": "string"},
+          "source": {"type": ["string", "null"]},
+          "fetched_at": {"type": ["string", "null"]},
+          "snapshot_type": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "unavailable_fields": {"type": "array", "items": {"type": "string"}},
+    "validation_flags": {"type": "array", "items": {"type": "string"}},
+    "strict_valid": {"type": "boolean"},
+    "fetched_at": {"type": "string"}
+  }
+}

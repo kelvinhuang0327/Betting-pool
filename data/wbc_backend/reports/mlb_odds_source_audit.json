@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "source_name": "Canonical local odds timeline sources",
+      "interface": "data/mlb_context_sources/odds_timeline_canonical.jsonl + data/mlb_context_sources/odds_timeline.jsonl + data/tsl_odds_history.jsonl",
+      "availability": true,
+      "historical_coverage": "2396 games with snapshots",
+      "granularity": "snapshot-level (mixed quality)",
+      "timestamp_quality": "mixed; strict monotonicity validated in QA report",
+      "cost_access_constraints": "in-repo local assets",
+      "suitability": "research_only_unless_strict_coverage_passes"
+    },
+    {
+      "source_name": "The Odds API v4 (external)",
+      "interface": "https://api.the-odds-api.com/v4/sports/baseball_mlb/odds",
+      "availability": false,
+      "historical_coverage": "depends on account plan and retention",
+      "granularity": "bookmaker snapshots",
+      "timestamp_quality": "good when historical snapshots are available",
+      "cost_access_constraints": "API key required; paid tiers for broad historical coverage",
+      "suitability": "production_candidate"
+    },
+    {
+      "source_name": "SportsDataIO MLB odds API (external)",
+      "interface": "https://sportsdata.io/developers/api-documentation/mlb",
+      "availability": false,
+      "historical_coverage": "vendor plan dependent",
+      "granularity": "event + odds feed (plan-dependent)",
+      "timestamp_quality": "vendor dependent",
+      "cost_access_constraints": "paid subscription + API key",
+      "suitability": "production_candidate"
+    }
+  ]
+}

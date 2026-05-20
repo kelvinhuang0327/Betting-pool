@@ -1,0 +1,23 @@
+{
+  "task": "P14-B",
+  "title": "CEO Decision Watch",
+  "date": "2026-05-30T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "decision_file_checked": "data/paper_recommendations/p14_ceo_odds_source_decision_20260530.json",
+  "decision_file_exists": false,
+  "ceo_decision": "DEFER_DECISION",
+  "path_a_status": "BLOCKED_NEEDS_CEO_APPROVAL_AND_API_KEY",
+  "path_b_status": "ACCUMULATION_INSUFFICIENT",
+  "supported_decisions": [
+    "APPROVE_PATH_A_WITH_API_KEY",
+    "APPROVE_PATH_A_BUT_KEY_PENDING",
+    "REJECT_PATH_A_USE_FORWARD_ONLY",
+    "DEFER_DECISION"
+  ],
+  "p15_allowed": false,
+  "p15_reason": "CEO decision is DEFER_DECISION. Both PATH A and PATH B remain blocked.",
+  "next_owner": "CEO",
+  "annotation": "paper_only=true。P14-B CEO Decision Watch。不代替 CEO 選路。不宣稱任何策略具獲利能力。"
+}

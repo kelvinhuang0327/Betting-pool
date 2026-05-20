@@ -77,3 +77,4 @@ telegram_bot_token.txt
 # ── Misc ──────────────────────────────────────────────────
 *.log
 tmp/
+.claude/

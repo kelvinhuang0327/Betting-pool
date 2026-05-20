@@ -28,10 +28,7 @@ Integration:
 """
 from __future__ import annotations
 
-import math
-import statistics
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
 
 
 # ─── Configuration ──────────────────────────────────────────────────────────
@@ -57,7 +54,7 @@ class CLBiasReport:
     sample_count: int = 0
     recent_mae: float = 0.0           # mean absolute error (last 10)
     drift_direction: str = "NEUTRAL"  # HOME / AWAY / NEUTRAL
-    details: Dict[str, str] = field(default_factory=dict)
+    details: dict[str, str] = field(default_factory=dict)
 
 
 # ─── Main Class ─────────────────────────────────────────────────────────────
@@ -87,8 +84,8 @@ class ClosingLineBiasCorrector:
 
         # State
         self.bias_estimate: float = 0.0
-        self.errors: List[float] = []
-        self.calibration_pairs: List[Tuple[float, float]] = []
+        self.errors: list[float] = []
+        self.calibration_pairs: list[tuple[float, float]] = []
         self._n_positive: int = 0
         self._n_negative: int = 0
 
@@ -198,7 +195,7 @@ class ClosingLineBiasCorrector:
 
     # ── Metrics ────────────────────────────────────────────────
 
-    def convergence_metrics(self) -> Dict:
+    def convergence_metrics(self) -> dict:
         """Track bias convergence over time."""
         if len(self.errors) < 10:
             return {"converged": False, "samples": len(self.errors)}
@@ -273,8 +270,9 @@ if __name__ == "__main__":
     # Test 2: Unbiased model
     print("\n━━━ Test 2: Unbiased model ━━━")
     c2 = ClosingLineBiasCorrector(min_samples=5)
-    import random; random.seed(42)
-    for i in range(20):
+    import random
+    random.seed(42)
+    for _ in range(20):
         cl = 0.50 + random.gauss(0, 0.02)
         c2.record(predicted_cl=cl, actual_cl=cl + random.gauss(0, 0.005))
 
@@ -290,7 +288,7 @@ if __name__ == "__main__":
     # Test 3: Large bias → staleness alert
     print("\n━━━ Test 3: Large bias → staleness ━━━")
     c3 = ClosingLineBiasCorrector(alpha=0.3, min_samples=3)
-    for i in range(10):
+    for _ in range(10):
         c3.record(predicted_cl=0.60, actual_cl=0.50)  # 10% systematic bias
 
     r3 = c3.correct_edge(raw_edge=0.05)
@@ -310,5 +308,5 @@ if __name__ == "__main__":
     print("  ✅ PASSED")
 
     print(f"\n{'=' * 60}")
-    print(f"✅ All 4 smoke tests passed")
+    print("✅ All 4 smoke tests passed")
     print(f"{'=' * 60}")

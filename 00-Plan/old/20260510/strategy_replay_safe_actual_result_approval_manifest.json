@@ -1,0 +1,110 @@
+{
+  "manifest_version": "p19-1.0",
+  "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+  "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+  "timestamp": "2026-05-10T00:00:00Z",
+  "entries": [
+    {
+      "candidate_id": "p18-safe-actual-result-row-3",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-12",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-16",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-21",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-27",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-28",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-34",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-35",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-41",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-42",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-49",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-50",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-56",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-57",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-63",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-64",
+      "approved_fields": [
+        "actual_result"
+      ]
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-65",
+      "approved_fields": [
+        "actual_result"
+      ]
+    }
+  ]
+}

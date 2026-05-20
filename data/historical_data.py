@@ -1,9 +1,10 @@
 """
 WBC Historical Match Database.
-Contains results and opening odds for 2023 WBC & 2024 Premier12 matches.
-Includes Money Line (ML) and Run Line (RL) odds.
+Contains historical game results for 2023 WBC & 2024 Premier12.
+Only result fields are treated as verified real data by default.
 """
 from typing import List, Dict
+from data.historical_record_sanitizer import sanitize_historical_records
 
 HISTORICAL_WBC_2023: List[Dict] = [
     {
@@ -168,3 +169,21 @@ HISTORICAL_2025_SEASON: List[Dict] = [
         "date": "2025-10-28"
     }
 ]
+
+HISTORICAL_WBC_2023 = sanitize_historical_records(
+    HISTORICAL_WBC_2023,
+    result_source="official_boxscore",
+    tournament="WBC_2023",
+)
+
+HISTORICAL_PREMIER12_2024 = sanitize_historical_records(
+    HISTORICAL_PREMIER12_2024,
+    result_source="official_boxscore",
+    tournament="PREMIER12_2024",
+)
+
+HISTORICAL_2025_SEASON = sanitize_historical_records(
+    HISTORICAL_2025_SEASON,
+    result_source="official_boxscore",
+    tournament="MIXED_2025",
+)

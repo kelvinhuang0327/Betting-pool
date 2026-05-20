@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "run_date": "2026-04-29",
+  "input_paths": {
+    "odds_snapshots": "data/derived/odds_snapshots_2026-04-29.jsonl",
+    "match_identity_bridge": "data/derived/match_identity_bridge_2026-04-29.jsonl",
+    "team_alias_map": "data/derived/team_alias_map_2026-04-29.csv"
+  },
+  "odds_records": 28941,
+  "selection_keys": 5963,
+  "opening_closing_pairs": 4356,
+  "allowed_market_records": {
+    "ML": 1057,
+    "RL": 1310,
+    "OU": 3596
+  },
+  "excluded_market_records": 2148,
+  "bridge_ready_records": 0,
+  "domain_mismatch_records": 5757,
+  "gate_counts": {
+    "G1_OPENING_EXISTS": {
+      "pass": 4356,
+      "fail": 1607
+    },
+    "G2_CLOSING_EXISTS": {
+      "pass": 4356,
+      "fail": 1607
+    },
+    "G3_MARKET_ALLOWED": {
+      "pass": 5963,
+      "fail": 0
+    },
+    "G4_POST_MATCH_EXCLUDED": {
+      "pass": 5963,
+      "fail": 0
+    },
+    "G5_SNAPSHOT_ORDER_VALID": {
+      "pass": 3876,
+      "fail": 1607,
+      "warn": 480
+    },
+    "G6_IMPLIED_PROBABILITY_VALID": {
+      "pass": 4356,
+      "fail": 1607
+    },
+    "G7_BRIDGE_STATUS_READY": {
+      "pass": 0,
+      "fail": 5963
+    },
+    "G8_QUALITY_FLAGS_ACCEPTABLE": {
+      "pass": 4356,
+      "fail": 0,
+      "warn": 1607
+    }
+  },
+  "aggregate_gate_results": {
+    "A1_sample_sufficiency": {
+      "pass": false,
+      "current": 0,
+      "target": 200,
+      "note": "PROVISIONAL_THRESHOLD_REQUIRES_RECALIBRATION"
+    },
+    "A2_league_coverage": {
+      "pass": false,
+      "bridge_ready_leagues": []
+    },
+    "A3_market_coverage": {
+      "pass": true,
+      "markets_present": [
+        "ML",
+        "OU",
+        "RL"
+      ]
+    }
+  },
+  "readiness_decision": "NOT_READY_DOMAIN_MISMATCH",
+  "recommended_next_step": "Phase 6H prediction registry extension design for MLB/KBO/NPB canonical matches"
+}

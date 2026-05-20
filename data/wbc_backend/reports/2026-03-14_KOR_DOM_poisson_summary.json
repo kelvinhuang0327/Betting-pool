@@ -1,0 +1,40 @@
+{
+  "date_tpe": "2026-03-14",
+  "starters": {
+    "game_pk": 788095,
+    "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788095/feed/live",
+    "away_sp": {
+      "name": "Hyun Jin Ryu",
+      "team": "KOR",
+      "stats_source": "local_catalog",
+      "era": 4.2,
+      "fip": 4.0,
+      "whip": 1.28,
+      "k_per_9": 7.2,
+      "bb_per_9": 2.0,
+      "fastball_velo": 89.5
+    },
+    "home_sp": {
+      "name": "Cristopher Sánchez",
+      "team": "DOM",
+      "stats_source": "https://statsapi.mlb.com/api/v1/people/650911/stats?stats=season&group=pitching&season=2025",
+      "era": 2.5,
+      "whip": 1.06,
+      "k_per_9": 9.45,
+      "bb_per_9": 1.96
+    }
+  },
+  "base_lambda_a": 3.8,
+  "base_lambda_b": 8.0,
+  "lambda_a": 3.5976823,
+  "lambda_b": 8.03432,
+  "a_win_9": 0.07417877129174352,
+  "b_win_9": 0.8711204109858168,
+  "tie_9": 0.05470081772243953,
+  "a_full": 0.10152918015296329,
+  "b_full": 0.8984708198470366,
+  "special_matchup_weight": "無資料",
+  "odds": "無資料",
+  "model_artifacts_has_team_weights": false,
+  "matrix_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/2026-03-14_KOR_DOM_poisson_matrix.csv"
+}

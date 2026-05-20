@@ -1,0 +1,1021 @@
+{
+  "phase55_version": "phase55_sp_vs_bullpen_diagnosis_v1",
+  "run_timestamp": "2026-05-05T09:58:10.263551+00:00",
+  "audit_hash": "b96f6b6f2cd779f2",
+  "phase54_failure_count": 6,
+  "phase54_failure_segments": [
+    "odds_bucket:heavy_favorite",
+    "odds_bucket:mid",
+    "disagreement:low",
+    "month:2025-04",
+    "month:2025-06",
+    "month:2025-08"
+  ],
+  "functional_form_results": [
+    {
+      "form_name": "tanh_current",
+      "adjusted_rows": 1347,
+      "adjusted_rate": 0.6652,
+      "mean_abs_adjustment": 0.0001791,
+      "max_abs_adjustment": 0.00053722,
+      "overall_bss": 0.021217,
+      "overall_ece": 0.029817,
+      "heavy_fav_ece": 0.089202,
+      "high_conf_bss": 0.097218,
+      "month_2025_04_bss": 0.113307,
+      "failure_segment_count": 8,
+      "segment_details": [
+        {
+          "segment_key": "confidence:high_confidence",
+          "n": 531,
+          "model_bss": 0.097218,
+          "model_ece": 0.017264,
+          "market_bss": 0.113082,
+          "market_ece": 0.022845,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:low_confidence",
+          "n": 849,
+          "model_bss": -4.5e-05,
+          "model_ece": 0.020466,
+          "market_bss": -0.002454,
+          "market_ece": 0.025722,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:mid_confidence",
+          "n": 645,
+          "model_bss": -0.013366,
+          "model_ece": 0.05246,
+          "market_bss": -0.011458,
+          "market_ece": 0.052872,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:high",
+          "n": 191,
+          "model_bss": -0.018738,
+          "model_ece": 0.070935,
+          "market_bss": 0.019842,
+          "market_ece": 0.067395,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:low",
+          "n": 1179,
+          "model_bss": 0.034004,
+          "model_ece": 0.029495,
+          "market_bss": 0.034248,
+          "market_ece": 0.017804,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:medium",
+          "n": 655,
+          "model_bss": 0.009851,
+          "model_ece": 0.042873,
+          "market_bss": 0.009777,
+          "market_ece": 0.049466,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-04",
+          "n": 53,
+          "model_bss": 0.113307,
+          "model_ece": 0.199191,
+          "market_bss": 0.17025,
+          "market_ece": 0.127381,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-05",
+          "n": 411,
+          "model_bss": 0.031932,
+          "model_ece": 0.042149,
+          "market_bss": 0.024378,
+          "market_ece": 0.054465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-06",
+          "n": 397,
+          "model_bss": -0.005316,
+          "model_ece": 0.078969,
+          "market_bss": 0.02169,
+          "market_ece": 0.03172,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-07",
+          "n": 369,
+          "model_bss": 0.007735,
+          "model_ece": 0.032225,
+          "market_bss": -0.004918,
+          "market_ece": 0.054325,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-08",
+          "n": 421,
+          "model_bss": 0.02091,
+          "model_ece": 0.041784,
+          "market_bss": 0.02306,
+          "market_ece": 0.019201,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-09",
+          "n": 374,
+          "model_bss": 0.038202,
+          "model_ece": 0.047702,
+          "market_bss": 0.040173,
+          "market_ece": 0.050465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "odds_bucket:heavy_favorite",
+          "n": 211,
+          "model_bss": 0.198884,
+          "model_ece": 0.089202,
+          "market_bss": 0.211259,
+          "market_ece": 0.032987,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:mid",
+          "n": 1407,
+          "model_bss": -0.006942,
+          "model_ece": 0.044603,
+          "market_bss": -0.00527,
+          "market_ece": 0.033603,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:underdog",
+          "n": 407,
+          "model_bss": 0.026454,
+          "model_ece": 0.03004,
+          "market_bss": 0.032953,
+          "market_ece": 0.02483,
+          "is_failure": false
+        },
+        {
+          "segment_key": "overall",
+          "n": 2025,
+          "model_bss": 0.021217,
+          "model_ece": 0.029817,
+          "market_bss": 0.024974,
+          "market_ece": 0.030111,
+          "is_failure": false
+        }
+      ],
+      "diagnostic_only": true,
+      "candidate_patch_created": false,
+      "production_modified": false
+    },
+    {
+      "form_name": "tanh_stronger",
+      "adjusted_rows": 1347,
+      "adjusted_rate": 0.6652,
+      "mean_abs_adjustment": 0.00035821,
+      "max_abs_adjustment": 0.00107445,
+      "overall_bss": 0.021255,
+      "overall_ece": 0.030217,
+      "heavy_fav_ece": 0.092915,
+      "high_conf_bss": 0.0973,
+      "month_2025_04_bss": 0.113475,
+      "failure_segment_count": 8,
+      "segment_details": [
+        {
+          "segment_key": "confidence:high_confidence",
+          "n": 531,
+          "model_bss": 0.0973,
+          "model_ece": 0.018737,
+          "market_bss": 0.113082,
+          "market_ece": 0.022845,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:low_confidence",
+          "n": 848,
+          "model_bss": -0.000225,
+          "model_ece": 0.021028,
+          "market_bss": -0.002692,
+          "market_ece": 0.02628,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:mid_confidence",
+          "n": 646,
+          "model_bss": -0.013055,
+          "model_ece": 0.051715,
+          "market_bss": -0.011132,
+          "market_ece": 0.052097,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:high",
+          "n": 190,
+          "model_bss": -0.01989,
+          "model_ece": 0.073616,
+          "market_bss": 0.020884,
+          "market_ece": 0.064894,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:low",
+          "n": 1179,
+          "model_bss": 0.03434,
+          "model_ece": 0.030859,
+          "market_bss": 0.034508,
+          "market_ece": 0.016912,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:medium",
+          "n": 656,
+          "model_bss": 0.009656,
+          "model_ece": 0.042276,
+          "market_bss": 0.009024,
+          "market_ece": 0.051821,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-04",
+          "n": 53,
+          "model_bss": 0.113475,
+          "model_ece": 0.19916,
+          "market_bss": 0.17025,
+          "market_ece": 0.127381,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-05",
+          "n": 411,
+          "model_bss": 0.031955,
+          "model_ece": 0.042132,
+          "market_bss": 0.024378,
+          "market_ece": 0.054465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-06",
+          "n": 397,
+          "model_bss": -0.005241,
+          "model_ece": 0.078988,
+          "market_bss": 0.02169,
+          "market_ece": 0.03172,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-07",
+          "n": 369,
+          "model_bss": 0.007814,
+          "model_ece": 0.033871,
+          "market_bss": -0.004918,
+          "market_ece": 0.054325,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-08",
+          "n": 421,
+          "model_bss": 0.020897,
+          "model_ece": 0.041787,
+          "market_bss": 0.02306,
+          "market_ece": 0.019201,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-09",
+          "n": 374,
+          "model_bss": 0.038221,
+          "model_ece": 0.047731,
+          "market_bss": 0.040173,
+          "market_ece": 0.050465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "odds_bucket:heavy_favorite",
+          "n": 211,
+          "model_bss": 0.199029,
+          "model_ece": 0.092915,
+          "market_bss": 0.211259,
+          "market_ece": 0.032987,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:mid",
+          "n": 1407,
+          "model_bss": -0.00692,
+          "model_ece": 0.044617,
+          "market_bss": -0.00527,
+          "market_ece": 0.033603,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:underdog",
+          "n": 407,
+          "model_bss": 0.026494,
+          "model_ece": 0.029978,
+          "market_bss": 0.032953,
+          "market_ece": 0.02483,
+          "is_failure": false
+        },
+        {
+          "segment_key": "overall",
+          "n": 2025,
+          "model_bss": 0.021255,
+          "model_ece": 0.030217,
+          "market_bss": 0.024974,
+          "market_ece": 0.030111,
+          "is_failure": false
+        }
+      ],
+      "diagnostic_only": true,
+      "candidate_patch_created": false,
+      "production_modified": false
+    },
+    {
+      "form_name": "linear_capped",
+      "adjusted_rows": 1347,
+      "adjusted_rate": 0.6652,
+      "mean_abs_adjustment": 0.00025536,
+      "max_abs_adjustment": 0.0009,
+      "overall_bss": 0.021235,
+      "overall_ece": 0.029819,
+      "heavy_fav_ece": 0.089163,
+      "high_conf_bss": 0.097258,
+      "month_2025_04_bss": 0.11338,
+      "failure_segment_count": 8,
+      "segment_details": [
+        {
+          "segment_key": "confidence:high_confidence",
+          "n": 531,
+          "model_bss": 0.097258,
+          "model_ece": 0.017248,
+          "market_bss": 0.113082,
+          "market_ece": 0.022845,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:low_confidence",
+          "n": 849,
+          "model_bss": -2.5e-05,
+          "model_ece": 0.020469,
+          "market_bss": -0.002454,
+          "market_ece": 0.025722,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:mid_confidence",
+          "n": 645,
+          "model_bss": -0.013367,
+          "model_ece": 0.052475,
+          "market_bss": -0.011458,
+          "market_ece": 0.052872,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:high",
+          "n": 191,
+          "model_bss": -0.018693,
+          "model_ece": 0.070923,
+          "market_bss": 0.019842,
+          "market_ece": 0.067395,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:low",
+          "n": 1179,
+          "model_bss": 0.034312,
+          "model_ece": 0.030468,
+          "market_bss": 0.034508,
+          "market_ece": 0.016912,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:medium",
+          "n": 655,
+          "model_bss": 0.00934,
+          "model_ece": 0.043001,
+          "market_bss": 0.00931,
+          "market_ece": 0.051071,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-04",
+          "n": 53,
+          "model_bss": 0.11338,
+          "model_ece": 0.199179,
+          "market_bss": 0.17025,
+          "market_ece": 0.127381,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-05",
+          "n": 411,
+          "model_bss": 0.031945,
+          "model_ece": 0.04214,
+          "market_bss": 0.024378,
+          "market_ece": 0.054465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-06",
+          "n": 397,
+          "model_bss": -0.005279,
+          "model_ece": 0.078978,
+          "market_bss": 0.02169,
+          "market_ece": 0.03172,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-07",
+          "n": 369,
+          "model_bss": 0.007771,
+          "model_ece": 0.032234,
+          "market_bss": -0.004918,
+          "market_ece": 0.054325,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-08",
+          "n": 421,
+          "model_bss": 0.020904,
+          "model_ece": 0.041786,
+          "market_bss": 0.02306,
+          "market_ece": 0.019201,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-09",
+          "n": 374,
+          "model_bss": 0.038211,
+          "model_ece": 0.047715,
+          "market_bss": 0.040173,
+          "market_ece": 0.050465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "odds_bucket:heavy_favorite",
+          "n": 211,
+          "model_bss": 0.198961,
+          "model_ece": 0.089163,
+          "market_bss": 0.211259,
+          "market_ece": 0.032987,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:mid",
+          "n": 1407,
+          "model_bss": -0.006933,
+          "model_ece": 0.044609,
+          "market_bss": -0.00527,
+          "market_ece": 0.033603,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:underdog",
+          "n": 407,
+          "model_bss": 0.026473,
+          "model_ece": 0.030011,
+          "market_bss": 0.032953,
+          "market_ece": 0.02483,
+          "is_failure": false
+        },
+        {
+          "segment_key": "overall",
+          "n": 2025,
+          "model_bss": 0.021235,
+          "model_ece": 0.029819,
+          "market_bss": 0.024974,
+          "market_ece": 0.030111,
+          "is_failure": false
+        }
+      ],
+      "diagnostic_only": true,
+      "candidate_patch_created": false,
+      "production_modified": false
+    },
+    {
+      "form_name": "sign_only",
+      "adjusted_rows": 217,
+      "adjusted_rate": 0.1072,
+      "mean_abs_adjustment": 0.001,
+      "max_abs_adjustment": 0.001,
+      "overall_bss": 0.021228,
+      "overall_ece": 0.03101,
+      "heavy_fav_ece": 0.092947,
+      "high_conf_bss": 0.097234,
+      "month_2025_04_bss": 0.113446,
+      "failure_segment_count": 8,
+      "segment_details": [
+        {
+          "segment_key": "confidence:high_confidence",
+          "n": 531,
+          "model_bss": 0.097234,
+          "model_ece": 0.018756,
+          "market_bss": 0.113082,
+          "market_ece": 0.022845,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:low_confidence",
+          "n": 849,
+          "model_bss": -1.2e-05,
+          "model_ece": 0.020479,
+          "market_bss": -0.002454,
+          "market_ece": 0.025722,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:mid_confidence",
+          "n": 645,
+          "model_bss": -0.013387,
+          "model_ece": 0.054959,
+          "market_bss": -0.011458,
+          "market_ece": 0.052872,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:high",
+          "n": 192,
+          "model_bss": -0.021661,
+          "model_ece": 0.078613,
+          "market_bss": 0.018655,
+          "market_ece": 0.065384,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:low",
+          "n": 1180,
+          "model_bss": 0.034662,
+          "model_ece": 0.032514,
+          "market_bss": 0.034969,
+          "market_ece": 0.016623,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:medium",
+          "n": 653,
+          "model_bss": 0.009563,
+          "model_ece": 0.041353,
+          "market_bss": 0.00877,
+          "market_ece": 0.052391,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-04",
+          "n": 53,
+          "model_bss": 0.113446,
+          "model_ece": 0.199202,
+          "market_bss": 0.17025,
+          "market_ece": 0.127381,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-05",
+          "n": 411,
+          "model_bss": 0.031915,
+          "model_ece": 0.042132,
+          "market_bss": 0.024378,
+          "market_ece": 0.054465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-06",
+          "n": 397,
+          "model_bss": -0.005336,
+          "model_ece": 0.078979,
+          "market_bss": 0.02169,
+          "market_ece": 0.03172,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-07",
+          "n": 369,
+          "model_bss": 0.007788,
+          "model_ece": 0.032219,
+          "market_bss": -0.004918,
+          "market_ece": 0.054325,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-08",
+          "n": 421,
+          "model_bss": 0.020902,
+          "model_ece": 0.041787,
+          "market_bss": 0.02306,
+          "market_ece": 0.019201,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-09",
+          "n": 374,
+          "model_bss": 0.03824,
+          "model_ece": 0.047719,
+          "market_bss": 0.040173,
+          "market_ece": 0.050465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "odds_bucket:heavy_favorite",
+          "n": 211,
+          "model_bss": 0.199001,
+          "model_ece": 0.092947,
+          "market_bss": 0.211259,
+          "market_ece": 0.032987,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:mid",
+          "n": 1407,
+          "model_bss": -0.006955,
+          "model_ece": 0.044606,
+          "market_bss": -0.00527,
+          "market_ece": 0.033603,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:underdog",
+          "n": 407,
+          "model_bss": 0.026493,
+          "model_ece": 0.030002,
+          "market_bss": 0.032953,
+          "market_ece": 0.02483,
+          "is_failure": false
+        },
+        {
+          "segment_key": "overall",
+          "n": 2025,
+          "model_bss": 0.021228,
+          "model_ece": 0.03101,
+          "market_bss": 0.024974,
+          "market_ece": 0.030111,
+          "is_failure": false
+        }
+      ],
+      "diagnostic_only": true,
+      "candidate_patch_created": false,
+      "production_modified": false
+    },
+    {
+      "form_name": "bucketed_delta",
+      "adjusted_rows": 535,
+      "adjusted_rate": 0.2642,
+      "mean_abs_adjustment": 0.00108972,
+      "max_abs_adjustment": 0.003,
+      "overall_bss": 0.021349,
+      "overall_ece": 0.031203,
+      "heavy_fav_ece": 0.089969,
+      "high_conf_bss": 0.096456,
+      "month_2025_04_bss": 0.113129,
+      "failure_segment_count": 8,
+      "segment_details": [
+        {
+          "segment_key": "confidence:high_confidence",
+          "n": 532,
+          "model_bss": 0.096456,
+          "model_ece": 0.018679,
+          "market_bss": 0.113244,
+          "market_ece": 0.021961,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:low_confidence",
+          "n": 849,
+          "model_bss": -0.000392,
+          "model_ece": 0.022822,
+          "market_bss": -0.002639,
+          "market_ece": 0.025673,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:mid_confidence",
+          "n": 644,
+          "model_bss": -0.012033,
+          "model_ece": 0.052597,
+          "market_bss": -0.011542,
+          "market_ece": 0.053714,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:high",
+          "n": 187,
+          "model_bss": -0.023498,
+          "model_ece": 0.072376,
+          "market_bss": 0.02063,
+          "market_ece": 0.064611,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:low",
+          "n": 1179,
+          "model_bss": 0.035174,
+          "model_ece": 0.033473,
+          "market_bss": 0.035473,
+          "market_ece": 0.016232,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:medium",
+          "n": 659,
+          "model_bss": 0.009342,
+          "model_ece": 0.043164,
+          "market_bss": 0.007422,
+          "market_ece": 0.054946,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-04",
+          "n": 53,
+          "model_bss": 0.113129,
+          "model_ece": 0.199183,
+          "market_bss": 0.17025,
+          "market_ece": 0.127381,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-05",
+          "n": 411,
+          "model_bss": 0.032056,
+          "model_ece": 0.039652,
+          "market_bss": 0.024378,
+          "market_ece": 0.054465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-06",
+          "n": 397,
+          "model_bss": -0.005021,
+          "model_ece": 0.079022,
+          "market_bss": 0.02169,
+          "market_ece": 0.03172,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-07",
+          "n": 369,
+          "model_bss": 0.007862,
+          "model_ece": 0.033899,
+          "market_bss": -0.004918,
+          "market_ece": 0.054325,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-08",
+          "n": 421,
+          "model_bss": 0.020964,
+          "model_ece": 0.041777,
+          "market_bss": 0.02306,
+          "market_ece": 0.019201,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-09",
+          "n": 374,
+          "model_bss": 0.038311,
+          "model_ece": 0.047748,
+          "market_bss": 0.040173,
+          "market_ece": 0.050465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "odds_bucket:heavy_favorite",
+          "n": 211,
+          "model_bss": 0.199339,
+          "model_ece": 0.089969,
+          "market_bss": 0.211259,
+          "market_ece": 0.032987,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:mid",
+          "n": 1407,
+          "model_bss": -0.006855,
+          "model_ece": 0.045335,
+          "market_bss": -0.00527,
+          "market_ece": 0.033603,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:underdog",
+          "n": 407,
+          "model_bss": 0.026577,
+          "model_ece": 0.029919,
+          "market_bss": 0.032953,
+          "market_ece": 0.02483,
+          "is_failure": false
+        },
+        {
+          "segment_key": "overall",
+          "n": 2025,
+          "model_bss": 0.021349,
+          "model_ece": 0.031203,
+          "market_bss": 0.024974,
+          "market_ece": 0.030111,
+          "is_failure": false
+        }
+      ],
+      "diagnostic_only": true,
+      "candidate_patch_created": false,
+      "production_modified": false
+    },
+    {
+      "form_name": "shrink_to_market",
+      "adjusted_rows": 1347,
+      "adjusted_rate": 0.6652,
+      "mean_abs_adjustment": 0.00017074,
+      "max_abs_adjustment": 0.00053722,
+      "overall_bss": 0.021213,
+      "overall_ece": 0.029818,
+      "heavy_fav_ece": 0.089222,
+      "high_conf_bss": 0.097204,
+      "month_2025_04_bss": 0.113293,
+      "failure_segment_count": 8,
+      "segment_details": [
+        {
+          "segment_key": "confidence:high_confidence",
+          "n": 531,
+          "model_bss": 0.097204,
+          "model_ece": 0.017269,
+          "market_bss": 0.113082,
+          "market_ece": 0.022845,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:low_confidence",
+          "n": 849,
+          "model_bss": -4.5e-05,
+          "model_ece": 0.020466,
+          "market_bss": -0.002454,
+          "market_ece": 0.025722,
+          "is_failure": false
+        },
+        {
+          "segment_key": "confidence:mid_confidence",
+          "n": 645,
+          "model_bss": -0.013366,
+          "model_ece": 0.05246,
+          "market_bss": -0.011458,
+          "market_ece": 0.052872,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:high",
+          "n": 191,
+          "model_bss": -0.018733,
+          "model_ece": 0.070937,
+          "market_bss": 0.019842,
+          "market_ece": 0.067395,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:low",
+          "n": 1179,
+          "model_bss": 0.034,
+          "model_ece": 0.0295,
+          "market_bss": 0.034248,
+          "market_ece": 0.017804,
+          "is_failure": true
+        },
+        {
+          "segment_key": "disagreement:medium",
+          "n": 655,
+          "model_bss": 0.009845,
+          "model_ece": 0.042871,
+          "market_bss": 0.009777,
+          "market_ece": 0.049466,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-04",
+          "n": 53,
+          "model_bss": 0.113293,
+          "model_ece": 0.199196,
+          "market_bss": 0.17025,
+          "market_ece": 0.127381,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-05",
+          "n": 411,
+          "model_bss": 0.031928,
+          "model_ece": 0.042156,
+          "market_bss": 0.024378,
+          "market_ece": 0.054465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-06",
+          "n": 397,
+          "model_bss": -0.005315,
+          "model_ece": 0.078963,
+          "market_bss": 0.02169,
+          "market_ece": 0.03172,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-07",
+          "n": 369,
+          "model_bss": 0.007732,
+          "model_ece": 0.032225,
+          "market_bss": -0.004918,
+          "market_ece": 0.054325,
+          "is_failure": false
+        },
+        {
+          "segment_key": "month:2025-08",
+          "n": 421,
+          "model_bss": 0.020907,
+          "model_ece": 0.041781,
+          "market_bss": 0.02306,
+          "market_ece": 0.019201,
+          "is_failure": true
+        },
+        {
+          "segment_key": "month:2025-09",
+          "n": 374,
+          "model_bss": 0.038193,
+          "model_ece": 0.047705,
+          "market_bss": 0.040173,
+          "market_ece": 0.050465,
+          "is_failure": false
+        },
+        {
+          "segment_key": "odds_bucket:heavy_favorite",
+          "n": 211,
+          "model_bss": 0.198843,
+          "model_ece": 0.089222,
+          "market_bss": 0.211259,
+          "market_ece": 0.032987,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:mid",
+          "n": 1407,
+          "model_bss": -0.00694,
+          "model_ece": 0.044603,
+          "market_bss": -0.00527,
+          "market_ece": 0.033603,
+          "is_failure": true
+        },
+        {
+          "segment_key": "odds_bucket:underdog",
+          "n": 407,
+          "model_bss": 0.026451,
+          "model_ece": 0.030036,
+          "market_bss": 0.032953,
+          "market_ece": 0.02483,
+          "is_failure": false
+        },
+        {
+          "segment_key": "overall",
+          "n": 2025,
+          "model_bss": 0.021213,
+          "model_ece": 0.029818,
+          "market_bss": 0.024974,
+          "market_ece": 0.030111,
+          "is_failure": false
+        }
+      ],
+      "diagnostic_only": true,
+      "candidate_patch_created": false,
+      "production_modified": false
+    }
+  ],
+  "best_form_name": "tanh_current",
+  "best_form_failure_count": 8,
+  "bullpen_diagnosis": {
+    "bullpen_missing_score": 0.6,
+    "evidence": [
+      "heavy_favorite segment failing: late-inning lead protection driven by bullpen leverage",
+      "Monthly failures (['month:2025-04', 'month:2025-06']): seasonal bullpen usage patterns likely differ",
+      "No SP functional form meaningfully reduces failure segments or fixes heavy_favorite/high_confidence: structural feature gap likely"
+    ],
+    "recommended_features": [
+      "bullpen_fatigue_3d",
+      "bullpen_fatigue_7d",
+      "reliever_back_to_back_count",
+      "bullpen_recent_era_proxy",
+      "late_game_leverage_usage_proxy"
+    ],
+    "failure_pattern": "HEAVY_FAVORITE_CONCENTRATED",
+    "bullpen_feature_likely_missing": true
+  },
+  "conclusion": "BULLPEN_FEATURE_INVESTIGATION",
+  "conclusion_rationale": "bullpen_missing_score=0.6000 >= 0.6; failure_pattern=HEAVY_FAVORITE_CONCENTRATED; no SP form resolves heavy_favorite/high_confidence failures but overall BSS can improve. Bullpen features recommended.",
+  "recommended_phase56_tasks": [
+    "Phase 56A: Investigate and prototype: bullpen_fatigue_3d, bullpen_fatigue_7d, reliever_back_to_back_count, bullpen_recent_era_proxy, late_game_leverage_usage_proxy",
+    "Phase 56B: Design bullpen fatigue proxy from MLB historical relief pitcher usage data",
+    "Phase 56C: Build phase56_bullpen_feature_builder.py",
+    "Phase 56D: Backfill bullpen features for full 2025 MLB season (2,025 games)",
+    "Phase 56E: Run Phase43/44/45 audit with bullpen features injected",
+    "Phase 56F: Verify heavy_favorite ECE improves with bullpen features",
+    "Phase 56G: If significant → write Phase57 candidate patch blueprint"
+  ],
+  "candidate_patch_created": false,
+  "production_modified": false,
+  "diagnostic_only": true
+}

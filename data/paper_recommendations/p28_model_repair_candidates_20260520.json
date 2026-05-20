@@ -1,0 +1,53 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "index_fallback_used": false,
+  "generated_at": "2026-05-20T05:00:36.506242+00:00",
+  "date": "2026-05-20",
+  "artifact": "P28_MODEL_REPAIR_CANDIDATES",
+  "baseline_brier": 0.24870309871543067,
+  "candidates": {
+    "A_temperature_scaling": {
+      "description": "Post-hoc calibration via temperature scaling (grid search T in [0.5, 3.0])",
+      "changes": "No model retraining; scales logit by optimal temperature T",
+      "walkforward_brier": 0.245535,
+      "delta": -0.003168,
+      "improvement_flag": "USEFUL_IMPROVEMENT",
+      "overfit_risk": false
+    },
+    "B_feature_expansion": {
+      "description": "Expand from 7 to 13 features using available CSV data",
+      "new_features": [
+        "F8: RL implied home probability (from RL Home odds)",
+        "F9: market conviction = |home_ml_p - 0.5|",
+        "F10: over implied probability (from Over odds)",
+        "F11: home team rolling win rate (in-window only)",
+        "F12: away team rolling win rate (in-window only)",
+        "F13: RL/ML probability differential"
+      ],
+      "walkforward_brier": 0.24559,
+      "delta": -0.003113,
+      "improvement_flag": "USEFUL_IMPROVEMENT",
+      "overfit_risk": false
+    },
+    "C_market_shrinkage": {
+      "description": "Blend model prediction with market baseline; optimize weight on inner val",
+      "changes": "w_model * p_model + (1-w_model) * p_market; w tuned per window",
+      "walkforward_brier": 0.245299,
+      "delta": -0.003404,
+      "improvement_flag": "USEFUL_IMPROVEMENT",
+      "overfit_risk": false
+    }
+  },
+  "best_candidate": "C_market_shrinkage",
+  "best_brier": 0.245299,
+  "best_delta": -0.003404,
+  "candidate_selection_rule": "Lowest walkforward Brier",
+  "clv_recheck_eligible": true
+}

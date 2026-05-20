@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import sys
-from dataclasses import asdict
 from pathlib import Path
-from typing import Dict, List, Tuple
 
 import pandas as pd
 
@@ -20,7 +18,7 @@ import data.wbc_pool_c as wbc_pool_c  # noqa: E402
 import data.wbc_pool_d as wbc_pool_d  # noqa: E402
 
 
-POOL_MODULES: List[Tuple[object, str, str]] = [
+POOL_MODULES: list[tuple[object, str, str]] = [
     (wbc_pool_a, "_TEAM_FACTORIES_A", "_POOL_A_SCHEDULE"),
     (wbc_pool_b, "_TEAM_FACTORIES_B", "_POOL_B_SCHEDULE"),
     (wbc_pool_c, "_TEAM_FACTORIES", "_POOL_C_SCHEDULE"),
@@ -28,8 +26,8 @@ POOL_MODULES: List[Tuple[object, str, str]] = [
 ]
 
 
-def _team_profile_rows() -> List[Dict[str, float]]:
-    rows: List[Dict[str, float]] = []
+def _team_profile_rows() -> list[dict[str, float]]:
+    rows: list[dict[str, float]] = []
     for mod, factories_name, _ in POOL_MODULES:
         factories = getattr(mod, factories_name)
         for code, factory in factories.items():
@@ -75,8 +73,8 @@ def _normalize_name(name: str) -> str:
     return "".join(ch for ch in name.lower() if ch.isalnum())
 
 
-def load_pitcher_profiles() -> Dict[str, Dict[str, Dict[str, float]]]:
-    profiles: Dict[str, Dict[str, Dict[str, float]]] = {}
+def load_pitcher_profiles() -> dict[str, dict[str, dict[str, float]]]:
+    profiles: dict[str, dict[str, dict[str, float]]] = {}
     for mod, factories_name, _ in POOL_MODULES:
         factories = getattr(mod, factories_name)
         for code, factory in factories.items():
@@ -112,8 +110,8 @@ def load_pitcher_profiles() -> Dict[str, Dict[str, Dict[str, float]]]:
     return profiles
 
 
-def load_game_odds() -> Dict[str, List[OddsLine]]:
-    output: Dict[str, List[OddsLine]] = {}
+def load_game_odds() -> dict[str, list[OddsLine]]:
+    output: dict[str, list[OddsLine]] = {}
     for mod, _, schedule_name in POOL_MODULES:
         for game in getattr(mod, schedule_name):
             odds_params = game.get("odds_params", {})

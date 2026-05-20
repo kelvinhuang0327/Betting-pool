@@ -1,0 +1,158 @@
+[
+  {
+    "variant_name": "all_features",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "bullpen",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "Baseline: all feature families enabled"
+  },
+  {
+    "variant_name": "recent_only",
+    "enabled_families": [
+      "recent_form",
+      "base_model"
+    ],
+    "description": "Only recent form features enabled"
+  },
+  {
+    "variant_name": "rest_only",
+    "enabled_families": [
+      "rest",
+      "base_model"
+    ],
+    "description": "Only rest days features enabled"
+  },
+  {
+    "variant_name": "bullpen_only",
+    "enabled_families": [
+      "bullpen",
+      "base_model"
+    ],
+    "description": "Only bullpen proxy features enabled"
+  },
+  {
+    "variant_name": "starter_only",
+    "enabled_families": [
+      "starter",
+      "base_model"
+    ],
+    "description": "Only starter ERA proxy features enabled"
+  },
+  {
+    "variant_name": "weather_only",
+    "enabled_families": [
+      "weather",
+      "base_model"
+    ],
+    "description": "Only weather features enabled (no logit contribution)"
+  },
+  {
+    "variant_name": "no_recent",
+    "enabled_families": [
+      "rest",
+      "bullpen",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except recent form"
+  },
+  {
+    "variant_name": "no_rest",
+    "enabled_families": [
+      "recent_form",
+      "bullpen",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except rest days"
+  },
+  {
+    "variant_name": "no_bullpen",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "starter",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except bullpen proxy"
+  },
+  {
+    "variant_name": "no_starter",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "bullpen",
+      "weather",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except starter ERA proxy"
+  },
+  {
+    "variant_name": "no_weather",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "bullpen",
+      "starter",
+      "market",
+      "base_model"
+    ],
+    "description": "All features except weather"
+  },
+  {
+    "variant_name": "no_context_features",
+    "enabled_families": [
+      "base_model",
+      "market"
+    ],
+    "description": "Base model + market only, all context features disabled"
+  },
+  {
+    "variant_name": "recent_plus_rest",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "base_model"
+    ],
+    "description": "Recent form + rest days only"
+  },
+  {
+    "variant_name": "starter_plus_bullpen",
+    "enabled_families": [
+      "starter",
+      "bullpen",
+      "base_model"
+    ],
+    "description": "Starter ERA + bullpen proxy only"
+  },
+  {
+    "variant_name": "recent_rest_starter",
+    "enabled_families": [
+      "recent_form",
+      "rest",
+      "starter",
+      "base_model"
+    ],
+    "description": "Recent form + rest + starter ERA (no bullpen, no weather)"
+  },
+  {
+    "variant_name": "market_or_base_only_baseline",
+    "enabled_families": [
+      "base_model"
+    ],
+    "description": "Pure base model only, no feature adjustments at all"
+  }
+]

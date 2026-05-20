@@ -1,0 +1,38 @@
+{
+  "task": "P13-C",
+  "title": "CEO Reminder Packet — Three-Option Decision",
+  "date": "2026-05-29T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "instruction": "CEO 須從以下三個選項中擇一裁決。系統不代替 CEO 做選擇。",
+  "current_classification": "P13_BLOCKED_MONITOR_ONLY",
+  "options": {
+    "OPTION_A": {
+      "label": "批准歷史 odds API（PATH A）",
+      "impact": "立即解鎖 1800 筆歷史賽局 odds 回填，CLV validation 可於約 2 天後就緒，P14 CLV gate 可啟動",
+      "unblock_condition": "CEO 建立 p11_ceo_odds_source_decision_20260527.json（內容 APPROVE_PATH_A_WITH_API_KEY）+ 提供有效 The Odds API key + 設定 ALLOW_SAMPLE_API_CALL=true",
+      "next_owner": "CTO",
+      "resulting_classification": "P13_READY_FOR_PATH_A_KEY_GATE"
+    },
+    "OPTION_B": {
+      "label": "拒絕歷史 API，僅走 2026 forward accumulation（PATH B）",
+      "impact": "系統繼續每日監控 TSL forward pairs。預計 60-90 天後達到 200 pairs @ 90% coverage，CLV gate 才可啟動。歷史 API 不會被呼叫。",
+      "unblock_condition": "CEO 建立決策檔案（REJECT_PATH_A_USE_FORWARD_ONLY），TSL forward 自動累積到 200 pairs @ ≥90%",
+      "next_owner": "Worker（daily monitor 繼續運行）",
+      "resulting_classification": "P13_BLOCKED_MONITOR_ONLY → 自動升級為 P13_READY_FOR_FORWARD_CLV_VALIDATION 當 pairs 達標"
+    },
+    "OPTION_C": {
+      "label": "繼續 defer，系統維持 blocked",
+      "impact": "P14 不得啟動。CLV / promotion 持續 blocked。Worker 僅做 daily monitor。無工程推進。",
+      "unblock_condition": "無。CEO 可於任意時間改選 A 或 B。",
+      "next_owner": "CEO",
+      "resulting_classification": "P13_BLOCKED_MONITOR_ONLY（持續）"
+    }
+  },
+  "current_active_option": "OPTION_C",
+  "p14_allowed": false,
+  "promotion_frozen": true,
+  "fixed_edge_5pct_champion_preserved": true,
+  "annotation": "paper_only=true。此為 P13-C CEO Reminder Packet。系統不代替 CEO 做決策。不宣稱任何策略具獲利能力。"
+}

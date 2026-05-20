@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Callable, Dict, Iterable, List, Sequence, Tuple
+from collections.abc import Callable, Sequence
 
 import numpy as np
 
@@ -11,8 +11,8 @@ def walk_forward_windows(
     train_size: int,
     test_size: int,
     step_size: int,
-) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
-    windows: List[Tuple[Tuple[int, int], Tuple[int, int]]] = []
+) -> list[tuple[tuple[int, int], tuple[int, int]]]:
+    windows: list[tuple[tuple[int, int], tuple[int, int]]] = []
     start = 0
     while start + train_size + test_size <= n_samples:
         train = (start, start + train_size)
@@ -25,11 +25,11 @@ def walk_forward_windows(
 def cross_year_validation_splits(
     years: Sequence[int],
     min_train_years: int = 2,
-) -> List[Tuple[List[int], List[int]]]:
+) -> list[tuple[list[int], list[int]]]:
     uniq = sorted(set(years))
     if len(uniq) <= min_train_years:
         return []
-    splits: List[Tuple[List[int], List[int]]] = []
+    splits: list[tuple[list[int], list[int]]] = []
     for idx in range(min_train_years, len(uniq)):
         train = uniq[:idx]
         test = [uniq[idx]]
@@ -42,7 +42,7 @@ def monte_carlo_season_simulation(
     horizon_days: int = 120,
     n_paths: int = 3000,
     seed: int = 42,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     rets = np.asarray(daily_returns, dtype=float)
     if rets.size == 0:
         raise ValueError("daily_returns cannot be empty")
@@ -67,12 +67,12 @@ def monte_carlo_season_simulation(
 
 
 def hyperparameter_search_protocol(
-    search_space: Dict[str, Tuple[float, float]],
+    search_space: dict[str, tuple[float, float]],
     n_trials: int,
     seed: int = 42,
-) -> List[Dict[str, float]]:
+) -> list[dict[str, float]]:
     rng = np.random.default_rng(seed)
-    trials: List[Dict[str, float]] = []
+    trials: list[dict[str, float]] = []
     for _ in range(max(1, n_trials)):
         params = {}
         for k, (lo, hi) in search_space.items():
@@ -86,9 +86,9 @@ def hyperparameter_search_protocol(
 def feature_ablation_testing(
     feature_names: Sequence[str],
     scorer: Callable[[Sequence[str]], float],
-) -> Dict[str, float]:
+) -> dict[str, float]:
     baseline = scorer(feature_names)
-    impacts: Dict[str, float] = {"baseline": float(baseline)}
+    impacts: dict[str, float] = {"baseline": float(baseline)}
     for feat in feature_names:
         reduced = [f for f in feature_names if f != feat]
         score = scorer(reduced)
@@ -96,7 +96,7 @@ def feature_ablation_testing(
     return impacts
 
 
-def edge_decay_analysis(edge_curve: Sequence[Tuple[float, float]]) -> Dict[str, float]:
+def edge_decay_analysis(edge_curve: Sequence[tuple[float, float]]) -> dict[str, float]:
     if not edge_curve:
         return {"half_life": 0.0, "initial_edge": 0.0, "terminal_edge": 0.0}
     ordered = sorted(edge_curve, key=lambda x: x[0])
@@ -114,12 +114,12 @@ def edge_decay_analysis(edge_curve: Sequence[Tuple[float, float]]) -> Dict[str, 
 
 @dataclass
 class CLVTracker:
-    records: List[Tuple[float, float, float]] = field(default_factory=list)
+    records: list[tuple[float, float, float]] = field(default_factory=list)
 
     def add(self, open_odds: float, close_odds: float, stake: float = 1.0) -> None:
         self.records.append((float(open_odds), float(close_odds), float(stake)))
 
-    def summary(self) -> Dict[str, float]:
+    def summary(self) -> dict[str, float]:
         if not self.records:
             return {"mean_clv": 0.0, "positive_rate": 0.0, "count": 0.0}
         clvs = np.asarray(
@@ -139,7 +139,7 @@ def calibration_monitoring(
     probabilities: Sequence[float],
     outcomes: Sequence[int],
     bins: int = 10,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     p = np.clip(np.asarray(probabilities, dtype=float), 1e-6, 1 - 1e-6)
     y = np.asarray(outcomes, dtype=float)
     if p.size != y.size:
@@ -205,7 +205,7 @@ def drift_detection(
     current: Sequence[float],
     psi_threshold: float = 0.20,
     ks_threshold: float = 0.10,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     ref = np.asarray(reference, dtype=float)
     cur = np.asarray(current, dtype=float)
     psi = population_stability_index(ref, cur)

@@ -1,0 +1,1566 @@
+{
+  "phase_version": "phase67_context_failure_attribution_v1",
+  "completion_marker": "PHASE_67_CONTEXT_FAILURE_ATTRIBUTION_VERIFIED",
+  "run_timestamp_utc": "2026-05-06T07:53:28.128196Z",
+  "candidate_patch_created": false,
+  "production_modified": false,
+  "alpha_modified": false,
+  "diagnostic_only": true,
+  "alpha": 0.4,
+  "phase66_gate_anchor": "MARKET_MICROSTRUCTURE_NOT_PROMISING",
+  "phase65_gate_anchor": "OVERFIT_RISK",
+  "phase64b_gate_anchor": "BULLPEN_GRANULAR_FEATURE_NOT_PROMISING",
+  "context_alignment": {
+    "n_predictions": 2025,
+    "n_gl_records": 2430,
+    "n_aligned": 2025,
+    "n_unaligned": 0,
+    "coverage": 1.0,
+    "coverage_sufficient": true,
+    "sample_audit_hash": "sha256:9496a64dca2a133088286c23deb6fa1eef299d578ec61a214eaefca4791af5bc"
+  },
+  "segment_n_all": 2025,
+  "segment_n_heavy_fav": 60,
+  "segment_n_high_conf": 10,
+  "segment_n_extreme_fav": 1,
+  "segment_n_phase45_failure": 170,
+  "all_metrics": {
+    "n": 2025,
+    "model_brier": 0.2447,
+    "market_brier": 0.2438,
+    "blend_brier": 0.2434,
+    "blend_bss_vs_market": 0.0014,
+    "model_bss_vs_market": -0.0039,
+    "fav_win_rate": 0.5506,
+    "win_rate": 0.5299,
+    "ece_blend": 0.0261
+  },
+  "heavy_fav_metrics": {
+    "n": 60,
+    "model_brier": 0.1792,
+    "market_brier": 0.1771,
+    "blend_brier": 0.1777,
+    "blend_bss_vs_market": -0.0033,
+    "model_bss_vs_market": -0.0119,
+    "fav_win_rate": 0.7667,
+    "win_rate": 0.65,
+    "ece_blend": 0.0526
+  },
+  "high_conf_metrics": {
+    "n": 10,
+    "model_brier": 0.0931,
+    "market_brier": 0.1239,
+    "blend_brier": 0.1043,
+    "blend_bss_vs_market": 0.1578,
+    "model_bss_vs_market": 0.2487,
+    "fav_win_rate": 0.9,
+    "win_rate": 0.5,
+    "ece_blend": 0.1284
+  },
+  "phase45_failure_metrics": {
+    "n": 170,
+    "model_brier": 0.4091,
+    "market_brier": 0.4135,
+    "blend_brier": 0.41,
+    "blend_bss_vs_market": 0.0085,
+    "model_bss_vs_market": 0.0105,
+    "fav_win_rate": 0.0,
+    "win_rate": 0.2059,
+    "ece_blend": 0.6395
+  },
+  "attribution_buckets": [
+    {
+      "dim": "home_rest_days_bucket",
+      "bucket_label": "b2b_0d",
+      "n": 1725,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1725,
+        "model_brier": 0.245,
+        "market_brier": 0.2434,
+        "blend_brier": 0.2435,
+        "blend_bss_vs_market": -0.0002,
+        "model_bss_vs_market": -0.0066,
+        "fav_win_rate": 0.5519,
+        "win_rate": 0.5316,
+        "ece_blend": 0.0225
+      },
+      "bootstrap": {
+        "n": 1725,
+        "n_boot": 1000,
+        "observed_delta": -0.0002,
+        "ci_lower": -0.0071,
+        "ci_upper": 0.0069,
+        "prob_positive": 0.462,
+        "significant": false
+      }
+    },
+    {
+      "dim": "home_rest_days_bucket",
+      "bucket_label": "rest_1d",
+      "n": 276,
+      "segment_name": "all",
+      "metrics": {
+        "n": 276,
+        "model_brier": 0.2421,
+        "market_brier": 0.244,
+        "blend_brier": 0.242,
+        "blend_bss_vs_market": 0.0082,
+        "model_bss_vs_market": 0.008,
+        "fav_win_rate": 0.5435,
+        "win_rate": 0.5181,
+        "ece_blend": 0.0783
+      },
+      "bootstrap": {
+        "n": 276,
+        "n_boot": 1000,
+        "observed_delta": 0.0082,
+        "ci_lower": -0.0085,
+        "ci_upper": 0.0254,
+        "prob_positive": 0.828,
+        "significant": false
+      }
+    },
+    {
+      "dim": "home_rest_days_bucket",
+      "bucket_label": "rest_2d",
+      "n": 9,
+      "segment_name": "all",
+      "metrics": {
+        "n": 9,
+        "model_brier": 0.2475,
+        "market_brier": 0.2586,
+        "blend_brier": 0.251,
+        "blend_bss_vs_market": 0.0295,
+        "model_bss_vs_market": 0.0431,
+        "fav_win_rate": 0.4444,
+        "win_rate": 0.3333,
+        "ece_blend": 0.1923
+      },
+      "bootstrap": {
+        "n": 9,
+        "n_boot": 1000,
+        "observed_delta": 0.0295,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "prob_positive": 0.5,
+        "significant": false
+      }
+    },
+    {
+      "dim": "home_rest_days_bucket",
+      "bucket_label": "rest_4plus",
+      "n": 15,
+      "segment_name": "all",
+      "metrics": {
+        "n": 15,
+        "model_brier": 0.2554,
+        "market_brier": 0.27,
+        "blend_brier": 0.2606,
+        "blend_bss_vs_market": 0.035,
+        "model_bss_vs_market": 0.0542,
+        "fav_win_rate": 0.6,
+        "win_rate": 0.6667,
+        "ece_blend": 0.2244
+      },
+      "bootstrap": {
+        "n": 15,
+        "n_boot": 1000,
+        "observed_delta": 0.035,
+        "ci_lower": -0.0263,
+        "ci_upper": 0.0902,
+        "prob_positive": 0.862,
+        "significant": false
+      }
+    },
+    {
+      "dim": "away_rest_days_bucket",
+      "bucket_label": "b2b_0d",
+      "n": 1746,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1746,
+        "model_brier": 0.2448,
+        "market_brier": 0.2432,
+        "blend_brier": 0.2432,
+        "blend_bss_vs_market": -0.0002,
+        "model_bss_vs_market": -0.0065,
+        "fav_win_rate": 0.5504,
+        "win_rate": 0.5326,
+        "ece_blend": 0.0256
+      },
+      "bootstrap": {
+        "n": 1746,
+        "n_boot": 1000,
+        "observed_delta": -0.0002,
+        "ci_lower": -0.0079,
+        "ci_upper": 0.0068,
+        "prob_positive": 0.444,
+        "significant": false
+      }
+    },
+    {
+      "dim": "away_rest_days_bucket",
+      "bucket_label": "rest_1d",
+      "n": 257,
+      "segment_name": "all",
+      "metrics": {
+        "n": 257,
+        "model_brier": 0.2435,
+        "market_brier": 0.2455,
+        "blend_brier": 0.2434,
+        "blend_bss_vs_market": 0.0084,
+        "model_bss_vs_market": 0.0082,
+        "fav_win_rate": 0.5525,
+        "win_rate": 0.5097,
+        "ece_blend": 0.0504
+      },
+      "bootstrap": {
+        "n": 257,
+        "n_boot": 1000,
+        "observed_delta": 0.0084,
+        "ci_lower": -0.0094,
+        "ci_upper": 0.0247,
+        "prob_positive": 0.829,
+        "significant": false
+      }
+    },
+    {
+      "dim": "away_rest_days_bucket",
+      "bucket_label": "rest_2d",
+      "n": 7,
+      "segment_name": "all",
+      "metrics": {
+        "n": 7,
+        "model_brier": 0.2437,
+        "market_brier": 0.2603,
+        "blend_brier": 0.2492,
+        "blend_bss_vs_market": 0.0426,
+        "model_bss_vs_market": 0.0636,
+        "fav_win_rate": 0.4286,
+        "win_rate": 0.2857,
+        "ece_blend": 0.2361
+      },
+      "bootstrap": {
+        "n": 7,
+        "n_boot": 1000,
+        "observed_delta": 0.0426,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "prob_positive": 0.5,
+        "significant": false
+      }
+    },
+    {
+      "dim": "away_rest_days_bucket",
+      "bucket_label": "rest_4plus",
+      "n": 15,
+      "segment_name": "all",
+      "metrics": {
+        "n": 15,
+        "model_brier": 0.2554,
+        "market_brier": 0.27,
+        "blend_brier": 0.2606,
+        "blend_bss_vs_market": 0.035,
+        "model_bss_vs_market": 0.0542,
+        "fav_win_rate": 0.6,
+        "win_rate": 0.6667,
+        "ece_blend": 0.2244
+      },
+      "bootstrap": {
+        "n": 15,
+        "n_boot": 1000,
+        "observed_delta": 0.035,
+        "ci_lower": -0.0263,
+        "ci_upper": 0.0902,
+        "prob_positive": 0.862,
+        "significant": false
+      }
+    },
+    {
+      "dim": "rest_imbalance_bucket",
+      "bucket_label": "away_1_more",
+      "n": 51,
+      "segment_name": "all",
+      "metrics": {
+        "n": 51,
+        "model_brier": 0.2584,
+        "market_brier": 0.2625,
+        "blend_brier": 0.2593,
+        "blend_bss_vs_market": 0.0122,
+        "model_bss_vs_market": 0.0157,
+        "fav_win_rate": 0.4706,
+        "win_rate": 0.4314,
+        "ece_blend": 0.1138
+      },
+      "bootstrap": {
+        "n": 51,
+        "n_boot": 1000,
+        "observed_delta": 0.0122,
+        "ci_lower": -0.0218,
+        "ci_upper": 0.0444,
+        "prob_positive": 0.764,
+        "significant": false
+      }
+    },
+    {
+      "dim": "rest_imbalance_bucket",
+      "bucket_label": "equal_rest",
+      "n": 1900,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1900,
+        "model_brier": 0.2442,
+        "market_brier": 0.2429,
+        "blend_brier": 0.2427,
+        "blend_bss_vs_market": 0.0008,
+        "model_bss_vs_market": -0.0051,
+        "fav_win_rate": 0.5563,
+        "win_rate": 0.5342,
+        "ece_blend": 0.0205
+      },
+      "bootstrap": {
+        "n": 1900,
+        "n_boot": 1000,
+        "observed_delta": 0.0008,
+        "ci_lower": -0.0057,
+        "ci_upper": 0.0074,
+        "prob_positive": 0.597,
+        "significant": false
+      }
+    },
+    {
+      "dim": "rest_imbalance_bucket",
+      "bucket_label": "home_1_more",
+      "n": 74,
+      "segment_name": "all",
+      "metrics": {
+        "n": 74,
+        "model_brier": 0.2495,
+        "market_brier": 0.2522,
+        "blend_brier": 0.2499,
+        "blend_bss_vs_market": 0.0091,
+        "model_bss_vs_market": 0.0108,
+        "fav_win_rate": 0.4595,
+        "win_rate": 0.4865,
+        "ece_blend": 0.162
+      },
+      "bootstrap": {
+        "n": 74,
+        "n_boot": 1000,
+        "observed_delta": 0.0091,
+        "ci_lower": -0.0227,
+        "ci_upper": 0.038,
+        "prob_positive": 0.712,
+        "significant": false
+      }
+    },
+    {
+      "dim": "back_to_back_bucket",
+      "bucket_label": "away_b2b",
+      "n": 72,
+      "segment_name": "all",
+      "metrics": {
+        "n": 72,
+        "model_brier": 0.2492,
+        "market_brier": 0.2522,
+        "blend_brier": 0.2497,
+        "blend_bss_vs_market": 0.0099,
+        "model_bss_vs_market": 0.0119,
+        "fav_win_rate": 0.4583,
+        "win_rate": 0.4861,
+        "ece_blend": 0.1654
+      },
+      "bootstrap": {
+        "n": 72,
+        "n_boot": 1000,
+        "observed_delta": 0.0099,
+        "ci_lower": -0.0218,
+        "ci_upper": 0.0403,
+        "prob_positive": 0.737,
+        "significant": false
+      }
+    },
+    {
+      "dim": "back_to_back_bucket",
+      "bucket_label": "both_b2b",
+      "n": 1674,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1674,
+        "model_brier": 0.2446,
+        "market_brier": 0.2428,
+        "blend_brier": 0.243,
+        "blend_bss_vs_market": -0.0006,
+        "model_bss_vs_market": -0.0074,
+        "fav_win_rate": 0.5544,
+        "win_rate": 0.5346,
+        "ece_blend": 0.0208
+      },
+      "bootstrap": {
+        "n": 1674,
+        "n_boot": 1000,
+        "observed_delta": -0.0006,
+        "ci_lower": -0.0079,
+        "ci_upper": 0.0065,
+        "prob_positive": 0.404,
+        "significant": false
+      }
+    },
+    {
+      "dim": "back_to_back_bucket",
+      "bucket_label": "home_b2b",
+      "n": 51,
+      "segment_name": "all",
+      "metrics": {
+        "n": 51,
+        "model_brier": 0.2584,
+        "market_brier": 0.2625,
+        "blend_brier": 0.2593,
+        "blend_bss_vs_market": 0.0122,
+        "model_bss_vs_market": 0.0157,
+        "fav_win_rate": 0.4706,
+        "win_rate": 0.4314,
+        "ece_blend": 0.1138
+      },
+      "bootstrap": {
+        "n": 51,
+        "n_boot": 1000,
+        "observed_delta": 0.0122,
+        "ci_lower": -0.0218,
+        "ci_upper": 0.0444,
+        "prob_positive": 0.764,
+        "significant": false
+      }
+    },
+    {
+      "dim": "back_to_back_bucket",
+      "bucket_label": "neither_b2b",
+      "n": 228,
+      "segment_name": "all",
+      "metrics": {
+        "n": 228,
+        "model_brier": 0.2409,
+        "market_brier": 0.2438,
+        "blend_brier": 0.2412,
+        "blend_bss_vs_market": 0.0106,
+        "model_bss_vs_market": 0.0115,
+        "fav_win_rate": 0.5702,
+        "win_rate": 0.5307,
+        "ece_blend": 0.0361
+      },
+      "bootstrap": {
+        "n": 228,
+        "n_boot": 1000,
+        "observed_delta": 0.0106,
+        "ci_lower": -0.0087,
+        "ci_upper": 0.0275,
+        "prob_positive": 0.876,
+        "significant": false
+      }
+    },
+    {
+      "dim": "day_night_bucket",
+      "bucket_label": "day_game",
+      "n": 754,
+      "segment_name": "all",
+      "metrics": {
+        "n": 754,
+        "model_brier": 0.2479,
+        "market_brier": 0.2459,
+        "blend_brier": 0.2462,
+        "blend_bss_vs_market": -0.0011,
+        "model_bss_vs_market": -0.0081,
+        "fav_win_rate": 0.5517,
+        "win_rate": 0.5239,
+        "ece_blend": 0.0247
+      },
+      "bootstrap": {
+        "n": 754,
+        "n_boot": 1000,
+        "observed_delta": -0.0011,
+        "ci_lower": -0.0113,
+        "ci_upper": 0.0093,
+        "prob_positive": 0.423,
+        "significant": false
+      }
+    },
+    {
+      "dim": "day_night_bucket",
+      "bucket_label": "night_game",
+      "n": 1271,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1271,
+        "model_brier": 0.2428,
+        "market_brier": 0.2425,
+        "blend_brier": 0.2418,
+        "blend_bss_vs_market": 0.0029,
+        "model_bss_vs_market": -0.0014,
+        "fav_win_rate": 0.55,
+        "win_rate": 0.5334,
+        "ece_blend": 0.0345
+      },
+      "bootstrap": {
+        "n": 1271,
+        "n_boot": 1000,
+        "observed_delta": 0.0029,
+        "ci_lower": -0.0052,
+        "ci_upper": 0.0114,
+        "prob_positive": 0.739,
+        "significant": false
+      }
+    },
+    {
+      "dim": "day_of_week_bucket",
+      "bucket_label": "friday",
+      "n": 330,
+      "segment_name": "all",
+      "metrics": {
+        "n": 330,
+        "model_brier": 0.247,
+        "market_brier": 0.2478,
+        "blend_brier": 0.2465,
+        "blend_bss_vs_market": 0.005,
+        "model_bss_vs_market": 0.0031,
+        "fav_win_rate": 0.5364,
+        "win_rate": 0.5455,
+        "ece_blend": 0.0392
+      },
+      "bootstrap": {
+        "n": 330,
+        "n_boot": 1000,
+        "observed_delta": 0.005,
+        "ci_lower": -0.0103,
+        "ci_upper": 0.0199,
+        "prob_positive": 0.733,
+        "significant": false
+      }
+    },
+    {
+      "dim": "day_of_week_bucket",
+      "bucket_label": "midweek",
+      "n": 801,
+      "segment_name": "all",
+      "metrics": {
+        "n": 801,
+        "model_brier": 0.2413,
+        "market_brier": 0.2405,
+        "blend_brier": 0.24,
+        "blend_bss_vs_market": 0.0021,
+        "model_bss_vs_market": -0.0033,
+        "fav_win_rate": 0.5605,
+        "win_rate": 0.5381,
+        "ece_blend": 0.0355
+      },
+      "bootstrap": {
+        "n": 801,
+        "n_boot": 1000,
+        "observed_delta": 0.0021,
+        "ci_lower": -0.0079,
+        "ci_upper": 0.0127,
+        "prob_positive": 0.653,
+        "significant": false
+      }
+    },
+    {
+      "dim": "day_of_week_bucket",
+      "bucket_label": "monday",
+      "n": 217,
+      "segment_name": "all",
+      "metrics": {
+        "n": 217,
+        "model_brier": 0.2456,
+        "market_brier": 0.2469,
+        "blend_brier": 0.2451,
+        "blend_bss_vs_market": 0.007,
+        "model_bss_vs_market": 0.0052,
+        "fav_win_rate": 0.5115,
+        "win_rate": 0.5392,
+        "ece_blend": 0.068
+      },
+      "bootstrap": {
+        "n": 217,
+        "n_boot": 1000,
+        "observed_delta": 0.007,
+        "ci_lower": -0.0127,
+        "ci_upper": 0.0271,
+        "prob_positive": 0.747,
+        "significant": false
+      }
+    },
+    {
+      "dim": "day_of_week_bucket",
+      "bucket_label": "weekend",
+      "n": 677,
+      "segment_name": "all",
+      "metrics": {
+        "n": 677,
+        "model_brier": 0.2473,
+        "market_brier": 0.2447,
+        "blend_brier": 0.2454,
+        "blend_bss_vs_market": -0.0031,
+        "model_bss_vs_market": -0.0109,
+        "fav_win_rate": 0.5583,
+        "win_rate": 0.5096,
+        "ece_blend": 0.0321
+      },
+      "bootstrap": {
+        "n": 677,
+        "n_boot": 1000,
+        "observed_delta": -0.0031,
+        "ci_lower": -0.0145,
+        "ci_upper": 0.0075,
+        "prob_positive": 0.291,
+        "significant": false
+      }
+    },
+    {
+      "dim": "double_header_bucket",
+      "bucket_label": "dh_game1",
+      "n": 46,
+      "segment_name": "all",
+      "metrics": {
+        "n": 46,
+        "model_brier": 0.241,
+        "market_brier": 0.2448,
+        "blend_brier": 0.2415,
+        "blend_bss_vs_market": 0.0138,
+        "model_bss_vs_market": 0.0157,
+        "fav_win_rate": 0.5435,
+        "win_rate": 0.5,
+        "ece_blend": 0.0995
+      },
+      "bootstrap": {
+        "n": 46,
+        "n_boot": 1000,
+        "observed_delta": 0.0138,
+        "ci_lower": -0.0327,
+        "ci_upper": 0.0587,
+        "prob_positive": 0.707,
+        "significant": false
+      }
+    },
+    {
+      "dim": "double_header_bucket",
+      "bucket_label": "single_game",
+      "n": 1979,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1979,
+        "model_brier": 0.2448,
+        "market_brier": 0.2437,
+        "blend_brier": 0.2435,
+        "blend_bss_vs_market": 0.0011,
+        "model_bss_vs_market": -0.0044,
+        "fav_win_rate": 0.5508,
+        "win_rate": 0.5306,
+        "ece_blend": 0.0244
+      },
+      "bootstrap": {
+        "n": 1979,
+        "n_boot": 1000,
+        "observed_delta": 0.0011,
+        "ci_lower": -0.006,
+        "ci_upper": 0.0074,
+        "prob_positive": 0.61,
+        "significant": false
+      }
+    },
+    {
+      "dim": "divisional_matchup_bucket",
+      "bucket_label": "interleague",
+      "n": 588,
+      "segment_name": "all",
+      "metrics": {
+        "n": 588,
+        "model_brier": 0.2447,
+        "market_brier": 0.2441,
+        "blend_brier": 0.2436,
+        "blend_bss_vs_market": 0.0023,
+        "model_bss_vs_market": -0.0023,
+        "fav_win_rate": 0.5578,
+        "win_rate": 0.5272,
+        "ece_blend": 0.0189
+      },
+      "bootstrap": {
+        "n": 588,
+        "n_boot": 1000,
+        "observed_delta": 0.0023,
+        "ci_lower": -0.0101,
+        "ci_upper": 0.0138,
+        "prob_positive": 0.63,
+        "significant": false
+      }
+    },
+    {
+      "dim": "divisional_matchup_bucket",
+      "bucket_label": "same_division",
+      "n": 667,
+      "segment_name": "all",
+      "metrics": {
+        "n": 667,
+        "model_brier": 0.2422,
+        "market_brier": 0.2386,
+        "blend_brier": 0.2399,
+        "blend_bss_vs_market": -0.0053,
+        "model_bss_vs_market": -0.0151,
+        "fav_win_rate": 0.5697,
+        "win_rate": 0.5532,
+        "ece_blend": 0.0264
+      },
+      "bootstrap": {
+        "n": 667,
+        "n_boot": 1000,
+        "observed_delta": -0.0053,
+        "ci_lower": -0.017,
+        "ci_upper": 0.0055,
+        "prob_positive": 0.177,
+        "significant": false
+      }
+    },
+    {
+      "dim": "divisional_matchup_bucket",
+      "bucket_label": "same_league_diff_div",
+      "n": 770,
+      "segment_name": "all",
+      "metrics": {
+        "n": 770,
+        "model_brier": 0.2469,
+        "market_brier": 0.2479,
+        "blend_brier": 0.2464,
+        "blend_bss_vs_market": 0.0063,
+        "model_bss_vs_market": 0.0042,
+        "fav_win_rate": 0.5286,
+        "win_rate": 0.5117,
+        "ece_blend": 0.0527
+      },
+      "bootstrap": {
+        "n": 770,
+        "n_boot": 1000,
+        "observed_delta": 0.0063,
+        "ci_lower": -0.0046,
+        "ci_upper": 0.0169,
+        "prob_positive": 0.89,
+        "significant": false
+      }
+    },
+    {
+      "dim": "fav_side_bucket",
+      "bucket_label": "away_fav",
+      "n": 646,
+      "segment_name": "all",
+      "metrics": {
+        "n": 646,
+        "model_brier": 0.2484,
+        "market_brier": 0.2444,
+        "blend_brier": 0.2456,
+        "blend_bss_vs_market": -0.0049,
+        "model_bss_vs_market": -0.0163,
+        "fav_win_rate": 0.5325,
+        "win_rate": 0.4675,
+        "ece_blend": 0.0295
+      },
+      "bootstrap": {
+        "n": 646,
+        "n_boot": 1000,
+        "observed_delta": -0.0049,
+        "ci_lower": -0.0186,
+        "ci_upper": 0.008,
+        "prob_positive": 0.22,
+        "significant": false
+      }
+    },
+    {
+      "dim": "fav_side_bucket",
+      "bucket_label": "home_fav",
+      "n": 1379,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1379,
+        "model_brier": 0.243,
+        "market_brier": 0.2435,
+        "blend_brier": 0.2424,
+        "blend_bss_vs_market": 0.0043,
+        "model_bss_vs_market": 0.0019,
+        "fav_win_rate": 0.5591,
+        "win_rate": 0.5591,
+        "ece_blend": 0.0245
+      },
+      "bootstrap": {
+        "n": 1379,
+        "n_boot": 1000,
+        "observed_delta": 0.0043,
+        "ci_lower": -0.0027,
+        "ci_upper": 0.0112,
+        "prob_positive": 0.876,
+        "significant": false
+      }
+    },
+    {
+      "dim": "park_run_env_bucket",
+      "bucket_label": "hitter_park",
+      "n": 342,
+      "segment_name": "all",
+      "metrics": {
+        "n": 342,
+        "model_brier": 0.2378,
+        "market_brier": 0.235,
+        "blend_brier": 0.2357,
+        "blend_bss_vs_market": -0.003,
+        "model_bss_vs_market": -0.0118,
+        "fav_win_rate": 0.5877,
+        "win_rate": 0.5292,
+        "ece_blend": 0.0312
+      },
+      "bootstrap": {
+        "n": 342,
+        "n_boot": 1000,
+        "observed_delta": -0.003,
+        "ci_lower": -0.019,
+        "ci_upper": 0.0139,
+        "prob_positive": 0.38,
+        "significant": false
+      }
+    },
+    {
+      "dim": "park_run_env_bucket",
+      "bucket_label": "neutral_park",
+      "n": 1348,
+      "segment_name": "all",
+      "metrics": {
+        "n": 1348,
+        "model_brier": 0.2468,
+        "market_brier": 0.2463,
+        "blend_brier": 0.2457,
+        "blend_bss_vs_market": 0.0025,
+        "model_bss_vs_market": -0.002,
+        "fav_win_rate": 0.543,
+        "win_rate": 0.5223,
+        "ece_blend": 0.025
+      },
+      "bootstrap": {
+        "n": 1348,
+        "n_boot": 1000,
+        "observed_delta": 0.0025,
+        "ci_lower": -0.0055,
+        "ci_upper": 0.0104,
+        "prob_positive": 0.71,
+        "significant": false
+      }
+    },
+    {
+      "dim": "park_run_env_bucket",
+      "bucket_label": "pitcher_park",
+      "n": 335,
+      "segment_name": "all",
+      "metrics": {
+        "n": 335,
+        "model_brier": 0.2433,
+        "market_brier": 0.2423,
+        "blend_brier": 0.242,
+        "blend_bss_vs_market": 0.0012,
+        "model_bss_vs_market": -0.0038,
+        "fav_win_rate": 0.5433,
+        "win_rate": 0.5612,
+        "ece_blend": 0.0551
+      },
+      "bootstrap": {
+        "n": 335,
+        "n_boot": 1000,
+        "observed_delta": 0.0012,
+        "ci_lower": -0.0151,
+        "ci_upper": 0.0166,
+        "prob_positive": 0.569,
+        "significant": false
+      }
+    },
+    {
+      "dim": "season_phase_bucket",
+      "bucket_label": "early_season",
+      "n": 187,
+      "segment_name": "all",
+      "metrics": {
+        "n": 187,
+        "model_brier": 0.2359,
+        "market_brier": 0.2291,
+        "blend_brier": 0.2327,
+        "blend_bss_vs_market": -0.0159,
+        "model_bss_vs_market": -0.0299,
+        "fav_win_rate": 0.615,
+        "win_rate": 0.5027,
+        "ece_blend": 0.0837
+      },
+      "bootstrap": {
+        "n": 187,
+        "n_boot": 1000,
+        "observed_delta": -0.0159,
+        "ci_lower": -0.0317,
+        "ci_upper": 0.0003,
+        "prob_positive": 0.028,
+        "significant": false
+      }
+    },
+    {
+      "dim": "season_phase_bucket",
+      "bucket_label": "late_season",
+      "n": 909,
+      "segment_name": "all",
+      "metrics": {
+        "n": 909,
+        "model_brier": 0.244,
+        "market_brier": 0.2456,
+        "blend_brier": 0.2439,
+        "blend_bss_vs_market": 0.0069,
+        "model_bss_vs_market": 0.0065,
+        "fav_win_rate": 0.5446,
+        "win_rate": 0.5303,
+        "ece_blend": 0.0242
+      },
+      "bootstrap": {
+        "n": 909,
+        "n_boot": 1000,
+        "observed_delta": 0.0069,
+        "ci_lower": -0.0015,
+        "ci_upper": 0.0148,
+        "prob_positive": 0.943,
+        "significant": false
+      }
+    },
+    {
+      "dim": "season_phase_bucket",
+      "bucket_label": "mid_season",
+      "n": 929,
+      "segment_name": "all",
+      "metrics": {
+        "n": 929,
+        "model_brier": 0.2472,
+        "market_brier": 0.2449,
+        "blend_brier": 0.2451,
+        "blend_bss_vs_market": -0.0008,
+        "model_bss_vs_market": -0.0093,
+        "fav_win_rate": 0.5436,
+        "win_rate": 0.535,
+        "ece_blend": 0.0421
+      },
+      "bootstrap": {
+        "n": 929,
+        "n_boot": 1000,
+        "observed_delta": -0.0008,
+        "ci_lower": -0.0116,
+        "ci_upper": 0.0102,
+        "prob_positive": 0.432,
+        "significant": false
+      }
+    },
+    {
+      "dim": "away_consec_road_bucket",
+      "bucket_label": "road_trip_1_3",
+      "n": 965,
+      "segment_name": "all",
+      "metrics": {
+        "n": 965,
+        "model_brier": 0.2424,
+        "market_brier": 0.244,
+        "blend_brier": 0.2421,
+        "blend_bss_vs_market": 0.0077,
+        "model_bss_vs_market": 0.0066,
+        "fav_win_rate": 0.5668,
+        "win_rate": 0.5306,
+        "ece_blend": 0.0166
+      },
+      "bootstrap": {
+        "n": 965,
+        "n_boot": 1000,
+        "observed_delta": 0.0077,
+        "ci_lower": -0.0021,
+        "ci_upper": 0.0164,
+        "prob_positive": 0.939,
+        "significant": false
+      }
+    },
+    {
+      "dim": "away_consec_road_bucket",
+      "bucket_label": "road_trip_4_6",
+      "n": 836,
+      "segment_name": "all",
+      "metrics": {
+        "n": 836,
+        "model_brier": 0.243,
+        "market_brier": 0.2409,
+        "blend_brier": 0.2413,
+        "blend_bss_vs_market": -0.0014,
+        "model_bss_vs_market": -0.0086,
+        "fav_win_rate": 0.5514,
+        "win_rate": 0.549,
+        "ece_blend": 0.0318
+      },
+      "bootstrap": {
+        "n": 836,
+        "n_boot": 1000,
+        "observed_delta": -0.0014,
+        "ci_lower": -0.0113,
+        "ci_upper": 0.0091,
+        "prob_positive": 0.375,
+        "significant": false
+      }
+    },
+    {
+      "dim": "away_consec_road_bucket",
+      "bucket_label": "road_trip_7plus",
+      "n": 224,
+      "segment_name": "all",
+      "metrics": {
+        "n": 224,
+        "model_brier": 0.2611,
+        "market_brier": 0.2532,
+        "blend_brier": 0.257,
+        "blend_bss_vs_market": -0.0151,
+        "model_bss_vs_market": -0.031,
+        "fav_win_rate": 0.4777,
+        "win_rate": 0.4554,
+        "ece_blend": 0.1118
+      },
+      "bootstrap": {
+        "n": 224,
+        "n_boot": 1000,
+        "observed_delta": -0.0151,
+        "ci_lower": -0.0326,
+        "ci_upper": 0.0031,
+        "prob_positive": 0.051,
+        "significant": false
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "dim": "home_rest_days_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0352,
+      "shuffled_mean_delta": 0.063,
+      "shuffled_std_delta": 0.0341,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "dim": "away_rest_days_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0428,
+      "shuffled_mean_delta": 0.0679,
+      "shuffled_std_delta": 0.0361,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "dim": "rest_imbalance_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0114,
+      "shuffled_mean_delta": 0.0287,
+      "shuffled_std_delta": 0.0159,
+      "null_rejected": false,
+      "overfit_risk": true
+    },
+    {
+      "dim": "back_to_back_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0128,
+      "shuffled_mean_delta": 0.0315,
+      "shuffled_std_delta": 0.0153,
+      "null_rejected": false,
+      "overfit_risk": true
+    },
+    {
+      "dim": "day_night_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.004,
+      "shuffled_mean_delta": 0.0058,
+      "shuffled_std_delta": 0.0046,
+      "null_rejected": false,
+      "overfit_risk": true
+    },
+    {
+      "dim": "day_of_week_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0101,
+      "shuffled_mean_delta": 0.0163,
+      "shuffled_std_delta": 0.0069,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "dim": "double_header_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0127,
+      "shuffled_mean_delta": 0.0166,
+      "shuffled_std_delta": 0.0128,
+      "null_rejected": false,
+      "overfit_risk": true
+    },
+    {
+      "dim": "divisional_matchup_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0116,
+      "shuffled_mean_delta": 0.0099,
+      "shuffled_std_delta": 0.0056,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "dim": "fav_side_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0092,
+      "shuffled_mean_delta": 0.0055,
+      "shuffled_std_delta": 0.0039,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "dim": "park_run_env_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0055,
+      "shuffled_mean_delta": 0.0125,
+      "shuffled_std_delta": 0.006,
+      "null_rejected": false,
+      "overfit_risk": true
+    },
+    {
+      "dim": "season_phase_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0228,
+      "shuffled_mean_delta": 0.0133,
+      "shuffled_std_delta": 0.0069,
+      "null_rejected": false,
+      "overfit_risk": false
+    },
+    {
+      "dim": "away_consec_road_bucket",
+      "segment": "all",
+      "real_blend_bss_delta": 0.0228,
+      "shuffled_mean_delta": 0.0123,
+      "shuffled_std_delta": 0.0065,
+      "null_rejected": false,
+      "overfit_risk": false
+    }
+  ],
+  "oof_results": [
+    {
+      "dim": "home_rest_days_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "away_rest_days_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "rest_imbalance_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "back_to_back_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "day_night_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "day_of_week_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "double_header_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "divisional_matchup_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "fav_side_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "park_run_env_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "season_phase_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    },
+    {
+      "dim": "away_consec_road_bucket",
+      "segment": "all",
+      "n_folds": 6,
+      "fold_months": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09"
+      ],
+      "fold_bss_deltas": [
+        -0.0387,
+        0.0073,
+        -0.0099,
+        0.0111,
+        0.0025,
+        0.0007
+      ],
+      "fold_ns": [
+        53,
+        411,
+        397,
+        369,
+        421,
+        374
+      ],
+      "oof_mean_delta": -0.0045,
+      "oof_consistent_sign": false,
+      "oof_significant": false
+    }
+  ],
+  "gate": "OVERFIT_RISK",
+  "gate_rationale": "Negative control overfit risk detected for dimensions: ['rest_imbalance_bucket', 'back_to_back_bucket', 'day_night_bucket', 'double_header_bucket', 'park_run_env_bucket']. Shuffled label std >= real BSS spread — signal is noise-level.",
+  "next_step": "標記 OVERFIT_RISK。調查 small-bucket artifact。不可推進至 patch。",
+  "any_bootstrap_significant": false,
+  "any_oof_promising": false,
+  "any_overfit_risk": true,
+  "worth_phase68": false,
+  "data_limited_dimensions": [
+    "travel_distance",
+    "getaway_day",
+    "lineup_available",
+    "lineup_missing",
+    "key_batter_missing"
+  ],
+  "data_limited_fields": [
+    "travel_miles_proxy",
+    "getaway_day_flag",
+    "lineup_missing_count",
+    "key_batter_il_flag",
+    "injury_report_available"
+  ],
+  "available_dimensions": [
+    "home_rest_days_bucket",
+    "away_rest_days_bucket",
+    "rest_imbalance_bucket",
+    "back_to_back_bucket",
+    "day_night_bucket",
+    "day_of_week_bucket",
+    "double_header_bucket",
+    "divisional_matchup_bucket",
+    "fav_side_bucket",
+    "park_run_env_bucket",
+    "season_phase_bucket",
+    "away_consec_road_bucket"
+  ]
+}
