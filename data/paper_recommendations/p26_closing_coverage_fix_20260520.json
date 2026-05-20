@@ -1,0 +1,95 @@
+{
+  "artifact_id": "p26_closing_coverage_fix_20260520",
+  "phase": "P26",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26_CLOSING_COVERAGE_DIAGNOSTIC_ONLY",
+
+  "dependency": {
+    "p25b": "P25B_WBC_CLV_BOOTSTRAP_RERUN_COMPLETED_INCONCLUSIVE",
+    "p25b_finding": "Only 220/886 matches have both pregame+closing snapshots for valid CLV pairs"
+  },
+
+  "source_trace": {
+    "file": "data/tsl_odds_history.jsonl",
+    "total_rows": 2826,
+    "unique_matches": 887,
+    "game_date_range": "2026-03-13 to 2026-05-21"
+  },
+
+  "coverage_summary": {
+    "total_matches": 887,
+    "complete_pair_matches": 220,
+    "pregame_only_matches": 577,
+    "closing_only_matches": 74,
+    "no_valid_snapshot_matches": 16,
+    "complete_pair_pct": 24.8,
+    "pregame_only_pct": 65.1
+  },
+
+  "root_cause_classification": [
+    "CLOSING_SCHEDULE_NOT_DEFINED",
+    "CRAWLER_RUNTIME_NOT_TRIGGERED"
+  ],
+
+  "root_cause_detail": {
+    "primary": "CLOSING_SCHEDULE_NOT_DEFINED — wbc_backend/mlb_data/odds_capture_scheduler.determine_capture_windows() reads only data/mlb_context/odds_timeline.jsonl (MLB games). WBC/NPB game times from tsl_odds_history.jsonl are never checked. The closing window (0-5 minutes before game) never fires for WBC/NPB games.",
+    "secondary": "CRAWLER_RUNTIME_NOT_TRIGGERED — The daemon (scripts/odds_capture_daemon.py) runs at 15-minute intervals in continuous mode but only activates closing/pregame/decision windows for MLB games. For WBC/NPB, it always runs in continuous mode regardless of game proximity.",
+    "evidence": {
+      "scheduler_file": "wbc_backend/mlb_data/odds_capture_scheduler.py",
+      "function": "determine_capture_windows()",
+      "reads_from": "data/mlb_context/odds_timeline.jsonl (MLB ONLY)",
+      "missing_input": "WBC/NPB game_times from tsl_odds_history.jsonl",
+      "closing_trigger_threshold_min": 5,
+      "daemon_interval_min": 15,
+      "typical_closest_gap_to_2h_window": "2.93h (average for missing-closing matches)",
+      "would_fix_with_15min_intervals_only": 19
+    }
+  },
+
+  "missing_closing_by_game_hour_utc": {
+    "00": 26, "01": 40, "02": 10, "04": 4, "05": 12,
+    "07": 1, "08": 11, "09": 163, "10": 29, "15": 1,
+    "16": 7, "17": 52, "18": 22, "19": 13, "20": 35,
+    "21": 2, "22": 65, "23": 84
+  },
+
+  "snapshot_interval_analysis": {
+    "n_consecutive_pairs": 1933,
+    "median_gap_h": 1.5,
+    "p25_gap_h": 0.5,
+    "p75_gap_h": 5.02,
+    "gaps_under_30min": 463,
+    "gaps_30min_to_2h": 615,
+    "gaps_2h_to_6h": 443,
+    "gaps_over_6h": 412
+  },
+
+  "proposed_fix": {
+    "approach": "SCHEDULE_EXTENSION",
+    "summary": "Extend determine_capture_windows() to also read WBC/NPB game times from tsl_odds_history.jsonl (or a derived manifest). Add game-relative closing trigger: activate closing window when any WBC/NPB game is within PREGAME_LEAD_MINUTES of game_time.",
+    "closing_target_offsets_h": [-1.5, -0.5, 0.5],
+    "labels": ["closing_pre_90min", "closing_pre_30min", "closing_post_30min"],
+    "implementation_file": "wbc_backend/mlb_data/odds_capture_scheduler.py",
+    "function_to_extend": "determine_capture_windows",
+    "why_diagnostic_only": "This is a live crawler change. Running it modifies tsl_odds_history.jsonl with new snapshots. Requires authorization before activating in production daemon.",
+    "estimated_coverage_after_fix": 797,
+    "estimated_coverage_lift_pairs": 577,
+    "estimated_coverage_lift_pct": 65.1
+  },
+
+  "schedule_artifact": "data/paper_recommendations/p26_tsl_closing_snapshot_schedule_20260520.json",
+  "schedule_artifact_matches_count": 577,
+
+  "next_steps": [
+    "Authorize closing trigger extension in determine_capture_windows() for WBC/NPB games",
+    "Let daemon collect 2-3 weeks of WBC/NPB closing snapshots (game_time ±2h)",
+    "Rerun p25b bootstrap with expanded comparable pairs (~797 target)",
+    "If CLV still INCONCLUSIVE at n≥600: escalate to model quality investigation"
+  ]
+}
