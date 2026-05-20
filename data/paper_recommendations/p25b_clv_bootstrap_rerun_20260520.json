@@ -1,0 +1,155 @@
+{
+  "artifact_id": "p25b_clv_bootstrap_rerun_20260520",
+  "phase": "P25B",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P25B_WBC_CLV_BOOTSTRAP_RERUN_COMPLETED_INCONCLUSIVE",
+
+  "dependency": {
+    "p25_fix": "P25_CLV_CONSTRUCTION_FIX_COMPLETED",
+    "module": "wbc_backend/clv/outcome_matching.py",
+    "p25_test_file": "tests/test_p25_clv_construction_fix.py",
+    "p25_tests_passed": 21
+  },
+
+  "source_trace": {
+    "file": "data/tsl_odds_history.jsonl",
+    "total_rows": 2815,
+    "unique_match_ids": 886,
+    "game_date_range": "2026-03-13 to 2026-05-21",
+    "league": "TSL WBC / NPB / other (TSL crawl)"
+  },
+
+  "pair_construction": {
+    "pregame_min_hours": 4.0,
+    "closing_window_hours_abs": 2.0,
+    "pregame_selection": "latest snapshot with gap >= 4h before game_time",
+    "closing_selection": "latest snapshot within +-2h of game_time",
+    "definition_note": "P2 reported 797 = games with >=1 pregame snapshot (not requiring closing). This run uses 220 = games with BOTH pregame (>=4h) AND closing (<=2h) snapshots."
+  },
+
+  "pair_summary": {
+    "valid_pairs_with_both_snapshots": 220,
+    "excluded_no_pregame": 89,
+    "excluded_no_closing": 577,
+    "total_unique_matches": 886
+  },
+
+  "line_aware_filter": {
+    "method": "name-based outcome matching via wbc_backend/clv/outcome_matching.py",
+    "filter_rule": "Only rows with line_comparable=True (status=MATCHED) contribute to clean CLV",
+    "no_index_fallback": true
+  },
+
+  "exclusion_breakdown": {
+    "total_outcome_results": 2351,
+    "line_comparable_true": 2115,
+    "excluded_line_shift_uncomparable": 236,
+    "excluded_missing_odds": 0,
+    "excluded_unsupported_market": 0,
+    "exclusion_rate_pct": 10.04
+  },
+
+  "bootstrap_config": {
+    "n_iterations": 5000,
+    "random_seed": 42,
+    "confidence_interval": 0.95
+  },
+
+  "overall_results": {
+    "n": 2115,
+    "mean_clv_pct": 0.0755,
+    "median_clv_pct": 0.0,
+    "std_clv_pct": 4.342,
+    "min_clv_pct": -65.93,
+    "max_clv_pct": 80.65,
+    "positive_rate_pct": 33.5,
+    "bootstrap_ci_lo_95": -0.1101,
+    "bootstrap_ci_hi_95": 0.2569,
+    "ci_crosses_zero": true,
+    "clean_clv_classification": "CLEAN_CLV_INCONCLUSIVE"
+  },
+
+  "market_breakdown": {
+    "MNL": {
+      "n": 623,
+      "mean_clv_pct": 0.2062,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 6.1705,
+      "bootstrap_ci_lo_95": -0.2641,
+      "bootstrap_ci_hi_95": 0.6935,
+      "ci_crosses_zero": true,
+      "classification": "INCONCLUSIVE"
+    },
+    "HDC": {
+      "n": 366,
+      "mean_clv_pct": -0.0543,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 3.4868,
+      "bootstrap_ci_lo_95": -0.4110,
+      "bootstrap_ci_hi_95": 0.2892,
+      "ci_crosses_zero": true,
+      "classification": "INCONCLUSIVE"
+    },
+    "OU": {
+      "n": 380,
+      "mean_clv_pct": 0.0408,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 3.6224,
+      "bootstrap_ci_lo_95": -0.3482,
+      "bootstrap_ci_hi_95": 0.3981,
+      "ci_crosses_zero": true,
+      "classification": "INCONCLUSIVE"
+    },
+    "TTO": {
+      "n": 312,
+      "mean_clv_pct": 0.1068,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 4.5262,
+      "bootstrap_ci_lo_95": -0.3840,
+      "bootstrap_ci_hi_95": 0.6224,
+      "ci_crosses_zero": true,
+      "classification": "INCONCLUSIVE"
+    },
+    "OE": {
+      "n": 434,
+      "mean_clv_pct": 0.0053,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 0.8407,
+      "bootstrap_ci_lo_95": -0.0756,
+      "bootstrap_ci_hi_95": 0.0820,
+      "ci_crosses_zero": true,
+      "classification": "INCONCLUSIVE"
+    }
+  },
+
+  "before_after_comparison": {
+    "note": "P24/old = index-based CLV on TSL WBC data; P25B/clean = line-aware CLV after construction fix",
+    "old_mean_clv_pct_approx": 0.362,
+    "old_max_clv_pct_approx": 107.14,
+    "old_ci_lo": -0.019,
+    "old_ci_hi": 0.776,
+    "clean_mean_clv_pct": 0.0755,
+    "clean_max_clv_pct": 80.65,
+    "clean_ci_lo": -0.1101,
+    "clean_ci_hi": 0.2569,
+    "mean_reduction_abs": 0.287,
+    "max_reduction_abs": 26.49,
+    "conclusion": "Removing 236 LINE_SHIFT_UNCOMPARABLE rows reduced mean CLV from +0.36% to +0.08% and max from +107% to +81%. Both CI cross zero. Clean CLV remains INCONCLUSIVE — confirms old positive mean was driven by line-shift artifacts."
+  },
+
+  "p2_797_discrepancy_note": "P2 report counted 797 = games with >=1 snapshot fetched >=4h before game_time (pregame snapshot exists). P25B requires BOTH pregame (>=4h) AND closing (<=2h) snapshots for a valid CLV pair. Only 220 of 886 matches satisfy both conditions. 577 games lack a closing snapshot (no TSL crawl near game start).",
+
+  "remaining_blockers": [
+    "INCONCLUSIVE: Bootstrap CI still crosses zero after construction fix. Model does not demonstrate consistent positive CLV.",
+    "MLB: pregame-safe games = 0. MLB CLV remains blocked.",
+    "Closing coverage gap: 577/886 matches lack a closing snapshot — TSL crawler needs to be scheduled near game start times.",
+    "Model quality: MLB Brier=0.2487 (near random), WBC sample too small (n=40) for reliable model-edge assessment.",
+    "Next step: Investigate whether WBC-specific model predictions can beat market closing odds on the 220 comparable pairs."
+  ]
+}
