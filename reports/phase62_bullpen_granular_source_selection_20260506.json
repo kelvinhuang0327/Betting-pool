@@ -1,0 +1,117 @@
+{
+  "module_version": "phase62_bullpen_granular_ingestion_v1",
+  "diagnostic_only": true,
+  "candidate_patch_created": false,
+  "production_modified": false,
+  "alpha_modified": false,
+  "source_selected": "mlb_stats_api_boxscore",
+  "gate": "STATSAPI_SELECTED",
+  "gate_rationale": "MLB StatsAPI /game/{pk}/boxscore provides per-pitcher IP and appearance order sufficient to derive 10 of 12 Phase 61 SSOT features. The 2 LI-dependent features (high_leverage_reliever_*) remain DATA_LIMITED and are deferred to Phase 63. Adding Statcast PbP now would double integration complexity without Phase 62 gate benefit.",
+  "ingestion_proof": {
+    "games_parsed": 4,
+    "games_missing": 1,
+    "total_pitcher_appearances": 26,
+    "starters": 7,
+    "openers_detected": 1,
+    "relievers": 19,
+    "closer_candidates": 8,
+    "avg_reliever_ip": 1.474,
+    "max_reliever_ip": 4.667,
+    "errors": []
+  },
+  "ssot_upgrade": {
+    "features_now_available": [
+      "bullpen_usage_last_1d",
+      "bullpen_usage_last_3d",
+      "bullpen_usage_last_5d",
+      "reliever_back_to_back_count",
+      "reliever_three_in_four_days_count",
+      "closer_used_last_1d",
+      "closer_used_last_2d",
+      "bullpen_fatigue_favorite_side",
+      "bullpen_fatigue_underdog_side",
+      "bullpen_rest_imbalance"
+    ],
+    "features_still_data_limited": [
+      "high_leverage_reliever_used_last_1d",
+      "high_leverage_reliever_workload_last_3d"
+    ],
+    "available_count": 10,
+    "data_limited_count": 2
+  },
+  "source_capability_table": [
+    {
+      "feature": "bullpen_usage_last_1d",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Sum IP of relievers on D-1; both sources support this window."
+    },
+    {
+      "feature": "bullpen_usage_last_3d",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Existing Phase 58/59 data; 2,430 rows in bullpen_usage_3d.jsonl."
+    },
+    {
+      "feature": "bullpen_usage_last_5d",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Extend timedelta range from D-3 to D-5; no new source needed."
+    },
+    {
+      "feature": "reliever_back_to_back_count",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Track pitcher IDs across days; B2B = appeared on both D-1 and D-2."
+    },
+    {
+      "feature": "reliever_three_in_four_days_count",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Track pitcher IDs across 4d window; >=3 appearances = high-frequency."
+    },
+    {
+      "feature": "closer_used_last_1d",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Closer candidate = last pitcher in game. Heuristic, not role-confirmed."
+    },
+    {
+      "feature": "closer_used_last_2d",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Same closer candidate heuristic; check D-1 and D-2."
+    },
+    {
+      "feature": "bullpen_fatigue_favorite_side",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Derived from bullpen_usage_last_3d + market; no new source needed."
+    },
+    {
+      "feature": "bullpen_fatigue_underdog_side",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Derived from bullpen_usage_last_3d + market; no new source needed."
+    },
+    {
+      "feature": "bullpen_rest_imbalance",
+      "statsapi_boxscore": "AVAILABLE",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Ratio of home/away 3d usage; derivable from existing data."
+    },
+    {
+      "feature": "high_leverage_reliever_used_last_1d",
+      "statsapi_boxscore": "DATA_LIMITED",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Requires leverage index (LI) per appearance. Boxscore has no LI field. PbP needed."
+    },
+    {
+      "feature": "high_leverage_reliever_workload_last_3d",
+      "statsapi_boxscore": "DATA_LIMITED",
+      "statcast_pbp": "AVAILABLE",
+      "notes": "Requires LI per appearance. Boxscore has no LI field. PbP needed."
+    }
+  ],
+  "audit_hash": "1af7e7a80df3e626"
+}

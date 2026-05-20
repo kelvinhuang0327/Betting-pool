@@ -20,8 +20,9 @@
 | 項目 | Puerto Rico (PUR) | Italy (ITA) |
 |---|---|---|
 | 台灣比賽日期 | 2026-03-15 | 2026-03-15 |
-| 先發投手預估 | 無資料 | 無資料 |
-| 先發投手球種/球速可驗證資料 | 無資料 | 無資料 |
+| 官方 probable starter | Seth Lugo (ERA 4.15 | WHIP 1.29 | K/9 7.74 | BB/9 3.41) | 官方 feed 尚未列出 |
+| 先發資料來源 | https://statsapi.mlb.com/api/v1.1/game/788098/feed/live | https://statsapi.mlb.com/api/v1.1/game/788098/feed/live |
+| 先發品質分數 | -0.117 | +0.000 |
 | 牛棚深度可驗證資料 | 無資料 | 無資料 |
 | 專項對戰加權資料 | 無資料 | 無資料 |
 
@@ -32,16 +33,19 @@
 - 模型設定：`/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/model_artifacts.json`
 
 回歸參數：
-- `lambda_PUR = 3.25`
-- `lambda_ITA = 4.88`
-- 特定對戰加權：`無資料`（無可驗證拆分資料）
+- 基礎 `lambda_PUR = 3.25`
+- 基礎 `lambda_ITA = 4.88`
+- 先發修正後 `lambda_PUR = 3.25`
+- 先發修正後 `lambda_ITA = 4.92`
+- Quarter-Final 先發權重：`0.65`
+- 特定對戰加權：`官方 probable starters + 保守先發抑分修正`
 
 機率結果：
-- PUR 9 局勝率：`0.2258`
-- ITA 9 局勝率：`0.6520`
-- 9 局平手率：`0.1222`
-- 全場 PUR 勝率（平手 50/50）：`0.2869`
-- 全場 ITA 勝率（平手 50/50）：`0.7131`
+- PUR 9 局勝率：`0.2217`
+- ITA 9 局勝率：`0.6574`
+- 9 局平手率：`0.1210`
+- 全場 PUR 勝率（平手 50/50）：`0.2821`
+- 全場 ITA 勝率（平手 50/50）：`0.7179`
 
 ## 🗺️ 得分機率矩陣圖
 
@@ -58,10 +62,10 @@ PUR  8 |
 PUR  7 |     ..     
 PUR  6 |   .::::.   
 PUR  5 |   :-==-:.  
-PUR  4 |  .-*##+=:. 
-PUR  3 |  .=#@%#=-. 
+PUR  4 |  .-+##+=:. 
+PUR  3 |  .=#@%#+-. 
 PUR  2 |  .=*%%*=:. 
-PUR  1 |  .:=+==:.  
+PUR  1 |  .:=++=:.  
 PUR  0 |    ....    
 ```
 

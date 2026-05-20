@@ -1,0 +1,246 @@
+{
+  "status": "OK",
+  "governance_flags": {
+    "execution_mode": "PAPER_ONLY",
+    "clv_mode": "SANDBOX_ONLY",
+    "decision_quality_scale": "UNAVAILABLE",
+    "live_recommendation": "disabled",
+    "live_sizing": "disabled",
+    "live_execution": "disabled",
+    "promotion_guard": "FROZEN_UNTIL_GENUINE_PREGAME_ODDS_AVAILABLE"
+  },
+  "governance_visibility": {
+    "execution_mode": "PAPER_ONLY",
+    "clv_mode": "SANDBOX_ONLY",
+    "decision_quality_scale": "UNAVAILABLE",
+    "promotion_guard": "FROZEN_UNTIL_GENUINE_PREGAME_ODDS_AVAILABLE",
+    "live_recommendation": "disabled"
+  },
+  "report_schema": {
+    "overall_strict_metrics": [
+      "strict_only_roi",
+      "strict_only_brier",
+      "strict_only_logloss"
+    ],
+    "sandbox_clv_metrics": [
+      "available_count",
+      "unavailable_count",
+      "positive_count",
+      "zero_count",
+      "negative_count",
+      "avg_clv_available_only"
+    ],
+    "trend_windows": [
+      "current_week",
+      "prior_week",
+      "current_month",
+      "prior_month"
+    ],
+    "regime_monitoring_fields": [
+      "sample_count_total",
+      "roi_total",
+      "clv_sandbox_total",
+      "fold_stability",
+      "suggestion"
+    ]
+  },
+  "overall_strict_metrics": {
+    "sample_count": 1493,
+    "strict_only_roi": 0.0418,
+    "strict_only_brier": 0.2554,
+    "strict_only_logloss": 0.7059,
+    "sandbox_clv": {
+      "available_count": 0,
+      "unavailable_count": 1493,
+      "positive_count": 0,
+      "zero_count": 0,
+      "negative_count": 0,
+      "avg_clv_available_only": 0.0
+    }
+  },
+  "weekly_tracking": {
+    "current_week": {
+      "sample_count": 64,
+      "strict_only_roi": 0.1803,
+      "strict_only_brier": 0.2485,
+      "strict_only_logloss": 0.6935,
+      "sandbox_clv": {
+        "available_count": 0,
+        "unavailable_count": 64,
+        "positive_count": 0,
+        "zero_count": 0,
+        "negative_count": 0,
+        "avg_clv_available_only": 0.0
+      }
+    },
+    "prior_week": {
+      "sample_count": 72,
+      "strict_only_roi": -0.1594,
+      "strict_only_brier": 0.2583,
+      "strict_only_logloss": 0.7114,
+      "sandbox_clv": {
+        "available_count": 0,
+        "unavailable_count": 72,
+        "positive_count": 0,
+        "zero_count": 0,
+        "negative_count": 0,
+        "avg_clv_available_only": 0.0
+      }
+    }
+  },
+  "monthly_tracking": {
+    "current_month": {
+      "sample_count": 286,
+      "strict_only_roi": 0.0667,
+      "strict_only_brier": 0.2493,
+      "strict_only_logloss": 0.6928,
+      "sandbox_clv": {
+        "available_count": 0,
+        "unavailable_count": 286,
+        "positive_count": 0,
+        "zero_count": 0,
+        "negative_count": 0,
+        "avg_clv_available_only": 0.0
+      }
+    },
+    "prior_month": {
+      "sample_count": 304,
+      "strict_only_roi": 0.0104,
+      "strict_only_brier": 0.2532,
+      "strict_only_logloss": 0.7013,
+      "sandbox_clv": {
+        "available_count": 0,
+        "unavailable_count": 304,
+        "positive_count": 0,
+        "zero_count": 0,
+        "negative_count": 0,
+        "avg_clv_available_only": 0.0
+      }
+    }
+  },
+  "trend_monitoring": {
+    "week_over_week": {
+      "roi_delta": 0.3397,
+      "brier_delta": -0.0098,
+      "logloss_delta": -0.0179,
+      "sample_delta": -8
+    },
+    "month_over_month": {
+      "roi_delta": 0.0563,
+      "brier_delta": -0.0039,
+      "logloss_delta": -0.0085,
+      "sample_delta": -18
+    },
+    "sample_growth_by_regime": [
+      {
+        "regime": "small_edge",
+        "week_growth": -21,
+        "month_growth": -23
+      },
+      {
+        "regime": "weak_starter_mismatch",
+        "week_growth": 13,
+        "month_growth": 5
+      }
+    ],
+    "regimes_improving_toward_tradable_thresholds": [
+      "weak_starter_mismatch"
+    ]
+  },
+  "regime_monitoring": {
+    "retained_research_regimes": [
+      "small_edge",
+      "weak_starter_mismatch"
+    ],
+    "summary": [
+      {
+        "regime": "small_edge",
+        "sample_count_total": 794,
+        "sample_count_week_current": 22,
+        "sample_count_week_prior": 43,
+        "sample_count_month_current": 150,
+        "sample_count_month_prior": 173,
+        "sample_growth_week": -21,
+        "sample_growth_month": -23,
+        "roi_total": 0.0027,
+        "roi_week_current": -0.0476,
+        "roi_week_prior": -0.2381,
+        "roi_month_current": -0.0504,
+        "roi_month_prior": -0.0429,
+        "clv_sandbox_total": {
+          "available_count": 0,
+          "unavailable_count": 794,
+          "positive_count": 0,
+          "zero_count": 0,
+          "negative_count": 0,
+          "avg_clv_available_only": 0.0
+        },
+        "clv_sandbox_week_current": {
+          "available_count": 0,
+          "unavailable_count": 22,
+          "positive_count": 0,
+          "zero_count": 0,
+          "negative_count": 0,
+          "avg_clv_available_only": 0.0
+        },
+        "clv_sandbox_week_prior": {
+          "available_count": 0,
+          "unavailable_count": 43,
+          "positive_count": 0,
+          "zero_count": 0,
+          "negative_count": 0,
+          "avg_clv_available_only": 0.0
+        },
+        "fold_stability": 0.0892,
+        "suggestion": "watch"
+      },
+      {
+        "regime": "weak_starter_mismatch",
+        "sample_count_total": 699,
+        "sample_count_week_current": 42,
+        "sample_count_week_prior": 29,
+        "sample_count_month_current": 136,
+        "sample_count_month_prior": 131,
+        "sample_growth_week": 13,
+        "sample_growth_month": 5,
+        "roi_total": 0.0862,
+        "roi_week_current": 0.3,
+        "roi_week_prior": -0.037,
+        "roi_month_current": 0.1908,
+        "roi_month_prior": 0.0794,
+        "clv_sandbox_total": {
+          "available_count": 0,
+          "unavailable_count": 699,
+          "positive_count": 0,
+          "zero_count": 0,
+          "negative_count": 0,
+          "avg_clv_available_only": 0.0
+        },
+        "clv_sandbox_week_current": {
+          "available_count": 0,
+          "unavailable_count": 42,
+          "positive_count": 0,
+          "zero_count": 0,
+          "negative_count": 0,
+          "avg_clv_available_only": 0.0
+        },
+        "clv_sandbox_week_prior": {
+          "available_count": 0,
+          "unavailable_count": 29,
+          "positive_count": 0,
+          "zero_count": 0,
+          "negative_count": 0,
+          "avg_clv_available_only": 0.0
+        },
+        "fold_stability": 0.0669,
+        "suggestion": "watch"
+      }
+    ]
+  },
+  "frozen_recommendation": "KEEP_MLB_FROZEN",
+  "notes": [
+    "MLB paper tracking is for research monitoring only.",
+    "Sandbox CLV metrics do not imply full-universe CLV availability.",
+    "No live recommendation, sizing, or execution is permitted under current governance."
+  ]
+}

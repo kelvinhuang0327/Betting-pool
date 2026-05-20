@@ -1,0 +1,559 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "no_data_fetched": true,
+  "generated_at": "2026-05-20T05:46:35.471275+00:00",
+  "date": "2026-05-20",
+  "artifact": "P29_EXTERNAL_DATA_CONTRACT",
+  "purpose": "Design document for external features needed to break Brier ceiling of 0.244",
+  "current_ceiling": {
+    "brier_with_csv_only": 0.244354,
+    "brier_with_orchestrator": 0.248703,
+    "gap_to_target_0_24": 0.004354
+  },
+  "contracts": {
+    "starting_pitcher": {
+      "contract_name": "STARTING_PITCHER_PREGAME",
+      "version": "v1.0-design",
+      "purpose": "Capture SP quality and form before game start",
+      "estimated_brier_improvement": {
+        "low": 0.005,
+        "high": 0.015,
+        "unit": "Brier_points"
+      },
+      "fields": [
+        {
+          "field_name": "game_id",
+          "type": "str",
+          "nullable": false,
+          "description": "Unique game identifier",
+          "fallback_rule": "N/A - required",
+          "leakage_risk": "NONE",
+          "freshness_sla_hours": 4,
+          "source_trace": "internal",
+          "backtest_availability": "YES_FROM_SCHEDULE",
+          "production_readiness": "READY"
+        },
+        {
+          "field_name": "pitcher_name",
+          "type": "str",
+          "nullable": false,
+          "description": "Probable starter name (official lineup)",
+          "fallback_rule": "UNKNOWN",
+          "leakage_risk": "MEDIUM-confirm before first pitch",
+          "freshness_sla_hours": 2,
+          "source_trace": "MLB.com/API/rotowire",
+          "backtest_availability": "PARTIAL-historical",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "pitcher_hand",
+          "type": "str",
+          "nullable": true,
+          "description": "Pitcher handedness (L/R)",
+          "fallback_rule": "UNKNOWN",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 24,
+          "source_trace": "Baseball-Reference/FanGraphs",
+          "backtest_availability": "YES-from_stats",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "season_era",
+          "type": "float",
+          "nullable": true,
+          "description": "Season ERA up to game date (pre-game only)",
+          "fallback_rule": "league_avg=4.20",
+          "leakage_risk": "HIGH-must use season-to-date only",
+          "freshness_sla_hours": 24,
+          "source_trace": "FanGraphs/BRef",
+          "backtest_availability": "YES-season_to_date",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "season_fip",
+          "type": "float",
+          "nullable": true,
+          "description": "Season FIP (ERA proxy, better regressor)",
+          "fallback_rule": "league_avg=4.20",
+          "leakage_risk": "HIGH-season_to_date_only",
+          "freshness_sla_hours": 24,
+          "source_trace": "FanGraphs",
+          "backtest_availability": "YES-season_to_date",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "last3_era",
+          "type": "float",
+          "nullable": true,
+          "description": "ERA over last 3 starts",
+          "fallback_rule": "season_era",
+          "leakage_risk": "HIGH-last3_within_training_window",
+          "freshness_sla_hours": 4,
+          "source_trace": "FanGraphs/BRef",
+          "backtest_availability": "PARTIAL",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "days_rest",
+          "type": "int",
+          "nullable": true,
+          "description": "Days since last appearance",
+          "fallback_rule": "5",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 2,
+          "source_trace": "schedule",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "pitch_count_last",
+          "type": "int",
+          "nullable": true,
+          "description": "Pitch count in last start",
+          "fallback_rule": "90",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 24,
+          "source_trace": "Gameday API",
+          "backtest_availability": "PARTIAL",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "injury_flag",
+          "type": "bool",
+          "nullable": false,
+          "description": "SP scratched or injured (pre-game)",
+          "fallback_rule": "False",
+          "leakage_risk": "MEDIUM-must be before game time",
+          "freshness_sla_hours": 1,
+          "source_trace": "Rotoworld/Twitter",
+          "backtest_availability": "NO-real_time_only",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "snapshot_ts",
+          "type": "str",
+          "nullable": false,
+          "description": "ISO timestamp of data capture",
+          "fallback_rule": "N/A - required",
+          "leakage_risk": "NONE",
+          "freshness_sla_hours": 0,
+          "source_trace": "internal",
+          "backtest_availability": "YES",
+          "production_readiness": "READY"
+        }
+      ],
+      "anti_leakage_rules": [
+        "NEVER use post-game stats (H, ER, IP from today's game)",
+        "NEVER use injury info revealed after bet cutoff",
+        "ALWAYS verify snapshot_ts < game_start_time",
+        "Season stats must be computed from games with date < game_date",
+        "last3 stats must exclude today's game"
+      ],
+      "free_data_sources": [
+        "Baseball Reference (free, scraping OK for research)",
+        "FanGraphs (free tier, season stats)",
+        "MLB Stats API (official, free, pitcher game logs)"
+      ]
+    },
+    "bullpen": {
+      "contract_name": "BULLPEN_PREGAME",
+      "version": "v1.0-design",
+      "purpose": "Capture bullpen fatigue and availability before game",
+      "estimated_brier_improvement": {
+        "low": 0.002,
+        "high": 0.007,
+        "unit": "Brier_points"
+      },
+      "fields": [
+        {
+          "field_name": "bullpen_ip_1d",
+          "type": "float",
+          "nullable": false,
+          "description": "Bullpen innings pitched yesterday",
+          "fallback_rule": "0.0",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 2,
+          "source_trace": "MLB Stats API",
+          "backtest_availability": "PARTIAL",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "bullpen_ip_3d",
+          "type": "float",
+          "nullable": false,
+          "description": "Bullpen IP last 3 days",
+          "fallback_rule": "3.0",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 2,
+          "source_trace": "MLB Stats API",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "bullpen_ip_7d",
+          "type": "float",
+          "nullable": false,
+          "description": "Bullpen IP last 7 days",
+          "fallback_rule": "7.0",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 24,
+          "source_trace": "MLB Stats API",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "closer_available",
+          "type": "bool",
+          "nullable": false,
+          "description": "Primary closer available",
+          "fallback_rule": "True",
+          "leakage_risk": "MEDIUM-pre-game flag",
+          "freshness_sla_hours": 1,
+          "source_trace": "Rotoworld",
+          "backtest_availability": "NO-real_time_only",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "fatigue_score",
+          "type": "float",
+          "nullable": true,
+          "description": "Custom fatigue: IP_7d / (7*2.0) normalized",
+          "fallback_rule": "0.5",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 24,
+          "source_trace": "computed_from_ip",
+          "backtest_availability": "YES",
+          "production_readiness": "COMPUTABLE_FROM_API"
+        },
+        {
+          "field_name": "season_bullpen_era",
+          "type": "float",
+          "nullable": true,
+          "description": "Team bullpen ERA season-to-date",
+          "fallback_rule": "league_avg=4.10",
+          "leakage_risk": "HIGH-season_to_date",
+          "freshness_sla_hours": 24,
+          "source_trace": "FanGraphs",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "snapshot_ts",
+          "type": "str",
+          "nullable": false,
+          "description": "ISO timestamp",
+          "fallback_rule": "N/A",
+          "leakage_risk": "NONE",
+          "freshness_sla_hours": 0,
+          "source_trace": "internal",
+          "backtest_availability": "YES",
+          "production_readiness": "READY"
+        }
+      ],
+      "anti_leakage_rules": [
+        "IP counts from today's game must be excluded",
+        "snapshot_ts must be < game_start_time",
+        "Closer availability is a real-time signal — must be sourced before first pitch"
+      ],
+      "free_data_sources": [
+        "MLB Stats API (game logs, bullpen usage)",
+        "FanGraphs team bullpen stats"
+      ]
+    },
+    "batting_form": {
+      "contract_name": "BATTING_FORM_PREGAME",
+      "version": "v1.0-design",
+      "purpose": "Capture recent offensive form to supplement season averages",
+      "estimated_brier_improvement": {
+        "low": 0.003,
+        "high": 0.01,
+        "unit": "Brier_points"
+      },
+      "fields": [
+        {
+          "field_name": "team_woba_season",
+          "type": "float",
+          "nullable": true,
+          "description": "Team wOBA season-to-date",
+          "fallback_rule": "league_avg=0.317",
+          "leakage_risk": "HIGH-season_to_date",
+          "freshness_sla_hours": 24,
+          "source_trace": "FanGraphs",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "team_woba_7d",
+          "type": "float",
+          "nullable": true,
+          "description": "Team wOBA last 7 days",
+          "fallback_rule": "team_woba_season",
+          "leakage_risk": "HIGH-rolling_window",
+          "freshness_sla_hours": 4,
+          "source_trace": "BRef/FG",
+          "backtest_availability": "PARTIAL",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "team_woba_14d",
+          "type": "float",
+          "nullable": true,
+          "description": "Team wOBA last 14 days",
+          "fallback_rule": "team_woba_season",
+          "leakage_risk": "HIGH-rolling_window",
+          "freshness_sla_hours": 24,
+          "source_trace": "BRef/FG",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "team_k_pct",
+          "type": "float",
+          "nullable": true,
+          "description": "Team strikeout rate season-to-date",
+          "fallback_rule": "league_avg=0.228",
+          "leakage_risk": "HIGH-season_to_date",
+          "freshness_sla_hours": 24,
+          "source_trace": "FanGraphs",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "team_bb_pct",
+          "type": "float",
+          "nullable": true,
+          "description": "Team walk rate season-to-date",
+          "fallback_rule": "league_avg=0.085",
+          "leakage_risk": "HIGH-season_to_date",
+          "freshness_sla_hours": 24,
+          "source_trace": "FanGraphs",
+          "backtest_availability": "YES",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "vs_hand_split",
+          "type": "str",
+          "nullable": true,
+          "description": "Offense vs R/L pitcher (facing today SP hand)",
+          "fallback_rule": "null",
+          "leakage_risk": "HIGH-requires SP hand + team splits",
+          "freshness_sla_hours": 24,
+          "source_trace": "FG",
+          "backtest_availability": "PARTIAL",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "snapshot_ts",
+          "type": "str",
+          "nullable": false,
+          "description": "ISO timestamp",
+          "fallback_rule": "N/A",
+          "leakage_risk": "NONE",
+          "freshness_sla_hours": 0,
+          "source_trace": "internal",
+          "backtest_availability": "YES",
+          "production_readiness": "READY"
+        }
+      ],
+      "anti_leakage_rules": [
+        "rolling_7d/14d must NOT include today's game",
+        "season stats must be computed from games with date < game_date",
+        "vs_hand_split requires SP hand to be known (not post-game)"
+      ],
+      "free_data_sources": [
+        "FanGraphs team splits (free)",
+        "Baseball Reference"
+      ]
+    },
+    "lineup_injury_proxy": {
+      "contract_name": "LINEUP_INJURY_PROXY_PREGAME",
+      "version": "v1.0-design",
+      "purpose": "Capture lineup completeness and injury uncertainty pre-game",
+      "estimated_brier_improvement": {
+        "low": 0.002,
+        "high": 0.006,
+        "unit": "Brier_points",
+        "note": "High uncertainty; confirmed lineup often unavailable early"
+      },
+      "fields": [
+        {
+          "field_name": "confirmed_lineup_flag",
+          "type": "bool",
+          "nullable": false,
+          "description": "Official lineup submitted",
+          "fallback_rule": "False",
+          "leakage_risk": "MEDIUM-pre-game only",
+          "freshness_sla_hours": 1,
+          "source_trace": "MLB API",
+          "backtest_availability": "NO-real_time",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "missing_key_bats",
+          "type": "int",
+          "nullable": false,
+          "description": "Number of top-3 by wOBA on IL",
+          "fallback_rule": "0",
+          "leakage_risk": "HIGH-requires IL list",
+          "freshness_sla_hours": 2,
+          "source_trace": "MLB API",
+          "backtest_availability": "PARTIAL",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "injury_uncertainty",
+          "type": "float",
+          "nullable": false,
+          "description": "Fraction of lineup spots uncertain",
+          "fallback_rule": "0.0",
+          "leakage_risk": "HIGH-pre-game only",
+          "freshness_sla_hours": 1,
+          "source_trace": "Rotoworld",
+          "backtest_availability": "NO",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "stale_lineup_flag",
+          "type": "bool",
+          "nullable": false,
+          "description": "Last known lineup > 4h before game",
+          "fallback_rule": "True",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 0,
+          "source_trace": "internal",
+          "backtest_availability": "YES",
+          "production_readiness": "COMPUTABLE"
+        },
+        {
+          "field_name": "snapshot_ts",
+          "type": "str",
+          "nullable": false,
+          "description": "ISO timestamp",
+          "fallback_rule": "N/A",
+          "leakage_risk": "NONE",
+          "freshness_sla_hours": 0,
+          "source_trace": "internal",
+          "backtest_availability": "YES",
+          "production_readiness": "READY"
+        }
+      ],
+      "anti_leakage_rules": [
+        "NEVER use post-game lineup or injury updates",
+        "confirmed_lineup_flag: only set True after official submission",
+        "stale_lineup_flag: set True if data > 4h old at bet time"
+      ],
+      "free_data_sources": [
+        "MLB Stats API (lineups)",
+        "Rotoworld (injuries, fragile)"
+      ]
+    },
+    "park_weather": {
+      "contract_name": "PARK_WEATHER_PREGAME",
+      "version": "v1.0-design",
+      "purpose": "Park factor and weather adjustments for run environment",
+      "estimated_brier_improvement": {
+        "low": 0.001,
+        "high": 0.003,
+        "unit": "Brier_points"
+      },
+      "fields": [
+        {
+          "field_name": "park_factor_runs",
+          "type": "float",
+          "nullable": false,
+          "description": "5-year park factor for runs (100=neutral)",
+          "fallback_rule": "100.0",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 8760,
+          "source_trace": "FanGraphs/BRef",
+          "backtest_availability": "YES-stable",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "wind_mph",
+          "type": "float",
+          "nullable": true,
+          "description": "Wind speed (mph)",
+          "fallback_rule": "0.0",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 2,
+          "source_trace": "OpenWeatherMap/NWS",
+          "backtest_availability": "NO",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "wind_direction",
+          "type": "str",
+          "nullable": true,
+          "description": "Wind direction (IN/OUT/Cross/Calm)",
+          "fallback_rule": "CALM",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 2,
+          "source_trace": "OpenWeatherMap",
+          "backtest_availability": "NO",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "temperature_f",
+          "type": "float",
+          "nullable": true,
+          "description": "Temperature at first pitch (°F)",
+          "fallback_rule": "72.0",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 2,
+          "source_trace": "OpenWeatherMap",
+          "backtest_availability": "NO",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "roof_status",
+          "type": "str",
+          "nullable": true,
+          "description": "OPEN/CLOSED/RETRACTABLE",
+          "fallback_rule": "OUTDOOR",
+          "leakage_risk": "LOW",
+          "freshness_sla_hours": 2,
+          "source_trace": "MLB schedule",
+          "backtest_availability": "PARTIAL",
+          "production_readiness": "NEEDS_SOURCING"
+        },
+        {
+          "field_name": "snapshot_ts",
+          "type": "str",
+          "nullable": false,
+          "description": "ISO timestamp",
+          "fallback_rule": "N/A",
+          "leakage_risk": "NONE",
+          "freshness_sla_hours": 0,
+          "source_trace": "internal",
+          "backtest_availability": "YES",
+          "production_readiness": "READY"
+        }
+      ],
+      "anti_leakage_rules": [
+        "Park factor must be computed from prior seasons only",
+        "Weather must be forecast (not actual) at bet time",
+        "Wind direction: categorical, not continuous, to avoid overfitting"
+      ],
+      "free_data_sources": [
+        "OpenWeatherMap free tier",
+        "NWS API (free)",
+        "FanGraphs park factors"
+      ]
+    }
+  },
+  "implementation_notes": [
+    "NO data is fetched in this script — design document only",
+    "MLB Stats API is free and official: https://statsapi.mlb.com",
+    "FanGraphs CSV export is free for research use",
+    "All contracts must enforce snapshot_ts < game_start_time",
+    "Backtest feasibility rating: YES=historical data freely available, PARTIAL=some available, NO=real-time only"
+  ]
+}

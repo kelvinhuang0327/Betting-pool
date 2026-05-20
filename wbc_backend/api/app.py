@@ -9,6 +9,9 @@ from wbc_backend.domain.schemas import AnalyzeRequest
 from wbc_backend.pipeline.service import PredictionService
 from wbc_backend.data.wbc_verification import WBCDataVerificationError
 from wbc_backend.pipeline.deployment_gate import DeploymentGateError
+from wbc_backend.reporting.strategy_replay_runtime_metadata import (
+    prepare_runtime_strategy_metadata_request_kwargs,
+)
 
 
 _service: PredictionService | None = None
@@ -26,6 +29,10 @@ def analyze_game(
     line_total: float = 7.5,
     line_spread_home: float = -1.5,
     force_retrain: bool = False,
+    strategy_id: str | None = None,
+    strategy_metadata_registry: str | None = None,
+    current_lifecycle_state: str | None = None,
+    strict_strategy_metadata: bool = False,
 ) -> dict:
     """
     Analyse a single game and return markdown + JSON reports.
@@ -51,11 +58,25 @@ def analyze_game(
         from wbc_backend.models.trainer import auto_train_models
         auto_train_models(service.config)
 
+    try:
+        strategy_metadata_kwargs = prepare_runtime_strategy_metadata_request_kwargs(
+            strategy_id,
+            registry_path=strategy_metadata_registry,
+            current_lifecycle_state=current_lifecycle_state,
+            strict=strict_strategy_metadata,
+        )
+    except ValueError as exc:
+        return {
+            "error": "STRATEGY_METADATA_INJECTION_BLOCKED",
+            "message": str(exc),
+        }
+
     req = AnalyzeRequest(
         game_id=game_id,
         line_total=line_total,
         line_spread_home=line_spread_home,
         force_retrain=force_retrain,
+        **strategy_metadata_kwargs,
     )
     try:
         res = service.analyze(req)

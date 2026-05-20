@@ -1,0 +1,277 @@
+⚠️  Verification Warning (Bypassed): WBC data verification failed for B07: Starting pitchers have not been officially verified.; Official starting lineup missing; using previous-game lineup fallback.; Snapshot home SP  != model home SP Vance Worley.; Snapshot away SP  != model away SP Eric Pardinho.; Home lineup does not match the verified starting lineup.; Away lineup does not match the verified starting lineup.; Away lineup player Thyago Vieira (DH) is not present in the verified away roster.; Model input still declares MOCK/SEED source. Treat this as unsafe until the authoritative snapshot fully replaces the seed path.
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool B  |  Minute Maid Park, Houston
+  2026-03-09T12:00:00-05:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Brazil (BRA) vs Great Britain (GBR)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    BRA     |    GBR     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    4.90    |    4.80    |     GBR     |
+| 打擊 wRC+          |     65     |     82     |     GBR     |
+| 打線 wOBA          |   0.272    |   0.292    |     GBR     |
+| 守備 DER           |   0.675    |   0.688    |     GBR     |
+| 跑壘 SB%           |    65%     |    68%     |     GBR     |
+| 牛棚 ERA           |    5.50    |    4.80    |     GBR     |
+| 高壓 Clutch wOBA   |   0.262    |   0.282    |     GBR     |
+| Elo Rating         |    1180    |    1250    |     GBR     |
+
+#### 先發投手對決
+
+| 指標           |     Eric Pardinho      |      Vance Worley      |
+|----------------|------------------------|------------------------|
+| ERA            |          4.30          |          4.80          |
+| FIP            |          4.20          |          4.90          |
+| WHIP           |          1.32          |          1.42          |
+| K/9            |          8.5           |          6.0           |
+| BB/9           |          3.5           |          3.0           |
+| Stuff+         |          100           |           82           |
+| 均速 (mph)     |          94.5          |          89.5          |
+| 春訓 ERA       |          3.80          |          4.30          |
+| 近3場 ERA      |          4.00          |          4.50          |
+| vs LHB BA      |         0.250          |         0.275          |
+| vs RHB BA      |         0.245          |         0.280          |
+| 高壓 ERA       |          4.50          |          5.20          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool B
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      BRA       |      GBR       |
+|--------|----------------|----------------|
+|  1局   |  SP Pardinho   |   SP Worley    |
+|  2局   |  SP Pardinho   |   SP Worley    |
+|  3局   |  SP Pardinho   |   SP Worley    |
+|  4局   |   PB Vieira    |  PB Petersen   |
+|  5局   |   PB Vieira    |  PB Petersen   |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |     Thyago Vieira      |    Michael Petersen    |
+|--------------|------------------------|------------------------|
+| ERA          |          4.00          |          5.00          |
+| FIP          |          4.10          |          5.10          |
+| Stuff+       |          108           |           78           |
+| 春訓 ERA     |          3.60          |          4.60          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      BRA |      GBR |
+|---------------|----------|----------|
+| elo           |    40.1% |    59.9% |
+| bayesian      |    35.2% |    64.8% |
+| poisson       |    40.6% |    59.4% |
+| gbm           |    40.6% |    59.4% |
+| monte_carlo   |    48.9% |    51.1% |
+|---------------|----------|----------|
+| **Ensemble**  | **43.3%** | **56.7%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Thyago Vieira`
+- piggyback_home: `Michael Petersen`
+- piggyback_adjustment: `0.0018`
+- bullpen_fatigue_away_3d: `128`
+- bullpen_fatigue_home_3d: `128`
+- bp_penalty_away: `0.0128`
+- bp_penalty_home: `0.0128`
+- roster_strength_away: `40`
+- roster_strength_home: `55`
+- rsi_adjustment: `-0.006`
+- collapse_shift: `0.0`
+- chemistry_bonus: `0.0006`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.4283`
+- pre_adjust_home: `0.5717`
+- post_adjust_away: `0.4325`
+- post_adjust_home: `0.5675`
+
+#### 比分預測
+
+| 排名 | 比分 (BRA-GBR) | 機率     |
+|------|----------------------|----------|
+|  1   |         4-5          |     4.3% |
+|  2   |         3-4          |     3.8% |
+|  3   |         5-4          |     3.7% |
+|  4   |         5-6          |     3.5% |
+|  5   |         6-5          |     3.2% |
+
+**最可能比分 (Most Likely Score):** `4-5` (BRA-GBR)
+
+**預測總分:** 10.0 分
+
+#### 多維度情境分析 (Multi-Scenario Analysis)
+
+> [!NOTE]
+> 基於 WBC 2026 模擬引擎輸出的三種情境預案：
+
+| 情境 (Scenario) | 預計總分 | 特徵描述 |
+|:---|:---:|:---|
+| **中性基準 (Baseline)** | 10 | 雙方發揮正常，符合實力常態分佈。 |
+| **投手戰 (Pitching Duel)** | 7 | 先發投手壓制力極大化，且牛棚銜接完美。 |
+| **打線爆發 (Explosion)** | 15 | 觸發連續得分鏈，弱方防禦體系崩潰。 |
+
+**模擬平均局數:** 9.2 局 (含 Mercy Rule 影響)
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     85.0% |      15.0% |
+|         7.5 |     73.5% |      26.5% |
+|         8.5 |     64.6% |      35.4% |
+|         9.5 |     50.5% |      49.5% |
+
+**延長賽機率 (Extra Innings):** 14.5%
+
+**爆冷機率 (BRA 獲勝):** 43.3%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ❌ **GBR** @ 1.72 (TSL)
+  - 隱含機率: 58.1% | 模型真實機率: 56.8%
+  - 期望值 (EV): -2.4% → **PASS**
+- ❌ **BRA** @ 2.20 (TSL)
+  - 隱含機率: 45.5% | 模型真實機率: 43.2%
+  - 期望值 (EV): -4.8% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **GBR (-1.5)** @ 2.15 (TSL)
+  - 隱含機率: 46.5% | 模型真實機率: 62.1%
+  - 期望值 (EV): +33.6% → **MEDIUM (Market Restricted)**
+- ❌ **BRA (+1.5)** @ 1.72 (TSL)
+  - 隱含機率: 58.1% | 模型真實機率: 42.1%
+  - 期望值 (EV): -27.7% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 8.5** @ 1.85 (TSL)
+  - EV: +19.5% → **MEDIUM (Market Restricted)**
+- ❌ **Under 8.5** @ 1.95 (TSL)
+  - EV: -26.5% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ❌ **GBR** @ 1.75 (TSL)
+  - 隱含機率: 57.1% | 模型真實機率: 55.5%
+  - 期望值 (EV): -3.0% → **PASS**
+- ❌ **BRA** @ 2.15 (TSL)
+  - 隱含機率: 46.5% | 模型真實機率: 44.5%
+  - 期望值 (EV): -4.2% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT BRA_Over 3.5** @ 1.85 (TSL)
+  - EV: +25.8% → **SECONDARY_VALIDATION_REQUIRED**
+- ✅ **TT GBR_Over 3.5** @ 1.85 (TSL)
+  - EV: +25.0% → **STRONG**
+- ❌ **TT GBR_Under 3.5** @ 1.95 (TSL)
+  - EV: -27.4% → **PASS**
+- ❌ **TT BRA_Under 3.5** @ 1.95 (TSL)
+  - EV: -28.3% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL GBR (-1.5) @ 2.15 (TSL)
+- True Probability: 62.1%
+- Implied Probability: 46.5%
+- **EV: +33.6%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.2920 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 GBR 為優勢方 (56.7%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool B，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: GBR、BRA 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: BRA 陣容完整度僅 40%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 📉 **牛棚疲勞**: BRA 牛棚近三日用球量過高，模型已加入 19.2% 的失分懲罰係數。
+- ⚖️ **盤口建議 (讓分)**: 模擬顯示兩隊分差僅 0.2 分，強隊穿盤 (-1.5) 風險較高，建議優先考慮 **受讓方 (+1.5)**。
+- 🧨 **盤口建議 (大小分)**: 預計總分高達 10.0，且打線擁有卓越的「关键打擊率」(Clutch wOBA 0.292)，強烈建議觀察 **大分 (Over)**。
+- 💰 **價值交易點**: TT GBR_Over 賠率為 1.85，隱含勝率僅 54.0%，但 AI 計算結果為 67.5%，存在 25.0% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool B 階段上限 65 球，Eric Pardinho 與 Vance Worley 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Thyago Vieira (ERA 4.00) vs Michael Petersen (ERA 5.00) — BRA 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: BRA 近 3 日牛棚用球數較高 (BRA: 128, GBR: 128)，後段比賽可能出現失分風險。
+5. 🔑 **打線核心對決**: Osvaldo Carvalho (wOBA 0.301, SwStr% vs 98mph+ 34.0%) vs Ivan Johnson (wOBA 0.321, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Eric Pardinho, Thyago Vieira, Jazz Chisholm Jr., Trayce Thompson, Harry Ford，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: GBR 高出 70 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      BRA       |      GBR       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       40       |       55       |
+| MLB 球員數        |       1        |       4        |
+| 磨合度 Chemistry  |      0.75      |      0.72      |
+
+**BRA 確認出賽球星**: Eric Pardinho, Thyago Vieira
+
+**GBR 確認出賽球星**: Jazz Chisholm Jr., Trayce Thompson, Harry Ford
+
+> ⚠️ **陣容差距**: GBR RSI 高出 15 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 3.00% of bankroll ($3,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +25.6%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | GBR | 2.15 | +33.6% | 0.50% | $500 |
+| 2 | TT | BRA_Over | 1.85 | +25.8% | 0.50% | $500 |
+| 3 | TT | GBR_Over | 1.85 | +25.0% | 1.50% | $1,500 |
+| 4 | OU | Over | 1.85 | +19.5% | 0.50% | $500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

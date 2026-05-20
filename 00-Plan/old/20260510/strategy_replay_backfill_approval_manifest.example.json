@@ -1,0 +1,14 @@
+{
+  "manifest_version": "p9-1.0",
+  "reviewer": "replay-ops-reviewer",
+  "approval_reason": "Approve fallback-only replay candidates after manual review of provenance and postgame joins.",
+  "timestamp": "2026-05-10T00:00:00Z",
+  "entries": [
+    {
+      "source_ref": "fixture:prediction:2",
+      "approved_fields": [
+        "canonical_outcome_key_fallback"
+      ]
+    }
+  ]
+}

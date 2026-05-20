@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Optional
 from orchestrator import db
 from orchestrator import execution_policy
+from orchestrator.provider_audit_guard import AuditGuard, AuditGuardBlockedError
 
 logger = logging.getLogger(__name__)
 
@@ -83,6 +84,39 @@ def _assert_llm_execution_allowed(provider: str, runner: str) -> None:
             manual_override=execution_policy.is_manual_run(os.environ),
         )["message"])
     execution_policy.record_llm_call(runner=runner, provider=provider, context="worker_provider_boundary")
+
+    # Phase 36: Usage Budget Guard — HARD_CAP 時封鎖 Worker 外部 AI
+    try:
+        from orchestrator.usage_budget_guard import is_provider_allowed
+        _budget_allowed, _budget_reason = is_provider_allowed("worker", provider, hours=24)
+        if not _budget_allowed:
+            from orchestrator.llm_usage_logger import log_usage
+            log_usage(
+                runner=runner,
+                role="worker",
+                provider=provider,
+                blocked=True,
+                block_reason=_budget_reason,
+                source_file="orchestrator/worker_tick.py",
+                source_function="_assert_llm_execution_allowed",
+                entrypoint="budget_guard_block",
+            )
+            from orchestrator.llm_audit import write_blocked
+            write_blocked(
+                runner=runner,
+                provider=provider,
+                block_reason=_budget_reason,
+                trigger_source="usage_budget_guard",
+            )
+            raise RuntimeError(
+                f"[WorkerTick] usage budget hard cap blocked: {_budget_reason}"
+            )
+    except RuntimeError:
+        raise
+    except Exception as _bg_exc:  # noqa: BLE001
+        logger.warning(
+            "[WorkerTick] Budget guard check failed (non-fatal, proceeding): %s", _bg_exc
+        )
 
 
 def _log_exec_result(
@@ -311,20 +345,39 @@ def execute_task_with_claude(task: dict) -> dict:
     ]
     logger.debug("[Worker] claude cmd: %s", " ".join(cmd))
 
-    # ── 執行 Claude ──────────────────────────────────────────────────────────
+    # ── 執行 Claude（AuditGuard fail-closed 包裹）─────────────────────────────
     try:
-        proc = subprocess.run(
-            cmd,
-            input=prompt_content,
-            capture_output=True,
-            text=True,
-            timeout=timeout_sec,
-            cwd=project_root,
+        audit = AuditGuard(
+            runner="worker_tick",
+            provider="claude",
+            task_id=task_id,
+            command=" ".join(cmd),
+            trigger_source="worker_execute",
         )
-    except subprocess.TimeoutExpired as exc:
-        raise RuntimeError(
-            f"[Claude] task #{task_id} timed out after {timeout_sec}s"
-        ) from exc
+    except AuditGuardBlockedError as exc:
+        raise RuntimeError(f"[Claude] audit guard blocked: {exc.block_reason}") from exc
+
+    with audit:
+        try:
+            proc = subprocess.run(
+                cmd,
+                input=prompt_content,
+                capture_output=True,
+                text=True,
+                timeout=timeout_sec,
+                cwd=project_root,
+            )
+        except subprocess.TimeoutExpired as exc:
+            audit.set_result(success=False, error=f"timeout after {timeout_sec}s")
+            raise RuntimeError(
+                f"[Claude] task #{task_id} timed out after {timeout_sec}s"
+            ) from exc
+
+        raw_output = (proc.stdout or "") + (proc.stderr or "")
+        if proc.returncode != 0:
+            audit.set_result(success=False, error=f"exited {proc.returncode}: {(proc.stderr or '')[:200]}")
+        else:
+            audit.set_result(success=True, raw_usage_excerpt=raw_output[:300])
 
     # ── 讀取輸出 ────────────────────────────────────────────────────────────
     completed_text = proc.stdout or ""
@@ -423,20 +476,39 @@ def execute_task_with_codex(task: dict) -> dict:
     ]
     logger.debug("[Worker] codex cmd: %s", " ".join(cmd))
 
-    # ── 執行 Codex ──────────────────────────────────────────────────────────
+    # ── 執行 Codex（AuditGuard fail-closed 包裹）─────────────────────────────
     try:
-        proc = subprocess.run(
-            cmd,
-            input=prompt_content,
-            capture_output=True,
-            text=True,
-            timeout=timeout_sec,
-            cwd=project_root,
+        audit = AuditGuard(
+            runner="worker_tick",
+            provider="codex",
+            task_id=task_id,
+            command=" ".join(cmd),
+            trigger_source="worker_execute",
         )
-    except subprocess.TimeoutExpired as exc:
-        raise RuntimeError(
-            f"[Codex] task #{task_id} timed out after {timeout_sec}s"
-        ) from exc
+    except AuditGuardBlockedError as exc:
+        raise RuntimeError(f"[Codex] audit guard blocked: {exc.block_reason}") from exc
+
+    with audit:
+        try:
+            proc = subprocess.run(
+                cmd,
+                input=prompt_content,
+                capture_output=True,
+                text=True,
+                timeout=timeout_sec,
+                cwd=project_root,
+            )
+        except subprocess.TimeoutExpired as exc:
+            audit.set_result(success=False, error=f"timeout after {timeout_sec}s")
+            raise RuntimeError(
+                f"[Codex] task #{task_id} timed out after {timeout_sec}s"
+            ) from exc
+
+        raw_output = (proc.stdout or "") + (proc.stderr or "")
+        if proc.returncode != 0:
+            audit.set_result(success=False, error=f"exited {proc.returncode}: {(proc.stderr or '')[:200]}")
+        else:
+            audit.set_result(success=True, raw_usage_excerpt=raw_output[:300])
 
     # ── 讀取輸出 ────────────────────────────────────────────────────────────
     completed_text = ""

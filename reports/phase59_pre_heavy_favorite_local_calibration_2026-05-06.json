@@ -1,0 +1,170 @@
+{
+  "phase_version": "phase59_pre_heavy_favorite_local_calibration_v1",
+  "run_timestamp": "2026-05-06T02:35:34.101636+00:00",
+  "audit_hash": "fe71fbf6d62bafe3",
+  "input_jsonl_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/mlb_2025_per_game_predictions.jsonl",
+  "input_audit_hash": "sha256:4ea8134872cda018a71544a765f94e5edf0e2dc9b3ae1f8c410c3445dc5c7696",
+  "sample_size": 2025,
+  "date_range_start": "2025-04-27",
+  "date_range_end": "2025-09-28",
+  "validation_strategy": "rolling_monthly_oof",
+  "train_months": [
+    "2025-04",
+    "2025-05"
+  ],
+  "eval_months": [
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09"
+  ],
+  "n_train": 464,
+  "n_eval": 1561,
+  "baseline": {
+    "name": "baseline",
+    "overall_bss": 0.021172052906598293,
+    "overall_ece": 0.02588253,
+    "heavy_fav_ece": 0.07787694,
+    "heavy_fav_n": 35,
+    "high_conf_bss": 0.21473018017851242,
+    "high_conf_n": 121,
+    "phase45_failure_segment_count": 1,
+    "bootstrap_ci_lower": 0.0,
+    "bootstrap_ci_upper": 0.0,
+    "bootstrap_prob_improvement": 0.0,
+    "bootstrap_significant": false,
+    "buckets": [
+      {
+        "bucket": "0.50-0.60",
+        "n": 1206,
+        "ece": 0.02987557,
+        "bss": -0.0026343851250414385
+      },
+      {
+        "bucket": "0.60-0.70",
+        "n": 320,
+        "ece": 0.00514685,
+        "bss": 0.07605572879999989
+      },
+      {
+        "bucket": "0.70-0.80",
+        "n": 35,
+        "ece": 0.07787694,
+        "bss": 0.3396802809142857
+      }
+    ]
+  },
+  "isotonic": {
+    "name": "isotonic",
+    "overall_bss": 0.015020268707371609,
+    "overall_ece": 0.02258306,
+    "heavy_fav_ece": 0.10608591,
+    "heavy_fav_n": 35,
+    "high_conf_bss": 0.17720620543971144,
+    "high_conf_n": 121,
+    "phase45_failure_segment_count": 1,
+    "bootstrap_ci_lower": -0.015021949341863405,
+    "bootstrap_ci_upper": 0.003059243407009027,
+    "bootstrap_prob_improvement": 0.077,
+    "bootstrap_significant": false,
+    "buckets": [
+      {
+        "bucket": "0.50-0.60",
+        "n": 1206,
+        "ece": 0.02108445,
+        "bss": -0.0051101456296691605
+      },
+      {
+        "bucket": "0.60-0.70",
+        "n": 320,
+        "ece": 0.04669259,
+        "bss": 0.05562492802303465
+      },
+      {
+        "bucket": "0.70-0.80",
+        "n": 35,
+        "ece": 0.10608591,
+        "bss": 0.3374142318347685
+      }
+    ]
+  },
+  "platt": {
+    "name": "platt",
+    "overall_bss": 0.019405246638967033,
+    "overall_ece": 0.01487157,
+    "heavy_fav_ece": 0.17418837,
+    "heavy_fav_n": 35,
+    "high_conf_bss": 0.16717052732526594,
+    "high_conf_n": 121,
+    "phase45_failure_segment_count": 1,
+    "bootstrap_ci_lower": -0.008397120498226385,
+    "bootstrap_ci_upper": 0.004877475233628248,
+    "bootstrap_prob_improvement": 0.28,
+    "bootstrap_significant": false,
+    "buckets": [
+      {
+        "bucket": "0.50-0.60",
+        "n": 1206,
+        "ece": 0.01206914,
+        "bss": 0.00043164575734144783
+      },
+      {
+        "bucket": "0.60-0.70",
+        "n": 320,
+        "ece": 0.04771302,
+        "bss": 0.06652997979289244
+      },
+      {
+        "bucket": "0.70-0.80",
+        "n": 35,
+        "ece": 0.17418837,
+        "bss": 0.24232661960994517
+      }
+    ]
+  },
+  "bucket_metrics": [
+    {
+      "bucket": "0.50-0.60",
+      "n": 1206,
+      "baseline_ece": 0.02987557,
+      "isotonic_ece": 0.02108445,
+      "platt_ece": 0.01206914,
+      "baseline_bss": -0.0026343851250414385,
+      "isotonic_bss": -0.0051101456296691605,
+      "platt_bss": 0.00043164575734144783
+    },
+    {
+      "bucket": "0.60-0.70",
+      "n": 320,
+      "baseline_ece": 0.00514685,
+      "isotonic_ece": 0.04669259,
+      "platt_ece": 0.04771302,
+      "baseline_bss": 0.07605572879999989,
+      "isotonic_bss": 0.05562492802303465,
+      "platt_bss": 0.06652997979289244
+    },
+    {
+      "bucket": "0.70-0.80",
+      "n": 35,
+      "baseline_ece": 0.07787694,
+      "isotonic_ece": 0.10608591,
+      "platt_ece": 0.17418837,
+      "baseline_bss": 0.3396802809142857,
+      "isotonic_bss": 0.3374142318347685,
+      "platt_bss": 0.24232661960994517
+    }
+  ],
+  "negative_control": {
+    "shuffled_isotonic_heavy_fav_ece": 0.10668014,
+    "shuffled_platt_heavy_fav_ece": 0.20903791,
+    "baseline_heavy_fav_ece": 0.07787694,
+    "sanity_ok": true
+  },
+  "gate": "BULLPEN_HYPOTHESIS_RETAINED",
+  "gate_rationale": "Neither isotonic (ECE 0.1061) nor Platt (ECE 0.1742) substantially improves heavy_fav ECE vs baseline (0.0779). Calibration layer is not the bottleneck.",
+  "next_step_recommendation": "Proceed to Phase59: acquire real bullpen boxscore / relief appearance data. Bullpen feature hypothesis remains the primary candidate explanation for heavy_favorite / high_confidence ECE failures.",
+  "candidate_patch_created": false,
+  "production_modified": false,
+  "alpha_modified": false,
+  "diagnostic_only": true
+}

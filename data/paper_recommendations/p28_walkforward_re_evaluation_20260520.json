@@ -1,0 +1,95 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "index_fallback_used": false,
+  "generated_at": "2026-05-20T05:00:36.506242+00:00",
+  "date": "2026-05-20",
+  "artifact": "P28_WALKFORWARD_RE_EVALUATION",
+  "n_windows": 5,
+  "total_test_games": 2020,
+  "baseline": {
+    "label": "Baseline (7-feat)",
+    "n": 2020,
+    "brier": 0.245105,
+    "logloss": 0.683099,
+    "accuracy": 0.5545,
+    "ece": 0.0287,
+    "brier_delta_vs_baseline": -0.003598,
+    "improvement_flag": "USEFUL_IMPROVEMENT",
+    "overfit_risk": false
+  },
+  "candidate_A": {
+    "label": "CandA (temp_scale)",
+    "n": 2020,
+    "brier": 0.245535,
+    "logloss": 0.683982,
+    "accuracy": 0.5545,
+    "ece": 0.0299,
+    "brier_delta_vs_baseline": -0.003168,
+    "improvement_flag": "USEFUL_IMPROVEMENT",
+    "overfit_risk": false,
+    "brier_delta_vs_reeval_baseline": 0.00043,
+    "improvement_vs_reeval": false
+  },
+  "candidate_B": {
+    "label": "CandB (13-feat expand)",
+    "n": 2020,
+    "brier": 0.24559,
+    "logloss": 0.684085,
+    "accuracy": 0.547,
+    "ece": 0.0332,
+    "brier_delta_vs_baseline": -0.003113,
+    "improvement_flag": "USEFUL_IMPROVEMENT",
+    "overfit_risk": false,
+    "brier_delta_vs_reeval_baseline": 0.000485,
+    "improvement_vs_reeval": false
+  },
+  "candidate_C": {
+    "label": "CandC (mkt_shrink)",
+    "n": 2020,
+    "brier": 0.245299,
+    "logloss": 0.683393,
+    "accuracy": 0.5535,
+    "ece": 0.0345,
+    "brier_delta_vs_baseline": -0.003404,
+    "improvement_flag": "USEFUL_IMPROVEMENT",
+    "overfit_risk": false,
+    "brier_delta_vs_reeval_baseline": 0.000194,
+    "improvement_vs_reeval": false
+  },
+  "best_candidate": "C_market_shrinkage",
+  "ranked_candidates": [
+    [
+      "C_market_shrinkage",
+      0.245299
+    ],
+    [
+      "A_temperature_scaling",
+      0.245535
+    ],
+    [
+      "B_feature_expansion",
+      0.24559
+    ]
+  ],
+  "primary_target_brier": 0.24,
+  "minimum_useful_delta": -0.002,
+  "target_met": false,
+  "minimum_useful_met": true,
+  "final_classification": "P28_MODEL_QUALITY_WEAK_IMPROVEMENT_DIAGNOSTIC_ONLY",
+  "champion": "fixed_edge_5pct",
+  "champion_status": "PRESERVED",
+  "promotion_frozen": true,
+  "note": "All candidates are paper-only diagnostic. No production deployment. No champion replacement.",
+  "re_eval_baseline_brier": 0.245105,
+  "reported_baseline_brier": 0.248703,
+  "baseline_discrepancy_note": "Re-evaluated baseline (0.245105) uses simplified LogReg with 7 features, different from reported Orchestrator baseline (0.248703). None of A/B/C improve over re-evaluated baseline. The discrepancy suggests the Orchestrator adds noise vs simple LogReg.",
+  "corrected_final_classification": "P28_MODEL_REPAIR_NO_IMPROVEMENT",
+  "corrected_interpretation": "All candidates are within +0.0005 of re-evaluated baseline. No genuine model improvement achieved. Key finding: simple 7-feat LogReg (0.2451) outperforms full Orchestrator (0.2487). True improvement requires external pitcher/batting data."
+}

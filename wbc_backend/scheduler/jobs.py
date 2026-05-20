@@ -78,7 +78,7 @@ class AutoScheduler:
         # ── Data Refresh (hourly) ────────────────────────
         def data_refresh():
             from wbc_backend.data.validator import auto_fetch_missing_data
-            auto_fetch_missing_data("MLB_2025", self.config)
+            auto_fetch_missing_data("WBC_2026", self.config)
 
         self.add_task("data_refresh", sc.data_refresh_interval_hours * 3600, data_refresh)
 
@@ -125,6 +125,29 @@ class AutoScheduler:
                 logger.info("[SCHEDULER] Postgame sync: %d new games recorded", len(synced))
 
         self.add_task("postgame_sync", sc.postgame_sync_interval_hours * 3600, postgame_sync)
+
+        # ── Live Odds Capture (every 15 min) — decision-time + closing odds ──
+        # Captures MLB pregame odds with smart scheduling to build genuine
+        # timelines with opening/decision/pregame/closing slots for CLV research.
+        def live_odds_capture():
+            from wbc_backend.mlb_data.odds_capture_scheduler import run_scheduled_capture
+            result = run_scheduled_capture()
+            status = result.get("status", "unknown")
+            if status == "captured":
+                cap = result.get("result", {})
+                logger.info(
+                    "[SCHEDULER] Live odds capture: games_updated=%d, snapshots_added=%d",
+                    cap.get("games_updated", 0),
+                    cap.get("snapshots_added", 0),
+                )
+            else:
+                logger.info("[SCHEDULER] Live odds capture: %s", status)
+
+        self.add_task(
+            "live_odds_capture",
+            sc.odds_capture_interval_minutes * 60,
+            live_odds_capture,
+        )
 
         # ── ML Artifact Rebuild (weekly) — gate artifact 保鮮 ──
         def artifact_rebuild():

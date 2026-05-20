@@ -1,0 +1,41 @@
+{
+  "task": "P12-B",
+  "title": "Blocked-State Governance Contract",
+  "date": "2026-05-28T00:00:00+00:00",
+  "paper_only": true,
+  "live_api_called": false,
+  "production_write": false,
+  "network_call": false,
+  "crawler_modified": false,
+  "blocked_reasons": [
+    "CEO_DECISION_PENDING",
+    "API_KEY_MISSING",
+    "NO_CLOSING_LINE",
+    "FORWARD_ACCUMULATION_INSUFFICIENT",
+    "CLV_NOT_READY",
+    "PROMOTION_FROZEN"
+  ],
+  "allowed_actions": [
+    "CEO_FOLLOWUP",
+    "PAPER_ONLY_MONITORING",
+    "FORWARD_COVERAGE_READINESS_CHECK",
+    "API_KEY_READINESS_CHECK",
+    "REPORT_ONLY"
+  ],
+  "forbidden_actions": [
+    "OPTIMIZER_PROMOTION",
+    "PRODUCTION_PROPOSAL",
+    "LIVE_ODDS_WRITE",
+    "TSL_CRAWLER_MODIFICATION",
+    "HISTORICAL_API_CALL_WITHOUT_APPROVAL",
+    "PROFITABILITY_CLAIM"
+  ],
+  "is_blocked": true,
+  "p13_allowed": false,
+  "governance_module": "wbc_backend/recommendation/blocked_state_governance.py",
+  "test_file": "tests/test_blocked_state_governance.py",
+  "test_count": 28,
+  "champion_strategy": "fixed_edge_5pct",
+  "promotion_frozen": true,
+  "annotation": "paper_only=true。此為 P12-B blocked-state governance contract。所有 forbidden actions 在 blocked 狀態下均不得執行。不宣稱任何策略具獲利能力。"
+}

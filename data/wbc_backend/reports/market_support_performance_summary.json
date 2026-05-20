@@ -1,0 +1,14 @@
+{
+  "group_by": "market_support_primary",
+  "n_games": 1,
+  "groups": {
+    "tsl_direct": {
+      "games": 1,
+      "winner_accuracy": 1.0,
+      "avg_brier": 0.069432,
+      "avg_log_loss": 0.305846,
+      "avg_total_score_error": 0.13
+    }
+  },
+  "decision_note": "Market support sample remains thin; treat recent support trends as observational rather than deployable."
+}

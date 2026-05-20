@@ -1,0 +1,279 @@
+⚠️  Verification Warning (Bypassed): WBC data verification failed for A08: Starting pitchers have not been officially verified.; Official starting lineup missing; using previous-game lineup fallback.; Snapshot home SP  != model home SP Jose De León.; Snapshot away SP  != model away SP Yariel Rodríguez.; Home SP Jose De León is not present in the verified home roster.; Home lineup does not match the verified starting lineup.; Away lineup does not match the verified starting lineup.; Home lineup player Francisco Lindor is not present in the verified home roster.; Home lineup player Carlos Correa is not present in the verified home roster.; Away lineup player Luis Robert is not present in the verified away roster.; Away lineup player Randy Arozarena (CUB) is not present in the verified away roster.; Model input still declares MOCK/SEED source. Treat this as unsafe until the authoritative snapshot fully replaces the seed path.
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool A  |  Estadio Hiram Bithorn, San Juan
+  2026-03-09T19:00:00-04:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置)
+  💧 盤口流動性 (Liquidity): LOW (盤口深度未知)
+======================================================================
+
+## Match: Cuba (CUB) vs Puerto Rico (PUR)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    CUB     |    PUR     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    4.00    |    3.45    |     PUR     |
+| 打擊 wRC+          |    105     |    122     |     PUR     |
+| 打線 wOBA          |   0.318    |   0.345    |     PUR     |
+| 守備 DER           |   0.705    |   0.718    |     PUR     |
+| 跑壘 SB%           |    74%     |    76%     |     PUR     |
+| 牛棚 ERA           |    3.80    |    3.10    |     PUR     |
+| 高壓 Clutch wOBA   |   0.310    |   0.340    |     PUR     |
+| Elo Rating         |    1400    |    1500    |     PUR     |
+
+#### 先發投手對決
+
+| 指標           |    Yariel Rodríguez    |      Jose De León      |
+|----------------|------------------------|------------------------|
+| ERA            |          4.20          |          3.80          |
+| FIP            |          4.10          |          3.90          |
+| WHIP           |          1.32          |          1.28          |
+| K/9            |          8.2           |          9.0           |
+| BB/9           |          3.5           |          3.2           |
+| Stuff+         |          102           |          105           |
+| 均速 (mph)     |          95.0          |          95.0          |
+| 春訓 ERA       |          3.80          |          3.40          |
+| 近3場 ERA      |          4.00          |          3.50          |
+| vs LHB BA      |         0.255          |         0.250          |
+| vs RHB BA      |         0.248          |         0.240          |
+| 高壓 ERA       |          4.50          |          4.00          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool A
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      CUB       |      PUR       |
+|--------|----------------|----------------|
+|  1局   |  SP Rodríguez  |    SP León     |
+|  2局   |  SP Rodríguez  |    SP León     |
+|  3局   |  SP Rodríguez  |    SP León     |
+|  4局   |    PB López    |    PB Díaz     |
+|  5局   |    PB López    |    PB Díaz     |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |       Yoan López       |       Edwin Díaz       |
+|--------------|------------------------|------------------------|
+| ERA          |          4.50          |          2.80          |
+| FIP          |          4.30          |          2.60          |
+| Stuff+       |           98           |          135           |
+| 春訓 ERA     |          4.00          |          2.00          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      CUB |      PUR |
+|---------------|----------|----------|
+| elo           |    32.9% |    67.1% |
+| bayesian      |    38.1% |    61.9% |
+| poisson       |    31.7% |    68.3% |
+| gbm           |    35.7% |    64.3% |
+| monte_carlo   |    39.7% |    60.3% |
+|---------------|----------|----------|
+| **Ensemble**  | **34.9%** | **65.1%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Yoan López`
+- piggyback_home: `Edwin Díaz`
+- piggyback_adjustment: `-0.003`
+- bullpen_fatigue_away_3d: `64`
+- bullpen_fatigue_home_3d: `128`
+- bp_penalty_away: `0.0064`
+- bp_penalty_home: `0.0128`
+- roster_strength_away: `72`
+- roster_strength_home: `88`
+- rsi_adjustment: `-0.0064`
+- collapse_shift: `0.0`
+- chemistry_bonus: `-0.001`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.3354`
+- pre_adjust_home: `0.6646`
+- post_adjust_away: `0.3495`
+- post_adjust_home: `0.6505`
+
+#### 比分預測
+
+| 排名 | 比分 (CUB-PUR) | 機率     |
+|------|----------------------|----------|
+|  1   |         3-4          |     5.1% |
+|  2   |         2-3          |     4.5% |
+|  3   |         3-5          |     4.5% |
+|  4   |         4-5          |     4.2% |
+|  5   |         4-3          |     4.2% |
+
+**最可能比分 (Most Likely Score):** `3-4` (CUB-PUR)
+
+**預測總分:** 8.5 分
+
+#### 多維度情境分析 (Multi-Scenario Analysis)
+
+> [!NOTE]
+> 基於 WBC 2026 模擬引擎輸出的三種情境預案：
+
+| 情境 (Scenario) | 預計總分 | 特徵描述 |
+|:---|:---:|:---|
+| **中性基準 (Baseline)** | 8 | 雙方發揮正常，符合實力常態分佈。 |
+| **投手戰 (Pitching Duel)** | 6 | 先發投手壓制力極大化，且牛棚銜接完美。 |
+| **打線爆發 (Explosion)** | 13 | 觸發連續得分鏈，弱方防禦體系崩潰。 |
+
+**模擬平均局數:** 9.2 局 (含 Mercy Rule 影響)
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     73.2% |      26.8% |
+|         7.5 |     56.6% |      43.4% |
+|         8.5 |     45.4% |      54.6% |
+|         9.5 |     33.8% |      66.2% |
+
+**延長賽機率 (Extra Innings):** 12.5%
+
+**爆冷機率 (CUB 獲勝):** 34.9%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ✅ **PUR** @ 1.65 (TSL)
+  - 隱含機率: 60.6% | 模型真實機率: 65.0%
+  - 期望值 (EV): +7.3% → **STRONG**
+- ❌ **CUB** @ 2.30 (TSL)
+  - 隱含機率: 43.5% | 模型真實機率: 34.9%
+  - 期望值 (EV): -19.6% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **PUR (-1.5)** @ 2.10 (TSL)
+  - 隱含機率: 47.6% | 模型真實機率: 63.5%
+  - 期望值 (EV): +33.3% → **MEDIUM (Market Restricted)**
+- ❌ **CUB (+1.5)** @ 1.75 (TSL)
+  - 隱含機率: 57.1% | 模型真實機率: 40.8%
+  - 期望值 (EV): -28.5% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Over 7.5** @ 1.85 (TSL)
+  - EV: +4.7% → **MEDIUM (Market Restricted)**
+- ❌ **Under 7.5** @ 1.95 (TSL)
+  - EV: -15.4% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **PUR** @ 1.68 (TSL)
+  - 隱含機率: 59.5% | 模型真實機率: 64.0%
+  - 期望值 (EV): +7.5% → **STRONG**
+- ❌ **CUB** @ 2.25 (TSL)
+  - 隱含機率: 44.4% | 模型真實機率: 36.0%
+  - 期望值 (EV): -19.0% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT PUR_Over 3.5** @ 1.85 (TSL)
+  - EV: +13.9% → **STRONG**
+- ❌ **TT CUB_Under 3.5** @ 1.95 (TSL)
+  - EV: -2.1% → **PASS**
+- ❌ **TT CUB_Over 3.5** @ 1.85 (TSL)
+  - EV: -7.9% → **PASS**
+- ❌ **TT PUR_Under 3.5** @ 1.95 (TSL)
+  - EV: -25.9% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL PUR (-1.5) @ 2.10 (TSL)
+- True Probability: 63.5%
+- Implied Probability: 47.6%
+- **EV: +33.3%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3024 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 PUR 為優勢方 (65.1%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool A，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: PUR、CUB 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚖️ **盤口建議 (讓分)**: 模擬顯示兩隊分差僅 0.5 分，強隊穿盤 (-1.5) 風險較高，建議優先考慮 **受讓方 (+1.5)**。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 8.5 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+- 💰 **價值交易點**: TT PUR_Over 賠率為 1.85，隱含勝率僅 54.0%，但 AI 計算結果為 61.6%，存在 13.9% 的期望值邊際 (Edge)。
+- 💰 **價值交易點**: F5 PUR 賠率為 1.68，隱含勝率僅 59.5%，但 AI 計算結果為 64.0%，存在 7.5% 的期望值邊際 (Edge)。
+- 💰 **價值交易點**: ML PUR 賠率為 1.65，隱含勝率僅 60.6%，但 AI 計算結果為 65.0%，存在 7.3% 的期望值邊際 (Edge)。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool A 階段上限 65 球，Yariel Rodríguez 與 Jose De León 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Yoan López (ERA 4.50) vs Edwin Díaz (ERA 2.80) — PUR 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: PUR 近 3 日牛棚用球數較高 (CUB: 64, PUR: 128)，後段比賽可能出現失分風險。
+5. 🔑 **打線核心對決**: Yoel Yanqui (wOBA 0.347, SwStr% vs 98mph+ 34.0%) vs MJ Melendez (wOBA 0.374, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Yoán Moncada, Luis Robert, Raidel Martinez, Francisco Lindor, Carlos Correa, Edwin Díaz 等 8 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: PUR 高出 100 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      CUB       |      PUR       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       72       |       88       |
+| MLB 球員數        |       3        |       14       |
+| 磨合度 Chemistry  |      0.80      |      0.85      |
+
+**CUB 確認出賽球星**: Yoán Moncada, Luis Robert, Raidel Martinez
+**CUB 待確認球星**:  Livan Moinelo
+
+**PUR 確認出賽球星**: Francisco Lindor, Carlos Correa, Edwin Díaz, Marcus Stroman, Seth Lugo
+**PUR 待確認球星**:  Nolan Arenado
+
+> ⚠️ **陣容差距**: PUR RSI 高出 16 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 4
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +13.1%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | PUR | 2.10 | +33.3% | 0.50% | $500 |
+| 2 | TT | PUR_Over | 1.85 | +13.9% | 1.50% | $1,500 |
+| 3 | F5 | PUR | 1.68 | +7.5% | 1.50% | $1,500 |
+| 4 | ML | PUR | 1.65 | +7.3% | 0.50% | $500 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

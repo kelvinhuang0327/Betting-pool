@@ -1,0 +1,131 @@
+{
+  "artifact": "P24_MARKET_LEVEL_ROBUSTNESS",
+  "phase": "P24_CLV_ROBUSTNESS_DIAGNOSTIC_ONLY",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "production_proposal": false,
+  "bootstrap_n": 5000,
+  "per_market": {
+    "HDC": {
+      "n": 458,
+      "mean_clv_pct": 1.4704,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 19.3466,
+      "min_clv_pct": -62.1538,
+      "max_clv_pct": 158.3333,
+      "positive_count": 184,
+      "negative_count": 184,
+      "neutral_count": 90,
+      "positive_rate_pct": 40.17,
+      "bootstrap_ci_95": {
+        "lo": -0.2041,
+        "hi": 3.3012,
+        "crosses_zero": true
+      },
+      "top5_outlier_dominance_pct": 17.31,
+      "classification": "INCONCLUSIVE",
+      "notes": "Highest mean market but CI is extremely wide (std=19.3%). Max +158% driven by a single extreme observation. Entirely outlier-dominated."
+    },
+    "MNL": {
+      "n": 472,
+      "mean_clv_pct": -0.0314,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 3.7705,
+      "min_clv_pct": -13.6364,
+      "max_clv_pct": 12.6761,
+      "positive_count": 214,
+      "negative_count": 214,
+      "neutral_count": 44,
+      "positive_rate_pct": 45.34,
+      "bootstrap_ci_95": {
+        "lo": -0.3727,
+        "hi": 0.3046,
+        "crosses_zero": true
+      },
+      "top5_outlier_dominance_pct": 4.51,
+      "classification": "INCONCLUSIVE",
+      "notes": "Mean slightly negative (-0.03%). Tightest CI of active markets. pos=neg perfectly symmetric. No edge detectable."
+    },
+    "OU": {
+      "n": 460,
+      "mean_clv_pct": 0.118,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 5.0734,
+      "min_clv_pct": -19.7425,
+      "max_clv_pct": 24.5989,
+      "positive_count": 179,
+      "negative_count": 178,
+      "neutral_count": 103,
+      "positive_rate_pct": 38.91,
+      "bootstrap_ci_95": {
+        "lo": -0.3628,
+        "hi": 0.5919,
+        "crosses_zero": true
+      },
+      "top5_outlier_dominance_pct": 7.03,
+      "classification": "INCONCLUSIVE",
+      "notes": "Small positive mean. CI crosses zero. pos/neg count near-parity (179/178). No detectable directional edge."
+    },
+    "OE": {
+      "n": 460,
+      "mean_clv_pct": 0.0083,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 0.8364,
+      "min_clv_pct": -2.439,
+      "max_clv_pct": 2.5,
+      "positive_count": 72,
+      "negative_count": 72,
+      "neutral_count": 316,
+      "positive_rate_pct": 15.65,
+      "bootstrap_ci_95": {
+        "lo": -0.0668,
+        "hi": 0.0856,
+        "crosses_zero": true
+      },
+      "top5_outlier_dominance_pct": 6.16,
+      "classification": "INCONCLUSIVE",
+      "notes": "OE market is extremely stable (std=0.84%). 68.7% neutral observations — odds almost never move. Mean effectively zero. No informational content."
+    },
+    "TTO": {
+      "n": 434,
+      "mean_clv_pct": 0.2546,
+      "median_clv_pct": 0.0,
+      "std_clv_pct": 6.8703,
+      "min_clv_pct": -20.0,
+      "max_clv_pct": 26.6667,
+      "positive_count": 177,
+      "negative_count": 177,
+      "neutral_count": 80,
+      "positive_rate_pct": 40.78,
+      "bootstrap_ci_95": {
+        "lo": -0.3801,
+        "hi": 0.9067,
+        "crosses_zero": true
+      },
+      "top5_outlier_dominance_pct": 7.44,
+      "classification": "INCONCLUSIVE",
+      "notes": "Positive mean (+0.25%) with CI crossing zero. pos=neg perfectly symmetric (177/177). Slightly elevated positive_rate (40.8%) worth monitoring but not actionable."
+    }
+  },
+  "market_ranking_by_mean": [
+    {"rank": 1, "market": "HDC", "mean_clv_pct": 1.4704, "classification": "INCONCLUSIVE"},
+    {"rank": 2, "market": "TTO", "mean_clv_pct": 0.2546, "classification": "INCONCLUSIVE"},
+    {"rank": 3, "market": "OU", "mean_clv_pct": 0.118, "classification": "INCONCLUSIVE"},
+    {"rank": 4, "market": "OE", "mean_clv_pct": 0.0083, "classification": "INCONCLUSIVE"},
+    {"rank": 5, "market": "MNL", "mean_clv_pct": -0.0314, "classification": "INCONCLUSIVE"}
+  ],
+  "cross_market_summary": "ALL 5 markets: INCONCLUSIVE. No market shows a statistically significant positive CLV edge. HDC has the largest nominal mean but is most outlier-dominated. OE is essentially no-information.",
+  "forbidden_claims": {
+    "production_proposal": false,
+    "champion_replacement": false,
+    "profitability_claim": false,
+    "guaranteed_profit": false
+  },
+  "final_classification": "P24_MARKET_LEVEL_ROBUSTNESS_COMPLETED"
+}

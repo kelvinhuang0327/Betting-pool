@@ -88,6 +88,7 @@ from wbc_backend.intelligence.edge_decay_predictor import (
 from wbc_backend.intelligence.line_movement_predictor import (
     LineMovementPredictor,
     LineMovementInput,
+    LineSnapshot,
     TimingAction,
 )
 from wbc_backend.intelligence.market_impact_simulator import (
@@ -203,6 +204,48 @@ class DecisionReport:
     meta_summary: dict[str, Any] = field(default_factory=dict)
 
 
+def _implied_prob_from_decimal(decimal_odds: float) -> float:
+    if decimal_odds <= 1.0:
+        return 0.99
+    return 1.0 / decimal_odds
+
+
+def _derive_line_history_metrics(
+    line_history: list[LineSnapshot],
+) -> dict[str, float]:
+    if len(line_history) < 2:
+        opening_home_odds = line_history[0].home_odds if line_history else 0.0
+        return {
+            "opening_home_odds": opening_home_odds,
+            "total_line_moves": max(0, len(line_history) - 1),
+            "full_velocity": 0.0,
+            "recent_velocity": 0.0,
+            "acceleration": 0.0,
+        }
+
+    def _velocity(prev_snap: LineSnapshot, next_snap: LineSnapshot) -> float:
+        dt_hours = abs(prev_snap.timestamp_minutes_to_game - next_snap.timestamp_minutes_to_game) / 60.0
+        if dt_hours <= 0:
+            return 0.0
+        prev_prob = _implied_prob_from_decimal(prev_snap.home_odds)
+        next_prob = _implied_prob_from_decimal(next_snap.home_odds)
+        return (next_prob - prev_prob) / dt_hours
+
+    full_velocity = _velocity(line_history[0], line_history[-1])
+    recent_velocity = _velocity(line_history[-2], line_history[-1])
+    acceleration = 0.0
+    if len(line_history) >= 3:
+        acceleration = recent_velocity - _velocity(line_history[-3], line_history[-2])
+
+    return {
+        "opening_home_odds": line_history[0].home_odds,
+        "total_line_moves": max(0, len(line_history) - 1),
+        "full_velocity": full_velocity,
+        "recent_velocity": recent_velocity,
+        "acceleration": acceleration,
+    }
+
+
 # ─── Institutional Decision Engine ─────────────────────────────────────────
 
 class InstitutionalDecisionEngine:
@@ -297,7 +340,9 @@ class InstitutionalDecisionEngine:
         sharp_direction_agrees: bool = True,
         steam_moves: int = 0,
         reverse_line_moves: int = 0,
+        total_line_moves: int = 0,
         closing_line_history: list[float] | None = None,
+        line_history: list[LineSnapshot] | None = None,
         recent_model_probs: list[float] | None = None,
         # Edge decay inputs
         odds_velocity: float = 0.0,
@@ -321,6 +366,18 @@ class InstitutionalDecisionEngine:
             match_label=match_label,
             timestamp=time.time(),
         )
+        line_history = line_history or []
+        line_metrics = _derive_line_history_metrics(line_history)
+        if opening_odds <= 1.0:
+            opening_odds = float(line_metrics.get("opening_home_odds", 0.0))
+        if total_line_moves <= 0:
+            total_line_moves = int(line_metrics.get("total_line_moves", 0.0))
+        if abs(line_movement_velocity) < 1e-12:
+            line_movement_velocity = float(line_metrics.get("full_velocity", 0.0))
+        if abs(odds_velocity) < 1e-12:
+            odds_velocity = float(line_metrics.get("recent_velocity", 0.0))
+        if abs(odds_acceleration) < 1e-12:
+            odds_acceleration = float(line_metrics.get("acceleration", 0.0))
 
         probs_list = list(sub_model_probs.values())
         model_prob = sum(probs_list) / len(probs_list) if probs_list else 0.5
@@ -341,7 +398,7 @@ class InstitutionalDecisionEngine:
             calibration_a=platt_a,
             calibration_b=platt_b,
             sharp_signals=sharp_signal_count,
-            line_movements=0,
+            line_movements=total_line_moves,
             odds_band_roi=band_roi,
         )
 
@@ -374,7 +431,7 @@ class InstitutionalDecisionEngine:
             n_sportsbooks=n_sportsbooks,
             odds_spread_pct=odds_spread_pct,
             line_movement_velocity=line_movement_velocity,
-            total_line_moves=0,
+            total_line_moves=total_line_moves,
             opening_odds=opening_odds,
             hours_to_game=hours_to_game,
             sharp_money_signal=sharp_signal_count,
@@ -436,8 +493,9 @@ class InstitutionalDecisionEngine:
             steam_direction="home" if sharp_direction_agrees and calibrated_prob > 0.5
                             else ("away" if sharp_direction_agrees else ""),
             reverse_line_moves=reverse_line_moves,
-            total_line_moves=0,
+            total_line_moves=total_line_moves,
             historical_closing_lines=closing_line_history or [],
+            line_history=line_history,
             our_side=our_side,
         )
 

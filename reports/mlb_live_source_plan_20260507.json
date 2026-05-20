@@ -1,0 +1,689 @@
+{
+  "module_version": "mlb_live_source_plan_v1",
+  "run_timestamp_utc": "2026-05-07T09:01:48.465504+00:00",
+  "run_date": "2026-05-07",
+  "plan_type": "live_source_adapter_selection_and_integration_plan",
+  "safety": {
+    "production_modified": false,
+    "no_real_bet": true,
+    "paper_only": true,
+    "no_profit_claim": true,
+    "no_edge_claim": true,
+    "no_auto_execution": true,
+    "no_live_api_connected": true,
+    "plan_only": true,
+    "diagnostic_only": true,
+    "fixture_not_production": true
+  },
+  "source_candidate_matrix": [
+    {
+      "source_id": "sched_mlb_statsapi_v1",
+      "source_type": "schedule",
+      "source_name": "MLB StatsAPI (statsapi.mlb.com)",
+      "access_method": "rest_api",
+      "official_or_third_party": "official",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "low",
+      "terms_risk": "medium",
+      "freshness_expected": "real-time",
+      "schema_fit_score": 0.9,
+      "reliability_score": 0.85,
+      "governance_risk": "low",
+      "production_readiness": "needs_verification",
+      "recommended": true,
+      "requires_verification": true,
+      "rejection_reason": null,
+      "notes": "MLB StatsAPI (statsapi.mlb.com/api/v1/schedule) provides official schedule + game status. No key required. Terms: unofficial/public use allowed but ToS should be reviewed for commercial use. Rate limit: approximately 5–10 req/sec observed. Pitcher data available via /api/v1/game/{gamePk}/boxscore."
+    },
+    {
+      "source_id": "sched_mlbdataapi_v1",
+      "source_type": "schedule",
+      "source_name": "MLB Data API (via python-mlb-statsapi library)",
+      "access_method": "rest_api",
+      "official_or_third_party": "third_party",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "low",
+      "terms_risk": "medium",
+      "freshness_expected": "real-time",
+      "schema_fit_score": 0.85,
+      "reliability_score": 0.8,
+      "governance_risk": "low",
+      "production_readiness": "needs_verification",
+      "recommended": true,
+      "requires_verification": true,
+      "rejection_reason": null,
+      "notes": "Python wrapper around MLB StatsAPI. Simplifies schedule/roster/pitcher queries. Dependency risk: library maintenance status unknown as of 2026."
+    },
+    {
+      "source_id": "sched_manual_csv_v1",
+      "source_type": "schedule",
+      "source_name": "Manual CSV Import (daily schedule)",
+      "access_method": "csv_import",
+      "official_or_third_party": "internal",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "none",
+      "terms_risk": "none",
+      "freshness_expected": "daily",
+      "schema_fit_score": 0.75,
+      "reliability_score": 0.6,
+      "governance_risk": "none",
+      "production_readiness": "ready",
+      "recommended": false,
+      "requires_verification": false,
+      "rejection_reason": "Manual process; not suitable for automated daily pipeline without human operator",
+      "notes": "Fallback option when API unavailable. Requires human to prepare CSV per contract schema."
+    },
+    {
+      "source_id": "sched_fixture_v1",
+      "source_type": "schedule",
+      "source_name": "Fixture Source (local JSON test file)",
+      "access_method": "fixture_file",
+      "official_or_third_party": "internal",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "none",
+      "terms_risk": "none",
+      "freshness_expected": "static",
+      "schema_fit_score": 0.95,
+      "reliability_score": 1.0,
+      "governance_risk": "none",
+      "production_readiness": "not_ready",
+      "recommended": false,
+      "requires_verification": false,
+      "rejection_reason": "FIXTURE_NOT_PRODUCTION: fixture is for tests / local dry-run / schema validation / demo only. Must never be used as production advisory source.",
+      "notes": "data/fixtures/mlb_current_source_sample_20260507.json"
+    },
+    {
+      "source_id": "odds_theoddsapi_v2",
+      "source_type": "odds",
+      "source_name": "The Odds API (the-odds-api.com)",
+      "access_method": "rest_api",
+      "official_or_third_party": "third_party",
+      "requires_api_key": true,
+      "cost_risk": "medium",
+      "rate_limit_risk": "medium",
+      "terms_risk": "low",
+      "freshness_expected": "5min",
+      "schema_fit_score": 0.85,
+      "reliability_score": 0.8,
+      "governance_risk": "low",
+      "production_readiness": "needs_verification",
+      "recommended": true,
+      "requires_verification": true,
+      "rejection_reason": null,
+      "notes": "Commercial API providing aggregated bookmaker odds (ML/RL/Total). Supports multiple bookmakers (DraftKings, FanDuel, BetMGM, etc.). Free tier: 500 requests/month. Paid: ~500-2500 req/month per plan. Suitable for pre-game odds. API key required. Terms: commercial use OK with subscription. REQUIRES_VERIFICATION: pricing, rate limits, available markets."
+    },
+    {
+      "source_id": "odds_sportradar_v1",
+      "source_type": "odds",
+      "source_name": "Sportradar Odds API",
+      "access_method": "rest_api",
+      "official_or_third_party": "third_party",
+      "requires_api_key": true,
+      "cost_risk": "high",
+      "rate_limit_risk": "low",
+      "terms_risk": "low",
+      "freshness_expected": "real-time",
+      "schema_fit_score": 0.9,
+      "reliability_score": 0.9,
+      "governance_risk": "low",
+      "production_readiness": "needs_verification",
+      "recommended": false,
+      "requires_verification": true,
+      "rejection_reason": "High cost — enterprise pricing. Not appropriate for research/quant phase. Revisit if production deployment is approved.",
+      "notes": "Sportradar is a leading sports data provider. Enterprise pricing typically $thousands/month. Full ML/RL/Total coverage, high reliability. Not cost-appropriate for current research phase."
+    },
+    {
+      "source_id": "odds_actionnetwork_scrape_v1",
+      "source_type": "odds",
+      "source_name": "Action Network (web scraping)",
+      "access_method": "web_scraping",
+      "official_or_third_party": "third_party",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "high",
+      "terms_risk": "high",
+      "freshness_expected": "variable",
+      "schema_fit_score": 0.5,
+      "reliability_score": 0.4,
+      "governance_risk": "high",
+      "production_readiness": "blocked",
+      "recommended": false,
+      "requires_verification": false,
+      "rejection_reason": "GOVERNANCE_RISK: Web scraping violates Action Network ToS. High fragility (HTML structure changes). Not a viable production solution. Listed for awareness only — must not be used.",
+      "notes": "⚠️ SCRAPING RISK: Terms of Service likely prohibit scraping. HTML structure changes frequently. Marked as BLOCKED — must not be used in production pipeline."
+    },
+    {
+      "source_id": "odds_manual_csv_v1",
+      "source_type": "odds",
+      "source_name": "Manual CSV Import (pre-game odds)",
+      "access_method": "csv_import",
+      "official_or_third_party": "internal",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "none",
+      "terms_risk": "none",
+      "freshness_expected": "daily",
+      "schema_fit_score": 0.7,
+      "reliability_score": 0.55,
+      "governance_risk": "none",
+      "production_readiness": "ready",
+      "recommended": false,
+      "requires_verification": false,
+      "rejection_reason": "Manual process; not suitable for automated pipeline",
+      "notes": "Fallback option. Human operator records opening-line or closing-line odds to CSV per contract schema. Acceptable for occasional use; not for continuous daily automation."
+    },
+    {
+      "source_id": "odds_fixture_v1",
+      "source_type": "odds",
+      "source_name": "Fixture Odds Source (embedded in fixture file)",
+      "access_method": "fixture_file",
+      "official_or_third_party": "internal",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "none",
+      "terms_risk": "none",
+      "freshness_expected": "static",
+      "schema_fit_score": 0.95,
+      "reliability_score": 1.0,
+      "governance_risk": "none",
+      "production_readiness": "not_ready",
+      "recommended": false,
+      "requires_verification": false,
+      "rejection_reason": "FIXTURE_NOT_PRODUCTION: odds embedded in fixture file are static test data. Must never be treated as real market odds.",
+      "notes": "Fixture file includes sample odds for adapter schema testing only."
+    },
+    {
+      "source_id": "result_mlb_statsapi_v1",
+      "source_type": "result",
+      "source_name": "MLB StatsAPI — Game Result (statsapi.mlb.com/linescore)",
+      "access_method": "rest_api",
+      "official_or_third_party": "official",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "low",
+      "terms_risk": "medium",
+      "freshness_expected": "real-time",
+      "schema_fit_score": 0.9,
+      "reliability_score": 0.85,
+      "governance_risk": "low",
+      "production_readiness": "needs_verification",
+      "recommended": true,
+      "requires_verification": true,
+      "rejection_reason": null,
+      "notes": "MLB StatsAPI provides final score + game status via /api/v1/game/{gamePk}/linescore. Official source. No key required. Same ToS considerations as schedule. home_win can be derived from final scores. Handles postponed/cancelled via game_status field."
+    },
+    {
+      "source_id": "result_manual_csv_v1",
+      "source_type": "result",
+      "source_name": "Manual CSV Import (game results)",
+      "access_method": "csv_import",
+      "official_or_third_party": "internal",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "none",
+      "terms_risk": "none",
+      "freshness_expected": "daily",
+      "schema_fit_score": 0.75,
+      "reliability_score": 0.6,
+      "governance_risk": "none",
+      "production_readiness": "ready",
+      "recommended": false,
+      "requires_verification": false,
+      "rejection_reason": "Manual process only; acceptable as emergency fallback",
+      "notes": "Human operator enters final scores after games complete."
+    },
+    {
+      "source_id": "result_replay_artifact_v1",
+      "source_type": "result",
+      "source_name": "Historical Replay Artifact (prediction JSONL)",
+      "access_method": "jsonl_artifact",
+      "official_or_third_party": "internal",
+      "requires_api_key": false,
+      "cost_risk": "none",
+      "rate_limit_risk": "none",
+      "terms_risk": "none",
+      "freshness_expected": "historical",
+      "schema_fit_score": 0.9,
+      "reliability_score": 1.0,
+      "governance_risk": "none",
+      "production_readiness": "ready",
+      "recommended": false,
+      "requires_verification": false,
+      "rejection_reason": "Historical only — cannot provide today-mode results",
+      "notes": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl Contains home_win for 2025 season replay. Used for replay mode pipeline validation only."
+    }
+  ],
+  "source_candidate_summary": {
+    "total_candidates": 12,
+    "schedule_candidates": 4,
+    "odds_candidates": 5,
+    "result_candidates": 3,
+    "recommended_count": 4,
+    "needs_verification_count": 5,
+    "blocked_count": 1
+  },
+  "contracts": {
+    "schedule_source_contract": {
+      "contract_id": "mlb_schedule_source_contract_v1",
+      "required_fields": [
+        "game_id",
+        "game_date",
+        "home_team",
+        "away_team",
+        "scheduled_start_time",
+        "game_status"
+      ],
+      "optional_fields": [
+        "probable_home_pitcher",
+        "probable_away_pitcher",
+        "venue",
+        "series_description",
+        "doubleheader_flag",
+        "broadcast_info"
+      ],
+      "freshness_sla_minutes": 60,
+      "allowed_missing_fields": [
+        "probable_home_pitcher",
+        "probable_away_pitcher",
+        "broadcast_info"
+      ],
+      "validation_rules": [
+        "game_date must be ISO YYYY-MM-DD format",
+        "game_id must be non-empty string",
+        "home_team and away_team must be non-empty strings",
+        "game_status must be one of: scheduled, live, final, postponed, cancelled, suspended",
+        "scheduled_start_time must be ISO 8601 or None"
+      ],
+      "unavailable_behavior": "If source is unavailable: set source_unavailable_flag=True, do not generate advisory, trigger fallback to DATA_LIMITED",
+      "fallback_behavior": "Fallback order: live current source → manual CSV import → fixture (tests/dry-run only) → DATA_LIMITED",
+      "governance_flags": {
+        "paper_only": true,
+        "no_real_bet": true,
+        "fixture_not_production": true,
+        "human_review_required_for_postponed": true
+      }
+    },
+    "odds_source_contract": {
+      "contract_id": "mlb_odds_source_contract_v1",
+      "required_fields": [
+        "game_id",
+        "game_date",
+        "home_moneyline_odds",
+        "away_moneyline_odds",
+        "source_timestamp"
+      ],
+      "optional_fields": [
+        "runline_spread",
+        "runline_home_odds",
+        "runline_away_odds",
+        "total_line",
+        "over_odds",
+        "under_odds",
+        "bookmaker_source",
+        "closing_line_flag",
+        "market_consensus_flag"
+      ],
+      "freshness_sla_minutes": 30,
+      "allowed_missing_fields": [
+        "runline_spread",
+        "runline_home_odds",
+        "runline_away_odds",
+        "total_line",
+        "over_odds",
+        "under_odds",
+        "bookmaker_source",
+        "closing_line_flag"
+      ],
+      "validation_rules": [
+        "home_moneyline_odds must be American odds integer (e.g. -140, +120)",
+        "away_moneyline_odds must be American odds integer",
+        "source_timestamp must be ISO 8601",
+        "No-vig normalization: use normalize_two_way_no_vig(home_ml, away_ml)",
+        "market_home_prob_no_vig must be in (0.0, 1.0)",
+        "runline_spread if present must be float (typically ±1.5)"
+      ],
+      "unavailable_behavior": "If odds unavailable: set market_home_prob_no_vig=None, advisory must output PASS (no_model_prediction mode). Do not invent or estimate odds.",
+      "fallback_behavior": "Fallback: live odds API → manual CSV import → no odds (PASS advisory only) → DATA_LIMITED",
+      "normalization_contract": {
+        "raw_odds_available": "bool — True if home+away moneyline present",
+        "no_vig_probability_available": "bool — True if normalize_two_way_no_vig succeeded",
+        "derived_probability_flag": "bool — True if prob was derived (not from direct prob source)",
+        "bookmaker_source": "str | None — name/id of bookmaker if available",
+        "closing_line_available": "bool — True if closing-line odds present",
+        "odds_timestamp": "str | None — ISO 8601 timestamp of the odds snapshot",
+        "normalization_function_used": "normalize_two_way_no_vig (orchestrator.mlb_current_sources)",
+        "odds_conversion_function_used": "american_odds_to_implied_prob (orchestrator.mlb_current_sources)"
+      },
+      "governance_flags": {
+        "paper_only": true,
+        "no_real_bet": true,
+        "no_stake_sizing": true,
+        "no_closing_line_exploitation": true,
+        "requires_verification_before_live_use": true
+      }
+    },
+    "result_source_contract": {
+      "contract_id": "mlb_result_source_contract_v1",
+      "required_fields": [
+        "game_id",
+        "game_date",
+        "final_home_score",
+        "final_away_score",
+        "game_status",
+        "home_win"
+      ],
+      "optional_fields": [
+        "result_verified_at",
+        "innings_played",
+        "outs_recorded",
+        "postponed_rescheduled_date"
+      ],
+      "freshness_sla_minutes": 240,
+      "allowed_missing_fields": [
+        "result_verified_at",
+        "innings_played",
+        "outs_recorded",
+        "postponed_rescheduled_date"
+      ],
+      "validation_rules": [
+        "game_status must be one of: final, postponed, cancelled, suspended",
+        "home_win must be 0 or 1 for final games; None for postponed/cancelled",
+        "final_home_score and final_away_score must be non-negative integers for final games",
+        "Postponed games: home_win=None, no ledger result update",
+        "Cancelled games: home_win=None, mark ledger entry as CANCELLED",
+        "Suspended games: treat as PENDING until resumed final posted"
+      ],
+      "unavailable_behavior": "If result unavailable: ledger entries remain PENDING_REVIEW. Do not fabricate results. Do not mark as WON/LOST without confirmed data.",
+      "fallback_behavior": "Fallback: live result API → manual CSV import → manual override (human-entered) → remain PENDING",
+      "governance_flags": {
+        "paper_only": true,
+        "no_real_bet": true,
+        "no_auto_result_fabrication": true,
+        "human_review_required_for_suspended": true,
+        "human_review_required_for_cancelled": true
+      }
+    }
+  },
+  "source_health_rules": {
+    "version": "source_health_rules_v1",
+    "checks": [
+      "reachable",
+      "schema_valid",
+      "freshness_ok",
+      "total_games_count",
+      "missing_moneyline_count",
+      "missing_runline_count",
+      "missing_total_count",
+      "missing_result_count"
+    ],
+    "outputs": [
+      "stale_data_flag",
+      "source_unavailable_flag",
+      "fallback_required",
+      "source_health_gate"
+    ],
+    "valid_health_gates": [
+      "SOURCE_HEALTH_OK",
+      "SOURCE_HEALTH_STALE",
+      "SOURCE_HEALTH_UNAVAILABLE",
+      "SOURCE_HEALTH_SCHEMA_ERROR",
+      "SOURCE_HEALTH_DATA_LIMITED"
+    ],
+    "thresholds": {
+      "stale_data_flag_threshold_minutes": 120,
+      "max_missing_moneyline_pct": 0.5,
+      "max_missing_runline_pct": 0.8,
+      "max_missing_total_pct": 0.8
+    }
+  },
+  "odds_normalization_contract": {
+    "contract_id": "mlb_odds_normalization_contract_v1",
+    "existing_functions": {
+      "american_odds_to_implied_prob": {
+        "module": "orchestrator.mlb_current_sources",
+        "signature": "american_odds_to_implied_prob(odds: float) -> float",
+        "description": "Converts American odds to raw implied probability. Positive (underdog): 100/(odds+100). Negative (favorite): |odds|/(|odds|+100).",
+        "status": "implemented_and_tested"
+      },
+      "normalize_two_way_no_vig": {
+        "module": "orchestrator.mlb_current_sources",
+        "signature": "normalize_two_way_no_vig(home_ml: float, away_ml: float) -> tuple[float, float]",
+        "description": "Removes bookmaker vig from two-way market. Divides each raw implied prob by total overround. Returns (no_vig_home_prob, no_vig_away_prob).",
+        "status": "implemented_and_tested"
+      }
+    },
+    "output_fields": {
+      "raw_odds_available": "bool — True if home + away moneyline American odds present",
+      "no_vig_probability_available": "bool — True if normalize_two_way_no_vig succeeded",
+      "derived_probability_flag": "bool — True if probability was derived (not raw)",
+      "bookmaker_source": "str | None — bookmaker name/id if available",
+      "closing_line_available": "bool — True if closing-line snapshot present",
+      "odds_timestamp": "str | None — ISO 8601 timestamp of odds snapshot",
+      "market_home_prob_no_vig": "float — no-vig home win probability",
+      "market_away_prob_no_vig": "float — no-vig away win probability (= 1 - home)"
+    },
+    "governance": {
+      "no_stake_sizing": true,
+      "no_vig_removal_does_not_imply_edge": true,
+      "derived_probs_are_estimates_not_true_probabilities": true,
+      "closing_line_value_not_computed_in_current_phase": true
+    }
+  },
+  "fallback_strategy": {
+    "strategy_id": "mlb_live_source_fallback_v1",
+    "today_mode_fallback_priority": [
+      {
+        "priority": 1,
+        "source": "live_current_source",
+        "condition": "source reachable, schema valid, freshness OK",
+        "action": "use for advisory + ledger"
+      },
+      {
+        "priority": 2,
+        "source": "manual_csv_import",
+        "condition": "live source unavailable; human operator provides CSV",
+        "action": "use for advisory + ledger; flag as manual_import=True"
+      },
+      {
+        "priority": 3,
+        "source": "fixture_source",
+        "condition": "ONLY if explicitly allowed (dry-run / schema-test / demo); NEVER for production",
+        "action": "use for schema validation and dry-run only; fixture_not_production=True"
+      },
+      {
+        "priority": 4,
+        "source": "replay_source",
+        "condition": "historical data only; date must be in historical range",
+        "action": "use for replay mode advisory; flag as today_schedule_unavailable=True"
+      },
+      {
+        "priority": 5,
+        "source": "DATA_LIMITED",
+        "condition": "all sources exhausted or unavailable",
+        "action": "do not generate advisory; return gate=MLB_SCHEDULER_DATA_LIMITED"
+      }
+    ],
+    "replay_mode_fallback_priority": [
+      {
+        "priority": 1,
+        "source": "historical_prediction_artifact",
+        "condition": "date in JSONL, home_win available",
+        "action": "full replay: advisory + ledger + result review"
+      },
+      {
+        "priority": 2,
+        "source": "historical_ledger_review_snapshot",
+        "condition": "ledger JSONL exists; reviewed_snapshot available",
+        "action": "review-only mode; no new advisory"
+      },
+      {
+        "priority": 3,
+        "source": "DATA_LIMITED",
+        "condition": "date not in historical data",
+        "action": "return gate=MLB_LIVE_SOURCE_DATA_LIMITED"
+      }
+    ],
+    "fixture_governance_rules": {
+      "allowed_uses": [
+        "unit tests",
+        "local dry-run",
+        "schema contract validation",
+        "demo / documentation",
+        "adapter integration testing"
+      ],
+      "forbidden_uses": [
+        "production advisory (real advisory treated as live)",
+        "real-money recommendation",
+        "live source readiness claim",
+        "override of live source in production pipeline",
+        "bankroll / stake sizing calculation"
+      ],
+      "enforcement": "FIXTURE_NOT_PRODUCTION=True must be set on all fixture-sourced responses. Scheduler gate must not reach MLB_DAILY_SCHEDULER_READY when fixture source is active."
+    }
+  },
+  "integration_plan": [
+    {
+      "phase_id": "Live-1",
+      "phase_name": "Schedule Source Adapter",
+      "goal": "Implement a live schedule source adapter that fetches today's MLB schedule from MLB StatsAPI (or manual CSV fallback). Validates schema contract. No odds dependency.",
+      "files_to_modify": [
+        "orchestrator/mlb_current_sources.py",
+        "data/fixtures/mlb_current_source_sample_20260507.json"
+      ],
+      "files_to_create": [
+        "orchestrator/mlb_schedule_source_adapter.py",
+        "tests/test_mlb_schedule_source_adapter.py",
+        "data/fixtures/mlb_schedule_source_test.json"
+      ],
+      "tests_to_add": [
+        "test_mlb_statsapi_schedule_fetch_contract",
+        "test_schedule_schema_validation_required_fields",
+        "test_schedule_source_health_probe",
+        "test_schedule_fallback_to_csv_on_unavailable",
+        "test_fixture_not_used_as_production_schedule",
+        "test_postponed_game_handling"
+      ],
+      "acceptance_criteria": [
+        "Adapter returns list of schedule rows matching MLBScheduleSourceContract",
+        "All required fields present or explicit unavailable flags set",
+        "Source health gate evaluates correctly (OK / STALE / UNAVAILABLE)",
+        "Fixture source returns FIXTURE_NOT_PRODUCTION flag",
+        "Postponed/cancelled games handled without exception",
+        "All 6 new tests pass",
+        "No regression in existing 1086+ tests"
+      ],
+      "rollback_plan": "Revert orchestrator/mlb_schedule_source_adapter.py to previous version or delete if newly created. Fixture source remains available for testing. mlb_daily_scheduler.py already handles fixture fallback.",
+      "governance_guard": "PRODUCTION_MODIFIED=False throughout. Fixture source must not bypass production pipeline. Any live API fetch must be read-only."
+    },
+    {
+      "phase_id": "Live-2",
+      "phase_name": "Odds Source Adapter",
+      "goal": "Implement an odds source adapter that normalizes moneyline/runline/total from a verified API (e.g. The Odds API). Applies american_odds_to_implied_prob + normalize_two_way_no_vig. Produces source health report per MLBOddsSourceContract.",
+      "files_to_modify": [
+        "orchestrator/mlb_current_sources.py",
+        "orchestrator/mlb_live_source_plan.py"
+      ],
+      "files_to_create": [
+        "orchestrator/mlb_odds_source_adapter.py",
+        "tests/test_mlb_odds_source_adapter.py",
+        "data/fixtures/mlb_odds_source_test.json"
+      ],
+      "tests_to_add": [
+        "test_odds_normalization_moneyline",
+        "test_odds_normalization_no_vig",
+        "test_odds_schema_validation_required_fields",
+        "test_odds_source_health_missing_moneyline_threshold",
+        "test_odds_fallback_to_csv_on_unavailable",
+        "test_odds_fixture_not_production",
+        "test_runline_optional_field_handling",
+        "test_total_optional_field_handling"
+      ],
+      "acceptance_criteria": [
+        "Adapter normalizes moneyline to no-vig probability using existing functions",
+        "market_home_prob_no_vig in (0.0, 1.0) for all valid inputs",
+        "Missing runline/total fields handled without exception",
+        "Source health gate triggers correctly on >50% missing moneyline",
+        "No stake_sizing field in any output",
+        "All 8 new tests pass",
+        "No regression in existing tests"
+      ],
+      "rollback_plan": "Delete orchestrator/mlb_odds_source_adapter.py if newly created. Advisory falls back to market_home_prob_no_vig=None → PASS advisory.",
+      "governance_guard": "No stake sizing. No closing line value calculation. odds_normalization_contract_v1 enforced. API key must be stored in .env — never hardcoded. Scraping (ACTION_NETWORK) is blocked — must not be implemented."
+    },
+    {
+      "phase_id": "Live-3",
+      "phase_name": "Result Source Adapter + Auto Post-game Review",
+      "goal": "Implement a result source adapter that fetches final scores from MLB StatsAPI and triggers automatic post-game ledger review. Handles postponed/cancelled/suspended per MLBResultSourceContract. Writes reviewed snapshot.",
+      "files_to_modify": [
+        "orchestrator/mlb_result_review.py",
+        "orchestrator/mlb_daily_scheduler.py"
+      ],
+      "files_to_create": [
+        "orchestrator/mlb_result_source_adapter.py",
+        "tests/test_mlb_result_source_adapter.py",
+        "data/fixtures/mlb_result_source_test.json"
+      ],
+      "tests_to_add": [
+        "test_result_source_final_game_schema",
+        "test_result_source_postponed_handling",
+        "test_result_source_cancelled_handling",
+        "test_result_source_home_win_derivation",
+        "test_result_source_health_probe",
+        "test_auto_review_trigger_on_final_result",
+        "test_no_result_fabrication_on_pending",
+        "test_ledger_remains_pending_on_suspended"
+      ],
+      "acceptance_criteria": [
+        "Adapter returns final scores matching MLBResultSourceContract",
+        "home_win correctly derived from final scores",
+        "Postponed games: home_win=None, ledger entries remain PENDING",
+        "Cancelled games: ledger entries marked CANCELLED",
+        "Auto post-game review triggers for FINAL games",
+        "All 8 new tests pass",
+        "No regression in existing tests"
+      ],
+      "rollback_plan": "Delete orchestrator/mlb_result_source_adapter.py if newly created. Scheduler falls back to manual result ingestion path. Ledger entries remain PENDING — no data loss.",
+      "governance_guard": "No result fabrication. no_auto_result_fabrication=True enforced. human_review_required for suspended/cancelled games. LEDGER_OVERWRITE_BLOCKED=True must remain throughout."
+    },
+    {
+      "phase_id": "Live-4",
+      "phase_name": "Daily Scheduler Integration + API Status + Source Freshness Dashboard",
+      "goal": "Integrate live schedule/odds/result adapters into mlb_daily_scheduler.py. Add API status endpoint for source freshness. Build source health dashboard (JSON + markdown). Full pipeline: live schedule → live odds → advisory → ledger → live result → post-game review → failure notes → manifest.",
+      "files_to_modify": [
+        "orchestrator/mlb_daily_scheduler.py",
+        "orchestrator/mlb_advisory_api.py",
+        "scripts/run_mlb_daily_scheduler.py"
+      ],
+      "files_to_create": [
+        "orchestrator/mlb_source_health_dashboard.py",
+        "tests/test_mlb_source_health_dashboard.py"
+      ],
+      "tests_to_add": [
+        "test_daily_scheduler_live_source_integration",
+        "test_api_status_endpoint_live_source_health",
+        "test_source_freshness_dashboard_output",
+        "test_scheduler_gate_upgrades_on_live_source",
+        "test_scheduler_falls_back_on_live_unavailable",
+        "test_full_pipeline_live_schedule_odds_result"
+      ],
+      "acceptance_criteria": [
+        "Scheduler gate reaches MLB_DAILY_SCHEDULER_READY with live sources",
+        "API status endpoint returns source_health per source type",
+        "Source freshness dashboard JSON + markdown generated",
+        "Fallback to DATA_LIMITED when all live sources unavailable",
+        "Completion marker MLB_DAILY_SCHEDULER_API_MVP_VERIFIED preserved",
+        "All 6 new tests pass",
+        "No regression in existing tests"
+      ],
+      "rollback_plan": "Revert orchestrator/mlb_daily_scheduler.py to current version (scheduler v1). Fixture-based and replay-based pipelines remain operational. Gate reverts to MLB_SCHEDULER_DATA_LIMITED / MLB_SCHEDULER_API_MVP_READY.",
+      "governance_guard": "NO_REAL_BET=True throughout. PRODUCTION_MODIFIED=False throughout. No stake sizing in any new API endpoint. Live source freshness checks must not bypass DATA_LIMITED gate. MLB_LIVE_SOURCE_PLAN_VERIFIED must be in Phase Live-4 report."
+    }
+  ],
+  "gate": "MLB_LIVE_SOURCE_NEEDS_API_VERIFICATION",
+  "gate_rationale": "Contracts and plan complete; 1 recommended odds source(s) require human API verification: The Odds API (the-odds-api.com)",
+  "completion_marker": "MLB_LIVE_SOURCE_PLAN_VERIFIED"
+}

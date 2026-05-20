@@ -1,0 +1,45 @@
+{
+  "task": "P19-D",
+  "title": "P19 CLV Gate Re-evaluation",
+  "date": "2026-05-20T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "inputs": {
+    "p19_canonical_forward_coverage": "data/paper_recommendations/p19_canonical_forward_coverage_regenerated_20260520.json",
+    "p19_closing_line_recheck": "data/paper_recommendations/p19_closing_line_availability_recheck_20260520.json",
+    "p18_ceo_hold": "data/paper_recommendations/p18_ceo_hold_artifact_20260519.json"
+  },
+  "gate_evaluation": {
+    "data_layer": {
+      "valid_clv_pairs": 233,
+      "pair_target": 200,
+      "pair_coverage_pct": 116.5,
+      "closing_line_available": true,
+      "timestamp_errors": 0,
+      "data_gate_result": "PASS"
+    },
+    "governance_layer": {
+      "ceo_decision_status": "DEFER_DECISION",
+      "ceo_gate_result": "BLOCKED_BY_CEO_HOLD"
+    },
+    "promotion_layer": {
+      "promotion_status": "FROZEN",
+      "champion": "fixed_edge_5pct",
+      "promotion_gate_result": "FROZEN_NOT_EVALUATED"
+    }
+  },
+  "clv_data_status": "CLV_DATA_SUFFICIENT",
+  "clv_gate_status": "BLOCKED_BY_CEO_HOLD",
+  "clv_gate_output": "BLOCKED",
+  "blocked_reason": "CEO decision = DEFER_DECISION. Data layer passed (233 valid pairs >= 200 target). Promotion gate frozen. CEO must approve CLV_VALIDATION_ONLY before P19 can proceed further.",
+  "is_clv_data_sufficient_for_promotion": false,
+  "clv_data_sufficient_comment": "CLV_DATA_SUFFICIENT means data coverage is adequate. It does NOT mean promotion is approved. CEO approval + promotion unfreeze required separately.",
+  "champion": "fixed_edge_5pct",
+  "champion_status": "PRESERVED",
+  "promotion_status": "FROZEN",
+  "p18_allowed": false,
+  "p19_allowed": false,
+  "profitability_claim": false,
+  "annotation": "paper_only=true。P19-D CLV Gate Re-evaluation。Data layer PASS（233 pairs）。CEO layer BLOCKED（DEFER_DECISION）。Promotion layer FROZEN。CLV_DATA_SUFFICIENT 僅代表資料覆蓋充足，不代表 promotion 解禁。CLV gate 正式結果仍為 BLOCKED_BY_CEO_HOLD。"
+}

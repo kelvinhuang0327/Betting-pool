@@ -1,0 +1,151 @@
+{
+  "artifact": "P25_CLV_FAILURE_ROOT_CAUSE_AUDIT",
+  "phase": "P25_CLV_INCONCLUSIVE_ROOT_CAUSE_AUDIT",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "production_proposal": false,
+  "source_data": {
+    "pinned_file": "data/tsl_odds_history.jsonl",
+    "pinned_lines": 2788,
+    "pinned_sha256": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+    "valid_pairs": 236,
+    "total_clv_observations": 2284
+  },
+  "p24_inconclusive_summary": {
+    "overall_mean_clv_pct": 0.3622,
+    "bootstrap_ci_95": {"lo": -0.0186, "hi": 0.7764, "crosses_zero": true},
+    "top1pct_outlier_contribution": 110.57,
+    "trimmed_5pct_mean": 0.0118,
+    "all_markets_classification": "INCONCLUSIVE"
+  },
+  "root_cause_candidates_investigated": [
+    "A_MODEL_QUALITY",
+    "B_MARKET_ODDS_ALIGNMENT",
+    "C_CLV_CONSTRUCTION",
+    "D_OUTLIER_ARTIFACT",
+    "E_MARKET_TAXONOMY_SIDE_MAPPING",
+    "F_SAMPLE_SIZE",
+    "G_RECOMMENDATION_POLICY_MISMATCH"
+  ],
+  "findings": {
+    "A_model_quality": {
+      "brier_score_mlb_walkforward": 0.2487,
+      "brier_reference_random": 0.25,
+      "brier_delta_vs_random": -0.0013,
+      "ml_hit_rate_pct": 46.25,
+      "ml_roi_platt": -0.011,
+      "ece_platt": 0.035,
+      "ece_isotonic": 0.044,
+      "wbc_ensemble_brier": 0.1415,
+      "wbc_ensemble_n_games": 40,
+      "verdict": "MODEL_QUALITY_INSUFFICIENT",
+      "notes": "MLB walkforward Brier=0.2487 is virtually identical to random (0.25). ML hit rate=46.25% is BELOW 50% — model predictions do not systematically beat coin flip. WBC ensemble Brier=0.1415 (N=40, too small for reliable inference). No reliable probability advantage exists to produce positive CLV.",
+      "severity": "HIGH"
+    },
+    "B_market_odds_alignment": {
+      "mnl_outcome_count_varies": true,
+      "mnl_mixed_2way_3way": "21 two-way + 215 three-way MNL markets",
+      "mnl_note": "CLV formula uses index 0,1 only — drops draw outcome for 3-way MNL. For 2-way MNL (no draw), the formula maps correctly. For 3-way MNL, draw CLV is not captured.",
+      "hdc_name_mismatch_pairs": 28,
+      "hdc_name_mismatch_pct": 12.2,
+      "hdc_note": "HDC handicap line name embedded in outcomeName (e.g., '底特律老虎 -2.5'). Name mismatch across pre/close means the handicap LINE shifted between pregame and closing snapshot. CLV formula compares index-0 odds regardless — comparing odds for DIFFERENT handicap lines. This is a CRITICAL construction error for HDC.",
+      "ou_name_mismatch_pairs": 21,
+      "tto_name_mismatch_pairs": 32,
+      "ou_tto_note": "OU/TTO outcome names include the total line (e.g., '大 7.5'). Name mismatch = total line shifted. Same cross-line CLV comparison risk as HDC.",
+      "verdict": "MARKET_MAPPING_RISK",
+      "severity": "HIGH"
+    },
+    "C_clv_construction": {
+      "pregame_median_gap_hours": 3.92,
+      "pregame_pct_gt24h": 0.0,
+      "closing_median_gap_hours": 0.47,
+      "closing_pct_lt30min": 53.0,
+      "same_timestamp_pre_clo": 0,
+      "look_ahead_risk": false,
+      "formula": "(pregame_odds - closing_odds) / closing_odds * 100",
+      "formula_correctness": "CONDITIONALLY_VALID",
+      "known_issues": [
+        "Name mismatch across pregame/closing indicates different market lines being compared (see B)",
+        "53% of closing windows are within 30 minutes of game time — valid but may include in-play data risk",
+        "OE market: std=0.84%, 68.7% neutral obs — CLV formula is mathematically correct but market is non-informative",
+        "CLV measures odds movement only, not model edge — a zero CLV environment does not disprove model value"
+      ],
+      "verdict": "CLV_CONSTRUCTION_RISK",
+      "severity": "HIGH"
+    },
+    "D_outlier_artifact": {
+      "top1pct_n": 22,
+      "top1pct_contribution_pct": 110.57,
+      "top5pct_contribution_pct": 101.79,
+      "top_outlier_pattern": "HDC market, handicap lines at 2.9→1.4 or similar (107-83% CLV)",
+      "outlier_likely_cause": "HANDICAP_LINE_SHIFT_CROSS_LINE_CLV_COMPARISON",
+      "note": "Top outliers are almost entirely from HDC market where the handicap line (point spread) changed between pregame and closing snapshots. The CLV formula then compares odds for DIFFERENT lines (e.g., -1.5 pregame vs -2.5 closing), producing artificially extreme CLV values that do not represent genuine market efficiency beating.",
+      "verdict": "OUTLIER_DRIVEN",
+      "severity": "CRITICAL",
+      "action_required": "Fix HDC/OU/TTO CLV to only compare same-line outcomes (name match, not index match)"
+    },
+    "E_market_taxonomy_side_mapping": {
+      "mnl_outcome_names": "Team name + draw (e.g., '洛杉磯天使/和局/芝加哥白襪'). Side mapping correct for index 0/2 (home/away). Index 1 = draw is excluded.",
+      "hdc_outcome_names": "'TeamName +/-spread' embedded. Side at index 0 is always the first team listed. Mapping is positionally consistent but line-shift creates cross-line comparison.",
+      "ou_outcome_names": "'大 X.X / 小 X.X' (Big/Small). Side 0 = Over, Side 1 = Under. Correct.",
+      "oe_outcome_names": "'單/雙' (Odd/Even). Fixed 2-way. Correct.",
+      "tto_outcome_names": "'大 X.X / 小 X.X'. Same as OU for team total. Correct.",
+      "verdict": "MARKET_MAPPING_PARTIAL_RISK",
+      "severity": "MEDIUM",
+      "primary_risk": "HDC/OU/TTO line-shift cross-comparison (covered in C/D)"
+    },
+    "F_sample_size": {
+      "per_market": {
+        "MNL": {"n": 472, "unique_matches": 236, "adequate": true, "status": "OK"},
+        "HDC": {"n": 458, "unique_matches": 229, "adequate": true, "status": "RISK_DUE_TO_CONSTRUCTION"},
+        "OU": {"n": 460, "unique_matches": 230, "adequate": true, "status": "RISK_DUE_TO_CONSTRUCTION"},
+        "OE": {"n": 460, "unique_matches": 230, "adequate": true, "status": "NON_INFORMATIVE_MARKET"},
+        "TTO": {"n": 434, "unique_matches": 217, "adequate": true, "status": "RISK_DUE_TO_CONSTRUCTION"}
+      },
+      "overall_n": 2284,
+      "minimum_for_ci": 200,
+      "verdict": "SAMPLE_SIZE_ADEQUATE",
+      "note": "Sample size (N=2284, 236 pairs) is adequate for CLV inference. INCONCLUSIVE result is not driven by sample limitation but by signal quality and construction issues.",
+      "severity": "LOW"
+    },
+    "G_recommendation_policy_mismatch": {
+      "clv_measures": "Market line movement (pregame odds vs closing odds)",
+      "model_predicts": "Win probability from ML features",
+      "mismatch": "CLV evaluates market consensus shift, not model prediction accuracy. A model can be correct while CLV is zero (market was already efficient). CLV positive does NOT imply model value; CLV negative does NOT imply model failure.",
+      "verdict": "POLICY_MISMATCH_CONFIRMED",
+      "severity": "MEDIUM",
+      "note": "Using CLV as model quality proxy is methodologically limited. Model Brier/ECE is the correct metric for model quality. CLV measures bookmaker efficiency, not model edge."
+    }
+  },
+  "root_cause_ranking": [
+    {"rank": 1, "cause": "CLV_CONSTRUCTION_RISK", "severity": "CRITICAL", "driver": "HDC/OU/TTO handicap-line shift creates cross-line CLV comparison, producing artificial extreme outliers"},
+    {"rank": 2, "cause": "OUTLIER_DRIVEN", "severity": "CRITICAL", "driver": "Top 1% outliers (all from HDC line-shifts) contribute 110.57% of total CLV sum — entire positive mean is an artifact"},
+    {"rank": 3, "cause": "MODEL_QUALITY_INSUFFICIENT", "severity": "HIGH", "driver": "MLB walkforward Brier≈random (0.2487), ML hit rate=46.25% (<50%), WBC N too small"},
+    {"rank": 4, "cause": "MARKET_MAPPING_RISK", "severity": "HIGH", "driver": "MNL mixed 2/3-way markets; HDC/OU/TTO line-names not matched across pre/close"},
+    {"rank": 5, "cause": "POLICY_MISMATCH_CONFIRMED", "severity": "MEDIUM", "driver": "CLV is not a valid proxy for model edge — separate evaluation frameworks required"}
+  ],
+  "final_p25_classification": "P25_CLV_FAILURE_ROOT_CAUSE_AUDIT_COMPLETED",
+  "primary_root_cause": "CLV_CONSTRUCTION_RISK",
+  "secondary_root_cause": "OUTLIER_DRIVEN",
+  "tertiary_root_cause": "MODEL_QUALITY_INSUFFICIENT",
+  "repair_priority": {
+    "P1_immediate": "Fix CLV construction: match outcomes by name not by index position for HDC/OU/TTO",
+    "P2_high": "Re-run CLV analysis after fixing construction — re-classify if HDC outliers are eliminated",
+    "P3_medium": "Model quality improvement: Brier currently ≈ random, need feature redesign",
+    "P4_low": "OE market exclusion: non-informative, pollutes overall statistics"
+  },
+  "forbidden_checks": {
+    "production_proposal": false,
+    "champion_replacement": false,
+    "profitability_claim": false,
+    "guaranteed_profit": false,
+    "live_api_call": false,
+    "crawler_modification": false
+  }
+}

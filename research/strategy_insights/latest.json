@@ -1,0 +1,28 @@
+{
+  "best_performing_regimes": [
+    {
+      "regime": "Pool B",
+      "roi": -0.2539,
+      "samples": 9
+    }
+  ],
+  "edge_stability": {
+    "non_positive_edge_roi": 0.0,
+    "positive_edge_roi": -0.6845
+  },
+  "signal_decay": {
+    "note": "compare recent vs historical buckets once enough settled trades accumulate",
+    "recent_sample_size": 35
+  },
+  "suspicious_patterns": [
+    "positive_edge_bets_losing"
+  ],
+  "updated_at": "2026-04-20T01:43:06.943680Z",
+  "worst_performing_regimes": [
+    {
+      "regime": "Pool C",
+      "roi": -0.96,
+      "samples": 9
+    }
+  ]
+}

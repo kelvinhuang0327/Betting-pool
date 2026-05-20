@@ -169,11 +169,12 @@ class PredictionService:
 
         # ── 1. Data Validation ───────────────────────────
         logger.info("[STEP 1] Validating data completeness...")
-        validation = validate_dataset("MLB_2025", self.config)
+        # WBC production must never point at the legacy MLB dataset.
+        validation = validate_dataset("WBC_2026", self.config)
         if not validation.is_valid:
             logger.info("[STEP 1] Data incomplete (%.1f%%), auto-fetching...",
                        validation.completeness_pct * 100)
-            validation = auto_fetch_missing_data("MLB_2025", self.config)
+            validation = auto_fetch_missing_data("WBC_2026", self.config)
         logger.info("[STEP 1] Data validation: completeness=%.1f%%, valid=%s",
                    validation.completeness_pct * 100, validation.is_valid)
 
@@ -246,6 +247,32 @@ class PredictionService:
             # Hard serving-boundary cap after rule engine.
             pred.home_win_prob = max(0.15, min(0.85, float(pred.home_win_prob)))
             pred.away_win_prob = 1.0 - pred.home_win_prob
+
+        # ── 5.5 WBC 2026 postmortem: expected_runs prior bias correction ────
+        # WBC 2026 observed mean total = 9.51 runs; Poisson prior ~7.0 runs.
+        # Bayesian shrinkage (n=49, pseudo=50): mult=1.20 (raw 1.36 → shrunk).
+        # Preserves home/away run share; only scales total upward.
+        # Rollback: set wbc_total_runs_bias_mult=1.0 in WBCAdjustmentConfig.
+        # Tag: WBC_2026_POSTMORTEM_BIAS_CORRECTION
+        if matchup.tournament.upper().startswith("WBC"):
+            _wbc_bias_mult = self.config.wbc.wbc_total_runs_bias_mult
+            if _wbc_bias_mult != 1.0:
+                _raw_home = pred.expected_home_runs
+                _raw_away = pred.expected_away_runs
+                _raw_total = _raw_home + _raw_away
+                if _raw_total > 0:
+                    _home_share = _raw_home / _raw_total
+                    _corrected_total = _raw_total * _wbc_bias_mult
+                    pred.expected_home_runs = round(_corrected_total * _home_share, 2)
+                    pred.expected_away_runs = round(_corrected_total * (1.0 - _home_share), 2)
+                    logger.info(
+                        "[STEP 5.5] WBC runs prior correction: %.2f+%.2f=%.2f → %.2f+%.2f=%.2f "
+                        "(mult=%.2f) [WBC_2026_POSTMORTEM_BIAS_CORRECTION]",
+                        _raw_home, _raw_away, _raw_total,
+                        pred.expected_home_runs, pred.expected_away_runs,
+                        pred.expected_home_runs + pred.expected_away_runs,
+                        _wbc_bias_mult,
+                    )
 
         # ── N.02 崩盤風險（mismatch_blowout_propensity）──────────────────────
         # 在 MC 之前計算，讓 volatility expansion 也能影響 OU 模擬尾部

@@ -40,6 +40,12 @@ def _build_training_data(config: AppConfig) -> tuple[np.ndarray, np.ndarray]:
     if "is_synthetic" in df.columns and df["is_synthetic"].fillna(False).astype(bool).any():
         raise RuntimeError("Synthetic training rows detected in MLB_2025 dataset; training aborted.")
 
+    if "is_verified_real" not in df.columns:
+        raise RuntimeError("MLB_2025 training data is missing provenance columns; training aborted.")
+
+    if not df["is_verified_real"].fillna(False).astype(bool).all():
+        raise RuntimeError("MLB_2025 dataset contains unverified-real rows; training aborted.")
+
     return _df_to_features(df)
 
 

@@ -73,6 +73,7 @@ def cmd_list(_args: argparse.Namespace) -> int:
         print("(no review items in queue)")
         return 0
 
+    pending_count = sum(1 for i in items if i.get("status") == STATUS_PENDING)
     print(f"\n{'─' * 80}")
     print(f"  {'REVIEW ID':<20}  {'TYPE':<26}  {'RISK':<8}  {'STATUS':<22}  {'CREATED'}")
     print(f"{'─' * 80}")
@@ -90,9 +91,14 @@ def cmd_list(_args: argparse.Namespace) -> int:
             f"  {rid:<20}  {rtype:<26}  {risk_col}  {status_col}  {created}{rev_sfx}"
         )
     print(f"{'─' * 80}\n")
-    pending_count = sum(1 for i in items if i.get("status") == STATUS_PENDING)
     if pending_count:
         print(_color(f"  ⚠  {pending_count} review(s) PENDING — planner is blocked.", _YELLOW))
+        print()
+        print("  To action a pending review:")
+        print("    python3 scripts/review_queue.py show <review_id>")
+        print("    python3 scripts/review_queue.py approve <review_id> --reviewer \"Kelvin\" --notes \"...\"")
+        print("    python3 scripts/review_queue.py reject <review_id> --reviewer \"Kelvin\" --notes \"...\"")
+        print("    python3 scripts/review_queue.py more-data <review_id> --reviewer \"Kelvin\" --notes \"...\"")
     print()
     return 0
 
@@ -127,7 +133,18 @@ def cmd_show(args: argparse.Namespace) -> int:
         print(f"  {_BOLD}{label:<22}{_RESET} {value}")
     print()
     print(f"  Summary:\n    {item.get('summary', '(none)')}")
-    print(f"{'=' * 60}\n")
+    print(f"{'=' * 60}")
+
+    # Show action commands if the review is still PENDING
+    if item.get("status") == STATUS_PENDING:
+        rid = item.get("review_id", "?")
+        print()
+        print(_color("  Available actions:", _YELLOW))
+        print(f"    python3 scripts/review_queue.py approve   {rid} --reviewer \"Kelvin\" --notes \"...\"")
+        print(f"    python3 scripts/review_queue.py reject    {rid} --reviewer \"Kelvin\" --notes \"...\"")
+        print(f"    python3 scripts/review_queue.py more-data {rid} --reviewer \"Kelvin\" --notes \"...\"")
+
+    print()
     return 0
 
 
@@ -139,7 +156,12 @@ def cmd_approve(args: argparse.Namespace) -> int:
     print(_color(f"✅ APPROVED: {args.review_id} by {args.reviewer}", _GREEN))
     print(f"   Allowed next task family: {result.get('allowed_next_task_family') or 'none'}")
     print(f"   production_patch_allowed = {result.get('production_patch_allowed', False)}")
-    print("   (Planner will create follow-up validation/proposal task on next tick.)")
+    print()
+    print("   Next steps:")
+    print("   - Planner will create a follow-up production-proposal-validation task on next tick.")
+    print("   - This does NOT deploy any production patch or modify the live model.")
+    print("   - Approval only unlocks validation task creation; a separate human review")
+    print("     will be required before any production-impacting change is made.")
     return 0
 
 
@@ -149,7 +171,11 @@ def cmd_reject(args: argparse.Namespace) -> int:
         print(f"Error: review_id '{args.review_id}' not found.", file=sys.stderr)
         return 1
     print(_color(f"❌ REJECTED: {args.review_id} by {args.reviewer}", _RED))
-    print("   No follow-up task will be created.")
+    print()
+    print("   Next steps:")
+    print("   - Planner will NOT create any follow-up task for this review.")
+    print("   - The sandbox patch associated with this review will not be promoted.")
+    print("   - No production model change occurs. Run 'list' to check for other pending reviews.")
     return 0
 
 
@@ -160,7 +186,11 @@ def cmd_more_data(args: argparse.Namespace) -> int:
         return 1
     print(_color(f"🔄 MORE_DATA_REQUESTED: {args.review_id} by {args.reviewer}", _CYAN))
     print(f"   Allowed next task family: {result.get('allowed_next_task_family') or 'none'}")
-    print("   (Planner will create data-collection task on next tick.)")
+    print()
+    print("   Next steps:")
+    print("   - Planner may create a clv-quality-analysis or additional-validation task on next tick.")
+    print("   - No production patch is applied. More data collection is initiated instead.")
+    print("   - Once data is collected a new review item will be queued for your decision.")
     return 0
 
 

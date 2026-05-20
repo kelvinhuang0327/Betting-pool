@@ -1,0 +1,50 @@
+{
+  "task": "P16-B",
+  "title": "CEO Response Gate",
+  "date": "2026-06-01T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "decision_file_checked": "data/paper_recommendations/p16_ceo_odds_source_decision_20260601.json",
+  "decision_file_exists": false,
+  "decision_status": "DEFER_DECISION",
+  "p17_allowed": false,
+  "p17_blocked_reason": "CEO has not responded to P15 escalation packet. No decision file exists.",
+  "next_owner": "CEO",
+  "worker_allowed_actions": [
+    "REPORT_ONLY",
+    "PAPER_ONLY_MONITORING"
+  ],
+  "final_branch": "HOLD",
+  "supported_decisions": [
+    "APPROVE_PATH_A_WITH_API_KEY",
+    "APPROVE_PATH_A_BUT_KEY_PENDING",
+    "REJECT_PATH_A_USE_FORWARD_ONLY",
+    "DEFER_DECISION"
+  ],
+  "decision_impacts": {
+    "APPROVE_PATH_A_WITH_API_KEY": {
+      "status": "READY_FOR_API_KEY_GATE_ONLY",
+      "p17_allowed": true,
+      "note": "API key gate only. No backfill. No network call until key confirmed."
+    },
+    "APPROVE_PATH_A_BUT_KEY_PENDING": {
+      "status": "BLOCKED_NEEDS_API_KEY",
+      "p17_allowed": false,
+      "note": "Waiting for CEO to provide API key before proceeding."
+    },
+    "REJECT_PATH_A_USE_FORWARD_ONLY": {
+      "status": "FORWARD_ONLY_MONITOR_CONTINUES",
+      "p17_allowed": false,
+      "note": "P17 only allowed once forward pairs >= 200. Currently 0/200."
+    },
+    "DEFER_DECISION": {
+      "status": "HOLD",
+      "p17_allowed": false,
+      "note": "No change. Worker continues daily monitor only."
+    }
+  },
+  "ceo_reply_template": "\u6211\u9078\u64c7\u9078\u9805 [A / B / C / D].",
+  "days_since_escalation": 1,
+  "annotation": "paper_only=true\u3002P16-B CEO Response Gate\u3002\u7121\u7db2\u8def\u547c\u53eb\u3002\u7121 crawler \u4fee\u6539\u3002\u4e0d\u5ba3\u7a31\u4efb\u4f55\u7b56\u7565\u5177\u7372\u5229\u80fd\u529b\u3002"
+}

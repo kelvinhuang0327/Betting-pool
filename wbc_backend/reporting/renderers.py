@@ -15,6 +15,70 @@ from wbc_backend.domain.schemas import (
 )
 
 
+def _market_support_label(state: str) -> str:
+    mapping = {
+        "tsl_direct": "TSL direct",
+        "tsl_stale": "TSL stale",
+        "tsl_unlisted_market": "TSL matchup listed, market unavailable",
+        "tsl_unlisted_matchup": "TSL matchup unavailable",
+        "intl_only": "International only",
+        "mixed": "Mixed support",
+    }
+    return mapping.get(str(state or ""), str(state or "unknown"))
+
+
+def _compact_market_support_map(support_map: dict[str, str] | None) -> str:
+    if not support_map:
+        return ""
+    ordered = ["ML", "RL", "OU", "OE", "F5", "TT"]
+    parts = []
+    for market in ordered:
+        if market in support_map:
+            parts.append(f"{market}:{_market_support_label(str(support_map[market]))}")
+    return " | ".join(parts)
+
+
+def _compact_market_support_breakdown(counts: dict[str, int] | None) -> str:
+    if not counts:
+        return ""
+    ordered = [
+        "tsl_direct",
+        "intl_only",
+        "tsl_stale",
+        "tsl_unlisted_market",
+        "tsl_unlisted_matchup",
+        "mixed",
+        "unknown",
+    ]
+    parts = []
+    for state in ordered:
+        if state in counts:
+            parts.append(f"{_market_support_label(state)} x{int(counts[state])}")
+    for state, count in counts.items():
+        if state not in ordered:
+            parts.append(f"{_market_support_label(state)} x{int(count)}")
+    return " | ".join(parts)
+
+
+def _top_market_support_groups(summary: dict[str, object] | None, limit: int = 3) -> list[str]:
+    if not summary:
+        return []
+    groups = summary.get("groups")
+    if not isinstance(groups, dict):
+        return []
+    lines: list[str] = []
+    for state, metrics in list(groups.items())[:limit]:
+        if not isinstance(metrics, dict):
+            continue
+        lines.append(
+            f"{_market_support_label(str(state))}: "
+            f"games={int(metrics.get('games', 0))}, "
+            f"acc={float(metrics.get('winner_accuracy', 0.0)):.1%}, "
+            f"brier={float(metrics.get('avg_brier', 0.0)):.4f}"
+        )
+    return lines
+
+
 def render_full_report(  # noqa: C901
     game: GameOutput,
     pred: PredictionResult,
@@ -24,6 +88,7 @@ def render_full_report(  # noqa: C901
     decision_report=None,
     calibration_metrics: dict | None = None,
     portfolio_metrics: dict | None = None,
+    market_support_performance: dict | None = None,
 ) -> str:
     """Generate comprehensive markdown report."""
     lines = [
@@ -114,8 +179,42 @@ def render_full_report(  # noqa: C901
         f"  Model Weight:        {market_result.get('model_weight_applied', 0.85):.0%}",
         f"  Market Weight:       {market_result.get('market_weight_applied', 0.15):.0%}",
         f"  Steam Moves:         {market_result.get('n_steam_moves', 0)}",
+        f"  Market Support:      {market_result.get('market_support_summary', '')}",
         "",
     ])
+    support_map = market_result.get("market_support_by_market")
+    if isinstance(support_map, dict) and support_map:
+        lines.append(f"  Market Support Map:  {_compact_market_support_map(support_map)}")
+        lines.append("")
+
+    tsl_status = pred.diagnostics.get("tsl_status")
+    if isinstance(tsl_status, dict):
+        lines.extend([
+            "━" * 40,
+            "🎯 TSL FEED STATUS",
+            "━" * 40,
+            f"  Source:             {tsl_status.get('source', '')}",
+            f"  Success:            {tsl_status.get('success', False)}",
+            f"  Games Count:        {tsl_status.get('games_count', 0)}",
+            f"  Fetched At:         {tsl_status.get('fetched_at', '')}",
+        ])
+        if tsl_status.get("note"):
+            lines.append(f"  Note:               {tsl_status.get('note')}")
+        if tsl_status.get("error"):
+            lines.append(f"  Error:              {tsl_status.get('error')}")
+        tsl_matchup = pred.diagnostics.get("tsl_matchup")
+        if isinstance(tsl_matchup, dict):
+            lines.append(f"  Matchup In Snapshot:{' ' if tsl_matchup.get('in_snapshot') else ''} {tsl_matchup.get('in_snapshot', False)}")
+            if tsl_matchup.get("game_id"):
+                lines.append(f"  Snapshot Game ID:   {tsl_matchup.get('game_id')}")
+            if tsl_matchup.get("game_time"):
+                lines.append(f"  Snapshot Game Time: {tsl_matchup.get('game_time')}")
+            if tsl_matchup.get("market_count") is not None:
+                lines.append(f"  Snapshot Markets:   {tsl_matchup.get('market_count', 0)}")
+            market_codes = tsl_matchup.get("market_codes") or []
+            if market_codes:
+                lines.append(f"  Market Codes:       {', '.join(market_codes)}")
+        lines.append("")
 
     # ── X-Factors ────────────────────────────────────────
     if pred.x_factors:
@@ -152,6 +251,15 @@ def render_full_report(  # noqa: C901
                 f"     Win Prob = {bet.win_probability:.1%}  |  "
                 f"Implied = {bet.implied_probability:.1%}",
             ])
+            if getattr(bet, "market_support_state", ""):
+                lines.append(
+                    f"     Market Support = {_market_support_label(getattr(bet, 'market_support_state', ''))}"
+                )
+            if getattr(bet, "decision_timing", "IMMEDIATE") != "IMMEDIATE":
+                lines.append(
+                    f"     Timing = {bet.decision_timing} "
+                    f"(delay {getattr(bet, 'delay_minutes', 0)} min)"
+                )
             if i < len(game.top_3_bets):
                 lines.append("")
 
@@ -182,8 +290,45 @@ def render_full_report(  # noqa: C901
             f"  Gross Exposure:       {portfolio_metrics.get('gross_exposure', 0):.4f}",
             f"  Drawdown Scale:       {portfolio_metrics.get('drawdown_scale', 1.0):.4f}",
             f"  Current Drawdown:     {portfolio_metrics.get('current_drawdown', 0):.1%}",
+            f"  Risk Level:           {portfolio_metrics.get('risk_level', '')}",
+            f"  Data Quality Risk:    {portfolio_metrics.get('data_quality_risk', '')}",
+            f"  TSL Feed State:       {portfolio_metrics.get('tsl_feed_state', '')}",
+            f"  TSL Matchup Listed:   {portfolio_metrics.get('tsl_matchup_in_snapshot', False)}",
+            f"  TSL Matchup Markets:  {portfolio_metrics.get('tsl_matchup_market_count', 0)}",
+            f"  Market Support:       {_market_support_label(portfolio_metrics.get('market_support_profile', ''))}",
+            f"  Support Tilt:         {portfolio_metrics.get('market_support_tilt', '')}",
             "",
         ])
+        if portfolio_metrics.get("tsl_feed_summary"):
+            lines.append(f"  TSL Feed Summary:     {portfolio_metrics.get('tsl_feed_summary')}")
+        if portfolio_metrics.get("market_support_breakdown"):
+            lines.append(
+                "  Support Breakdown:   "
+                f"{_compact_market_support_breakdown(portfolio_metrics.get('market_support_breakdown'))}"
+            )
+        if portfolio_metrics.get("market_support_adjustments"):
+            adjustments = portfolio_metrics.get("market_support_adjustments") or {}
+            ordered = []
+            for state, multiplier in adjustments.items():
+                ordered.append(f"{_market_support_label(str(state))} x{float(multiplier):.3f}")
+            lines.append(f"  Support Adjustments: {' | '.join(ordered)}")
+        for warning in portfolio_metrics.get("warnings", []) or []:
+            lines.append(f"  Warning:              {warning}")
+        lines.append("")
+
+    if market_support_performance:
+        lines.extend([
+            "━" * 40,
+            "📚 MARKET SUPPORT PERFORMANCE",
+            "━" * 40,
+            f"  Group By:            {market_support_performance.get('group_by', '')}",
+            f"  Tracked Games:       {market_support_performance.get('n_games', 0)}",
+        ])
+        if market_support_performance.get("decision_note"):
+            lines.append(f"  Decision Note:       {market_support_performance.get('decision_note')}")
+        for row in _top_market_support_groups(market_support_performance):
+            lines.append(f"  {row}")
+        lines.append("")
 
     # ── Calibration Monitoring ───────────────────────────
     if calibration_metrics:
@@ -213,6 +358,7 @@ def render_json(
     decision_report=None,
     calibration_metrics: dict | None = None,
     portfolio_metrics: dict | None = None,
+    market_support_performance: dict | None = None,
 ) -> str:
     """Generate JSON report."""
     payload = {
@@ -266,6 +412,11 @@ def render_json(
                 "stake": b.stake_amount,
                 "win_prob": b.win_probability,
                 "implied_prob": b.implied_probability,
+                "approved": b.approved,
+                "timing": b.decision_timing,
+                "delay_minutes": b.delay_minutes,
+                "market_support_state": b.market_support_state,
+                "market_support_label": _market_support_label(b.market_support_state),
             }
             for i, b in enumerate(game.top_3_bets)
         ],
@@ -280,7 +431,13 @@ def render_json(
         }
     if portfolio_metrics:
         payload["portfolio"] = portfolio_metrics
+        if portfolio_metrics.get("market_support_breakdown"):
+            payload["portfolio"]["market_support_breakdown_label"] = _compact_market_support_breakdown(
+                portfolio_metrics.get("market_support_breakdown")
+            )
     if calibration_metrics:
         payload["calibration"] = calibration_metrics
+    if market_support_performance:
+        payload["market_support_performance"] = market_support_performance
 
     return json.dumps(payload, ensure_ascii=False, indent=2)

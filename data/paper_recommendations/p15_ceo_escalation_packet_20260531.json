@@ -1,0 +1,43 @@
+{
+  "task": "P15-E",
+  "title": "CEO Escalation Packet",
+  "date": "2026-05-31T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "current_state_summary": {
+    "clv_status": "BLOCKED_NO_CLOSING_LINE",
+    "promotion_status": "FROZEN",
+    "p16_allowed": false,
+    "days_in_defer": 2,
+    "champion": "fixed_edge_5pct",
+    "pair_count": 0,
+    "pair_target": 200
+  },
+  "decision_options": {
+    "A": {
+      "label": "Approve historical API + provide key",
+      "impact": "Unlock PATH A historical backfill. CLV validation becomes possible after backfill completes.",
+      "unblock_condition": "CEO approves + API key provided to Worker",
+      "next_owner": "Worker",
+      "worker_next_action": "Run API key gate check (paper_only). No backfill until key validated."
+    },
+    "B": {
+      "label": "Reject historical API, use forward-only",
+      "impact": "PATH A stays closed. PATH B forward accumulation continues at current pace (0/200 pairs).",
+      "unblock_condition": "forward pregame+closing pairs >= 200",
+      "next_owner": "Worker",
+      "worker_next_action": "Continue daily forward coverage read-only check. No crawler modification."
+    },
+    "C": {
+      "label": "Continue defer, accept blocked state",
+      "impact": "No change. Engineering team continues daily monitor only. P16 not allowed.",
+      "unblock_condition": "CEO makes a decision (A or B)",
+      "next_owner": "CEO",
+      "worker_next_action": "Daily monitor only. Report only. No new tasks."
+    }
+  },
+  "ceo_reply_template": "I choose option [A / B / C].",
+  "worker_commitment": "Worker will not advance P16 without explicit CEO decision.",
+  "annotation": "paper_only=true。P15-E CEO Escalation Packet。不代替 CEO 選路。不宣稱任何策略具獲利能力。"
+}

@@ -1,9 +1,9 @@
 # Phase 6K — Model Output Contract Validator Report
 
-**Date**: 2026-04-29
+**Date**: 2026-04-30
 **Phase**: 6K (Validator — No Code Changes, No Predictions, No Commit)
 **Contract Schema Version**: 6j-1.0
-**Readiness Decision**: `NOT_READY_MODEL_OUTPUT_GAP`
+**Readiness Decision**: `PARTIAL_READY_HISTORICAL_ROWS_BLOCKED`
 
 ---
 
@@ -14,12 +14,12 @@ candidate model output files. The validator scans the real contract target
 `data/derived/model_outputs_YYYY-MM-DD.jsonl`, dry-run placeholders, and legacy
 report/aggregate files to determine whether any source is registry-compatible.
 
-**Real contract target (`model_outputs_2026-04-29.jsonl`)**: **MISSING**
+**Real contract target (`model_outputs_2026-04-29.jsonl`)**: EXISTS
 **Dry-run placeholder rows**: 2080
 **Legacy candidate files scanned**: 9
 **Valid real model output rows (all gates pass)**: 0
 
-**Readiness Decision: `NOT_READY_MODEL_OUTPUT_GAP`**
+**Readiness Decision: `PARTIAL_READY_HISTORICAL_ROWS_BLOCKED`**
 
 No real `model_outputs_YYYY-MM-DD.jsonl` file exists. All existing candidate files
 are either aggregate metrics, paper-tracking retrospective reports, or WBC-domain
@@ -34,7 +34,7 @@ placeholders confirm schema structure but remain non-CLV-usable by design.
 |---|:---:|---:|---|
 | `docs/orchestration/phase6j_model_output_contract_design_2026-04-29.md` | ✅ | 33,554 B | Phase 6J contract — 14 sections, 31 required fields |
 | `data/derived/future_model_predictions_dry_run_2026-04-29.jsonl` | ✅ | 2,137,566 B | Phase 6I dry-run placeholder; 2,080 rows; all `dry_run=true` |
-| `data/derived/model_outputs_2026-04-29.jsonl` | ❌ | 0 B | Real contract target — **MISSING** |
+| `data/derived/model_outputs_2026-04-29.jsonl` | ✅ | 5,411,390 B | Real contract target — **MISSING** |
 
 ---
 
@@ -42,7 +42,7 @@ placeholders confirm schema structure but remain non-CLV-usable by design.
 
 | Candidate | Exists | Rows | Looks Like Model Output | Required Fields Present | Valid Rows | Decision |
 |---|:---:|---:|:---:|:---:|---:|---|
-| `data/derived/model_outputs_2026-04-29.jsonl` | ❌ | 0 | ❌ | ❌ | 0 | `MISSING_REAL_MODEL_OUTPUT_FILE` |
+| `data/derived/model_outputs_2026-04-29.jsonl` | ✅ | 2,986 | ✅ | ✅ | 0 | `MISSING_REAL_MODEL_OUTPUT_FILE` |
 | `future_model_predictions_dry_run_2026-04-29.jsonl` | ✅ | 2,080 | ⚠️ partial | ⚠️ partial | 0 | `DRY_RUN_PLACEHOLDER_NOT_CLV_USABLE` |
 | `model_artifacts.json` | ✅ | 0 | ❌ | ❌ | 0 | `AGGREGATE_ONLY: top-level keys ['calibration', 'params', 'od` |
 | `market_validation.json` | ✅ | 0 | ❌ | ❌ | 0 | `AGGREGATE_ONLY: top-level keys ['ML', 'RL', 'OU']` |
@@ -103,6 +103,7 @@ game but lacks: `canonical_match_id`, `prediction_time_utc`, `market_key`,
 | M10 | MARKET_SEMANTICS_VALID | 766 | 1,314 | 0 | 36.8% | ❌ |
 | M11 | CLV_USABLE_FLAG_CORRECT | 2,080 | 0 | 0 | 100.0% | ✅ |
 | M12 | DRY_RUN_FLAG_CORRECT | 2,080 | 0 | 0 | 100.0% | ✅ |
+| M13 | NATIVE_TIMESTAMP_CONTRACT | 0 | 2,080 | 0 | 0.0% | ❌ |
 
 **Expected**: M1, M5 fail for most rows (missing contract fields in dry-run schema).
 M9, M12 should pass (no leakage fields; dry_run=true consistently).
@@ -143,7 +144,7 @@ Dry-run rows lack the following Phase 6J production fields:
 
 ## 7. Readiness Decision
 
-**`NOT_READY_MODEL_OUTPUT_GAP`**
+**`PARTIAL_READY_HISTORICAL_ROWS_BLOCKED`**
 
 ### Rationale
 

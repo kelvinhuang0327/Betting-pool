@@ -43,6 +43,7 @@ from orchestrator.common import (  # noqa: E402
     COPILOT_DAEMON_STATE_PATH,
     ORCH_RUNTIME_ROOT,
 )
+from orchestrator.provider_audit_guard import AuditGuard, AuditGuardBlockedError  # noqa: E402
 
 logging.basicConfig(
     level=logging.INFO,
@@ -66,6 +67,107 @@ def _detect_failure_status(error_text: str) -> str:
     if any(m in low for m in _RATE_LIMIT_MARKERS):
         return "FAILED_RATE_LIMIT"
     return "FAILED"
+
+
+# ── Copilot CLI 模式偵測 (Phase 36A) ─────────────────────────────────────────
+
+_CLI_MODE_CACHE: Optional[str] = None
+_CLI_MODE_CACHE_TIME: float = 0.0
+_CLI_MODE_CACHE_TTL: float = 300.0  # 5 分鐘快取
+
+
+def _detect_copilot_cli_mode_uncached() -> str:
+    """實際偵測邏輯（不使用快取）。"""
+    # 1. 新版 agent CLI：copilot binary 存在且支援 -p/--prompt
+    copilot_bin = shutil.which("copilot")
+    if copilot_bin and os.path.isfile(copilot_bin):
+        try:
+            r = subprocess.run(
+                [copilot_bin, "--help"],
+                capture_output=True, text=True, timeout=10,
+            )
+            if "--prompt" in (r.stdout + r.stderr):
+                return "agent_cli"
+        except Exception:  # noqa: BLE001
+            pass
+
+    # 2. 舊版 gh extension：gh copilot suggest --target 路徑
+    gh_bin = shutil.which("gh")
+    if gh_bin and os.path.isfile(gh_bin):
+        try:
+            r = subprocess.run(
+                [gh_bin, "copilot", "suggest", "--help"],
+                capture_output=True, text=True, timeout=10,
+            )
+            # 舊版 extension help 包含 --target (shell/git/gh)
+            if "--target" in (r.stdout + r.stderr):
+                return "gh_extension_legacy"
+        except Exception:  # noqa: BLE001
+            pass
+
+    return "unavailable"
+
+
+def detect_copilot_cli_mode() -> str:
+    """
+    偵測可用的 Copilot CLI 模式（含 TTL 快取）。
+
+    Returns:
+        "agent_cli"           — copilot binary (1.0+) 存在且支援 -p/--prompt
+        "gh_extension_legacy" — 僅 gh copilot suggest --target 路徑可用
+        "unavailable"         — 無可用 CLI
+    """
+    global _CLI_MODE_CACHE, _CLI_MODE_CACHE_TIME  # noqa: PLW0603
+    now = time.monotonic()
+    if _CLI_MODE_CACHE is not None and (now - _CLI_MODE_CACHE_TIME) < _CLI_MODE_CACHE_TTL:
+        return _CLI_MODE_CACHE
+    mode = _detect_copilot_cli_mode_uncached()
+    _CLI_MODE_CACHE = mode
+    _CLI_MODE_CACHE_TIME = now
+    logger.debug("[CopilotDaemon] CLI mode detected: %s", mode)
+    return mode
+
+
+def build_copilot_command(
+    prompt: str,
+    model: Optional[str],
+    cli_mode: str,
+    dry_run: bool = True,
+) -> list[str]:
+    """
+    建構 Copilot CLI 指令列表（不執行）。
+
+    Args:
+        prompt:   提示內容字串
+        model:    模型名稱；None / "" 使用 CLI 預設；"auto" 亦省略 --model
+        cli_mode: "agent_cli" | "gh_extension_legacy"
+        dry_run:  True 時以 "[PROMPT_CONTENT]" 替代實際 prompt 內容（安全輸出）
+
+    Returns:
+        可直接傳給 subprocess.run() 的 argv list
+
+    Raises:
+        ValueError: 若 cli_mode 不受支援
+    """
+    safe_prompt = "[PROMPT_CONTENT]" if dry_run else prompt
+    # "auto" 與空字串皆省略 --model，由 CLI 自行選擇
+    effective_model = model if (model and model not in ("", "auto")) else None
+
+    if cli_mode == "agent_cli":
+        copilot_bin = shutil.which("copilot") or "copilot"
+        cmd: list[str] = [copilot_bin, "-p", safe_prompt, "--allow-all-tools"]
+        if effective_model:
+            cmd += ["--model", effective_model]
+        return cmd
+
+    if cli_mode == "gh_extension_legacy":
+        gh_bin = shutil.which("gh") or "gh"
+        cmd = [gh_bin, "copilot", "suggest", "--target", "shell"]
+        if effective_model:
+            cmd += ["--model", effective_model]
+        return cmd
+
+    raise ValueError(f"build_copilot_command: unknown cli_mode={cli_mode!r}")
 
 
 def _runtime_block_reason() -> Optional[str]:
@@ -184,28 +286,41 @@ def _execute_with_gh_copilot(
     completed_path: str,
     timeout_sec: int,
     copilot_model: Optional[str] = None,
+    cli_mode: Optional[str] = None,
 ) -> subprocess.CompletedProcess:
     """
-    使用 gh copilot suggest 執行提示。
-    gh copilot 需要在使用者 session（有 keychain 存取）中執行。
+    Copilot CLI 執行（Phase 36A：支援新版 agent_cli 與舊版 gh_extension_legacy）。
+
+    agent_cli 模式（copilot 1.0+）：
+        copilot -p <prompt> --allow-all-tools [--model <model>]
+    gh_extension_legacy 模式（舊版 gh extension）：
+        gh copilot suggest --target shell [--model <model>]  + stdin prompt
     """
     _assert_runtime_execution_allowed()
-    gh_bin = shutil.which("gh") or "/opt/homebrew/bin/gh"
-    if not os.path.isfile(gh_bin):
-        raise RuntimeError(f"gh binary not found: {gh_bin!r}")
 
-    cmd = [gh_bin, "copilot", "suggest", "--target", "shell"]
-    if copilot_model:
-        cmd += ["--model", copilot_model]
+    if cli_mode is None:
+        cli_mode = detect_copilot_cli_mode()
+    if cli_mode == "unavailable":
+        raise RuntimeError(
+            "Copilot CLI unavailable: neither agent_cli nor gh_extension_legacy found"
+        )
 
-    return subprocess.run(
-        cmd,
-        input=prompt_content,
+    cmd = build_copilot_command(prompt_content, copilot_model, cli_mode, dry_run=False)
+    binary = cmd[0]
+    if not (shutil.which(binary) or os.path.isfile(binary)):
+        raise RuntimeError(f"Binary not found: {binary!r}")
+
+    run_kwargs: dict = dict(
         capture_output=True,
         text=True,
         timeout=timeout_sec,
         cwd=str(PROJECT_ROOT),
     )
+    # legacy 模式透過 stdin 傳遞 prompt（保留原有行為）
+    if cli_mode == "gh_extension_legacy":
+        run_kwargs["input"] = prompt_content
+
+    return subprocess.run(cmd, **run_kwargs)
 
 
 def _execute_with_codex(
@@ -303,8 +418,8 @@ def _log_daemon_result(
 
 def _execute_task(task: dict) -> dict:
     """
-    執行單一任務。
-    優先使用 gh copilot（keychain session 中），失敗時 fallback 到 codex。
+    執行單一任務（Phase 36A：AuditGuard 在 subprocess 前初始化）。
+    優先使用 Copilot CLI（agent_cli 或 legacy），失敗時 fallback 到 codex。
     """
     task_id = task["id"]
     prompt_path = task.get("prompt_file_path", "")
@@ -322,40 +437,122 @@ def _execute_task(task: dict) -> dict:
     timeout_sec = int(expected_hours * 3600) + 1800
 
     copilot_model = db.get_worker_copilot_model() or None
+    cli_mode = detect_copilot_cli_mode()
 
     before_dirty = _list_dirty_files()
 
-    # ── 嘗試 gh copilot，失敗時 fallback codex ──────────────────────────
-    proc: Optional[subprocess.CompletedProcess] = None
-    used_provider = "copilot"
+    # ── 1. 政策檢查（AuditGuard 初始化之前）────────────────────────────────
+    _assert_runtime_execution_allowed()
 
-    if shutil.which("gh"):
-        try:
-            proc = _execute_with_gh_copilot(
-                prompt_content, completed_path, timeout_sec, copilot_model
+    # ── 1b. Usage Budget Guard 檢查（HARD_CAP 時強制封鎖）─────────────────
+    try:
+        from orchestrator.usage_budget_guard import is_provider_allowed
+        from orchestrator.llm_usage_logger import log_usage
+        _budget_allowed, _budget_reason = is_provider_allowed(
+            "worker", "copilot-daemon", hours=24
+        )
+        if not _budget_allowed:
+            log_usage(
+                runner="copilot_daemon",
+                role="worker",
+                provider="copilot-daemon",
+                blocked=True,
+                block_reason=_budget_reason,
+                task_id=task_id,
+                source_file="orchestrator/copilot_daemon.py",
+                source_function="_execute_task",
+                entrypoint="budget_guard_block",
             )
-            if proc.returncode != 0:
+            from orchestrator.llm_audit import write_blocked
+            write_blocked(
+                runner="copilot_daemon",
+                provider="github-copilot",
+                block_reason=_budget_reason,
+                task_id=task_id,
+                trigger_source="usage_budget_guard",
+            )
+            raise RuntimeError(
+                f"[CopilotDaemon] usage budget hard cap blocked: {_budget_reason}"
+            )
+    except RuntimeError:
+        raise
+    except Exception as _bg_exc:  # noqa: BLE001
+        logger.warning(
+            "[CopilotDaemon] Budget guard check failed (non-fatal, proceeding): %s", _bg_exc
+        )
+
+    # ── 2. AuditGuard 初始化（寫入 ATTEMPT，在 subprocess 之前）──────────────
+    try:
+        _audit = AuditGuard(
+            runner="copilot_daemon",
+            provider="copilot-daemon",
+            usage_role="worker",
+            task_id=task_id,
+            model=copilot_model,
+            trigger_source="copilot_daemon_execute",
+        )
+    except AuditGuardBlockedError as exc:
+        _log_daemon_result(
+            provider="copilot-daemon",
+            task_id=task_id,
+            success=False,
+            error=f"AuditGuard blocked: {exc.block_reason}",
+        )
+        raise RuntimeError(
+            f"[CopilotDaemon] audit guard blocked: {exc.block_reason}"
+        ) from exc
+
+    # ── 3. Subprocess 在 AuditGuard context 內執行 ───────────────────────
+    proc: Optional[subprocess.CompletedProcess] = None
+    used_provider = "copilot-daemon"
+
+    with _audit:
+        # 嘗試 Copilot CLI（agent_cli 或 legacy），失敗時 fallback codex
+        if cli_mode != "unavailable":
+            try:
+                proc = _execute_with_gh_copilot(
+                    prompt_content, completed_path, timeout_sec, copilot_model, cli_mode
+                )
+                if proc.returncode != 0:
+                    logger.warning(
+                        "[CopilotDaemon] Task #%d: copilot rc=%d (%s), falling back to codex",
+                        task_id, proc.returncode, cli_mode,
+                    )
+                    proc = None
+            except subprocess.TimeoutExpired:
+                _audit.set_result(success=False, error="copilot subprocess timed out")
+                raise
+            except Exception as exc:  # noqa: BLE001
                 logger.warning(
-                    "[CopilotDaemon] Task #%d: gh copilot rc=%d, falling back to codex",
-                    task_id, proc.returncode,
+                    "[CopilotDaemon] Task #%d: copilot error (%s), falling back to codex",
+                    task_id, exc,
                 )
                 proc = None
-        except subprocess.TimeoutExpired:
-            raise
-        except Exception as exc:
-            logger.warning(
-                "[CopilotDaemon] Task #%d: gh copilot error (%s), falling back to codex",
-                task_id, exc,
-            )
-            proc = None
 
-    if proc is None:
-        used_provider = "codex"
-        proc = _execute_with_codex(prompt_content, completed_path, timeout_sec)
+        if proc is None:
+            used_provider = "codex"
+            try:
+                proc = _execute_with_codex(prompt_content, completed_path, timeout_sec)
+            except subprocess.TimeoutExpired:
+                _audit.set_result(success=False, error="codex subprocess timed out")
+                raise
+
+        assert proc is not None, "Both copilot and codex subprocess paths returned None"
+        raw_output = (proc.stdout or "") + (proc.stderr or "")
+
+        # ── AuditGuard RESULT（在 subprocess 完成後，仍在 context 內）──────────
+        if proc.returncode != 0:
+            _audit.set_result(
+                success=False,
+                error=f"[{used_provider}] exited {proc.returncode}: {(proc.stderr or '')[:200]}",
+                raw_usage_excerpt=raw_output[:300],
+            )
+        else:
+            _audit.set_result(success=True, raw_usage_excerpt=raw_output[:300])
 
     after_dirty = _list_dirty_files()
 
-    raw_output = (proc.stdout or "") + (proc.stderr or "")
+    # ── 4. 失敗路徑：記錄 usage 並 raise ─────────────────────────────────
     if proc.returncode != 0:
         _log_daemon_result(
             provider=used_provider,
@@ -368,7 +565,7 @@ def _execute_task(task: dict) -> dict:
             f"[{used_provider}] exited {proc.returncode}: {(proc.stderr or '')[:500]}"
         )
 
-    # ── 讀取 completed file（優先），fallback stdout ──────────────────────
+    # ── 5. 讀取 completed file（優先），fallback stdout ───────────────────
     if os.path.exists(completed_path):
         with open(completed_path, "r", encoding="utf-8") as fh:
             completed_text = fh.read()
@@ -423,6 +620,13 @@ def run_once() -> str:
     # 3. Scheduler 狀態
     block_reason = _runtime_block_reason()
     if block_reason:
+        from orchestrator.llm_audit import write_blocked
+        write_blocked(
+            runner="copilot_daemon",
+            provider="github-copilot",
+            block_reason=block_reason,
+            trigger_source="scheduler_tick",
+        )
         execution_policy.set_active_background_runner("copilot-daemon", False)
         _write_state("idle")
         return block_reason

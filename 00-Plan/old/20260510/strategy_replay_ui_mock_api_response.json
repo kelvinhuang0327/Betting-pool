@@ -1,0 +1,177 @@
+{
+  "final_marker": "P40_STRATEGY_REPLAY_UI_MOCK_DATA_SPEC_GATE_READY",
+  "mode": "UI_MOCK_DATA_SPEC_ONLY",
+  "production_ui": false,
+  "ui_mode": "UI_MOCK_DATA_SPEC_ONLY",
+  "source_mode": "FIXTURE_ONLY",
+  "readiness_level": "BACKFILL_REQUIRED",
+  "production_ui_can_start": false,
+  "runtime_production_enablement_allowed": false,
+  "production_migration_allowed": false,
+  "warnings": [
+    "Mock-data/spec-only. Not production UI.",
+    "No production migration has been executed.",
+    "Historical strategy identity remains blocked unless explicit metadata source is accepted.",
+    "Read-only fixture/mock contract only."
+  ],
+  "disabled_actions": [
+    "PRODUCTION_LAUNCH",
+    "RUNTIME_PRODUCTION_ENABLEMENT",
+    "PRODUCTION_MIGRATION",
+    "PRODUCTION_DB_WRITE",
+    "HISTORICAL_REGISTRY_MUTATION",
+    "HISTORICAL_IDENTITY_REPAIR"
+  ],
+  "filters": {
+    "strategy_id": null,
+    "lifecycle_state": null,
+    "date_from": null,
+    "date_to": null,
+    "market_type": null,
+    "settlement_status": null,
+    "data_quality_flag": null,
+    "source_mode": "FIXTURE_ONLY",
+    "sort_by": "prediction_timestamp",
+    "sort_dir": "desc",
+    "page": 1,
+    "page_size": 25
+  },
+  "pagination": {
+    "page": 1,
+    "page_size": 25,
+    "total_rows": 3,
+    "total_pages": 1
+  },
+  "quality_badges": [
+    "FIXTURE_ONLY",
+    "MOCK_DATA_SPEC_ONLY",
+    "BACKFILL_REQUIRED",
+    "NO_PRODUCTION_LAUNCH"
+  ],
+  "detail_drawer_fields": [
+    "strategy_id",
+    "strategy_name",
+    "game_id",
+    "prediction_timestamp",
+    "lifecycle_state_at_prediction_time",
+    "current_lifecycle_state",
+    "prediction",
+    "actual_result",
+    "data_quality_flags",
+    "replay_metadata_version",
+    "source_mode",
+    "warnings",
+    "disabled_actions"
+  ],
+  "empty_state": {
+    "title": "No mock rows loaded",
+    "message": "Mock-data/spec-only. Not production UI.",
+    "secondary_message": "Historical strategy identity remains blocked unless explicit metadata source is accepted."
+  },
+  "error_state": {
+    "title": "Contract validation failed",
+    "message": "Mock-data/spec-only. Not production UI.",
+    "secondary_message": "No production migration has been executed."
+  },
+  "rows": [
+    {
+      "strategy_id": "strategy.pool_c.ml_v1",
+      "strategy_name": "Pool C ML v1",
+      "lifecycle_state_at_prediction_time": "online",
+      "current_lifecycle_state": "online",
+      "game_id": "C07",
+      "prediction_timestamp": "2026-05-10T13:59:30.667682+00:00",
+      "prediction": {
+        "home_win_prob": 0.46,
+        "away_win_prob": 0.54,
+        "expected_home_runs": 4.9,
+        "expected_away_runs": 5.2,
+        "confidence_score": 0.85,
+        "market_bias_score": 0.0,
+        "x_factors": [
+          "Explicit runtime metadata fixture"
+        ],
+        "diagnostics": {
+          "regime": "POOL"
+        }
+      },
+      "actual_result": "pending",
+      "data_quality_flags": [
+        "MOCK_DATA_SPEC_ONLY"
+      ],
+      "replay_metadata_version": "mock-spec-v1",
+      "row_status": "MOCK_SPEC_ROW",
+      "source_mode": "FIXTURE_ONLY",
+      "production_ready": false,
+      "runtime_production_enablement_allowed": false,
+      "production_migration_allowed": false
+    },
+    {
+      "strategy_id": "strategy.pool_d.ml_v1",
+      "strategy_name": "Pool D ML v1",
+      "lifecycle_state_at_prediction_time": "offline",
+      "current_lifecycle_state": "offline",
+      "game_id": "C08",
+      "prediction_timestamp": "2026-05-10T14:15:12.000000+00:00",
+      "prediction": {
+        "home_win_prob": 0.51,
+        "away_win_prob": 0.49,
+        "expected_home_runs": 3.8,
+        "expected_away_runs": 3.4,
+        "confidence_score": 0.72,
+        "market_bias_score": -0.03,
+        "x_factors": [
+          "Fixture-only replay sample",
+          "No production launch"
+        ],
+        "diagnostics": {
+          "regime": "POOL"
+        }
+      },
+      "actual_result": "pending",
+      "data_quality_flags": [
+        "MOCK_DATA_SPEC_ONLY",
+        "CANONICAL_OUTCOME_KEY_FALLBACK_TO_GAME_ID"
+      ],
+      "replay_metadata_version": "mock-spec-v1",
+      "row_status": "MOCK_SPEC_ROW",
+      "source_mode": "FIXTURE_ONLY",
+      "production_ready": false,
+      "runtime_production_enablement_allowed": false,
+      "production_migration_allowed": false
+    },
+    {
+      "strategy_id": "strategy.pool_a.replay_demo_v1",
+      "strategy_name": "Pool A Replay Demo v1",
+      "lifecycle_state_at_prediction_time": "observation",
+      "current_lifecycle_state": "observation",
+      "game_id": "C09",
+      "prediction_timestamp": "2026-05-10T14:42:03.000000+00:00",
+      "prediction": {
+        "home_win_prob": 0.37,
+        "away_win_prob": 0.63,
+        "expected_home_runs": 2.9,
+        "expected_away_runs": 5.1,
+        "confidence_score": 0.66,
+        "market_bias_score": 0.08,
+        "x_factors": [
+          "Mock-data/spec payload"
+        ],
+        "diagnostics": {
+          "regime": "POOL"
+        }
+      },
+      "actual_result": "pending",
+      "data_quality_flags": [
+        "MOCK_DATA_SPEC_ONLY",
+        "BACKFILL_REQUIRED"
+      ],
+      "replay_metadata_version": "mock-spec-v1",
+      "row_status": "MOCK_SPEC_ROW",
+      "source_mode": "FIXTURE_ONLY",
+      "production_ready": false,
+      "runtime_production_enablement_allowed": false,
+      "production_migration_allowed": false
+    }
+  ]
+}

@@ -14,6 +14,81 @@ from wbc_backend.config.settings import MarketConfig
 from wbc_backend.domain.schemas import OddsLine, OddsTimeSeries
 
 logger = logging.getLogger(__name__)
+_MARKET_CODE_MAP = {
+    "ML": "MNL",
+    "RL": "HDC",
+    "OU": "OU",
+    "OE": "OE",
+    "F5": "FMNL",
+    "TT": "TTO",
+}
+
+
+def _market_support_summary(tsl_feed_state: str, matchup_status: dict | None) -> str:
+    if tsl_feed_state in {"blocked", "blocked_cached"}:
+        return "TSL blocked"
+    if tsl_feed_state in {"migrating", "migrating_cached"}:
+        return "TSL migrating"
+    if tsl_feed_state in {"degraded", "degraded_cached"}:
+        return "TSL degraded"
+    if tsl_feed_state == "healthy_unlisted":
+        return "TSL healthy, matchup unavailable"
+    if matchup_status and matchup_status.get("in_snapshot"):
+        if not matchup_status.get("is_fresh", True):
+            return "TSL listed, stale"
+        market_count = int(matchup_status.get("market_count", 0) or 0)
+        if market_count > 0:
+            return f"TSL listed, {market_count} markets"
+        return "TSL listed"
+    return "International only"
+
+
+def _market_support_by_market(tsl_feed_state: str, matchup_status: dict | None) -> dict[str, str]:
+    market_codes = {str(code).strip().upper() for code in ((matchup_status or {}).get("market_codes") or [])}
+    in_snapshot = bool((matchup_status or {}).get("in_snapshot", False))
+    is_fresh = bool((matchup_status or {}).get("is_fresh", True))
+
+    states: dict[str, str] = {}
+    for market, code in _MARKET_CODE_MAP.items():
+        if tsl_feed_state in {"blocked", "blocked_cached"}:
+            states[market] = "blocked"
+        elif tsl_feed_state in {"migrating", "migrating_cached"}:
+            states[market] = "migrating"
+        elif tsl_feed_state in {"degraded", "degraded_cached"}:
+            states[market] = "degraded"
+        elif not in_snapshot:
+            states[market] = "unlisted_matchup"
+        elif code not in market_codes:
+            states[market] = "unlisted_market"
+        elif not is_fresh:
+            states[market] = "stale"
+        else:
+            states[market] = "direct"
+    return states
+
+
+def _assess_tsl_feed_state(
+    feed_status: dict | None,
+    matchup_status: dict | None,
+    odds_lines: list[OddsLine],
+) -> tuple[str, float]:
+    """Return (state, reliability multiplier) for TSL-derived market trust."""
+    if not feed_status:
+        return "unknown", 1.0
+    has_tsl_lines = any(line.sportsbook == "TSL" for line in odds_lines)
+    if feed_status.get("success"):
+        if matchup_status and not matchup_status.get("in_snapshot", False) and not has_tsl_lines:
+            return "healthy_unlisted", 0.5
+        return "healthy", 1.0
+
+    note = str(feed_status.get("note") or feed_status.get("error") or "")
+    if "modern_pre_" in note and "403" in note:
+        return ("blocked_cached" if has_tsl_lines else "blocked"), (0.35 if has_tsl_lines else 1.0)
+    if "legacy_fetch_failed" in note:
+        return ("migrating_cached" if has_tsl_lines else "migrating"), (0.55 if has_tsl_lines else 1.0)
+    if has_tsl_lines:
+        return "degraded_cached", 0.65
+    return "degraded", 1.0
 
 
 def decimal_to_implied_prob(odds: float) -> float:
@@ -116,6 +191,8 @@ def market_adjustment(
     away_code: str,
     config: MarketConfig | None = None,
     odds_history: dict[str, OddsTimeSeries] | None = None,
+    feed_status: dict | None = None,
+    matchup_status: dict | None = None,
 ) -> dict:
     """
     Full market calibration:
@@ -132,6 +209,12 @@ def market_adjustment(
       - market_weight_applied
     """
     config = config or MarketConfig()
+    tsl_feed_state, tsl_reliability = _assess_tsl_feed_state(feed_status, matchup_status, odds_lines)
+    if tsl_reliability < 1.0:
+        odds_lines = [
+            line for line in odds_lines
+            if line.sportsbook != "TSL"
+        ] or odds_lines
 
     # ── 1. Market implied probabilities ──────────────────
     ml_home_odds = [o for o in odds_lines
@@ -166,6 +249,7 @@ def market_adjustment(
     # ── 4. Adjust model prediction ───────────────────────
     # Base: 85% model, 15% market (increased if steam moves detected)
     base_market_weight = 0.15 + market_weight if market_available else 0.0
+    base_market_weight *= tsl_reliability
     base_market_weight = min(0.40, base_market_weight)  # Cap at 40%
     model_weight = 1.0 - base_market_weight
 
@@ -182,11 +266,15 @@ def market_adjustment(
         "market_implied_away": round(away_fair, 4),
         "model_weight_applied": round(model_weight, 4),
         "market_weight_applied": round(base_market_weight, 4),
+        "tsl_feed_state": tsl_feed_state,
+        "tsl_feed_reliability": round(tsl_reliability, 4),
+        "market_support_summary": _market_support_summary(tsl_feed_state, matchup_status),
+        "market_support_by_market": _market_support_by_market(tsl_feed_state, matchup_status),
     }
 
     logger.info(
-        "Market adjustment: model=%.3f → adjusted=%.3f (market=%.3f, bias=%.3f, steams=%d)",
-        model_home_prob, adjusted_home_prob, home_fair, bias, len(steam_moves),
+        "Market adjustment: model=%.3f → adjusted=%.3f (market=%.3f, bias=%.3f, steams=%d, tsl=%s)",
+        model_home_prob, adjusted_home_prob, home_fair, bias, len(steam_moves), tsl_feed_state,
     )
 
     return result

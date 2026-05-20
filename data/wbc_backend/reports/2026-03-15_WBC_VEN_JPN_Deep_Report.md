@@ -20,8 +20,9 @@
 | 項目 | Venezuela (VEN) | Japan (JPN) |
 |---|---|---|
 | 台灣比賽日期 | 2026-03-15 | 2026-03-15 |
-| 先發投手預估 | 無資料 | 無資料 |
-| 先發投手球種/球速可驗證資料 | 無資料 | 無資料 |
+| 官方 probable starter | Ranger Suarez (ERA 3.20 | WHIP 1.22 | K/9 8.64 | BB/9 2.17) | Yoshinobu Yamamoto (ERA 2.49 | WHIP 0.99 | K/9 10.42 | BB/9 3.06) |
+| 先發資料來源 | https://statsapi.mlb.com/api/v1.1/game/788097/feed/live | https://statsapi.mlb.com/api/v1.1/game/788097/feed/live |
+| 先發品質分數 | +0.315 | +0.733 |
 | 牛棚深度可驗證資料 | 無資料 | 無資料 |
 | 專項對戰加權資料 | 無資料 | 無資料 |
 
@@ -32,16 +33,19 @@
 - 模型設定：`/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/model_artifacts.json`
 
 回歸參數：
-- `lambda_VEN = 4.38`
-- `lambda_JPN = 5.75`
-- 特定對戰加權：`無資料`（無可驗證拆分資料）
+- 基礎 `lambda_VEN = 4.38`
+- 基礎 `lambda_JPN = 5.75`
+- 先發修正後 `lambda_VEN = 4.12`
+- 先發修正後 `lambda_JPN = 5.61`
+- Quarter-Final 先發權重：`0.65`
+- 特定對戰加權：`官方 probable starters + 保守先發抑分修正`
 
 機率結果：
-- VEN 9 局勝率：`0.2777`
-- JPN 9 局勝率：`0.6053`
+- VEN 9 局勝率：`0.2618`
+- JPN 9 局勝率：`0.6211`
 - 9 局平手率：`0.1170`
-- 全場 VEN 勝率（平手 50/50）：`0.3362`
-- 全場 JPN 勝率（平手 50/50）：`0.6638`
+- 全場 VEN 勝率（平手 50/50）：`0.3203`
+- 全場 JPN 勝率（平手 50/50）：`0.6797`
 
 ## 🗺️ 得分機率矩陣圖
 
@@ -54,14 +58,14 @@ ASCII 熱度圖（VEN 為列，JPN 為欄）：
        + 01234567890
 VEN 10 |            
 VEN  9 |            
-VEN  8 |    ......  
-VEN  7 |   .:---::. 
-VEN  6 |   .-=++=-:.
-VEN  5 |   :=*##*=:.
-VEN  4 |   :+#@%#+-.
-VEN  3 |   :=#%#*=:.
-VEN  2 |   .-=++=-:.
-VEN  1 |    .::::.  
+VEN  8 |     ....   
+VEN  7 |   ..:-::.  
+VEN  6 |   .-=+=-:. 
+VEN  5 |   :=*#*+-:.
+VEN  4 |  .-+%@%*=:.
+VEN  3 |  .:+#%%*=:.
+VEN  2 |   :=+*+=-:.
+VEN  1 |   ..:-::.. 
 VEN  0 |            
 ```
 

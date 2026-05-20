@@ -1,0 +1,41 @@
+{
+  "task": "P18-BLOCKED-CLV-GATE",
+  "title": "P18 CLV Closing-Line Availability Gate",
+  "date": "2026-05-19T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "clv_gate_output": "BLOCKED",
+  "clv_blocked_reasons": [
+    "BLOCKED_ARTIFACT_CHAIN_STALE",
+    "BLOCKED_CEO_DECISION_PENDING"
+  ],
+  "clv_status_per_artifact_chain": "BLOCKED_NO_CLOSING_LINE",
+  "clv_status_per_raw_data": "CLV_DATA_SUFFICIENT",
+  "raw_data_audit": {
+    "tsl_odds_history_exists": true,
+    "valid_clv_pairs": 233,
+    "pair_target": 200,
+    "pair_coverage_pct": 116.5,
+    "clv_gate_clear_per_raw_data": true
+  },
+  "governance_audit": {
+    "pair_count_from_p17_artifact": 0,
+    "p17_artifact_stale": true,
+    "stale_reason": "P17-C generated in worktree context where tsl_odds_history.jsonl was absent",
+    "current_governance_decision": "BLOCKED"
+  },
+  "closing_line_source_approved": false,
+  "ceo_decision_status": "DEFER_DECISION",
+  "promotion_frozen": true,
+  "champion": "fixed_edge_5pct",
+  "path_a_status": "BLOCKED_NEEDS_CEO_APPROVAL_AND_API_KEY",
+  "path_b_status": "ARTIFACT_CHAIN_STALE_NEEDS_P17C_REGEN",
+  "unblock_sequence": [
+    "1. CEO decides: APPROVE_PATH_A_WITH_API_KEY or REJECT_PATH_A_USE_FORWARD_ONLY",
+    "2. Regenerate P17-C artifact against canonical root (will show 233 pairs)",
+    "3. P18 CLV gate re-evaluated → if CEO approved + 233 pairs confirmed → CLV_READY"
+  ],
+  "profitability_claim": false,
+  "annotation": "paper_only=true。P18 CLV Gate。無網路呼叫。Formal gate = BLOCKED（兩原因：artifact chain stale + CEO 決策 DEFER）。Raw data audit 顯示 233 valid pairs（>200 threshold），但 governance 以 P17 artifact chain 為準。需 CEO 決策 + P17-C 重新產生才能解鎖。"
+}

@@ -1,0 +1,52 @@
+{
+  "row_count": 1951,
+  "unique_game_id_count": 1951,
+  "duplicate_game_id_count": 0,
+  "unique_date_team_key_count": 1951,
+  "duplicate_date_team_key_count": 0,
+  "missing_game_id_count": 0,
+  "missing_date_count": 0,
+  "missing_home_team_count": 0,
+  "missing_away_team_count": 0,
+  "same_home_away_count": 0,
+  "normalization_examples": [
+    {
+      "home_raw": "Pittsburgh Pirates",
+      "away_raw": "Chicago Cubs",
+      "home_norm": "PIT",
+      "away_norm": "CHC",
+      "date": "2025-05-01"
+    },
+    {
+      "home_raw": "Cincinnati Reds",
+      "away_raw": "St. Louis Cardinals",
+      "home_norm": "CIN",
+      "away_norm": "STL",
+      "date": "2025-05-01"
+    },
+    {
+      "home_raw": "New York Mets",
+      "away_raw": "Arizona Diamondbacks",
+      "home_norm": "NYM",
+      "away_norm": "ARI",
+      "date": "2025-05-01"
+    },
+    {
+      "home_raw": "Tampa Bay Rays",
+      "away_raw": "Kansas City Royals",
+      "home_norm": "TB",
+      "away_norm": "KC",
+      "date": "2025-05-01"
+    },
+    {
+      "home_raw": "Cleveland Guardians",
+      "away_raw": "Minnesota Twins",
+      "home_norm": "CLE",
+      "away_norm": "MIN",
+      "date": "2025-05-01"
+    }
+  ],
+  "risk_level": "LOW",
+  "risk_reasons": [],
+  "generated_at": "2026-05-20T09:54:07.209950+00:00"
+}

@@ -300,6 +300,10 @@ class BetRecommendation:
     stake_fraction: float
     stake_amount: float = 0.0
     confidence: float = 0.5
+    approved: bool = True
+    decision_timing: str = "IMMEDIATE"
+    delay_minutes: int = 0
+    market_support_state: str = "unknown"
     reason: str = ""
 
 
@@ -363,6 +367,11 @@ class AnalyzeRequest:
     line_total: float = 7.5
     line_spread_home: float = -1.5
     force_retrain: bool = False
+    strategy_id: str | None = None
+    strategy_name: str | None = None
+    lifecycle_state_at_prediction_time: str | None = None
+    current_lifecycle_state: str | None = None
+    canonical_outcome_key: str | None = None
 
 
 @dataclass

@@ -220,6 +220,36 @@ def _get_human_review_queue_summary() -> dict:
         return {}
 
 
+def _get_clv_accumulation_summary() -> dict:
+    """Return Phase 32 CLV accumulation policy summary."""
+    try:
+        from orchestrator.clv_accumulation_policy import get_clv_accumulation_summary
+        return get_clv_accumulation_summary()
+    except Exception as exc:
+        logger.debug("[OpsReport] clv_accumulation unavailable: %s", exc)
+        return {}
+
+
+def _get_clv_batch_scheduler_summary() -> dict:
+    """Return Phase 33 CLV batch scheduler summary."""
+    try:
+        from orchestrator.clv_batch_scheduler import get_batch_scheduler_summary
+        return get_batch_scheduler_summary()
+    except Exception as exc:
+        logger.debug("[OpsReport] clv_batch_scheduler unavailable: %s", exc)
+        return {}
+
+
+def _get_clv_threshold_summary() -> dict:
+    """Return Phase 34 CLV threshold crossing summary."""
+    try:
+        from orchestrator.clv_threshold_tracker import get_threshold_summary
+        return get_threshold_summary()
+    except Exception as exc:
+        logger.debug("[OpsReport] clv_threshold unavailable: %s", exc)
+        return {}
+
+
 def _get_phase6_summary() -> dict[str, Any]:
     """Read Phase 6 CLV state."""
     try:
@@ -761,6 +791,12 @@ def generate_report(window: str = "8h") -> dict[str, Any]:
         "closing_sub_classification": closing_sub_classification,
         # Phase 24: human review queue
         "human_review_queue": _get_human_review_queue_summary(),
+        # Phase 32: CLV accumulation policy
+        "clv_accumulation": _get_clv_accumulation_summary(),
+        # Phase 33: CLV batch scheduler
+        "clv_batch_scheduler": _get_clv_batch_scheduler_summary(),
+        # Phase 34: CLV threshold crossing tracker
+        "clv_threshold": _get_clv_threshold_summary(),
     }
 
 
@@ -989,6 +1025,29 @@ def render_markdown(report: dict) -> str:
             )
             lines.append(f"> Run: `python3 scripts/review_queue.py list`")
             lines.append("")
+            pending_items = hrq.get("pending_reviews", [])
+            for item in pending_items[:3]:
+                rid = item.get("review_id", "?")
+                risk = item.get("risk_level", "?").upper()
+                rtype = item.get("review_type", "?")
+                created = (item.get("created_at_utc") or "")[:16]
+                lines += [
+                    f"### Pending: `{rid}`",
+                    f"",
+                    f"- **Type**: {rtype}  **Risk**: {risk}  **Created**: {created}",
+                    f"- **Title**: {item.get('title') or item.get('summary', '')[:120]}",
+                    f"",
+                    f"```",
+                    f"python3 scripts/review_queue.py show {rid}",
+                    f"python3 scripts/review_queue.py approve {rid} --reviewer \"Kelvin\" --notes \"...\"",
+                    f"python3 scripts/review_queue.py reject {rid} --reviewer \"Kelvin\" --notes \"...\"",
+                    f"python3 scripts/review_queue.py more-data {rid} --reviewer \"Kelvin\" --notes \"...\"",
+                    f"```",
+                    f"",
+                ]
+            if hrq_pending > 3:
+                lines.append(f"> ...and {hrq_pending - 3} more. Run `python3 scripts/review_queue.py list`")
+                lines.append("")
         latest_rev = hrq.get("latest_review")
         if latest_rev:
             lines += [

@@ -1,0 +1,37 @@
+{
+  "task": "P20-E",
+  "title": "P20 Hold / Unblock Gate Refresh",
+  "date": "2026-05-21T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "gate_inputs": {
+    "p19_canonical_forward_coverage": "data/paper_recommendations/p19_canonical_forward_coverage_regenerated_20260520.json",
+    "p19_clv_gate_reevaluation": "data/paper_recommendations/p19_clv_gate_reevaluation_20260520.json",
+    "p20_ceo_decision_intake": "data/paper_recommendations/p20_ceo_clv_decision_intake_20260521.json"
+  },
+  "ceo_decision_status": "DEFER_DECISION",
+  "ceo_decision_file_exists": false,
+  "gate_refresh_result": {
+    "p21_allowed": false,
+    "p21_scope": null,
+    "clv_validation_allowed": false,
+    "promotion_allowed": false,
+    "promotion_frozen": true,
+    "champion_preserved": true,
+    "champion": "fixed_edge_5pct",
+    "next_owner": "CEO",
+    "hold_status": "HOLD_NO_EXPANSION_MAINTAINED"
+  },
+  "data_layer_status": {
+    "valid_clv_pairs": 233,
+    "pair_target": 200,
+    "pair_coverage_pct": 116.5,
+    "data_gate_result": "PASS"
+  },
+  "reason": "CEO decision = DEFER_DECISION (file not found). Data is sufficient (233 pairs, 116.5% coverage). P21 cannot start until CEO approves CLV_VALIDATION_ONLY.",
+  "unblock_condition": "CEO must create p20_ceo_clv_validation_decision_20260521.json with decision = APPROVE_CLV_VALIDATION_ONLY",
+  "p20_final_classification": "P20_CEO_CLV_DECISION_REQUIRED",
+  "profitability_claim": false,
+  "annotation": "paper_only=true。P20-E Hold/Unblock Gate Refresh。CEO 未批准 CLV validation。p21_allowed=false。Champion fixed_edge_5pct PRESERVED。Promotion FROZEN。Data layer PASS 但 CEO 決策為剩餘唯一 block。"
+}

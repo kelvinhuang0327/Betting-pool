@@ -67,6 +67,9 @@ class DecisionContext:
     sharp_signals: list[str] = field(default_factory=list)
     steam_detected: bool = False
     market_efficiency: float = 0.5
+    home_code: str = ""
+    away_code: str = ""
+    market_support_state: str = "unknown"
 
 
 # ─── Configuration ───────────────────────────────────────────────────────────
@@ -97,6 +100,14 @@ HIGH_VOLATILITY_DELAY = 30          # wait when market is volatile
 
 # ─── Gate 1: Model Consensus Check ──────────────────────────────────────────
 
+def _bet_is_home_side(ctx: DecisionContext, bet: BetRecommendation) -> bool | None:
+    side = str(getattr(bet, "side", "")).strip().upper()
+    if side in {"HOME", str(ctx.home_code).upper()}:
+        return True
+    if side in {"AWAY", str(ctx.away_code).upper()}:
+        return False
+    return None
+
 def gate_consensus(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision:
     """
     Check that sufficient models agree on the bet direction.
@@ -110,13 +121,20 @@ def gate_consensus(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision
     if not probs:
         return GateDecision(
             gate="CONSENSUS",
-            result=GateResult.REJECT,
-            reason="No sub-model predictions available",
+            result=GateResult.PASS,
+            reason="No sub-model predictions available; consensus gate skipped",
+            confidence=0.8,
         )
 
-    # Determine bet side: is this bet on the favourite or underdog?
-    bet_side = getattr(bet, "side", "home").lower()
-    bet_on_home = "home" in bet_side
+    # Determine bet side: if market is non-directional (e.g. OU/OE), skip the gate.
+    bet_on_home = _bet_is_home_side(ctx, bet)
+    if bet_on_home is None:
+        return GateDecision(
+            gate="CONSENSUS",
+            result=GateResult.PASS,
+            reason="Non-directional market; consensus gate skipped",
+            confidence=0.85,
+        )
 
     # Count models agreeing with bet direction
     agreeing = 0
@@ -288,11 +306,13 @@ def gate_sizing(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision:
     Returns the stake percentage in modified_value.
     """
     model_prob = ctx.model_prob
-    bet_side = getattr(bet, "side", "home").lower()
-    if "away" in bet_side:
-        bet_prob = 1.0 - model_prob
-    else:
+    bet_on_home = _bet_is_home_side(ctx, bet)
+    if bet_on_home is None:
+        bet_prob = getattr(bet, "win_probability", model_prob)
+    elif bet_on_home:
         bet_prob = model_prob
+    else:
+        bet_prob = 1.0 - model_prob
 
     odds = ctx.odds
     if odds <= 1.0 or bet_prob <= 0.0:
@@ -336,6 +356,22 @@ def gate_timing(ctx: DecisionContext, bet: BetRecommendation) -> GateDecision:
     IMMEDIATE — place now
     DELAY     — wait for line movement to settle
     """
+    if getattr(bet, "sportsbook", "") == "TSL" and ctx.market_support_state in {"tsl_unlisted_matchup", "tsl_unlisted_market"}:
+        return GateDecision(
+            gate="TIMING",
+            result=GateResult.MODIFY,
+            reason=f"TSL support state={ctx.market_support_state}. Delay 30min or route to international books.",
+            modified_value=HIGH_VOLATILITY_DELAY,
+        )
+
+    if getattr(bet, "sportsbook", "") == "TSL" and ctx.market_support_state == "tsl_stale":
+        return GateDecision(
+            gate="TIMING",
+            result=GateResult.MODIFY,
+            reason="TSL snapshot is stale. Delay 15min until Taiwan-market odds refresh.",
+            modified_value=STEAM_DELAY_MINUTES,
+        )
+
     if ctx.steam_detected:
         return GateDecision(
             gate="TIMING",

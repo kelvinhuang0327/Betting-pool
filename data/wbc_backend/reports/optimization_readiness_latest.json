@@ -1,0 +1,150 @@
+{
+  "generated_at": "2026-05-01T14:04:47.628111Z",
+  "readiness_state": "LEARNING_READY",
+  "severity": "GREEN",
+  "reason": "14 CLV record(s) computed — learning families are allowed",
+  "learning_allowed": true,
+  "next_required_event": "Start model learning cycle — CLV data is ready",
+  "recommended_next_action": "Switch to safe-run mode and allow model-patch / calibration tasks",
+  "phase6": {
+    "available": true,
+    "clv_computed": 14,
+    "clv_pending_closing": 0,
+    "clv_blocked": 0,
+    "all_clv_pending": false,
+    "registry_rows": 14,
+    "next_required_event": "All CLV COMPUTED — ready for full CLV-based reinforcement"
+  },
+  "phase7": {
+    "available": true,
+    "last_run_at": "2026-05-01T13:10:01.208951+00:00",
+    "pending_clv": 0,
+    "computed_clv": 1,
+    "stale_closing_rejected": 0,
+    "learning_unlocked_count": 1
+  },
+  "governance": {
+    "available": true,
+    "current_state": "DATA_READY",
+    "reasons": [
+      "clv_computed_available: 14 COMPUTED records (100.0% of total)"
+    ],
+    "allowed_families": [
+      "model-validation-atomic",
+      "model-patch-atomic",
+      "strategy-reinforcement",
+      "calibration-atomic",
+      "feature-atomic",
+      "regime-atomic",
+      "odds-atomic",
+      "feedback-atomic",
+      "backtest-validity-atomic",
+      "simulation-atomic",
+      "maintenance",
+      "observability-ux"
+    ],
+    "blocked_families": [],
+    "recommended_next_action": "Proceed with model validation and strategy feedback. CLV computed records are available for learning."
+  },
+  "ops": {
+    "available": true,
+    "classification": "IDLE",
+    "tasks_completed": 0,
+    "effective_completed": 0,
+    "consecutive_skips": 0,
+    "hard_off_skip_count": 10,
+    "skip_reasons": {
+      "hard_off_protection": 10
+    },
+    "governance_blocked": 0,
+    "clv_computed": 14,
+    "next_focus": "No tasks generated. Check planner_tick configuration and blueprint coverage."
+  },
+  "completion_quality": {
+    "available": true,
+    "total_completed": 0,
+    "completed_valid": 0,
+    "completed_diagnostic_only": 0,
+    "completed_empty_artifact": 0,
+    "completed_noop": 0,
+    "effective_completed": 0,
+    "quality_ok": true
+  },
+  "safe_work": {
+    "available": true,
+    "due_tasks": [
+      "refresh_external_closing",
+      "refresh_tsl_closing",
+      "closing_availability_audit",
+      "closing_monitor",
+      "scheduler_health_check",
+      "artifact_health_check",
+      "ops_report"
+    ],
+    "cadence_health": {
+      "task_type": "closing_monitor",
+      "cadence_min": 20,
+      "current_slot": 1481370,
+      "dedupe_key": "closing_monitor:slot:1481370",
+      "task_due": true,
+      "existing_task_id": null,
+      "existing_status": null
+    },
+    "closing_monitor_due": true
+  },
+  "skip_reasons": {
+    "hard_off_protection": 10
+  },
+  "skip_health": {
+    "available": true,
+    "total_skips": 10,
+    "hard_off_protected": 10,
+    "unexplained_consecutive": 0,
+    "all_protected": true,
+    "skip_reasons": {
+      "hard_off_protection": 10
+    },
+    "skip_health": "HEALTHY"
+  },
+  "closing_availability": {
+    "available": true,
+    "pending_total": 0,
+    "computed_total": 14,
+    "missing_all_sources": 0,
+    "invalid_before_prediction": 0,
+    "invalid_same_snapshot": 0,
+    "stale_candidates": 0,
+    "recommended_refresh_tsl": 0,
+    "recommended_refresh_external": 0,
+    "manual_review_required": 0,
+    "ready_to_upgrade": 0,
+    "next_closing_action": "No pending CLV records",
+    "next_refresh_action": "manual_review_summary",
+    "refresh_task_due": true,
+    "last_refresh_task": null,
+    "source_refresh_blocked_reason": "Automated refresh exhausted — escalation triggered. Operator manual review required.",
+    "last_refresh_action": "refresh_external_closing",
+    "last_refresh_improved": false,
+    "consecutive_no_improvement": 22,
+    "escalation_recommended": true,
+    "recommended_escalation_action": "manual_review_summary"
+  },
+  "latest_learning_cycle": null,
+  "latest_gate_decision": null,
+  "latest_patch_evaluation": null,
+  "latest_eval_gate_decision": null,
+  "human_review_queue": {
+    "total": 0,
+    "pending_count": 0,
+    "approved_count": 0,
+    "rejected_count": 0,
+    "more_data_count": 0,
+    "blocked_by_human_review": false,
+    "latest_review": null,
+    "pending_reviews": [],
+    "approved_reviews": [],
+    "rejected_reviews": [],
+    "more_data_requested": []
+  },
+  "blocked_by_human_review": false
+}

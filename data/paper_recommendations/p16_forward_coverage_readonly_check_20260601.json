@@ -1,0 +1,28 @@
+{
+  "task": "P16-C",
+  "title": "Forward Coverage Read-only Check v3",
+  "date": "2026-06-01T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "sources_checked": [
+    "data/tsl_odds_history.jsonl",
+    "data/paper_recommendations/p15_forward_coverage_readonly_check_20260531.json",
+    "data/paper_recommendations/p11_forward_collection_readiness_20260527.json"
+  ],
+  "tsl_odds_history_exists": false,
+  "total_snapshots": 0,
+  "unique_games": 0,
+  "pregame_candidate_count": 0,
+  "closing_candidate_count": 0,
+  "pregame_closing_pair_count": 0,
+  "pair_count": 0,
+  "pair_target": 200,
+  "pair_coverage_pct": 0.0,
+  "delta_vs_p15": 0,
+  "delta_from_p14": 0,
+  "status": "ACCUMULATION_INSUFFICIENT",
+  "p17_clv_allowed": false,
+  "p17_clv_reason": "pair_count=0 < pair_target=200. No forward accumulation change from P15.",
+  "annotation": "paper_only=true\u3002P16-C Forward Coverage Read-only Check v3\u3002\u7121\u7db2\u8def\u547c\u53eb\u3002\u7121 crawler \u4fee\u6539\u3002\u4e0d\u5ba3\u7a31\u4efb\u4f55\u7b56\u7565\u5177\u7372\u5229\u80fd\u529b\u3002"
+}

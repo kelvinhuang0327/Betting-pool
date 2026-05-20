@@ -1,0 +1,42 @@
+{"timestamp": "2026-04-18T05:29:16.062695Z", "type": "monitor_start", "pid": 32755, "duration_hours": 8, "interval_minutes": 15}
+{"timestamp": "2026-04-18T05:29:16.092641Z", "cycle": 1, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "ok"}
+{"timestamp": "2026-04-18T05:44:16.095201Z", "cycle": 2, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "ok"}
+{"timestamp": "2026-04-18T05:59:16.098437Z", "cycle": 3, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "ok"}
+{"timestamp": "2026-04-18T06:14:16.108693Z", "cycle": 4, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "ok"}
+{"timestamp": "2026-04-18T06:29:16.102243Z", "type": "no_growth_warning", "duration_minutes": 60.0}
+{"timestamp": "2026-04-18T06:29:16.102520Z", "cycle": 5, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T08:16:19.260227Z", "type": "no_growth_warning", "duration_minutes": 167.1}
+{"timestamp": "2026-04-18T08:16:19.260498Z", "cycle": 6, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T09:33:07.636541Z", "type": "no_growth_warning", "duration_minutes": 243.9}
+{"timestamp": "2026-04-18T09:33:07.636783Z", "cycle": 7, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T09:48:07.639429Z", "type": "no_growth_warning", "duration_minutes": 258.9}
+{"timestamp": "2026-04-18T09:48:07.643299Z", "cycle": 8, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T10:03:07.638980Z", "type": "no_growth_warning", "duration_minutes": 273.9}
+{"timestamp": "2026-04-18T10:03:07.639175Z", "cycle": 9, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T10:18:07.648222Z", "type": "no_growth_warning", "duration_minutes": 288.9}
+{"timestamp": "2026-04-18T10:18:07.648488Z", "cycle": 10, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T10:33:07.653778Z", "type": "no_growth_warning", "duration_minutes": 303.9}
+{"timestamp": "2026-04-18T10:33:07.654082Z", "cycle": 11, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T10:48:07.651429Z", "type": "no_growth_warning", "duration_minutes": 318.9}
+{"timestamp": "2026-04-18T10:48:07.655184Z", "cycle": 12, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T11:03:07.655981Z", "type": "no_growth_warning", "duration_minutes": 333.9}
+{"timestamp": "2026-04-18T11:03:07.656241Z", "cycle": 13, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T11:18:07.659016Z", "type": "no_growth_warning", "duration_minutes": 348.9}
+{"timestamp": "2026-04-18T11:18:07.659331Z", "cycle": 14, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T11:33:07.667612Z", "type": "no_growth_warning", "duration_minutes": 363.9}
+{"timestamp": "2026-04-18T11:33:07.667891Z", "cycle": 15, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T11:48:07.673483Z", "type": "no_growth_warning", "duration_minutes": 378.9}
+{"timestamp": "2026-04-18T11:48:07.677491Z", "cycle": 16, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T12:03:07.669846Z", "type": "no_growth_warning", "duration_minutes": 393.9}
+{"timestamp": "2026-04-18T12:03:07.670063Z", "cycle": 17, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T12:18:07.683671Z", "type": "no_growth_warning", "duration_minutes": 408.9}
+{"timestamp": "2026-04-18T12:18:07.683995Z", "cycle": 18, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T12:33:07.675466Z", "type": "no_growth_warning", "duration_minutes": 423.9}
+{"timestamp": "2026-04-18T12:33:07.675775Z", "cycle": 19, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T12:50:30.908309Z", "type": "no_growth_warning", "duration_minutes": 441.2}
+{"timestamp": "2026-04-18T12:50:30.911056Z", "cycle": 20, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T13:05:30.925956Z", "type": "no_growth_warning", "duration_minutes": 456.2}
+{"timestamp": "2026-04-18T13:05:30.926775Z", "cycle": 21, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T13:20:30.894102Z", "type": "no_growth_warning", "duration_minutes": 471.2}
+{"timestamp": "2026-04-18T13:20:30.894289Z", "cycle": 22, "snapshot_count": 2529, "external_closing_count": 3, "api_calls_today": 1, "games_with_2plus_snapshots": 0, "status": "warning"}
+{"timestamp": "2026-04-18T13:35:30.877323Z", "type": "final_summary", "cycles_completed": 22, "duration_minutes": 486, "total_snapshots_added": 0, "total_external_closing_added": 0, "settlements_ingested": 0, "roi_delta": 0.0, "postmortems_triggered": 0, "classification": "FAILED", "reason": "no snapshot growth over 8 hours"}

@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-03-20T06:40:24.783492Z",
+  "objective": "Audit MLB odds timeline mapping and CLV zero root cause",
+  "source_summary": {
+    "records": 2396,
+    "same_opening_closing": 2396,
+    "odds_history_len_1": 2396,
+    "odds_history_len_gt_1": 0,
+    "decision_home_ml_present": 0,
+    "closing_home_ml_canonical": 0,
+    "post_game_proxy_only": 2396,
+    "timeline_issues_flagged": 0
+  },
+  "context_summary": {
+    "records": 2430,
+    "same_opening_closing": 1688,
+    "odds_history_len_1": 2396,
+    "odds_history_len_gt_1": 0,
+    "decision_home_ml_present": 0,
+    "timeline_issues_flagged": 2430
+  },
+  "timeline_tier_breakdown_verified": {
+    "strict_4point": 0,
+    "timeline_3plus_pregame": 0,
+    "timeline_2plus_pregame": 0,
+    "closing_only_pregame": 0,
+    "post_game_proxy_only": 2396,
+    "no_data": 34,
+    "universe": "2025 MLB historical backtest (mlb_odds_2025_real.csv, 2430 games)"
+  },
+  "tsl_spring2026_overlay": {
+    "total_mlb_games_in_tsl": 38,
+    "games_with_2plus_pregame_snapshots": 29,
+    "games_with_actual_line_movement": 1,
+    "universe": "Spring 2026 spring training games — NOT part of 2025 historical backtest universe",
+    "overlap_with_2025_historical": 0,
+    "usable_for_2025_clv_research": false
+  },
+  "root_cause": [
+    "mlb_odds_2025_real.csv was a single post-season scrape (2026-03-18/19). All 2430 games have exactly 1 snapshot timestamp AFTER the game date.",
+    "Timeline history for MLB 2025 games is single-point for all records; no independent pregame line exists.",
+    "canonical closing_home_ml is now correctly NULL for post-game-only snapshots (fixed 2026-03-20). Post-game odds remain in odds_history for research.",
+    "TSL odds history covers spring 2026 games only; zero match_id overlap with 2025 CSV universe."
+  ],
+  "repair_actions": [
+    "historical_odds_ingestion.py: closing_home_ml now NULL when no pregame snapshot (canonical schema is strict).",
+    "historical_odds_ingestion.py: added pregame_snapshot_count per canonical row for tier classification.",
+    "QA report: added timeline_tier_breakdown (strict_4point / 3plus / 2plus / closing_only_pregame / post_game_proxy_only / no_data).",
+    "QA report: added post_game_proxy_count and post_game_proxy_rate (2396 games, 98.6%).",
+    "QA report: acceptance_gate.post_game_proxy_gte_80pct = True (post-game proxy available for research).",
+    "TSL spring 2026: tsl_timeline_research_asset.json produced. 38 MLB games, 4 with 4+ snapshots, 1 with actual line movement.",
+    "Decision-quality CLV still requires explicit decision-time odds; unavailable CLV correctly classified as closing_fallback."
+  ],
+  "clv_status": {
+    "strict_timeline_clv": "UNAVAILABLE (0 games with pregame multi-snapshot in 2025 universe)",
+    "closing_fallback_clv": "OPERATIONAL (2396 games use post-game odds as closing proxy; CLV=0 honest)",
+    "tsl_spring2026_clv": "NOT_APPLICABLE (no game outcomes for spring training)",
+    "path_to_genuine_clv": "External historical odds API (The Odds API / SportsDataIO) for 2025 season OR real-time TSL collection for 2026 regular season"
+  }
+}

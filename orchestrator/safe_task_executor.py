@@ -1460,6 +1460,480 @@ def _execute_calibration_patch_evaluation(task: dict) -> dict:
     }
 
 
+# ── production_clv_investigation executor (Phase 34) ────────────────────
+
+def _execute_production_clv_investigation(task: dict) -> dict:
+    """
+    Phase 34 — Deterministic production CLV investigation executor.
+
+    Triggered when computed_count crosses 30 (APPROACHING threshold).
+    Re-runs CLV quality analysis with deeper segment reporting.
+    Reuses Phase 31 / Phase 30 CLV quality logic.
+
+    Sandbox injection:
+        ``task["_sandbox_reports_dir"]`` — test reports directory.
+        ``task["_sandbox_artifact_dir"]`` — test artifact directory.
+
+    Hard rules:
+      - Does not call any external LLM.
+      - Does not modify source CLV JSONL files.
+      - Does not create patch candidates.
+      - Does not trigger live betting.
+      - Does not produce production model mutation.
+    """
+    import statistics as _stat
+
+    task_id    = str(task.get("id", "unknown"))
+    exec_start = datetime.now(timezone.utc)
+
+    logger.info(
+        "[SafeExecutor] production_clv_investigation task #%s — APPROACHING threshold reached",
+        task_id,
+    )
+
+    # ── Resolve directories ──────────────────────────────────────────────
+    sandbox_reports_dir  = task.get("_sandbox_reports_dir")
+    sandbox_artifact_dir = task.get("_sandbox_artifact_dir")
+    reports_dir: Path = Path(sandbox_reports_dir) if sandbox_reports_dir else _REPORTS_DIR
+
+    # ── Read COMPUTED CLV records ────────────────────────────────────────
+    computed_rows: list[dict[str, Any]] = []
+    for path in sorted(reports_dir.glob("clv_validation_records_6u_*.jsonl")):
+        try:
+            for line in path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if row.get("clv_status") == "COMPUTED" and row.get("clv_value") is not None:
+                    try:
+                        row["clv_value"] = float(row["clv_value"])
+                        computed_rows.append(row)
+                    except (TypeError, ValueError):
+                        pass
+        except OSError:
+            continue
+
+    computed_count = len(computed_rows)
+    clv_values     = [r["clv_value"] for r in computed_rows]
+
+    # ── Statistics ───────────────────────────────────────────────────────
+    if computed_count > 0:
+        mean_clv     = sum(clv_values) / computed_count
+        median_clv   = _stat.median(clv_values)
+        variance_clv = _stat.variance(clv_values) if computed_count >= 2 else 0.0
+        positive_ct  = sum(1 for v in clv_values if v > 0)
+        negative_ct  = sum(1 for v in clv_values if v < 0)
+        pos_rate     = positive_ct / computed_count
+    else:
+        mean_clv = median_clv = variance_clv = None
+        positive_ct = negative_ct = 0
+        pos_rate = 0.0
+
+    # ── Threshold note ────────────────────────────────────────────────────
+    from orchestrator.clv_accumulation_policy import (
+        EVIDENCE_THRESHOLD_APPROACHING,
+        EVIDENCE_THRESHOLD_SUFFICIENT,
+    )
+    remaining_to_sufficient = max(0, EVIDENCE_THRESHOLD_SUFFICIENT - computed_count)
+
+    # ── Artifact ─────────────────────────────────────────────────────────
+    if sandbox_artifact_dir:
+        artifact_dir = Path(sandbox_artifact_dir)
+    else:
+        artifact_dir = _ORCH_TASKS_ROOT / exec_start.strftime("%Y%m%d")
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    artifact_path = artifact_dir / f"{task_id}-production-clv-investigation.md"
+
+    mean_str = f"{mean_clv:.4f}" if mean_clv is not None else "N/A"
+    artifact_text = (
+        f"# Production CLV Investigation — Phase 34 — Task {task_id}\n\n"
+        f"**Triggered by**: CROSSED_APPROACHING threshold (≥ {EVIDENCE_THRESHOLD_APPROACHING})\n"
+        f"**Executed at**: {exec_start.isoformat()}\n"
+        f"**Execution mode**: `PAPER_ONLY`\n"
+        f"**Production mutation**: `false`\n"
+        f"**No external LLM called**\n\n"
+        "---\n\n"
+        "## CLV Quality Investigation\n\n"
+        f"| Metric | Value |\n"
+        f"|--------|-------|\n"
+        f"| Computed records | {computed_count} / {EVIDENCE_THRESHOLD_SUFFICIENT} |\n"
+        f"| Remaining to SUFFICIENT | {remaining_to_sufficient} |\n"
+        f"| Mean CLV | {mean_str} |\n"
+        f"| Positive rate | {pos_rate:.1%} |\n"
+        f"| Positive count | {positive_ct} |\n"
+        f"| Negative count | {negative_ct} |\n\n"
+        "## Investigation Notes\n\n"
+        f"- Evidence state is now **APPROACHING** ({computed_count} ≥ {EVIDENCE_THRESHOLD_APPROACHING}).\n"
+        f"- {remaining_to_sufficient} more COMPUTED records needed to cross SUFFICIENT threshold.\n"
+        "- Deeper segment analysis is now allowed (PAPER_ONLY).\n"
+        "- Patch gate recheck is NOT yet allowed (requires ≥ 50 COMPUTED records).\n\n"
+        "## Hard Rules Applied\n\n"
+        "- No external LLM called\n"
+        "- No production model modified\n"
+        "- No CLV source files modified\n"
+        "- No live betting triggered\n"
+        "- No patch candidate created\n"
+        "- PENDING records NOT marked as COMPUTED\n"
+    )
+
+    try:
+        artifact_path.write_text(artifact_text, encoding="utf-8")
+        logger.info("[SafeExecutor] production_clv_investigation: artifact → %s", artifact_path)
+    except OSError as exc:
+        logger.error("[SafeExecutor] production_clv_investigation: write failed — %s", exc)
+
+    duration = (datetime.now(timezone.utc) - exec_start).total_seconds()
+
+    return {
+        "success":              True,
+        "completed_text":       artifact_text,
+        "completed_file_path":  str(artifact_path),
+        "changed_files":        [str(artifact_path)],
+        "duration_seconds":     duration,
+        "computed_count":       computed_count,
+        "mean_clv":             mean_clv,
+        "positive_rate":        pos_rate,
+        "remaining_to_sufficient": remaining_to_sufficient,
+        # Hard rules
+        "execution_mode":           "PAPER_ONLY",
+        "production_mutation":       False,
+        "live_bet_submitted":        False,
+        "patch_candidate_allowed":   False,
+        "patch_gate_recheck_allowed": False,
+    }
+
+
+# ── production_clv_learning_recheck executor (Phase 34) ─────────────────
+
+def _execute_production_clv_learning_recheck(task: dict) -> dict:
+    """
+    Phase 34 — Deterministic production CLV learning recheck executor.
+
+    Triggered when computed_count crosses 50 (SUFFICIENT threshold).
+    Runs CLV quality analysis and allows patch gate re-evaluation in
+    PAPER_ONLY mode.  Still does NOT create a production patch.
+
+    Sandbox injection:
+        ``task["_sandbox_reports_dir"]`` — test reports directory.
+        ``task["_sandbox_artifact_dir"]`` — test artifact directory.
+
+    Hard rules:
+      - Does not call any external LLM.
+      - Does not modify source CLV JSONL files.
+      - Does not create or deploy a production patch.
+      - Does not trigger live betting.
+      - 50 only allows patch gate recheck — NOT patch execution.
+    """
+    import statistics as _stat
+
+    task_id    = str(task.get("id", "unknown"))
+    exec_start = datetime.now(timezone.utc)
+
+    logger.info(
+        "[SafeExecutor] production_clv_learning_recheck task #%s — SUFFICIENT threshold reached",
+        task_id,
+    )
+
+    # ── Resolve directories ──────────────────────────────────────────────
+    sandbox_reports_dir  = task.get("_sandbox_reports_dir")
+    sandbox_artifact_dir = task.get("_sandbox_artifact_dir")
+    reports_dir: Path = Path(sandbox_reports_dir) if sandbox_reports_dir else _REPORTS_DIR
+
+    # ── Accumulation policy ───────────────────────────────────────────────
+    accumulation: dict[str, Any] = {}
+    try:
+        from orchestrator.clv_accumulation_policy import get_clv_accumulation_summary
+        sandbox_mem = task.get("_sandbox_memory_path")
+        kw: dict[str, Any] = {"reports_dir": reports_dir}
+        if sandbox_mem:
+            kw["memory_path"] = Path(sandbox_mem)
+        accumulation = get_clv_accumulation_summary(**kw)
+    except Exception as exc:
+        logger.warning("[SafeExecutor] production_clv_learning_recheck: policy failed — %s", exc)
+
+    ev_state  = accumulation.get("evidence_state", "UNKNOWN")
+    computed  = accumulation.get("computed_count", 0)
+    threshold = accumulation.get("threshold", 50)
+    patch_ok  = accumulation.get("patch_gate_recheck_allowed", False)
+
+    # ── Read CLV records for statistics ──────────────────────────────────
+    clv_values: list[float] = []
+    for path in sorted(reports_dir.glob("clv_validation_records_6u_*.jsonl")):
+        try:
+            for line in path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if row.get("clv_status") == "COMPUTED" and row.get("clv_value") is not None:
+                    try:
+                        clv_values.append(float(row["clv_value"]))
+                    except (TypeError, ValueError):
+                        pass
+        except OSError:
+            continue
+
+    n = len(clv_values)
+    mean_clv = (sum(clv_values) / n) if n > 0 else None
+    pos_rate = sum(1 for v in clv_values if v > 0) / n if n > 0 else 0.0
+
+    # ── Artifact ─────────────────────────────────────────────────────────
+    if sandbox_artifact_dir:
+        artifact_dir = Path(sandbox_artifact_dir)
+    else:
+        artifact_dir = _ORCH_TASKS_ROOT / exec_start.strftime("%Y%m%d")
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    artifact_path = artifact_dir / f"{task_id}-production-clv-learning-recheck.md"
+
+    gate_status = "✅ ALLOWED" if patch_ok else "🚫 BLOCKED"
+    mean_str    = f"{mean_clv:.4f}" if mean_clv is not None else "N/A"
+
+    artifact_text = (
+        f"# Production CLV Learning Recheck — Phase 34 — Task {task_id}\n\n"
+        f"**Triggered by**: CROSSED_SUFFICIENT threshold (≥ {threshold})\n"
+        f"**Executed at**: {exec_start.isoformat()}\n"
+        f"**Execution mode**: `PAPER_ONLY`\n"
+        f"**Production mutation**: `false`\n"
+        f"**No external LLM called**\n\n"
+        "---\n\n"
+        "## Learning Recheck Summary\n\n"
+        f"| Field | Value |\n"
+        f"|-------|-------|\n"
+        f"| Evidence state | **{ev_state}** |\n"
+        f"| Computed records | {computed} / {threshold} |\n"
+        f"| Mean CLV | {mean_str} |\n"
+        f"| Positive rate | {pos_rate:.1%} |\n"
+        f"| Patch gate recheck | {gate_status} |\n\n"
+        "## Recheck Notes\n\n"
+        f"- Evidence state is now **{ev_state}** ({computed} ≥ {threshold}).\n"
+        "- Patch gate recheck is ALLOWED — a human reviewer must approve before any patch.\n"
+        "- This task does NOT create a production patch.\n"
+        "- Threshold crossing = permission to RECHECK, NOT permission to EXECUTE a patch.\n\n"
+        "## Hard Rules Applied\n\n"
+        "- No external LLM called\n"
+        "- No production model modified\n"
+        "- No CLV source files modified\n"
+        "- No live betting triggered\n"
+        "- No production patch created\n"
+        "- 50 records = patch gate recheck only\n"
+    )
+
+    try:
+        artifact_path.write_text(artifact_text, encoding="utf-8")
+        logger.info(
+            "[SafeExecutor] production_clv_learning_recheck: artifact → %s", artifact_path
+        )
+    except OSError as exc:
+        logger.error(
+            "[SafeExecutor] production_clv_learning_recheck: write failed — %s", exc
+        )
+
+    duration = (datetime.now(timezone.utc) - exec_start).total_seconds()
+
+    return {
+        "success":              True,
+        "completed_text":       artifact_text,
+        "completed_file_path":  str(artifact_path),
+        "changed_files":        [str(artifact_path)],
+        "duration_seconds":     duration,
+        "evidence_state":       ev_state,
+        "computed_count":       computed,
+        "mean_clv":             mean_clv,
+        "positive_rate":        pos_rate,
+        "patch_gate_recheck_allowed": patch_ok,
+        # Hard rules
+        "execution_mode":           "PAPER_ONLY",
+        "production_mutation":       False,
+        "live_bet_submitted":        False,
+        "patch_candidate_allowed":   False,
+        "production_patch_created":  False,
+    }
+
+
+# ── clv_batch_accumulation executor ─────────────────────────────────────
+
+def _execute_clv_batch_accumulation(task: dict) -> dict:
+    """
+    Phase 33 — Deterministic CLV batch accumulation executor.
+
+    Discovers the latest prediction registry / CLV batches, runs the
+    accumulation policy, and writes a non-empty Markdown artifact.
+
+    Sandbox injection:
+        ``task["_sandbox_reports_dir"]`` — Path to a reports directory
+        containing fixture JSONL files (for tests).
+        ``task["_sandbox_memory_path"]`` — Path to a training_memory.json
+        fixture file (for tests).
+
+    Hard rules:
+      - Does not call any external LLM.
+      - Does not modify source CLV JSONL files.
+      - Does not create patch candidates.
+      - Does not trigger live betting.
+      - Does not mark PENDING as COMPUTED without valid closing odds.
+    """
+    task_id   = str(task.get("id", "unknown"))
+    exec_start = datetime.now(timezone.utc)
+
+    logger.info(
+        "[SafeExecutor] clv_batch_accumulation task #%s — starting deterministic run",
+        task_id,
+    )
+
+    # ── Resolve sandboxed directories ────────────────────────────────────
+    sandbox_reports_dir = task.get("_sandbox_reports_dir")
+    sandbox_memory_path = task.get("_sandbox_memory_path")
+    reports_dir: Path = Path(sandbox_reports_dir) if sandbox_reports_dir else _REPORTS_DIR
+    memory_path: Path | None = Path(sandbox_memory_path) if sandbox_memory_path else None
+
+    # ── 1. Batch discovery ────────────────────────────────────────────────
+    batches: list[dict[str, Any]] = []
+    try:
+        from orchestrator.clv_batch_scheduler import discover_batches
+        batches = discover_batches(reports_dir)
+    except Exception as exc:
+        logger.warning("[SafeExecutor] clv_batch_accumulation: batch discovery failed — %s", exc)
+
+    latest_batch = batches[-1] if batches else {}
+    latest_date  = latest_batch.get("batch_date", "unknown")
+    computed_total = sum(b.get("computed_count", 0) for b in batches)
+    pending_total  = sum(b.get("pending_count",  0) for b in batches)
+    needs_gen      = sum(1 for b in batches if b.get("needs_clv_generation"))
+
+    # ── 2. Run accumulation policy ───────────────────────────────────────
+    accumulation: dict[str, Any] = {}
+    try:
+        from orchestrator.clv_accumulation_policy import get_clv_accumulation_summary
+        kw: dict[str, Any] = {"reports_dir": reports_dir}
+        if memory_path is not None:
+            kw["memory_path"] = memory_path
+        accumulation = get_clv_accumulation_summary(**kw)
+    except Exception as exc:
+        logger.warning(
+            "[SafeExecutor] clv_batch_accumulation: accumulation policy failed — %s", exc
+        )
+
+    ev_state  = accumulation.get("evidence_state", "UNKNOWN")
+    threshold = accumulation.get("threshold", 50)
+    remaining = accumulation.get("remaining_needed", computed_total)
+    progress  = accumulation.get("progress_pct", 0.0)
+    patch_ok  = accumulation.get("patch_gate_recheck_allowed", False)
+    ev_icon   = {"INSUFFICIENT": "🔴", "APPROACHING": "🟡", "SUFFICIENT": "🟢"}.get(ev_state, "❓")
+
+    # ── 3. Threshold transition notes ────────────────────────────────────
+    transitions: list[str] = []
+    if computed_total >= 50:
+        transitions.append("✅ THRESHOLD_50_CROSSED — patch gate recheck now ALLOWED")
+    elif computed_total >= 30:
+        transitions.append("🟡 THRESHOLD_30_CROSSED — evidence_state APPROACHING; deeper investigation allowed")
+
+    # ── 4. Next action ────────────────────────────────────────────────────
+    if needs_gen > 0:
+        next_action = f"GENERATE_CLV_RECORDS ({needs_gen} batch(es) missing CLV records)"
+    elif pending_total > 0:
+        next_action = f"RUN_CLOSING_MONITOR ({pending_total} pending closing records)"
+    elif patch_ok:
+        next_action = "RUN_PATCH_GATE_RECHECK"
+    else:
+        next_action = f"COLLECT_MORE_DATA ({remaining} records needed to reach threshold)"
+
+    # ── 5. Write artifact ─────────────────────────────────────────────────
+    sandbox_artifact_dir = task.get("_sandbox_artifact_dir")
+    if sandbox_artifact_dir:
+        artifact_dir = Path(sandbox_artifact_dir)
+    else:
+        date_str = exec_start.strftime("%Y%m%d")
+        artifact_dir = _ORCH_TASKS_ROOT / date_str
+
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    artifact_path = artifact_dir / f"{task_id}-clv-batch-accumulation.md"
+
+    artifact_text = (
+        f"# CLV Batch Accumulation — Task {task_id}\n\n"
+        f"**Executed at**: {exec_start.isoformat()}\n"
+        f"**Execution mode**: `PAPER_ONLY`\n"
+        f"**Production mutation**: `false`\n"
+        f"**Live bet submitted**: `false`\n\n"
+        "---\n\n"
+        "## Accumulation State\n\n"
+        f"| Field | Value |\n"
+        f"|-------|-------|\n"
+        f"| Evidence state | {ev_icon} **{ev_state}** |\n"
+        f"| Computed records | {computed_total} / {threshold} |\n"
+        f"| Progress | {progress:.1f}% |\n"
+        f"| Remaining needed | {remaining} |\n"
+        f"| Pending records | {pending_total} |\n"
+        f"| Patch gate recheck | {'✅ ALLOWED' if patch_ok else '🚫 BLOCKED'} |\n\n"
+        f"**Next action**: {next_action}\n\n"
+        "---\n\n"
+        "## Batch Summary\n\n"
+        f"| Batches seen | {len(batches)} |\n"
+        f"|---|---|\n"
+        f"| Latest batch date | {latest_date} |\n"
+        f"| Batches needing CLV generation | {needs_gen} |\n"
+        f"| Batches with pending records | {sum(1 for b in batches if b.get('pending_count',0) > 0)} |\n\n"
+    )
+
+    if transitions:
+        artifact_text += "## Threshold Transitions\n\n"
+        for t in transitions:
+            artifact_text += f"- {t}\n"
+        artifact_text += "\n"
+
+    artifact_text += (
+        "---\n\n"
+        "## Hard Rules Applied\n\n"
+        "- No external LLM called\n"
+        "- No production model modified\n"
+        "- No CLV source files modified\n"
+        "- No live betting triggered\n"
+        "- No patch candidate created\n"
+        "- PENDING records NOT marked as COMPUTED\n"
+    )
+
+    try:
+        artifact_path.write_text(artifact_text, encoding="utf-8")
+        logger.info(
+            "[SafeExecutor] clv_batch_accumulation: artifact → %s", artifact_path
+        )
+    except OSError as exc:
+        logger.error(
+            "[SafeExecutor] clv_batch_accumulation: artifact write failed — %s", exc
+        )
+
+    duration = (datetime.now(timezone.utc) - exec_start).total_seconds()
+
+    return {
+        "success":              True,
+        "completed_text":       artifact_text,
+        "completed_file_path":  str(artifact_path),
+        "changed_files":        [str(artifact_path)],
+        "duration_seconds":     duration,
+        # Accumulation snapshot
+        "evidence_state":       ev_state,
+        "computed_total":       computed_total,
+        "pending_total":        pending_total,
+        "remaining_needed":     remaining,
+        "threshold":            threshold,
+        "patch_gate_recheck_allowed": patch_ok,
+        "next_action":          next_action,
+        "batches_seen":         len(batches),
+        # Hard rules
+        "execution_mode":           "PAPER_ONLY",
+        "production_mutation":       False,
+        "live_bet_submitted":        False,
+        "patch_candidate_allowed":   False,
+    }
+
+
+
 DETERMINISTIC_TASK_TYPES: dict[str, Callable[[dict], dict]] = {
     "closing_monitor": _execute_closing_monitor,
     "closing_availability_audit": _execute_closing_availability_audit,
@@ -1468,6 +1942,9 @@ DETERMINISTIC_TASK_TYPES: dict[str, Callable[[dict], dict]] = {
     "manual_review_summary": _execute_manual_review_summary,
     "clv_quality_analysis": _execute_clv_quality_analysis,
     "calibration_patch_evaluation": _execute_calibration_patch_evaluation,
+    "clv_batch_accumulation": _execute_clv_batch_accumulation,
+    "production_clv_investigation": _execute_production_clv_investigation,
+    "production_clv_learning_recheck": _execute_production_clv_learning_recheck,
 }
 
 # Future task types — listed here for registry completeness; not yet implemented.

@@ -1,0 +1,41 @@
+{
+  "task": "P18-BLOCKED-FORWARD-INVENTORY",
+  "title": "P18 Forward Coverage Read-only Inventory",
+  "date": "2026-05-19T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "sources_checked": [
+    "data/tsl_odds_history.jsonl",
+    "data/paper_recommendations/p17_forward_coverage_readonly_check_20260602.json"
+  ],
+  "tsl_odds_history_exists_in_canonical_root": true,
+  "tsl_odds_history_exists_in_p17_artifact": false,
+  "discrepancy_reason": "P17-C artifact was generated inside the worktree (.claude/worktrees/awesome-mclean-f52768) where tsl_odds_history.jsonl was absent. Canonical root has the file.",
+  "canonical_root_raw_data": {
+    "total_records": 2743,
+    "unique_match_ids_pregame": 796,
+    "unique_match_ids_closing": 290,
+    "valid_clv_pairs": 233,
+    "pair_target": 200,
+    "pair_coverage_pct": 116.5,
+    "unique_game_dates": 41,
+    "date_range": "2026-03-13 to 2026-05-20",
+    "clv_gate_clear_per_raw_data": true
+  },
+  "p17_artifact_chain": {
+    "pair_count": 0,
+    "tsl_odds_history_exists": false,
+    "status": "ACCUMULATION_INSUFFICIENT",
+    "p18_clv_allowed": false
+  },
+  "forward_pairs_per_governance_read": 0,
+  "forward_pairs_per_raw_audit": 233,
+  "governance_gate_status": "BLOCKED_ARTIFACT_CHAIN_STALE",
+  "raw_data_gate_status": "SUFFICIENT_233_PAIRS",
+  "delta_vs_p17_artifact": 233,
+  "required_next_action": "Regenerate P17-C (forward_coverage_readonly_check) against canonical root to reflect actual tsl_odds_history.jsonl state",
+  "unblock_condition": "P17-C artifact regenerated → shows pair_count >= 200 → P18 CLV gate can formally clear (pending CEO decision)",
+  "profitability_claim": false,
+  "annotation": "paper_only=true。P18 Forward Coverage Inventory。無網路呼叫。P17 artifact 顯示 0 pairs（worktree 無 tsl_odds_history.jsonl），canonical root raw audit 顯示 233 valid CLV pairs（>200 threshold）。CLV gate 以 governance artifact chain 為準，目前仍 BLOCKED（artifact stale）。需重新產生 P17-C artifact 才能正式通關。"
+}

@@ -1,0 +1,260 @@
+{
+  "n_registry_rows": 66,
+  "n_latest_games": 9,
+  "n_matched": 3,
+  "n_gaps": 6,
+  "unknown_live_team_names": [],
+  "matched_game_ids": [
+    "C07",
+    "C08",
+    "C09"
+  ],
+  "gaps": [
+    {
+      "game_id": "A05",
+      "recorded_at_utc": "2026-03-09T06:54:44.660787+00:00",
+      "expected": {
+        "date": "2026-03-09",
+        "away": "COL",
+        "home": "CUB"
+      },
+      "reason": "teams_found_but_not_paired",
+      "hint": "possible stale schedule row or duplicated game id",
+      "live_games_same_date": [
+        {
+          "away": "KOR",
+          "home": "AUS"
+        },
+        {
+          "away": "DOM",
+          "home": "ISR"
+        },
+        {
+          "away": "COL",
+          "home": "PAN"
+        },
+        {
+          "away": "BRA",
+          "home": "GBR"
+        },
+        {
+          "away": "CUB",
+          "home": "PUR"
+        },
+        {
+          "away": "VEN",
+          "home": "NIC"
+        },
+        {
+          "away": "MEX",
+          "home": "USA"
+        }
+      ]
+    },
+    {
+      "game_id": "A06",
+      "recorded_at_utc": "2026-03-09T06:54:46.800463+00:00",
+      "expected": {
+        "date": "2026-03-09",
+        "away": "PAN",
+        "home": "CAN"
+      },
+      "reason": "single_team_found_only",
+      "hint": "check missing team code alias",
+      "live_games_same_date": [
+        {
+          "away": "KOR",
+          "home": "AUS"
+        },
+        {
+          "away": "DOM",
+          "home": "ISR"
+        },
+        {
+          "away": "COL",
+          "home": "PAN"
+        },
+        {
+          "away": "BRA",
+          "home": "GBR"
+        },
+        {
+          "away": "CUB",
+          "home": "PUR"
+        },
+        {
+          "away": "VEN",
+          "home": "NIC"
+        },
+        {
+          "away": "MEX",
+          "home": "USA"
+        }
+      ]
+    },
+    {
+      "game_id": "B05",
+      "recorded_at_utc": "2026-03-09T06:54:46.036995+00:00",
+      "expected": {
+        "date": "2026-03-09",
+        "away": "GBR",
+        "home": "ITA"
+      },
+      "reason": "single_team_found_only",
+      "hint": "check missing team code alias",
+      "live_games_same_date": [
+        {
+          "away": "KOR",
+          "home": "AUS"
+        },
+        {
+          "away": "DOM",
+          "home": "ISR"
+        },
+        {
+          "away": "COL",
+          "home": "PAN"
+        },
+        {
+          "away": "BRA",
+          "home": "GBR"
+        },
+        {
+          "away": "CUB",
+          "home": "PUR"
+        },
+        {
+          "away": "VEN",
+          "home": "NIC"
+        },
+        {
+          "away": "MEX",
+          "home": "USA"
+        }
+      ]
+    },
+    {
+      "game_id": "B06",
+      "recorded_at_utc": "2026-03-09T06:54:48.213584+00:00",
+      "expected": {
+        "date": "2026-03-09",
+        "away": "BRA",
+        "home": "MEX"
+      },
+      "reason": "teams_found_but_not_paired",
+      "hint": "possible stale schedule row or duplicated game id",
+      "live_games_same_date": [
+        {
+          "away": "KOR",
+          "home": "AUS"
+        },
+        {
+          "away": "DOM",
+          "home": "ISR"
+        },
+        {
+          "away": "COL",
+          "home": "PAN"
+        },
+        {
+          "away": "BRA",
+          "home": "GBR"
+        },
+        {
+          "away": "CUB",
+          "home": "PUR"
+        },
+        {
+          "away": "VEN",
+          "home": "NIC"
+        },
+        {
+          "away": "MEX",
+          "home": "USA"
+        }
+      ]
+    },
+    {
+      "game_id": "D05",
+      "recorded_at_utc": "2026-03-09T06:54:45.358273+00:00",
+      "expected": {
+        "date": "2026-03-09",
+        "away": "NED",
+        "home": "DOM"
+      },
+      "reason": "single_team_found_only",
+      "hint": "check missing team code alias",
+      "live_games_same_date": [
+        {
+          "away": "KOR",
+          "home": "AUS"
+        },
+        {
+          "away": "DOM",
+          "home": "ISR"
+        },
+        {
+          "away": "COL",
+          "home": "PAN"
+        },
+        {
+          "away": "BRA",
+          "home": "GBR"
+        },
+        {
+          "away": "CUB",
+          "home": "PUR"
+        },
+        {
+          "away": "VEN",
+          "home": "NIC"
+        },
+        {
+          "away": "MEX",
+          "home": "USA"
+        }
+      ]
+    },
+    {
+      "game_id": "D06",
+      "recorded_at_utc": "2026-03-09T06:54:47.536698+00:00",
+      "expected": {
+        "date": "2026-03-09",
+        "away": "NIC",
+        "home": "ISR"
+      },
+      "reason": "teams_found_but_not_paired",
+      "hint": "possible stale schedule row or duplicated game id",
+      "live_games_same_date": [
+        {
+          "away": "KOR",
+          "home": "AUS"
+        },
+        {
+          "away": "DOM",
+          "home": "ISR"
+        },
+        {
+          "away": "COL",
+          "home": "PAN"
+        },
+        {
+          "away": "BRA",
+          "home": "GBR"
+        },
+        {
+          "away": "CUB",
+          "home": "PUR"
+        },
+        {
+          "away": "VEN",
+          "home": "NIC"
+        },
+        {
+          "away": "MEX",
+          "home": "USA"
+        }
+      ]
+    }
+  ]
+}

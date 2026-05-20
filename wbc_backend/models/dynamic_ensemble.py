@@ -284,15 +284,21 @@ class DynamicBayesianEnsemble:
         for sr in sub_results:
             preds[sr.model_name] = sr.home_win_prob
 
-        # Weighted blend
+        # Weighted blend with P0.2 Safety Cap
         total_weight = 0.0
         blended_prob = 0.0
         weights_used: dict[str, float] = {}
         confidence_sum = 0.0
+        
+        # Guardrail derived from research report
+        SUB_MODEL_CAP = 0.85
+        def cap_prob(p: float) -> float:
+            return max(1.0 - SUB_MODEL_CAP, min(SUB_MODEL_CAP, p))
 
         for sr in sub_results:
             w = weights.get(sr.model_name, 1.0 / len(sub_results))
-            blended_prob += w * sr.home_win_prob
+            capped_p = cap_prob(sr.home_win_prob)
+            blended_prob += w * capped_p
             total_weight += w
             weights_used[sr.model_name] = w
             confidence_sum += w * sr.confidence
@@ -305,8 +311,8 @@ class DynamicBayesianEnsemble:
         if total_weight < 1.0 and total_weight > 0:
             blended_prob = blended_prob / total_weight
 
-        # Bound probability
-        home_wp = float(np.clip(blended_prob, 0.05, 0.95))
+        # Hard guardrail at serving boundary (P1): align with global 0.85 cap policy
+        home_wp = float(np.clip(blended_prob, 0.15, 0.85))
         away_wp = float(1.0 - home_wp)
 
         # Confidence: ensemble agreement (1 - variance across model predictions)

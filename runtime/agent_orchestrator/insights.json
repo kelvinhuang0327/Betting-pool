@@ -1,0 +1,234 @@
+[
+  {
+    "id": "b84eef27",
+    "source_task_id": 827,
+    "source_signal_state_type": "deep_research_regime",
+    "source_title": "MLB Regime Detection Accuracy Research: Misclassification Attribution and Boundary Refinement",
+    "category": "regime_detection",
+    "weakness": "small_edge / weak_starter_mismatch 邊界誤分類率未量化，regime precision < 75%",
+    "evidence_files": [
+      "data/wbc_backend/reports/mlb_regime_paper_report.json",
+      "data/wbc_backend/reports/mlb_decision_quality_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_model_rebuild.py",
+      "wbc_backend/research/mlb_regime_feature_redesign.py"
+    ],
+    "expected_metric": "regime precision >= 75%，誤分類率 < 20%",
+    "priority": 2,
+    "status": "PATCH_QUEUED",
+    "created_at": "2026-04-24T05:49:17.826901+00:00",
+    "patch_task_id": 1079,
+    "patched_at": "2026-04-24T06:40:31.418991+00:00"
+  },
+  {
+    "id": "730f3f84",
+    "source_task_id": 826,
+    "source_signal_state_type": "deep_research_odds_quality",
+    "source_title": "MLB CLV and Odds Timeline Quality Audit: External Closing Coverage and TSL Divergence",
+    "category": "clv_odds_quality",
+    "weakness": "外部收盤賠率覆蓋率不足，CLV 計算有系統性缺口（staleness / timestamp gap）",
+    "evidence_files": [
+      "data/mlb_context/odds_timeline.jsonl",
+      "data/mlb_context/external_closing_state.json"
+    ],
+    "target_files": [
+      "data/odds_api_client.py",
+      "data/mlb_live_pipeline.py"
+    ],
+    "expected_metric": "外部收盤覆蓋率 >= 85%，median CLV 誤差 < 0.02",
+    "priority": 3,
+    "status": "PATCH_QUEUED",
+    "created_at": "2026-04-24T05:49:17.826928+00:00",
+    "patch_task_id": 1084,
+    "patched_at": "2026-04-24T06:41:09.995242+00:00"
+  },
+  {
+    "id": "1cb0efb8",
+    "source_task_id": 824,
+    "source_signal_state_type": "deep_research_feedback",
+    "source_title": "MLB Feedback Loop Audit: Settlement Ingestion Completeness and ROI Attribution by Regime",
+    "category": "feedback_loop",
+    "weakness": "結算注入完整性未驗證，GOOD_BET / BAD_BET 標籤可靠性與按 regime 的 ROI 未追蹤",
+    "evidence_files": [
+      "research/trade_ledger.jsonl",
+      "research/roi_tracking.json",
+      "data/wbc_backend/reports/mlb_decision_quality_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "結算率 >= 95%，GOOD_BET 標籤準確率 >= 90%",
+    "priority": 3,
+    "status": "PATCH_QUEUED",
+    "created_at": "2026-04-24T05:49:17.826940+00:00",
+    "patch_task_id": 1085,
+    "patched_at": "2026-04-24T06:41:10.019334+00:00"
+  },
+  {
+    "id": "15f08789",
+    "source_task_id": 823,
+    "source_signal_state_type": "deep_research_calibration",
+    "source_title": "MLB Prediction Accuracy Deep Audit: Calibration, Feature Drift, and Regime Error Attribution",
+    "category": "calibration",
+    "weakness": "各 regime 的 Brier score / LogLoss 基線未量化，校準器（Platt vs Isotonic）尚未對比",
+    "evidence_files": [
+      "data/wbc_backend/reports/mlb_decision_quality_report.json",
+      "data/wbc_backend/reports/mlb_regime_paper_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_model_rebuild.py",
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "小 regime Brier score 改善 >= 2%",
+    "priority": 1,
+    "status": "PARTIAL",
+    "created_at": "2026-04-24T05:49:17.826946+00:00",
+    "patch_task_id": 828,
+    "patched_at": "2026-04-24T05:49:17.852278+00:00",
+    "validation_task_id": 867,
+    "validated_at": "2026-04-24T05:57:08.213166+00:00",
+    "partial_at": "2026-04-24T06:34:49.596511+00:00",
+    "partial_reason": "PARTIAL_KEEP"
+  },
+  {
+    "id": "12b9ac84",
+    "source_task_id": 822,
+    "source_signal_state_type": "deep_research_calibration",
+    "source_title": "MLB Prediction Accuracy Deep Audit: Calibration, Feature Drift, and Regime Error Attribution",
+    "category": "calibration",
+    "weakness": "各 regime 的 Brier score / LogLoss 基線未量化，校準器（Platt vs Isotonic）尚未對比",
+    "evidence_files": [
+      "data/wbc_backend/reports/mlb_decision_quality_report.json",
+      "data/wbc_backend/reports/mlb_regime_paper_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_model_rebuild.py",
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "小 regime Brier score 改善 >= 2%",
+    "priority": 1,
+    "status": "PARTIAL",
+    "created_at": "2026-04-24T05:49:17.826951+00:00",
+    "patch_task_id": 880,
+    "patched_at": "2026-04-24T05:59:37.436385+00:00",
+    "validation_task_id": 917,
+    "validated_at": "2026-04-24T06:07:11.335516+00:00",
+    "partial_at": "2026-04-24T06:12:59.723646+00:00",
+    "partial_reason": "INSUFFICIENT_DATA"
+  },
+  {
+    "id": "ceb7e8dc",
+    "source_task_id": 817,
+    "source_signal_state_type": "deep_research_backtest_validity",
+    "source_title": "MLB Backtest Validity Audit: Post-Game Odds Contamination, Walk-Forward Integrity, and Sample Sufficiency",
+    "category": "backtest_validity",
+    "weakness": "walk-forward 切割完整性與開賽後賠率污染率未驗證",
+    "evidence_files": [
+      "data/mlb_context/odds_timeline.jsonl",
+      "data/wbc_backend/reports/mlb_regime_paper_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_model_rebuild.py",
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "split leakage < 2%，所有 pregame 特徵使用開賽前 timestamp",
+    "priority": 1,
+    "status": "VALIDATED",
+    "created_at": "2026-04-24T05:49:17.826974+00:00",
+    "patch_task_id": 963,
+    "patched_at": "2026-04-24T06:17:12.216898+00:00",
+    "validation_task_id": 1012,
+    "validated_at": "2026-04-24T06:27:14.501231+00:00"
+  },
+  {
+    "id": "8c5e2766",
+    "source_task_id": 813,
+    "source_signal_state_type": "deep_research_feature",
+    "source_title": "MLB Starter and Bullpen Feature Quality Audit: Leakage Detection and Predictive Power Ranking",
+    "category": "feature_quality",
+    "weakness": "先發 / 牛棚特徵的 look-ahead leakage 風險未驗證，predictive power 未排名",
+    "evidence_files": [
+      "data/wbc_backend/reports/mlb_regime_paper_report.json",
+      "data/wbc_backend/reports/mlb_decision_quality_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_regime_feature_redesign.py",
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "leakage 特徵清零，移除後 Brier delta < -1%",
+    "priority": 2,
+    "status": "PATCH_QUEUED",
+    "created_at": "2026-04-24T05:49:17.826993+00:00",
+    "patch_task_id": 1080,
+    "patched_at": "2026-04-24T06:40:31.439681+00:00"
+  },
+  {
+    "id": "07742efd",
+    "source_task_id": 962,
+    "source_signal_state_type": "deep_research_calibration",
+    "source_title": "MLB Prediction Accuracy Deep Audit: Calibration, Feature Drift, and Regime Error Attribution",
+    "category": "calibration",
+    "weakness": "各 regime 的 Brier score / LogLoss 基線未量化，校準器（Platt vs Isotonic）尚未對比",
+    "evidence_files": [
+      "data/wbc_backend/reports/mlb_decision_quality_report.json",
+      "data/wbc_backend/reports/mlb_regime_paper_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_model_rebuild.py",
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "小 regime Brier score 改善 >= 2%",
+    "priority": 1,
+    "status": "PARTIAL",
+    "created_at": "2026-04-24T06:17:12.199685+00:00",
+    "patch_task_id": 1354,
+    "patched_at": "2026-04-24T07:30:38.573103+00:00",
+    "partial_at": "2026-04-24T07:30:52.378480+00:00",
+    "partial_reason": "PARTIAL_KEEP"
+  },
+  {
+    "id": "64c3cce4",
+    "source_task_id": 1057,
+    "source_signal_state_type": "deep_research_backtest_validity",
+    "source_title": "MLB Backtest Validity Audit: Post-Game Odds Contamination, Walk-Forward Integrity, and Sample Sufficiency",
+    "category": "backtest_validity",
+    "weakness": "walk-forward 切割完整性與開賽後賠率污染率未驗證",
+    "evidence_files": [
+      "data/mlb_context/odds_timeline.jsonl",
+      "data/wbc_backend/reports/mlb_regime_paper_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_model_rebuild.py",
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "split leakage < 2%，所有 pregame 特徵使用開賽前 timestamp",
+    "priority": 1,
+    "status": "PATCH_QUEUED",
+    "created_at": "2026-04-24T06:37:17.738372+00:00",
+    "patch_task_id": 1078,
+    "patched_at": "2026-04-24T06:40:31.402425+00:00"
+  },
+  {
+    "id": "53bbe0e1",
+    "source_task_id": 1362,
+    "source_signal_state_type": "deep_research_calibration",
+    "source_title": "MLB Prediction Accuracy Deep Audit: Calibration, Feature Drift, and Regime Error Attribution",
+    "category": "calibration",
+    "weakness": "各 regime 的 Brier score / LogLoss 基線未量化，校準器（Platt vs Isotonic）尚未對比",
+    "evidence_files": [
+      "data/wbc_backend/reports/mlb_decision_quality_report.json",
+      "data/wbc_backend/reports/mlb_regime_paper_report.json"
+    ],
+    "target_files": [
+      "wbc_backend/research/mlb_model_rebuild.py",
+      "wbc_backend/evaluation/mlb_decision_quality.py"
+    ],
+    "expected_metric": "小 regime Brier score 改善 >= 2%",
+    "priority": 1,
+    "status": "PATCH_QUEUED",
+    "created_at": "2026-04-24T07:32:22.025185+00:00",
+    "patch_task_id": 1364,
+    "patched_at": "2026-04-24T07:32:22.045269+00:00"
+  }
+]

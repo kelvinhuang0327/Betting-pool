@@ -1586,7 +1586,9 @@ def _compute_blowout_risk_signals(
 
     # N.04 WBC 慈悲規則危害：錦標賽後段（round >= 3 = QF）比賽更長
     # P(mercy rule) ≈ blowout_propensity × 0.5，Pool 降權（常被中斷）
-    round_mercy_factor = {1: 0.30, 2: 0.45, 3: 0.60, 4: 0.70, 5: 0.70}.get(round_num, 0.30)
+    # WBC 2026 post-hoc: mercy triggered only in Pool (rounds 1-2); QF/SF/Final (rounds 3-5) carry
+    # higher mismatch hazard weight for calibration. schemas.py: 3=QF, 4=SF, 5=F.
+    round_mercy_factor = {1: 0.30, 2: 0.45, 3: 0.80, 4: 0.80, 5: 0.80}.get(round_num, 0.30)
     feats["mercy_rule_hazard"] = float(
         min(1.0, feats["mismatch_blowout_propensity"] * round_mercy_factor)
     )

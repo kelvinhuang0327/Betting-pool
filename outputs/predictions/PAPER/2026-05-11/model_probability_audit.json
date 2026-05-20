@@ -1,0 +1,31 @@
+{
+  "row_count": 2430,
+  "usable_count": 1341,
+  "missing_model_prob_count": 1089,
+  "missing_market_prob_count": 0,
+  "missing_outcome_count": 0,
+  "model_brier": 0.255225,
+  "market_brier": 0.247004,
+  "brier_skill_score": -0.033283,
+  "ece": 0.059493,
+  "avg_model_prob": 0.566072,
+  "avg_market_prob": 0.518116,
+  "avg_outcome": 0.522744,
+  "orientation_checks": {
+    "home_win_rate_when_model_gt_0_5": 0.5364,
+    "home_win_rate_when_model_lt_0_5": 0.4747,
+    "avg_model_prob_when_home_wins": 0.5708,
+    "avg_model_prob_when_home_loses": 0.5609
+  },
+  "probability_range": {
+    "min_model_prob": 0.1458,
+    "max_model_prob": 0.8837,
+    "invalid_prob_count": 0
+  },
+  "source_counts": {
+    "real_model": 0,
+    "calibrated_model": 1341,
+    "market_proxy": 0,
+    "unknown": 1089
+  }
+}

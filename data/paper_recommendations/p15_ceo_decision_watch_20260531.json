@@ -1,0 +1,50 @@
+{
+  "task": "P15-B",
+  "title": "CEO Decision Watch v2",
+  "date": "2026-05-31T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "decision_file_checked": "data/paper_recommendations/p15_ceo_odds_source_decision_20260531.json",
+  "decision_file_exists": false,
+  "ceo_decision": "DEFER_DECISION",
+  "path_a_status": "BLOCKED_NEEDS_CEO_APPROVAL_AND_API_KEY",
+  "path_b_status": "ACCUMULATION_INSUFFICIENT",
+  "supported_decisions": [
+    "APPROVE_PATH_A_WITH_API_KEY",
+    "APPROVE_PATH_A_BUT_KEY_PENDING",
+    "REJECT_PATH_A_USE_FORWARD_ONLY",
+    "DEFER_DECISION"
+  ],
+  "decision_impacts": {
+    "APPROVE_PATH_A_WITH_API_KEY": {
+      "next_action": "READY_FOR_API_KEY_GATE",
+      "p16_allowed": true,
+      "p16_scope": "API_KEY_GATE_ONLY"
+    },
+    "APPROVE_PATH_A_BUT_KEY_PENDING": {
+      "next_action": "WAIT_FOR_API_KEY",
+      "p16_allowed": false,
+      "p16_scope": "BLOCKED_UNTIL_KEY_PROVIDED"
+    },
+    "REJECT_PATH_A_USE_FORWARD_ONLY": {
+      "next_action": "FORWARD_ONLY_MONITOR_CONTINUES",
+      "p16_allowed": false,
+      "p16_scope": "BLOCKED_UNTIL_FORWARD_PAIRS_GTE_200"
+    },
+    "DEFER_DECISION": {
+      "next_action": "CONTINUE_DAILY_MONITOR_ONLY",
+      "p16_allowed": false,
+      "p16_scope": "BLOCKED"
+    }
+  },
+  "allowed_worker_actions": [
+    "REPORT_ONLY",
+    "PAPER_ONLY_MONITORING"
+  ],
+  "p16_allowed": false,
+  "p16_reason": "CEO decision is DEFER_DECISION. Both PATH A and PATH B remain blocked.",
+  "next_owner": "CEO",
+  "days_in_defer_state": 2,
+  "annotation": "paper_only=true。P15-B CEO Decision Watch v2。不代替 CEO 選路。不宣稱任何策略具獲利能力。"
+}

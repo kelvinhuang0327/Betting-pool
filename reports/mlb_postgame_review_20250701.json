@@ -1,0 +1,318 @@
+{
+  "module_version": "mlb_result_review_v1",
+  "run_timestamp_utc": "2026-05-07T08:46:10.363443+00:00",
+  "review_date": "2025-07-01",
+  "source_mode": "replay",
+  "source_status": "loaded",
+  "ledger_path": "reports/mlb_paper_betting_ledger.jsonl",
+  "reviewed_snapshot_path": "reports/mlb_paper_betting_reviewed_snapshot_20250701.jsonl",
+  "reviewed_entries_written": 7,
+  "total_ledger_entries_loaded": 13,
+  "date_filtered_entries": 7,
+  "total_result_snapshots": 12,
+  "safety": {
+    "production_modified": false,
+    "candidate_patch_created": false,
+    "alpha_modified": false,
+    "prediction_jsonl_overwritten": false,
+    "ledger_overwrite_blocked": true,
+    "no_edge_claim": true,
+    "no_profit_claim": true,
+    "diagnostic_only": true,
+    "paper_only": true,
+    "no_real_bet": true
+  },
+  "review_summary": {
+    "review_date": "2025-07-01",
+    "source_mode": "replay",
+    "total_ledger_entries": 7,
+    "matched_results": 7,
+    "pending_results": 0,
+    "reviewed_count": 4,
+    "won_count": 3,
+    "lost_count": 1,
+    "push_count": 0,
+    "unknown_count": 0,
+    "pass_count": 0,
+    "watch_only_count": 2,
+    "lean_count": 4,
+    "market_only_shadow_count": 1,
+    "brier_score": 0.2323,
+    "bss_vs_baseline": -0.2387,
+    "recommendation_accuracy": 0.75,
+    "top_failure_reasons": [
+      "NO_BET_REVIEW_ONLY",
+      "MODEL_MARKET_DISAGREEMENT_LOSS"
+    ],
+    "next_day_adjustment_notes": [
+      "1 paper bet(s) LOST: review model-market divergence patterns",
+      "1 MARKET_ONLY_SHADOW entries: review Phase71/72 band outcomes"
+    ],
+    "human_review_required": true
+  },
+  "reviewed_entries": [
+    {
+      "ledger_id": "ADV_b389bf470654_MONEYLINE",
+      "advisory_id": "ADV_b389bf470654",
+      "game_id": "MLB2025_1266_2025-07-01_NEW_TOR",
+      "game_date": "2025-07-01",
+      "market_type": "moneyline",
+      "recommendation": "LEAN_HOME",
+      "paper_selection": "HOME",
+      "model_prob": 0.5173,
+      "market_prob": 0.4009,
+      "result_status": "WON",
+      "realized_outcome": "home_win",
+      "review_status": "REVIEWED",
+      "review_reason": "result_available: WON",
+      "paper_profit_loss_units": 1.494,
+      "brier_component": 0.232999,
+      "failure_tags": [],
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "ledger_id": "ADV_0b0b4dab9188_MONEYLINE",
+      "advisory_id": "ADV_0b0b4dab9188",
+      "game_id": "MLB2025_1267_2025-07-01_ST._PIT",
+      "game_date": "2025-07-01",
+      "market_type": "moneyline",
+      "recommendation": "WATCH_ONLY",
+      "paper_selection": null,
+      "model_prob": 0.5099,
+      "market_prob": 0.583,
+      "result_status": "NO_BET",
+      "realized_outcome": null,
+      "review_status": "REVIEWED_NO_BET",
+      "review_reason": "no_bet: recommendation=WATCH_ONLY",
+      "paper_profit_loss_units": null,
+      "brier_component": null,
+      "failure_tags": [
+        "NO_BET_REVIEW_ONLY"
+      ],
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "ledger_id": "ADV_082e2a996476_MONEYLINE",
+      "advisory_id": "ADV_082e2a996476",
+      "game_id": "MLB2025_1268_2025-07-01_MIN_MIA",
+      "game_date": "2025-07-01",
+      "market_type": "moneyline",
+      "recommendation": "LEAN_HOME",
+      "paper_selection": "HOME",
+      "model_prob": 0.5551,
+      "market_prob": 0.438,
+      "result_status": "WON",
+      "realized_outcome": "home_win",
+      "review_status": "REVIEWED",
+      "review_reason": "result_available: WON",
+      "paper_profit_loss_units": 1.283,
+      "brier_component": 0.197936,
+      "failure_tags": [],
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "ledger_id": "ADV_c8f3b9afc967_MONEYLINE",
+      "advisory_id": "ADV_c8f3b9afc967",
+      "game_id": "MLB2025_1271_2025-07-01_LOS_ATL",
+      "game_date": "2025-07-01",
+      "market_type": "moneyline",
+      "recommendation": "LEAN_AWAY",
+      "paper_selection": "AWAY",
+      "model_prob": 0.5219,
+      "market_prob": 0.6507,
+      "result_status": "WON",
+      "realized_outcome": "away_win",
+      "review_status": "REVIEWED",
+      "review_reason": "result_available: WON",
+      "paper_profit_loss_units": 0.537,
+      "brier_component": 0.27238,
+      "failure_tags": [],
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "ledger_id": "ADV_e8fe7c014f31_MONEYLINE",
+      "advisory_id": "ADV_e8fe7c014f31",
+      "game_id": "MLB2025_1273_2025-07-01_BAL_TEX",
+      "game_date": "2025-07-01",
+      "market_type": "moneyline",
+      "recommendation": "LEAN_AWAY",
+      "paper_selection": "AWAY",
+      "model_prob": 0.5249,
+      "market_prob": 0.6301,
+      "result_status": "LOST",
+      "realized_outcome": "home_win",
+      "review_status": "REVIEWED",
+      "review_reason": "result_available: LOST",
+      "paper_profit_loss_units": -1.0,
+      "brier_component": 0.22572,
+      "failure_tags": [
+        "MODEL_MARKET_DISAGREEMENT_LOSS"
+      ],
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "ledger_id": "ADV_9ca8a6dea2b5_MONEYLINE",
+      "advisory_id": "ADV_9ca8a6dea2b5",
+      "game_id": "MLB2025_1274_2025-07-01_HOU_COL",
+      "game_date": "2025-07-01",
+      "market_type": "moneyline",
+      "recommendation": "WATCH_ONLY",
+      "paper_selection": null,
+      "model_prob": 0.3404,
+      "market_prob": 0.438,
+      "result_status": "NO_BET",
+      "realized_outcome": null,
+      "review_status": "REVIEWED_NO_BET",
+      "review_reason": "no_bet: recommendation=WATCH_ONLY",
+      "paper_profit_loss_units": null,
+      "brier_component": null,
+      "failure_tags": [
+        "NO_BET_REVIEW_ONLY"
+      ],
+      "paper_only": true,
+      "no_real_bet": true
+    },
+    {
+      "ledger_id": "ADV_b29c8a33b85f_MONEYLINE",
+      "advisory_id": "ADV_b29c8a33b85f",
+      "game_id": "MLB2025_1277_2025-07-01_CHI_LOS",
+      "game_date": "2025-07-01",
+      "market_type": "moneyline",
+      "recommendation": "MARKET_ONLY_SHADOW",
+      "paper_selection": null,
+      "model_prob": 0.6963,
+      "market_prob": 0.7447,
+      "result_status": "UNKNOWN",
+      "realized_outcome": "home_win",
+      "review_status": "REVIEWED_NO_BET",
+      "review_reason": "no_bet: recommendation=MARKET_ONLY_SHADOW",
+      "paper_profit_loss_units": null,
+      "brier_component": null,
+      "failure_tags": [],
+      "paper_only": true,
+      "no_real_bet": true
+    }
+  ],
+  "failure_notes": [
+    {
+      "failure_tag": "MODEL_MARKET_DISAGREEMENT_LOSS",
+      "count": 1,
+      "examples": [
+        {
+          "game_id": "MLB2025_1273_2025-07-01_BAL_TEX",
+          "recommendation": "LEAN_AWAY",
+          "result_status": "LOST",
+          "model_prob": 0.5249,
+          "market_prob": 0.6301
+        }
+      ],
+      "suspected_failure_mode": "model_market_divergence_not_predictive: opening line gap may close before game time",
+      "proposed_next_audit": "Accumulate 30+ LEAN outcomes; test whether large model-market gap is predictive in held-out season data (n >= 1500 required)",
+      "blocked_auto_change_reason": "human_review_required: governance rules prohibit automatic model/alpha/stake changes based on dry-run review results",
+      "human_review_required": true
+    },
+    {
+      "failure_tag": "MARKET_ONLY_SHADOW_LOSS",
+      "count": 0,
+      "examples": [],
+      "suspected_failure_mode": "phase71_band_model_wrong: market may have better info in [0.65,0.70) band",
+      "proposed_next_audit": "Review Phase71 market-superiority evidence in [0.65,0.70) band; validate that shadow-only guard holds out-of-sample",
+      "blocked_auto_change_reason": "human_review_required: governance rules prohibit automatic model/alpha/stake changes based on dry-run review results",
+      "human_review_required": true
+    },
+    {
+      "failure_tag": "HIGH_CONFIDENCE_LOSS",
+      "count": 0,
+      "examples": [],
+      "suspected_failure_mode": "overconfidence: model assigned high prob but outcome was opposite",
+      "proposed_next_audit": "Investigate whether model is systematically overconfident above 0.65; run ECE calibration audit with Phase69 counterfactual framework",
+      "blocked_auto_change_reason": "human_review_required: governance rules prohibit automatic model/alpha/stake changes based on dry-run review results",
+      "human_review_required": true
+    },
+    {
+      "failure_tag": "DATA_UNAVAILABLE",
+      "count": 0,
+      "examples": [],
+      "suspected_failure_mode": "missing_features: SP FIP / park factor / bullpen data not available",
+      "proposed_next_audit": "Improve feature completeness: SP FIP data, park factor pipeline, bullpen usage tracking",
+      "blocked_auto_change_reason": "human_review_required: governance rules prohibit automatic model/alpha/stake changes based on dry-run review results",
+      "human_review_required": true
+    },
+    {
+      "failure_tag": "RESULT_UNAVAILABLE",
+      "count": 0,
+      "examples": [],
+      "suspected_failure_mode": "no_result_source: live result API not configured; fixture/replay only",
+      "proposed_next_audit": "Integrate live result source API (e.g., MLB Stats API) for same-day post-game review; replace fixture/replay with real-time pipeline",
+      "blocked_auto_change_reason": "human_review_required: governance rules prohibit automatic model/alpha/stake changes based on dry-run review results",
+      "human_review_required": true
+    },
+    {
+      "failure_tag": "NO_BET_REVIEW_ONLY",
+      "count": 2,
+      "examples": [
+        {
+          "game_id": "MLB2025_1267_2025-07-01_ST._PIT",
+          "recommendation": "WATCH_ONLY",
+          "result_status": "NO_BET",
+          "model_prob": 0.5099,
+          "market_prob": 0.583
+        },
+        {
+          "game_id": "MLB2025_1274_2025-07-01_HOU_COL",
+          "recommendation": "WATCH_ONLY",
+          "result_status": "NO_BET",
+          "model_prob": 0.3404,
+          "market_prob": 0.438
+        }
+      ],
+      "suspected_failure_mode": "pass_or_watch_only: no bet placed; outcome tracked for reference only",
+      "proposed_next_audit": "Monitor PASS/WATCH_ONLY outcome distributions to validate threshold calibration (LEAN_THRESHOLD=0.10, WATCH_THRESHOLD=0.05)",
+      "blocked_auto_change_reason": "human_review_required: governance rules prohibit automatic model/alpha/stake changes based on dry-run review results",
+      "human_review_required": true
+    },
+    {
+      "failure_tag": "UNKNOWN_OUTCOME",
+      "count": 0,
+      "examples": [],
+      "suspected_failure_mode": "runline_or_total_not_tracked: insufficient data for non-moneyline markets",
+      "proposed_next_audit": "Add runline / total result tracking once live source provides final scores and spread data",
+      "blocked_auto_change_reason": "human_review_required: governance rules prohibit automatic model/alpha/stake changes based on dry-run review results",
+      "human_review_required": true
+    }
+  ],
+  "next_audit_proposal": {
+    "observation": [
+      "lean_count=4; accuracy=0.75",
+      "brier=0.2323; bss=-0.2387",
+      "1 games in Phase71/72 de-risk band"
+    ],
+    "suspected_failure_mode": [
+      "model_market_divergence_not_predictive: opening line gap may close before game time"
+    ],
+    "proposed_next_audit": [
+      "Accumulate >= 30 LEAN outcomes before drawing any conclusion about model edge",
+      "Continue accumulating replay sessions; require n >= 1500 before interpreting Brier as stable",
+      "Track shadow outcomes over >= 20 sessions to validate Phase71 market superiority hypothesis out-of-sample"
+    ],
+    "required_data": [],
+    "blocked_auto_change_reason": "human_review_required: no automatic model/alpha/stake/bet changes permitted; all proposals require human review and >= 1500 sample validation",
+    "human_review_required": true,
+    "auto_model_change_blocked": true,
+    "auto_alpha_change_blocked": true,
+    "auto_stake_change_blocked": true,
+    "auto_bet_blocked": true,
+    "no_profit_claim": true,
+    "no_edge_claim": true
+  },
+  "gate": "MLB_POSTGAME_REVIEW_READY",
+  "gate_rationale": "result_ingestion + reviewed_snapshot + review_summary + brier_metrics + failure_notes all operational; paper-only safety flags complete",
+  "completion_marker": "MLB_POSTGAME_REVIEW_VERIFIED",
+  "metrics_ssot_used": true,
+  "metrics_ssot_module": "orchestrator.metrics_ssot"
+}

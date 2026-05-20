@@ -1,0 +1,318 @@
+{
+  "bankroll_change": -1.5849,
+  "bankroll_curve": [
+    {
+      "bankroll": 100.0139,
+      "event_id": "C01:WBC:Pool C:BET:prediction:settlement",
+      "pnl": 0.0139,
+      "timestamp": "2026-03-05T23:59:00Z"
+    },
+    {
+      "bankroll": 99.9139,
+      "event_id": "C02:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-05T23:59:00Z"
+    },
+    {
+      "bankroll": 99.8139,
+      "event_id": "C03:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-06T23:59:00Z"
+    },
+    {
+      "bankroll": 99.7139,
+      "event_id": "C04:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-06T23:59:00Z"
+    },
+    {
+      "bankroll": 99.6887,
+      "event_id": "A01:WBC:Pool A:BET:prediction:settlement",
+      "pnl": -0.0252,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.6135,
+      "event_id": "A02:WBC:Pool A:BET:prediction:settlement",
+      "pnl": -0.0752,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.5506,
+      "event_id": "B01:WBC:Pool B:BET:prediction:settlement",
+      "pnl": -0.0629,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.4506,
+      "event_id": "B02:WBC:Pool B:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.3737,
+      "event_id": "C05:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.0769,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.3542,
+      "event_id": "C06:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.0195,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.2542,
+      "event_id": "D01:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.1542,
+      "event_id": "D02:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-07T23:59:00Z"
+    },
+    {
+      "bankroll": 99.106,
+      "event_id": "A03:WBC:Pool A:BET:prediction:settlement",
+      "pnl": -0.0482,
+      "timestamp": "2026-03-08T23:59:00Z"
+    },
+    {
+      "bankroll": 99.006,
+      "event_id": "A04:WBC:Pool A:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-08T23:59:00Z"
+    },
+    {
+      "bankroll": 98.9204,
+      "event_id": "B03:WBC:Pool B:BET:prediction:settlement",
+      "pnl": -0.0856,
+      "timestamp": "2026-03-08T23:59:00Z"
+    },
+    {
+      "bankroll": 98.8204,
+      "event_id": "B04:WBC:Pool B:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-08T23:59:00Z"
+    },
+    {
+      "bankroll": 98.7204,
+      "event_id": "C08:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-08T23:59:00Z"
+    },
+    {
+      "bankroll": 98.6794,
+      "event_id": "D03:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.041,
+      "timestamp": "2026-03-08T23:59:00Z"
+    },
+    {
+      "bankroll": 98.5794,
+      "event_id": "D04:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-08T23:59:00Z"
+    },
+    {
+      "bankroll": 98.5476,
+      "event_id": "C09:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.0318,
+      "timestamp": "2026-03-09T15:00:00Z"
+    },
+    {
+      "bankroll": 98.5219,
+      "event_id": "A05:WBC:Pool A:BET:prediction:settlement",
+      "pnl": -0.0257,
+      "timestamp": "2026-03-09T23:59:00Z"
+    },
+    {
+      "bankroll": 98.6031,
+      "event_id": "A06:WBC:Pool A:BET:prediction:settlement",
+      "pnl": 0.0812,
+      "timestamp": "2026-03-09T23:59:00Z"
+    },
+    {
+      "bankroll": 98.5799,
+      "event_id": "B05:WBC:Pool B:BET:prediction:settlement",
+      "pnl": -0.0232,
+      "timestamp": "2026-03-09T23:59:00Z"
+    },
+    {
+      "bankroll": 98.4799,
+      "event_id": "B06:WBC:Pool B:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-09T23:59:00Z"
+    },
+    {
+      "bankroll": 98.3799,
+      "event_id": "D05:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-09T23:59:00Z"
+    },
+    {
+      "bankroll": 98.3465,
+      "event_id": "D06:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.0334,
+      "timestamp": "2026-03-09T23:59:00Z"
+    },
+    {
+      "bankroll": 98.3334,
+      "event_id": "A08:WBC:Pool A:BET:prediction:settlement",
+      "pnl": -0.0131,
+      "timestamp": "2026-03-10T23:59:00Z"
+    },
+    {
+      "bankroll": 98.3117,
+      "event_id": "B08:WBC:Pool B:BET:prediction:settlement",
+      "pnl": -0.0217,
+      "timestamp": "2026-03-10T23:59:00Z"
+    },
+    {
+      "bankroll": 98.2117,
+      "event_id": "C10:WBC:Pool C:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-10T23:59:00Z"
+    },
+    {
+      "bankroll": 98.1117,
+      "event_id": "D07:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-10T23:59:00Z"
+    },
+    {
+      "bankroll": 98.0117,
+      "event_id": "D08:WBC:Pool D:BET:prediction:settlement",
+      "pnl": -0.1,
+      "timestamp": "2026-03-10T23:59:00Z"
+    },
+    {
+      "bankroll": 98.3317,
+      "event_id": "B09:WBC:Pool B:BET:prediction:settlement",
+      "pnl": 0.32,
+      "timestamp": "2026-03-11T23:59:00Z"
+    },
+    {
+      "bankroll": 98.412,
+      "event_id": "D09:WBC:Pool D:BET:prediction:settlement",
+      "pnl": 0.0803,
+      "timestamp": "2026-03-11T23:59:00Z"
+    },
+    {
+      "bankroll": 98.3961,
+      "event_id": "A10:WBC:Pool A:BET:prediction:settlement",
+      "pnl": -0.0159,
+      "timestamp": "2026-03-12T23:59:00Z"
+    },
+    {
+      "bankroll": 98.4151,
+      "event_id": "B10:WBC:Pool B:BET:prediction:settlement",
+      "pnl": 0.019,
+      "timestamp": "2026-03-12T23:59:00Z"
+    }
+  ],
+  "current_bankroll": 98.4151,
+  "daily": {
+    "2026-03-05": {
+      "pnl": -0.0861,
+      "roi": -0.7708,
+      "samples": 2,
+      "stake": 0.1117
+    },
+    "2026-03-06": {
+      "pnl": -0.2,
+      "roi": -1.0,
+      "samples": 2,
+      "stake": 0.2
+    },
+    "2026-03-07": {
+      "pnl": -0.5597,
+      "roi": -1.0,
+      "samples": 8,
+      "stake": 0.5597
+    },
+    "2026-03-08": {
+      "pnl": -0.5748,
+      "roi": -1.0,
+      "samples": 7,
+      "stake": 0.5748
+    },
+    "2026-03-09": {
+      "pnl": -0.2329,
+      "roi": -0.6484,
+      "samples": 7,
+      "stake": 0.3592
+    },
+    "2026-03-10": {
+      "pnl": -0.3348,
+      "roi": -1.0,
+      "samples": 5,
+      "stake": 0.3348
+    },
+    "2026-03-11": {
+      "pnl": 0.4003,
+      "roi": 2.7683,
+      "samples": 2,
+      "stake": 0.1446
+    },
+    "2026-03-12": {
+      "pnl": 0.0031,
+      "roi": 0.1016,
+      "samples": 2,
+      "stake": 0.0305
+    }
+  },
+  "initial_bankroll": 100.0,
+  "max_drawdown_pct": 0.02,
+  "monthly": {
+    "2026-03": {
+      "pnl": -1.5849,
+      "roi": -0.6845,
+      "samples": 35,
+      "stake": 2.3153
+    }
+  },
+  "regime_breakdown": {
+    "Pool A": {
+      "pnl": -0.2221,
+      "roi": -0.6375,
+      "samples": 8,
+      "stake": 0.3484
+    },
+    "Pool B": {
+      "pnl": -0.1544,
+      "roi": -0.2539,
+      "samples": 9,
+      "stake": 0.608
+    },
+    "Pool C": {
+      "pnl": -0.6143,
+      "roi": -0.96,
+      "samples": 9,
+      "stake": 0.6399
+    },
+    "Pool D": {
+      "pnl": -0.5941,
+      "roi": -0.8263,
+      "samples": 9,
+      "stake": 0.719
+    }
+  },
+  "sample_size": 35,
+  "updated_at": "2026-04-20T01:43:06.941836Z",
+  "weekly": {
+    "2026-W10": {
+      "pnl": -1.4206,
+      "roi": -0.9823,
+      "samples": 19,
+      "stake": 1.4462
+    },
+    "2026-W11": {
+      "pnl": -0.1643,
+      "roi": -0.189,
+      "samples": 16,
+      "stake": 0.8691
+    }
+  }
+}

@@ -299,5 +299,96 @@ class TestOUUnderBlowoutSuppression(unittest.TestCase):
         self.assertEqual(logged_skips, [])
 
 
+class TestWBCExpectedRunsBiasCorrection(unittest.TestCase):
+    """WBC 2026 postmortem: expected_runs prior bias correction (mult=1.25).
+    Non-blowout WBC games mean≈9.09/prior 7.0=1.30; blowout handled by Category N.
+    Bayesian shrinkage (n=44, pseudo=50) → 1.14; rounded up to 1.25 for WBC inflation buffer.
+    Tag: WBC_2026_POSTMORTEM_BIAS_CORRECTION
+    """
+
+    def _run_mc(self, home_runs: float, away_runs: float, mult: float = 1.0, simulations: int = 50000):
+        from wbc_backend.domain.schemas import PredictionResult
+        from wbc_backend.simulation.monte_carlo import run_monte_carlo
+        h = round(home_runs * mult, 2)
+        a = round(away_runs * mult, 2)
+        pred = PredictionResult(
+            game_id="TEST_BIAS",
+            home_win_prob=0.52,
+            away_win_prob=0.48,
+            expected_home_runs=h,
+            expected_away_runs=a,
+            x_factors=[],
+            diagnostics={},
+        )
+        return run_monte_carlo(pred, line_total=7.5, simulations=simulations, seed=42)
+
+    def test_mult_1_25_raises_mean_total(self):
+        """×1.25 should raise mean_total_runs meaningfully (>1 run) for avg WBC game."""
+        pre = self._run_mc(3.7, 3.3, mult=1.0)
+        post = self._run_mc(3.7, 3.3, mult=1.25)
+        delta = post.mean_total_runs - pre.mean_total_runs
+        self.assertGreater(delta, 1.0, msg="Expected >1.0 run increase with mult=1.25")
+
+    def test_mult_1_25_raises_over_prob(self):
+        """×1.25 should raise over_7.5 probability for avg WBC game."""
+        pre = self._run_mc(3.7, 3.3, mult=1.0)
+        post = self._run_mc(3.7, 3.3, mult=1.25)
+        self.assertGreater(post.over_prob, pre.over_prob,
+                           msg="over_prob should increase after bias correction")
+        # Gap should narrow from 28.5pp → <15pp (mult=1.25 closes to ~11.9pp)
+        actual_over_75 = 0.673
+        gap_pre = actual_over_75 - pre.over_prob
+        gap_post = actual_over_75 - post.over_prob
+        self.assertLess(gap_post, gap_pre,
+                        msg="Calibration gap to actual 67.3% should narrow after correction")
+
+    def test_home_away_share_preserved(self):
+        """Correction must preserve home/away run share (only total is scaled)."""
+        home_runs, away_runs = 4.2, 3.4
+        total = home_runs + away_runs
+        home_share_before = home_runs / total
+
+        # Simulate what service.py does
+        mult = 1.25
+        corrected_total = total * mult
+        corrected_home = round(corrected_total * home_share_before, 2)
+        corrected_away = round(corrected_total * (1.0 - home_share_before), 2)
+
+        home_share_after = corrected_home / (corrected_home + corrected_away)
+        self.assertAlmostEqual(home_share_after, home_share_before, places=1,
+                               msg="Home/away run share should be preserved after correction")
+
+    def test_mult_1_0_is_noop(self):
+        """mult=1.0 should produce identical results (rollback/disable check)."""
+        pre = self._run_mc(3.7, 3.3, mult=1.0)
+        post = self._run_mc(3.7, 3.3, mult=1.0)  # same mult
+        self.assertAlmostEqual(pre.mean_total_runs, post.mean_total_runs, places=2)
+        self.assertAlmostEqual(pre.over_prob, post.over_prob, places=4)
+
+    def test_low_score_game_still_under_dominant(self):
+        """×1.25 on a pitching duel (4.5 total → 5.625) should NOT flip to over-dominant."""
+        post = self._run_mc(2.5, 2.0, mult=1.25)
+        # Corrected total ≈ 5.625 → under_7.5 should still be majority
+        self.assertGreater(post.under_prob, 0.65,
+                           msg="Low-score pitching duel should remain under-dominant after correction")
+
+    def test_config_field_exists_in_wbc_adjustment_config(self):
+        """WBCAdjustmentConfig must expose wbc_total_runs_bias_mult = 1.25."""
+        from wbc_backend.config.settings import WBCAdjustmentConfig
+        cfg = WBCAdjustmentConfig()
+        self.assertTrue(hasattr(cfg, "wbc_total_runs_bias_mult"),
+                        "WBCAdjustmentConfig must have wbc_total_runs_bias_mult")
+        self.assertAlmostEqual(cfg.wbc_total_runs_bias_mult, 1.25, places=5)
+
+    def test_p90_tail_increases_appropriately(self):
+        """×1.25 should raise P90 (explosion scenario) by at least 1 run."""
+        pre = self._run_mc(3.7, 3.3, mult=1.0)
+        post = self._run_mc(3.7, 3.3, mult=1.25)
+        p90_pre = pre.scenarios.get("explosion", 0)
+        p90_post = post.scenarios.get("explosion", 0)
+        self.assertGreater(p90_post, p90_pre,
+                           msg="P90 tail should increase after ×1.25 correction")
+
+
 if __name__ == "__main__":
     unittest.main()

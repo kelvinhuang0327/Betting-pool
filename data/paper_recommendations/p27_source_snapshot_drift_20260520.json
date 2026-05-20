@@ -1,0 +1,22 @@
+{
+  "artifact": "P27_SOURCE_SNAPSHOT_DRIFT",
+  "phase": "P27_PER_MARKET_CLV_ISOLATION",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "promotion_allowed": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "p23_pinned_lines": 2788,
+  "p23_pinned_sha256": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+  "current_lines": 2808,
+  "current_sha256": "0e62ddf9e36e7dfe2400bd0fefc2abf570af965f6cfbde6037fddc83375970d2",
+  "drift_detected": true,
+  "drift_records": 20,
+  "action": "RECORDED_ONLY_NOT_OVERWRITTEN",
+  "p27_uses_pinned_baseline": true,
+  "generated_at": "2026-05-20T04:48:42.738058+00:00"
+}

@@ -1,0 +1,332 @@
+{
+  "write_plan_version": "p20-1.0",
+  "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+  "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+  "timestamp": "2026-05-10T00:00:00Z",
+  "dry_run_only": true,
+  "write_plan_items": [
+    {
+      "candidate_id": "p18-safe-actual-result-row-3",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 3,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-12",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 12,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-16",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 16,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-21",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 21,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-27",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 27,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-28",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=C09",
+      "prediction_row_index": 28,
+      "game_id": "C09",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 2,
+          "away_score": 7,
+          "home_win": false,
+          "total_runs": 9
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-34",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 34,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-35",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=C09",
+      "prediction_row_index": 35,
+      "game_id": "C09",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 2,
+          "away_score": 7,
+          "home_win": false,
+          "total_runs": 9
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-41",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 41,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-42",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=C09",
+      "prediction_row_index": 42,
+      "game_id": "C09",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 2,
+          "away_score": 7,
+          "home_win": false,
+          "total_runs": 9
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-49",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 49,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-50",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=C09",
+      "prediction_row_index": 50,
+      "game_id": "C09",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 2,
+          "away_score": 7,
+          "home_win": false,
+          "total_runs": 9
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-56",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 56,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-57",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=C09",
+      "prediction_row_index": 57,
+      "game_id": "C09",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 2,
+          "away_score": 7,
+          "home_win": false,
+          "total_runs": 9
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-63",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=B06",
+      "prediction_row_index": 63,
+      "game_id": "B06",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 16,
+          "away_score": 0,
+          "home_win": true,
+          "total_runs": 16
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-64",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=C09",
+      "prediction_row_index": 64,
+      "game_id": "C09",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 2,
+          "away_score": 7,
+          "home_win": false,
+          "total_runs": 9
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    },
+    {
+      "candidate_id": "p18-safe-actual-result-row-65",
+      "source_ref": "data/wbc_backend/reports/postgame_results.jsonl#game_id=C09",
+      "prediction_row_index": 65,
+      "game_id": "C09",
+      "approved_fields": ["actual_result"],
+      "proposed_patch": {
+        "actual_result": {
+          "home_score": 2,
+          "away_score": 7,
+          "home_win": false,
+          "total_runs": 9
+        }
+      },
+      "reviewer": "P19_REVIEW_MANIFEST_AGENT",
+      "approval_reason": "Exact game_id match against postgame_results.jsonl; actual_result only.",
+      "timestamp": "2026-05-10T00:00:00Z",
+      "dry_run_only": true
+    }
+  ]
+}

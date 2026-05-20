@@ -167,6 +167,16 @@ class WBCAdjustmentConfig:
         "Final": {"starter_impact": 0.75, "bullpen_impact": 1.30, "variance_add": 0.14},
     })
 
+    # ── WBC 2026 postmortem bias correction ──────────────────────────────────
+    # WBC 2026 observed mean total = 9.51 (all 49 games); Poisson prior ~7.0.
+    # Blowout games (5 mercy-rule) are handled by Category N mismatch_blowout_propensity.
+    # Non-blowout WBC games: mean ≈ 9.09 → raw ratio vs prior = 9.09/7.0 ≈ 1.30.
+    # Bayesian shrinkage (n=44 non-blowout, pseudo-count=50): mult = 1 + (1.30-1) * 0.469 ≈ 1.14
+    # Rounded up to 1.25 (extra buffer for WBC international offensive inflation).
+    # Set to 1.0 to disable. Applies to WBC tournaments only; never affects MLB path.
+    # Source: WBC 2026 postmortem, 2026-03-19. Tag: WBC_2026_POSTMORTEM_BIAS_CORRECTION
+    wbc_total_runs_bias_mult: float = 1.25
+
 
 # ── Market Calibration Config ───────────────────────────────────────────────
 
@@ -192,6 +202,7 @@ class SchedulerConfig:
     research_cycle_interval_hours: int = 24    # V3 research phase-gate cycle daily
     postgame_sync_interval_hours: int = 2      # 賽後回寫 + retrainer 更新（每 2 小時）
     artifact_rebuild_interval_hours: int = 168  # ML artifact 重建（每週；有資料更新時手動提前觸發）
+    odds_capture_interval_minutes: int = 15    # Live odds 抓取間隔（分鐘）
 
 
 # ── Self-Improvement Config ──────────────────────────────────────────────────

@@ -1,0 +1,58 @@
+{
+  "module_version": "phase63_bullpen_granular_ingestion_v2",
+  "phase62_gate": "STATSAPI_SELECTED",
+  "phase63_gate": "GRANULAR_INGESTION_READY",
+  "diagnostic_only": true,
+  "candidate_patch_created": false,
+  "production_modified": false,
+  "alpha_modified": false,
+  "source": "mlb_stats_api_boxscore",
+  "ingestion_summary": {
+    "games_parsed": 4,
+    "games_missing": 1,
+    "total_normalized_appearances": 26,
+    "starters": 7,
+    "openers": 1,
+    "relievers": 19,
+    "errors": []
+  },
+  "ssot_artifact_summary": {
+    "total_artifacts": 4,
+    "unique_teams": 4,
+    "unique_prediction_dates": 1,
+    "artifacts_with_1d_data": 2,
+    "artifacts_with_3d_data": 4,
+    "artifacts_with_5d_data": 4,
+    "data_limited_confirmed": true
+  },
+  "ssot_feature_status": {
+    "available_features": [
+      "bullpen_usage_last_1d",
+      "bullpen_usage_last_3d",
+      "bullpen_usage_last_5d",
+      "reliever_back_to_back_count",
+      "reliever_three_in_four_days_count",
+      "closer_used_last_1d",
+      "closer_used_last_2d",
+      "bullpen_fatigue_favorite_side",
+      "bullpen_fatigue_underdog_side",
+      "bullpen_rest_imbalance"
+    ],
+    "data_limited_features": [
+      "high_leverage_reliever_used_last_1d",
+      "high_leverage_reliever_workload_last_3d"
+    ],
+    "available_count": 10,
+    "data_limited_count": 2
+  },
+  "edge_case_policies": {
+    "doubleheader": "Game 2 of a same-day doubleheader excludes Game 1 box scores (D-0). The strict `game_date < prediction_date` inequality in all window functions enforces PIT safety so same-day games never pollute the pre-game window.",
+    "postponed": "A null or missing boxscore is treated as postponed/rescheduled. games_missing is incremented; no relief appearances are generated; SSOT window functions fall back to prior available days naturally.",
+    "suspended": "Suspended games are treated identically to postponed (incomplete boxscore). Not ingested until the game is officially marked complete.",
+    "opener": "Opener detected when appearance_order == 1 AND innings_pitched < 2.0. opener_flag=True, reliever_flag=True. Opener IP IS counted in bullpen_usage_last_Nd windows (they are relievers).",
+    "bulk_pitcher": "Bulk pitcher: appearance_order >= 2 with potentially large IP. reliever_flag=True regardless of IP; opener_flag=False. Bulk pitcher IP is counted in bullpen IP windows same as any reliever."
+  },
+  "phase64_ready": true,
+  "phase64_guidance": "Phase 64 attribution ready: compute feature EV deltas against CLV / final odds. Use SSOTFeatureArtifact as input. Restrict to prediction_date games only.",
+  "audit_hash": "4923b662e37f0ca1"
+}

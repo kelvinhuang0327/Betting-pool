@@ -1,0 +1,20 @@
+{
+  "target_date": "2026-04-30",
+  "source_registry": "data/wbc_backend/reports/prediction_registry_6t_2026-04-30.jsonl",
+  "output_path": "data/wbc_backend/reports/clv_validation_records_6u_2026-04-30.jsonl",
+  "timeline_path": "data/mlb_context/odds_timeline.jsonl",
+  "clv_schema_version": "6u-1.0",
+  "source_phase": "6U",
+  "stats": {
+    "total_registry_rows": 14,
+    "eligible": 14,
+    "blocked": 0,
+    "skipped_duplicate": 14,
+    "computed": 0,
+    "pending_closing": 0,
+    "validation_errors": 0,
+    "rejection_reasons": {},
+    "validation_error_details": []
+  },
+  "generated_at_utc": "2026-04-30T09:00:30.675057Z"
+}

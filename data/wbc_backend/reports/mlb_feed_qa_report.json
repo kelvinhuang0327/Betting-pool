@@ -1,0 +1,256 @@
+{
+  "fetched_at": "2026-03-19T03:34:08.183576Z",
+  "csv_path": "data/mlb_2025/mlb_odds_2025_real.csv",
+  "output_dir": "data/mlb_context",
+  "external_refresh": null,
+  "source_audit": [
+    {
+      "feed_name": "lineups",
+      "source": "data/mlb_context_sources/confirmed_lineups.jsonl",
+      "source_type": "jsonl_file",
+      "in_repo": true,
+      "available": true,
+      "coverage_estimate": 0.9753,
+      "reliability": "high",
+      "historical_availability": "good",
+      "notes": "ready for strict-tier feed generation"
+    },
+    {
+      "feed_name": "bullpen_usage_3d",
+      "source": "data/mlb_context_sources/bullpen_usage_3d.jsonl",
+      "source_type": "jsonl_file",
+      "in_repo": true,
+      "available": true,
+      "coverage_estimate": 0.9753,
+      "reliability": "high",
+      "historical_availability": "good",
+      "notes": "ready for strict-tier feed generation"
+    },
+    {
+      "feed_name": "odds_timeline",
+      "source": "data/mlb_context_sources/odds_timeline_canonical.jsonl",
+      "source_type": "jsonl_file",
+      "in_repo": true,
+      "available": true,
+      "coverage_estimate": 1.0,
+      "reliability": "high",
+      "historical_availability": "good",
+      "notes": "ready for strict-tier feed generation"
+    },
+    {
+      "feed_name": "odds_timeline",
+      "source": "data/mlb_context_sources/odds_timeline.jsonl",
+      "source_type": "jsonl_file",
+      "in_repo": true,
+      "available": true,
+      "coverage_estimate": 0.9868,
+      "reliability": "high",
+      "historical_availability": "good",
+      "notes": "ready for strict-tier feed generation"
+    },
+    {
+      "feed_name": "odds_timeline",
+      "source": "data/tsl_odds_history.jsonl",
+      "source_type": "jsonl_file",
+      "in_repo": true,
+      "available": true,
+      "coverage_estimate": 0.0,
+      "reliability": "low",
+      "historical_availability": "limited",
+      "notes": "insufficient matched historical records"
+    },
+    {
+      "feed_name": "weather_wind",
+      "source": "data/mlb_context_sources/weather_wind.jsonl",
+      "source_type": "jsonl_file",
+      "in_repo": true,
+      "available": true,
+      "coverage_estimate": 0.9753,
+      "reliability": "high",
+      "historical_availability": "good",
+      "notes": "ready for strict-tier feed generation"
+    },
+    {
+      "feed_name": "injury_rest",
+      "source": "data/mlb_context_sources/injury_rest.jsonl",
+      "source_type": "jsonl_file",
+      "in_repo": true,
+      "available": true,
+      "coverage_estimate": 0.9753,
+      "reliability": "high",
+      "historical_availability": "good",
+      "notes": "ready for strict-tier feed generation"
+    }
+  ],
+  "feeds": [
+    {
+      "feed_name": "lineups",
+      "output_file": "data/mlb_context/lineups.jsonl",
+      "total_records_written": 2430,
+      "matched_game_id_count": 2430,
+      "unmatched_count": 0,
+      "stale_count": 0,
+      "duplicate_resolution_count": 0,
+      "missing_required_field_count": 0,
+      "failures": 0
+    },
+    {
+      "feed_name": "bullpen_usage_3d",
+      "output_file": "data/mlb_context/bullpen_usage_3d.jsonl",
+      "total_records_written": 2430,
+      "matched_game_id_count": 2430,
+      "unmatched_count": 0,
+      "stale_count": 0,
+      "duplicate_resolution_count": 0,
+      "missing_required_field_count": 0,
+      "failures": 0
+    },
+    {
+      "feed_name": "odds_timeline",
+      "output_file": "data/mlb_context/odds_timeline.jsonl",
+      "total_records_written": 2430,
+      "matched_game_id_count": 2430,
+      "unmatched_count": 0,
+      "stale_count": 0,
+      "duplicate_resolution_count": 0,
+      "missing_required_field_count": 68,
+      "failures": 0
+    },
+    {
+      "feed_name": "weather_wind",
+      "output_file": "data/mlb_context/weather_wind.jsonl",
+      "total_records_written": 2430,
+      "matched_game_id_count": 2430,
+      "unmatched_count": 0,
+      "stale_count": 0,
+      "duplicate_resolution_count": 0,
+      "missing_required_field_count": 0,
+      "failures": 0
+    },
+    {
+      "feed_name": "injury_rest",
+      "output_file": "data/mlb_context/injury_rest.jsonl",
+      "total_records_written": 2430,
+      "matched_game_id_count": 2430,
+      "unmatched_count": 0,
+      "stale_count": 0,
+      "duplicate_resolution_count": 0,
+      "missing_required_field_count": 233,
+      "failures": 0
+    }
+  ],
+  "strict_validation_recovery": {
+    "before": {
+      "strict_valid_games": 0,
+      "research_valid_games": 0,
+      "invalid_games": 2430,
+      "strict_valid_rate": 0.0,
+      "availability_pct": {
+        "confirmed_home_starter": 0.9753,
+        "confirmed_away_starter": 0.9753,
+        "confirmed_home_lineup": 0.9753,
+        "confirmed_away_lineup": 0.9753,
+        "bullpen_usage_last_3d_home": 0.9654,
+        "bullpen_usage_last_3d_away": 0.9663,
+        "home_away_splits": 0.9753,
+        "platoon_splits": 0.9753,
+        "park_factors": 0.9753,
+        "weather": 0.856,
+        "wind": 0.856,
+        "injury_report": 0.9753,
+        "rest_days_home": 0.9514,
+        "rest_days_away": 0.9527,
+        "odds_history": 0.986,
+        "closing_line_home": 0.0,
+        "closing_line_away": 0.0
+      }
+    },
+    "after": {
+      "strict_valid_games": 0,
+      "research_valid_games": 2396,
+      "invalid_games": 34,
+      "strict_valid_rate": 0.0,
+      "availability_pct": {
+        "confirmed_home_starter": 0.9753,
+        "confirmed_away_starter": 0.9753,
+        "confirmed_home_lineup": 0.9753,
+        "confirmed_away_lineup": 0.9753,
+        "bullpen_usage_last_3d_home": 0.9654,
+        "bullpen_usage_last_3d_away": 0.9663,
+        "home_away_splits": 0.9753,
+        "platoon_splits": 0.9753,
+        "park_factors": 0.9753,
+        "weather": 0.856,
+        "wind": 0.856,
+        "injury_report": 0.9753,
+        "rest_days_home": 0.9514,
+        "rest_days_away": 0.9527,
+        "odds_history": 0.986,
+        "closing_line_home": 0.986,
+        "closing_line_away": 0.986
+      }
+    }
+  },
+  "feed_impact_tracking": [
+    {
+      "feed": "lineups",
+      "strict_valid_rate_before": 0.0,
+      "strict_valid_rate_after": 0.0,
+      "strict_valid_delta": 0.0,
+      "strict_valid_games_before": 0,
+      "strict_valid_games_after": 0,
+      "newly_unlocked_fields": [],
+      "remaining_blockers": [
+        "closing_line_home",
+        "closing_line_away"
+      ]
+    },
+    {
+      "feed": "bullpen_usage_3d",
+      "strict_valid_rate_before": 0.0,
+      "strict_valid_rate_after": 0.0,
+      "strict_valid_delta": 0.0,
+      "strict_valid_games_before": 0,
+      "strict_valid_games_after": 0,
+      "newly_unlocked_fields": [],
+      "remaining_blockers": [
+        "closing_line_home",
+        "closing_line_away"
+      ]
+    },
+    {
+      "feed": "odds_timeline",
+      "strict_valid_rate_before": 0.0,
+      "strict_valid_rate_after": 0.0,
+      "strict_valid_delta": 0.0,
+      "strict_valid_games_before": 0,
+      "strict_valid_games_after": 0,
+      "newly_unlocked_fields": [
+        "closing_line_home",
+        "closing_line_away"
+      ],
+      "remaining_blockers": []
+    },
+    {
+      "feed": "weather_wind",
+      "strict_valid_rate_before": 0.0,
+      "strict_valid_rate_after": 0.0,
+      "strict_valid_delta": 0.0,
+      "strict_valid_games_before": 0,
+      "strict_valid_games_after": 0,
+      "newly_unlocked_fields": [],
+      "remaining_blockers": []
+    },
+    {
+      "feed": "injury_rest",
+      "strict_valid_rate_before": 0.0,
+      "strict_valid_rate_after": 0.0,
+      "strict_valid_delta": 0.0,
+      "strict_valid_games_before": 0,
+      "strict_valid_games_after": 0,
+      "newly_unlocked_fields": [],
+      "remaining_blockers": []
+    }
+  ],
+  "total_failures": 0
+}

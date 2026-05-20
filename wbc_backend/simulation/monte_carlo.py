@@ -29,7 +29,7 @@ def run_monte_carlo(  # noqa: C901
     away_sp_fatigue: float = 0.0,
     home_bullpen_stress: float = 0.0,
     away_bullpen_stress: float = 0.0,
-    wbc_variance_add: float = 0.18,
+    wbc_variance_add: float = 0.25,  # raised from 0.18 → WBC 2026 post-hoc: P90=15 runs, CoV=0.408
     mercy_rule: bool = True,
     blowout_propensity: float = 0.0,    # N.02 mismatch_blowout_propensity → tail expansion
 ) -> SimulationSummary:

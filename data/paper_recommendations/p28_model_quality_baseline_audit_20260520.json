@@ -1,0 +1,67 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "index_fallback_used": false,
+  "generated_at": "2026-05-20T05:00:36.506242+00:00",
+  "date": "2026-05-20",
+  "artifact": "P28_MODEL_QUALITY_BASELINE_AUDIT",
+  "phase": "P28_MLB_MODEL_QUALITY_REPAIR",
+  "existing_walkforward_brier": 0.24870309871543067,
+  "existing_walkforward_n": 2188,
+  "existing_walkforward_logloss": 0.6910209828420658,
+  "existing_walkforward_hit_rate": 0.46248462484624847,
+  "existing_walkforward_ece": 0.034723,
+  "random_baseline_brier": 0.25,
+  "platt_brier": 0.24839886714045137,
+  "isotonic_brier": 0.25034840528802593,
+  "prediction_distribution": {
+    "mean": 0.5642,
+    "std": 0.0955,
+    "concentration_0_45_to_0_55": 0.32,
+    "count_gt_0_60": 562,
+    "min": 0.1458,
+    "max": 0.9163,
+    "note": "From mlb_decision_quality_report.json sample (N=1493)"
+  },
+  "baseline_conclusion": "MODEL_RANDOM_LIKE",
+  "baseline_notes": [
+    "Current model uses only 7 features: market odds + OU + starter_known + home_bias",
+    "Model essentially regresses market odds → home win prob",
+    "Brier 0.2487 is barely above random baseline 0.25",
+    "Mean prediction 0.5642 shows mild home bias (MLB actual ~54% home win rate)",
+    "Platt calibration: delta=-0.0003 (trivial)",
+    "Isotonic: Brier=0.2503 (worse than baseline)",
+    "Root cause: feature poverty — no pitcher quality, no rolling form, no RL signal"
+  ],
+  "calibration_audit": {
+    "ece": 0.034723,
+    "ece_status": "ACCEPTABLE (< 0.05 threshold)",
+    "home_bias_mean_pred": 0.5642,
+    "home_actual_win_rate": 0.54,
+    "overconfidence": false,
+    "platt_ece": 0.035249,
+    "isotonic_ece": 0.044041
+  },
+  "discrimination_audit": {
+    "auc": "MISSING_NOT_IN_ARTIFACTS",
+    "hit_rate": 0.46248,
+    "below_random_hit_rate": true,
+    "note": "hit_rate < 0.50 suggests model's selected bets underperform even coin flip"
+  },
+  "current_model_features": [
+    "home_ml_p (home implied probability)",
+    "away_ml_p (away implied probability)",
+    "home_ml_p - away_ml_p (differential)",
+    "ou (over/under line)",
+    "starter_home_known (binary)",
+    "starter_away_known (binary)",
+    "home_bias (constant 1.0)"
+  ],
+  "feature_conclusion": "MODEL_DATA_LIMITED"
+}

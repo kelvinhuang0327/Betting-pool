@@ -4,7 +4,13 @@ Evaluates prediction performance for Money Line (ML) and Run Line (RL).
 
 § 核心規範 01: 嚴禁合成數據進入回測。
 """
+import os
+import sys
 from typing import List, Dict
+
+# Ensure repo-root imports work when running this file directly.
+sys.path.append(os.getcwd())
+
 from data.historical_data import HISTORICAL_WBC_2023, HISTORICAL_PREMIER12_2024, HISTORICAL_2025_SEASON
 from data.wbc_historical_multiyear import (
     ALL_WBC_HISTORICAL, WBC_TEAM_META,

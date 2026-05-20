@@ -1,0 +1,17 @@
+{
+  "dataset": "mlb-2025-asplayed.csv",
+  "ingest_source_file": "gl2025.txt",
+  "ingest_source_type": "retrosheet_gamelog",
+  "source_chain_verified": true,
+  "verification": {
+    "method": "exact_match_on_date_teams_scores",
+    "rows_dataset": 2430,
+    "rows_retrosheet": 2430,
+    "unmatched_dataset_rows": 0,
+    "missing_dataset_rows": 0,
+    "retrosheet_sha256": "586a7d73c2755c17a13ae034ba0cd0c5eaf77251a8b77ac7be780aa799d63f3d",
+    "verified_at_utc": "2026-03-12T06:29:35.016973Z"
+  },
+  "notes": "Verified against Retrosheet gl2025.txt by exact tuple match (date, away_team, home_team, away_score, home_score).",
+  "row_count": 2430
+}

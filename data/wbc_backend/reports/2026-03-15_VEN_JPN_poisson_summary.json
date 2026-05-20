@@ -1,12 +1,36 @@
 {
   "date_tpe": "2026-03-15",
-  "lambda_a": 4.375,
-  "lambda_b": 5.75,
-  "a_win_9": 0.27767053608116254,
-  "b_win_9": 0.6053146570585857,
-  "tie_9": 0.1170148068602519,
-  "a_full": 0.3361779395112885,
-  "b_full": 0.6638220604887116,
+  "starters": {
+    "game_pk": 788097,
+    "starter_source_url": "https://statsapi.mlb.com/api/v1.1/game/788097/feed/live",
+    "away_sp": {
+      "name": "Ranger Suarez",
+      "team": "VEN",
+      "stats_source": "https://statsapi.mlb.com/api/v1/people/624133/stats?stats=season&group=pitching&season=2025",
+      "era": 3.2,
+      "whip": 1.22,
+      "k_per_9": 8.64,
+      "bb_per_9": 2.17
+    },
+    "home_sp": {
+      "name": "Yoshinobu Yamamoto",
+      "team": "JPN",
+      "stats_source": "https://statsapi.mlb.com/api/v1/people/808967/stats?stats=season&group=pitching&season=2025",
+      "era": 2.49,
+      "whip": 0.99,
+      "k_per_9": 10.42,
+      "bb_per_9": 3.06
+    }
+  },
+  "base_lambda_a": 4.375,
+  "base_lambda_b": 5.75,
+  "lambda_a": 4.1247215625,
+  "lambda_b": 5.608610375,
+  "a_win_9": 0.26182444109899594,
+  "b_win_9": 0.6211401687498813,
+  "tie_9": 0.11703539015112276,
+  "a_full": 0.3203421361745573,
+  "b_full": 0.6796578638254427,
   "special_matchup_weight": "無資料",
   "odds": "無資料",
   "model_artifacts_has_team_weights": false,

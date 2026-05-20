@@ -1,0 +1,133 @@
+{
+  "artifact": "P25_MODEL_QUALITY_GAP_AUDIT",
+  "phase": "P25_CLV_INCONCLUSIVE_ROOT_CAUSE_AUDIT",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "model_quality_verdict": "MODEL_QUALITY_INSUFFICIENT",
+  "scope": "MLB walkforward validation + WBC gate evidence + calibration comparison",
+  "mlb_walkforward": {
+    "source": "data/wbc_backend/walkforward_summary.json",
+    "n_games": 2188,
+    "ml_bets": 1626,
+    "ml_roi": -0.01114,
+    "ml_hit_rate": 0.46248,
+    "ou_roi": -0.12183,
+    "brier_score": 0.24870,
+    "logloss": 0.69102,
+    "interpretation": {
+      "brier_vs_random": "Brier=0.2487 vs random baseline=0.25; delta=-0.0013. Model is virtually indistinguishable from random probability assignment.",
+      "hit_rate_below_50pct": "ML hit rate 46.25% is BELOW the 50% break-even threshold. Model predictions are worse than a coin flip for moneyline betting over 1,626 bets.",
+      "ou_roi_negative": "OU ROI=-12.2% — model has NO predictive value for over/under totals.",
+      "conclusion": "The MLB walkforward model does not have a statistically meaningful edge over random chance."
+    }
+  },
+  "wbc_gate_validation": {
+    "source": "data/wbc_backend/reports/gate_validation_evidence.json",
+    "ensemble_brier": 0.141523,
+    "n_evaluable_games": 40,
+    "interpretation": {
+      "wbc_brier_good": "0.1415 is significantly better than MLB walkforward (0.2487) and beats random baseline",
+      "small_sample_warning": "N=40 games is too small for reliable inference. At N=40, a 95% CI on Brier is approximately ±0.03-0.05. The observed 0.1415 could plausibly range from 0.09 to 0.19.",
+      "selection_bias_risk": "WBC evaluable games may not be representative — games with sufficient prediction data may bias toward games with stable markets",
+      "conclusion": "WBC model appears better than random, but N=40 is insufficient to validate as production-ready."
+    }
+  },
+  "calibration_comparison": {
+    "source": "data/wbc_backend/calibration_compare.json",
+    "platt": {
+      "brier": 0.24840,
+      "logloss": 0.69038,
+      "ece": 0.035249,
+      "ml_roi": -0.008463,
+      "ml_hit_rate": 0.46438
+    },
+    "isotonic": {
+      "brier": 0.25035,
+      "logloss": 0.73093,
+      "ece": 0.044041,
+      "ml_roi": 0.018048,
+      "ml_hit_rate": 0.48030
+    },
+    "interpretation": {
+      "ece_acceptable": "Both Platt ECE (3.52%) and Isotonic ECE (4.40%) are acceptable calibration errors (threshold typically 5%). Calibration itself is not the problem.",
+      "brier_still_near_random": "Even after calibration, Brier is 0.2484 (Platt) — still near-random.",
+      "hit_rate_still_below_50": "Platt hit_rate=46.44%, Isotonic hit_rate=48.03% — both below the 50% threshold. No profitable edge.",
+      "isotonic_positive_roi_caveat": "Isotonic shows ml_roi=+1.8%, but this is in-sample calibration — not a validated out-of-sample result. The underlying Brier=0.2504 is essentially random.",
+      "conclusion": "Calibration quality is acceptable but does not create profitability. The underlying model discriminative ability is the bottleneck."
+    }
+  },
+  "model_contract_compliance": {
+    "source": "data/derived/model_output_contract_validation_summary_2026-04-29.json",
+    "readiness_decision": "PARTIAL_READY_HISTORICAL_ROWS_BLOCKED",
+    "gate_failures": {
+      "M1_pass_rate_pct": 0.0,
+      "M5_pass_rate_pct": 0.0,
+      "M6_pass_rate_pct": 0.0,
+      "M13_pass_rate_pct": 0.0,
+      "M10_pass_rate_pct": 36.8
+    },
+    "missing_fields": [
+      "feature_cutoff_source",
+      "model_output_written_at_utc",
+      "prediction_run_completed_at_utc",
+      "data_freshness_label",
+      "feature_lookback_days",
+      "model_version_tag",
+      "training_end_date"
+    ],
+    "interpretation": "Model outputs are missing 7 critical temporal metadata fields. M1/M5/M6/M13 gates failing at 0% suggests these are structural schema violations affecting ALL model outputs (not a subset). Without temporal metadata, auditing for data leakage or staleness is impossible."
+  },
+  "gap_summary": {
+    "gaps_identified": [
+      {
+        "gap": "Discriminative ability near random on large sample (MLB N=2188)",
+        "severity": "CRITICAL",
+        "metric": "Brier=0.2487, random=0.25, delta=-0.0013"
+      },
+      {
+        "gap": "ML hit rate below 50% (worse than random for binary bet)",
+        "severity": "CRITICAL",
+        "metric": "hit_rate=46.25%"
+      },
+      {
+        "gap": "WBC sample too small for validation (N=40 evaluable games)",
+        "severity": "HIGH",
+        "metric": "N=40, Brier=0.1415 (unreliable CI)"
+      },
+      {
+        "gap": "7 model output metadata fields missing",
+        "severity": "HIGH",
+        "metric": "M1/M5/M6/M13 gates = 0% pass"
+      },
+      {
+        "gap": "OU ROI = -12.2% (strong anti-edge on totals)",
+        "severity": "MEDIUM",
+        "metric": "ou_roi=-0.12183"
+      }
+    ],
+    "overall_verdict": "MODEL_QUALITY_INSUFFICIENT",
+    "note": "Even if CLV construction is fixed (addressing root cause #1), the underlying model would not generate positive CLV because the model has no demonstrated predictive advantage over the market. Both problems must be addressed independently."
+  },
+  "repair_requirements": {
+    "DO_NOT_DO": [
+      "Do NOT propose new model features without data leakage validation",
+      "Do NOT claim improved Brier without walkforward re-validation",
+      "Do NOT promote any challenger to production",
+      "Do NOT replace fixed_edge_5pct champion"
+    ],
+    "research_directions_only": [
+      "Feature engineering: investigate why hit_rate < 50% — potential feature leakage contaminating model",
+      "WBC-specific model: MLB model may not generalize to WBC. Separate WBC training with ≥1500 historical games required",
+      "MLB model retraining: current model may be underpowered, wrong features, or overfitted to noise",
+      "Contract compliance: add missing 7 temporal metadata fields to all model outputs"
+    ],
+    "classification": "RESEARCH_ONLY_REQUIRES_BACKTEST_VALIDATION"
+  },
+  "forbidden_checks": {
+    "production_proposal": false,
+    "profitability_claim": false,
+    "champion_replacement": false,
+    "model_promotion": false
+  }
+}

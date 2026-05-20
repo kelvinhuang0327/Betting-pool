@@ -866,6 +866,318 @@ def render_card(payload: dict[str, Any]) -> str:
             lines.append(f"  ⚠️  {ud['malformed_count']} 筆損壞記錄已略過")
         lines.append("")
 
+    # ── Phase 36: Usage Budget Guard 狀態 ─────────────────────────
+    ub = payload.get("usage_budget", {})
+    if ub and ub.get("budget_status") not in (None, "UNKNOWN"):
+        lines.append(sub)
+        lines.append("💰 USAGE BUDGET GUARD (Phase 36)")
+        lines.append(sub)
+        b_status = ub.get("budget_status", "?")
+        b_icon = {"OK": "✅", "WARN": "⚠️", "CRITICAL": "🚨", "HARD_CAP": "🛑"}.get(b_status, "❓")
+        lines.append(f"狀態: {b_icon} {b_status}  |  排程模式: {ub.get('recommended_scheduler_mode', '?')}  |  窗口: {ub.get('window_hours', 24)}h")
+        lines.append("")
+
+        # 角色詳情
+        roles_b = ub.get("roles", {})
+        for role_n in ("planner", "cto", "worker"):
+            r = roles_b.get(role_n, {})
+            if not r:
+                continue
+            r_status = r.get("status", "OK")
+            r_icon = {"OK": "✅", "WARN": "⚠️", "CRITICAL": "🚨", "HARD_CAP": "🛑"}.get(r_status, "❓")
+            calls = r.get("calls", 0)
+            blocked = r.get("blocked", 0)
+            if role_n in ("planner", "cto"):
+                allowed = r.get("allowed_external", 0)
+                lines.append(f"  {role_n.upper()}: {r_icon} {r_status}  |  外部呼叫={calls}  允許上限={allowed}  封鎖={blocked}")
+            else:
+                warn_c = r.get("warn_calls", "?")
+                hard_c = r.get("hard_cap_calls", "?")
+                lines.append(f"  {role_n.upper()}: {r_icon} {r_status}  |  呼叫={calls}/{hard_c}  (WARN>{warn_c})  封鎖={blocked}")
+
+        lines.append("")
+
+        # Provider 詳情
+        provs = ub.get("providers", {})
+        if provs:
+            lines.append("  Provider 使用:")
+            for pname, pdat in provs.items():
+                p_status = pdat.get("status", "OK")
+                p_icon = {"OK": "✅", "WARN": "⚠️", "CRITICAL": "🚨", "HARD_CAP": "🛑"}.get(p_status, "❓")
+                lines.append(f"    [{pname}] {p_icon} {p_status}  {pdat.get('calls', 0)}/{pdat.get('hard_cap_calls','?')} 次")
+            lines.append("")
+
+        # Token 使用
+        tok_data = ub.get("tokens", {})
+        if tok_data:
+            t_status = tok_data.get("status", "OK")
+            t_icon = {"OK": "✅", "WARN": "⚠️", "CRITICAL": "🚨", "HARD_CAP": "🛑"}.get(t_status, "❓")
+            lines.append(f"  Tokens: {t_icon} input={tok_data.get('input_tokens', 0):,}  (hard_cap={tok_data.get('hard_cap_input_tokens', 0):,})")
+            lines.append("")
+
+        # 告警
+        for w in ub.get("warnings", []):
+            lines.append(w)
+        for c in ub.get("critical_alerts", []):
+            lines.append(c)
+        if ub.get("warnings") or ub.get("critical_alerts"):
+            lines.append("")
+
+    # ── LLM Audit 稽核生命週期 ─────────────────────────────────────
+    aus = payload.get("audit_summary", {})
+    if aus and aus.get("available", True) is not False:
+        lines.append(sub)
+        lines.append("🔐 LLM AUDIT 稽核生命週期")
+        lines.append(sub)
+
+        total_a = aus.get("total", {})
+        attempt = aus.get("attempts", total_a.get("ATTEMPT", total_a.get("attempts", 0)))
+        result  = aus.get("results",  total_a.get("RESULT",  total_a.get("results", 0)))
+        blocked = aus.get("blocked",  total_a.get("BLOCKED", total_a.get("blocked", 0)))
+        total_events = aus.get("total_events", attempt + result + blocked)
+        lines.append(f"今日總事件數  : {total_events}  (ATTEMPT {attempt} / RESULT {result} / BLOCKED {blocked})")
+        lines.append("")
+
+        by_role = aus.get("by_role", {})
+        if by_role:
+            lines.append("| Role            | ATTEMPT | RESULT | BLOCKED |")
+            lines.append("|-----------------|---------|--------|---------|")
+            for role_key, rdat in by_role.items():
+                lines.append(
+                    f"| {role_key:15} "
+                    f"| {rdat.get('attempts', rdat.get('ATTEMPT', 0)):7} "
+                    f"| {rdat.get('results', rdat.get('RESULT', 0)):6} "
+                    f"| {rdat.get('blocked', rdat.get('BLOCKED', 0)):7} |"
+                )
+            lines.append("")
+
+        recent_audit = aus.get("recent", [])
+        if recent_audit:
+            lines.append("最近 5 筆 Audit 事件:")
+            for ev in recent_audit:
+                ok_icon = "✅" if ev.get("success") else ("—" if ev.get("success") is None else "❌")
+                lines.append(
+                    f"  {ev.get('time','—')} | {ev.get('event','—'):7} | "
+                    f"{ev.get('runner','—'):15} | {ev.get('provider','—'):14} | "
+                    f"task={ev.get('task_id') or '—'} | {ok_icon}"
+                )
+            lines.append("")
+
+        # Coverage check
+        try:
+            from orchestrator.llm_audit_coverage import check_coverage
+            cov = check_coverage()
+            cov_status = cov["coverage_status"]
+            cov_icon = "✅" if cov_status == "FULL" else ("⚠️" if cov_status == "PARTIAL" else "❌")
+            lines.append(f"AuditGuard 覆蓋率  : {cov_icon} {cov_status}  ({len(cov.get('covered_paths',[]))} covered / {len(cov.get('excluded_paths',[]))} excluded)")
+            if cov_status != "FULL":
+                for w in cov.get("warnings", []):
+                    lines.append(f"    ⚠️  {w}")
+            lines.append("")
+        except Exception:
+            pass
+    elif aus.get("available") is False:
+        lines.append("🔐 LLM Audit: unavailable")
+        lines.append("")
+
+    # ── Phase 24 Human Review Queue ───────────────────────────────
+    hr = payload.get("human_review", {})
+    if hr and hr.get("available", True) is not False:
+        lines.append(sub)
+        lines.append("👤 HUMAN REVIEW QUEUE")
+        lines.append(sub)
+        pending_count = hr.get("pending_count", 0)
+        blocked = hr.get("blocked_by_human_review", False)
+        block_icon = "🚫 BLOCKED" if blocked else "✅ clear"
+        lines.append(f"Planner gate         : {block_icon}")
+        lines.append(f"Pending              : {pending_count}  |  Approved: {hr.get('approved_count',0)}  |  Rejected: {hr.get('rejected_count',0)}  |  More-data: {hr.get('more_data_count',0)}")
+        lines.append(f"Total queue items    : {hr.get('total', 0)}")
+        lines.append("")
+
+        latest = hr.get("latest_review")
+        if latest:
+            lines.append(f"Latest review        : {latest.get('review_id','?')}  [{latest.get('status','?')}]")
+            lines.append(f"  Type               : {latest.get('review_type','?')}")
+            lines.append(f"  Risk               : {latest.get('risk_level','?').upper()}")
+            lines.append(f"  Recommended action : {latest.get('recommended_action') or '—'}")
+            rev_by = latest.get('reviewer')
+            if rev_by:
+                lines.append(f"  Reviewed by        : {rev_by}  @ {(latest.get('reviewed_at_utc') or '')[:16]}")
+            lines.append("")
+
+        # Show actionable commands if there are pending reviews
+        pending_reviews = hr.get("pending_reviews", [])
+        if pending_reviews:
+            lines.append(f"⚠️  {pending_count} review(s) require your action — planner is BLOCKED")
+            lines.append("")
+            for item in pending_reviews[:3]:
+                rid = item.get("review_id", "?")
+                lines.append(f"  Review ID: {rid}  [{item.get('review_type','?')}]  risk={item.get('risk_level','?').upper()}")
+                lines.append(f"  Title    : {item.get('title') or item.get('summary','')[:80]}")
+                lines.append(f"  Created  : {(item.get('created_at_utc') or '')[:16]}")
+                lines.append("")
+                lines.append(f"  Action commands:")
+                lines.append(f"    python3 scripts/review_queue.py show {rid}")
+                lines.append(f"    python3 scripts/review_queue.py approve {rid} --reviewer \"Kelvin\" --notes \"...\"")
+                lines.append(f"    python3 scripts/review_queue.py reject {rid} --reviewer \"Kelvin\" --notes \"...\"")
+                lines.append(f"    python3 scripts/review_queue.py more-data {rid} --reviewer \"Kelvin\" --notes \"...\"")
+                lines.append("")
+            if pending_count > 3:
+                lines.append(f"  ... and {pending_count - 3} more. Run: python3 scripts/review_queue.py list")
+                lines.append("")
+        else:
+            lines.append("  No pending reviews — planner gate is clear.")
+            lines.append("")
+    elif hr.get("available") is False:
+        lines.append("👤 Human Review Queue: unavailable")
+        lines.append("")
+
+    # ── Phase 33 CLV Batch Scheduler ────────────────────────────
+    bs = payload.get("clv_batch_scheduler", {})
+    if bs.get("available"):
+        lines.append(sub)
+        lines.append("🗂️  CLV BATCH ACCUMULATION SCHEDULER (Phase 33)")
+        lines.append(sub)
+        lines.append(f"Batches seen         : {bs.get('batches_seen', 0)}")
+        lines.append(f"Latest batch date    : {bs.get('latest_batch_date') or '—'}")
+        lines.append(f"Computed total       : {bs.get('computed_total', 0)}")
+        lines.append(f"Pending total        : {bs.get('pending_total', 0)}")
+        lines.append(f"Remaining needed     : {bs.get('remaining_needed', 0)}")
+        lines.append(f"Threshold crossed    : {'YES ✅' if bs.get('threshold_crossed') else 'NO'}")
+        lines.append(f"Scheduler due        : {'YES ⚡' if bs.get('scheduler_due') else 'NO'}")
+        lines.append(f"Next action          : {bs.get('next_batch_action', '')}")
+        if bs.get("last_accumulation_run_at"):
+            lines.append(f"Last run             : {bs['last_accumulation_run_at'][:16]}")
+        lines.append("")
+    elif bs.get("available") is False:
+        lines.append("🗂️  CLV Batch Scheduler: unavailable")
+        lines.append("")
+
+    # ── Phase 34 CLV Threshold Crossing Tracker ─────────────────
+    ct = payload.get("clv_threshold", {})
+    if ct.get("available"):
+        pending_ct = ct.get("pending_threshold_events", 0)
+        ev_icon34 = "⚡" if pending_ct > 0 else "✅"
+        lines.append(sub)
+        lines.append(f"🎯 CLV THRESHOLD CROSSING TRACKER (Phase 34)")
+        lines.append(sub)
+        lines.append(f"Last computed count  : {ct.get('last_computed_count', 0)}")
+        lines.append(f"Crossed 30 (Approx.) : {'YES ✅' if ct.get('crossed_30') else 'NO'}")
+        lines.append(f"Crossed 50 (Suffic.) : {'YES ✅' if ct.get('crossed_50') else 'NO'}")
+        lines.append(f"Pending events       : {ev_icon34} {pending_ct}")
+        lines.append(f"Latest event type    : {ct.get('latest_event_type') or '—'}")
+        lines.append(f"Recommended task     : {ct.get('recommended_task_type') or '—'}")
+        if ct.get("generated_task_id"):
+            lines.append(f"Generated task ID    : {ct['generated_task_id']}")
+        lines.append("")
+    elif ct.get("available") is False:
+        lines.append("🎯 CLV Threshold Tracker: unavailable")
+        lines.append("")
+
+    # ── Phase 32 CLV Accumulation Policy ────────────────────────
+    clv_acc = payload.get("clv_accumulation", {})
+    if clv_acc.get("available"):
+        ev_state = clv_acc.get("evidence_state", "UNKNOWN")
+        ev_icon = {"INSUFFICIENT": "🔴", "APPROACHING": "🟡", "SUFFICIENT": "🟢"}.get(ev_state, "❓")
+        lines.append(sub)
+        lines.append("📊 CLV ACCUMULATION POLICY (Phase 32)")
+        lines.append(sub)
+        lines.append(f"Evidence state       : {ev_icon} {ev_state}")
+        lines.append(
+            f"Progress             : {clv_acc.get('computed_count', 0)}"
+            f" / {clv_acc.get('threshold', 50)}"
+            f"  ({clv_acc.get('progress_pct', 0.0):.1f}%)"
+        )
+        lines.append(f"Remaining needed     : {clv_acc.get('remaining_needed', 0)}")
+        lines.append(f"Learning cycle OK    : {'YES ✅' if clv_acc.get('learning_cycle_allowed') else 'NO ❌'}")
+        lines.append(f"Patch gate recheck   : {'ALLOWED ✅' if clv_acc.get('patch_gate_recheck_allowed') else 'BLOCKED 🚫'}")
+        lines.append(f"Patch candidate      : {'ALLOWED' if clv_acc.get('patch_candidate_allowed') else 'BLOCKED 🚫'}")
+        lines.append(f"Recommended action   : {clv_acc.get('recommended_next_action', '')}")
+        segs = clv_acc.get("priority_segments", [])
+        if segs:
+            lines.append(f"Priority segments    : {len(segs)} (all observation-only until threshold)")
+        recs = clv_acc.get("scheduler_recommendations", [])
+        if recs:
+            lines.append(f"Scheduler policy     : {', '.join(recs[:3])}")
+        lines.append("")
+    elif clv_acc.get("available") is False:
+        lines.append("📊 CLV Accumulation Policy: unavailable")
+        lines.append("")
+
+    # ── Phase 35 Daily CLV Ops ────────────────────────────────────
+    dops = payload.get("daily_clv_ops", {})
+    if dops.get("date") or dops.get("highest_severity"):
+        hsev = dops.get("highest_severity", "INFO")
+        SEV_ICON35 = {"CRITICAL": "🔴", "WARN": "🟡", "INFO": "🟢"}
+        s_icon = SEV_ICON35.get(hsev, "❓")
+        lines.append(sub)
+        lines.append(f"📋 DAILY CLV OPS (Phase 35) — {dops.get('date', '—')}  {s_icon} {hsev}")
+        lines.append(sub)
+        clv_c = dops.get("clv", {})
+        acc_c = dops.get("accumulation", {})
+        thr_c = dops.get("threshold", {})
+        hr_c  = dops.get("human_review", {})
+        llm_c = dops.get("llm_audit", {})
+        lines.append(
+            f"Computed/Pending/Blocked : "
+            f"{clv_c.get('computed_total', 0)} / "
+            f"{clv_c.get('pending_total', 0)} / "
+            f"{clv_c.get('blocked_total', 0)}"
+        )
+        ev_s = acc_c.get("evidence_state", "UNKNOWN")
+        ev_icon35 = {"INSUFFICIENT": "🔴", "APPROACHING": "🟡", "SUFFICIENT": "🟢"}.get(ev_s, "❓")
+        lines.append(f"Evidence state           : {ev_icon35} {ev_s}")
+        lines.append(f"Accum. progress          : {acc_c.get('computed_count', 0)} / {acc_c.get('threshold', 50)}")
+        lines.append(f"Threshold events pending : {thr_c.get('pending_threshold_events', 0)}")
+        lines.append(f"Human reviews pending    : {hr_c.get('pending_count', 0)}")
+        lines.append(f"Unexpected LLM today     : {llm_c.get('attempts', 0)}")
+        alerts35 = dops.get("alerts", [])
+        crit35 = sum(1 for a in alerts35 if a.get("severity") == "CRITICAL")
+        warn35 = sum(1 for a in alerts35 if a.get("severity") == "WARN")
+        if crit35 or warn35:
+            lines.append(f"Alerts                   : 🔴 {crit35} CRITICAL, 🟡 {warn35} WARN")
+        lines.append(f"Operator action          : {dops.get('operator_next_action', '—')}")
+        lines.append("")
+    elif dops.get("available") is False:
+        lines.append("📋 Daily CLV Ops: unavailable")
+        lines.append("")
+
+    # ── Phase 44 Market Blend Paper-Only Tracking ─────────────────────────
+    p44 = payload.get("phase44_paper", {})
+    if p44.get("available"):
+        lines.append(sub)
+        lines.append("🔬 MARKET BLEND PAPER-ONLY TRACKING (Phase 44)")
+        lines.append(sub)
+        gate = p44.get("gate_state", "PAPER_ONLY")
+        patch = p44.get("candidate_patch_created", False)
+        criteria = p44.get("gate_criteria_summary", "NOT_MET")
+        gate_icon = "🟡" if gate == "PAPER_ONLY" else "🟢"
+        patch_icon = "✅" if not patch else "🚨 CREATED"
+        bs_sig = p44.get("bootstrap_significance", "N/A")
+        bs_icon = "✅" if bs_sig == "SIGNIFICANT" else "⚠️"
+        blend_bss = p44.get("blend_bss", 0.0)
+        bss_icon = "✅" if blend_bss > 0 else "❌"
+        ci = p44.get("bootstrap_ci", [None, None])
+        if ci and ci[0] is not None and ci[1] is not None:
+            ci_str = f"[{ci[0]:+.4f}, {ci[1]:+.4f}]"
+        else:
+            ci_str = "N/A"
+        lines.append(f"Gate state           : {gate_icon} {gate}")
+        lines.append(f"Candidate patch      : {patch_icon} {patch}")
+        lines.append(f"Sample size          : {p44.get('sample_size', 0):,}  (need ≥ 3,000 for re-eval)")
+        lines.append(f"Date range           : {p44.get('date_start', '?')} → {p44.get('date_end', '?')}")
+        lines.append(f"Blend BSS vs market  : {bss_icon} {blend_bss:+.4f}")
+        lines.append(f"Blend ECE            : {p44.get('blend_ece', 0.0):.4f}  (mkt={p44.get('market_ece', 0.0):.4f})")
+        lines.append(f"Brier delta          : {p44.get('brier_delta', 0.0):+.4f}  (blend − market)")
+        lines.append(f"Bootstrap            : {bs_icon} {bs_sig}  CI={ci_str}")
+        lines.append(f"Gate criteria        : {criteria}")
+        if p44.get("audit_hash"):
+            lines.append(f"Audit hash           : {p44.get('audit_hash', '')[:16]}…")
+        lines.append("")
+    elif p44.get("available") is False:
+        lines.append("🔬 Phase 44 Paper Tracking: unavailable")
+        lines.append("")
+
     lines.append(bar)
     return "\n".join(lines)
 
@@ -1057,6 +1369,115 @@ def compute_closing_refresh_feedback() -> dict[str, Any]:
 
 
 # ──────────────────────────────────────────────────────────────────────────
+# Phase 24 — Human Review Queue
+# ──────────────────────────────────────────────────────────────────────────
+def compute_human_review_queue() -> dict[str, Any]:
+    """
+    Phase 24: Read the human review queue summary.
+    Read-only — never modifies state.
+    """
+    try:
+        from orchestrator.human_review_queue import get_queue_summary, get_pending_reviews
+        summary = get_queue_summary()
+        pending = get_pending_reviews()
+        return {
+            "available": True,
+            "total": summary.get("total", 0),
+            "pending_count": summary.get("pending_count", 0),
+            "approved_count": summary.get("approved_count", 0),
+            "rejected_count": summary.get("rejected_count", 0),
+            "more_data_count": summary.get("more_data_count", 0),
+            "blocked_by_human_review": summary.get("blocked_by_human_review", False),
+            "latest_review": summary.get("latest_review"),
+            "pending_reviews": pending,
+        }
+    except Exception as exc:
+        return {"available": False, "error": str(exc), "pending_count": 0,
+                "blocked_by_human_review": False, "pending_reviews": []}
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 32 — CLV Accumulation Policy
+# ──────────────────────────────────────────────────────────────────────────
+def compute_clv_accumulation_status() -> dict[str, Any]:
+    """
+    Phase 32: Read CLV accumulation state from production records + training_memory.
+    Read-only — never modifies state.
+    """
+    try:
+        from orchestrator.clv_accumulation_policy import get_clv_accumulation_summary
+        return get_clv_accumulation_summary()
+    except Exception as exc:
+        return {"available": False, "error": str(exc)}
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 33 — CLV Batch Scheduler
+# ──────────────────────────────────────────────────────────────────────────
+def compute_clv_batch_scheduler_status() -> dict[str, Any]:
+    """
+    Phase 33: Read CLV batch scheduler state.
+    Read-only — never modifies state.
+    """
+    try:
+        from orchestrator.clv_batch_scheduler import get_batch_scheduler_summary
+        return get_batch_scheduler_summary()
+    except Exception as exc:
+        return {"available": False, "error": str(exc)}
+
+
+def compute_clv_threshold_status() -> dict[str, Any]:
+    """
+    Phase 34: Read CLV threshold crossing tracker state.
+    Read-only — never modifies state.
+    """
+    try:
+        from orchestrator.clv_threshold_tracker import get_threshold_summary
+        return get_threshold_summary()
+    except Exception as exc:
+        return {"available": False, "error": str(exc)}
+
+
+def compute_daily_clv_ops_status() -> dict[str, Any]:
+    """
+    Phase 35: Build the daily CLV ops summary.
+    Read-only — never modifies state.
+    """
+    try:
+        from orchestrator.daily_clv_ops_summary import get_daily_ops_summary
+        return get_daily_ops_summary()
+    except Exception as exc:
+        return {"available": False, "error": str(exc)}
+
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# LLM Audit Summary
+# ──────────────────────────────────────────────────────────────────────────
+def compute_llm_audit_summary() -> dict[str, Any]:
+    """讀取 llm_audit.jsonl 並回傳今日稽核摘要供 Decision Card 使用。"""
+    try:
+        from orchestrator.llm_audit import build_audit_today_summary, read_audit_records
+        summary = build_audit_today_summary()
+        # Most recent 5 events for the card
+        recent = read_audit_records(hours=24, tail=5)
+        recent_rows = []
+        for rec in recent:
+            recent_rows.append({
+                "time": (rec.get("ts", "") or "")[:16].replace("T", " "),
+                "event": rec.get("event_type", "—"),
+                "runner": rec.get("runner", "—"),
+                "provider": rec.get("provider", "—"),
+                "task_id": rec.get("task_id"),
+                "success": rec.get("success"),
+            })
+        summary["recent"] = recent_rows
+        return summary
+    except Exception as exc:
+        return {"available": False, "error": str(exc), "total": {}, "by_role": {}, "recent": []}
+
+
+# ──────────────────────────────────────────────────────────────────────────
 # LLM Usage Detail
 # ──────────────────────────────────────────────────────────────────────────
 def compute_llm_usage_detail(window: str = "today", limit: int = 10) -> dict[str, Any]:
@@ -1066,6 +1487,86 @@ def compute_llm_usage_detail(window: str = "today", limit: int = 10) -> dict[str
         return get_usage_summary(window=window, limit=limit)
     except Exception as exc:
         return {"available": False, "error": str(exc), "roles": {}, "recent": [], "warnings": []}
+
+
+def compute_usage_budget_status(hours: float = 24) -> dict[str, Any]:
+    """Phase 36: Read Usage Budget Guard status (read-only)."""
+    try:
+        from orchestrator.usage_budget_guard import get_budget_summary
+        return get_budget_summary(hours=hours)
+    except Exception as exc:
+        return {"budget_status": "UNKNOWN", "error": str(exc)}
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Phase 44 — Market Blend Paper-Only Tracking
+# ──────────────────────────────────────────────────────────────────────────
+def compute_phase44_paper_tracking() -> dict[str, Any]:
+    """
+    Phase 44: Read latest paper-tracking JSON report (read-only).
+    Falls back to inline Phase 43 evidence summary when no JSON file found.
+    Never modifies files or calls external systems.
+    """
+    import glob
+    _ROOT = Path(__file__).resolve().parents[1]
+    pattern = str(_ROOT / "reports" / "phase44_market_blend_paper_tracking_*.json")
+    matches = sorted(glob.glob(pattern))
+    if matches:
+        try:
+            with open(matches[-1], encoding="utf-8") as fh:
+                data = json.load(fh)
+            return {
+                "available": True,
+                "source": "json_report",
+                "gate_state": data.get("gate_state", "PAPER_ONLY"),
+                "candidate_patch_created": data.get("candidate_patch_created", False),
+                "sample_size": data.get("sample_size", 0),
+                "date_start": data.get("date_start", ""),
+                "date_end": data.get("date_end", ""),
+                "blend_bss": data.get("blend_bss", 0.0),
+                "blend_brier": data.get("blend_brier", 0.0),
+                "market_brier": data.get("market_brier", 0.0),
+                "blend_ece": data.get("blend_ece", 0.0),
+                "market_ece": data.get("market_ece", 0.0),
+                "brier_delta": data.get("brier_delta", 0.0),
+                "bootstrap_significance": (data.get("bootstrap") or {}).get("significance", "N/A"),
+                "bootstrap_ci": [
+                    (data.get("bootstrap") or {}).get("ci_lower"),
+                    (data.get("bootstrap") or {}).get("ci_upper"),
+                ],
+                "gate_criteria_summary": data.get("gate_criteria_summary", "NOT_MET"),
+                "audit_hash": data.get("audit_hash", "")[:16],
+                "generated_at": data.get("generated_at", ""),
+            }
+        except Exception as exc:
+            return {"available": False, "error": f"JSON parse error: {exc}"}
+    # Fallback: inline Phase 43 evidence
+    from orchestrator.phase44_market_blend_paper_tracking import PHASE43_EVIDENCE_SUMMARY
+    return {
+        "available": True,
+        "source": "phase43_inline",
+        "gate_state": "PAPER_ONLY",
+        "candidate_patch_created": False,
+        "sample_size": PHASE43_EVIDENCE_SUMMARY.get("sample_size", 2025),
+        "date_start": PHASE43_EVIDENCE_SUMMARY.get("date_range", ["?", "?"])[0],
+        "date_end": PHASE43_EVIDENCE_SUMMARY.get("date_range", ["?", "?"])[1],
+        "blend_bss": PHASE43_EVIDENCE_SUMMARY.get("overall_blend_bss", 0.0),
+        "blend_brier": PHASE43_EVIDENCE_SUMMARY.get("overall_blend_brier", 0.0),
+        "market_brier": PHASE43_EVIDENCE_SUMMARY.get("overall_market_brier", 0.0),
+        "blend_ece": PHASE43_EVIDENCE_SUMMARY.get("overall_blend_ece", 0.0),
+        "market_ece": 0.0,  # not stored inline
+        "brier_delta": (
+            PHASE43_EVIDENCE_SUMMARY.get("overall_blend_brier", 0.0)
+            - PHASE43_EVIDENCE_SUMMARY.get("overall_market_brier", 0.0)
+        ),
+        "bootstrap_significance": PHASE43_EVIDENCE_SUMMARY.get("bootstrap_significance", "N/A"),
+        "bootstrap_ci": PHASE43_EVIDENCE_SUMMARY.get("bootstrap_ci", [None, None]),
+        "gate_criteria_summary": "NOT_MET",
+        "audit_hash": "",
+        "generated_at": "",
+    }
+
+
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -1091,6 +1592,14 @@ def build_payload() -> dict[str, Any]:
     closing_availability = compute_closing_availability()
     closing_refresh_feedback = compute_closing_refresh_feedback()
     usage_detail = compute_llm_usage_detail()
+    audit_summary = compute_llm_audit_summary()
+    human_review = compute_human_review_queue()
+    clv_accumulation = compute_clv_accumulation_status()
+    clv_batch_scheduler = compute_clv_batch_scheduler_status()
+    clv_threshold = compute_clv_threshold_status()
+    daily_clv_ops = compute_daily_clv_ops_status()
+    usage_budget = compute_usage_budget_status()
+    phase44_paper = compute_phase44_paper_tracking()
     return {
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "status": status,
@@ -1111,6 +1620,14 @@ def build_payload() -> dict[str, Any]:
         "closing_availability": closing_availability,
         "closing_refresh_feedback": closing_refresh_feedback,
         "usage_detail": usage_detail,
+        "audit_summary": audit_summary,
+        "human_review": human_review,
+        "clv_accumulation": clv_accumulation,
+        "clv_batch_scheduler": clv_batch_scheduler,
+        "clv_threshold": clv_threshold,
+        "daily_clv_ops": daily_clv_ops,
+        "usage_budget": usage_budget,
+        "phase44_paper": phase44_paper,
     }
 
 

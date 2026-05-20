@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """
-Phase 6K — Model Output Contract Validator
-==========================================
+Phase 6K/6P — Model Output Contract Validator
+=============================================
 Validates candidate files against the Phase 6J model output contract
 (data/derived/model_outputs_YYYY-MM-DD.jsonl schema).
 
-Applies quality gates M1–M12.
+Phase 6K: Applies quality gates M1–M12.
+Phase 6P: Extends with M13_NATIVE_TIMESTAMP_CONTRACT; extends M6/M9/M11
+          to check Phase 6O native timestamp fields (graceful skip when absent).
+
 Produces a Markdown report and optional JSON summary.
 Does NOT modify any source file.
 Does NOT generate predictions.
@@ -23,8 +26,43 @@ from typing import Any
 
 # ── Constants ────────────────────────────────────────────────────────────────
 
-SCHEMA_VERSION = "6k-1.0"
-PHASE = "6K"
+SCHEMA_VERSION = "6p-1.0"
+PHASE = "6K/6P"
+
+# ── Phase 6O Native Timestamp Extension Constants ────────────────────────────
+
+NATIVE_TIMESTAMP_FIELDS: list[str] = [
+    "prediction_run_started_at_utc",
+    "prediction_run_completed_at_utc",
+    "model_output_written_at_utc",
+    "prediction_time_source",
+    "feature_cutoff_source",
+    "timestamp_capture_version",
+    "timestamp_quality_flags",
+]
+
+ALLOWED_PREDICTION_TIME_SOURCES: list[str] = [
+    "MODEL_INFERENCE_RUNTIME",
+    "MODEL_OUTPUT_EMISSION_RUNTIME",
+    "SCHEDULER_RUN_RUNTIME",
+]
+
+DISALLOWED_PREDICTION_TIME_SOURCES_FOR_CLV: list[str] = [
+    "REPORT_METADATA",
+    "FILE_METADATA_LOW_CONFIDENCE",
+    "UNKNOWN",
+]
+
+HARD_FAIL_TIMESTAMP_QUALITY_FLAGS: list[str] = [
+    "TIMESTAMP_MISSING",
+    "TIMESTAMP_SOURCE_LOW_CONFIDENCE",
+    "PREDICTION_TIME_AFTER_MATCH",
+    "FEATURE_CUTOFF_AFTER_PREDICTION",
+    "FEATURE_CUTOFF_AFTER_MATCH",
+    "TIMESTAMP_CLOCK_DRIFT",
+    "HISTORICAL_TIMESTAMP_RECOVERY",
+    "ODDS_SNAPSHOT_AFTER_MATCH",
+]
 
 REQUIRED_CONTRACT_FIELDS: list[str] = [
     "schema_version",
@@ -97,6 +135,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--summary",
         default="data/derived/model_output_contract_validation_summary_2026-04-29.json",
+    )
+    p.add_argument(
+        "--phase6p-report",
+        default="docs/orchestration/phase6p_native_timestamp_validator_extension_report_2026-04-29.md",
     )
     return p.parse_args()
 
@@ -189,6 +231,44 @@ def gate_m6(row: dict) -> tuple[bool, list[str]]:
         )
         ok = False
 
+    # Phase 6O T4–T7: native timestamp chain invariants (skip gracefully when fields absent)
+    started_t = _parse_dt(row.get("prediction_run_started_at_utc"))
+    completed_t = _parse_dt(row.get("prediction_run_completed_at_utc"))
+    written_t = _parse_dt(row.get("model_output_written_at_utc"))
+    odds_snap_t = _parse_dt(row.get("odds_snapshot_time_utc"))
+
+    if started_t is not None and prediction_t is not None:
+        if started_t > prediction_t:
+            notes.append(
+                f"M6_FAIL_T4: prediction_run_started_at_utc {row.get('prediction_run_started_at_utc')} "
+                f"> prediction_time_utc {row.get('prediction_time_utc')}"
+            )
+            ok = False
+
+    if completed_t is not None and prediction_t is not None:
+        if prediction_t > completed_t:
+            notes.append(
+                f"M6_FAIL_T5: prediction_time_utc {row.get('prediction_time_utc')} "
+                f"> prediction_run_completed_at_utc {row.get('prediction_run_completed_at_utc')}"
+            )
+            ok = False
+
+    if written_t is not None and prediction_t is not None:
+        if written_t < prediction_t:
+            notes.append(
+                f"M6_FAIL_T6: model_output_written_at_utc {row.get('model_output_written_at_utc')} "
+                f"< prediction_time_utc {row.get('prediction_time_utc')}"
+            )
+            ok = False
+
+    if odds_snap_t is not None and prediction_t is not None:
+        if odds_snap_t > prediction_t:
+            notes.append(
+                f"M6_FAIL_T7: odds_snapshot_time_utc {row.get('odds_snapshot_time_utc')} "
+                f"> prediction_time_utc {row.get('prediction_time_utc')}"
+            )
+            ok = False
+
     if ok:
         notes.append("M6_PASS")
     return ok, notes
@@ -240,7 +320,7 @@ def gate_m8(row: dict) -> tuple[bool, list[str]]:
 
 
 def gate_m9(row: dict) -> tuple[bool, list[str]]:
-    """M9_NO_LEAKAGE_HARD_FAIL: no settlement/result fields; no leakage flags."""
+    """M9_NO_LEAKAGE_HARD_FAIL: no settlement/result fields; no leakage flags; no disallowed timestamp sources."""
     found_fields = [f for f in SETTLEMENT_LEAKAGE_FIELDS if f in row]
     if found_fields:
         return False, [f"M9_FAIL_LEAKAGE: settlement/result fields present: {found_fields}"]
@@ -251,6 +331,28 @@ def gate_m9(row: dict) -> tuple[bool, list[str]]:
     bad_flags = [f for f in flags if any(lf in str(f) for lf in FORBIDDEN_LEAKAGE_FLAGS)]
     if bad_flags:
         return False, [f"M9_FAIL_LEAKAGE: forbidden leakage flags: {bad_flags}"]
+
+    # Phase 6O: prediction_time_source disallowed source check
+    pts = row.get("prediction_time_source")
+    if pts is not None and pts in DISALLOWED_PREDICTION_TIME_SOURCES_FOR_CLV:
+        return False, [f"M9_FAIL_LEAKAGE: prediction_time_source='{pts}' is disallowed for CLV"]
+
+    # Phase 6O: timestamp_quality_flags hard-fail check
+    tqf = row.get("timestamp_quality_flags") or []
+    if not isinstance(tqf, list):
+        tqf = []
+    bad_ts_flags = [f for f in tqf if f in HARD_FAIL_TIMESTAMP_QUALITY_FLAGS]
+    if bad_ts_flags:
+        return False, [f"M9_FAIL_LEAKAGE: timestamp_quality_flags contains hard-fail flags: {bad_ts_flags}"]
+
+    # Phase 6O: odds_snapshot_time_utc leakage check
+    odds_snap_t = _parse_dt(row.get("odds_snapshot_time_utc"))
+    prediction_t_m9 = _parse_dt(row.get("prediction_time_utc"))
+    if odds_snap_t is not None and prediction_t_m9 is not None and odds_snap_t > prediction_t_m9:
+        return False, [
+            f"M9_FAIL_LEAKAGE: odds_snapshot_time_utc {row.get('odds_snapshot_time_utc')} "
+            f"> prediction_time_utc {row.get('prediction_time_utc')}"
+        ]
 
     return True, ["M9_PASS"]
 
@@ -306,6 +408,24 @@ def gate_m11(row: dict) -> tuple[bool, list[str]]:
     if pp is None and clv_usable:
         return False, ["M11_FAIL: predicted_probability=null but clv_usable=true"]
 
+    # Phase 6O: if clv_usable=true, require native timestamp contract compliance
+    if clv_usable and not is_dry and pp is not None:
+        pts = row.get("prediction_time_source")
+        tcv = row.get("timestamp_capture_version")
+        tqf = row.get("timestamp_quality_flags") or []
+        if not isinstance(tqf, list):
+            tqf = []
+        if pts not in ALLOWED_PREDICTION_TIME_SOURCES:
+            return False, [
+                f"M11_FAIL: clv_usable=true but prediction_time_source='{pts}' "
+                f"is not in allowed native sources {ALLOWED_PREDICTION_TIME_SOURCES}"
+            ]
+        if not tcv or not isinstance(tcv, str) or not tcv.strip():
+            return False, ["M11_FAIL: clv_usable=true but timestamp_capture_version is absent"]
+        bad = [f for f in tqf if f in HARD_FAIL_TIMESTAMP_QUALITY_FLAGS]
+        if bad:
+            return False, [f"M11_FAIL: clv_usable=true but timestamp_quality_flags contains {bad}"]
+
     return True, ["M11_PASS"]
 
 
@@ -331,6 +451,53 @@ def gate_m12(row: dict) -> tuple[bool, list[str]]:
     return True, ["M12_PASS_NOT_DRY_RUN"]
 
 
+def gate_m13(row: dict) -> tuple[bool, list[str]]:
+    """M13_NATIVE_TIMESTAMP_CONTRACT: all Phase 6O native timestamp fields present with valid sources."""
+    issues: list[str] = []
+
+    # Required native timestamp datetime fields
+    for field in [
+        "prediction_run_started_at_utc",
+        "prediction_run_completed_at_utc",
+        "model_output_written_at_utc",
+    ]:
+        if field not in row or row[field] is None:
+            issues.append(f"M13_FAIL: {field} is absent or null")
+
+    # prediction_time_source must be in allowed set
+    pts = row.get("prediction_time_source")
+    if pts is None:
+        issues.append("M13_FAIL: prediction_time_source is absent")
+    elif pts in DISALLOWED_PREDICTION_TIME_SOURCES_FOR_CLV:
+        issues.append(f"M13_FAIL: prediction_time_source='{pts}' is disallowed for CLV")
+    elif pts not in ALLOWED_PREDICTION_TIME_SOURCES:
+        issues.append(f"M13_FAIL: prediction_time_source='{pts}' is not a recognized allowed source")
+
+    # feature_cutoff_source must be set and not UNKNOWN
+    fcs = row.get("feature_cutoff_source")
+    if fcs is None:
+        issues.append("M13_FAIL: feature_cutoff_source is absent")
+    elif fcs == "UNKNOWN":
+        issues.append("M13_FAIL: feature_cutoff_source=UNKNOWN is not CLV-eligible")
+
+    # timestamp_capture_version must be a non-empty string
+    tcv = row.get("timestamp_capture_version")
+    if not tcv or not isinstance(tcv, str) or not tcv.strip():
+        issues.append("M13_FAIL: timestamp_capture_version is absent or empty")
+
+    # timestamp_quality_flags must not contain hard-fail flags
+    tqf = row.get("timestamp_quality_flags") or []
+    if not isinstance(tqf, list):
+        tqf = []
+    bad = [f for f in tqf if f in HARD_FAIL_TIMESTAMP_QUALITY_FLAGS]
+    if bad:
+        issues.append(f"M13_FAIL: timestamp_quality_flags contains hard-fail flags: {bad}")
+
+    if issues:
+        return False, issues
+    return True, ["M13_PASS: all native timestamp fields present and valid"]
+
+
 ALL_GATES = [
     ("M1", gate_m1),
     ("M2", gate_m2),
@@ -344,6 +511,7 @@ ALL_GATES = [
     ("M10", gate_m10),
     ("M11", gate_m11),
     ("M12", gate_m12),
+    ("M13", gate_m13),
 ]
 
 
@@ -471,14 +639,17 @@ def determine_readiness(
     real_valid_rows: int,
     dry_run_rows: int,
     gate_agg: dict[str, dict],
+    native_ts_blocked_rows: int = 0,
 ) -> str:
     if not real_candidate_exists:
         return "NOT_READY_MODEL_OUTPUT_GAP"
     if real_valid_rows == 0:
-        return "NOT_READY_SCHEMA_GAP"
-    # Check M5 (version fields)
-    m5 = gate_agg.get("M5", {})
-    if m5.get("fail", 0) > 0 and m5.get("pass", 0) == 0:
+        # Phase 6P: distinguish rows blocked by native timestamp gate
+        if native_ts_blocked_rows > 0:
+            return "PARTIAL_READY_HISTORICAL_ROWS_BLOCKED"
+        m5 = gate_agg.get("M5", {})
+        if m5.get("fail", 0) > 0 and m5.get("pass", 0) == 0:
+            return "NOT_READY_SCHEMA_GAP"
         return "NOT_READY_SCHEMA_GAP"
     if real_valid_rows > 0:
         return "READY_FOR_MODEL_OUTPUT_ADAPTER"
@@ -653,6 +824,7 @@ def build_report(
         "M10": "MARKET_SEMANTICS_VALID",
         "M11": "CLV_USABLE_FLAG_CORRECT",
         "M12": "DRY_RUN_FLAG_CORRECT",
+        "M13": "NATIVE_TIMESTAMP_CONTRACT",
     }
 
     for gate_id, name in gate_names.items():
@@ -858,6 +1030,11 @@ def main() -> int:
         "size": 0,
     }
 
+    # Phase 6P: native timestamp gate tracking (initialized before real candidate block)
+    native_ts_blocked_rows: int = 0
+    native_ts_ready_rows: int = 0
+    native_ts_missing_fields: list[str] = []
+
     real_gate_agg: dict | None = None
     if os.path.exists(args.candidate):
         info = classify_legacy_candidate(args.candidate)
@@ -874,6 +1051,19 @@ def main() -> int:
             )
             real_candidate_info["valid_rows"] = valid
             real_candidate_info["has_required_fields"] = info.get("looks_like_model_output", False)
+            # Phase 6P: count native timestamp gate results for real rows
+            native_ts_blocked_rows = sum(
+                1 for r in real_rows_results if not r.get("M13", {}).get("pass", True)
+            )
+            native_ts_ready_rows = sum(
+                1 for r in real_rows_results if r.get("M13", {}).get("pass", False)
+            )
+            native_ts_missing_fields = sorted(set(
+                field
+                for row in real_rows[:100]
+                for field in NATIVE_TIMESTAMP_FIELDS
+                if field not in row or row[field] is None
+            ))
 
     # ── Scan legacy candidates ───────────────────────────────────────────────
     legacy_paths = [
@@ -912,6 +1102,7 @@ def main() -> int:
         real_candidate_info.get("valid_rows", 0),
         len(dry_run_rows),
         dry_run_gate_agg,
+        native_ts_blocked_rows=native_ts_blocked_rows,
     )
 
     gate_names = {
@@ -927,6 +1118,7 @@ def main() -> int:
         "M10": "MARKET_SEMANTICS_VALID",
         "M11": "CLV_USABLE_FLAG_CORRECT",
         "M12": "DRY_RUN_FLAG_CORRECT",
+        "M13": "NATIVE_TIMESTAMP_CONTRACT",
     }
 
     # ── Console summary ──────────────────────────────────────────────────────
@@ -951,8 +1143,23 @@ def main() -> int:
         pct = agg.get("pass_pct", 0.0)
         status = "PASS" if f_c == 0 else ("BLOCK" if b > 0 else "FAIL")
         print(f"    {gate_id:3s} {name:35s}: {status} ({p}/{p+f_c}, {pct:.1f}%)")
+    if real_gate_agg:
+        print()
+        print("  Gate Results (real candidate rows):")
+        for gate_id, name in gate_names.items():
+            agg = real_gate_agg.get(gate_id, {})
+            p_r = agg.get("pass", 0)
+            f_r = agg.get("fail", 0)
+            b_r = agg.get("block", 0)
+            pct_r = agg.get("pass_pct", 0.0)
+            status_r = "PASS" if f_r == 0 else ("BLOCK" if b_r > 0 else "FAIL")
+            print(f"    {gate_id:3s} {name:35s}: {status_r} ({p_r}/{p_r + f_r}, {pct_r:.1f}%)")
     print()
     print(f"  READINESS DECISION   : {readiness}")
+    print(f"  M13 Native TS ready  : {native_ts_ready_rows}/{native_ts_ready_rows + native_ts_blocked_rows} real rows")
+    native_ts_missing_preview = native_ts_missing_fields[:4]
+    ellipsis_str = '...' if len(native_ts_missing_fields) > 4 else ''
+    print(f"  Native TS missing    : {native_ts_missing_preview}{ellipsis_str}")
     print("=" * 70)
 
     # ── Write report ─────────────────────────────────────────────────────────
@@ -982,9 +1189,19 @@ def main() -> int:
         "dry_run_rows": len(dry_run_rows),
         "gate_results": gate_results_summary,
         "readiness_decision": readiness,
-        "recommended_next_step": "Phase 6L: ML-Only Model Output Adapter",
+        "recommended_next_step": "Phase 6Q: Future Inference Timestamp Capture Stub / Dry-Run Adapter",
         "source_data_modified": False,
         "formal_clv_validation_run": False,
+        "native_timestamp_gate_enabled": True,
+        "m13_native_timestamp_contract": real_gate_agg.get("M13", {}) if real_gate_agg else {
+            "total_rows": 0, "pass": 0, "fail": 0, "block": 0, "pass_pct": 0.0,
+            "note": "no_real_rows_validated",
+        },
+        "native_timestamp_ready_rows": native_ts_ready_rows,
+        "native_timestamp_blocked_rows": native_ts_blocked_rows,
+        "native_timestamp_missing_fields": native_ts_missing_fields,
+        "allowed_prediction_time_sources": ALLOWED_PREDICTION_TIME_SOURCES,
+        "disallowed_prediction_time_sources": DISALLOWED_PREDICTION_TIME_SOURCES_FOR_CLV,
     }
     Path(args.summary).parent.mkdir(parents=True, exist_ok=True)
     with open(args.summary, "w", encoding="utf-8") as f:

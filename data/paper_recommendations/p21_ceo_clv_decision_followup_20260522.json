@@ -1,0 +1,57 @@
+{
+  "phase": "P21_CEO_CLV_DECISION_FOLLOWUP_GATE",
+  "task": "P21-B",
+  "date": "2026-05-22",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+
+  "decision_file_checked": "data/paper_recommendations/p21_ceo_clv_validation_decision_20260522.json",
+  "decision_file_exists": false,
+  "decision_status": "DEFER_DECISION",
+
+  "supported_decisions": [
+    "APPROVE_CLV_VALIDATION_ONLY",
+    "REQUIRE_MANUAL_PAIR_REVIEW",
+    "KEEP_HOLD_NO_EXPANSION",
+    "DEFER_DECISION"
+  ],
+
+  "intake_result": {
+    "clv_validation_allowed": false,
+    "p22_allowed": false,
+    "promotion_allowed": false,
+    "champion_replacement_allowed": false,
+    "promotion_frozen": true,
+    "champion": "fixed_edge_5pct",
+    "champion_status": "PRESERVED",
+    "next_owner": "CEO",
+    "hold_maintained": true
+  },
+
+  "p21_c_executed": false,
+  "p21_c_skip_reason": "CEO has not approved CLV validation",
+  "p21_d_executed": false,
+  "p21_d_skip_reason": "P21-C skipped",
+
+  "inherited_evidence": {
+    "valid_clv_pairs": 233,
+    "pair_target": 200,
+    "pair_coverage_pct": 116.5,
+    "timestamp_parse_errors": 0,
+    "closing_line_available": true,
+    "p19_regenerated": true,
+    "p19_stale_corrected": true,
+    "source": "p19_canonical_forward_coverage_regenerated_20260520.json"
+  },
+
+  "unblock_condition": {
+    "file_to_create": "data/paper_recommendations/p21_ceo_clv_validation_decision_20260522.json",
+    "required_decision": "APPROVE_CLV_VALIDATION_ONLY",
+    "then_allowed": ["P21-C", "P21-D", "P22 CLV_VALIDATION_ONLY"]
+  },
+
+  "final_classification": "P21_CEO_CLV_DECISION_REQUIRED"
+}

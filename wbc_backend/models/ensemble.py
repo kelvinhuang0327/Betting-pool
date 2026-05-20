@@ -39,16 +39,30 @@ def predict_matchup(  # NOSONAR  # noqa: C901
     # ── 1. Statistical models ────────────────────────────
     sub_results: list[SubModelResult] = []
 
+    # P0.2 Safety: Probability Cap (Research Board Recommendation)
+    # Mitigate overconfidence in individual sub-models
+    SUB_MODEL_CAP = 0.85
+    def cap_sub(prob: float) -> float:
+        return max(1.0 - SUB_MODEL_CAP, min(SUB_MODEL_CAP, prob))
+
     elo_result = elo_model.predict(matchup, config.elo_home_advantage)
+    elo_result.home_win_prob = cap_sub(elo_result.home_win_prob)
+    elo_result.away_win_prob = 1.0 - elo_result.home_win_prob
     sub_results.append(elo_result)
 
     poisson_result = poisson_model.predict(matchup)
+    poisson_result.home_win_prob = cap_sub(poisson_result.home_win_prob)
+    poisson_result.away_win_prob = 1.0 - poisson_result.home_win_prob
     sub_results.append(poisson_result)
 
     bayesian_result = bayesian_model.predict(matchup)
+    bayesian_result.home_win_prob = cap_sub(bayesian_result.home_win_prob)
+    bayesian_result.away_win_prob = 1.0 - bayesian_result.home_win_prob
     sub_results.append(bayesian_result)
 
     baseline_result = baseline_model.predict(matchup)
+    baseline_result.home_win_prob = cap_sub(baseline_result.home_win_prob)
+    baseline_result.away_win_prob = 1.0 - baseline_result.home_win_prob
     sub_results.append(baseline_result)
 
     # ── 2. Advanced + Alpha features ─────────────────────
@@ -73,11 +87,14 @@ def predict_matchup(  # NOSONAR  # noqa: C901
     from wbc_backend.models.neural_net import NeuralNetModel
     try:
         nn = NeuralNetModel(config)
-        sub_results.append(nn.predict_single(merged_features))
+        nn_result = nn.predict_single(merged_features)
+        nn_result.home_win_prob = cap_sub(nn_result.home_win_prob)
+        nn_result.away_win_prob = 1.0 - nn_result.home_win_prob
+        sub_results.append(nn_result)
     except Exception as e:
         logger.warning("NeuralNet failed: %s", e)
 
-    # ── 4. Stacking + Dynamic Ensemble ───────────────────
+    # ── 4. Stacking + Dynamic Ensemble (MAB-Aware Mixing) ────────
     stacker = StackingModel()
     stack_home_wp, _, stack_confidence = stacker.predict(sub_results)
 
@@ -87,10 +104,23 @@ def predict_matchup(  # NOSONAR  # noqa: C901
         round_name=matchup.round_name,
     )
 
-    # Blend static stacker and dynamic Bayesian ensemble to stabilize live output.
-    home_wp = 0.4 * stack_home_wp + 0.6 * dynamic_blend.home_win_prob
+    # Research Board Proposal: Regime-Aware Adaptive Weighting
+    # Divergence check suggests uncertainty -> favor stable Bayesian/Elo
+    divergence_score = abs(stack_home_wp - dynamic_blend.home_win_prob)
+    
+    if divergence_score > 0.12:
+        # High divergence: favor the more stable dynamic Bayesian blend
+        dynamic_weight = 0.8
+    elif stack_confidence > 0.85:
+        # High consensus confidence: favor the high-performance stacker (Neural Net influenced)
+        dynamic_weight = 0.3
+    else:
+        # Default balanced mix
+        dynamic_weight = 0.6
+
+    home_wp = (1.0 - dynamic_weight) * stack_home_wp + dynamic_weight * dynamic_blend.home_win_prob
     away_wp = 1.0 - home_wp
-    confidence = max(0.1, min(0.98, 0.4 * stack_confidence + 0.6 * dynamic_blend.confidence))
+    confidence = max(0.1, min(0.98, (1.0 - dynamic_weight) * stack_confidence + dynamic_weight * dynamic_blend.confidence))
 
     alpha_quality = float(alpha_signals.n_signals) / 276.0 if alpha_signals.n_signals > 0 else 0.0
     confidence *= (0.92 + 0.08 * min(1.0, alpha_quality))
@@ -177,7 +207,8 @@ def predict_matchup(  # NOSONAR  # noqa: C901
             away_wp = 1.0 - home_wp
             logger.warning("[STRATEGY] High Market Divergence (%.3f). SNR penalty applied.", divergence)
 
-    home_wp = max(0.03, min(0.97, home_wp))
+    # Hard guardrail at serving boundary (P1): prevent tail overconfidence
+    home_wp = max(0.15, min(0.85, home_wp))
     away_wp = 1.0 - home_wp
 
     diagnostics["snr"] = snr_score

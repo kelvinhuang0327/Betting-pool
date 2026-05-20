@@ -1,0 +1,32 @@
+{
+  "input_count": 2402,
+  "feature_count": 2402,
+  "coverage_by_feature": {
+    "home_recent_win_rate": {
+      "hit": 2402,
+      "total": 2402,
+      "pct": 1.0
+    },
+    "away_recent_win_rate": {
+      "hit": 2402,
+      "total": 2402,
+      "pct": 1.0
+    }
+  },
+  "missing_feature_reasons": [
+    "starter_era_proxy: 2402/2402 rows missing (requires ≥2 prior starts in as-played data)"
+  ],
+  "leakage_safe": true,
+  "lookback_games": 15,
+  "feature_version": "p10_independent_features_v1",
+  "bullpen_context_rows": 4832,
+  "rest_context_rows": 4832,
+  "weather_context_rows": 4832,
+  "asplayed_rows": 2430,
+  "starter_era_proxy_available": true,
+  "candidate_mode": "feature_only",
+  "paper_only": true,
+  "run_at_utc": "2026-05-11T05:09:02.866056+00:00",
+  "input_csv": "outputs/predictions/PAPER/2026-05-11/mlb_odds_with_repaired_features.csv",
+  "output_dir": "outputs/predictions/PAPER/2026-05-11/feature_only"
+}

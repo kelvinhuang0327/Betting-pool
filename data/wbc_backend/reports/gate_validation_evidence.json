@@ -1,0 +1,41 @@
+{
+  "methodology": "real_registry_replay_no_simulation",
+  "n_registry_rows": 40,
+  "n_latest_unique_games": 40,
+  "n_pregame_snapshots": 40,
+  "n_evaluable_games": 40,
+  "n_missing_actual": 0,
+  "missing_actual_detail": [],
+  "n_missing_submodel_probs": 0,
+  "n_pair_fallback_matches": 29,
+  "ensemble_brier": 0.141523,
+  "bayesian_brier": 0.141632,
+  "nn_brier": 0.153735,
+  "ensemble_accuracy": 0.8,
+  "bayesian_accuracy": 0.8,
+  "permutation_p_ens_vs_bayes": 0.988551,
+  "mcnemar_p_ens_vs_bayes": 1.0,
+  "mcnemar_table": {
+    "b_baseline_only": 0,
+    "c_candidate_only": 0
+  },
+  "cap_check": {
+    "min_prob": 0.15,
+    "max_prob": 0.85,
+    "violations": 0
+  },
+  "stage5_stability_std_rolling10_brier": 0.063873,
+  "stages": {
+    "Stage1_Integrity": "PASS",
+    "Stage2_Validation": "PASS",
+    "Stage3_Risk": "PASS",
+    "Stage4_Deployment": "FAIL",
+    "Stage5_Stability": "FAIL"
+  },
+  "final_decision": "HOLDOUT_REQUIRED",
+  "notes": [
+    "Stage4 requires statistically significant difference and strictly better (lower) brier than baseline.",
+    "McNemar is reported as a diagnostic; significance is not treated as mandatory pass here.",
+    "If Stage5 fails due to low sample (<30 games), deployment is blocked by policy."
+  ]
+}

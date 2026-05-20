@@ -1,0 +1,35 @@
+{
+  "task": "P16-D",
+  "title": "No-Expansion Hold Verification",
+  "date": "2026-06-01T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "governance_module": "wbc_backend/recommendation/blocked_state_governance.py",
+  "forbidden_count": 8,
+  "forbidden_actions_blocked": {
+    "OPTIMIZER_PROMOTION": true,
+    "PRODUCTION_PROPOSAL": true,
+    "LIVE_ODDS_WRITE": true,
+    "TSL_CRAWLER_MODIFICATION": true,
+    "HISTORICAL_API_CALL_WITHOUT_APPROVAL": true,
+    "PROFITABILITY_CLAIM": true,
+    "NEW_ROADMAP_EXPANSION": true,
+    "NEW_BACKFILL_WITHOUT_DECISION": true
+  },
+  "allowed_actions_permitted": {
+    "CEO_FOLLOWUP": true,
+    "PAPER_ONLY_MONITORING": true,
+    "FORWARD_COVERAGE_READINESS_CHECK": true,
+    "API_KEY_READINESS_CHECK": true,
+    "REPORT_ONLY": true
+  },
+  "p16_allowed": false,
+  "p17_allowed": false,
+  "enforcement": "PASS",
+  "regression_vs_p15": "NO_CHANGE",
+  "champion": "fixed_edge_5pct",
+  "champion_status": "PRESERVED",
+  "promotion_status": "FROZEN",
+  "annotation": "paper_only=true\u3002P16-D No-Expansion Hold Verification\u3002\u7121\u7db2\u8def\u547c\u53eb\u3002\u7121 crawler \u4fee\u6539\u3002\u4e0d\u5ba3\u7a31\u4efb\u4f55\u7b56\u7565\u5177\u7372\u5229\u80fd\u529b\u3002"
+}

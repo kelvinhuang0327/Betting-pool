@@ -3,16 +3,24 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-
 ROOT = Path("/Users/kelvin/Kelvin-WorkSpace/Betting-pool")
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from wbc_backend.config.settings import WBCAdjustmentConfig
+
+
 SCORES_PATH = ROOT / "data/wbc_2026_live_scores.json"
 ARTIFACTS_PATH = ROOT / "data/wbc_backend/model_artifacts.json"
 REPORTS_DIR = ROOT / "data/wbc_backend/reports"
+STARTERS_PATH = ROOT / "data/wbc_quarterfinal_starters_2026.json"
+ROUND_CFG = WBCAdjustmentConfig().round_adjustments["Quarter-Final"]
 
 MATCHUPS = [
     {
@@ -48,6 +56,13 @@ MATCHUPS = [
 
 def load_scores() -> dict:
     return json.loads(SCORES_PATH.read_text(encoding="utf-8"))
+
+
+def load_starters() -> dict:
+    if not STARTERS_PATH.exists():
+        return {}
+    payload = json.loads(STARTERS_PATH.read_text(encoding="utf-8"))
+    return payload.get("games", {})
 
 
 def team_rates(scores_obj: dict, team_name: str) -> dict[str, float]:
@@ -123,13 +138,63 @@ def build_ascii_heatmap(matrix: np.ndarray, team_a_code: str) -> str:
     return "\n".join(lines)
 
 
+def _starter_key(matchup: dict) -> str:
+    return f"{matchup['date_tpe']}_{matchup['team_a_code']}_{matchup['team_b_code']}"
+
+
+def _clamp(value: float, low: float, high: float) -> float:
+    return max(low, min(high, value))
+
+
+def starter_quality_score(starter: dict | None) -> float:
+    if not starter:
+        return 0.0
+
+    era = float(starter.get("era", 4.00))
+    whip = float(starter.get("whip", 1.25))
+    k_per_9 = float(starter.get("k_per_9", 8.0))
+    bb_per_9 = float(starter.get("bb_per_9", 3.0))
+    kbb = max(k_per_9 - bb_per_9, 0.0)
+
+    era_component = _clamp((4.00 - era) / 2.0, -1.0, 1.0)
+    whip_component = _clamp((1.25 - whip) / 0.30, -1.0, 1.0)
+    kbb_component = _clamp((kbb - 5.0) / 4.0, -1.0, 1.0)
+    return 0.45 * era_component + 0.25 * whip_component + 0.30 * kbb_component
+
+
+def starter_run_suppression_factor(starter: dict | None) -> float:
+    if not starter:
+        return 1.0
+    quality = starter_quality_score(starter)
+    return 1.0 - (_clamp(quality, -1.0, 1.0) * ROUND_CFG["starter_impact"] * 0.12)
+
+
+def starter_summary_text(starter: dict | None) -> str:
+    if not starter:
+        return "官方 feed 尚未列出"
+    stat_bits: list[str] = []
+    if starter.get("era") is not None:
+        stat_bits.append(f"ERA {float(starter['era']):.2f}")
+    if starter.get("whip") is not None:
+        stat_bits.append(f"WHIP {float(starter['whip']):.2f}")
+    if starter.get("k_per_9") is not None:
+        stat_bits.append(f"K/9 {float(starter['k_per_9']):.2f}")
+    if starter.get("bb_per_9") is not None:
+        stat_bits.append(f"BB/9 {float(starter['bb_per_9']):.2f}")
+    details = " | ".join(stat_bits) if stat_bits else "官方已公告姓名，無可驗證 season stats"
+    return f"{starter['name']} ({details})"
+
+
 def render_report(
     *,
     matchup: dict,
     team_a: dict[str, float],
     team_b: dict[str, float],
+    starters: dict,
     lambda_a: float,
     lambda_b: float,
+    base_lambda_a: float,
+    base_lambda_b: float,
     p_a_win_9: float,
     p_b_win_9: float,
     p_tie_9: float,
@@ -143,6 +208,11 @@ def render_report(
     delta_rag = team_b["runs_allowed_per_game"] - team_a["runs_allowed_per_game"]
     delta_rdg = team_b["run_diff_per_game"] - team_a["run_diff_per_game"]
     stronger_code = matchup["team_b_code"] if p_b_full > p_a_full else matchup["team_a_code"]
+    away_sp = starters.get("away_sp")
+    home_sp = starters.get("home_sp")
+    starter_source = starters.get("starter_source_url", "無資料")
+    away_quality = starter_quality_score(away_sp)
+    home_quality = starter_quality_score(home_sp)
 
     return f"""# 2026 WBC 深度對決分析：{matchup['team_a_name']} ({matchup['team_a_code']}) vs {matchup['team_b_name']} ({matchup['team_b_code']})
 
@@ -166,8 +236,9 @@ def render_report(
 | 項目 | {matchup['team_a_name']} ({matchup['team_a_code']}) | {matchup['team_b_name']} ({matchup['team_b_code']}) |
 |---|---|---|
 | 台灣比賽日期 | {matchup['date_tpe']} | {matchup['date_tpe']} |
-| 先發投手預估 | 無資料 | 無資料 |
-| 先發投手球種/球速可驗證資料 | 無資料 | 無資料 |
+| 官方 probable starter | {starter_summary_text(away_sp)} | {starter_summary_text(home_sp)} |
+| 先發資料來源 | {starter_source} | {starter_source} |
+| 先發品質分數 | {away_quality:+.3f} | {home_quality:+.3f} |
 | 牛棚深度可驗證資料 | 無資料 | 無資料 |
 | 專項對戰加權資料 | 無資料 | 無資料 |
 
@@ -178,9 +249,12 @@ def render_report(
 - 模型設定：`{ARTIFACTS_PATH}`
 
 回歸參數：
-- `lambda_{matchup['team_a_code']} = {lambda_a:.2f}`
-- `lambda_{matchup['team_b_code']} = {lambda_b:.2f}`
-- 特定對戰加權：`無資料`（無可驗證拆分資料）
+- 基礎 `lambda_{matchup['team_a_code']} = {base_lambda_a:.2f}`
+- 基礎 `lambda_{matchup['team_b_code']} = {base_lambda_b:.2f}`
+- 先發修正後 `lambda_{matchup['team_a_code']} = {lambda_a:.2f}`
+- 先發修正後 `lambda_{matchup['team_b_code']} = {lambda_b:.2f}`
+- Quarter-Final 先發權重：`{ROUND_CFG['starter_impact']:.2f}`
+- 特定對戰加權：`官方 probable starters + 保守先發抑分修正`
 
 機率結果：
 - {matchup['team_a_code']} 9 局勝率：`{p_a_win_9:.4f}`
@@ -217,13 +291,17 @@ ASCII 熱度圖（{matchup['team_a_code']} 為列，{matchup['team_b_code']} 為
 def main() -> None:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     scores_obj = load_scores()
+    starters_map = load_starters()
 
     for matchup in MATCHUPS:
         team_a = team_rates(scores_obj, matchup["team_a_name"])
         team_b = team_rates(scores_obj, matchup["team_b_name"])
 
-        lambda_a = (team_a["runs_scored_per_game"] + team_b["runs_allowed_per_game"]) / 2.0
-        lambda_b = (team_b["runs_scored_per_game"] + team_a["runs_allowed_per_game"]) / 2.0
+        base_lambda_a = (team_a["runs_scored_per_game"] + team_b["runs_allowed_per_game"]) / 2.0
+        base_lambda_b = (team_b["runs_scored_per_game"] + team_a["runs_allowed_per_game"]) / 2.0
+        starters = starters_map.get(_starter_key(matchup), {})
+        lambda_a = base_lambda_a * starter_run_suppression_factor(starters.get("home_sp"))
+        lambda_b = base_lambda_b * starter_run_suppression_factor(starters.get("away_sp"))
         matrix = build_probability_matrix(lambda_a, lambda_b)
 
         p_a_win_9 = float(np.tril(matrix, -1).sum())
@@ -246,6 +324,9 @@ def main() -> None:
 
         summary = {
             "date_tpe": matchup["date_tpe"],
+            "starters": starters,
+            "base_lambda_a": base_lambda_a,
+            "base_lambda_b": base_lambda_b,
             "lambda_a": lambda_a,
             "lambda_b": lambda_b,
             "a_win_9": p_a_win_9,
@@ -267,8 +348,11 @@ def main() -> None:
             matchup=matchup,
             team_a=team_a,
             team_b=team_b,
+            starters=starters,
             lambda_a=lambda_a,
             lambda_b=lambda_b,
+            base_lambda_a=base_lambda_a,
+            base_lambda_b=base_lambda_b,
             p_a_win_9=p_a_win_9,
             p_b_win_9=p_b_win_9,
             p_tie_9=p_tie_9,

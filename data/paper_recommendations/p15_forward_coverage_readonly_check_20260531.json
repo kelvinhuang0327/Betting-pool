@@ -1,0 +1,26 @@
+{
+  "task": "P15-C",
+  "title": "Forward Coverage Read-only Check v2",
+  "date": "2026-05-31T00:00:00+00:00",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "sources_checked": [
+    "data/tsl_odds_history.jsonl",
+    "data/paper_recommendations/p14_forward_coverage_readonly_check_20260530.json",
+    "data/paper_recommendations/p13_minimal_blocked_state_recheck_20260529.json"
+  ],
+  "tsl_odds_history_exists": false,
+  "total_snapshots": 0,
+  "unique_games": 0,
+  "pregame_candidate_count": 0,
+  "closing_candidate_count": 0,
+  "pregame_closing_pair_count": 0,
+  "pair_target": 200,
+  "pair_coverage_pct": 0.0,
+  "delta_from_p14": 0,
+  "status": "ACCUMULATION_INSUFFICIENT",
+  "p16_clv_allowed": false,
+  "p16_clv_reason": "pair_count=0 < pair_target=200. No forward accumulation change from P14.",
+  "annotation": "paper_only=true。P15-C Forward Coverage Read-only Check v2。無網路呼叫。無 crawler 修改。不宣稱任何策略具獲利能力。"
+}

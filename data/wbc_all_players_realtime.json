@@ -10,8 +10,8 @@
                 "stats": []
             },
             {
-                "id": 627392,
-                "name": "Daniel Missaki",
+                "id": 822885,
+                "name": "Caio De Araujo",
                 "position": "P",
                 "stats": []
             },
@@ -400,6 +400,12 @@
                 "stats": []
             },
             {
+                "id": 839138,
+                "name": "Cheng-Yu Chang",
+                "position": "IF",
+                "stats": []
+            },
+            {
                 "id": 808993,
                 "name": "Chieh-Hsien Chen",
                 "position": "OF",
@@ -418,15 +424,15 @@
                 "stats": []
             },
             {
-                "id": 701678,
-                "name": "Hao-Yu  Lee",
-                "position": "2B",
-                "stats": []
-            },
-            {
                 "id": 830717,
                 "name": "Jo-Hsi Hsu",
                 "position": "P",
+                "stats": []
+            },
+            {
+                "id": 675085,
+                "name": "Jonathon Long",
+                "position": "1B",
                 "stats": []
             },
             {
@@ -682,12 +688,6 @@
                 "stats": []
             },
             {
-                "id": 595751,
-                "name": "Jorge Alfaro",
-                "position": "C",
-                "stats": []
-            },
-            {
                 "id": 500779,
                 "name": "Jose Quintana",
                 "position": "P",
@@ -696,6 +696,12 @@
             {
                 "id": 527054,
                 "name": "Julio Teheran",
+                "position": "P",
+                "stats": []
+            },
+            {
+                "id": 650813,
+                "name": "Luis Escobar",
                 "position": "P",
                 "stats": []
             },
@@ -718,12 +724,6 @@
                 "stats": []
             },
             {
-                "id": 665665,
-                "name": "Reiver Sanmartin",
-                "position": "P",
-                "stats": []
-            },
-            {
                 "id": 471906,
                 "name": "Reynaldo Rodriguez",
                 "position": "1B",
@@ -733,6 +733,12 @@
                 "id": 677013,
                 "name": "Rio Gomez",
                 "position": "P",
+                "stats": []
+            },
+            {
+                "id": 622738,
+                "name": "Tito Polo",
+                "position": "OF",
                 "stats": []
             },
             {
@@ -1192,9 +1198,9 @@
                 "stats": []
             },
             {
-                "id": 544836,
-                "name": "Enny Romero",
-                "position": "P",
+                "id": 570481,
+                "name": "Erik González",
+                "position": "SS",
                 "stats": []
             },
             {
@@ -1218,18 +1224,6 @@
             {
                 "id": 623211,
                 "name": "Huascar Brazobán",
-                "position": "P",
-                "stats": []
-            },
-            {
-                "id": 665161,
-                "name": "Jeremy Peña",
-                "position": "SS",
-                "stats": []
-            },
-            {
-                "id": 622772,
-                "name": "Jimmy Cordero",
                 "position": "P",
                 "stats": []
             },
@@ -1282,51 +1276,9 @@
                 "stats": []
             },
             {
-                "id": 592692,
-                "name": "Mel Rojas Jr.",
-                "position": "OF",
-                "stats": []
-            },
-            {
-                "id": 631222,
-                "name": "Michael De La Cruz",
-                "position": "C",
-                "stats": []
-            },
-            {
-                "id": 650958,
-                "name": "Michael De León",
-                "position": "3B",
-                "stats": []
-            },
-            {
                 "id": 665833,
                 "name": "Oneil Cruz",
                 "position": "CF",
-                "stats": []
-            },
-            {
-                "id": 642601,
-                "name": "Oscar De La Cruz",
-                "position": "P",
-                "stats": []
-            },
-            {
-                "id": 600474,
-                "name": "Pedro Severino",
-                "position": "C",
-                "stats": []
-            },
-            {
-                "id": 570488,
-                "name": "Phillips Valdez",
-                "position": "P",
-                "stats": []
-            },
-            {
-                "id": 650701,
-                "name": "Ricardo Cespedes",
-                "position": "OF",
                 "stats": []
             },
             {
@@ -1342,12 +1294,6 @@
                 "stats": []
             },
             {
-                "id": 593647,
-                "name": "Sócrates Brito",
-                "position": "OF",
-                "stats": []
-            },
-            {
                 "id": 665489,
                 "name": "Vladimir Guerrero Jr.",
                 "position": "1B",
@@ -1357,12 +1303,6 @@
                 "id": 593974,
                 "name": "Wandy Peralta",
                 "position": "P",
-                "stats": []
-            },
-            {
-                "id": 593590,
-                "name": "Webster Rivas",
-                "position": "C",
                 "stats": []
             }
         ]
@@ -1468,12 +1408,6 @@
                 "stats": []
             },
             {
-                "id": 665650,
-                "name": "Lucius Fox",
-                "position": "SS",
-                "stats": []
-            },
-            {
                 "id": 689288,
                 "name": "Matt Koperniak",
                 "position": "OF",
@@ -1543,6 +1477,12 @@
                 "id": 474699,
                 "name": "Vance Worley",
                 "position": "P",
+                "stats": []
+            },
+            {
+                "id": 800712,
+                "name": "Wallace Clark",
+                "position": "SS",
                 "stats": []
             },
             {
@@ -1696,12 +1636,6 @@
                 "stats": []
             },
             {
-                "id": 476594,
-                "name": "Robert Stock",
-                "position": "P",
-                "stats": []
-            },
-            {
                 "id": 696492,
                 "name": "Ryan Prager",
                 "position": "P",
@@ -1711,6 +1645,12 @@
                 "id": 687462,
                 "name": "Spencer Horwitz",
                 "position": "1B",
+                "stats": []
+            },
+            {
+                "id": 805374,
+                "name": "Tanner Jacobson",
+                "position": "P",
                 "stats": []
             },
             {
@@ -1768,6 +1708,12 @@
                 "stats": []
             },
             {
+                "id": 677587,
+                "name": "Brayan Rocchio",
+                "position": "SS",
+                "stats": []
+            },
+            {
                 "id": 668144,
                 "name": "Claudio Scotti",
                 "position": "P",
@@ -1792,21 +1738,9 @@
                 "stats": []
             },
             {
-                "id": 690626,
-                "name": "Dylan DeLucia",
-                "position": "P",
-                "stats": []
-            },
-            {
                 "id": 838341,
                 "name": "Gabriele Quattrini",
                 "position": "P",
-                "stats": []
-            },
-            {
-                "id": 838338,
-                "name": "Giaconino Lasaracina",
-                "position": "IF",
                 "stats": []
             },
             {
@@ -1840,6 +1774,12 @@
                 "stats": []
             },
             {
+                "id": 682175,
+                "name": "Joe Jacques",
+                "position": "P",
+                "stats": []
+            },
+            {
                 "id": 686747,
                 "name": "Joe La Sorsa",
                 "position": "P",
@@ -1858,12 +1798,6 @@
                 "stats": []
             },
             {
-                "id": 691019,
-                "name": "Kyle Teel",
-                "position": "C",
-                "stats": []
-            },
-            {
                 "id": 670036,
                 "name": "Matt Festa",
                 "position": "P",
@@ -1876,15 +1810,21 @@
                 "stats": []
             },
             {
-                "id": 670156,
-                "name": "Miles Mastrobuoni",
-                "position": "3B",
+                "id": 681508,
+                "name": "Mickey Gasper",
+                "position": "2B",
                 "stats": []
             },
             {
                 "id": 703492,
                 "name": "Nick Morabito",
                 "position": "OF",
+                "stats": []
+            },
+            {
+                "id": 606331,
+                "name": "Renzo Martini",
+                "position": "3B",
                 "stats": []
             },
             {
@@ -1973,7 +1913,7 @@
             },
             {
                 "id": 685547,
-                "name": "Kensuke Kondo",
+                "name": "Kensuke Kondoh",
                 "position": "OF",
                 "stats": []
             },
@@ -2230,15 +2170,15 @@
                 "stats": []
             },
             {
-                "id": 649966,
-                "name": "Luis Urías",
-                "position": "SS",
-                "stats": []
-            },
-            {
                 "id": 518435,
                 "name": "Manny Barreda",
                 "position": "P",
+                "stats": []
+            },
+            {
+                "id": 680771,
+                "name": "Mateo Gil",
+                "position": "3B",
                 "stats": []
             },
             {
@@ -2794,15 +2734,15 @@
                 "stats": []
             },
             {
-                "id": 677870,
-                "name": "Leo Jiménez",
-                "position": "SS",
+                "id": 699024,
+                "name": "Leo Bernal",
+                "position": "C",
                 "stats": []
             },
             {
-                "id": 699024,
-                "name": "Leonardo Bernal",
-                "position": "C",
+                "id": 677870,
+                "name": "Leo Jiménez",
+                "position": "SS",
                 "stats": []
             },
             {
@@ -2965,12 +2905,6 @@
                 "id": 663558,
                 "name": "Jovani Morán",
                 "position": "P",
-                "stats": []
-            },
-            {
-                "id": 801346,
-                "name": "Luis Hernandez",
-                "position": "C",
                 "stats": []
             },
             {
@@ -3172,12 +3106,6 @@
                 "stats": []
             },
             {
-                "id": 676617,
-                "name": "Riley O'Brien",
-                "position": "P",
-                "stats": []
-            },
-            {
                 "id": 838334,
                 "name": "Seung Ki Song",
                 "position": "P",
@@ -3196,6 +3124,12 @@
                 "stats": []
             },
             {
+                "id": 823559,
+                "name": "Taek Yeon Kim",
+                "position": "P",
+                "stats": []
+            },
+            {
                 "id": 838331,
                 "name": "Woo Joo Jeong",
                 "position": "P",
@@ -3208,7 +3142,7 @@
                 "stats": []
             },
             {
-                "id": 838863,
+                "id": 823590,
                 "name": "Yeong Chan You",
                 "position": "P",
                 "stats": []
@@ -3297,12 +3231,6 @@
                 "stats": []
             },
             {
-                "id": 477132,
-                "name": "Clayton Kershaw",
-                "position": "P",
-                "stats": []
-            },
-            {
                 "id": 670280,
                 "name": "David Bednar",
                 "position": "P",
@@ -3345,6 +3273,12 @@
                 "stats": []
             },
             {
+                "id": 656546,
+                "name": "Jeff Hoffman",
+                "position": "P",
+                "stats": []
+            },
+            {
                 "id": 656941,
                 "name": "Kyle Schwarber",
                 "position": "DH",
@@ -3365,12 +3299,6 @@
             {
                 "id": 571510,
                 "name": "Matthew Boyd",
-                "position": "P",
-                "stats": []
-            },
-            {
-                "id": 608379,
-                "name": "Michael Wacha",
                 "position": "P",
                 "stats": []
             },
@@ -3405,14 +3333,14 @@
                 "stats": []
             },
             {
-                "id": 642232,
-                "name": "Ryan Yarbrough",
+                "id": 657612,
+                "name": "Tim Hill",
                 "position": "P",
                 "stats": []
             },
             {
-                "id": 669373,
-                "name": "Tarik Skubal",
+                "id": 643511,
+                "name": "Tyler Rogers",
                 "position": "P",
                 "stats": []
             },
@@ -3420,6 +3348,12 @@
                 "id": 669257,
                 "name": "Will Smith",
                 "position": "C",
+                "stats": []
+            },
+            {
+                "id": 676684,
+                "name": "Will Vest",
+                "position": "P",
                 "stats": []
             }
         ]
@@ -3531,6 +3465,12 @@
                 "stats": []
             },
             {
+                "id": 501625,
+                "name": "Jose Alvarez",
+                "position": "P",
+                "stats": []
+            },
+            {
                 "id": 676130,
                 "name": "José Buttó",
                 "position": "P",
@@ -3600,12 +3540,6 @@
                 "id": 677800,
                 "name": "Wilyer Abreu",
                 "position": "OF",
-                "stats": []
-            },
-            {
-                "id": 672782,
-                "name": "Yoendrys Gómez",
-                "position": "P",
                 "stats": []
             }
         ]

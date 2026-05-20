@@ -1,0 +1,280 @@
+⚠️  Verification Warning (Bypassed): WBC data verification failed for C10: Starting pitchers have not been officially verified.; Official starting lineup missing; using previous-game lineup fallback.; Snapshot home SP  != model home SP Yoshinobu Yamamoto.; Snapshot away SP  != model away SP Martin Schneider.; Home lineup does not match the verified starting lineup.; Away lineup does not match the verified starting lineup.; Home lineup player Lars Nootbaar is not present in the verified home roster.; Home lineup player Kensuke Kondoh is not present in the verified home roster.; Away lineup player Eric Sogard is not present in the verified away roster.; Model input still declares MOCK/SEED source. Treat this as unsafe until the authoritative snapshot fully replaces the seed path.
+======================================================================
+  ⚾  2026 WBC QUANTITATIVE BETTING REPORT
+  Pool C  |  Tokyo Dome, Tokyo
+  2026-03-10T19:00:00+09:00
+
+  📡 資料來源 (Data Source): MOCK/SEED (人工建置模擬賽前盤口)
+  💧 盤口流動性 (Liquidity): LOW (尚未開盤)
+======================================================================
+
+## Match: Czech Republic (CZE) vs Japan (JPN)
+
+### 1. 核心指標對比
+
+| 指標 (Category)    |    CZE     |    JPN     | 優勢 (Edge) |
+|--------------------|------------|------------|-------------|
+| 投手 (Pitching)    |    5.00    |    2.75    |     JPN     |
+| 打擊 wRC+          |     72     |    135     |     JPN     |
+| 打線 wOBA          |   0.280    |   0.362    |     JPN     |
+| 守備 DER           |   0.680    |   0.730    |     JPN     |
+| 跑壘 SB%           |    65%     |    78%     |     JPN     |
+| 牛棚 ERA           |    5.50    |    2.40    |     JPN     |
+| 高壓 Clutch wOBA   |   0.270    |   0.370    |     JPN     |
+| Elo Rating         |    1200    |    1635    |     JPN     |
+
+#### 先發投手對決
+
+| 指標           |    Martin Schneider    |   Yoshinobu Yamamoto   |
+|----------------|------------------------|------------------------|
+| ERA            |          4.50          |          3.10          |
+| FIP            |          4.80          |          3.25          |
+| WHIP           |          1.42          |          1.12          |
+| K/9            |          6.5           |          10.4          |
+| BB/9           |          3.5           |          2.1           |
+| Stuff+         |           85           |          125           |
+| 均速 (mph)     |          90.0          |          96.5          |
+| 春訓 ERA       |          4.00          |          2.40          |
+| 近3場 ERA      |          4.20          |          2.90          |
+| vs LHB BA      |         0.270          |         0.220          |
+| vs RHB BA      |         0.280          |         0.205          |
+| 高壓 ERA       |          5.00          |          2.80          |
+
+#### 投手用球數限制 & 投手時間軸
+
+- **賽程階段**: Pool C
+- **單場上限**: 65 球
+- **休息規定**: ≥30球 → 休1天; ≥50球 → 休4天
+- **先發預計局數**: ~3.5 局
+
+| 局數   |      CZE       |      JPN       |
+|--------|----------------|----------------|
+|  1局   |  SP Schneider  |  SP Yamamoto   |
+|  2局   |  SP Schneider  |  SP Yamamoto   |
+|  3局   |  SP Schneider  |  SP Yamamoto   |
+|  4局   |    PB Ondra    |  PB Takahashi  |
+|  5局   |    PB Ondra    |  PB Takahashi  |
+|  6局   |    Bullpen     |    Bullpen     |
+|  7局   |    Bullpen     |    Bullpen     |
+|  8局   |    Bullpen     |    Bullpen     |
+|  9局   |    Bullpen     |    Bullpen     |
+
+#### 第二先發 (Piggyback Starter)
+
+| 指標         |      Tomas Ondra       |    Hiroto Takahashi    |
+|--------------|------------------------|------------------------|
+| ERA          |          5.80          |          1.58          |
+| FIP          |          5.90          |          2.40          |
+| Stuff+       |           75           |          122           |
+| 春訓 ERA     |          5.20          |          1.50          |
+
+### 2. 勝率預測與比分分佈
+
+#### Ensemble Model 各模型輸出
+
+| Model         |      CZE |      JPN |
+|---------------|----------|----------|
+| elo           |     6.7% |    93.3% |
+| bayesian      |     8.2% |    91.8% |
+| poisson       |     3.2% |    96.5% |
+| gbm           |     6.1% |    93.9% |
+| monte_carlo   |    16.9% |    83.1% |
+|---------------|----------|----------|
+| **Ensemble**  | ** 7.1%** | **92.9%** |
+
+#### WBC 修正係數
+
+- round: `Pool`
+- pitch_limit: `65`
+- sp_expected_innings: `3.5`
+- starter_impact_factor: `0.55`
+- bullpen_impact_factor: `1.6`
+- sp_dampening: `0.45`
+- piggyback_away: `Tomas Ondra`
+- piggyback_home: `Hiroto Takahashi`
+- piggyback_adjustment: `-0.0075`
+- bullpen_fatigue_away_3d: `64`
+- bullpen_fatigue_home_3d: `128`
+- bp_penalty_away: `0.0064`
+- bp_penalty_home: `0.0128`
+- roster_strength_away: `45`
+- roster_strength_home: `98`
+- rsi_adjustment: `-0.0362`
+- collapse_shift: `-0.015`
+- chemistry_bonus: `-0.002`
+- variance_regression: `0.11`
+- strikeout_adj: `+6%`
+- xbh_adj: `-4%`
+- pre_adjust_away: `0.0625`
+- pre_adjust_home: `0.9375`
+- post_adjust_away: `0.0713`
+- post_adjust_home: `0.9287`
+
+#### 比分預測
+
+| 排名 | 比分 (CZE-JPN) | 機率     |
+|------|----------------------|----------|
+|  1   |         3-4          |     4.2% |
+|  2   |         3-6          |     3.9% |
+|  3   |         3-5          |     3.9% |
+|  4   |         2-4          |     3.7% |
+|  5   |         2-5          |     3.6% |
+
+**最可能比分 (Most Likely Score):** `3-4` (CZE-JPN)
+
+**預測總分:** 8.9 分
+
+#### 多維度情境分析 (Multi-Scenario Analysis)
+
+> [!NOTE]
+> 基於 WBC 2026 模擬引擎輸出的三種情境預案：
+
+| 情境 (Scenario) | 預計總分 | 特徵描述 |
+|:---|:---:|:---|
+| **中性基準 (Baseline)** | 9 | 雙方發揮正常，符合實力常態分佈。 |
+| **投手戰 (Pitching Duel)** | 6 | 先發投手壓制力極大化，且牛棚銜接完美。 |
+| **打線爆發 (Explosion)** | 13 | 觸發連續得分鏈，弱方防禦體系崩潰。 |
+
+**模擬平均局數:** 9.1 局 (含 Mercy Rule 影響)
+
+#### 總分分佈 (O/U 機率)
+
+| 盤口 (Line) | Over 機率 | Under 機率 |
+|-------------|-----------|------------|
+|         6.5 |     77.5% |      22.5% |
+|         7.5 |     63.0% |      37.0% |
+|         8.5 |     52.6% |      47.4% |
+|         9.5 |     40.0% |      60.0% |
+
+**延長賽機率 (Extra Innings):** 3.5%
+
+**爆冷機率 (CZE 獲勝):** 7.1%
+
+### 3. 台灣運彩 (TSL) 下注建議
+
+#### 不讓分（獨贏）Money Line
+- ⚠️ **JPN** @ 1.10 (TSL)
+  - 隱含機率: 90.9% | 模型真實機率: 92.9%
+  - 期望值 (EV): +2.2% → **SMALL**
+- ❌ **CZE** @ 8.00 (TSL)
+  - 隱含機率: 12.5% | 模型真實機率: 7.1%
+  - 期望值 (EV): -43.0% → **PASS**
+
+#### 讓分 Run Line / Spread
+- ✅ **JPN (-3.5)** @ 1.85 (TSL)
+  - 隱含機率: 54.0% | 模型真實機率: 70.4%
+  - 期望值 (EV): +30.2% → **MEDIUM (Market Restricted)**
+- ❌ **CZE (+3.5)** @ 1.95 (TSL)
+  - 隱含機率: 51.3% | 模型真實機率: 34.4%
+  - 期望值 (EV): -32.8% → **PASS**
+
+#### 大小分 Over/Under
+- ✅ **Under 9.5** @ 1.95 (TSL)
+  - EV: +17.0% → **MEDIUM (Market Restricted)**
+- ❌ **Over 9.5** @ 1.85 (TSL)
+  - EV: -24.8% → **PASS**
+
+#### 單雙 Odd/Even（總分奇偶）
+- ❌ **單（奇數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+- ❌ **雙（偶數）** @ 1.90 (TSL)
+  - 隱含機率: 52.6% | 模型機率: 50.0%
+  - EV: -5.0% → **PASS**
+
+#### 前五局獨贏 First 5 Innings
+- ✅ **JPN** @ 1.15 (TSL)
+  - 隱含機率: 87.0% | 模型真實機率: 92.7%
+  - 期望值 (EV): +6.6% → **MEDIUM**
+- ❌ **CZE** @ 6.00 (TSL)
+  - 隱含機率: 16.7% | 模型真實機率: 7.3%
+  - 期望值 (EV): -56.0% → **PASS**
+
+#### 隊伍總分 Team Totals
+- ✅ **TT JPN_Under 6.5** @ 1.95 (TSL)
+  - EV: +28.2% → **SECONDARY_VALIDATION_REQUIRED**
+- ❌ **TT CZE_Over 2.5** @ 1.85 (TSL)
+  - EV: -0.5% → **PASS**
+- ❌ **TT CZE_Under 2.5** @ 1.95 (TSL)
+  - EV: -9.8% → **PASS**
+- ❌ **TT JPN_Over 6.5** @ 1.85 (TSL)
+  - EV: -27.7% → **PASS**
+
+--------------------------------------------------
+### BETTING DECISION
+
+**Best Bet:** RL JPN (-3.5) @ 1.85 (TSL)
+- True Probability: 70.4%
+- Implied Probability: 54.0%
+- **EV: +30.2%**
+- **Warning**: This market has been restricted due to historical negative ROI.
+- Stake: 0.50% of bankroll = **$500**
+  (Kelly Full: 0.3549 → Used: 0.0050)
+
+**Confidence:** ★★★★★
+
+--------------------------------------------------
+### AI 推薦原因 (AI Rationale)
+
+- 🤖 **模型核心邏輯**: 預測 JPN 為優勢方 (92.9%)。
+- ⚾ **WBC 賽制特點**: 本場為 Pool C，先發限投 65 球，預測先發僅能負擔約 3.5 局。
+- 🔄 **第二先發 (Piggyback)**: JPN、CZE 已配置第二先發以銜接中繼局數，顯著降低了早期換投帶來的崩盤風險。
+- ⚠️ **陣容異動警告**: CZE 陣容完整度僅 45%，Meta-Learner 已自動調高 Simulation 模型權重以應對不確定性。
+- 🔥 **打線壓制力**: JPN 打線對戰 Martin Schneider 的預期 wOBA 高達 0.411，存在早期爆發可能。
+- ⚡ **投手壓制力**: Yoshinobu Yamamoto 具備 Stuff+ 125 的頂級球威，顯著降低了對手打線的長打機率。
+- 💪 **盤口建議 (讓分)**: JPN 具備強大分差優勢 (預計贏 2.6 分)，**讓分盤 (-1.5)** 具備高度穿盤潛力。
+- ☁️ **盤口建議 (大小分)**: 總分預計在 8.9 附近，處於關鍵盤口中性區，需視當天球場風向與濕度決定。
+
+### 4. 關鍵變數 (X-Factors)
+
+1. ⚠️ **資料真實性警示**: 目前盤口/球員數據依賴預先設定之 SEED，尚未經真實市場深度校驗，存在嚴重高估 Edge 的風險。
+2. 🔑 **用球數限制 (Pitch Count)**: Pool C 階段上限 65 球，Martin Schneider 與 Yoshinobu Yamamoto 預計僅投 ~3.5 局 (約 15~18 球/局)。第 4 局起由第二先發接手，比賽後半段完全由牛棚主導。
+3. 🔑 **第二先發 (Piggyback)**: Tomas Ondra (ERA 5.80) vs Hiroto Takahashi (ERA 1.58) — JPN 的第二先發品質較佳，中段比賽有優勢。
+4. 🔑 **牛棚疲勞度**: JPN 近 3 日牛棚用球數較高 (CZE: 64, JPN: 128)，後段比賽可能出現失分風險。
+5. 🔑 **打線核心對決**: Matous Bubenik (wOBA 0.309, SwStr% vs 98mph+ 34.0%) vs Kazuma Okamoto (wOBA 0.391, SwStr% vs 98mph+ 34.0%)
+6. 🔑 **球星效應**: 本場確認參賽球星 — Martin Schneider, Martin Cervenka, Eric Sogard, Shohei Ohtani, Yoshinobu Yamamoto, Yusei Kikuchi 等 11 人，球星表現將直接影響勝負走勢。
+7. 🔑 **Elo 差距**: JPN 高出 435 分，歷史勝率優勢明顯，但 WBC 短期賽制與 65 球限制增加爆冷機率。
+
+### 5. 陣容完整度 (Roster Strength)
+
+| 指標              |      CZE       |      JPN       |
+|-------------------|----------------|----------------|
+| RSI (0-100)       |       45       |       98       |
+| MLB 球員數        |       0        |       12       |
+| 磨合度 Chemistry  |      0.78      |      0.88      |
+
+**CZE 確認出賽球星**: Martin Schneider, Martin Cervenka, Eric Sogard
+
+**JPN 確認出賽球星**: Shohei Ohtani, Yoshinobu Yamamoto, Yusei Kikuchi, Munetaka Murakami, Masataka Yoshida, Seiya Suzuki, Kazuma Okamoto, Shosei Togo
+**JPN 待確認球星**:  Hiroto Takahashi
+**JPN 缺席球星**:    Roki Sasaki, Yuki Matsui, Kaima Taira
+
+> ⚠️ **陣容差距**: JPN RSI 高出 53 分，
+>    MLB 球員數量與球星密度有明顯優勢。
+
+--------------------------------------------------
+### Risk Status: GREEN
+
+🟢 **Betting ALLOWED**
+- All systems nominal
+
+--------------------------------------------------
+### PORTFOLIO SUMMARY
+
+- **Total Bets Today:** 5
+- **Total Risk:** 4.00% of bankroll ($4,000)
+- **Bankroll:** $100,000
+- **Conservative Mode:** No
+- **Expected ROI (weighted):** +12.4%
+
+| # | Market | Side | Odds | EV | Stake | Amount |
+|---|--------|------|------|----|-------|--------|
+| 1 | RL | JPN | 1.85 | +30.2% | 0.50% | $500 |
+| 2 | TT | JPN_Under | 1.95 | +28.2% | 0.50% | $500 |
+| 3 | OU | Under | 1.95 | +17.0% | 0.50% | $500 |
+| 4 | F5 | JPN | 1.15 | +6.6% | 1.50% | $1,500 |
+| 5 | ML | JPN | 1.10 | +2.2% | 1.00% | $1,000 |
+
+======================================================================
+  END OF REPORT — Generated by WBC Quantitative Betting AI Engine
+======================================================================

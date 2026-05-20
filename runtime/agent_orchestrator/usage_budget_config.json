@@ -1,0 +1,53 @@
+{
+  "version": "2026-05-04-v1",
+  "enabled": true,
+  "window": "24h",
+  "roles": {
+    "planner": {
+      "max_allowed_external_calls": 0,
+      "severity_on_any_allowed": "CRITICAL",
+      "hard_cap": true
+    },
+    "cto": {
+      "max_allowed_external_calls": 0,
+      "severity_on_any_allowed": "CRITICAL",
+      "hard_cap": true
+    },
+    "worker": {
+      "warn_calls": 20,
+      "critical_calls": 40,
+      "hard_cap_calls": 60
+    }
+  },
+  "providers": {
+    "github-copilot": {
+      "warn_calls": 20,
+      "critical_calls": 40,
+      "hard_cap_calls": 60
+    },
+    "copilot-daemon": {
+      "warn_calls": 20,
+      "critical_calls": 40,
+      "hard_cap_calls": 60
+    },
+    "claude": {
+      "warn_calls": 10,
+      "critical_calls": 20,
+      "hard_cap_calls": 30
+    },
+    "codex": {
+      "warn_calls": 5,
+      "critical_calls": 10,
+      "hard_cap_calls": 15
+    }
+  },
+  "tokens": {
+    "warn_input_tokens": 3000000,
+    "critical_input_tokens": 6000000,
+    "hard_cap_input_tokens": 9000000
+  },
+  "blocked_attempts": {
+    "warn": 5,
+    "critical": 10
+  }
+}

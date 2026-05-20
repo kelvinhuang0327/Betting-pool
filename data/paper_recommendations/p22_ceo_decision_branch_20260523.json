@@ -1,0 +1,21 @@
+{
+  "phase": "P22_CEO_DECISION_BRANCH",
+  "task": "P22-B",
+  "date": "2026-05-23",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "decision_file": "data/paper_recommendations/p22_ceo_clv_validation_decision_20260523.json",
+  "decision": "APPROVE_CLV_VALIDATION_ONLY",
+  "clv_validation_allowed": true,
+  "p23_allowed": true,
+  "p23_scope": "CLV_REPORT_REVIEW_ONLY",
+  "champion": "fixed_edge_5pct",
+  "champion_status": "PRESERVED",
+  "promotion_frozen": true,
+  "hold_maintained": true,
+  "branch_result": "APPROVED_CLV_VALIDATION_ONLY"
+}

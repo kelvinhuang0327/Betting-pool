@@ -20,8 +20,8 @@ DEFAULT_SETTINGS = {
     "scheduler_enabled": "1",
     "llm_execution_mode": "safe-run",
     "planner_provider": "local",          # Phase 0: Planner 預設為本地執行
-    "worker_provider": "codex",
-    "worker_copilot_model": "",
+    "worker_provider": "copilot-daemon",
+    "worker_copilot_model": "gpt-5-mini",
     "cto_review_frequency_mode": "once_daily",
     "cto_scheduler_enabled": "1",
     "cto_planner_provider": "local",      # Phase 0: CTO Planner 預設為本地執行

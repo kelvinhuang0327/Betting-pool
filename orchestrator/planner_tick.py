@@ -2111,6 +2111,27 @@ def run_planner_tick() -> dict:
             logger.info(f"[PlannerTick] {message}")
             return {"status": "SKIPPED", "message": message}
 
+        # ── Phase 36: Usage Budget Guard 狀態評估 ─────────────────────────
+        _budget_status = "OK"
+        _budget_scheduler_mode = "NORMAL"
+        try:
+            from orchestrator.usage_budget_guard import evaluate_usage_budget
+            _budget_result = evaluate_usage_budget(hours=24)
+            _budget_status = _budget_result.get("budget_status", "OK")
+            _budget_scheduler_mode = _budget_result.get("recommended_scheduler_mode", "NORMAL")
+            if _budget_status == "HARD_CAP":
+                logger.warning(
+                    "[PlannerTick] Usage HARD_CAP reached — deferring external-AI-required tasks. "
+                    "Scheduler mode: PAUSE_EXTERNAL_AI"
+                )
+            elif _budget_status == "CRITICAL":
+                logger.warning(
+                    "[PlannerTick] Usage CRITICAL — only deterministic tasks allowed. "
+                    "Scheduler mode: DETERMINISTIC_ONLY"
+                )
+        except Exception as _bg_exc:
+            logger.warning("[PlannerTick] Budget guard evaluation failed (non-fatal): %s", _bg_exc)
+
         # ── STEP 0: REPLAN recovery ──
         recovery = _recover_replan_required()
         if recovery["archived_count"] > 0:
@@ -2534,6 +2555,146 @@ def run_planner_tick() -> dict:
                 "[PlannerTick] Phase24 review queue check failed (non-fatal): %s", _hrq_exc
             )
 
+        # ── STEP 0.91: Phase 33 — CLV Batch Accumulation Scheduler ──────────
+        # When evidence_state is INSUFFICIENT or APPROACHING, inject a
+        # clv_batch_accumulation candidate with cadence-based deduplication.
+        # Prioritize over patch gate recheck and blueprint exploration.
+        _clv_batch_candidates: list[dict] = []
+        try:
+            from orchestrator.clv_accumulation_policy import get_clv_accumulation_summary as _get_acc
+            from orchestrator.clv_batch_scheduler import get_batch_scheduler_summary as _get_sched
+            _acc = _get_acc()
+            _ev_state = _acc.get("evidence_state", "")
+            _computed_count = _acc.get("computed_count", 0)
+            _acc_threshold = _acc.get("threshold", 50)
+
+            if _ev_state in ("INSUFFICIENT", "APPROACHING"):
+                _sched33 = _get_sched()
+                _pending_total = _sched33.get("pending_total", 0)
+                _new_reg = _sched33.get("needs_clv_generation", 0) > 0
+                _scheduler_due = _sched33.get("scheduler_due", True)
+
+                if _scheduler_due or _new_reg or _pending_total > 0:
+                    # Cadence slot dedup: fast (240 min) when pending records exist,
+                    # normal (1440 min) otherwise
+                    _slot_min = 240 if (_pending_total > 0 or _new_reg) else 1440
+                    _slot_idx = int(datetime.now(timezone.utc).timestamp()) // 60 // _slot_min
+                    _focus_area = f"clv-batch-accumulation:slot:{_slot_idx}"
+                    _now_iso33  = datetime.now(timezone.utc).isoformat()
+                    _clv_batch_candidates.append({
+                        "title": (
+                            f"[Phase33] CLV Batch Accumulation — "
+                            f"{_ev_state} ({_computed_count}/{_acc_threshold})"
+                        ),
+                        "task_type": "clv_batch_accumulation",
+                        "analysis_family": "clv-batch-accumulation",
+                        "focus_area": _focus_area,
+                        "source": "clv_batch_scheduler",
+                        "phase33_evidence_state": _ev_state,
+                        "phase33_computed_count": _computed_count,
+                        "phase33_remaining": _acc.get("remaining_needed", 0),
+                        "production_patch_allowed": False,
+                        "prompt": (
+                            "# Phase 33 — CLV Batch Accumulation\n\n"
+                            f"## Evidence State\n{_ev_state}\n\n"
+                            f"## Progress\n{_computed_count} / {_acc_threshold} COMPUTED records\n"
+                            f"Remaining needed: {_acc.get('remaining_needed', 0)}\n\n"
+                            "## Objective\n"
+                            "1. Discover latest prediction registry batches.\n"
+                            "2. Run CLV accumulation policy update.\n"
+                            "3. Check if threshold has been crossed.\n\n"
+                            "## Hard Constraints\n"
+                            "- Do NOT create patch candidates.\n"
+                            "- Do NOT call external LLM.\n"
+                            "- Do NOT trigger live betting.\n"
+                            "- Do NOT fake CLV records.\n"
+                            "- Do NOT mark PENDING as COMPUTED without valid closing odds.\n\n"
+                            f"## Created At\n{_now_iso33}\n"
+                        ),
+                    })
+                    logger.info(
+                        "[PlannerTick] Phase33 CLV batch accumulation candidate added: "
+                        "evidence_state=%s computed=%d/%d slot=%s cadence=%dmin",
+                        _ev_state, _computed_count, _acc_threshold, _focus_area, _slot_min,
+                    )
+                else:
+                    logger.debug(
+                        "[PlannerTick] Phase33 CLV batch accumulation: scheduler not due "
+                        "(evidence_state=%s, pending=%d, new_registry=%s)",
+                        _ev_state, _pending_total, _new_reg,
+                    )
+        except Exception as _p33_exc:
+            logger.warning(
+                "[PlannerTick] Phase33 CLV batch scheduler failed (non-fatal): %s", _p33_exc
+            )
+
+        # ── STEP 0.92: Phase 34 — CLV Threshold Crossing Trigger ──────────
+        # If unhandled threshold events exist, inject the correct safe
+        # follow-up task (investigation or learning recheck). No patch tasks.
+        _clv_threshold_candidates: list[dict] = []
+        try:
+            from orchestrator.clv_threshold_tracker import (
+                get_pending_threshold_events as _get_threshold_events,
+                EVENT_CROSSED_APPROACHING,
+                EVENT_CROSSED_SUFFICIENT,
+                TASK_FOR_APPROACHING,
+                TASK_FOR_SUFFICIENT,
+            )
+            _pending_events = _get_threshold_events()
+            if _pending_events:
+                # Prefer SUFFICIENT over APPROACHING (higher priority)
+                _sufficient_evts  = [e for e in _pending_events if e["event_type"] == EVENT_CROSSED_SUFFICIENT]
+                _approaching_evts = [e for e in _pending_events if e["event_type"] == EVENT_CROSSED_APPROACHING]
+                _top_event = (_sufficient_evts or _approaching_evts)[0]
+
+                _ev34_type  = _top_event["event_type"]
+                _ev34_count = _top_event.get("current_count", 0)
+                _task34_type = _top_event["recommended_task_type"]
+                _ev34_id     = _top_event["event_id"]
+
+                _focus34 = f"clv-threshold:{_ev34_type}:{_ev34_id[:8]}"
+                _now_iso34 = datetime.now(timezone.utc).isoformat()
+
+                _patch_ok34 = _ev34_type == EVENT_CROSSED_SUFFICIENT
+                _clv_threshold_candidates.append({
+                    "title": (
+                        f"[Phase34] CLV Threshold: {_ev34_type} ({_ev34_count} records)"
+                    ),
+                    "task_type": _task34_type,
+                    "analysis_family": "clv-threshold-trigger",
+                    "focus_area": _focus34,
+                    "source": "clv_threshold_tracker",
+                    "phase34_event_type": _ev34_type,
+                    "phase34_event_id":   _ev34_id,
+                    "phase34_count":      _ev34_count,
+                    "production_patch_allowed": False,
+                    "patch_gate_recheck_allowed": _patch_ok34,
+                    "prompt": (
+                        "# Phase 34 — CLV Threshold Crossing Trigger\n\n"
+                        f"## Event\n{_ev34_type}\n\n"
+                        f"## Computed Count\n{_ev34_count} COMPUTED records\n\n"
+                        f"## Recommended Task\n{_task34_type}\n\n"
+                        "## Objective\n"
+                        "1. Run the appropriate safe follow-up analysis.\n"
+                        "2. Mark the threshold event as handled.\n\n"
+                        "## Hard Constraints\n"
+                        "- Do NOT create production patch.\n"
+                        "- Do NOT call external LLM.\n"
+                        "- Do NOT trigger live betting.\n"
+                        "- 50 records = patch gate RECHECK only, not patch EXECUTION.\n\n"
+                        f"## Created At\n{_now_iso34}\n"
+                    ),
+                })
+                logger.info(
+                    "[PlannerTick] Phase34 threshold candidate added: "
+                    "event=%s task_type=%s count=%d focus=%s",
+                    _ev34_type, _task34_type, _ev34_count, _focus34,
+                )
+        except Exception as _p34_exc:
+            logger.warning(
+                "[PlannerTick] Phase34 threshold tracker failed (non-fatal): %s", _p34_exc
+            )
+
         # ── STEP 1: 前置封鎖守衛（RUNNING / QUEUED / BLOCKED_ENV 自動解除）──
         latest_task = db.get_latest_task()
         blocker = _resolve_previous_task_blocker(latest_task)
@@ -2600,8 +2761,8 @@ def run_planner_tick() -> dict:
         blueprints = list(TASK_BLUEPRINTS)
         random.shuffle(blueprints)
         wiki_candidates = _mine_tasks_from_wiki()
-        # 優先順序：hrq(P24) > patch-eval gate23 > patch-eval gate22 > validation > patch > blueprints > wiki
-        all_candidates = _hrq_candidates + _eval_gate_candidates + _patch_eval_candidates + _validation_candidates + _patch_candidates + blueprints + wiki_candidates
+        # 優先順序：hrq(P24) > clv_batch(P33) > clv_threshold(P34) > patch-eval gate23 > patch-eval gate22 > validation > patch > blueprints > wiki
+        all_candidates = _hrq_candidates + _clv_batch_candidates + _clv_threshold_candidates + _eval_gate_candidates + _patch_eval_candidates + _validation_candidates + _patch_candidates + blueprints + wiki_candidates
 
         last_verdict = None
         blocked_by_recent_count = 0
@@ -2658,6 +2819,26 @@ def run_planner_tick() -> dict:
             last_verdict = quality_verdict
 
             if quality_verdict.passed:
+                # Phase 36: 根據 budget 決定是否允許建立此任務
+                _task_kind = task_data.get("task_kind") or task_data.get("kind") or ""
+                _DETERMINISTIC_TASK_KINDS = {
+                    "clv_batch_accumulation", "clv_threshold_check",
+                    "production_clv_investigation", "usage_budget_check",
+                    "audit_guard_check", "frontend_health_check",
+                }
+                _is_deterministic = _task_kind in _DETERMINISTIC_TASK_KINDS
+                _skip_due_to_budget = False
+                if _budget_scheduler_mode == "PAUSE_EXTERNAL_AI" and not _is_deterministic:
+                    logger.warning(
+                        "[PlannerTick] HARD_CAP: skipping task '%s' (kind=%s) — "
+                        "only deterministic tasks allowed under PAUSE_EXTERNAL_AI",
+                        task_data.get("title", "?"), _task_kind,
+                    )
+                    _skip_due_to_budget = True
+
+                if _skip_due_to_budget:
+                    continue
+
                 # 通過品質驗收
                 task_data = persist_task_prompt(task_data)
                 task_id = db.create_task(**task_data)

@@ -1,0 +1,142 @@
+[
+  {
+    "bucket": "daily",
+    "direction": "negative",
+    "event_id": "trigger:daily:2026-03-09:2026-04-18T16:33:14.553617Z",
+    "period": "2026-03-09",
+    "roi": -1.0,
+    "samples": 1,
+    "signature": "daily:2026-03-09:negative:-1.0",
+    "timestamp": "2026-04-18T16:33:14.553620Z"
+  },
+  {
+    "bucket": "weekly",
+    "direction": "negative",
+    "event_id": "trigger:weekly:2026-W11:2026-04-18T16:33:14.553623Z",
+    "period": "2026-W11",
+    "roi": -1.0,
+    "samples": 1,
+    "signature": "weekly:2026-W11:negative:-1.0",
+    "timestamp": "2026-04-18T16:33:14.553624Z"
+  },
+  {
+    "bucket": "monthly",
+    "direction": "negative",
+    "event_id": "trigger:monthly:2026-03:2026-04-18T16:33:14.553626Z",
+    "period": "2026-03",
+    "roi": -1.0,
+    "samples": 1,
+    "signature": "monthly:2026-03:negative:-1.0",
+    "timestamp": "2026-04-18T16:33:14.553627Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "negative",
+    "event_id": "trigger:daily:2026-03-05:2026-04-18T16:44:07.590973Z",
+    "period": "2026-03-05",
+    "roi": -0.7708,
+    "samples": 2,
+    "signature": "daily:2026-03-05:negative:-0.7708",
+    "timestamp": "2026-04-18T16:44:07.590975Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "negative",
+    "event_id": "trigger:daily:2026-03-06:2026-04-18T16:44:07.590979Z",
+    "period": "2026-03-06",
+    "roi": -1.0,
+    "samples": 2,
+    "signature": "daily:2026-03-06:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590980Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "negative",
+    "event_id": "trigger:daily:2026-03-07:2026-04-18T16:44:07.590981Z",
+    "period": "2026-03-07",
+    "roi": -1.0,
+    "samples": 8,
+    "signature": "daily:2026-03-07:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590982Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "negative",
+    "event_id": "trigger:daily:2026-03-08:2026-04-18T16:44:07.590984Z",
+    "period": "2026-03-08",
+    "roi": -1.0,
+    "samples": 7,
+    "signature": "daily:2026-03-08:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590985Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "negative",
+    "event_id": "trigger:daily:2026-03-09:2026-04-18T16:44:07.590986Z",
+    "period": "2026-03-09",
+    "roi": -0.6484,
+    "samples": 7,
+    "signature": "daily:2026-03-09:negative:-0.6484",
+    "timestamp": "2026-04-18T16:44:07.590987Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "negative",
+    "event_id": "trigger:daily:2026-03-10:2026-04-18T16:44:07.590989Z",
+    "period": "2026-03-10",
+    "roi": -1.0,
+    "samples": 5,
+    "signature": "daily:2026-03-10:negative:-1.0",
+    "timestamp": "2026-04-18T16:44:07.590990Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "positive",
+    "event_id": "trigger:daily:2026-03-11:2026-04-18T16:44:07.590991Z",
+    "period": "2026-03-11",
+    "roi": 2.7683,
+    "samples": 2,
+    "signature": "daily:2026-03-11:positive:2.7683",
+    "timestamp": "2026-04-18T16:44:07.590992Z"
+  },
+  {
+    "bucket": "daily",
+    "direction": "positive",
+    "event_id": "trigger:daily:2026-03-12:2026-04-18T16:44:07.590994Z",
+    "period": "2026-03-12",
+    "roi": 0.1016,
+    "samples": 2,
+    "signature": "daily:2026-03-12:positive:0.1016",
+    "timestamp": "2026-04-18T16:44:07.590995Z"
+  },
+  {
+    "bucket": "weekly",
+    "direction": "negative",
+    "event_id": "trigger:weekly:2026-W10:2026-04-18T16:44:07.590997Z",
+    "period": "2026-W10",
+    "roi": -0.9823,
+    "samples": 19,
+    "signature": "weekly:2026-W10:negative:-0.9823",
+    "timestamp": "2026-04-18T16:44:07.590998Z"
+  },
+  {
+    "bucket": "weekly",
+    "direction": "negative",
+    "event_id": "trigger:weekly:2026-W11:2026-04-18T16:44:07.590999Z",
+    "period": "2026-W11",
+    "roi": -0.189,
+    "samples": 16,
+    "signature": "weekly:2026-W11:negative:-0.189",
+    "timestamp": "2026-04-18T16:44:07.591000Z"
+  },
+  {
+    "bucket": "monthly",
+    "direction": "negative",
+    "event_id": "trigger:monthly:2026-03:2026-04-18T16:44:07.591002Z",
+    "period": "2026-03",
+    "roi": -0.6845,
+    "samples": 35,
+    "signature": "monthly:2026-03:negative:-0.6845",
+    "timestamp": "2026-04-18T16:44:07.591003Z"
+  }
+]

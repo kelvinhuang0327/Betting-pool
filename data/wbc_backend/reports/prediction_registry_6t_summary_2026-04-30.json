@@ -1,0 +1,45 @@
+{
+  "phase": "6T",
+  "registry_schema_version": "6t-1.0",
+  "source_file": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/derived/model_outputs_6s_future_2026-04-30.jsonl",
+  "output_file": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/prediction_registry_6t_2026-04-30.jsonl",
+  "source_rows": 14,
+  "converted": 0,
+  "rejected_total": 14,
+  "rejected_by_reason": {
+    "duplicate_key": 14
+  },
+  "rejected_detail": {
+    "duplicate_key": [
+      "baseball:mlb:20260430:ATL:DET:home",
+      "baseball:mlb:20260430:ATL:DET:away",
+      "baseball:mlb:20260430:PIT:STL:home",
+      "baseball:mlb:20260430:PIT:STL:away",
+      "baseball:mlb:20260430:NYM:WSH:home",
+      "baseball:mlb:20260430:NYM:WSH:away",
+      "baseball:mlb:20260430:MIL:ARI:home",
+      "baseball:mlb:20260430:MIL:ARI:away",
+      "baseball:mlb:20260430:OAK:KC:home",
+      "baseball:mlb:20260430:OAK:KC:away",
+      "baseball:mlb:20260430:PHI:SFG:home",
+      "baseball:mlb:20260430:PHI:SFG:away",
+      "baseball:mlb:20260430:MIN:TOR:home",
+      "baseball:mlb:20260430:MIN:TOR:away"
+    ]
+  },
+  "validation_errors": [],
+  "execution_mode": "RESEARCH_ONLY",
+  "governance_status": "VALIDATED_ML_ONLY",
+  "downstream_readiness": {
+    "research_layer": false,
+    "settlement_ingestion": true,
+    "roi_tracking": true,
+    "clv_generation_6u": false
+  },
+  "phase_6u_blockers": [
+    "CLV record generation (needs closing odds)",
+    "Kelly sizing (needs bankroll state)",
+    "Settlement linkage (needs game results)"
+  ],
+  "created_at_utc": "2026-04-30T08:47:50Z"
+}

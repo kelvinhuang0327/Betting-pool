@@ -1,0 +1,12 @@
+{
+  "original_bss": -0.033284,
+  "calibrated_bss": -0.0068,
+  "original_ece": 0.059493,
+  "calibrated_ece": 0.000375,
+  "delta_bss": 0.026484,
+  "delta_ece": -0.059118,
+  "recommendation": "KEEP_BLOCKED",
+  "in_sample_warning": "in-sample calibration candidate \u2014 not production deployable unless OOF validated",
+  "usable_original_rows": 1341,
+  "usable_calibrated_rows": 1341
+}

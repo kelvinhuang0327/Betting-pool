@@ -1,0 +1,143 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "no_data_fetched": true,
+  "generated_at": "2026-05-20T05:46:35.471275+00:00",
+  "date": "2026-05-20",
+  "artifact": "P29_FEATURE_READINESS_MATRIX",
+  "readiness_matrix": {
+    "market_odds_baseline": {
+      "status": "CURRENTLY_AVAILABLE",
+      "current_brier": 0.244354,
+      "estimated_improvement": {
+        "low": 0.0,
+        "high": 0.0
+      },
+      "note": "Pure market odds achieve 0.2444 — baseline ceiling without external data"
+    },
+    "run_line_signal": {
+      "status": "REPO_PROXY_AVAILABLE",
+      "current_brier_proxy": "P28 tested: +0.000485 vs LogReg (no improvement)",
+      "estimated_improvement": {
+        "low": 0.0,
+        "high": 0.001
+      },
+      "note": "RL odds already in CSV, but P28 tested and found no improvement"
+    },
+    "starting_pitcher": {
+      "status": "EXTERNAL_REQUIRED",
+      "estimated_improvement": {
+        "low": 0.005,
+        "high": 0.015
+      },
+      "source": "MLB Stats API / FanGraphs (free)",
+      "leakage_risk": "HIGH - must enforce season_to_date only",
+      "backtest_feasibility": "YES - FanGraphs has historical season stats"
+    },
+    "bullpen_fatigue": {
+      "status": "EXTERNAL_REQUIRED",
+      "estimated_improvement": {
+        "low": 0.002,
+        "high": 0.007
+      },
+      "source": "MLB Stats API game logs",
+      "leakage_risk": "LOW",
+      "backtest_feasibility": "YES"
+    },
+    "batting_form_rolling": {
+      "status": "EXTERNAL_REQUIRED",
+      "estimated_improvement": {
+        "low": 0.003,
+        "high": 0.01
+      },
+      "source": "FanGraphs / BRef",
+      "leakage_risk": "HIGH - rolling window must respect date cutoff",
+      "backtest_feasibility": "YES"
+    },
+    "lineup_injury_proxy": {
+      "status": "EXTERNAL_REQUIRED",
+      "estimated_improvement": {
+        "low": 0.002,
+        "high": 0.006
+      },
+      "source": "MLB API / Rotoworld",
+      "leakage_risk": "HIGH - real-time signal, hard to backtest",
+      "backtest_feasibility": "PARTIAL - IL list available historically"
+    },
+    "park_weather": {
+      "status": "EXTERNAL_REQUIRED",
+      "estimated_improvement": {
+        "low": 0.001,
+        "high": 0.003
+      },
+      "source": "OpenWeatherMap / FanGraphs",
+      "leakage_risk": "LOW - park factor stable; weather forecast OK",
+      "backtest_feasibility": "PARTIAL - historical weather not always free"
+    },
+    "prohibited_features": [
+      "postgame stats (ERA/H/ER from today's game)",
+      "closing_odds as pregame feature (future leakage)",
+      "lineup updates after bet timestamp",
+      "result-derived fields (runs scored, win probability after game start)",
+      "unlicensed scraped PII data"
+    ],
+    "combined_estimated_ceiling": {
+      "with_pitcher_only": {
+        "brier_estimate": 0.234,
+        "improvement_vs_market": 0.01
+      },
+      "with_pitcher_and_batting": {
+        "brier_estimate": 0.228,
+        "improvement_vs_market": 0.016
+      },
+      "with_full_external_stack": {
+        "brier_estimate": 0.222,
+        "improvement_vs_market": 0.022
+      },
+      "caveat": "Estimates are optimistic upper bounds; real gains may be lower due to proxy quality"
+    }
+  },
+  "summary": {
+    "currently_available": [
+      "market_odds_baseline"
+    ],
+    "repo_proxy_available": [
+      "run_line_signal"
+    ],
+    "external_required": [
+      "starting_pitcher",
+      "bullpen_fatigue",
+      "batting_form_rolling",
+      "lineup_injury_proxy",
+      "park_weather"
+    ],
+    "not_safe_to_use": [
+      "postgame stats (ERA/H/ER from today's game)",
+      "closing_odds as pregame feature (future leakage)",
+      "lineup updates after bet timestamp",
+      "result-derived fields (runs scored, win probability after game start)",
+      "unlicensed scraped PII data"
+    ],
+    "highest_impact_feature": "starting_pitcher",
+    "lowest_effort_sourcing": "park_factor (stable, multi-year, FanGraphs CSV)",
+    "feasibility_for_backtest": "starting_pitcher + bullpen + batting_form are all feasible for historical backtest"
+  },
+  "p29_decision": {
+    "orchestrator_noise_found": true,
+    "simplification_candidate": "P29_ORCHESTRATOR_NOISE_REMOVAL_CANDIDATE_FOUND",
+    "external_data_contract_complete": true,
+    "external_data_contract_status": "P29_EXTERNAL_DATA_CONTRACT_READY",
+    "ceiling_analysis": "P29_EXTERNAL_FEATURES_REQUIRED_TO_BREAK_CEILING",
+    "combined_final_classification": [
+      "P29_ORCHESTRATOR_NOISE_REMOVAL_CANDIDATE_FOUND",
+      "P29_EXTERNAL_DATA_CONTRACT_READY",
+      "P29_EXTERNAL_FEATURES_REQUIRED_TO_BREAK_CEILING"
+    ]
+  }
+}

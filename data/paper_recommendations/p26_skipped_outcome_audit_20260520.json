@@ -1,0 +1,530 @@
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "profitability_claim": false,
+  "live_api_call": false,
+  "crawler_modified": false,
+  "index_fallback_used": false,
+  "source_snapshot_lines_used": 2788,
+  "source_snapshot_sha256_expected": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+  "source_snapshot_drift_detected": true,
+  "current_snapshot_lines": 2803,
+  "current_snapshot_sha256": "157f4bdb77e7eed7b61de0746814bd71376f274981246bc2f107b1d3b46a6daa",
+  "drift_action": "RECORDED_ONLY_NOT_OVERWRITTEN",
+  "generated_at": "2026-05-20T04:37:59.658677+00:00",
+  "date": "2026-05-20",
+  "artifact": "P26_SKIPPED_OUTCOME_AUDIT",
+  "total_outcome_results": 2499,
+  "matched": 2331,
+  "skipped_total": 168,
+  "skip_reason_breakdown": {
+    "LINE_MOVED": 162,
+    "MARKET_SHAPE_MISMATCH": 6
+  },
+  "skip_pct_of_total": 6.72,
+  "skipped_examples_up_to_50": [
+    {
+      "match_id": "3461495.1",
+      "game_time": "2026-04-18T02:20:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 10.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 10.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.8,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461495.1",
+      "game_time": "2026-04-18T02:20:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 10.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 10.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.7,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461584.1",
+      "game_time": "2026-04-18T07:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "密爾瓦基釀酒人 -1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '密爾瓦基釀酒人 -1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.3,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461584.1",
+      "game_time": "2026-04-18T07:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "邁阿密馬林魚 +1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '邁阿密馬林魚 +1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.4,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461565.1",
+      "game_time": "2026-04-18T08:10:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 8.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 8.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.95,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461565.1",
+      "game_time": "2026-04-18T08:10:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 8.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 8.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.55,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461597.1",
+      "game_time": "2026-04-18T08:10:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.5,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461597.1",
+      "game_time": "2026-04-18T08:10:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.96,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461597.1",
+      "game_time": "2026-04-18T08:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "聖路易紅雀 +1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '聖路易紅雀 +1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.45,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461597.1",
+      "game_time": "2026-04-18T08:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "休士頓太空人 -1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '休士頓太空人 -1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.1,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461575.1",
+      "game_time": "2026-04-18T09:40:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 10.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 10.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.15,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461575.1",
+      "game_time": "2026-04-18T09:40:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 10.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 10.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.43,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461825.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.85,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461825.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.5,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461826.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.73,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461826.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.6,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461827.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.66,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461827.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.66,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461827.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 5.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 5.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.62,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461827.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 5.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 5.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.82,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461911.1",
+      "game_time": "2026-04-19T04:05:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.94,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461911.1",
+      "game_time": "2026-04-19T04:05:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.52,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461913.1",
+      "game_time": "2026-04-19T04:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "密爾瓦基釀酒人 -2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '密爾瓦基釀酒人 -2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 3.0,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461913.1",
+      "game_time": "2026-04-19T04:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "邁阿密馬林魚 +2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '邁阿密馬林魚 +2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.22,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461955.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 5.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 5.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.6,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461955.1",
+      "game_time": "2026-04-18T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 5.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 5.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.85,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461969.1",
+      "game_time": "2026-04-19T07:15:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 8.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 8.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.3,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3461969.1",
+      "game_time": "2026-04-19T07:15:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 8.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 8.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.4,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462186.1",
+      "game_time": "2026-04-19T12:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.6,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462186.1",
+      "game_time": "2026-04-19T12:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.73,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462210.1",
+      "game_time": "2026-04-19T12:30:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.42,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462210.1",
+      "game_time": "2026-04-19T12:30:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 2.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 2.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.0,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462329.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 5.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 5.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.78,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462329.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 5.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 5.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.65,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462329.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "韓華老鷹 -0.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '韓華老鷹 -0.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.78,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462329.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "樂天巨人 +0.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '樂天巨人 +0.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.65,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462331.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 4.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 4.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.72,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462331.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 4.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 4.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.72,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462330.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "大 4.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 4.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.65,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462330.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "TTO",
+      "outcome_name": "小 4.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 4.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.78,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462332.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 11.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 11.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.85,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462332.1",
+      "game_time": "2026-04-19T13:00:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 11.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 11.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.6,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462382.1",
+      "game_time": "2026-04-19T17:05:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "統一獅 -1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '統一獅 -1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.15,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462382.1",
+      "game_time": "2026-04-19T17:05:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "富邦悍將 +1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '富邦悍將 +1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.42,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462713.1",
+      "game_time": "2026-04-22T08:05:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 8.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 8.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.88,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3462713.1",
+      "game_time": "2026-04-22T08:05:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 8.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 8.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.62,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3463199.1",
+      "game_time": "2026-04-24T07:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "明尼蘇達雙城 -1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '明尼蘇達雙城 -1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.1,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3463199.1",
+      "game_time": "2026-04-24T07:10:00+08:00",
+      "market_code": "HDC",
+      "outcome_name": "紐約大都會 +1.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '紐約大都會 +1.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.45,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3463480.1",
+      "game_time": "2026-04-25T08:05:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "大 9.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '大 9.5' absent in closing (line likely shifted)",
+      "pregame_odds": 2.2,
+      "closing_odds": null
+    },
+    {
+      "match_id": "3463480.1",
+      "game_time": "2026-04-25T08:05:00+08:00",
+      "market_code": "OU",
+      "outcome_name": "小 9.5",
+      "status": "LINE_MOVED",
+      "skip_reason": "LINE_MOVED: pregame outcome '小 9.5' absent in closing (line likely shifted)",
+      "pregame_odds": 1.42,
+      "closing_odds": null
+    }
+  ]
+}

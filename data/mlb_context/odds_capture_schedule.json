@@ -1,0 +1,1998 @@
+{
+  "games": {},
+  "last_run": "2026-05-20T09:58:52.440942Z",
+  "captures": [
+    {
+      "timestamp": "2026-05-17T07:36:35.544732Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "518.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T07:51:38.144009Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "503.3min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T08:06:41.739921Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "488.2min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T08:21:45.093631Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "473.2min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T08:36:47.688913Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "458.0min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T08:51:58.952307Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "443.0min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T12:31:14.907727Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "223.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T12:46:15.237390Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "208.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T13:04:03.039027Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "190.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-17T21:15:56.606891Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 1,
+        "games_updated": 1,
+        "snapshots_added": 1,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "failed",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "OddsAPI returned 0 games"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T01:21:03.097574Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 10,
+        "games_updated": 10,
+        "snapshots_added": 10,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "1278.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T01:36:05.835088Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 10,
+        "games_updated": 10,
+        "snapshots_added": 10,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "1263.8min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T01:51:13.889539Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "1248.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T02:06:16.174929Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "1232.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T02:22:08.755760Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "1217.8min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T03:00:03.597445Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-18T04:31:28.835151Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "1088.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T04:46:31.476517Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "1073.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T05:01:34.529202Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "1058.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T05:58:46.486620Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "1001.2min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T06:18:11.792085Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "981.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T06:33:15.764513Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "966.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T06:49:11.482339Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "950.8min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T07:34:10.441245Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "905.8min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T07:49:14.294873Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "890.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T08:04:16.849433Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "875.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T08:19:20.067179Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "860.6min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T08:34:22.655958Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "845.6min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T08:49:25.200907Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "830.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T09:04:27.676848Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "815.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T09:19:30.202317Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "800.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T09:34:32.863398Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "785.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:39:40.356778Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-18T14:54:41.198221Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "465.3min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T15:09:43.837767Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "450.2min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T15:24:46.569511Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "435.2min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T20:36:24.625897Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "123.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T20:51:28.048521Z",
+      "windows": {
+        "continuous": true,
+        "decision": true,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "108.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-18T21:06:30.824417Z",
+      "windows": {
+        "continuous": true,
+        "decision": true,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 13,
+        "games_updated": 13,
+        "snapshots_added": 13,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "93.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T00:17:54.150341Z",
+      "windows": {
+        "continuous": true,
+        "decision": true,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "failed",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "OddsAPI returned 0 games"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T01:05:05.839235Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "failed",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "OddsAPI returned 0 games"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T10:24:52.574654Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "585.0min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T10:39:58.847940Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "570.0min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T10:55:01.489059Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "554.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T11:10:03.922272Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "539.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T11:25:06.232783Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "524.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T11:40:08.564084Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "509.8min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T11:55:11.932053Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "494.8min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T12:10:14.849159Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "479.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T12:25:18.760366Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "464.6min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T12:40:21.382346Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "449.6min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T12:55:23.711465Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "434.6min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T13:10:26.175649Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "419.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T13:25:28.330263Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "404.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T13:40:31.179703Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "389.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T14:20:36.239243Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "349.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T14:35:38.318444Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "334.3min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T14:50:41.006859Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "319.3min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T15:05:43.578528Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "304.2min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T15:20:46.175712Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "289.2min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T15:35:48.823964Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "274.1min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T15:50:51.183202Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "259.1min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T16:05:55.399724Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "243.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T16:21:18.512793Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "228.6min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-19T16:35:26.546112Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "214.3min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T01:21:00.621374Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": true,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 16,
+        "games_updated": 16,
+        "snapshots_added": 16,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "16.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T01:36:04.755057Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": true,
+        "closing": true
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T01:51:06.794021Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T02:06:08.685294Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T02:21:12.590133Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "failed",
+          "api_calls_today": 1,
+          "games_updated": 0,
+          "trigger_reason": "OddsAPI returned 0 games"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T02:36:16.000089Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "failed",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "OddsAPI returned 0 games"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T02:51:19.328374Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_daily_cap_reached",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "cap=2 reached, calls=2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T03:06:21.996839Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_daily_cap_reached",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "cap=2 reached, calls=2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T03:21:24.517645Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T03:42:35.072586Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_daily_cap_reached",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "cap=2 reached, calls=2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T03:57:38.687445Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T04:12:40.423390Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T04:27:42.126057Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_daily_cap_reached",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "cap=2 reached, calls=2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T04:42:45.416906Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_daily_cap_reached",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "cap=2 reached, calls=2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T04:57:48.272668Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_daily_cap_reached",
+          "api_calls_today": 2,
+          "games_updated": 0,
+          "trigger_reason": "cap=2 reached, calls=2"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T05:12:51.063400Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "712.1min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T05:27:54.089339Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "697.0min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-20T05:42:57.170767Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T05:57:59.121906Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T06:13:00.895975Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T06:28:03.558997Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T06:43:05.362555Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T06:58:07.302637Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T07:13:09.111457Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T07:28:10.950703Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T07:43:13.351286Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T07:58:15.667874Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T08:13:18.221335Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T08:28:20.168097Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T08:43:22.272645Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T08:58:24.690917Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T09:13:29.716567Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T09:28:35.199425Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T09:43:38.102253Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-20T09:58:50.169028Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false
+      },
+      "result": {
+        "snapshots_received": 0,
+        "games_updated": 0,
+        "snapshots_added": 0
+      }
+    }
+  ]
+}

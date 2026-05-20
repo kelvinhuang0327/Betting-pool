@@ -1,10 +1,9 @@
 """
 WBC Multi-Year Historical Match Database (2009 / 2013 / 2017 / 2023).
 
-Provides ~78 verified WBC game results + opening odds for backtesting.
-All data sourced from Baseball Reference, Retrosheet, and archived
-sportsbook lines. Each entry is tagged with ``data_source`` to comply
-with § 核心規範 01 (no synthetic data in backtests).
+Provides verified WBC game results for backtesting.
+Only result fields are treated as verified real data by default unless
+odds provenance is explicitly attached per record.
 
 Layer 1 (Primary):
   - 2009 WBC (26 games)
@@ -16,6 +15,7 @@ Layer 2 (Proxy — 類 WBC 短賽):
   - 2024 Premier12 (imported from historical_data.py)
 """
 from typing import List, Dict
+from data.historical_record_sanitizer import sanitize_historical_records
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -549,3 +549,35 @@ def get_wbc_dataset_summary() -> Dict:
         "meets_min_threshold": len(ALL_WBC_HISTORICAL) >= 50,
         "teams_covered": len(WBC_TEAM_META),
     }
+
+
+HISTORICAL_WBC_2009 = sanitize_historical_records(
+    HISTORICAL_WBC_2009,
+    result_source="retrosheet_verified",
+    tournament="WBC_2009",
+)
+
+HISTORICAL_WBC_2013 = sanitize_historical_records(
+    HISTORICAL_WBC_2013,
+    result_source="retrosheet_verified",
+    tournament="WBC_2013",
+)
+
+HISTORICAL_WBC_2017 = sanitize_historical_records(
+    HISTORICAL_WBC_2017,
+    result_source="retrosheet_verified",
+    tournament="WBC_2017",
+)
+
+HISTORICAL_WBC_2023_FULL = sanitize_historical_records(
+    HISTORICAL_WBC_2023_FULL,
+    result_source="retrosheet_verified",
+    tournament="WBC_2023",
+)
+
+ALL_WBC_HISTORICAL = (
+    HISTORICAL_WBC_2009
+    + HISTORICAL_WBC_2013
+    + HISTORICAL_WBC_2017
+    + HISTORICAL_WBC_2023_FULL
+)

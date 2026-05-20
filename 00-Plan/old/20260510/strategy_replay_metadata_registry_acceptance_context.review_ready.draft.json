@@ -1,0 +1,26 @@
+{
+  "registry_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/00-BettingPlan/20260510/strategy_replay_metadata_registry.production_candidate.draft.json",
+  "registry_owner": "wbc_backend.reporting.strategy_registry",
+  "reviewer": "",
+  "approval_timestamp": null,
+  "production_candidate": true,
+  "non_production_example": false,
+  "audit_evidence_refs": [
+    "00-BettingPlan/20260510/strategy_replay_runtime_metadata_e2e_fixture_validation_report.md",
+    "00-BettingPlan/20260510/strategy_replay_metadata_registry_acceptance_gate_report.md",
+    "00-BettingPlan/20260510/strategy_replay_metadata_registry_production_candidate_evidence_pack.md",
+    "00-BettingPlan/20260510/strategy_replay_metadata_registry_rollback_plan.draft.md",
+    "00-BettingPlan/20260510/strategy_replay_metadata_registry_human_review_checklist.md"
+  ],
+  "lifecycle_source_refs": [
+    "wbc_backend/reporting/strategy_replay_metadata_registry.py",
+    "wbc_backend/reporting/strategy_replay_runtime_metadata.py",
+    "wbc_backend/reporting/strategy_replay_metadata_registry_acceptance.py"
+  ],
+  "runtime_injection_test_passed": true,
+  "e2e_fixture_validation_passed": true,
+  "explicit_human_approval": false,
+  "rollback_plan_ref": "00-BettingPlan/20260510/strategy_replay_metadata_registry_rollback_plan.draft.md",
+  "allowed_for_future_writes_only": true,
+  "allowed_for_historical_backfill": false
+}

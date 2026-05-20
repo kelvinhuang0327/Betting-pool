@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 from openai import OpenAI
+from orchestrator import db as orchestrator_db
+from orchestrator import execution_policy
 
 # ── Load Environment ───────────────────────────────────────────────────
 load_dotenv()
@@ -111,6 +113,19 @@ async def handle_chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if not client:
         await update.message.reply_text("🤖 我現在還沒有大腦 (未設定 GITHUB_TOKEN)，請聯絡管理員。")
+        return
+
+    orchestrator_db.init_db()
+    try:
+        execution_policy.assert_llm_execution_allowed(
+            runner="telegram_bot",
+            provider="openai",
+            context="telegram_chat",
+            background=False,
+            manual_override=True,
+        )
+    except RuntimeError:
+        await update.message.reply_text("⛔ 目前處於 LLM hard off 狀態，已拒絕 AI 對話請求。")
         return
 
     # 傳送「思考中」的視覺效果

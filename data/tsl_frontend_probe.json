@@ -1,0 +1,204 @@
+{
+  "bundle_url": "https://www.sportslottery.com.tw/assets/index-D9vZ7zhY.js",
+  "api_endpoints": [
+    "/api/betting/fo/bets/code/${e}",
+    "/api/betting/fo/bookbetslip",
+    "/api/betting/fo/bookbetslip/${e}",
+    "/services/content/get",
+    "https://api3rd.sportslottery.com.tw",
+    "https://blob3rd.sportslottery.com.tw/apidata",
+    "https://blob3rd.sportslottery.com.tw/apidata/App/Icons/Sport/${t.sportId}.svg`),s=oe(()=>({display:"
+  ],
+  "baseball_market_catalog": [
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "354",
+      "kind": "main",
+      "filter_key": "ppl",
+      "show_on_pre_list": 1,
+      "show_on_live_list": 1,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "357",
+      "kind": "mrf2",
+      "filter_key": "",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "358",
+      "kind": "name",
+      "filter_key": "ppl",
+      "show_on_pre_list": 1,
+      "show_on_live_list": 1,
+      "type_key": "h"
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "360",
+      "kind": "name",
+      "filter_key": "ppl",
+      "show_on_pre_list": 1,
+      "show_on_live_list": 1,
+      "type_key": "t"
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "362",
+      "kind": "name",
+      "filter_key": "ppl",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "362",
+      "kind": "name",
+      "filter_key": "tem",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "363",
+      "kind": "name",
+      "filter_key": "ppl",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "363",
+      "kind": "name",
+      "filter_key": "tem",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "364",
+      "kind": "name",
+      "filter_key": "tem",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "364",
+      "kind": "name",
+      "filter_key": "har",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "366",
+      "kind": "name",
+      "filter_key": "",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "369",
+      "kind": "name",
+      "filter_key": "har",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "374",
+      "kind": "mrc2",
+      "filter_key": "ppl",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "376",
+      "kind": "name",
+      "filter_key": "f5i",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "377",
+      "kind": "name",
+      "filter_key": "f5i",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": "h"
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "378",
+      "kind": "name",
+      "filter_key": "f5i",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": "t"
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "379",
+      "kind": "name",
+      "filter_key": "f5i",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "380",
+      "kind": "name",
+      "filter_key": "f5i",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "389",
+      "kind": "name",
+      "filter_key": "ini",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "398",
+      "kind": "name",
+      "filter_key": "ini",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": "t"
+    },
+    {
+      "sport_id": "34731.1",
+      "market_type_id": "4202",
+      "kind": "mrc2",
+      "filter_key": "",
+      "show_on_pre_list": 0,
+      "show_on_live_list": 0,
+      "type_key": ""
+    }
+  ],
+  "fetched_at": "2026-03-13T04:52:36.828723Z"
+}

@@ -1,0 +1,50 @@
+{
+  "phase": "P23_SOURCE_SNAPSHOT_PIN",
+  "task": "P23-C",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "current_snapshot": {
+    "file": "data/tsl_odds_history.jsonl",
+    "line_count": 2788,
+    "sha256": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+    "first_record_fetched_at": "2026-03-13T03:30:16.039741Z",
+    "first_record_game_time": "2026-03-13T12:00:00+08:00",
+    "last_record_fetched_at": "2026-05-20T03:06:23.144632Z",
+    "last_record_game_time": "2026-05-20T09:40:00+08:00",
+    "pinned_at": "2026-05-20T00:00:00Z",
+    "command_line_count": "wc -l data/tsl_odds_history.jsonl",
+    "command_sha256": "shasum -a 256 data/tsl_odds_history.jsonl"
+  },
+  "p19_source_baseline": {
+    "reported_in": "data/paper_recommendations/p19_canonical_forward_coverage_regenerated_20260520.json",
+    "line_count": 2747,
+    "sha256": "not_pinned_in_p19_artifact",
+    "first_record_ts": "2026-03-13 (inferred from game_date_range.first)",
+    "last_record_ts": "2026-05-20 (inferred from game_date_range.last)",
+    "unique_match_ids": 859,
+    "valid_clv_pairs": 233,
+    "note": "P19 artifact did not pin sha256 or exact fetched_at timestamps; line_count inferred from total_records field"
+  },
+  "p22_source_baseline": {
+    "reported_in": "data/paper_recommendations/p22_hold_ready_gate_refresh_20260523.json",
+    "line_count": 2772,
+    "sha256": "not_pinned_in_p22_artifact",
+    "valid_clv_pairs": 236,
+    "note": "P22 artifact did not pin sha256; line_count inferred from p22_pipeline.py output log (2772 records loaded). sha256 not reconstructable as file has grown since."
+  },
+  "growth_timeline": {
+    "p19_records": 2747,
+    "p22_records": 2772,
+    "current_records": 2788,
+    "p19_to_p22_growth": 25,
+    "p22_to_current_growth": 16,
+    "total_growth_from_p19": 41,
+    "note": "tsl_odds_history.jsonl is an append-only log; growth is expected as TSL crawler continues operation. File is NOT modified by this task."
+  },
+  "pin_status": "CURRENT_SNAPSHOT_PINNED",
+  "p19_p22_hash_status": "NOT_PINNABLE_RETROSPECTIVELY",
+  "recommendation": "Future phases should pin sha256 at time of computation to enable exact retrospective reproducibility."
+}

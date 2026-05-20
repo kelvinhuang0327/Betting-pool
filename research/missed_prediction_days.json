@@ -1,0 +1,60 @@
+{
+  "entries": [
+    {
+      "date": "2026-03-08",
+      "games_found": 8,
+      "notes": "partial_coverage_or_interrupted_pipeline",
+      "prediction_events": 1,
+      "reason": "incomplete_coverage",
+      "results_ingested": true,
+      "status": "PARTIAL_DAY",
+      "timestamp": "2026-04-18T16:47:04.004050Z"
+    },
+    {
+      "date": "2026-03-09",
+      "games_found": 7,
+      "notes": "partial_coverage_or_interrupted_pipeline",
+      "prediction_events": 6,
+      "reason": "incomplete_coverage",
+      "results_ingested": true,
+      "status": "PARTIAL_DAY",
+      "timestamp": "2026-04-18T16:44:07.597765Z"
+    },
+    {
+      "date": "2026-03-10",
+      "games_found": 7,
+      "notes": "partial_coverage_or_interrupted_pipeline",
+      "prediction_events": 2,
+      "reason": "incomplete_coverage",
+      "results_ingested": true,
+      "status": "PARTIAL_DAY",
+      "timestamp": "2026-04-18T16:47:04.004835Z"
+    },
+    {
+      "date": "2026-03-11",
+      "games_found": 4,
+      "notes": "partial_coverage_or_interrupted_pipeline",
+      "prediction_events": 2,
+      "reason": "incomplete_coverage",
+      "results_ingested": true,
+      "status": "PARTIAL_DAY",
+      "timestamp": "2026-04-18T16:47:04.005383Z"
+    }
+  ],
+  "summary": {
+    "missed_count": 4,
+    "partial_dates": [
+      "2026-03-08",
+      "2026-03-09",
+      "2026-03-10",
+      "2026-03-11"
+    ],
+    "skipped_dates": [],
+    "status_counts": {
+      "ACTIVE_DAY": 0,
+      "PARTIAL_DAY": 4,
+      "SKIPPED_DAY": 0
+    }
+  },
+  "updated_at": "2026-04-18T16:47:04.005390Z"
+}

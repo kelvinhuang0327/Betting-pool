@@ -1,0 +1,386 @@
+{
+  "n_samples": 40,
+  "unresolved_games": [],
+  "best_by_brier": {
+    "lambda_ensemble": 0.525,
+    "brier": 0.140803,
+    "bayesian_brier": 0.141632,
+    "perm_p": 0.818436,
+    "stability_std": 0.062011,
+    "stage4_pass": false,
+    "stage5_pass": false
+  },
+  "any_stage4_pass": false,
+  "any_stage5_pass": false,
+  "candidates": [
+    {
+      "lambda_ensemble": 0.0,
+      "brier": 0.141632,
+      "bayesian_brier": 0.141632,
+      "perm_p": 1.0,
+      "stability_std": 0.060228,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.025,
+      "brier": 0.141554,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.65107,
+      "stability_std": 0.060306,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.05,
+      "brier": 0.14148,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.658868,
+      "stability_std": 0.060385,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.075,
+      "brier": 0.141409,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.666267,
+      "stability_std": 0.060465,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.1,
+      "brier": 0.141343,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.673865,
+      "stability_std": 0.060545,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.125,
+      "brier": 0.14128,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.684663,
+      "stability_std": 0.060626,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.15,
+      "brier": 0.141221,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.694261,
+      "stability_std": 0.060707,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.175,
+      "brier": 0.141166,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.70226,
+      "stability_std": 0.06079,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.2,
+      "brier": 0.141115,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.710058,
+      "stability_std": 0.060873,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.225,
+      "brier": 0.141068,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.720456,
+      "stability_std": 0.060956,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.25,
+      "brier": 0.141025,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.727654,
+      "stability_std": 0.061041,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.275,
+      "brier": 0.140985,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.736253,
+      "stability_std": 0.061126,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.3,
+      "brier": 0.140949,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.743651,
+      "stability_std": 0.061211,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.325,
+      "brier": 0.140918,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.75145,
+      "stability_std": 0.061298,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.35,
+      "brier": 0.14089,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.759448,
+      "stability_std": 0.061385,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.375,
+      "brier": 0.140866,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.766247,
+      "stability_std": 0.061472,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.4,
+      "brier": 0.140846,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.775445,
+      "stability_std": 0.06156,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.425,
+      "brier": 0.140829,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.784643,
+      "stability_std": 0.061649,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.45,
+      "brier": 0.140817,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.794641,
+      "stability_std": 0.061739,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.475,
+      "brier": 0.140809,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.804439,
+      "stability_std": 0.061829,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.5,
+      "brier": 0.140804,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.811238,
+      "stability_std": 0.06192,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.525,
+      "brier": 0.140803,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.818436,
+      "stability_std": 0.062011,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.55,
+      "brier": 0.140806,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.828034,
+      "stability_std": 0.062104,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.575,
+      "brier": 0.140813,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.835633,
+      "stability_std": 0.062196,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.6,
+      "brier": 0.140824,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.843031,
+      "stability_std": 0.06229,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.625,
+      "brier": 0.140839,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.85163,
+      "stability_std": 0.062384,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.65,
+      "brier": 0.140857,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.860428,
+      "stability_std": 0.062479,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.675,
+      "brier": 0.140879,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.869426,
+      "stability_std": 0.062574,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.7,
+      "brier": 0.140906,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.878224,
+      "stability_std": 0.06267,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.725,
+      "brier": 0.140936,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.886623,
+      "stability_std": 0.062767,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.75,
+      "brier": 0.14097,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.896021,
+      "stability_std": 0.062864,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.775,
+      "brier": 0.141008,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.905019,
+      "stability_std": 0.062962,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.8,
+      "brier": 0.14105,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.914817,
+      "stability_std": 0.063061,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.825,
+      "brier": 0.141095,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.923615,
+      "stability_std": 0.06316,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.85,
+      "brier": 0.141145,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.933213,
+      "stability_std": 0.06326,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.875,
+      "brier": 0.141198,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.942212,
+      "stability_std": 0.063361,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.9,
+      "brier": 0.141255,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.95041,
+      "stability_std": 0.063462,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.925,
+      "brier": 0.141316,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.959408,
+      "stability_std": 0.063564,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.95,
+      "brier": 0.141381,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.969806,
+      "stability_std": 0.063666,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 0.975,
+      "brier": 0.14145,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.978804,
+      "stability_std": 0.06377,
+      "stage4_pass": false,
+      "stage5_pass": false
+    },
+    {
+      "lambda_ensemble": 1.0,
+      "brier": 0.141523,
+      "bayesian_brier": 0.141632,
+      "perm_p": 0.986603,
+      "stability_std": 0.063873,
+      "stage4_pass": false,
+      "stage5_pass": false
+    }
+  ]
+}

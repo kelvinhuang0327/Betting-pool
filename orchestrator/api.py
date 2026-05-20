@@ -32,6 +32,8 @@ from orchestrator.common import (
 from orchestrator.cto_review_tick import run_cto_review_tick
 from orchestrator.planner_tick import run_planner_tick
 from orchestrator.worker_tick import run_worker_tick
+from wbc_backend.config.settings import AppConfig
+from wbc_backend.reporting.strategy_replay_service import build_strategy_replay_query_from_app_config
 
 router = APIRouter()
 
@@ -279,6 +281,38 @@ def _get_usage_detail_safe(window: str = "today", limit: int = 10) -> dict:
         return {"available": False, "roles": {}, "recent": [], "warnings": []}
 
 
+def _get_human_review_actionability_safe() -> dict:
+    """Human review queue actionability snapshot (read-only)."""
+    try:
+        from orchestrator.human_review_queue import get_queue_summary
+        summary = get_queue_summary()
+        pending_reviews = summary.get("pending_reviews", [])
+        commands: dict = {}
+        if pending_reviews:
+            first = pending_reviews[-1]
+            rid = first.get("review_id", "?")
+            commands = {
+                "show":      f"python3 scripts/review_queue.py show {rid}",
+                "approve":   f"python3 scripts/review_queue.py approve {rid} --reviewer \"Kelvin\" --notes \"...\"",
+                "reject":    f"python3 scripts/review_queue.py reject {rid} --reviewer \"Kelvin\" --notes \"...\"",
+                "more_data": f"python3 scripts/review_queue.py more-data {rid} --reviewer \"Kelvin\" --notes \"...\"",
+            }
+        return {
+            "available": True,
+            "pending_count": summary.get("pending_count", 0),
+            "approved_count": summary.get("approved_count", 0),
+            "rejected_count": summary.get("rejected_count", 0),
+            "more_data_count": summary.get("more_data_count", 0),
+            "blocked_by_human_review": summary.get("blocked_by_human_review", False),
+            "latest_review": summary.get("latest_review"),
+            "pending_reviews": pending_reviews,
+            "commands": commands,
+        }
+    except Exception as exc:
+        return {"available": False, "error": str(exc), "pending_count": 0,
+                "blocked_by_human_review": False, "commands": {}}
+
+
 @router.get("/api/orchestrator/summary", responses=ERROR_500_RESPONSE)
 def get_orchestrator_summary():
     try:
@@ -332,6 +366,7 @@ def get_orchestrator_summary():
             "next_planner_tick_estimate": next_planner_at,
             "next_worker_tick_estimate": next_worker_at,
             "usage_detail": _get_usage_detail_safe(),
+            "human_review_queue_actionability": _get_human_review_actionability_safe(),
         }
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
@@ -364,8 +399,8 @@ def get_provider_config():
 @router.post("/api/orchestrator/providers", responses=ERROR_400_RESPONSE)
 def set_provider_config(req: ProviderConfigRequest):
     if req.planner_provider:
-        if req.planner_provider not in {"claude", "codex"}:
-            raise HTTPException(400, "Planner provider 僅支援 claude / codex")
+        if req.planner_provider not in {"local", "claude", "codex"}:
+            raise HTTPException(400, "Planner provider 僅支援 local / claude / codex")
         ok, reason = provider_available(req.planner_provider)
         if not ok:
             raise HTTPException(400, f"Planner provider unavailable: {reason}")
@@ -388,6 +423,38 @@ def set_provider_config(req: ProviderConfigRequest):
 @router.get("/api/orchestrator/runtime-mode")
 def get_runtime_mode():
     return execution_policy.get_state()
+
+
+@router.get("/api/strategy-replay/history")
+def get_strategy_replay_history(
+    strategy_id: Annotated[Optional[str], Query()] = None,
+    lifecycle_state: Annotated[Optional[str], Query()] = None,
+    date_from: Annotated[Optional[str], Query()] = None,
+    date_to: Annotated[Optional[str], Query()] = None,
+    market_type: Annotated[Optional[str], Query()] = None,
+    settlement_status: Annotated[Optional[str], Query()] = None,
+    page: Annotated[int, Query(ge=1)] = 1,
+    page_size: Annotated[int, Query(ge=1, le=100)] = 25,
+    sort_by: Annotated[str, Query()] = "prediction_timestamp",
+    sort_dir: Annotated[str, Query()] = "desc",
+):
+    config = AppConfig()
+    _, payload = build_strategy_replay_query_from_app_config(
+        config,
+        {
+            "strategy_id": strategy_id,
+            "lifecycle_state": lifecycle_state,
+            "date_from": date_from,
+            "date_to": date_to,
+            "market_type": market_type,
+            "settlement_status": settlement_status,
+            "page": page,
+            "page_size": page_size,
+            "sort_by": sort_by,
+            "sort_dir": sort_dir,
+        },
+    )
+    return payload
 
 
 @router.post("/api/runtime-mode", responses=ERROR_400_RESPONSE)
@@ -677,8 +744,8 @@ def get_cto_provider_config():
 @router.post("/api/orchestrator/cto/providers", responses=ERROR_400_RESPONSE)
 def set_cto_provider_config(req: CTOProviderConfigRequest):
     if req.planner_provider:
-        if req.planner_provider not in {"claude", "codex"}:
-            raise HTTPException(400, "CTO Planner provider 僅支援 claude / codex")
+        if req.planner_provider not in {"local", "claude", "codex"}:
+            raise HTTPException(400, "CTO Planner provider 僅支援 local / claude / codex")
         db.set_setting("cto_planner_provider", req.planner_provider)
     if req.planner_model is not None:
         if req.planner_model and not validate_copilot_model(req.planner_model):
@@ -1063,6 +1130,184 @@ def get_usage_summary(hours: int = 24, tail: int = 10):
     summary = build_usage_summary(records, recent_n=tail)
     summary["hours"] = hours
     return summary
+
+
+# ── LLM Audit Endpoints ──────────────────────────────────────────────────────
+
+
+@router.get("/api/orchestrator/llm-audit/recent")
+def get_llm_audit_recent(
+    limit: int = Query(50, ge=1, le=500),
+    runner: Optional[str] = Query(None),
+    provider: Optional[str] = Query(None),
+    blocked: Optional[bool] = Query(None),
+    event_type: Optional[str] = Query(None),
+):
+    """
+    LLM Audit 最近 N 筆事件。
+
+    Query params:
+        limit:      回傳筆數（預設 50，最大 500）
+        runner:     篩選 runner_type（例如 worker_tick）
+        provider:   篩選 provider（例如 claude）
+        blocked:    true/false 篩選封鎖事件
+        event_type: LLM_CALL_ATTEMPT | LLM_CALL_RESULT | LLM_CALL_BLOCKED
+
+    回傳欄位含：correlation_id, event_type, runner_type, usage_role,
+    provider, task_id, trigger_source, blocked, block_reason,
+    success, duration_ms, input_tokens, output_tokens 等。
+    """
+    from orchestrator.llm_audit import read_audit_records
+    records = read_audit_records(
+        hours=0,  # 無時間限制，依 limit 截斷
+        tail=limit,
+        runner=runner,
+        provider=provider,
+        blocked=blocked,
+        event_type=event_type,
+    )
+    return {"records": records, "count": len(records)}
+
+
+@router.get("/api/orchestrator/llm-audit/today")
+def get_llm_audit_today(
+    runner: Optional[str] = Query(None),
+    provider: Optional[str] = Query(None),
+):
+    """
+    LLM Audit 今日摘要。
+
+    回傳：
+        date, total_events, attempts, results, blocked,
+        succeeded, failed, by_role, by_provider
+    """
+    from orchestrator.llm_audit import build_audit_today_summary, read_audit_records
+    summary = build_audit_today_summary()
+
+    # 附上今日明細（最近 100 筆）
+    from datetime import datetime, timezone
+    today_cutoff = int((datetime.now(timezone.utc).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    ) - datetime.now(timezone.utc)).total_seconds() * -1 / 3600)
+    today_records = read_audit_records(
+        hours=today_cutoff or 24,
+        runner=runner,
+        provider=provider,
+    )
+    summary["recent"] = today_records[-100:]
+    return summary
+
+
+# ── LLM Usage Endpoints ───────────────────────────────────────────────────────
+
+
+@router.get("/api/orchestrator/llm-usage/today")
+def get_llm_usage_today():
+    """
+    LLM Usage 今日統計（依 role / provider 分組）。
+    """
+    from orchestrator.usage_reader import read_usage_records, build_usage_summary
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    hours_since_midnight = max(1, int((now - start_of_day).total_seconds() / 3600) + 1)
+    records = read_usage_records(hours=hours_since_midnight)
+    summary = build_usage_summary(records, recent_n=20)
+    summary["window"] = "today"
+    return summary
+
+
+@router.get("/api/orchestrator/llm-usage/recent")
+def get_llm_usage_recent(limit: int = Query(20, ge=1, le=200)):
+    """
+    LLM Usage 最近 N 筆記錄。
+    """
+    from orchestrator.usage_reader import read_usage_records, build_usage_summary
+    records = read_usage_records(hours=0, tail=limit)
+    summary = build_usage_summary(records, recent_n=limit)
+    summary["window"] = f"recent_{limit}"
+    return summary
+
+
+# ── Planner / CTO Settings Endpoints ─────────────────────────────────────────
+
+
+class PlannerSettingsRequest(BaseModel):
+    planner_provider: Optional[str] = None
+    planner_llm_mode: Optional[str] = None       # off | suggest_only
+    planner_daily_call_cap: Optional[int] = None
+    planner_timeout_seconds: Optional[int] = None
+
+
+class CTOReviewSettingsRequest(BaseModel):
+    cto_review_provider: Optional[str] = None
+    cto_review_mode: Optional[str] = None        # local_review | review_only
+    cto_review_daily_call_cap: Optional[int] = None
+    cto_review_timeout_seconds: Optional[int] = None
+
+
+@router.get("/api/orchestrator/planner-settings")
+def get_planner_settings():
+    """取得 Planner 設定（planner_provider, llm_mode, daily_cap, timeout）。"""
+    return {
+        "planner_provider": db.get_setting("planner_provider", "local"),
+        "planner_llm_provider": db.get_setting("planner_llm_provider", "local"),
+        "planner_llm_mode": db.get_setting("planner_llm_mode", "off"),
+        "planner_daily_call_cap": int(db.get_setting("planner_daily_call_cap", "0") or 0),
+        "planner_timeout_seconds": int(db.get_setting("planner_timeout_seconds", "300") or 300),
+    }
+
+
+@router.post("/api/orchestrator/planner-settings", responses=ERROR_400_RESPONSE)
+def update_planner_settings(req: PlannerSettingsRequest):
+    """更新 Planner 設定。planner_provider 不允許設為外部 LLM。"""
+    from orchestrator.provider_factory import EXTERNAL_PROVIDERS
+    if req.planner_provider and req.planner_provider.lower() in EXTERNAL_PROVIDERS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"planner_provider 不允許設為外部 LLM: {req.planner_provider}",
+        )
+    if req.planner_provider is not None:
+        db.set_setting("planner_provider", req.planner_provider)
+    if req.planner_llm_mode is not None:
+        if req.planner_llm_mode not in ("off", "suggest_only"):
+            raise HTTPException(status_code=400, detail="planner_llm_mode 必須為 off 或 suggest_only")
+        db.set_setting("planner_llm_mode", req.planner_llm_mode)
+    if req.planner_daily_call_cap is not None:
+        db.set_setting("planner_daily_call_cap", str(req.planner_daily_call_cap))
+    if req.planner_timeout_seconds is not None:
+        db.set_setting("planner_timeout_seconds", str(req.planner_timeout_seconds))
+    return get_planner_settings()
+
+
+@router.get("/api/orchestrator/cto-review-settings")
+def get_cto_review_settings():
+    """取得 CTO Review 設定。"""
+    return {
+        "cto_review_provider": db.get_setting("cto_review_provider", "local"),
+        "cto_review_mode": db.get_setting("cto_review_mode", "local_review"),
+        "cto_review_daily_call_cap": int(db.get_setting("cto_review_daily_call_cap", "0") or 0),
+        "cto_review_timeout_seconds": int(db.get_setting("cto_review_timeout_seconds", "300") or 300),
+    }
+
+
+@router.post("/api/orchestrator/cto-review-settings", responses=ERROR_400_RESPONSE)
+def update_cto_review_settings(req: CTOReviewSettingsRequest):
+    """更新 CTO Review 設定。cto_review_mode 限 local_review 或 review_only。"""
+    if req.cto_review_mode is not None:
+        if req.cto_review_mode not in ("local_review", "review_only"):
+            raise HTTPException(
+                status_code=400,
+                detail="cto_review_mode 必須為 local_review 或 review_only",
+            )
+        db.set_setting("cto_review_mode", req.cto_review_mode)
+    if req.cto_review_provider is not None:
+        db.set_setting("cto_review_provider", req.cto_review_provider)
+    if req.cto_review_daily_call_cap is not None:
+        db.set_setting("cto_review_daily_call_cap", str(req.cto_review_daily_call_cap))
+    if req.cto_review_timeout_seconds is not None:
+        db.set_setting("cto_review_timeout_seconds", str(req.cto_review_timeout_seconds))
+    return get_cto_review_settings()
 
 
 # App Factory

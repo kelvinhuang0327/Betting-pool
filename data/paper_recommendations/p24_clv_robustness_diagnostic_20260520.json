@@ -1,0 +1,87 @@
+{
+  "artifact": "P24_CLV_ROBUSTNESS_DIAGNOSTIC",
+  "phase": "P24_CLV_ROBUSTNESS_DIAGNOSTIC_ONLY",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "network_call": false,
+  "crawler_modified": false,
+  "profitability_claim": false,
+  "promotion_allowed": false,
+  "champion_replacement_allowed": false,
+  "production_proposal": false,
+  "source_data": {
+    "pinned_file": "data/tsl_odds_history.jsonl",
+    "pinned_lines": 2788,
+    "pinned_sha256": "ac1320de7efa23e645ffb81f27c9825634c3d63566ed8ccf5c62ee6cf7c94118",
+    "drift_excluded_lines": 8,
+    "re_derived_from_pinned_slice": true
+  },
+  "derivation_rules": {
+    "pregame_window_hours_min": 2.0,
+    "closing_window_hours": 2.0,
+    "requires_markets_field": true,
+    "look_ahead_leakage_check": "PASSED"
+  },
+  "pair_derivation": {
+    "valid_pairs": 236,
+    "total_observations": 2284,
+    "market_counts": {
+      "MNL": 472,
+      "HDC": 458,
+      "OU": 460,
+      "OE": 460,
+      "TTO": 434
+    },
+    "note": "2284 observations from 2-outcome counting per market. P22 used 2499 (3-outcome for MNL). Delta=215 is methodological, not data loss."
+  },
+  "overall_clv": {
+    "n": 2284,
+    "mean_clv_pct": 0.3622,
+    "median_clv_pct": 0.0,
+    "std_clv_pct": 9.6231,
+    "min_clv_pct": -62.1538,
+    "max_clv_pct": 158.3333,
+    "positive_count": 826,
+    "negative_count": 825,
+    "neutral_count": 633,
+    "positive_rate_pct": 36.16
+  },
+  "bootstrap_analysis": {
+    "bootstrap_n": 5000,
+    "random_seed": 42,
+    "mean_ci_95": {
+      "mean": 0.3622,
+      "lo": -0.0186,
+      "hi": 0.7764,
+      "crosses_zero": true,
+      "interpretation": "95% CI crosses zero. Mean is not statistically distinguishable from zero at 5% significance."
+    },
+    "positive_rate_ci_95": {
+      "rate_pct": 36.16,
+      "lo_pct": 34.19,
+      "hi_pct": 38.18,
+      "interpretation": "Positive rate CI [34.2%, 38.2%] — below 50% threshold, consistent with noise."
+    },
+    "trimmed_mean_5pct": 0.0118,
+    "trimmed_mean_10pct": 0.0072,
+    "interpretation_trimmed": "After 5%/10% trim, mean collapses to near-zero. Gross mean driven by extreme tails."
+  },
+  "clv_classification": "INCONCLUSIVE",
+  "classification_criteria": {
+    "ROBUST": "CI fully positive AND sign-stable after outlier removal",
+    "WEAK_STABLE": "CI does not cross zero AND mean positive after outlier removal",
+    "INCONCLUSIVE": "CI crosses zero OR sign changes after outlier removal",
+    "NEGATIVE": "Mean negative AND sign-stable after outlier removal",
+    "actual": "INCONCLUSIVE — CI crosses zero [-0.0186, 0.7764]; trimmed mean ~0.01%; outlier top-1% contributes 110.57% of total CLV sum"
+  },
+  "signal_verdict": "The WBC 2026 CLV signal at the overall level is INCONCLUSIVE. The positive gross mean (+0.36%) is a statistical artifact of a small number of extreme outlier observations. The underlying distribution is approximately symmetric around zero with a large neutral mass (27.7%). No robust positive edge is detectable.",
+  "forbidden_claims": {
+    "production_proposal": false,
+    "champion_replacement": false,
+    "profitability_claim": false,
+    "guaranteed_profit": false,
+    "live_api_call": false
+  },
+  "final_classification": "P24_CLV_ROBUSTNESS_DIAGNOSTIC_COMPLETED"
+}

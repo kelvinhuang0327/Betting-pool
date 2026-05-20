@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "oof_row_count": 1951,
+    "skipped_row_count": 451,
+    "first_val_month": "2025-05",
+    "total_folds": 5,
+    "folds": [
+      {
+        "validation_month": "2025-05",
+        "train_start": "2025-03-18",
+        "train_end": "2025-04-30",
+        "validation_start": "2025-05-01",
+        "validation_end": "2025-05-31",
+        "train_size": 451,
+        "validation_total_rows": 404,
+        "validation_enriched_rows": 404,
+        "n_bins": 10,
+        "min_bin_size": 30,
+        "global_win_rate": 0.600887,
+        "leakage_safe": true
+      },
+      {
+        "validation_month": "2025-06",
+        "train_start": "2025-03-18",
+        "train_end": "2025-05-31",
+        "validation_start": "2025-06-01",
+        "validation_end": "2025-06-30",
+        "train_size": 855,
+        "validation_total_rows": 394,
+        "validation_enriched_rows": 394,
+        "n_bins": 10,
+        "min_bin_size": 30,
+        "global_win_rate": 0.563743,
+        "leakage_safe": true
+      },
+      {
+        "validation_month": "2025-07",
+        "train_start": "2025-03-18",
+        "train_end": "2025-06-30",
+        "validation_start": "2025-07-01",
+        "validation_end": "2025-07-31",
+        "train_size": 1249,
+        "validation_total_rows": 362,
+        "validation_enriched_rows": 362,
+        "n_bins": 10,
+        "min_bin_size": 30,
+        "global_win_rate": 0.549239,
+        "leakage_safe": true
+      },
+      {
+        "validation_month": "2025-08",
+        "train_start": "2025-03-18",
+        "train_end": "2025-07-31",
+        "validation_start": "2025-08-01",
+        "validation_end": "2025-08-31",
+        "train_size": 1611,
+        "validation_total_rows": 419,
+        "validation_enriched_rows": 419,
+        "n_bins": 10,
+        "min_bin_size": 30,
+        "global_win_rate": 0.549969,
+        "leakage_safe": true
+      },
+      {
+        "validation_month": "2025-09",
+        "train_start": "2025-03-18",
+        "train_end": "2025-08-31",
+        "validation_start": "2025-09-01",
+        "validation_end": "2025-09-28",
+        "train_size": 2030,
+        "validation_total_rows": 372,
+        "validation_enriched_rows": 372,
+        "n_bins": 10,
+        "min_bin_size": 30,
+        "global_win_rate": 0.544335,
+        "leakage_safe": true
+      }
+    ],
+    "n_bins": 10,
+    "min_bin_size": 30,
+    "min_train_size": 300,
+    "initial_train_months": 2
+  },
+  "generated_at": "2026-05-11T06:44:07.177265+00:00"
+}

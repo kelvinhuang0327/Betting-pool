@@ -542,6 +542,30 @@ def get_readiness_summary() -> dict[str, Any]:
     except Exception as exc:
         logger.debug("[Readiness] human_review_queue_summary unavailable: %s", exc)
 
+    # Phase 32: surface CLV accumulation state
+    clv_accumulation: dict = {}
+    try:
+        from orchestrator.clv_accumulation_policy import get_clv_accumulation_summary
+        clv_accumulation = get_clv_accumulation_summary()
+    except Exception as exc:
+        logger.debug("[Readiness] clv_accumulation unavailable: %s", exc)
+
+    # Phase 33: surface CLV batch scheduler state
+    clv_batch_scheduler: dict = {}
+    try:
+        from orchestrator.clv_batch_scheduler import get_batch_scheduler_summary
+        clv_batch_scheduler = get_batch_scheduler_summary()
+    except Exception as exc:
+        logger.debug("[Readiness] clv_batch_scheduler unavailable: %s", exc)
+
+    # Phase 34: surface CLV threshold crossing state
+    clv_threshold: dict = {}
+    try:
+        from orchestrator.clv_threshold_tracker import get_threshold_summary
+        clv_threshold = get_threshold_summary()
+    except Exception as exc:
+        logger.debug("[Readiness] clv_threshold unavailable: %s", exc)
+
     return {
         "generated_at": now,
         "readiness_state": readiness_state,
@@ -571,6 +595,12 @@ def get_readiness_summary() -> dict[str, Any]:
         # Phase 24: human review queue
         "human_review_queue": human_review_queue_summary,
         "blocked_by_human_review": human_review_queue_summary.get("blocked_by_human_review", False),
+        # Phase 32: CLV accumulation policy
+        "clv_accumulation": clv_accumulation,
+        # Phase 33: CLV batch scheduler
+        "clv_batch_scheduler": clv_batch_scheduler,
+        # Phase 34: CLV threshold crossing tracker
+        "clv_threshold": clv_threshold,
     }
 
 
@@ -749,5 +779,105 @@ def render_readiness_markdown(summary: dict[str, Any]) -> str:
                 f"",
             ]
 
+    # ── Phase 24 Human Review Queue ─────────────────────────────────
+    hrq = summary.get("human_review_queue", {})
+    if hrq:
+        pending_count = hrq.get("pending_count", 0)
+        blocked = hrq.get("blocked_by_human_review", False)
+        lines += [
+            sub,
+            "  PHASE 24 — HUMAN REVIEW QUEUE",
+            sub,
+            f"  Planner gate       : {'🚫 BLOCKED' if blocked else '✅ clear'}",
+            f"  Pending            : {pending_count}",
+            f"  Approved           : {hrq.get('approved_count', 0)}",
+            f"  Rejected           : {hrq.get('rejected_count', 0)}",
+            f"  More-data requested: {hrq.get('more_data_count', 0)}",
+            f"",
+        ]
+        if pending_count > 0:
+            lines.append(f"  ⚠️  {pending_count} review(s) PENDING — planner is blocked.")
+            lines.append(f"  Run: python3 scripts/review_queue.py list")
+            pending_reviews = hrq.get("pending_reviews", [])
+            for item in pending_reviews[:2]:
+                rid = item.get("review_id", "?")
+                lines.append(
+                    f"  → {rid}  [{item.get('review_type','?')}]"
+                    f"  risk={item.get('risk_level','?').upper()}"
+                )
+                lines.append(
+                    f"       python3 scripts/review_queue.py approve {rid}"
+                    f" --reviewer \"Kelvin\" --notes \"...\""
+                )
+            lines.append("")
+        else:
+            latest = hrq.get("latest_review")
+            if latest:
+                lines.append(
+                    f"  Latest review      : {latest.get('review_id','?')}  "
+                    f"[{latest.get('status','?')}]  {latest.get('review_type','?')}"
+                )
+                lines.append("")
+
+    # ── Phase 34 CLV Threshold Tracker ───────────────────────────
+    ct = summary.get("clv_threshold", {})
+    if ct.get("available"):
+        pending_ct = ct.get("pending_threshold_events", 0)
+        lines += [
+            sub,
+            "  PHASE 34 — CLV THRESHOLD CROSSING TRACKER",
+            sub,
+            f"  Last computed count  : {ct.get('last_computed_count', 0)}",
+            f"  Crossed 30 (Approx.) : {'YES ✅' if ct.get('crossed_30') else 'NO'}",
+            f"  Crossed 50 (Suffic.) : {'YES ✅' if ct.get('crossed_50') else 'NO'}",
+            f"  Pending events       : {pending_ct}",
+            f"  Latest event type    : {ct.get('latest_event_type') or '—'}",
+            f"  Recommended task     : {ct.get('recommended_task_type') or '—'}",
+            f"",
+        ]
+
+    # ── Phase 33 CLV Batch Scheduler ─────────────────────────────────
+    bs = summary.get("clv_batch_scheduler", {})
+    if bs.get("available"):
+        lines += [
+            sub,
+            "  PHASE 33 — CLV BATCH ACCUMULATION SCHEDULER",
+            sub,
+            f"  Batches seen       : {bs.get('batches_seen', 0)}",
+            f"  Latest batch       : {bs.get('latest_batch_date') or '—'}",
+            f"  Computed total     : {bs.get('computed_total', 0)}",
+            f"  Pending total      : {bs.get('pending_total', 0)}",
+            f"  Remaining needed   : {bs.get('remaining_needed', 0)}",
+            f"  Threshold crossed  : {'YES ✅' if bs.get('threshold_crossed') else 'NO'}",
+            f"  Scheduler due      : {'YES ⚡' if bs.get('scheduler_due') else 'NO'}",
+            f"  Next action        : {bs.get('next_batch_action', '')}",
+            f"",
+        ]
+
+    # ── Phase 32 CLV Accumulation Policy ────────────────────────────
+    clv_acc = summary.get("clv_accumulation", {})
+    if clv_acc.get("available"):
+        ev_state = clv_acc.get("evidence_state", "UNKNOWN")
+        ev_icon = {"INSUFFICIENT": "🔴", "APPROACHING": "🟡", "SUFFICIENT": "🟢"}.get(ev_state, "❓")
+        lines += [
+            sub,
+            "  PHASE 32 — CLV ACCUMULATION POLICY",
+            sub,
+            f"  Evidence state     : {ev_icon} {ev_state}",
+            f"  Computed records   : {clv_acc.get('computed_count', 0)} / {clv_acc.get('threshold', 50)}",
+            f"  Progress           : {clv_acc.get('progress_pct', 0.0):.1f}%",
+            f"  Remaining needed   : {clv_acc.get('remaining_needed', 0)}",
+            f"  Learning cycle OK  : {'YES ✅' if clv_acc.get('learning_cycle_allowed') else 'NO ❌'}",
+            f"  Patch gate recheck : {'YES ✅' if clv_acc.get('patch_gate_recheck_allowed') else 'BLOCKED 🚫'}",
+            f"  Recommended action : {clv_acc.get('recommended_next_action', '')}",
+        ]
+        segs = clv_acc.get("priority_segments", [])
+        if segs:
+            lines.append(f"  Priority segments  : {len(segs)} (observation-only until threshold)")
+        lines.append(f"")
+
     lines.append(bar)
     return "\n".join(lines)
+
+
+

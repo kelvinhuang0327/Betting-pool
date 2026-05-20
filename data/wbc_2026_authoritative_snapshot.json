@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generated_at": "2026-03-09T06:36:56.271921Z",
+  "generated_at": "2026-03-18T14:12:20.646841Z",
   "description": "Authoritative WBC snapshot built from official MLB/WBC schedule and roster sources. Predictions remain blocked until starters and lineups are officially verified per game.",
   "games": [
     {
@@ -59,11 +59,12 @@
         "Chen Zhong-Ao Zhuang",
         "Chen-Wei Chen",
         "Cheng-Hui Sung",
+        "Cheng-Yu Chang",
         "Chieh-Hsien Chen",
         "Chih-Wei Hu",
         "Hao-Chun Cheng",
-        "Hao-Yu  Lee",
         "Jo-Hsi Hsu",
+        "Jonathon Long",
         "Jun-Wei Zhang",
         "Jyun-Yue Tseng",
         "Kai-Wei Lin",
@@ -144,11 +145,15 @@
           "team": "TPE"
         },
         {
+          "name": "Cheng-Yu Chang",
+          "team": "TPE"
+        },
+        {
           "name": "Chieh-Hsien Chen",
           "team": "TPE"
         },
         {
-          "name": "Hao-Yu  Lee",
+          "name": "Jonathon Long",
           "team": "TPE"
         },
         {
@@ -162,10 +167,6 @@
         {
           "name": "Lyle Lin",
           "team": "TPE"
-        },
-        {
-          "name": "Nien-Ting Wu",
-          "team": "TPE"
         }
       ],
       "starter_source_urls": [],
@@ -176,7 +177,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -220,10 +221,10 @@
         "Jung Hoo Lee",
         "Kyung-Eun Noh",
         "Min Jae Shin",
-        "Riley O'Brien",
         "Seung Ki Song",
         "Shay Whitcomb",
         "Si Hwan Roh",
+        "Taek Yeon Kim",
         "Woo Joo Jeong",
         "Woo-Suk Go",
         "Yeong Chan You",
@@ -554,7 +555,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -585,7 +586,7 @@
         "Hiroya Miyagi",
         "Kaito Kozono",
         "Kazuma Okamoto",
-        "Kensuke Kondo",
+        "Kensuke Kondoh",
         "Kenya Wakatsuki",
         "Koki Kitayama",
         "Masataka Yoshida",
@@ -614,11 +615,12 @@
         "Chen Zhong-Ao Zhuang",
         "Chen-Wei Chen",
         "Cheng-Hui Sung",
+        "Cheng-Yu Chang",
         "Chieh-Hsien Chen",
         "Chih-Wei Hu",
         "Hao-Chun Cheng",
-        "Hao-Yu  Lee",
         "Jo-Hsi Hsu",
+        "Jonathon Long",
         "Jun-Wei Zhang",
         "Jyun-Yue Tseng",
         "Kai-Wei Lin",
@@ -679,7 +681,7 @@
           "team": "JPN"
         },
         {
-          "name": "Kensuke Kondo",
+          "name": "Kensuke Kondoh",
           "team": "JPN"
         },
         {
@@ -721,11 +723,15 @@
           "team": "TPE"
         },
         {
+          "name": "Cheng-Yu Chang",
+          "team": "TPE"
+        },
+        {
           "name": "Chieh-Hsien Chen",
           "team": "TPE"
         },
         {
-          "name": "Hao-Yu  Lee",
+          "name": "Jonathon Long",
           "team": "TPE"
         },
         {
@@ -738,10 +744,6 @@
         },
         {
           "name": "Lyle Lin",
-          "team": "TPE"
-        },
-        {
-          "name": "Nien-Ting Wu",
           "team": "TPE"
         }
       ],
@@ -799,8 +801,8 @@
         "José Caballero",
         "Jose Ramos",
         "Kenny Hernandez",
+        "Leo Bernal",
         "Leo Jiménez",
-        "Leonardo Bernal",
         "Logan Allen",
         "Luis Castillo",
         "Miguel Amaya",
@@ -932,7 +934,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -973,6 +975,7 @@
         "Jackson Chourio",
         "Javier Sanoja",
         "Jhonathan Díaz",
+        "Jose Alvarez",
         "José Buttó",
         "Keider Montero",
         "Luinder Avila",
@@ -984,8 +987,7 @@
         "Salvador Perez",
         "William Contreras",
         "Willson Contreras",
-        "Wilyer Abreu",
-        "Yoendrys Gómez"
+        "Wilyer Abreu"
       ],
       "away_roster": [
         "Antwone Kelly",
@@ -1159,7 +1161,6 @@
         "Jazz Chisholm Jr.",
         "Justin Wylie",
         "Kristian Robinson",
-        "Lucius Fox",
         "Matt Koperniak",
         "Miles Langhorne",
         "Najer Victor",
@@ -1172,6 +1173,7 @@
         "Tristan Beck",
         "Tyler Viza",
         "Vance Worley",
+        "Wallace Clark",
         "Will Cresswell"
       ],
       "away_roster": [
@@ -1194,8 +1196,8 @@
         "Jonathan Aranda",
         "Julian Ornelas",
         "Luis Gastelum",
-        "Luis Urías",
         "Manny Barreda",
+        "Mateo Gil",
         "Nacho Alvarez Jr.",
         "Nick Gonzales",
         "Randy Arozarena",
@@ -1242,11 +1244,11 @@
           "team": "GBR"
         },
         {
-          "name": "Lucius Fox",
+          "name": "Matt Koperniak",
           "team": "GBR"
         },
         {
-          "name": "Matt Koperniak",
+          "name": "Nate Eaton",
           "team": "GBR"
         }
       ],
@@ -1296,7 +1298,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -1340,15 +1342,15 @@
         "Jesus Marriaga",
         "Jhon Romero",
         "Jordan Diaz",
-        "Jorge Alfaro",
         "Jose Quintana",
         "Julio Teheran",
+        "Luis Escobar",
         "Luis Patiño",
         "Michael Arroyo",
         "Pedro Garcia",
-        "Reiver Sanmartin",
         "Reynaldo Rodriguez",
         "Rio Gomez",
+        "Tito Polo",
         "Yapson Gomez"
       ],
       "away_roster": [
@@ -1370,7 +1372,6 @@
         "José De León",
         "Jose Espada",
         "Jovani Morán",
-        "Luis Hernandez",
         "Luis Quiñones",
         "Luis Vázquez",
         "MJ Melendez",
@@ -1462,7 +1463,7 @@
           "team": "PUR"
         },
         {
-          "name": "Luis Hernandez",
+          "name": "Luis Vázquez",
           "team": "PUR"
         }
       ],
@@ -1474,7 +1475,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -1510,13 +1511,11 @@
         "Cristopher Sánchez",
         "Dennis Santana",
         "Elvis Alvarado",
-        "Enny Romero",
+        "Erik González",
         "Fernando Tatis Jr.",
         "Geraldo Perdomo",
         "Gregory Soto",
         "Huascar Brazobán",
-        "Jeremy Peña",
-        "Jimmy Cordero",
         "Juan Mejia",
         "Juan Soto",
         "Julio Rodríguez",
@@ -1525,20 +1524,11 @@
         "Ketel Marte",
         "Luis Severino",
         "Manny Machado",
-        "Mel Rojas Jr.",
-        "Michael De La Cruz",
-        "Michael De León",
         "Oneil Cruz",
-        "Oscar De La Cruz",
-        "Pedro Severino",
-        "Phillips Valdez",
-        "Ricardo Cespedes",
         "Sandy Alcantara",
         "Seranthony Domínguez",
-        "Sócrates Brito",
         "Vladimir Guerrero Jr.",
-        "Wandy Peralta",
-        "Webster Rivas"
+        "Wandy Peralta"
       ],
       "away_roster": [
         "Angel Obando",
@@ -1596,15 +1586,15 @@
           "team": "DOM"
         },
         {
+          "name": "Erik González",
+          "team": "DOM"
+        },
+        {
           "name": "Fernando Tatis Jr.",
           "team": "DOM"
         },
         {
           "name": "Geraldo Perdomo",
-          "team": "DOM"
-        },
-        {
-          "name": "Jeremy Peña",
           "team": "DOM"
         },
         {
@@ -1662,7 +1652,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -1687,7 +1677,7 @@
       ],
       "home_roster": [
         "Bo Takahashi",
-        "Daniel Missaki",
+        "Caio De Araujo",
         "Dante Bichette Jr.",
         "Enzo Hayashida",
         "Enzo Sawayama",
@@ -1727,7 +1717,6 @@
         "Byron Buxton",
         "Cal Raleigh",
         "Clay Holmes",
-        "Clayton Kershaw",
         "David Bednar",
         "Ernie Clement",
         "Gabe Speier",
@@ -1735,19 +1724,20 @@
         "Garrett Whitlock",
         "Griffin Jax",
         "Gunnar Henderson",
+        "Jeff Hoffman",
         "Kyle Schwarber",
         "Logan Webb",
         "Mason Miller",
         "Matthew Boyd",
-        "Michael Wacha",
         "Nolan McLean",
         "Paul Goldschmidt",
         "Paul Skenes",
         "Pete Crow-Armstrong",
         "Roman Anthony",
-        "Ryan Yarbrough",
-        "Tarik Skubal",
-        "Will Smith"
+        "Tim Hill",
+        "Tyler Rogers",
+        "Will Smith",
+        "Will Vest"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/776/roster?season=2026",
       "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/940/roster?season=2026",
@@ -1839,7 +1829,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -1899,11 +1889,12 @@
         "Chen Zhong-Ao Zhuang",
         "Chen-Wei Chen",
         "Cheng-Hui Sung",
+        "Cheng-Yu Chang",
         "Chieh-Hsien Chen",
         "Chih-Wei Hu",
         "Hao-Chun Cheng",
-        "Hao-Yu  Lee",
         "Jo-Hsi Hsu",
+        "Jonathon Long",
         "Jun-Wei Zhang",
         "Jyun-Yue Tseng",
         "Kai-Wei Lin",
@@ -2006,11 +1997,15 @@
           "team": "TPE"
         },
         {
+          "name": "Cheng-Yu Chang",
+          "team": "TPE"
+        },
+        {
           "name": "Chieh-Hsien Chen",
           "team": "TPE"
         },
         {
-          "name": "Hao-Yu  Lee",
+          "name": "Jonathon Long",
           "team": "TPE"
         },
         {
@@ -2023,10 +2018,6 @@
         },
         {
           "name": "Lyle Lin",
-          "team": "TPE"
-        },
-        {
-          "name": "Nien-Ting Wu",
           "team": "TPE"
         }
       ],
@@ -2071,7 +2062,7 @@
         "Hiroya Miyagi",
         "Kaito Kozono",
         "Kazuma Okamoto",
-        "Kensuke Kondo",
+        "Kensuke Kondoh",
         "Kenya Wakatsuki",
         "Koki Kitayama",
         "Masataka Yoshida",
@@ -2116,10 +2107,10 @@
         "Jung Hoo Lee",
         "Kyung-Eun Noh",
         "Min Jae Shin",
-        "Riley O'Brien",
         "Seung Ki Song",
         "Shay Whitcomb",
         "Si Hwan Roh",
+        "Taek Yeon Kim",
         "Woo Joo Jeong",
         "Woo-Suk Go",
         "Yeong Chan You",
@@ -2165,7 +2156,7 @@
           "team": "JPN"
         },
         {
-          "name": "Kensuke Kondo",
+          "name": "Kensuke Kondoh",
           "team": "JPN"
         },
         {
@@ -2317,15 +2308,15 @@
         "Jesus Marriaga",
         "Jhon Romero",
         "Jordan Diaz",
-        "Jorge Alfaro",
         "Jose Quintana",
         "Julio Teheran",
+        "Luis Escobar",
         "Luis Patiño",
         "Michael Arroyo",
         "Pedro Garcia",
-        "Reiver Sanmartin",
         "Reynaldo Rodriguez",
         "Rio Gomez",
+        "Tito Polo",
         "Yapson Gomez"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2026",
@@ -2685,26 +2676,26 @@
         "Adam Ottavino",
         "Alek Jacob",
         "Andrew Fischer",
+        "Brayan Rocchio",
         "Claudio Scotti",
         "Dan Altavilla",
         "Dante Nori",
         "Dominic Canzone",
-        "Dylan DeLucia",
         "Gabriele Quattrini",
-        "Giaconino Lasaracina",
         "Gordon Graceffo",
         "Greg Weissert",
         "J.J. D'Orazio",
         "Jac Caglianone",
         "Jakob Marsee",
+        "Joe Jacques",
         "Joe La Sorsa",
         "Jon Berti",
         "Kyle Nicolas",
-        "Kyle Teel",
         "Matt Festa",
         "Michael Lorenzen",
-        "Miles Mastrobuoni",
+        "Mickey Gasper",
         "Nick Morabito",
+        "Renzo Martini",
         "Ron Marinaccio",
         "Sam Aldegheri",
         "Sam Antonacci",
@@ -2714,7 +2705,7 @@
       ],
       "away_roster": [
         "Bo Takahashi",
-        "Daniel Missaki",
+        "Caio De Araujo",
         "Dante Bichette Jr.",
         "Enzo Hayashida",
         "Enzo Sawayama",
@@ -2756,15 +2747,15 @@
           "team": "ITA"
         },
         {
+          "name": "Brayan Rocchio",
+          "team": "ITA"
+        },
+        {
           "name": "Dante Nori",
           "team": "ITA"
         },
         {
           "name": "Dominic Canzone",
-          "team": "ITA"
-        },
-        {
-          "name": "Giaconino Lasaracina",
           "team": "ITA"
         },
         {
@@ -2784,7 +2775,7 @@
           "team": "ITA"
         },
         {
-          "name": "Kyle Teel",
+          "name": "Mickey Gasper",
           "team": "ITA"
         }
       ],
@@ -2834,7 +2825,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -2876,7 +2867,6 @@
         "José De León",
         "Jose Espada",
         "Jovani Morán",
-        "Luis Hernandez",
         "Luis Quiñones",
         "Luis Vázquez",
         "MJ Melendez",
@@ -2911,8 +2901,8 @@
         "José Caballero",
         "Jose Ramos",
         "Kenny Hernandez",
+        "Leo Bernal",
         "Leo Jiménez",
-        "Leonardo Bernal",
         "Logan Allen",
         "Luis Castillo",
         "Miguel Amaya",
@@ -2984,7 +2974,7 @@
           "team": "PUR"
         },
         {
-          "name": "Luis Hernandez",
+          "name": "Luis Vázquez",
           "team": "PUR"
         }
       ],
@@ -3077,6 +3067,7 @@
         "Jackson Chourio",
         "Javier Sanoja",
         "Jhonathan Díaz",
+        "Jose Alvarez",
         "José Buttó",
         "Keider Montero",
         "Luinder Avila",
@@ -3088,8 +3079,7 @@
         "Salvador Perez",
         "William Contreras",
         "Willson Contreras",
-        "Wilyer Abreu",
-        "Yoendrys Gómez"
+        "Wilyer Abreu"
       ],
       "away_roster": [
         "Assaf Lowengart",
@@ -3115,9 +3105,9 @@
         "Noah Mendlinger",
         "RJ Schreck",
         "Rob Kaminsky",
-        "Robert Stock",
         "Ryan Prager",
         "Spencer Horwitz",
+        "Tanner Jacobson",
         "Tommy Kahnle",
         "Zach Levenson",
         "Zack Leban",
@@ -3256,7 +3246,6 @@
         "Byron Buxton",
         "Cal Raleigh",
         "Clay Holmes",
-        "Clayton Kershaw",
         "David Bednar",
         "Ernie Clement",
         "Gabe Speier",
@@ -3264,19 +3253,20 @@
         "Garrett Whitlock",
         "Griffin Jax",
         "Gunnar Henderson",
+        "Jeff Hoffman",
         "Kyle Schwarber",
         "Logan Webb",
         "Mason Miller",
         "Matthew Boyd",
-        "Michael Wacha",
         "Nolan McLean",
         "Paul Goldschmidt",
         "Paul Skenes",
         "Pete Crow-Armstrong",
         "Roman Anthony",
-        "Ryan Yarbrough",
-        "Tarik Skubal",
-        "Will Smith"
+        "Tim Hill",
+        "Tyler Rogers",
+        "Will Smith",
+        "Will Vest"
       ],
       "away_roster": [
         "Andre Scrubb",
@@ -3295,7 +3285,6 @@
         "Jazz Chisholm Jr.",
         "Justin Wylie",
         "Kristian Robinson",
-        "Lucius Fox",
         "Matt Koperniak",
         "Miles Langhorne",
         "Najer Victor",
@@ -3308,6 +3297,7 @@
         "Tristan Beck",
         "Tyler Viza",
         "Vance Worley",
+        "Wallace Clark",
         "Will Cresswell"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/940/roster?season=2026",
@@ -3406,11 +3396,11 @@
           "team": "GBR"
         },
         {
-          "name": "Lucius Fox",
+          "name": "Matt Koperniak",
           "team": "GBR"
         },
         {
-          "name": "Matt Koperniak",
+          "name": "Nate Eaton",
           "team": "GBR"
         }
       ],
@@ -3468,10 +3458,10 @@
         "Jung Hoo Lee",
         "Kyung-Eun Noh",
         "Min Jae Shin",
-        "Riley O'Brien",
         "Seung Ki Song",
         "Shay Whitcomb",
         "Si Hwan Roh",
+        "Taek Yeon Kim",
         "Woo Joo Jeong",
         "Woo-Suk Go",
         "Yeong Chan You",
@@ -3484,11 +3474,12 @@
         "Chen Zhong-Ao Zhuang",
         "Chen-Wei Chen",
         "Cheng-Hui Sung",
+        "Cheng-Yu Chang",
         "Chieh-Hsien Chen",
         "Chih-Wei Hu",
         "Hao-Chun Cheng",
-        "Hao-Yu  Lee",
         "Jo-Hsi Hsu",
+        "Jonathon Long",
         "Jun-Wei Zhang",
         "Jyun-Yue Tseng",
         "Kai-Wei Lin",
@@ -3591,11 +3582,15 @@
           "team": "TPE"
         },
         {
+          "name": "Cheng-Yu Chang",
+          "team": "TPE"
+        },
+        {
           "name": "Chieh-Hsien Chen",
           "team": "TPE"
         },
         {
-          "name": "Hao-Yu  Lee",
+          "name": "Jonathon Long",
           "team": "TPE"
         },
         {
@@ -3608,10 +3603,6 @@
         },
         {
           "name": "Lyle Lin",
-          "team": "TPE"
-        },
-        {
-          "name": "Nien-Ting Wu",
           "team": "TPE"
         }
       ],
@@ -3656,7 +3647,7 @@
         "Hiroya Miyagi",
         "Kaito Kozono",
         "Kazuma Okamoto",
-        "Kensuke Kondo",
+        "Kensuke Kondoh",
         "Kenya Wakatsuki",
         "Koki Kitayama",
         "Masataka Yoshida",
@@ -3750,7 +3741,7 @@
           "team": "JPN"
         },
         {
-          "name": "Kensuke Kondo",
+          "name": "Kensuke Kondoh",
           "team": "JPN"
         },
         {
@@ -3902,15 +3893,15 @@
         "Jesus Marriaga",
         "Jhon Romero",
         "Jordan Diaz",
-        "Jorge Alfaro",
         "Jose Quintana",
         "Julio Teheran",
+        "Luis Escobar",
         "Luis Patiño",
         "Michael Arroyo",
         "Pedro Garcia",
-        "Reiver Sanmartin",
         "Reynaldo Rodriguez",
         "Rio Gomez",
+        "Tito Polo",
         "Yapson Gomez"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2026",
@@ -4063,13 +4054,11 @@
         "Cristopher Sánchez",
         "Dennis Santana",
         "Elvis Alvarado",
-        "Enny Romero",
+        "Erik González",
         "Fernando Tatis Jr.",
         "Geraldo Perdomo",
         "Gregory Soto",
         "Huascar Brazobán",
-        "Jeremy Peña",
-        "Jimmy Cordero",
         "Juan Mejia",
         "Juan Soto",
         "Julio Rodríguez",
@@ -4078,20 +4067,11 @@
         "Ketel Marte",
         "Luis Severino",
         "Manny Machado",
-        "Mel Rojas Jr.",
-        "Michael De La Cruz",
-        "Michael De León",
         "Oneil Cruz",
-        "Oscar De La Cruz",
-        "Pedro Severino",
-        "Phillips Valdez",
-        "Ricardo Cespedes",
         "Sandy Alcantara",
         "Seranthony Domínguez",
-        "Sócrates Brito",
         "Vladimir Guerrero Jr.",
-        "Wandy Peralta",
-        "Webster Rivas"
+        "Wandy Peralta"
       ],
       "away_roster": [
         "Antwone Kelly",
@@ -4157,15 +4137,15 @@
           "team": "DOM"
         },
         {
+          "name": "Erik González",
+          "team": "DOM"
+        },
+        {
           "name": "Fernando Tatis Jr.",
           "team": "DOM"
         },
         {
           "name": "Geraldo Perdomo",
-          "team": "DOM"
-        },
-        {
-          "name": "Jeremy Peña",
           "team": "DOM"
         },
         {
@@ -4253,26 +4233,26 @@
         "Adam Ottavino",
         "Alek Jacob",
         "Andrew Fischer",
+        "Brayan Rocchio",
         "Claudio Scotti",
         "Dan Altavilla",
         "Dante Nori",
         "Dominic Canzone",
-        "Dylan DeLucia",
         "Gabriele Quattrini",
-        "Giaconino Lasaracina",
         "Gordon Graceffo",
         "Greg Weissert",
         "J.J. D'Orazio",
         "Jac Caglianone",
         "Jakob Marsee",
+        "Joe Jacques",
         "Joe La Sorsa",
         "Jon Berti",
         "Kyle Nicolas",
-        "Kyle Teel",
         "Matt Festa",
         "Michael Lorenzen",
-        "Miles Mastrobuoni",
+        "Mickey Gasper",
         "Nick Morabito",
+        "Renzo Martini",
         "Ron Marinaccio",
         "Sam Aldegheri",
         "Sam Antonacci",
@@ -4297,7 +4277,6 @@
         "Jazz Chisholm Jr.",
         "Justin Wylie",
         "Kristian Robinson",
-        "Lucius Fox",
         "Matt Koperniak",
         "Miles Langhorne",
         "Najer Victor",
@@ -4310,6 +4289,7 @@
         "Tristan Beck",
         "Tyler Viza",
         "Vance Worley",
+        "Wallace Clark",
         "Will Cresswell"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/841/roster?season=2026",
@@ -4332,15 +4312,15 @@
           "team": "ITA"
         },
         {
+          "name": "Brayan Rocchio",
+          "team": "ITA"
+        },
+        {
           "name": "Dante Nori",
           "team": "ITA"
         },
         {
           "name": "Dominic Canzone",
-          "team": "ITA"
-        },
-        {
-          "name": "Giaconino Lasaracina",
           "team": "ITA"
         },
         {
@@ -4360,7 +4340,7 @@
           "team": "ITA"
         },
         {
-          "name": "Kyle Teel",
+          "name": "Mickey Gasper",
           "team": "ITA"
         }
       ],
@@ -4394,11 +4374,11 @@
           "team": "GBR"
         },
         {
-          "name": "Lucius Fox",
+          "name": "Matt Koperniak",
           "team": "GBR"
         },
         {
-          "name": "Matt Koperniak",
+          "name": "Nate Eaton",
           "team": "GBR"
         }
       ],
@@ -4488,8 +4468,8 @@
         "José Caballero",
         "Jose Ramos",
         "Kenny Hernandez",
+        "Leo Bernal",
         "Leo Jiménez",
-        "Leonardo Bernal",
         "Logan Allen",
         "Luis Castillo",
         "Miguel Amaya",
@@ -4674,9 +4654,9 @@
         "Noah Mendlinger",
         "RJ Schreck",
         "Rob Kaminsky",
-        "Robert Stock",
         "Ryan Prager",
         "Spencer Horwitz",
+        "Tanner Jacobson",
         "Tommy Kahnle",
         "Zach Levenson",
         "Zack Leban",
@@ -4871,8 +4851,8 @@
         "Jonathan Aranda",
         "Julian Ornelas",
         "Luis Gastelum",
-        "Luis Urías",
         "Manny Barreda",
+        "Mateo Gil",
         "Nacho Alvarez Jr.",
         "Nick Gonzales",
         "Randy Arozarena",
@@ -4885,7 +4865,7 @@
       ],
       "away_roster": [
         "Bo Takahashi",
-        "Daniel Missaki",
+        "Caio De Araujo",
         "Dante Bichette Jr.",
         "Enzo Hayashida",
         "Enzo Sawayama",
@@ -5119,10 +5099,10 @@
         "Jung Hoo Lee",
         "Kyung-Eun Noh",
         "Min Jae Shin",
-        "Riley O'Brien",
         "Seung Ki Song",
         "Shay Whitcomb",
         "Si Hwan Roh",
+        "Taek Yeon Kim",
         "Woo Joo Jeong",
         "Woo-Suk Go",
         "Yeong Chan You",
@@ -5274,8 +5254,8 @@
         "José Caballero",
         "Jose Ramos",
         "Kenny Hernandez",
+        "Leo Bernal",
         "Leo Jiménez",
-        "Leonardo Bernal",
         "Logan Allen",
         "Luis Castillo",
         "Miguel Amaya",
@@ -5306,15 +5286,15 @@
         "Jesus Marriaga",
         "Jhon Romero",
         "Jordan Diaz",
-        "Jorge Alfaro",
         "Jose Quintana",
         "Julio Teheran",
+        "Luis Escobar",
         "Luis Patiño",
         "Michael Arroyo",
         "Pedro Garcia",
-        "Reiver Sanmartin",
         "Reynaldo Rodriguez",
         "Rio Gomez",
+        "Tito Polo",
         "Yapson Gomez"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2026",
@@ -5407,7 +5387,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -5454,9 +5434,9 @@
         "Noah Mendlinger",
         "RJ Schreck",
         "Rob Kaminsky",
-        "Robert Stock",
         "Ryan Prager",
         "Spencer Horwitz",
+        "Tanner Jacobson",
         "Tommy Kahnle",
         "Zach Levenson",
         "Zack Leban",
@@ -5475,13 +5455,11 @@
         "Cristopher Sánchez",
         "Dennis Santana",
         "Elvis Alvarado",
-        "Enny Romero",
+        "Erik González",
         "Fernando Tatis Jr.",
         "Geraldo Perdomo",
         "Gregory Soto",
         "Huascar Brazobán",
-        "Jeremy Peña",
-        "Jimmy Cordero",
         "Juan Mejia",
         "Juan Soto",
         "Julio Rodríguez",
@@ -5490,20 +5468,11 @@
         "Ketel Marte",
         "Luis Severino",
         "Manny Machado",
-        "Mel Rojas Jr.",
-        "Michael De La Cruz",
-        "Michael De León",
         "Oneil Cruz",
-        "Oscar De La Cruz",
-        "Pedro Severino",
-        "Phillips Valdez",
-        "Ricardo Cespedes",
         "Sandy Alcantara",
         "Seranthony Domínguez",
-        "Sócrates Brito",
         "Vladimir Guerrero Jr.",
-        "Wandy Peralta",
-        "Webster Rivas"
+        "Wandy Peralta"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/840/roster?season=2026",
       "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/805/roster?season=2026",
@@ -5567,15 +5536,15 @@
           "team": "DOM"
         },
         {
+          "name": "Erik González",
+          "team": "DOM"
+        },
+        {
           "name": "Fernando Tatis Jr.",
           "team": "DOM"
         },
         {
           "name": "Geraldo Perdomo",
-          "team": "DOM"
-        },
-        {
-          "name": "Jeremy Peña",
           "team": "DOM"
         },
         {
@@ -5595,7 +5564,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -5635,7 +5604,6 @@
         "Jazz Chisholm Jr.",
         "Justin Wylie",
         "Kristian Robinson",
-        "Lucius Fox",
         "Matt Koperniak",
         "Miles Langhorne",
         "Najer Victor",
@@ -5648,11 +5616,12 @@
         "Tristan Beck",
         "Tyler Viza",
         "Vance Worley",
+        "Wallace Clark",
         "Will Cresswell"
       ],
       "away_roster": [
         "Bo Takahashi",
-        "Daniel Missaki",
+        "Caio De Araujo",
         "Dante Bichette Jr.",
         "Enzo Hayashida",
         "Enzo Sawayama",
@@ -5718,11 +5687,11 @@
           "team": "GBR"
         },
         {
-          "name": "Lucius Fox",
+          "name": "Matt Koperniak",
           "team": "GBR"
         },
         {
-          "name": "Matt Koperniak",
+          "name": "Nate Eaton",
           "team": "GBR"
         }
       ],
@@ -5772,7 +5741,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -5814,7 +5783,6 @@
         "José De León",
         "Jose Espada",
         "Jovani Morán",
-        "Luis Hernandez",
         "Luis Quiñones",
         "Luis Vázquez",
         "MJ Melendez",
@@ -5900,7 +5868,7 @@
           "team": "PUR"
         },
         {
-          "name": "Luis Hernandez",
+          "name": "Luis Vázquez",
           "team": "PUR"
         }
       ],
@@ -5950,7 +5918,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -6023,6 +5991,7 @@
         "Jackson Chourio",
         "Javier Sanoja",
         "Jhonathan Díaz",
+        "Jose Alvarez",
         "José Buttó",
         "Keider Montero",
         "Luinder Avila",
@@ -6034,8 +6003,7 @@
         "Salvador Perez",
         "William Contreras",
         "Willson Contreras",
-        "Wilyer Abreu",
-        "Yoendrys Gómez"
+        "Wilyer Abreu"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/881/roster?season=2026",
       "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2026",
@@ -6127,7 +6095,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -6160,7 +6128,6 @@
         "Byron Buxton",
         "Cal Raleigh",
         "Clay Holmes",
-        "Clayton Kershaw",
         "David Bednar",
         "Ernie Clement",
         "Gabe Speier",
@@ -6168,19 +6135,20 @@
         "Garrett Whitlock",
         "Griffin Jax",
         "Gunnar Henderson",
+        "Jeff Hoffman",
         "Kyle Schwarber",
         "Logan Webb",
         "Mason Miller",
         "Matthew Boyd",
-        "Michael Wacha",
         "Nolan McLean",
         "Paul Goldschmidt",
         "Paul Skenes",
         "Pete Crow-Armstrong",
         "Roman Anthony",
-        "Ryan Yarbrough",
-        "Tarik Skubal",
-        "Will Smith"
+        "Tim Hill",
+        "Tyler Rogers",
+        "Will Smith",
+        "Will Vest"
       ],
       "away_roster": [
         "Alejandro Kirk",
@@ -6202,8 +6170,8 @@
         "Jonathan Aranda",
         "Julian Ornelas",
         "Luis Gastelum",
-        "Luis Urías",
         "Manny Barreda",
+        "Mateo Gil",
         "Nacho Alvarez Jr.",
         "Nick Gonzales",
         "Randy Arozarena",
@@ -6304,7 +6272,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -6335,7 +6303,7 @@
         "Hiroya Miyagi",
         "Kaito Kozono",
         "Kazuma Okamoto",
-        "Kensuke Kondo",
+        "Kensuke Kondoh",
         "Kenya Wakatsuki",
         "Koki Kitayama",
         "Masataka Yoshida",
@@ -6407,7 +6375,7 @@
           "team": "JPN"
         },
         {
-          "name": "Kensuke Kondo",
+          "name": "Kensuke Kondoh",
           "team": "JPN"
         },
         {
@@ -6481,7 +6449,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -6560,9 +6528,9 @@
         "Noah Mendlinger",
         "RJ Schreck",
         "Rob Kaminsky",
-        "Robert Stock",
         "Ryan Prager",
         "Spencer Horwitz",
+        "Tanner Jacobson",
         "Tommy Kahnle",
         "Zach Levenson",
         "Zack Leban",
@@ -6658,7 +6626,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -6700,7 +6668,6 @@
         "José De León",
         "Jose Espada",
         "Jovani Morán",
-        "Luis Hernandez",
         "Luis Quiñones",
         "Luis Vázquez",
         "MJ Melendez",
@@ -6786,7 +6753,7 @@
           "team": "PUR"
         },
         {
-          "name": "Luis Hernandez",
+          "name": "Luis Vázquez",
           "team": "PUR"
         }
       ],
@@ -6836,7 +6803,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -6872,13 +6839,11 @@
         "Cristopher Sánchez",
         "Dennis Santana",
         "Elvis Alvarado",
-        "Enny Romero",
+        "Erik González",
         "Fernando Tatis Jr.",
         "Geraldo Perdomo",
         "Gregory Soto",
         "Huascar Brazobán",
-        "Jeremy Peña",
-        "Jimmy Cordero",
         "Juan Mejia",
         "Juan Soto",
         "Julio Rodríguez",
@@ -6887,20 +6852,11 @@
         "Ketel Marte",
         "Luis Severino",
         "Manny Machado",
-        "Mel Rojas Jr.",
-        "Michael De La Cruz",
-        "Michael De León",
         "Oneil Cruz",
-        "Oscar De La Cruz",
-        "Pedro Severino",
-        "Phillips Valdez",
-        "Ricardo Cespedes",
         "Sandy Alcantara",
         "Seranthony Domínguez",
-        "Sócrates Brito",
         "Vladimir Guerrero Jr.",
-        "Wandy Peralta",
-        "Webster Rivas"
+        "Wandy Peralta"
       ],
       "away_roster": [
         "Andrés Giménez",
@@ -6920,6 +6876,7 @@
         "Jackson Chourio",
         "Javier Sanoja",
         "Jhonathan Díaz",
+        "Jose Alvarez",
         "José Buttó",
         "Keider Montero",
         "Luinder Avila",
@@ -6931,8 +6888,7 @@
         "Salvador Perez",
         "William Contreras",
         "Willson Contreras",
-        "Wilyer Abreu",
-        "Yoendrys Gómez"
+        "Wilyer Abreu"
       ],
       "home_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/805/roster?season=2026",
       "away_roster_source_url": "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2026",
@@ -6958,15 +6914,15 @@
           "team": "DOM"
         },
         {
+          "name": "Erik González",
+          "team": "DOM"
+        },
+        {
           "name": "Fernando Tatis Jr.",
           "team": "DOM"
         },
         {
           "name": "Geraldo Perdomo",
-          "team": "DOM"
-        },
-        {
-          "name": "Jeremy Peña",
           "team": "DOM"
         },
         {
@@ -7024,7 +6980,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -7057,7 +7013,6 @@
         "Byron Buxton",
         "Cal Raleigh",
         "Clay Holmes",
-        "Clayton Kershaw",
         "David Bednar",
         "Ernie Clement",
         "Gabe Speier",
@@ -7065,45 +7020,46 @@
         "Garrett Whitlock",
         "Griffin Jax",
         "Gunnar Henderson",
+        "Jeff Hoffman",
         "Kyle Schwarber",
         "Logan Webb",
         "Mason Miller",
         "Matthew Boyd",
-        "Michael Wacha",
         "Nolan McLean",
         "Paul Goldschmidt",
         "Paul Skenes",
         "Pete Crow-Armstrong",
         "Roman Anthony",
-        "Ryan Yarbrough",
-        "Tarik Skubal",
-        "Will Smith"
+        "Tim Hill",
+        "Tyler Rogers",
+        "Will Smith",
+        "Will Vest"
       ],
       "away_roster": [
         "Aaron Nola",
         "Adam Ottavino",
         "Alek Jacob",
         "Andrew Fischer",
+        "Brayan Rocchio",
         "Claudio Scotti",
         "Dan Altavilla",
         "Dante Nori",
         "Dominic Canzone",
-        "Dylan DeLucia",
         "Gabriele Quattrini",
-        "Giaconino Lasaracina",
         "Gordon Graceffo",
         "Greg Weissert",
         "J.J. D'Orazio",
         "Jac Caglianone",
         "Jakob Marsee",
+        "Joe Jacques",
         "Joe La Sorsa",
         "Jon Berti",
         "Kyle Nicolas",
-        "Kyle Teel",
         "Matt Festa",
         "Michael Lorenzen",
-        "Miles Mastrobuoni",
+        "Mickey Gasper",
         "Nick Morabito",
+        "Renzo Martini",
         "Ron Marinaccio",
         "Sam Aldegheri",
         "Sam Antonacci",
@@ -7161,15 +7117,15 @@
           "team": "ITA"
         },
         {
+          "name": "Brayan Rocchio",
+          "team": "ITA"
+        },
+        {
           "name": "Dante Nori",
           "team": "ITA"
         },
         {
           "name": "Dominic Canzone",
-          "team": "ITA"
-        },
-        {
-          "name": "Giaconino Lasaracina",
           "team": "ITA"
         },
         {
@@ -7189,7 +7145,7 @@
           "team": "ITA"
         },
         {
-          "name": "Kyle Teel",
+          "name": "Mickey Gasper",
           "team": "ITA"
         }
       ],
@@ -7201,7 +7157,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -7378,7 +7334,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     },
@@ -7421,8 +7377,8 @@
         "Jonathan Aranda",
         "Julian Ornelas",
         "Luis Gastelum",
-        "Luis Urías",
         "Manny Barreda",
+        "Mateo Gil",
         "Nacho Alvarez Jr.",
         "Nick Gonzales",
         "Randy Arozarena",
@@ -7438,26 +7394,26 @@
         "Adam Ottavino",
         "Alek Jacob",
         "Andrew Fischer",
+        "Brayan Rocchio",
         "Claudio Scotti",
         "Dan Altavilla",
         "Dante Nori",
         "Dominic Canzone",
-        "Dylan DeLucia",
         "Gabriele Quattrini",
-        "Giaconino Lasaracina",
         "Gordon Graceffo",
         "Greg Weissert",
         "J.J. D'Orazio",
         "Jac Caglianone",
         "Jakob Marsee",
+        "Joe Jacques",
         "Joe La Sorsa",
         "Jon Berti",
         "Kyle Nicolas",
-        "Kyle Teel",
         "Matt Festa",
         "Michael Lorenzen",
-        "Miles Mastrobuoni",
+        "Mickey Gasper",
         "Nick Morabito",
+        "Renzo Martini",
         "Ron Marinaccio",
         "Sam Aldegheri",
         "Sam Antonacci",
@@ -7515,15 +7471,15 @@
           "team": "ITA"
         },
         {
+          "name": "Brayan Rocchio",
+          "team": "ITA"
+        },
+        {
           "name": "Dante Nori",
           "team": "ITA"
         },
         {
           "name": "Dominic Canzone",
-          "team": "ITA"
-        },
-        {
-          "name": "Giaconino Lasaracina",
           "team": "ITA"
         },
         {
@@ -7543,7 +7499,7 @@
           "team": "ITA"
         },
         {
-          "name": "Kyle Teel",
+          "name": "Mickey Gasper",
           "team": "ITA"
         }
       ],
@@ -7555,7 +7511,7 @@
         "rosters_verified": true,
         "starters_verified": false,
         "lineups_verified": false,
-        "last_verified_at": "2026-03-09T06:36:56.271921Z",
+        "last_verified_at": "2026-03-18T14:12:20.646841Z",
         "max_age_hours": 24
       }
     }

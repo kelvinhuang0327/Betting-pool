@@ -1,0 +1,14 @@
+{
+  "date_tpe": "2026-03-15",
+  "lambda_a": 3.25,
+  "lambda_b": 4.875,
+  "a_win_9": 0.22576741955080026,
+  "b_win_9": 0.6520023118763456,
+  "tie_9": 0.12223026857285423,
+  "a_full": 0.2868825538372274,
+  "b_full": 0.7131174461627727,
+  "special_matchup_weight": "無資料",
+  "odds": "無資料",
+  "model_artifacts_has_team_weights": false,
+  "matrix_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_backend/reports/2026-03-15_PUR_ITA_poisson_matrix.csv"
+}

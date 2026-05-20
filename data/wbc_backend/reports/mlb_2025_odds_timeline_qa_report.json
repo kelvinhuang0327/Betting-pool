@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-03-20T06:31:03.480753Z",
+  "csv_path": "data/mlb_2025/mlb_odds_2025_real.csv",
+  "canonical_output_path": "data/mlb_context_sources/odds_timeline_canonical.jsonl",
+  "source_rows_total": 4828,
+  "mapped_source_rows": 4828,
+  "unmatched_source_rows": 0,
+  "duplicate_matches": 2396,
+  "mapping_mode_counts": {
+    "exact_game_id": 4828
+  },
+  "mapping_success_rate": 1.0,
+  "total_games": 2430,
+  "games_with_any_snapshot": 2396,
+  "games_strict_valid_count": 0,
+  "strict_4point_coverage_rate": 0.0,
+  "coverage_rate": 0.0,
+  "closing_only_coverage_rate": 0.0,
+  "closing_only_count": 0,
+  "any_data_coverage_rate": 0.986,
+  "any_data_count": 2396,
+  "post_game_proxy_count": 2396,
+  "post_game_proxy_rate": 0.986,
+  "timeline_tier_breakdown": {
+    "strict_4point": 0,
+    "timeline_3plus_pregame": 0,
+    "timeline_2plus_pregame": 0,
+    "closing_only_pregame": 0,
+    "post_game_proxy_only": 2396,
+    "no_data": 34,
+    "note": "strict_4point: all 4 timepoints present and strictly ordered before game start. post_game_proxy_only: odds exist but captured AFTER game start (post-season scrape). closing_home_ml in canonical schema is NULL for post_game_proxy_only games. Research use: post-game odds remain in odds_history field."
+  },
+  "missing_by_timepoint": {
+    "opening": 2430,
+    "decision": 2430,
+    "latest_pregame": 2430,
+    "closing": 34
+  },
+  "timestamp_monotonic_failures": 0,
+  "duplicate_snapshots": 2396,
+  "post_start_snapshot_count": 2396,
+  "no_pregame_snapshot_games": 2396,
+  "data_limitation_summary": {
+    "post_game_snapshot_only_games": 2396,
+    "no_pregame_data_games": 2396,
+    "root_cause": "post_season_single_scrape",
+    "clv_status": "closing_only_proxy",
+    "note": "All snapshots were captured after game dates (post-season scrape). Post-game odds remain in odds_history for research (CLV=0 honest proxy). canonical closing_home_ml is NULL because no true pregame snapshot exists. True opening/decision CLV requires multi-timepoint pregame data."
+  },
+  "acceptance_gate": {
+    "strict_4point_coverage_gte_80pct": false,
+    "coverage_rate_gte_80pct": false,
+    "mapping_success_rate_gte_95pct": true,
+    "strict_validation_pass": false,
+    "closing_only_coverage_gte_80pct": false,
+    "post_game_proxy_gte_80pct": true
+  }
+}
