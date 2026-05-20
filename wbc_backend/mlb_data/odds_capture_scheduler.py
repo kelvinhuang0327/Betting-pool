@@ -1,11 +1,15 @@
 """
-MLB Odds Capture Scheduler
+MLB + WBC/NPB Odds Capture Scheduler
 
-Schedules odds captures at critical time points for each MLB game:
+Schedules odds captures at critical time points for each MLB, WBC, and NPB game:
   T_open     = when odds first appear (continuous polling)
   T_decision = commence_time - 2 hours
   T_pregame  = commence_time - 5 minutes
   T_close    = commence_time (final snapshot)
+
+P26B extension: determine_capture_windows() now also reads WBC/NPB game_times
+from data/tsl_odds_history.jsonl so the daemon triggers closing captures near
+each WBC/NPB game start.  MLB logic is unchanged (additive extension).
 
 Integrates with existing AutoScheduler or runs standalone via cron.
 """
@@ -32,6 +36,17 @@ logger = logging.getLogger(__name__)
 # Schedule file tracks which captures have been completed
 SCHEDULE_PATH = Path("data/mlb_context/odds_capture_schedule.json")
 
+# P26B: source for WBC/NPB game times (read-only; never written by this module)
+WBC_NPB_HISTORY_PATH = Path("data/tsl_odds_history.jsonl")
+
+# How far ahead to look for upcoming WBC/NPB games (hours)
+WBC_NPB_LOOKAHEAD_HOURS: float = 48.0
+
+# Closing window: capture is triggered for WBC/NPB games within this many minutes
+# BEFORE or AFTER game_time.  Negative = after game start.
+WBC_NPB_CLOSING_BEFORE_MIN: float = 120.0   # up to 2h before game
+WBC_NPB_CLOSING_AFTER_MIN: float = 120.0    # up to 2h after game start
+
 
 def _now_utc() -> datetime:
     return datetime.now(timezone.utc)
@@ -53,6 +68,80 @@ def _save_schedule(schedule: dict[str, Any]) -> None:
         json.dumps(schedule, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+
+
+def _parse_ts_utc(s: str | None) -> datetime | None:
+    """Parse a timestamp string (any timezone) into a UTC-aware datetime. Returns None on failure."""
+    if not s:
+        return None
+    try:
+        from dateutil.parser import parse as dtparse
+        dt = dtparse(s)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc)
+    except Exception:
+        return None
+
+
+def _load_wbc_npb_game_times(
+    source_path: Path = WBC_NPB_HISTORY_PATH,
+    lookahead_hours: float = WBC_NPB_LOOKAHEAD_HOURS,
+    now: datetime | None = None,
+) -> list[dict[str, Any]]:
+    """
+    Load upcoming WBC/NPB game times from tsl_odds_history.jsonl.
+
+    Returns a list of dicts (one per unique upcoming match) with:
+      - match_id
+      - game_time_utc (datetime, UTC-aware)
+      - home_team / away_team
+
+    Gracefully returns [] if source_path is missing, empty, or unparseable.
+    Never raises — caller must treat missing data as "no WBC/NPB games".
+    """
+    if not source_path.exists():
+        logger.debug("WBC/NPB source not found: %s — skipping WBC window check", source_path)
+        return []
+
+    if now is None:
+        now = datetime.now(timezone.utc)
+    cutoff = now + timedelta(hours=lookahead_hours)
+
+    seen: set[str] = set()
+    games: list[dict[str, Any]] = []
+    try:
+        for line in source_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            mid = str(row.get("match_id", ""))
+            if not mid or mid in seen:
+                continue
+            seen.add(mid)
+            gt = _parse_ts_utc(row.get("game_time", ""))
+            if gt is None:
+                continue
+            # Include upcoming games AND recently-started games within closing window
+            # Lower bound: game_time >= now - WBC_NPB_CLOSING_AFTER_MIN
+            earliest = now - timedelta(minutes=WBC_NPB_CLOSING_AFTER_MIN)
+            if earliest <= gt <= cutoff:
+                games.append({
+                    "match_id": mid,
+                    "game_time_utc": gt,
+                    "home_team": row.get("home_team_name", ""),
+                    "away_team": row.get("away_team_name", ""),
+                })
+    except OSError as exc:
+        logger.warning("Could not read WBC/NPB source %s: %s", source_path, exc)
+        return []
+
+    logger.debug("Loaded %d upcoming WBC/NPB games from %s", len(games), source_path)
+    return games
 
 
 def get_todays_mlb_schedule() -> list[dict[str, Any]]:
@@ -81,25 +170,35 @@ def get_todays_mlb_schedule() -> list[dict[str, Any]]:
 
 def determine_capture_windows(
     now: datetime | None = None,
-) -> dict[str, bool]:
+    *,
+    wbc_npb_source: Path | None = None,
+) -> dict[str, Any]:
     """
     Determine which capture windows should be active right now.
 
-    Returns dict of capture types that are currently actionable:
-      - "continuous": always True for opening odds
-      - "decision": True if any game is 2-3 hours away
-      - "pregame": True if any game is 0-30 minutes away
-      - "closing": True if any game is 0-5 minutes away
+    Returns dict with:
+      - "continuous" (bool): always True
+      - "decision"  (bool): True if any MLB/WBC/NPB game is 60-120 min away
+      - "pregame"   (bool): True if any MLB/WBC/NPB game is 0-30 min away
+      - "closing"   (bool): True if any MLB/WBC/NPB game is within ±closing window
+      - "_wbc_npb_audit" (list[dict]): audit entries for WBC/NPB triggers
+        Each entry: {match_id, home_team, away_team, game_time_utc,
+                     minutes_to_game, trigger_types, source}
+
+    P26B extension: also reads WBC/NPB game_times from tsl_odds_history.jsonl
+    (via wbc_npb_source, defaults to WBC_NPB_HISTORY_PATH). MLB logic unchanged.
     """
     if now is None:
         now = _now_utc()
 
+    # ── MLB logic (unchanged) ──────────────────────────────────────────────────
     timelines = _load_timelines(TIMELINE_PATH)
-    windows = {
+    windows: dict[str, Any] = {
         "continuous": True,
         "decision": False,
         "pregame": False,
         "closing": False,
+        "_wbc_npb_audit": [],
     }
 
     from .normalization import parse_ts
@@ -118,13 +217,55 @@ def determine_capture_windows(
         if 0 <= delta_minutes <= PREGAME_LEAD_MINUTES:
             windows["closing"] = True
 
+    # ── P26B: WBC / NPB extension (additive) ──────────────────────────────────
+    src = wbc_npb_source if wbc_npb_source is not None else WBC_NPB_HISTORY_PATH
+    wbc_games = _load_wbc_npb_game_times(source_path=src, now=now)
+
+    for game in wbc_games:
+        gt: datetime = game["game_time_utc"]
+        delta_minutes = (gt - now).total_seconds() / 60.0
+
+        # Skip games that started more than WBC_NPB_CLOSING_AFTER_MIN ago
+        if delta_minutes < -WBC_NPB_CLOSING_AFTER_MIN:
+            continue
+
+        triggered: list[str] = []
+
+        if DECISION_LEAD_MINUTES <= delta_minutes <= DECISION_LEAD_MINUTES + 60:
+            windows["decision"] = True
+            triggered.append("decision")
+
+        if 0 <= delta_minutes <= 30:
+            windows["pregame"] = True
+            triggered.append("pregame")
+
+        # Closing window: game_time - WBC_NPB_CLOSING_BEFORE_MIN  to
+        #                 game_time + WBC_NPB_CLOSING_AFTER_MIN
+        if -WBC_NPB_CLOSING_AFTER_MIN <= delta_minutes <= WBC_NPB_CLOSING_BEFORE_MIN:
+            windows["closing"] = True
+            triggered.append("closing")
+
+        if triggered:
+            windows["_wbc_npb_audit"].append({
+                "match_id": game["match_id"],
+                "home_team": game["home_team"],
+                "away_team": game["away_team"],
+                "game_time_utc": gt.isoformat().replace("+00:00", "Z"),
+                "minutes_to_game": round(delta_minutes, 1),
+                "trigger_types": triggered,
+                "source": str(src),
+                "trigger_reason": f"WBC/NPB game triggered windows={triggered} "
+                                  f"(delta={delta_minutes:.1f}min)",
+            })
+
     return windows
 
 
 def should_capture_now() -> bool:
     """Quick check: is there any reason to run a capture right now?"""
     windows = determine_capture_windows()
-    return any(windows.values())
+    # Only check the boolean flags, not the audit list
+    return any(windows[k] for k in ("continuous", "decision", "pregame", "closing"))
 
 
 def run_scheduled_capture(

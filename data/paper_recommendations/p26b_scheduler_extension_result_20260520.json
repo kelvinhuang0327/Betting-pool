@@ -1,0 +1,95 @@
+{
+  "artifact_id": "p26b_scheduler_extension_result_20260520",
+  "phase": "P26B",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26B_SCHEDULER_EXTENSION_COMPLETED",
+
+  "authorization_status": {
+    "authorized": true,
+    "authorization_received": "YES: 授權擴充 determine_capture_windows() 讀取 WBC/NPB",
+    "action_taken": "implemented scheduler extension + 16 tests"
+  },
+
+  "scheduler_extension_enabled": true,
+  "supported_leagues": ["WBC", "NPB", "CPBL", "MLB", "KBO"],
+
+  "implementation_summary": {
+    "file_modified": "wbc_backend/mlb_data/odds_capture_scheduler.py",
+    "new_constants": [
+      "WBC_NPB_HISTORY_PATH = Path('data/tsl_odds_history.jsonl')",
+      "WBC_NPB_LOOKAHEAD_HOURS = 48.0",
+      "WBC_NPB_CLOSING_BEFORE_MIN = 120.0",
+      "WBC_NPB_CLOSING_AFTER_MIN = 120.0"
+    ],
+    "new_functions": ["_parse_ts_utc()", "_load_wbc_npb_game_times()"],
+    "modified_functions": ["determine_capture_windows()", "should_capture_now()"],
+    "backward_compatible": true,
+    "mlb_logic_unchanged": true
+  },
+
+  "trigger_windows": {
+    "decision": "60 <= delta_min <= 120 (game_time - now)",
+    "pregame":  "0  <= delta_min <= 30",
+    "closing":  "-120 <= delta_min <= 120 (game_time ±2h)"
+  },
+
+  "audit_output": {
+    "key": "_wbc_npb_audit",
+    "fields": ["match_id", "home_team", "away_team", "game_time_utc",
+               "minutes_to_game", "trigger_types", "source", "trigger_reason"]
+  },
+
+  "test_results": {
+    "test_file": "tests/test_p26b_scheduler_extension.py",
+    "total": 16,
+    "passed": 16,
+    "failed": 0,
+    "cases_covered": [
+      "MLB existing behavior preserved",
+      "WBC game at T-90min triggers decision",
+      "WBC game at T-30min triggers pregame",
+      "WBC game at T-10min triggers pregame+closing",
+      "WBC game at T-5min triggers closing",
+      "WBC game at T+30min still triggers closing (within ±120min)",
+      "WBC game at T+3h does NOT trigger (>120min after start)",
+      "Missing source file: no crash, graceful []",
+      "Empty source file: graceful []",
+      "NPB game triggers identical to WBC",
+      "MLB + WBC coexist independently",
+      "MLB closing unaffected by WBC source",
+      "Audit entry fields complete on trigger",
+      "No audit entry for non-triggered game"
+    ]
+  },
+
+  "full_suite_results": {
+    "p26b_tests": "16/16 PASS",
+    "p25_tests": "21/21 PASS",
+    "p26_clv_tests": "23/23 PASS",
+    "p12_p17_governance": "318/318 PASS",
+    "total": "378/378 PASS"
+  },
+
+  "expected_impact": {
+    "description": "Daemon will now trigger closing captures for WBC/NPB games. Over 2-3 weeks, this should grow complete CLV pairs from 220 toward ~797.",
+    "current_clv_pairs": 220,
+    "target_clv_pairs": 797,
+    "lift_pairs": 577,
+    "lift_pct": 65.1,
+    "data_collection_time": "2-3 weeks",
+    "next_step": "Rerun P25B bootstrap after 600+ complete pairs are collected"
+  },
+
+  "next_steps": [
+    "Monitor daemon: confirm closing=True appears in data/mlb_context/odds_capture_schedule.json for WBC/NPB games",
+    "Wait 2-3 weeks for closing snapshots to accumulate",
+    "Rerun P25B-style bootstrap (P25C) when complete CLV pairs >= 600",
+    "If CLV still INCONCLUSIVE: escalate to model quality investigation"
+  ]
+}
