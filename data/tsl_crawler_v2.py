@@ -261,7 +261,7 @@ class TSLCrawlerV2:
         data = self._request_json(endpoint, method="POST", payload=payload)
         return data.get("data", []) if isinstance(data, dict) else []
 
-    def fetch_baseball_games(self) -> list[dict[str, Any]]:
+    def fetch_baseball_games(self, force_closing: bool = False) -> list[dict[str, Any]]:
         if self.use_mock:
             games = self._get_mock_data()
             write_tsl_fetch_status(
@@ -277,7 +277,7 @@ class TSLCrawlerV2:
             modern_games, modern_notes = self._fetch_modern_baseball_games()
             diagnostics.extend(modern_notes)
             if modern_games:
-                save_tsl_snapshot(games=modern_games, source="TSL_BLOB3RD")
+                save_tsl_snapshot(games=modern_games, source="TSL_BLOB3RD", force_closing=force_closing)
                 write_tsl_fetch_status(
                     success=True,
                     games_count=len(modern_games),
@@ -299,7 +299,7 @@ class TSLCrawlerV2:
         try:
             legacy_games = self._fetch_legacy_baseball_games()
             if legacy_games:
-                save_tsl_snapshot(games=legacy_games, source="TSL_API_V2")
+                save_tsl_snapshot(games=legacy_games, source="TSL_API_V2", force_closing=force_closing)
                 diagnostics.append(f"legacy_games={len(legacy_games)}")
                 write_tsl_fetch_status(
                     success=True,

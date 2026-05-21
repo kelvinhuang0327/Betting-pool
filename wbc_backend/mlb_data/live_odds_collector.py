@@ -167,12 +167,16 @@ def _now_iso() -> str:
 # TSL fetch adapter
 # ---------------------------------------------------------------------------
 
-def _fetch_tsl_odds() -> list[dict[str, Any]]:
-    """Fetch current MLB odds from TSL crawler. Returns normalized game dicts."""
+def _fetch_tsl_odds(force_closing: bool = False) -> list[dict[str, Any]]:
+    """Fetch current MLB odds from TSL crawler. Returns normalized game dicts.
+
+    P26F: force_closing=True bypasses MNL dedup in tsl_odds_history.jsonl so that
+    a closing snapshot is always written during the game_time ±2h window.
+    """
     try:
         from data.tsl_crawler_v2 import TSLCrawlerV2
         crawler = TSLCrawlerV2(use_mock=False)
-        raw_games = crawler.fetch_baseball_games()
+        raw_games = crawler.fetch_baseball_games(force_closing=force_closing)
     except Exception as exc:
         logger.error("TSL fetch failed: %s", exc)
         return []
@@ -550,16 +554,20 @@ def capture_live_odds(
     *,
     timeline_path: Path = TIMELINE_PATH,
     odds_api_key: str | None = None,
+    force_closing: bool = False,
 ) -> dict[str, Any]:
     """
     Main entry point: fetch from all sources with retry, update timeline.
+
+    P26F: force_closing=True is passed when the capture window is in closing mode
+    (game_time ±2h), bypassing the MNL dedup filter in tsl_odds_history.jsonl.
     """
     all_snapshots: list[dict[str, Any]] = []
 
     # Primary: TSL
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            tsl_snaps = _fetch_tsl_odds()
+            tsl_snaps = _fetch_tsl_odds(force_closing=force_closing)
             all_snapshots.extend(tsl_snaps)
             logger.info("TSL fetch OK: %d snapshots (attempt %d)", len(tsl_snaps), attempt)
             break

@@ -1,0 +1,61 @@
+{
+  "artifact_id": "p26f_closing_dedup_bypass_20260521",
+  "phase": "P26F",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26F_CLOSING_DEDUP_BYPASS_COMPLETED",
+
+  "source_trace": {
+    "p26e_blocker": "TSL_DEDUP_FILTER_BLOCKS_CLOSING_SNAPSHOTS",
+    "p26e_finding": "append_tsl_history() skipped snapshots when MNL odds unchanged, even during closing window"
+  },
+
+  "changed_modules": [
+    "data/tsl_snapshot.py",
+    "data/tsl_crawler_v2.py",
+    "wbc_backend/mlb_data/live_odds_collector.py",
+    "wbc_backend/mlb_data/odds_capture_scheduler.py"
+  ],
+
+  "dedup_behavior_before": {
+    "rule": "Skip if MNL odds_key == dedup_state[match_id], regardless of capture context",
+    "closing_snapshot_written": false,
+    "problem": "Closing snapshots blocked by stable odds; CLV pairs cannot form"
+  },
+
+  "dedup_behavior_after": {
+    "rule_normal": "Skip if MNL odds_key == dedup_state[match_id] AND force_closing=False (unchanged)",
+    "rule_closing": "Always write when force_closing=True (closing window detected by scheduler)",
+    "closing_snapshot_written": true,
+    "audit_fields_on_forced_row": ["force_closing_snapshot=True", "capture_reason='closing_window'", "dedup_bypassed=bool"]
+  },
+
+  "force_closing_rule": {
+    "trigger": "windows['closing'] == True in run_scheduled_capture()",
+    "propagation": "run_scheduled_capture → capture_live_odds → _fetch_tsl_odds → TSLCrawlerV2.fetch_baseball_games → save_tsl_snapshot → append_tsl_history",
+    "default": "force_closing=False (all callers backward compatible)",
+    "pregame_unaffected": "pregame=True alone does NOT set force_closing"
+  },
+
+  "test_results": {
+    "test_file": "tests/test_p26f_closing_dedup_bypass.py",
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "full_suite": "393/393 PASS"
+  },
+
+  "daemon_restart_required": false,
+  "note": "Long-running daemon (PID 1715) reloads Python code on each IMPORT, but since force_closing is wired through the call chain, the next daemon tick will automatically use the new behavior. However, since the daemon caches modules, a restart is recommended to ensure fresh import.",
+
+  "expected_coverage_impact": {
+    "near_miss_matches": 69,
+    "potential_new_complete_pairs_if_daemon_restarts": "~69 (limited by historical data)",
+    "future_games": "All future WBC/NPB games in closing window will get force-saved closing snapshot"
+  }
+}

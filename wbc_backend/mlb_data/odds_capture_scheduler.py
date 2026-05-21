@@ -309,6 +309,7 @@ def run_scheduled_capture(
     result = capture_live_odds(
         timeline_path=timeline_path,
         odds_api_key=odds_api_key,
+        force_closing=bool(windows.get("closing")),
     )
 
     # Record capture in schedule
