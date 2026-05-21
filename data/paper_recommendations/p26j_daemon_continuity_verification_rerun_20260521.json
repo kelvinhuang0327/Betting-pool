@@ -1,0 +1,50 @@
+{
+  "artifact_id": "p26j_daemon_continuity_verification_rerun_20260521",
+  "phase": "P26J",
+  "run_type": "daemon_continuity_rerun",
+  "generated_at": "2026-05-21T09:12:47Z",
+  "verification_window": {
+    "start_utc": "2026-05-21T07:00:00Z",
+    "end_utc": "2026-05-21T09:00:00Z",
+    "label": "closing_window_for_17:00_TWN_games"
+  },
+  "daemon_status": {
+    "total_heartbeat_rows_all_time": 2096,
+    "heartbeat_rows_in_window": 8,
+    "cycles": [
+      {"timestamp": "2026-05-21T07:10:39Z", "fetched": false, "api_calls_today": 2, "status": "captured"},
+      {"timestamp": "2026-05-21T07:25:49Z", "fetched": false, "api_calls_today": 2, "status": "captured"},
+      {"timestamp": "2026-05-21T07:40:51Z", "fetched": false, "api_calls_today": 2, "status": "captured"},
+      {"timestamp": "2026-05-21T07:55:53Z", "fetched": false, "api_calls_today": 2, "status": "captured"},
+      {"timestamp": "2026-05-21T08:10:55Z", "fetched": false, "api_calls_today": 2, "status": "captured"},
+      {"timestamp": "2026-05-21T08:25:57Z", "fetched": false, "api_calls_today": 2, "status": "captured"},
+      {"timestamp": "2026-05-21T08:40:58Z", "fetched": false, "api_calls_today": 2, "status": "captured"},
+      {"timestamp": "2026-05-21T08:56:01Z", "fetched": false, "api_calls_today": 2, "status": "captured"}
+    ],
+    "last_heartbeat_before_window": "2026-05-21T06:55:35Z",
+    "first_heartbeat_after_window": "2026-05-21T09:11:03Z",
+    "daemon_alive_in_window": true,
+    "fetch_executed_in_window": false,
+    "api_calls_today_stable_at": 2,
+    "next_trigger_minutes": null
+  },
+  "key_observations": [
+    "Daemon ran 8 cycles in 07:00-09:00Z window (every ~15 min)",
+    "fetched=false in ALL 8 cycles — external closing API was NOT called",
+    "api_calls_today remained at 2 throughout — no new API calls made",
+    "next_trigger_minutes=null — no future trigger scheduled",
+    "Last two api calls were likely the 02:07Z + 02:09Z captures from early morning",
+    "status='captured' is misleading — it does not mean data was fetched",
+    "Daemon cycle interval consistent ~15 min, no gap or stop detected"
+  ],
+  "classification": "DAEMON_RAN_BUT_SOURCE_DID_NOT_RETURN_TARGETS",
+  "sub_classification": "FETCH_NOT_EXECUTED_IN_CLOSING_WINDOW",
+  "root_cause_hypothesis": "The external closing API trigger condition was not met during 07:00-09:00Z. Possible causes: (1) api_calls_today quota reached at 2, (2) closing trigger condition evaluated game_time incorrectly, (3) next_trigger_minutes=null means scheduler did not queue a closing fetch. All are observable without code modification.",
+  "actions_taken": [],
+  "actions_blocked": [
+    "daemon restart",
+    "scheduler modification",
+    "crawler modification",
+    "manual API call"
+  ]
+}
