@@ -1,0 +1,95 @@
+{
+  "artifact_id": "p26i_expected_pair_prediction_failure_20260521",
+  "phase": "P26I",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+  "complete_pair_before": 220,
+  "complete_pair_after": 220,
+  "delta_complete_pairs": 0,
+  "bootstrap_ran": false,
+
+  "p26g_prediction_under_review": {
+    "artifact": "data/paper_recommendations/p26g_coverage_recheck_post_p26f_20260521.json",
+    "prediction": "expected_new_pairs_today=2",
+    "candidates": ["3469930.1", "3469931.1"],
+    "basis": "Both matches have pregame snapshots (gap=6.84h) and game_time=2026-05-21T09:00Z; closing window opens at 07:00Z"
+  },
+
+  "p26h_classification_under_review": {
+    "artifact": "data/paper_recommendations/p26h_force_closing_pair_formation_20260521.json",
+    "classification": "P26H_EXPECTED_PAIRS_PREDICTION_BROKEN",
+    "evaluation_time": "2026-05-21T02:54Z",
+    "closing_window_start": "2026-05-21T07:00Z",
+    "gap_to_window_at_evaluation": "4.1h",
+    "p26h_premature": true,
+    "p26h_premature_explanation": "P26H evaluated expected_new_pairs at 02:54Z, which is 4.1h BEFORE the 07:00Z closing window opened. Labeling prediction as BROKEN before the verification window is open is a premature classification."
+  },
+
+  "p26i_root_cause_findings": [
+    {
+      "id": "F1",
+      "finding": "P26H analysis timing was premature",
+      "evidence": "P26H ran at ~02:54Z. Closing window opens at 07:00Z. Gap = 4.1h. No closing snapshot can exist at 02:54Z for a 07:00Z window.",
+      "severity": "HIGH",
+      "action": "P26H's 'UNMATCHED' label should be treated as 'TOO_EARLY_TO_VERIFY'"
+    },
+    {
+      "id": "F2",
+      "finding": "Daemon IS actively running at P26I analysis time",
+      "evidence": "Latest heartbeat: 2026-05-21T03:09:50Z. Capture schedule last_run: 02:54Z (schedule JSON lags one cycle). Daemon cycle interval ~15min. Running since 01:06Z.",
+      "severity": "INFO",
+      "action": "No daemon intervention needed"
+    },
+    {
+      "id": "F3",
+      "finding": "TSL IS listing 3469930.1 and 3469931.1 every cycle",
+      "evidence": "6 consecutive captures for each match (02:07Z through 03:09Z). force_closing=True, capture_reason=closing_window. Source is available.",
+      "severity": "INFO",
+      "action": "No source availability issue"
+    },
+    {
+      "id": "F4",
+      "finding": "Historical daemon gap risk: 9.9h outage on 2026-05-20",
+      "evidence": "Daemon ran to 15:10Z on 2026-05-20 then stopped until 01:06Z on 2026-05-21. If similar gap recurs (03:09Z → ≥07:00Z), closing window would be missed.",
+      "severity": "MEDIUM",
+      "action": "Monitor daemon uptime through 09:00Z. If daemon stops before 07:00Z, P26G prediction confirmed broken."
+    },
+    {
+      "id": "F5",
+      "finding": "P26G prediction logic is conditionally optimistic",
+      "evidence": "P26G assumes daemon will run continuously. Does not model daemon outage probability. Closing window prediction is time-bounded — validity depends on daemon uptime in a specific 2h window hours in the future.",
+      "severity": "MEDIUM",
+      "action": "P26G prediction framework should include daemon_uptime_required field for future window predictions"
+    }
+  ],
+
+  "prediction_failure_classification": {
+    "selected": "P26I_CLOSING_CAPTURE_GAP_INCONCLUSIVE",
+    "ruled_out": {
+      "P26I_SCHEDULER_WINDOW_ALIGNMENT_GAP_CONFIRMED": "Daemon IS running at analysis time; no confirmed gap during actual window",
+      "P26I_TSL_SOURCE_UNAVAILABLE_AT_CLOSING_CONFIRMED": "TSL IS capturing these matches every cycle",
+      "P26I_MATCHING_RULE_TIMESTAMP_BUG_SUSPECTED": "Timestamps parse correctly; gap computation verified",
+      "P26I_P26G_PREDICTION_LOGIC_TOO_OPTIMISTIC": "Partially applies (daemon uptime assumption), but primary issue is P26H evaluation timing"
+    },
+    "note": "Cannot confirm failure or success until post-game (09:00Z+) validation."
+  },
+
+  "timeline": {
+    "02:07Z": "First snapshots captured for 3469930.1, 3469931.1 (gap=6.88h, pregame)",
+    "02:09Z": "P26F force_closing active; capture_reason=closing_window (gap=6.84h, still pregame)",
+    "02:54Z": "P26H analysis run — UNMATCHED label applied (premature)",
+    "03:09Z": "P26I analysis — daemon confirmed running, latest cycle captured",
+    "07:00Z": "Closing window OPENS for 3469930.1, 3469931.1",
+    "07:15Z_approx": "Expected first closing capture (if daemon runs)",
+    "09:00Z": "Games start — post-game validation possible after this",
+    "P26J": "Validate whether COMPLETE_PAIR increased to 222"
+  },
+
+  "final_classification": "P26I_CLOSING_CAPTURE_GAP_INCONCLUSIVE"
+}

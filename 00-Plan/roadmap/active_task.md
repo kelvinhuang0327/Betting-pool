@@ -1,11 +1,11 @@
-# Active Task — P26H Pair Formation Monitor + P26G Delivery Closure
+# Active Task — P26I Closing Window Capture Gap Investigation
 
-> **[COMPLETED 2026-05-21]** `P26H_PAIR_FORMATION_MONITOR_AND_P26G_CLOSURE_20260521`
+> **[COMPLETED 2026-05-21]** `P26I_CLOSING_WINDOW_CAPTURE_GAP_INVESTIGATION_20260521`
 > CEO Decision: `CEO_DECISION_PARTIALLY_APPROVED` (2026-05-21)
 > 主軸對齊：主軸二前置 (CLV validation readiness)
 > 模式：`paper_only=true`、`diagnostic_only=true`、`production_proposal=false`
-> **Final Classification**: `P26H_EXPECTED_PAIRS_PREDICTION_BROKEN`
-> **Next Task**: P26I — Closing Window Capture Gap Investigation (3469930.1, 3469931.1)
+> **Final Classification**: `P26I_CLOSING_CAPTURE_GAP_INCONCLUSIVE`
+> **Next Task**: P26J — Post-game validation (after 09:00Z): confirm/deny P26G expected_new_pairs prediction
 
 ---
 
