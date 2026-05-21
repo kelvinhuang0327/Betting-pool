@@ -1,11 +1,15 @@
-# Active Task — P26I Closing Window Capture Gap Investigation
+# Active Task — P26J Closing Window Post-Window Ground Truth Verification
 
-> **[COMPLETED 2026-05-21]** `P26I_CLOSING_WINDOW_CAPTURE_GAP_INVESTIGATION_20260521`
-> CEO Decision: `CEO_DECISION_PARTIALLY_APPROVED` (2026-05-21)
+> **[BLOCKED 2026-05-21 03:20Z]** `P26J_CLOSING_WINDOW_POST_WINDOW_GROUND_TRUTH_20260521`
 > 主軸對齊：主軸二前置 (CLV validation readiness)
 > 模式：`paper_only=true`、`diagnostic_only=true`、`production_proposal=false`
-> **Final Classification**: `P26I_CLOSING_CAPTURE_GAP_INCONCLUSIVE`
-> **Next Task**: P26J — Post-game validation (after 09:00Z): confirm/deny P26G expected_new_pairs prediction
+> **Current Classification**: `P26J_BLOCKED_BY_WINDOW_NOT_CLOSED`
+> **Resume After**: `2026-05-21T09:10:00Z` (Taiwan: 17:10)
+> **Resume Action**: Re-run P26J — verify 3469930.1/3469931.1 closing snapshots; recompute COMPLETE_PAIR; classify daemon continuity
+>
+> **Preceding Task Completed**:
+> `P26I_CLOSING_WINDOW_CAPTURE_GAP_INVESTIGATION_20260521` → commit `60a73a7`
+> Final Classification: `P26I_CLOSING_CAPTURE_GAP_INCONCLUSIVE`
 
 ---
 
