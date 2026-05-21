@@ -1,0 +1,123 @@
+{
+  "artifact_id": "p26h_phase8_validation_20260521",
+  "phase": "P26H",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+
+  "targeted_tests": {
+    "run_timestamp_utc": "2026-05-21",
+    "test_sets": [
+      {
+        "file": "tests/test_p26f_closing_dedup_bypass.py",
+        "result": "PASS",
+        "note": "Included in 75-test run"
+      },
+      {
+        "file": "tests/test_p26b_scheduler_extension.py",
+        "result": "PASS",
+        "note": "Included in 75-test run"
+      },
+      {
+        "file": "tests/test_p25_clv_construction_fix.py",
+        "result": "PASS",
+        "note": "Included in 75-test run"
+      },
+      {
+        "file": "tests/test_p26_clv_line_aware_matching.py",
+        "result": "PASS",
+        "note": "Included in 75-test run"
+      },
+      {
+        "file": "tests/test_blocked_state_daily_monitor_p12.py",
+        "result": "PASS",
+        "note": "Included in 318-test governance run"
+      },
+      {
+        "file": "tests/test_p13_minimal_monitor.py",
+        "result": "PASS",
+        "note": "Included in 318-test governance run"
+      },
+      {
+        "file": "tests/test_p14_no_expansion_guard.py",
+        "result": "PASS",
+        "note": "Included in 318-test governance run"
+      },
+      {
+        "file": "tests/test_p15_no_expansion_watch.py",
+        "result": "PASS",
+        "note": "Included in 318-test governance run"
+      },
+      {
+        "file": "tests/test_p16_no_expansion_hold.py",
+        "result": "PASS",
+        "note": "Included in 318-test governance run"
+      },
+      {
+        "file": "tests/test_p17_hold_state_continuity.py",
+        "result": "PASS",
+        "note": "Included in 318-test governance run"
+      }
+    ],
+    "run1_clv_tests": {
+      "total_passed": 75,
+      "total_failed": 0,
+      "duration_seconds": 1.29,
+      "files": ["test_p26f_closing_dedup_bypass.py", "test_p26b_scheduler_extension.py", "test_p25_clv_construction_fix.py", "test_p26_clv_line_aware_matching.py"]
+    },
+    "run2_governance_tests": {
+      "total_passed": 318,
+      "total_failed": 0,
+      "duration_seconds": 0.48,
+      "files": ["test_blocked_state_daily_monitor_p12.py", "test_p13_minimal_monitor.py", "test_p14_no_expansion_guard.py", "test_p15_no_expansion_watch.py", "test_p16_no_expansion_hold.py", "test_p17_hold_state_continuity.py"]
+    },
+    "overall_result": "PASS",
+    "total_passed": 393,
+    "total_failed": 0
+  },
+
+  "forbidden_scan": {
+    "scan_targets": [
+      "report/p26h_*_20260521.md",
+      "00-BettingPlan/20260521/p26h_*_20260521.md",
+      "data/paper_recommendations/p26h_*_20260521.json"
+    ],
+    "patterns_checked": [
+      "production proposal",
+      "promotion",
+      "profitab",
+      "guaranteed profit",
+      "live odds api",
+      "crawler modif",
+      "champion replacement"
+    ],
+    "result": "CLEAN",
+    "non_positive_hits": [
+      {
+        "pattern": "promotion",
+        "context": "\"promotion_allowed\": false",
+        "classification": "non_positive_hit — governance guard false flag, not a violation"
+      },
+      {
+        "pattern": "profitab",
+        "context": "\"profitability_claim\": false",
+        "classification": "non_positive_hit — governance guard false flag, not a violation"
+      },
+      {
+        "pattern": "production proposal",
+        "context": "\"production_proposal\": false",
+        "classification": "non_positive_hit — governance guard false flag, not a violation"
+      }
+    ],
+    "positive_hits": [],
+    "final_verdict": "GREP_CLEAN_CANDIDATE"
+  },
+
+  "overall_validation_result": "PASS",
+  "final_classification_confirmed": "P26H_EXPECTED_PAIRS_PREDICTION_BROKEN"
+}

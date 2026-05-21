@@ -2,280 +2,259 @@
 
 ## 1. CTO Review Date
 
-2026-05-20 Asia/Taipei
+2026-05-21 Asia/Taipei
 
 ## 2. Input Sources
 
 Read / referenced:
 
 - [Confirmed] `00-Plan/roadmap/roadmap.md`
-- [Confirmed] `00-BettingPlan/20260520/p23_gate_and_reproducibility_reconciliation_20260520.md`
-- [Confirmed] `00-BettingPlan/20260520/p24_clv_robustness_diagnostic_20260520.md`
-- [Confirmed] `00-BettingPlan/20260520/p25_clv_failure_root_cause_audit_20260520.md`
-- [Confirmed] `00-BettingPlan/20260520/p26_clv_line_aware_matching_repair_20260520.md`
-- [Confirmed] `00-BettingPlan/20260520/p27_per_market_clean_clv_isolation_20260520.md`
-- [Confirmed] `00-BettingPlan/20260520/p28_mlb_model_quality_repair_20260520.md`
-- [Confirmed] `00-BettingPlan/20260520/p29_orchestrator_noise_removal_and_external_data_contract_20260520.md`
-- [Confirmed] `data/paper_recommendations/p29_orchestrator_ablation_results_20260520.json`
-- [Confirmed] `data/paper_recommendations/p29_orchestrator_noise_attribution_audit_20260520.json`
-- [Confirmed] `data/paper_recommendations/p29_external_data_contract_20260520.json`
-- [Confirmed] `data/paper_recommendations/p29_feature_readiness_matrix_20260520.json`
-- [Confirmed] `data/paper_recommendations/p29_source_snapshot_drift_20260520.json`
-- [Confirmed] `report/p29_final_validation_20260520.md`
-- [Confirmed] Existing `00-Plan/roadmap/active_task.md` was read; it still describes older P23 work.
+- [Confirmed] `data/paper_recommendations/p26g_coverage_recheck_post_p26f_20260521.json`
+- [Confirmed] `report/p26g_coverage_recheck_post_p26f_20260521.md`
+- [Confirmed] `00-BettingPlan/20260521/p26g_coverage_recheck_post_p26f_20260521.md`
+- [Confirmed] `git log --oneline --decorate -8`
+- [Confirmed] `git status --short`
+- [Confirmed] User-provided P26G handoff report in this conversation.
 
 Not performed:
 
-- [Confirmed] No pytest rerun in this CTO review. Test status is taken from P29 final validation report.
-- [Confirmed] No development implementation, no production write, no data modification, no PR merge.
-- [Confirmed] `00-Plan/roadmap/active_task.md` was not updated because the strict allowed-write list only permitted `roadmap.md` and `CTO-Analysis.md`.
+- [Confirmed] No pytest rerun in this CTO review.
+- [Confirmed] No daemon restart, no scheduler/runtime change, no production write, no raw data modification, no PR merge.
+- [Confirmed] No `active_task.md` write because strict allowed-write list only permits `roadmap.md` and `CTO-Analysis.md`.
+- [Confirmed] No new worker task prompt emitted because the strict restriction says not to produce a new worker task prompt.
 
 ## 3. Roadmap Alignment Assessment
 
 | Tag | Finding |
 |---|---|
-| [Aligned] | P23-P27 correctly moved from raw CLV optimism to line-aware CLV repair and per-market isolation. |
-| [Aligned] | P28 correctly shifted from CLV to model quality after clean CLV remained inconclusive. |
-| [Aligned] | P29 correctly investigates Orchestrator noise after Full Orchestrator Brier `0.248703` underperformed Simple LogReg `0.245105`. |
-| [Aligned] | P29 external data contracts support the product goal of improving MLB pregame predictions before recommendation expansion. |
-| [Drift] | The previous canonical roadmap still placed P22/P23 reconciliation at P0, but P23-P29 artifacts now exist locally. |
-| [Drift] | `active_task.md` still points to P23 gate reconciliation and is outdated relative to P29. |
-| [Missing] | Roadmap lacked a real-Orchestrator validation step for the P29 proxy `w_market=0.50` finding. |
-| [Missing] | Roadmap lacked a market baseline timestamp/leakage audit, despite pure market Brier `0.244354`. |
-| [Outdated] | P22 positive CLV interpretation is obsolete after P25-P27 showed construction bug / clean CLV inconclusive. |
-| [Outdated] | Any direct path from P29 proxy ablation to production weight change is invalid. |
-| [Blocked] | Strategy optimizer, champion replacement, and production proposal remain blocked by real-pipeline validation and timestamp safety. |
+| [Aligned] | P26G correctly checked the runtime effect of P26F after daemon restart. |
+| [Aligned] | P26G correctly blocked P25C bootstrap because COMPLETE_PAIR remained 220 (<300). |
+| [Aligned] | P26G preserved paper-only / diagnostic-only governance and did not change champion/promotion/production state. |
+| [Drift] | Previous roadmap emphasized P29/P30A model-quality validation; current system state shows CLV pair formation is the immediate data maturity blocker. |
+| [Drift] | P26F code is committed (`8a98f52`), but P26G artifacts are untracked and therefore not fully delivered as versioned evidence. |
+| [Missing] | Roadmap did not explicitly separate "force-closing rows written" from "COMPLETE_PAIR formed." |
+| [Missing] | Roadmap did not yet require missing-pregame diagnosis for force-closing rows. |
+| [Outdated] | Any plan to run P25C immediately after force-closing success is outdated. Pair-level threshold still controls. |
+| [Blocked] | P25C bootstrap, strategy diagnostics, and promotion remain blocked by COMPLETE_PAIR=220. |
 
 ## 4. Completed Work Assessment
 
-### P23-P27
+### P26F
 
-- [Confirmed] P23 gate/reproducibility reconciliation completed.
-- [Confirmed] P24 CLV robustness diagnostic completed and did not establish robust CLV.
-- [Confirmed] P25 identified a CLV construction bug caused by non-line-aware outcome matching.
-- [Confirmed] P26 repaired CLV with line-aware matching; old positive mean was largely artifact-driven.
-- [Confirmed] P27 isolated markets and OE exclusion; clean CLV remained inconclusive across markets.
+- [Confirmed] HEAD commit is `8a98f52 fix(p26f): force-save closing snapshots through dedup bypass`.
+- [Confirmed] P26F dedup bypass is now loaded by the restarted daemon.
 
-### P28
+### P26G
 
-- [Confirmed] `P28_MODEL_REPAIR_NO_IMPROVEMENT`.
-- [Confirmed] Full Orchestrator Brier `0.2487`; Simple 7-feature LogReg Brier `0.2451`.
-- [Confirmed] Target Brier `<0.24` was not reached.
-
-### P29
-
-- [Confirmed] P29 final classifications:
-  - `P29_ORCHESTRATOR_NOISE_REMOVAL_CANDIDATE_FOUND`
-  - `P29_EXTERNAL_DATA_CONTRACT_READY`
-  - `P29_EXTERNAL_FEATURES_REQUIRED_TO_BREAK_CEILING`
-- [Confirmed] P29 proxy ablation tested 8 variants over 2,020 test games / 5 windows.
-- [Confirmed] Best proxy variant: `V3_marl_sim_w50_sq2`, Brier `0.244154`.
-- [Confirmed] Pure market Brier `0.244354`; Simple LogReg Brier `0.245105`; reported Full Orchestrator Brier `0.248703`.
-- [Confirmed] P29 created two scripts:
-  - `scripts/p29_orchestrator_noise_audit.py`
-  - `scripts/p29_external_data_contract_builder.py`
-- [Confirmed] P29 created five external-data design contracts: starting pitcher, bullpen, batting form, lineup/injury proxy, park/weather.
-- [Confirmed from report] P29 validation says P26 `23/23 PASS`, P17 `64/64 PASS`, P13-P17 `296/296 PASS`, total `383/383 PASS`, JSON schema `5/5 PASS`, forbidden scan `0 hits`.
+- [Confirmed] Daemon restart succeeded: old PID `1715` -> new PID `15022`.
+- [Confirmed] First tick reported `TSL fetch OK: 7 snapshots`.
+- [Confirmed] P26G artifact classification is `P26G_FORCE_CLOSING_ROWS_CONFIRMED`.
+- [Confirmed] `force_closing_snapshot=True` rows = 10.
+- [Confirmed] `dedup_bypassed=True` rows = 7 in the artifact; user handoff said 2, so the repo artifact supersedes the pasted count.
+- [Confirmed] One row was in the closing window (`gap=-0.53h`), but lacked a matching pregame snapshot.
+- [Confirmed] COMPLETE_PAIR stayed at 220; delta = 0.
+- [Confirmed] P25C bootstrap did not run.
+- [Confirmed] P26G JSON/MD/BettingPlan artifacts exist locally.
+- [Confirmed] P26G artifacts are untracked in git status.
 
 Interpretation:
 
-- [Confirmed] P29 is diagnostic/proxy-only, not a production Orchestrator modification.
-- [Inferred] The strongest next step is not SP ingestion yet; it is validating whether the real Orchestrator can reproduce the proxy improvement without leakage.
+- [Confirmed] P26F is runtime-effective.
+- [Confirmed] Force-closing rows alone do not prove CLV pair growth.
+- [Confirmed] Pair formation requires both pregame and closing snapshots for the same match.
 
 ## 5. Unfinished Work Assessment
 
 | Item | Status |
 |---|---|
-| Real Orchestrator `w_market` validation | [Blocked] P29 result is proxy/math simulation; real pipeline validation not yet done. |
-| Market timestamp/leakage audit | [Blocked] Pure market baseline is strong, but pregame safety is not proven in P29. |
-| Production-safe ablation hook | [Missing] No confirmed diagnostic hook for sweeping real Orchestrator components without default-path mutation. |
-| External data implementation | [Blocked] Contracts are design-only; no SP/bullpen/batting/lineup/weather data fetched or validated. |
-| Strategy optimizer re-entry | [Blocked] Should wait until probability quality improves and market baseline safety is proven. |
-| TSL recommendation expansion | [Blocked] Model quality and market evidence are not strong enough for release beyond paper diagnostics. |
-| Active task SSOT | [Drift] Existing `active_task.md` is stale P23; not updated due write restriction. |
+| P26G validation closure | [Unknown] Phase 8 targeted tests / forbidden scan not rerun in this CTO review; handoff did not include complete test output. |
+| P26G versioned delivery | [Blocked] P26G artifacts exist but are untracked; no P26G commit hash found. |
+| Pair formation | [Blocked] COMPLETE_PAIR remains 220; first valid closing row had no pregame pair. |
+| P25C bootstrap | [Blocked] Threshold is 300; current COMPLETE_PAIR=220. |
+| Missing-pregame root cause | [Missing] Need match-level diagnosis of force-closing rows with/without pregame snapshots. |
+| 15-minute interval impact | [Unknown] P26E/P26G suggest cadence may matter, but impact has not been measured in a diagnostic-only way. |
+| Runtime dirty files | [Blocked for commits] Worktree contains many daemon/runtime/data/output modifications that must not be staged as code artifacts. |
 
 ## 6. P0 / P1 / P2 / P3-P10 Reprioritization
 
 | Priority | Phase | Why now |
 |---:|---|---|
-| **P0** | P30A Real Orchestrator `w_market` Validation | It is the only way to turn P29's proxy finding into reliable engineering evidence. |
-| **P1** | Market Baseline Timestamp / Leakage Audit | Market-heavy variants are meaningless if market probability uses closing/postgame information. |
-| **P2** | External Data Contract Freeze | Contracts are valuable, but implementation would expand scope before the Orchestrator evidence is stable. |
-| **P3** | Orchestrator Simplification Decision Gate | Decide simplify / raise market weight / keep full path only after P0/P1. |
-| **P4** | Starting Pitcher Data Prototype | Highest-impact external feature, but waits behind P0/P1 and source approval. |
-| **P5** | Model Quality Repair Loop | Continue Brier/logloss/ECE repair with real-pipeline and no-leakage evidence. |
-| **P6** | TSL Market Taxonomy + Recommendation Contract | Product maturity work, but recommendation release remains blocked. |
-| **P7** | Strategy Simulation Re-entry Gate | Strategy optimization resumes only after probability quality is trustworthy. |
-| **P8** | Daily Paper Ops / Drift Monitor | Useful after canonical metrics and source lineage stabilize. |
-| **P9** | Repo / PR Governance Gate | PR #2 remains explicit-YES gated; not product P0. |
-| **P10** | Production Proposal Gate | Remains blocked until evidence, licensed/live data, fail-safe, monitoring, and approval exist. |
+| **P0** | P26G Delivery Closure + P26H Pair Formation Monitor | It blocks trusted continuation: P26G artifacts are untracked, validation is not fully confirmed, and pair formation did not improve. |
+| **P1** | Missing-Pregame / Pair Formation Root Cause | First force-closing row had no pregame, so the next system question is why matched pairs are not forming. |
+| **P2** | Closing Cadence Impact Estimate | 15-minute cadence may still cause near misses, but it needs diagnostic evidence before runtime changes. |
+| **P3** | P25C Bootstrap Gate | Bootstrap only after COMPLETE_PAIR >=300 and line-comparable filters are satisfied. |
+| **P4** | P26 Runtime Validation Hygiene | Rerun targeted tests and forbidden scan; record results without staging raw feed/runtime files. |
+| **P5** | TSL CLV Data SSOT | Keep raw feed, daemon state, source snapshots, and derived artifacts separated. |
+| **P6** | MLB Prediction Quality Work Re-entry | P29/P30A remains useful but should not preempt CLV pair coverage gate today. |
+| **P7** | TSL Market Recommendation Contract | Keep product recommendation rows paper-only and source-traceable. |
+| **P8** | Daily Paper Ops / Drift Monitor | Monitor COMPLETE_PAIR and bootstrap readiness over time. |
+| **P9** | Repo / PR Governance Gate | Stay on canonical repo/branch; no new repo/worktree/branch unless explicitly authorized. |
+| **P10** | Production Proposal Gate | Remains blocked until formal evidence, live/licensed data path, fail-safe, monitoring, and explicit approval exist. |
 
 Upgraded to P0:
 
-- [Confirmed] Real Orchestrator validation of `w_market=0.50`.
-- [Confirmed] Diagnostic-only ablation hook / no production default mutation.
+- [Confirmed] P26H pair-formation monitor.
+- [Confirmed] P26G artifact/validation delivery closure.
 
 Upgraded to P1:
 
-- [Confirmed] Market baseline timestamp/leakage audit.
+- [Confirmed] Missing-pregame diagnosis for force-closing rows.
 
 Downgraded:
 
-- [Confirmed] SP/bullpen/batting implementation. Contracts are ready, but implementation waits.
-- [Confirmed] Strategy optimizer / champion replacement / promotion.
-- [Confirmed] PR #2 merge, unless explicit user approval is given.
+- [Confirmed] P29/P30A Orchestrator validation. It remains valuable, but not today's first blocker.
+- [Confirmed] SP/bullpen/batting external data implementation.
+- [Confirmed] Optimizer / promotion / champion replacement.
 
 Merged:
 
-- [Inferred] P23-P27 CLV phases become one completed CLV-cleanup evidence chain.
-- [Inferred] P28-P29 become one model-quality/noise-attribution chain.
+- [Inferred] P26G delivery closure and P26H monitoring can be one focused next cycle if scope remains read-only plus artifact-only.
 
 Paused / retired:
 
-- [Confirmed] P22 positive CLV interpretation.
-- [Confirmed] Non-line-aware CLV.
-- [Confirmed] EV-proxy or proxy ablation as production evidence.
-- [Confirmed] Live API, crawler modification, production proposal, profitability claim.
+- [Confirmed] P25C bootstrap until COMPLETE_PAIR >=300.
+- [Confirmed] Manual snapshot fabrication.
+- [Confirmed] Daemon interval change until diagnostic-only impact estimate and explicit authorization.
+- [Confirmed] Assuming force-closing snapshot count equals COMPLETE_PAIR growth.
 
 ## 7. Critical Blockers
 
-### Blocker 1: Proxy-to-Real Orchestrator Gap
+### Blocker 1: COMPLETE_PAIR Remains 220
 
-- Impact: model architecture, prediction quality, recommendation validity.
-- Why blocker: P29 improvement is proxy-only; real Full Orchestrator component behavior may not match.
-- Risk if ignored: changing weights or planning downstream strategy from a non-reproducible proxy result.
+- Impact: CLV validation, bootstrap, strategy diagnostics.
+- Why blocker: P25C requires COMPLETE_PAIR >=300; P26G delta was 0.
+- Risk if ignored: bootstrap on insufficient sample and unreliable CLV inference.
 - Priority: P0.
-- Acceptance: real Orchestrator sweep reports Brier/logloss/hit rate/sample size for market weights, with no production default mutation.
+- Acceptance: pair-level monitor reports coverage before/after and only runs bootstrap if >=300.
 
-### Blocker 2: Market Probability Timestamp / Leakage Risk
+### Blocker 2: Force-Closing Rows Not Yet Becoming Pairs
 
-- Impact: data quality, model evaluation correctness.
-- Why blocker: pure market Brier `0.244354` is strong, but only usable if it is pregame-safe.
-- Risk if ignored: leakage can masquerade as model improvement.
+- Impact: data quality and coverage accumulation.
+- Why blocker: first closing-window row lacked corresponding pregame snapshot.
+- Risk if ignored: rows accumulate but CLV pair coverage does not improve.
 - Priority: P1.
-- Acceptance: each market probability has timestamp/source lineage; closing/postgame odds are excluded or result is marked `LEAKAGE_RISK`.
+- Acceptance: every force-closing row is classified as complete, missing_pregame, missing_closing, or ambiguous with gap details.
 
-### Blocker 3: Orchestrator Coupling Risk
+### Blocker 3: P26G Delivery Closure Incomplete
 
-- Impact: architecture safety.
-- Why blocker: MARL/Elo/market/ensemble components may be too coupled for clean ablation without side effects.
-- Risk if ignored: accidental production default mutation or non-isolated research results.
+- Impact: auditability and handoff reliability.
+- Why blocker: artifacts exist but are untracked; Phase 8 full validation / forbidden scan is not confirmed by this CTO review.
+- Risk if ignored: future agents may repeat work or rely on incomplete artifacts.
 - Priority: P0.
-- Acceptance: diagnostic-only adapter/hook isolates weights and records no production path mutation.
+- Acceptance: artifacts accounted for, validation result recorded, and raw feed/runtime files excluded from staging.
 
-### Blocker 4: Feature Ceiling Without External Data
+### Blocker 4: 15-Minute Cadence Unquantified
 
-- Impact: prediction quality.
-- Why blocker: P29 suggests current repo/CSV feature ceiling is around Brier `0.244-0.245`.
-- Risk if ignored: repeated internal feature/calibration experiments may burn effort without breaking ceiling.
-- Priority: P2/P4.
-- Acceptance: external contracts remain design-only until P0/P1 clear; starting pitcher prototype is next feature candidate after approval.
+- Impact: closing capture coverage.
+- Why blocker: cadence may cause near misses, but changing runtime behavior without measurement is risky.
+- Risk if ignored: coverage may grow slowly; if changed prematurely, daemon load/noise can increase.
+- Priority: P2.
+- Acceptance: diagnostic estimate compares 15-min vs 5-min expected coverage lift before any scheduler change.
 
-### Blocker 5: Stale Active Task SSOT
+### Blocker 5: Runtime Dirty Worktree
 
-- Impact: agent orchestration and workflow safety.
-- Why blocker: `active_task.md` still describes P23 while roadmap now points to P30A.
-- Risk if ignored: Planner/Worker may execute stale gate work instead of current P30A focus.
-- Priority: P2 governance.
-- Acceptance: update is deferred until write authorization includes `active_task.md`, or the next authorized agent updates it.
+- Impact: repo governance and review quality.
+- Why blocker: many daemon/runtime/data/output files are modified and must not be committed as code artifacts.
+- Risk if ignored: raw/live feed or generated outputs pollute commits.
+- Priority: P4.
+- Acceptance: next artifact commit stages only report/artifact files explicitly allowed by that task.
 
 ## 8. Recommended System Optimization Directions
 
-### Direction 1: Real Orchestrator Diagnostic Validation
+### Direction 1: Pair Formation Observability
 
-- Roadmap phase: P0.
-- Why important: Converts P29's useful but proxy-only finding into real-pipeline evidence.
-- Maturity gain: Separates actual architecture improvement from simulation artifact.
-- Expected benefit: Potentially reduce Brier from `0.2487` toward `0.244-0.245` if reproduced.
-- Risk: Real pipeline may not reproduce P29 proxy result.
-- Acceptance: sweep variants output Brier/logloss/hit rate/sample size and no production default mutation.
+- Roadmap phase: P0/P1.
+- Why important: The system now writes force-closing snapshots, but CLV readiness depends on matched pregame+closing pairs.
+- Maturity gain: Moves from row-level observation to match-level evidence.
+- Expected benefit: Clear path to COMPLETE_PAIR >=300 or a concrete pregame capture blocker.
+- Risk: It may show coverage grows slowly even after P26F.
+- Acceptance: match-level force-closing inventory with pair formation status and COMPLETE_PAIR delta.
 - Priority: P0.
 
-### Direction 2: Market Timestamp / Leakage Safety
+### Direction 2: P26G Delivery Hygiene
 
-- Roadmap phase: P1.
-- Why important: Market-heavy models require proof that market probability is pregame-safe.
-- Maturity gain: Protects evaluation correctness and prevents false improvement.
-- Expected benefit: Clear permission to use market baseline as comparator or fallback.
-- Risk: If timestamps are missing, results must be classified as leakage-risk and not adopted.
-- Acceptance: source trace and timestamp audit for every market probability field.
-- Priority: P1.
+- Roadmap phase: P0/P4.
+- Why important: Existing P26G artifacts are untracked and validation is not fully confirmed in this CTO review.
+- Maturity gain: Makes runtime evidence auditable and prevents repeated verification loops.
+- Expected benefit: Cleaner handoff and safer next execution.
+- Risk: Staging could accidentally include raw daemon data if not tightly scoped.
+- Acceptance: only P26G/P26H artifact/report files are staged by a worker task; raw feed/runtime files remain unstaged.
+- Priority: P0.
 
-### Direction 3: External Feature Contract Governance
+### Direction 3: Bootstrap Gate Discipline
 
-- Roadmap phase: P2/P4.
-- Why important: External features are likely required to break the Brier ceiling, but they introduce data cost and leakage risk.
-- Maturity gain: Keeps sourcing, fields, freshness SLA, and anti-leakage rules explicit before implementation.
-- Expected benefit: Clean path to starting pitcher / bullpen / batting upgrades after architecture validation.
-- Risk: Scope explosion if SP integration starts before P0/P1.
-- Acceptance: contracts remain `contract_only=true` until source approval and backtest plan exist.
+- Roadmap phase: P3.
+- Why important: P25C bootstrap is tempting but invalid below 300 complete pairs.
+- Maturity gain: Protects statistical validity and avoids false CLV conclusions.
+- Expected benefit: Bootstrap runs only when enough data exists.
+- Risk: Delays downstream strategy analysis, but correctly.
+- Acceptance: bootstrap decision is machine-readable and tied to COMPLETE_PAIR threshold.
+- Priority: P1/P3.
+
+### Direction 4: Cadence Impact Estimation Before Runtime Change
+
+- Roadmap phase: P2.
+- Why important: 15-minute interval may be a residual blocker, but changing it affects daemon load and operational noise.
+- Maturity gain: Adds measurement before runtime mutation.
+- Expected benefit: A justified yes/no decision on 5-minute cadence.
+- Risk: Estimate may be inconclusive.
+- Acceptance: no daemon restart or scheduler change unless explicitly authorized after diagnostic estimate.
 - Priority: P2.
 
-### Direction 4: Product Recommendation Contract After Model Quality
+### Direction 5: Product/Strategy Lane Gating
 
-- Roadmap phase: P6.
-- Why important: The core product is MLB -> TSL paper recommendation, but recommendations need reliable probability and odds lineage.
-- Maturity gain: Ties markets to model probability, odds, edge, source time, risk gate, and `paper_only=true`.
-- Expected benefit: Prevents unsupported market expansion and keeps product output auditable.
-- Risk: Premature market expansion without model improvement.
-- Acceptance: each market has supported/diagnostic/blocked status and evidence requirements.
+- Roadmap phase: P6/P7.
+- Why important: MLB prediction/recommendation and strategy optimization require verified CLV coverage, not just runtime snapshots.
+- Maturity gain: Keeps product and optimizer work behind formal data-readiness gates.
+- Expected benefit: Prevents premature betting recommendations or strategy promotion.
+- Risk: Model-quality work is delayed while data gate matures.
+- Acceptance: product/strategy tasks resume only after CLV pair coverage or explicit CTO/CEO reprioritization.
 - Priority: P3+.
-
-### Direction 5: Roadmap / Active Task SSOT Repair
-
-- Roadmap phase: P9.
-- Why important: stale `active_task.md` can mislead the next agent.
-- Maturity gain: Aligns Planner/Worker execution with current CTO priorities.
-- Expected benefit: Fewer repeated or stale tasks.
-- Risk: Current write constraints did not allow active task update.
-- Acceptance: update `active_task.md` only after explicit authorization includes that file.
-- Priority: P2 governance.
 
 ## 9. Roadmap Changes Applied
 
-- [Confirmed] Updated `00-Plan/roadmap/roadmap.md`.
-- [Confirmed] Replaced this `00-Plan/roadmap/CTO-Analysis.md` with the P29/P30A CTO assessment.
-- [Confirmed] Marked P23-P27 CLV cleanup as completed/historical.
-- [Confirmed] Marked P28 as model repair no improvement.
-- [Confirmed] Marked P29 as completed diagnostic/proxy and external contract design.
-- [Confirmed] Reprioritized P0 to P30A real Orchestrator `w_market` validation.
-- [Confirmed] Reprioritized P1 to market timestamp/leakage audit.
-- [Confirmed] Marked external data implementation as deferred behind P0/P1.
-- [Confirmed] Did not update `active_task.md` because it is outside the strict allowed write list.
+- [Confirmed] Updated `00-Plan/roadmap/roadmap.md` with P26G/P26H as the latest top section.
+- [Confirmed] Replaced `00-Plan/roadmap/CTO-Analysis.md` with this P26G CTO assessment.
+- [Confirmed] Marked P26F runtime mechanism as confirmed.
+- [Confirmed] Marked COMPLETE_PAIR=220 as the active blocker.
+- [Confirmed] Marked P25C bootstrap as blocked until COMPLETE_PAIR >=300.
+- [Confirmed] Downgraded P29/P30A model-quality work behind the current CLV coverage gate.
+- [Confirmed] Did not write `active_task.md` because it is outside the strict allowed-write list and prompt generation is explicitly restricted.
 
 ## 10. Risks / Unknowns
 
-- [Unknown] Whether real Orchestrator pipeline reproduces P29 proxy improvement.
-- [Unknown] Whether market probabilities are strictly pregame-safe.
-- [Unknown] Whether Orchestrator components can be cleanly ablated without a diagnostic adapter.
-- [Unknown] Whether `w_market=0.50` remains best in a wider real-pipeline sweep.
-- [Unknown] Whether SP/bullpen/batting contract estimates are realistic; they are upper-bound design estimates.
-- [Confirmed] P29 tests were not rerun in this CTO analysis; test status is report-based.
-- [Confirmed] P29 artifacts/scripts/reports are present but untracked in the current git status.
-- [Confirmed] `active_task.md` is stale relative to P29 but was not updated due write restrictions.
-- [Confirmed] PR #2 remains open and must not be merged without explicit authorization.
+- [Unknown] Whether Phase 8 full validation / forbidden scan passed after P26G.
+- [Confirmed] P26G artifacts are present but untracked.
+- [Confirmed] P26F commit exists; P26G commit does not appear in recent git log.
+- [Unknown] Whether missing pregame is due to late TSL listing, pregame capture gap, or expected natural accumulation.
+- [Unknown] Whether 15-minute interval materially reduces pair formation.
+- [Confirmed] COMPLETE_PAIR remains 220 and bootstrap must not run.
+- [Confirmed] Worktree contains many runtime/data/output dirty files; staging must be tightly scoped.
+- [Confirmed] Tests were not rerun in this CTO analysis.
 
 ## 11. CTO Final Recommendation
 
-Today should focus on exactly one engineering direction: **P30A real Orchestrator `w_market` ablation validation plus market timestamp/leakage audit**. Do not start SP data integration yet, and do not launch optimizer promotion, champion replacement, production proposal, live API, or crawler changes.
+Today should not start P25C bootstrap, P29/P30A model work, optimizer promotion, or production proposal.
 
-The decision rule is simple:
+The next highest-value direction is **P26H force-closing pair formation monitoring plus P26G delivery closure**:
 
-- If real Orchestrator reproduces a Brier improvement of at least `0.002` with no leakage risk, keep it as a paper-only architecture candidate.
-- If not reproduced, retire the P29 proxy result as non-actionable.
-- If timestamp lineage is unsafe, block the market-heavy conclusion regardless of Brier.
+- Confirm P26G artifacts and validation state.
+- Classify every force-closing row by match-level pair formation status.
+- Recompute COMPLETE_PAIR before/after.
+- Run P25C bootstrap only if COMPLETE_PAIR >=300.
+- Keep daemon/runtime/raw data out of commits.
 
 Final classification: `CTO_ROADMAP_UPDATED_WITH_RISKS`
 
 ## 12. 10 行內 CTO 摘要
 
-1. P23-P27 CLV cleanup is now historical; clean CLV remains inconclusive.
-2. P28 failed to improve model quality; Full Orchestrator is worse than simple LogReg.
-3. P29 found a proxy candidate: `w_market=0.50`, Brier `0.244154`.
-4. P29 also shows pure market Brier `0.244354`, requiring timestamp/leakage audit.
-5. P29 is diagnostic/proxy-only, not production evidence.
-6. P0 is P30A real Orchestrator `w_market` validation.
-7. P1 is market baseline timestamp/leakage audit.
-8. External data contracts are ready but remain design-only.
-9. Promotion, champion replacement, production proposal, live API, and crawler changes remain frozen.
-10. Do one thing next: validate P29 in the real pipeline before any SP integration or optimizer work.
+1. P26F is committed at `8a98f52` and runtime-effective after daemon restart.
+2. P26G confirmed 10 force-closing rows and 7 dedup bypass rows.
+3. COMPLETE_PAIR stayed at 220; delta is 0.
+4. First closing-window row lacked pregame, so no new pair formed.
+5. P25C bootstrap remains blocked until COMPLETE_PAIR >=300.
+6. P26G artifacts exist but are untracked; validation/commit closure is still needed.
+7. P0 is P26G delivery closure + P26H pair formation monitor.
+8. P1 is missing-pregame root cause diagnosis.
+9. P2 is 15-min vs 5-min cadence impact estimate, diagnostic-only.
+10. No promotion, no production proposal, no manual snapshots, no daemon change without explicit authorization.

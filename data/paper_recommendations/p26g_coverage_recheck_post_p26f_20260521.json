@@ -1,0 +1,62 @@
+{
+  "artifact_id": "p26g_coverage_recheck_post_p26f_20260521",
+  "phase": "P26G",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26G_FORCE_CLOSING_ROWS_CONFIRMED",
+
+  "source_trace": {
+    "history_file": "data/tsl_odds_history.jsonl",
+    "capture_schedule": "data/mlb_context/odds_capture_schedule.json"
+  },
+
+  "p26f_commit": "8a98f52",
+  "old_daemon_pid": 1715,
+  "new_daemon_pid": 15022,
+  "restart_time": "2026-05-21T02:09:35Z",
+
+  "tick_verification": {
+    "first_tick_utc": "2026-05-21T02:09:34Z",
+    "first_tick_log": "TSL fetch OK: 7 snapshots (attempt 1)",
+    "latest_heartbeat_utc": "2026-05-21T02:09:37Z",
+    "new_rows_count": 10
+  },
+
+  "force_closing_rows_found": true,
+  "force_closing_analysis": {
+    "total_force_closing_rows": 10,
+    "dedup_bypassed_true_count": 7,
+    "closing_gap_le_2h_count": 1,
+    "note": "All 10 new rows carry force_closing_snapshot=True (P26F mechanism confirmed). 7 rows had dedup_bypassed=True (stable odds forced-written). 1 row within ±2h closing window (3469566.1, gap=-0.53h). Other rows 6-15h away from game_time: still pre-game captures."
+  },
+
+  "coverage_before": {
+    "complete_pair": 220, "pregame_only": 577,
+    "closing_only": 74, "no_valid_snapshots": 16, "total_matches": 887
+  },
+
+  "coverage_after": {
+    "complete_pair": 220, "pregame_only": 586,
+    "closing_only": 75, "no_valid_snapshots": 16, "total_matches": 897,
+    "note": "10 new matches added (new games from TSL). 3469566.1 has closing snapshot but NO pregame → not COMPLETE_PAIR. Other forced rows are 6-15h pregame, not in closing window."
+  },
+
+  "delta_complete_pairs": 0,
+  "p25c_bootstrap_threshold": 300,
+  "whether_bootstrap_ran": false,
+  "bootstrap_reason": "220 < 300. Force_closing mechanism confirmed but needs more game cycles to accumulate COMPLETE_PAIR matches.",
+
+  "next_closing_candidates": [
+    {"match_id": "3469930.1", "game_time_utc": "2026-05-21T09:00:00Z", "window_entry_utc": "07:00Z", "has_pregame": true},
+    {"match_id": "3469931.1", "game_time_utc": "2026-05-21T09:00:00Z", "window_entry_utc": "07:00Z", "has_pregame": true}
+  ],
+  "expected_new_pairs_today": 2,
+
+  "p26f_mechanism_status": "CONFIRMED_WORKING",
+  "remaining_blocker": "Coverage accumulation: needs 2-7 days for 80 more COMPLETE_PAIR matches. Each day ~5-15 new games enter closing window with existing pregame snapshots."
+}

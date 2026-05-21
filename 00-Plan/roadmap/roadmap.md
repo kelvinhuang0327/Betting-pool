@@ -5,7 +5,74 @@
 **Observed branch:** `codex/main-sync-20260516`  
 **Mode:** `paper_only=true`, `production_ready=false`, `NO_REAL_BET=true`  
 **Roadmap status:** integrated from historical roadmap files because `00-Plan/roadmap/roadmap.md` was [Missing].  
-**Active marker:** `CTO_CANONICAL_ROADMAP_P29_TO_P30A_REAL_ORCHESTRATOR_20260520_READY`
+**Active marker:** `CTO_CANONICAL_ROADMAP_P26H_EXPECTED_PAIRS_PREDICTION_BROKEN_20260521`
+
+---
+
+## 0B. Latest CTO Update - P26G Force Closing Runtime Confirmed
+
+This section supersedes section 0 where runtime CLV coverage gates conflict with model-quality / Orchestrator work.
+
+### 0B.1 Current System Truth
+
+| Area | Status |
+|---|---|
+| Repo / branch | [Confirmed] Canonical repo `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`, branch `main`. |
+| P26F | [Confirmed] Commit `8a98f52` is HEAD: `fix(p26f): force-save closing snapshots through dedup bypass`. |
+| P26G artifacts | [Confirmed] JSON/MD/BettingPlan artifacts exist locally, but are currently untracked. |
+| Daemon restart | [Confirmed] Old PID `1715` -> new PID `15022`; first tick reported `TSL fetch OK: 7 snapshots`. |
+| Force closing runtime | [Confirmed] `force_closing_snapshot=True` rows = 10; `dedup_bypassed=True` rows = 7. |
+| Closing write | [Confirmed] One row was within closing window (`gap=-0.53h`), but it had no matching pregame snapshot. |
+| Coverage | [Confirmed] COMPLETE_PAIR remains 220 before/after P26G; delta = 0. |
+| Bootstrap | [Confirmed] P25C bootstrap did not run and must not run while COMPLETE_PAIR < 300. |
+| P26G validation | [Unknown] Handoff did not include full Phase 8 test / forbidden-scan output; CTO review did not rerun tests. |
+| P26G commit | [Confirmed] No P26G commit is visible in `git log`; P26G artifacts are untracked. |
+| Runtime dirty files | [Confirmed] Worktree has many daemon/runtime/data/output modifications; do not include raw feed/runtime files in roadmap-driven commits. |
+
+### 0B.2 Roadmap Alignment Assessment
+
+| Tag | Assessment |
+|---|---|
+| [Aligned] | P26G correctly verified the P26F force-closing mechanism at runtime after daemon restart. |
+| [Aligned] | P25C bootstrap was correctly blocked because COMPLETE_PAIR stayed at 220 (<300). |
+| [Drift] | Prior roadmap section 0 focused on P29/P30A model-quality work. Current runtime data gate shows CLV pair formation is the immediate maturity blocker. |
+| [Missing] | Roadmap did not yet encode that force-closing rows alone do not imply COMPLETE_PAIR growth. |
+| [Missing] | Roadmap did not yet separate P26G delivery closure from P26H pair-formation monitoring. |
+| [Outdated] | Any plan to run bootstrap immediately after force-closing success is invalid until pair-level coverage reaches 300. |
+| [Blocked] | Formal CLV bootstrap / downstream strategy diagnostics remain blocked by COMPLETE_PAIR=220. |
+
+### 0B.3 Reprioritized P0-P10 From P26G
+
+| Priority | Phase | Track | Objective | Done condition |
+|---:|---|---|---|---|
+| **P0** | P26G Delivery Closure + P26H Pair Formation Monitor | Data QA + runtime observation | Confirm P26G artifacts/validation state, inventory force-closing rows, and diagnose which rows have matching pregame snapshots. | P26G artifacts accounted for; force-closing rows classified by match; COMPLETE_PAIR before/after reported; no bootstrap if <300. |
+| **P1** | Pregame Coverage Gap Diagnostic | Data QA | Determine why the first force-closing row lacked pregame and whether this is natural late listing or a pregame capture bug. | Missing-pregame reason categories and counts exist; no manual snapshot fabrication. |
+| **P2** | Closing Cadence Impact Estimate | Ops | Estimate whether 15-minute interval is still a blocker and whether 5-minute cadence would materially improve pair formation. | Diagnostic-only estimate; no daemon/scheduler change without explicit authorization. |
+| **P3** | P25C Bootstrap Gate | Validation | Run bootstrap only after COMPLETE_PAIR >=300 and line-comparable filtering is satisfied. | Bootstrap result exists or remains blocked with threshold reason. |
+| **P4** | P26 Runtime Validation Hygiene | QA | Rerun targeted tests and forbidden scan for P26F/P26G/P26H artifacts. | Tests and scan results recorded; raw feed/runtime files excluded from commits. |
+| **P5** | TSL CLV Data SSOT | Data governance | Keep source snapshots, history counts, daemon state, and derived pair counts distinct. | Raw feed is never committed as artifact; reports cite source trace and hash/count when needed. |
+| **P6** | MLB Prediction Quality Work Re-entry | Prediction | Revisit P29/P30A model quality only after CLV data gate has a stable monitoring path. | Orchestrator work remains paper-only and cannot supersede CLV coverage gate. |
+| **P7** | TSL Market Recommendation Contract | Product | Maintain paper recommendation contract for markets with traceable odds/pregame/closing evidence. | Market rows require source, timestamp, edge, risk gate, and `paper_only=true`. |
+| **P8** | Daily Paper Ops / Drift Monitor | Ops | Monitor COMPLETE_PAIR, force-closing rows, missing-pregame, missing-closing, and bootstrap readiness. | Daily report explains whether bootstrap is allowed. |
+| **P9** | Repo / PR Governance Gate | Engineering governance | Keep branch/repo workflow disciplined; do not create repos/worktrees or merge protected PRs without approval. | Canonical branch stays `main`; PR actions remain explicit-authorization only. |
+| **P10** | Production Proposal Gate | Governance | Production remains blocked until formal evidence, licensed/live data path, fail-safe, monitoring, and approval exist. | `production_ready=false` until explicit approval. |
+
+### 0B.4 Items Upgraded, Downgraded, Paused, Retired
+
+- [Confirmed] Upgraded to P0: P26H force-closing pair formation monitor and P26G delivery closure.
+- [Confirmed] Upgraded to P1: missing-pregame / pair-formation root cause analysis.
+- [Confirmed] Downgraded: P29/P30A Orchestrator work; still valuable, but not today's first blocker while CLV coverage is below threshold.
+- [Confirmed] Paused: P25C bootstrap until COMPLETE_PAIR >=300.
+- [Confirmed] Paused: daemon interval change until diagnostic-only impact estimate and explicit authorization.
+- [Confirmed] Retired: assuming force-closing snapshot count equals COMPLETE_PAIR growth.
+
+### 0B.5 Today Focus
+
+1. Close P26G delivery uncertainty: artifacts, validation state, and commit state.
+2. Run P26H pair-formation monitoring: force-closing row inventory, matching pregame lookup, COMPLETE_PAIR before/after.
+3. Keep P25C bootstrap blocked unless COMPLETE_PAIR >=300.
+
+No daemon restart, no scheduler code change, no raw data modification, no manual snapshot fabrication, no promotion, no champion replacement, and no production proposal.
 
 ---
 
