@@ -34,6 +34,11 @@ TRIGGER_LEAD_MINUTES = 10
 # If the primary fetch fails, allow one retry after this many seconds
 RETRY_AFTER_SECONDS = 300   # 5 minutes
 
+# Policy A: reserve this many OddsAPI calls for the game-day closing trigger window.
+# When api_calls_today >= (cap - CLOSING_WINDOW_RESERVE) and a future game's closing
+# window has not yet opened, block the current call to preserve quota.
+CLOSING_WINDOW_RESERVE = 1
+
 # Accept snapshots captured within ±90 min of game start.
 # Expanded from 30 to capture Wave 2 afternoon games (kickoff +35~+101 min after first pitch).
 MAX_GAP_MINUTES = 90
@@ -43,20 +48,20 @@ MAX_GAP_MINUTES = 90
 # State helpers
 # ---------------------------------------------------------------------------
 
-def _load_state() -> dict[str, Any]:
-    if STATE_PATH.exists():
+def _load_state(path: Path = STATE_PATH) -> dict[str, Any]:
+    if path.exists():
         try:
-            return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+            return json.loads(path.read_text(encoding="utf-8"))
         except Exception:
             pass
     return {}
 
 
-def _save_state(state: dict[str, Any]) -> None:
-    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    tmp = STATE_PATH.with_suffix(".json.tmp")
+def _save_state(state: dict[str, Any], path: Path = STATE_PATH) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
-    tmp.replace(STATE_PATH)
+    tmp.replace(path)
 
 
 def _today_utc() -> str:
@@ -124,6 +129,31 @@ def _count_external_closing(timeline_path: Path) -> int:
     )
 
 
+def _next_trigger_game(timeline_path: Path) -> datetime | None:
+    """Return the earliest game whose closing-trigger window has not yet opened.
+
+    Policy A uses this to detect whether a future closing window still needs a
+    quota call reserved.  A game is "not yet triggered" when its start time is
+    more than TRIGGER_LEAD_MINUTES in the future — i.e. the daemon would return
+    ``skipped_too_early`` if asked to fetch for that game right now.
+    """
+    rows = _load_rows(timeline_path)
+    now  = _now_utc()
+    threshold = now + timedelta(minutes=TRIGGER_LEAD_MINUTES)
+
+    candidates: list[datetime] = []
+    for row in rows:
+        if (row.get("source") or "").startswith("historical"):
+            continue
+        ct = parse_ts(str(row.get("commence_time", "")))
+        if ct is None:
+            continue
+        if ct > threshold:
+            candidates.append(ct)
+
+    return min(candidates) if candidates else None
+
+
 # ---------------------------------------------------------------------------
 # Main entry point
 # ---------------------------------------------------------------------------
@@ -149,7 +179,7 @@ def run_daily_closing_capture(
     if not key:
         return {"status": "skipped_no_api_key", "api_calls_today": 0, "games_updated": 0}
 
-    state = _load_state()
+    state = _load_state(state_path)
     today = _today_utc()
 
     # Reset daily counters if it's a new day
@@ -208,6 +238,29 @@ def run_daily_closing_capture(
             "trigger_reason": f"{minutes_to_first:.1f}min to first game (threshold={trigger_threshold}min)",
         }
 
+    # Policy A: Reserve CLOSING_WINDOW_RESERVE quota calls for future game closing windows.
+    # If a future game's trigger window has not yet opened and the remaining quota would
+    # be exhausted by this call, block it to preserve at least one call for that window.
+    if not force and api_calls >= (2 - CLOSING_WINDOW_RESERVE):
+        next_game = _next_trigger_game(timeline_path)
+        if next_game is not None:
+            mins_to_next = (next_game - now).total_seconds() / 60.0
+            logger.info(
+                "Daily closing QUOTA RESERVED: api_calls_today=%d/2, "
+                "next game closing window in %.0fmin (T-%dmin trigger). "
+                "Blocking to preserve closing window quota.",
+                api_calls, mins_to_next, TRIGGER_LEAD_MINUTES,
+            )
+            return {
+                "status": "skipped_quota_reserved_for_closing",
+                "api_calls_today": api_calls,
+                "games_updated": 0,
+                "trigger_reason": (
+                    f"quota reserved: {api_calls}/2 used, "
+                    f"next game closing window in {mins_to_next:.0f}min"
+                ),
+            }
+
     # Retry cooldown: if last attempt failed, wait RETRY_AFTER_SECONDS
     last_failure = state.get("last_failure_ts")
     if last_failure and not force:
@@ -223,9 +276,11 @@ def run_daily_closing_capture(
 
     # ── Execute the fetch ──────────────────────────────────────────────────
     attempt_ts = now.isoformat().replace("+00:00", "Z")
-    state["last_attempt_ts"] = attempt_ts
     api_calls += 1
     state["api_calls_today"] = api_calls
+    state["last_attempt_ts"] = attempt_ts
+    _save_state(state, state_path)  # Policy B: persist quota counter BEFORE API call
+                                    # (survives daemon crash mid-request)
 
     logger.info(
         "Daily closing capture triggered: %.1f min to first game, api_calls_today=%d",
@@ -241,7 +296,7 @@ def run_daily_closing_capture(
     except Exception as exc:
         logger.error("Daily closing capture failed: %s", exc)
         state["last_failure_ts"] = attempt_ts
-        _save_state(state)
+        _save_state(state, state_path)
         return {
             "status": "failed",
             "api_calls_today": api_calls,
@@ -258,7 +313,7 @@ def run_daily_closing_capture(
     if result.get("status") == "no_data" or fetched == 0:
         logger.warning("Daily closing: API returned no games (fetched=0)")
         state["last_failure_ts"] = attempt_ts
-        _save_state(state)
+        _save_state(state, state_path)
         return {
             "status": "failed",
             "api_calls_today": api_calls,
@@ -278,7 +333,7 @@ def run_daily_closing_capture(
             "fetched": fetched, "matched": matched,
             "updated": 0, "stale_skipped": stale, "unmatched": unmatched,
         }
-        _save_state(state)
+        _save_state(state, state_path)
         return {
             "status": "stale_retry",
             "api_calls_today": api_calls,
@@ -298,7 +353,7 @@ def run_daily_closing_capture(
         "unmatched": unmatched,
     }
     state.pop("last_failure_ts", None)
-    _save_state(state)
+    _save_state(state, state_path)
 
     total_ext = _count_external_closing(timeline_path)
 
@@ -323,7 +378,7 @@ def run_daily_closing_capture(
 
 def get_daily_state(state_path: Path = STATE_PATH) -> dict[str, Any]:
     """Return current daily state for health checks."""
-    state = _load_state()
+    state = _load_state(state_path)
     today = _today_utc()
     if state.get("date") != today:
         return {"date": today, "api_calls_today": 0, "fetched": False}
