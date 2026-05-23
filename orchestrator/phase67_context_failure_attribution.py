@@ -31,7 +31,7 @@ import json
 import random
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -1287,7 +1287,7 @@ def run_phase67_context_failure_attribution(
     result = Phase67Result(
         phase_version=PHASE_VERSION,
         completion_marker=COMPLETION_MARKER,
-        run_timestamp_utc=datetime.utcnow().isoformat() + "Z",
+        run_timestamp_utc=datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
         candidate_patch_created=CANDIDATE_PATCH_CREATED,
         production_modified=PRODUCTION_MODIFIED,
         alpha_modified=ALPHA_MODIFIED,

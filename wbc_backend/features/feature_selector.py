@@ -274,7 +274,7 @@ def select_features(
         feature_names.append(name)
 
     if not X_cols:
-        ts = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         return FeatureSelectorResult(
             selected_features=[], rejected_features=[],
             importance_scores={}, method="none",
@@ -335,7 +335,7 @@ def select_features(
         else:
             selected.append(name)
 
-    ts = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     return FeatureSelectorResult(
         selected_features=selected,
         rejected_features=rejected,

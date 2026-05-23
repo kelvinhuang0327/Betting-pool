@@ -249,6 +249,9 @@ def test_audit_failure_blocks_subprocess(tmp_path, monkeypatch, tmp_usage_jsonl)
         execution_policy, "assert_llm_execution_allowed",
         lambda **kwargs: None,
     )
+    # 隔離 usage_budget_guard 以防止 live llm_usage.jsonl 觸發 HARD_CAP
+    import orchestrator.usage_budget_guard as ubg_module
+    monkeypatch.setattr(ubg_module, "is_provider_allowed", lambda *a, **kw: (True, None))
     # 直接 patch AuditGuard 使用的 write_attempt（在 provider_audit_guard 模組中）
     monkeypatch.setattr(aug_module, "write_attempt", lambda **kwargs: None)
     monkeypatch.setattr(aug_module, "write_blocked", lambda **kwargs: None)
@@ -288,6 +291,9 @@ def test_successful_mocked_execution_writes_usage(
         execution_policy, "evaluate_execution",
         lambda **kwargs: {"reason": None, "mode": "safe-run"},
     )
+    # 隔離 usage_budget_guard 以防止 live llm_usage.jsonl 觸發 HARD_CAP
+    import orchestrator.usage_budget_guard as ubg_module
+    monkeypatch.setattr(ubg_module, "is_provider_allowed", lambda *a, **kw: (True, None))
 
     # DB: gpt-5-mini model
     monkeypatch.setattr(

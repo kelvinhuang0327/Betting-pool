@@ -31,7 +31,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field, asdict
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Literal, Optional
 
 
@@ -103,7 +103,7 @@ class MlbTslRecommendationRow:
 
     # ── Metadata ─────────────────────────────────────────────────────────────
     generated_at_utc: datetime = field(
-        default_factory=lambda: __import__("datetime").datetime.utcnow()
+        default_factory=lambda: datetime.now(timezone.utc)
     )
     source_trace: dict = field(default_factory=dict)
 

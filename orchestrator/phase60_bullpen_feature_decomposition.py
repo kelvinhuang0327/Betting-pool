@@ -26,7 +26,7 @@ import math
 import random
 import re
 from dataclasses import asdict, dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -849,7 +849,7 @@ def run_phase60_decomposition(
     5. Rolling OOF validation
     6. Gate recommendation
     """
-    run_ts = datetime.utcnow().isoformat() + "Z"
+    run_ts = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
 
     # Validate PIT safety
     bull_raw = _load_jsonl(bullpen_path)
