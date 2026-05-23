@@ -124,10 +124,13 @@ def run_capture() -> dict:
 
 
 def _write_heartbeat(result: dict) -> None:
-    """Append one heartbeat row. Never raise — observability must be safe."""
+    """Append one heartbeat row (schema v2). Never raise — observability must be safe."""
     try:
         import json as _json
+        import re as _re
         from pathlib import Path as _Path
+
+        from wbc_backend.mlb_data.heartbeat_schema import make_semantic_heartbeat_row
 
         state_path = ROOT / "data" / "mlb_context" / "external_closing_state.json"
         state: dict = {}
@@ -137,13 +140,12 @@ def _write_heartbeat(result: dict) -> None:
             except Exception:
                 state = {}
 
-        daily = (result or {}).get("daily_closing") or {}
-        dstatus = daily.get("status") or (result or {}).get("status") or "unknown"
-
-        # Derive next_trigger_minutes from daily trigger_reason when present
+        # Derive next_trigger_minutes from external_closing trigger_reason.
+        # (The key lives at result["result"]["external_closing"]["trigger_reason"].)
+        inner = ((result or {}).get("result") or {})
+        ec = inner.get("external_closing") or {}
         next_trigger_min: float | None = None
-        reason = str(daily.get("trigger_reason") or "")
-        import re as _re
+        reason = str(ec.get("trigger_reason") or "")
         m = _re.search(r"(\d+(?:\.\d+)?)\s*min", reason)
         if m:
             try:
@@ -151,13 +153,12 @@ def _write_heartbeat(result: dict) -> None:
             except Exception:
                 next_trigger_min = None
 
-        row = {
-            "timestamp": _now_utc(),
-            "fetched": bool(state.get("fetched", False)),
-            "api_calls_today": int(state.get("api_calls_today", 0)),
-            "next_trigger_minutes": next_trigger_min,
-            "status": dstatus,
-        }
+        row = make_semantic_heartbeat_row(
+            result=result,
+            existing_state=state,
+            timestamp=_now_utc(),
+            next_trigger_minutes=next_trigger_min,
+        )
         _Path(HEARTBEAT_PATH).parent.mkdir(parents=True, exist_ok=True)
         with open(HEARTBEAT_PATH, "a", encoding="utf-8") as fh:
             fh.write(_json.dumps(row, ensure_ascii=False) + "\n")
