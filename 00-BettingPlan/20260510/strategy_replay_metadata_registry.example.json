@@ -1,0 +1,20 @@
+{
+  "non_production_example": true,
+  "production_candidate": false,
+  "records": [
+    {
+      "strategy_id": "example.strategy.non_production",
+      "strategy_name": "Example Non-Production Strategy",
+      "current_lifecycle_state": "preview",
+      "lifecycle_state_source": "explicit_registry",
+      "lifecycle_state_updated_at": "2026-05-10T08:00:00Z",
+      "owner_module": "wbc_backend.reporting.strategy_registry",
+      "audit_source": "strategy_registry_seed",
+      "allowed_for_future_writes": true,
+      "allowed_for_historical_backfill": false,
+      "metadata_version": "p28a-1.0",
+      "notes": "Non-production example only. Never used in production contexts.",
+      "source_kind": "registry"
+    }
+  ]
+}

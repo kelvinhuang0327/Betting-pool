@@ -1,0 +1,23 @@
+{
+  "production_candidate": true,
+  "accepted": false,
+  "runtime_enabled": false,
+  "non_production_example": false,
+  "review_status": "draft_only",
+  "records": [
+    {
+      "strategy_id": "strategy.pool_c.ml_v1",
+      "strategy_name": "Pool C ML v1",
+      "current_lifecycle_state": "preview",
+      "lifecycle_state_source": "explicit_registry",
+      "lifecycle_state_updated_at": "2026-05-10T08:00:00Z",
+      "owner_module": "wbc_backend.reporting.strategy_registry",
+      "audit_source": "strategy_registry_seed",
+      "allowed_for_future_writes": true,
+      "allowed_for_historical_backfill": false,
+      "metadata_version": "p28a-1.0",
+      "notes": "Candidate draft only. Not runtime enabled.",
+      "source_kind": "registry"
+    }
+  ]
+}

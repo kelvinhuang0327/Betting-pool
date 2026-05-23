@@ -1,0 +1,38 @@
+{
+  "mode": "UI_MOCK_DATA_SPEC_ONLY",
+  "final_marker": "P40_STRATEGY_REPLAY_UI_MOCK_DATA_SPEC_GATE_READY",
+  "production_ui": false,
+  "source_mode": "FIXTURE_ONLY",
+  "readiness_level": "MOCK_DATA_ONLY",
+  "runtime_production_enablement_allowed": false,
+  "production_migration_allowed": false,
+  "production_launch_allowed": false,
+  "production_ui_can_start": false,
+  "disabled_actions": ["PRODUCTION_LAUNCH"],
+  "warnings": [
+    "Mock-data/spec-only. Not production UI.",
+    "No production migration has been executed.",
+    "Historical strategy identity remains blocked unless explicit metadata source is accepted."
+  ],
+  "rows": [
+    {
+      "strategy_id": "strategy.pool_c.ml_v1",
+      "strategy_name": "Pool C ML v1",
+      "lifecycle_state_at_prediction_time": "preview",
+      "current_lifecycle_state": "preview",
+      "game_id": "WBC2026-MOCK-001",
+      "prediction_timestamp": "2026-05-10T08:00:00Z",
+      "prediction": {
+        "home_win_probability": 0.55,
+        "away_win_probability": 0.45
+      },
+      "actual_result": "PENDING",
+      "data_quality_flags": [],
+      "replay_metadata_version": "p28a-1.0",
+      "production_ready": false,
+      "ui_mode": "mock",
+      "runtime_production_enablement_allowed": false,
+      "production_migration_allowed": false
+    }
+  ]
+}
