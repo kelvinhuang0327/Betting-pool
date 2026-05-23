@@ -1,6 +1,12 @@
-# Active Task — P26K CLOSED ✅
+# Active Task — P30A GREEN BASELINE LOCKED ✅
 
-> **[CLOSED 2026-05-23]** `P26K_CLOSING_FETCH_TRIGGER_ROOT_CAUSE_DIAGNOSTIC_20260521`
+> **[CLOSED 2026-05-24]** `P30A_GREEN_BASELINE_LOCK`
+> HEAD: `e40e02a` | Branch: `main`
+> Full suite: **6202 passed / 17 skipped / 0 failed**
+> P28 chain: 186/186 | strategy_replay: 282/282
+> Next: **P30E** (warning reduction: 6 `utcnow()` call sites → `datetime.now(timezone.utc)`)
+
+> **P26K CLOSED [2026-05-23]** `P26K_CLOSING_FETCH_TRIGGER_ROOT_CAUSE_DIAGNOSTIC_20260521`
 > 最終分類: `P26K_SOURCE_STATE_TRULY_EMPTY_CONFIRMED` + `P26K_QUOTA_HARD_CAP_SECONDARY`
 >
 > **P26K 結案**:
