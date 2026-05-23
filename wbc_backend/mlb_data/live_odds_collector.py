@@ -589,9 +589,27 @@ def capture_live_odds(
                 if attempt < MAX_RETRIES:
                     time.sleep(RETRY_DELAY_SECONDS)
 
+    # P28D: Run TSL market availability monitor after each poll cycle.
+    # Uses only normalized TSL snapshots (source="TSL") already in all_snapshots.
+    # Empty list is valid — means TSL returned nothing → potential early withdrawal.
+    _tsl_monitor_result: dict[str, Any] = {}
+    try:
+        from .tsl_poll_monitor_adapter import run_tsl_monitor_after_poll
+        _tsl_snaps_for_monitor = [s for s in all_snapshots if s.get("source") == "TSL"]
+        _tsl_monitor_result = run_tsl_monitor_after_poll(
+            tsl_snaps=_tsl_snaps_for_monitor,
+            poll_ts=_now_iso(),
+            context=f"capture_live_odds force_closing={force_closing}",
+        )
+    except Exception as _mon_exc:
+        logger.warning("TSL monitor skipped: %s", _mon_exc)
+
     if not all_snapshots:
         logger.warning("No odds snapshots fetched from any source")
-        return {"snapshots_received": 0, "games_updated": 0, "snapshots_added": 0}
+        base: dict[str, Any] = {"snapshots_received": 0, "games_updated": 0, "snapshots_added": 0}
+        if _tsl_monitor_result:
+            base["tsl_monitor"] = _tsl_monitor_result
+        return base
 
     summary = update_timeline_from_snapshots(all_snapshots, timeline_path)
 
@@ -636,6 +654,9 @@ def capture_live_odds(
                 )
         except Exception as exc:
             logger.warning("Daily closing capture failed: %s", exc)
+
+    if _tsl_monitor_result:
+        summary["tsl_monitor"] = _tsl_monitor_result
 
     logger.info(
         "Odds capture complete: %d snapshots → %d games updated, %d added, %d dupes skipped",
