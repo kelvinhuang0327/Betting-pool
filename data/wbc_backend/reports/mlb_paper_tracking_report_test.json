@@ -16,7 +16,7 @@
     "scope": "historical 2025 MLB",
     "source": "wbc_backend/research/mlb_paper_monitor.py",
     "status": "paper-only / benchmark only",
-    "generated_at": "2026-05-20T09:50:37.038660Z"
+    "generated_at": "2026-05-23T13:18:53.346409Z"
   },
   "status": "OK",
   "governance_flags": {

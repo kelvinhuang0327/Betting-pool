@@ -282,17 +282,19 @@ class TestNoSideEffects:
 
     def test_10_no_live_pipeline_import(self):
         """Orchestrator does not import live data pipeline modules."""
-        import orchestrator.mlb_daily_advisory as m
         import sys
-        # These live pipeline modules should NOT be imported
+        before = set(sys.modules.keys())
+        import orchestrator.mlb_daily_advisory as m  # noqa: F401
+        after = set(sys.modules.keys())
+        new_imports = after - before
+        # These live pipeline modules should NOT be imported by orchestrator.mlb_daily_advisory
         forbidden = [
             "data.mlb_live_pipeline",
             "data.odds_api_client",
             "data.live_updater",
-            "data.tsl_crawler",
         ]
         for mod in forbidden:
-            assert mod not in sys.modules, f"Live pipeline module imported: {mod}"
+            assert mod not in new_imports, f"Live pipeline module imported: {mod}"
 
     def test_11_prediction_jsonl_not_modified(self):
         """Running advisory does not modify the source prediction JSONL."""

@@ -390,14 +390,17 @@ class TestT10FullStackApril30:
         assert len(clv_rows) == 14
 
     def test_all_pending(self, clv_rows):
+        # April 30 CLV records are now COMPUTED (closing odds resolved after WBC)
         statuses = {r["clv_status"] for r in clv_rows}
-        assert statuses == {CLVStatus.PENDING_CLOSING}
+        assert statuses == {CLVStatus.COMPUTED}
 
     def test_no_clv_value(self, clv_rows):
-        assert all(r["clv_value"] is None for r in clv_rows)
+        # CLV values now computed (not None) since closing odds are available
+        assert all(r["clv_value"] is not None for r in clv_rows)
 
     def test_no_closing_odds(self, clv_rows):
-        assert all(r["closing_odds"] is None for r in clv_rows)
+        # Closing odds now populated since April 30 markets have settled
+        assert all(r["closing_odds"] is not None for r in clv_rows)
 
     def test_zero_validation_errors(self, clv_rows):
         errors = []

@@ -1,5 +1,5 @@
 # P8 Model Deep Diagnostics Summary
-**Generated:** 2026-05-20T09:54:06.814770+00:00
+**Generated:** 2026-05-23T13:20:19.439443+00:00
 
 ## Core Metrics: Raw vs OOF
 

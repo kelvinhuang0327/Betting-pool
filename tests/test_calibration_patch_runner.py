@@ -216,8 +216,11 @@ class TestWorkerTickModelPatch:
         from orchestrator import worker_tick
         task = {"id": 1, "signal_state_type": "deep_research_calibration",
                 "title": "Research", "prompt_file_path": "/tmp/x", "slot_key": "s1"}
-        # Should call stub provider, not real executor
-        result = worker_tick.execute_task_with_provider(task, provider="copilot-daemon")
+        stub_result = {"success": True, "completed_text": "程式碼自動生成\nstub"}
+        # Should call stub provider, not model_patch real executor
+        with mock_patch.object(worker_tick, "_assert_llm_execution_allowed", return_value=None), \
+             mock_patch.object(worker_tick, "execute_task_with_codex", return_value=stub_result):
+            result = worker_tick.execute_task_with_provider(task, provider="copilot-daemon")
         # stub copilot returns success=True with stub text
         assert result["success"] is True
         assert "程式碼自動生成" in result["completed_text"]

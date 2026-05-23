@@ -536,7 +536,10 @@ class PredictionService:
         return round(home_runs, 2), round(away_runs, 2), True
 
     def _load_market_support_performance_summary(self) -> dict[str, object] | None:
-        target = Path(self.config.sources.reports_dir) / "market_support_performance_summary.json"
+        cfg = getattr(self, "config", None)
+        if cfg is None:
+            return None
+        target = Path(cfg.sources.reports_dir) / "market_support_performance_summary.json"
         if not target.exists():
             return None
         try:

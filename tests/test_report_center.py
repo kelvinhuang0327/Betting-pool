@@ -15,7 +15,7 @@ class TestReportCenter(unittest.TestCase):
         self.assertIn("REPORT CENTER", report)
         self.assertIn("WBC_Review_Meeting_Latest.md", report)
         self.assertIn("Next Step:", report)
-        self.assertIn("Open the decision quality and alpha discovery reports", report)
+        self.assertIn("single-snapshot benchmark", report)
         self.assertIn("Observe and collect spring snapshots", report)
 
 

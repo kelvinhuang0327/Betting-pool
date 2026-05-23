@@ -1,24 +1,24 @@
 {
   "source": "TSL_BLOB3RD",
-  "fetched_at": "2026-05-20T05:27:55.658251Z",
+  "fetched_at": "2026-05-23T13:10:45.806624Z",
   "games": [
     {
-      "gameId": "3469753.1",
-      "homeTeamName": "日本火腿鬥士",
-      "awayTeamName": "樂天金鷲",
-      "gameTime": "2026-05-20T17:00:00+08:00",
+      "gameId": "3470443.1",
+      "homeTeamName": "辛辛那堤紅人",
+      "awayTeamName": "聖路易紅雀",
+      "gameTime": "2026-05-24T01:10:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "樂天金鷲",
-              "odds": "2.00",
+              "outcomeName": "聖路易紅雀",
+              "odds": "1.68",
               "specialBetValue": null
             },
             {
-              "outcomeName": "日本火腿鬥士",
-              "odds": "1.48",
+              "outcomeName": "辛辛那堤紅人",
+              "odds": "1.82",
               "specialBetValue": null
             }
           ]
@@ -27,152 +27,14 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "樂天金鷲 +1.5",
-              "odds": "1.58",
-              "specialBetValue": "-1.5"
+              "outcomeName": "聖路易紅雀 +2.5",
+              "odds": "1.28",
+              "specialBetValue": "-2.5"
             },
             {
-              "outcomeName": "日本火腿鬥士 -1.5",
-              "odds": "1.86",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "1.73",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.70",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.52",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.83",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.50",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.85",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.96",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "樂天金鷲",
-              "odds": "3.60",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.55",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "日本火腿鬥士",
-              "odds": "2.65",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "樂天金鷲",
-              "odds": "2.20",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "4.80",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "日本火腿鬥士",
-              "odds": "1.60",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.62",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.71",
-              "specialBetValue": "4.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469754.1",
-      "homeTeamName": "歐力士猛牛",
-      "awayTeamName": "福岡軟銀鷹",
-      "gameTime": "2026-05-20T17:00:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "福岡軟銀鷹",
-              "odds": "1.82",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "歐力士猛牛",
-              "odds": "1.62",
-              "specialBetValue": null
+              "outcomeName": "辛辛那堤紅人 -2.5",
+              "odds": "2.70",
+              "specialBetValue": "-2.5"
             }
           ]
         },
@@ -180,1757 +42,44 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "福岡軟銀鷹 +1.5",
-              "odds": "1.36",
+              "outcomeName": "聖路易紅雀 +1.5",
+              "odds": "1.43",
               "specialBetValue": "-1.5"
             },
             {
-              "outcomeName": "歐力士猛牛 -1.5",
-              "odds": "2.28",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "1.82",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "1.62",
-              "specialBetValue": "7.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.73",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.60",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.82",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.53",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.96",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "福岡軟銀鷹",
-              "odds": "3.55",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.45",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "歐力士猛牛",
-              "odds": "3.15",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "福岡軟銀鷹",
-              "odds": "2.00",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "4.10",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "歐力士猛牛",
-              "odds": "1.80",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.58",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.75",
-              "specialBetValue": "3.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469755.1",
-      "homeTeamName": "西武獅",
-      "awayTeamName": "羅德海洋",
-      "gameTime": "2026-05-20T17:00:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "羅德海洋",
-              "odds": "1.94",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "西武獅",
-              "odds": "1.52",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "羅德海洋 +1.5",
-              "odds": "1.42",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "西武獅 -1.5",
+              "outcomeName": "辛辛那堤紅人 -1.5",
               "odds": "2.15",
               "specialBetValue": "-1.5"
             }
           ]
         },
         {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.72",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "1.72",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.82",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.53",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.65",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.68",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.96",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "羅德海洋",
-              "odds": "4.00",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.40",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "西武獅",
-              "odds": "3.05",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "羅德海洋",
-              "odds": "2.20",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "3.80",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "西武獅",
-              "odds": "1.70",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.73",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.60",
-              "specialBetValue": "3.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469804.1",
-      "homeTeamName": "培證英雄",
-      "awayTeamName": "SSG登陸者",
-      "gameTime": "2026-05-20T17:30:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "SSG登陸者",
-              "odds": "1.33",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "培證英雄",
-              "odds": "2.35",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "SSG登陸者 -1.5",
-              "odds": "1.60",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "培證英雄 +1.5",
-              "odds": "1.85",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "1.65",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.78",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.53",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.93",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.56",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.88",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.56",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.88",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "SSG登陸者",
-              "odds": "2.60",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.60",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "培證英雄",
-              "odds": "4.30",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "SSG登陸者",
-              "odds": "1.45",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "5.15",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "培證英雄",
-              "odds": "2.65",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "SSG登陸者 -1.5",
-              "odds": "1.88",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "培證英雄 +1.5",
-              "odds": "1.56",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.75",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.68",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.82",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.62",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.72",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.72",
-              "specialBetValue": "2.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469805.1",
-      "homeTeamName": "斗山熊",
-      "awayTeamName": "NC恐龍",
-      "gameTime": "2026-05-20T17:30:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "NC恐龍",
-              "odds": "1.93",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "斗山熊",
-              "odds": "1.53",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "NC恐龍 +1.5",
-              "odds": "1.45",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "斗山熊 -1.5",
-              "odds": "2.07",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "1.73",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.70",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.88",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.56",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.72",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.72",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.55",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.90",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "NC恐龍",
-              "odds": "3.70",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.60",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "斗山熊",
-              "odds": "2.90",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "NC恐龍",
-              "odds": "2.20",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "4.90",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "斗山熊",
-              "odds": "1.70",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "NC恐龍 +0.5",
-              "odds": "1.70",
-              "specialBetValue": "-0.5"
-            },
-            {
-              "outcomeName": "斗山熊 -0.5",
-              "odds": "1.73",
-              "specialBetValue": "-0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.75",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.68",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.86",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.58",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.63",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.80",
-              "specialBetValue": "1.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469806.1",
-      "homeTeamName": "三星獅",
-      "awayTeamName": "KT巫師",
-      "gameTime": "2026-05-20T17:30:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "KT巫師",
-              "odds": "1.60",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "三星獅",
-              "odds": "1.85",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "KT巫師 -1.5",
-              "odds": "1.93",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "三星獅 +1.5",
-              "odds": "1.53",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 11.5",
-              "odds": "1.75",
-              "specialBetValue": "11.5"
-            },
-            {
-              "outcomeName": "小 11.5",
-              "odds": "1.68",
-              "specialBetValue": "11.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.56",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.88",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.66",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.76",
-              "specialBetValue": "5.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.56",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.88",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "KT巫師",
-              "odds": "2.70",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.85",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "三星獅",
-              "odds": "3.00",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "KT巫師",
-              "odds": "1.70",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "6.00",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "三星獅",
-              "odds": "2.00",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "KT巫師 -0.5",
-              "odds": "1.78",
-              "specialBetValue": "0.5"
-            },
-            {
-              "outcomeName": "三星獅 +0.5",
-              "odds": "1.65",
-              "specialBetValue": "0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.85",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "1.60",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.68",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.75",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.53",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.93",
-              "specialBetValue": "2.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469807.1",
-      "homeTeamName": "韓華老鷹",
-      "awayTeamName": "樂天巨人",
-      "gameTime": "2026-05-20T17:30:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "樂天巨人",
-              "odds": "1.82",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "韓華老鷹",
-              "odds": "1.62",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "樂天巨人 +1.5",
-              "odds": "1.43",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "韓華老鷹 -1.5",
-              "odds": "2.10",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 9.5",
-              "odds": "1.62",
-              "specialBetValue": "9.5"
-            },
-            {
-              "outcomeName": "小 9.5",
-              "odds": "1.82",
-              "specialBetValue": "9.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.63",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.80",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.73",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.70",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.55",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.90",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "樂天巨人",
-              "odds": "3.30",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.70",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "韓華老鷹",
-              "odds": "2.75",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "樂天巨人",
-              "odds": "2.00",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "5.55",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "韓華老鷹",
-              "odds": "1.75",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "樂天巨人 +0.5",
-              "odds": "1.65",
-              "specialBetValue": "-0.5"
-            },
-            {
-              "outcomeName": "韓華老鷹 -0.5",
-              "odds": "1.78",
-              "specialBetValue": "-0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.76",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.66",
-              "specialBetValue": "5.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.68",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.75",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.86",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.58",
-              "specialBetValue": "2.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469808.1",
-      "homeTeamName": "起亞老虎",
-      "awayTeamName": "LG雙子",
-      "gameTime": "2026-05-20T17:30:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "LG雙子",
-              "odds": "1.65",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "起亞老虎",
-              "odds": "1.78",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "LG雙子 -1.5",
+              "outcomeName": "聖路易紅雀 -1.5",
               "odds": "2.00",
               "specialBetValue": "1.5"
             },
-            {
-              "outcomeName": "起亞老虎 +1.5",
-              "odds": "1.48",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 9.5",
-              "odds": "1.63",
-              "specialBetValue": "9.5"
-            },
-            {
-              "outcomeName": "小 9.5",
-              "odds": "1.80",
-              "specialBetValue": "9.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.76",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.66",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.62",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.82",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.55",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.90",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "LG雙子",
-              "odds": "2.95",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.70",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "起亞老虎",
-              "odds": "3.10",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "LG雙子",
-              "odds": "1.80",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "5.45",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "起亞老虎",
-              "odds": "1.95",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "LG雙子 -0.5",
-              "odds": "1.85",
-              "specialBetValue": "0.5"
-            },
-            {
-              "outcomeName": "起亞老虎 +0.5",
-              "odds": "1.60",
-              "specialBetValue": "0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.80",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.63",
-              "specialBetValue": "5.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.85",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.60",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.75",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.68",
-              "specialBetValue": "2.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469810.1",
-      "homeTeamName": "味全龍",
-      "awayTeamName": "台鋼雄鷹",
-      "gameTime": "2026-05-20T18:35:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "台鋼雄鷹",
-              "odds": "1.76",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "味全龍",
-              "odds": "1.66",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "台鋼雄鷹 -1.5",
-              "odds": "2.30",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "味全龍 +1.5",
-              "odds": "1.35",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.58",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "1.86",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.96",
-              "specialBetValue": null
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469811.1",
-      "homeTeamName": "樂天桃猿",
-      "awayTeamName": "中信兄弟",
-      "gameTime": "2026-05-20T18:35:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "中信兄弟",
-              "odds": "2.05",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "樂天桃猿",
-              "odds": "1.46",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "中信兄弟 +1.5",
-              "odds": "1.50",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "樂天桃猿 -1.5",
-              "odds": "1.96",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "1.66",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "1.76",
-              "specialBetValue": "7.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.96",
-              "specialBetValue": null
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469812.1",
-      "homeTeamName": "富邦悍將",
-      "awayTeamName": "統一獅",
-      "gameTime": "2026-05-20T18:35:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "統一獅",
-              "odds": "1.72",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "富邦悍將",
-              "odds": "1.72",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "統一獅 -1.5",
-              "odds": "2.28",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "富邦悍將 +1.5",
-              "odds": "1.36",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.78",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "1.65",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.96",
-              "specialBetValue": null
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469710.1",
-      "homeTeamName": "費城費城人",
-      "awayTeamName": "辛辛那堤紅人",
-      "gameTime": "2026-05-21T01:05:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "辛辛那堤紅人",
-              "odds": "1.97",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "費城費城人",
-              "odds": "1.53",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
             {
               "outcomeName": "辛辛那堤紅人 +1.5",
-              "odds": "1.53",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "費城費城人 -1.5",
-              "odds": "1.97",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 9.5",
-              "odds": "1.70",
-              "specialBetValue": "9.5"
-            },
-            {
-              "outcomeName": "小 9.5",
-              "odds": "1.80",
-              "specialBetValue": "9.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.55",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.90",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.76",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.66",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.48",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "1.90",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "辛辛那堤紅人",
-              "odds": "3.35",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.65",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "費城費城人",
-              "odds": "2.55",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 0.5",
-              "odds": "1.56",
-              "specialBetValue": "0.5"
-            },
-            {
-              "outcomeName": "小 0.5",
-              "odds": "1.78",
-              "specialBetValue": "0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "辛辛那堤紅人",
-              "odds": "2.05",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "5.20",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "費城費城人",
-              "odds": "1.60",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.75",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.58",
-              "specialBetValue": "5.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.65",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.78",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.96",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
               "odds": "1.50",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "聖路易紅雀 -2.5",
+              "odds": "2.47",
               "specialBetValue": "2.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469714.1",
-      "homeTeamName": "坦帕灣光芒",
-      "awayTeamName": "巴爾的摩金鶯",
-      "gameTime": "2026-05-21T01:10:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "巴爾的摩金鶯",
-              "odds": "1.88",
-              "specialBetValue": null
             },
             {
-              "outcomeName": "坦帕灣光芒",
-              "odds": "1.62",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "巴爾的摩金鶯 +2.5",
-              "odds": "1.26",
-              "specialBetValue": "-2.5"
-            },
-            {
-              "outcomeName": "坦帕灣光芒 -2.5",
-              "odds": "2.75",
-              "specialBetValue": "-2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "巴爾的摩金鶯 +1.5",
-              "odds": "1.42",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "坦帕灣光芒 -1.5",
-              "odds": "2.20",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "巴爾的摩金鶯 -1.5",
-              "odds": "2.40",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "坦帕灣光芒 +1.5",
-              "odds": "1.36",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "1.55",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "1.95",
-              "specialBetValue": "7.5"
+              "outcomeName": "辛辛那堤紅人 +2.5",
+              "odds": "1.33",
+              "specialBetValue": "2.5"
             }
           ]
         },
@@ -1939,12 +88,12 @@
           "outcomes": [
             {
               "outcomeName": "大 8.5",
-              "odds": "1.79",
+              "odds": "1.48",
               "specialBetValue": "8.5"
             },
             {
               "outcomeName": "小 8.5",
-              "odds": "1.71",
+              "odds": "2.05",
               "specialBetValue": "8.5"
             }
           ]
@@ -1954,13 +103,28 @@
           "outcomes": [
             {
               "outcomeName": "大 9.5",
-              "odds": "2.10",
+              "odds": "1.75",
               "specialBetValue": "9.5"
             },
             {
               "outcomeName": "小 9.5",
-              "odds": "1.45",
+              "odds": "1.75",
               "specialBetValue": "9.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 10.5",
+              "odds": "1.97",
+              "specialBetValue": "10.5"
+            },
+            {
+              "outcomeName": "小 10.5",
+              "odds": "1.53",
+              "specialBetValue": "10.5"
             }
           ]
         },
@@ -1969,12 +133,12 @@
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.90",
+              "odds": "1.73",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.55",
+              "odds": "1.70",
               "specialBetValue": "4.5"
             }
           ]
@@ -1983,14 +147,14 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 3.5",
-              "odds": "1.58",
-              "specialBetValue": "3.5"
+              "outcomeName": "大 4.5",
+              "odds": "1.65",
+              "specialBetValue": "4.5"
             },
             {
-              "outcomeName": "小 3.5",
-              "odds": "1.86",
-              "specialBetValue": "3.5"
+              "outcomeName": "小 4.5",
+              "odds": "1.78",
+              "specialBetValue": "4.5"
             }
           ]
         },
@@ -1999,12 +163,12 @@
           "outcomes": [
             {
               "outcomeName": "單",
-              "odds": "1.48",
+              "odds": "1.50",
               "specialBetValue": null
             },
             {
               "outcomeName": "雙",
-              "odds": "2.00",
+              "odds": "1.96",
               "specialBetValue": null
             }
           ]
@@ -2013,17 +177,17 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "巴爾的摩金鶯",
-              "odds": "3.25",
+              "outcomeName": "聖路易紅雀",
+              "odds": "2.85",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "1.55",
+              "odds": "1.65",
               "specialBetValue": null
             },
             {
-              "outcomeName": "坦帕灣光芒",
+              "outcomeName": "辛辛那堤紅人",
               "odds": "2.85",
               "specialBetValue": null
             }
@@ -2034,12 +198,12 @@
           "outcomes": [
             {
               "outcomeName": "大 0.5",
-              "odds": "1.66",
+              "odds": "1.56",
               "specialBetValue": "0.5"
             },
             {
               "outcomeName": "小 0.5",
-              "odds": "1.66",
+              "odds": "1.78",
               "specialBetValue": "0.5"
             }
           ]
@@ -2048,18 +212,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "巴爾的摩金鶯",
-              "odds": "1.90",
+              "outcomeName": "聖路易紅雀",
+              "odds": "1.80",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "4.75",
+              "odds": "5.15",
               "specialBetValue": null
             },
             {
-              "outcomeName": "坦帕灣光芒",
-              "odds": "1.75",
+              "outcomeName": "辛辛那堤紅人",
+              "odds": "1.85",
               "specialBetValue": null
             }
           ]
@@ -2068,14 +232,14 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 4.5",
-              "odds": "1.62",
-              "specialBetValue": "4.5"
+              "outcomeName": "大 5.5",
+              "odds": "1.70",
+              "specialBetValue": "5.5"
             },
             {
-              "outcomeName": "小 4.5",
-              "odds": "1.71",
-              "specialBetValue": "4.5"
+              "outcomeName": "小 5.5",
+              "odds": "1.63",
+              "specialBetValue": "5.5"
             }
           ]
         },
@@ -2084,12 +248,12 @@
           "outcomes": [
             {
               "outcomeName": "大 2.5",
-              "odds": "1.90",
+              "odds": "1.76",
               "specialBetValue": "2.5"
             },
             {
               "outcomeName": "小 2.5",
-              "odds": "1.55",
+              "odds": "1.66",
               "specialBetValue": "2.5"
             }
           ]
@@ -2098,24 +262,24 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 1.5",
-              "odds": "1.50",
-              "specialBetValue": "1.5"
+              "outcomeName": "大 2.5",
+              "odds": "1.75",
+              "specialBetValue": "2.5"
             },
             {
-              "outcomeName": "小 1.5",
-              "odds": "1.96",
-              "specialBetValue": "1.5"
+              "outcomeName": "小 2.5",
+              "odds": "1.68",
+              "specialBetValue": "2.5"
             }
           ]
         }
       ]
     },
     {
-      "gameId": "3469709.1",
-      "homeTeamName": "明尼蘇達雙城",
+      "gameId": "3470412.1",
+      "homeTeamName": "芝加哥小熊",
       "awayTeamName": "休士頓太空人",
-      "gameTime": "2026-05-21T01:40:00+08:00",
+      "gameTime": "2026-05-24T02:20:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
@@ -2126,7 +290,7 @@
               "specialBetValue": null
             },
             {
-              "outcomeName": "明尼蘇達雙城",
+              "outcomeName": "芝加哥小熊",
               "odds": "1.48",
               "specialBetValue": null
             }
@@ -2137,12 +301,12 @@
           "outcomes": [
             {
               "outcomeName": "休士頓太空人 +2.5",
-              "odds": "1.33",
+              "odds": "1.32",
               "specialBetValue": "-2.5"
             },
             {
-              "outcomeName": "明尼蘇達雙城 -2.5",
-              "odds": "2.47",
+              "outcomeName": "芝加哥小熊 -2.5",
+              "odds": "2.50",
               "specialBetValue": "-2.5"
             }
           ]
@@ -2152,12 +316,12 @@
           "outcomes": [
             {
               "outcomeName": "休士頓太空人 +1.5",
-              "odds": "1.52",
+              "odds": "1.50",
               "specialBetValue": "-1.5"
             },
             {
-              "outcomeName": "明尼蘇達雙城 -1.5",
-              "odds": "1.98",
+              "outcomeName": "芝加哥小熊 -1.5",
+              "odds": "2.00",
               "specialBetValue": "-1.5"
             }
           ]
@@ -2167,12 +331,12 @@
           "outcomes": [
             {
               "outcomeName": "大 6.5",
-              "odds": "1.40",
+              "odds": "1.48",
               "specialBetValue": "6.5"
             },
             {
               "outcomeName": "小 6.5",
-              "odds": "2.30",
+              "odds": "2.05",
               "specialBetValue": "6.5"
             }
           ]
@@ -2182,12 +346,12 @@
           "outcomes": [
             {
               "outcomeName": "大 7.5",
-              "odds": "1.66",
+              "odds": "1.84",
               "specialBetValue": "7.5"
             },
             {
               "outcomeName": "小 7.5",
-              "odds": "1.84",
+              "odds": "1.66",
               "specialBetValue": "7.5"
             }
           ]
@@ -2197,28 +361,13 @@
           "outcomes": [
             {
               "outcomeName": "大 8.5",
-              "odds": "1.90",
+              "odds": "2.07",
               "specialBetValue": "8.5"
             },
             {
               "outcomeName": "小 8.5",
-              "odds": "1.60",
+              "odds": "1.46",
               "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.86",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.58",
-              "specialBetValue": "4.5"
             }
           ]
         },
@@ -2227,12 +376,27 @@
           "outcomes": [
             {
               "outcomeName": "大 3.5",
-              "odds": "1.76",
+              "odds": "1.60",
               "specialBetValue": "3.5"
             },
             {
               "outcomeName": "小 3.5",
-              "odds": "1.66",
+              "odds": "1.85",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.88",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
+              "odds": "1.56",
               "specialBetValue": "3.5"
             }
           ]
@@ -2262,12 +426,12 @@
             },
             {
               "outcomeName": "和局",
-              "odds": "1.50",
+              "odds": "1.45",
               "specialBetValue": null
             },
             {
-              "outcomeName": "明尼蘇達雙城",
-              "odds": "2.80",
+              "outcomeName": "芝加哥小熊",
+              "odds": "2.90",
               "specialBetValue": null
             }
           ]
@@ -2277,12 +441,12 @@
           "outcomes": [
             {
               "outcomeName": "大 0.5",
-              "odds": "1.75",
+              "odds": "1.80",
               "specialBetValue": "0.5"
             },
             {
               "outcomeName": "小 0.5",
-              "odds": "1.58",
+              "odds": "1.55",
               "specialBetValue": "0.5"
             }
           ]
@@ -2297,11 +461,11 @@
             },
             {
               "outcomeName": "和局",
-              "odds": "4.45",
+              "odds": "4.30",
               "specialBetValue": null
             },
             {
-              "outcomeName": "明尼蘇達雙城",
+              "outcomeName": "芝加哥小熊",
               "odds": "1.65",
               "specialBetValue": null
             }
@@ -2311,14 +475,14 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 4.5",
-              "odds": "1.80",
-              "specialBetValue": "4.5"
+              "outcomeName": "大 3.5",
+              "odds": "1.50",
+              "specialBetValue": "3.5"
             },
             {
-              "outcomeName": "小 4.5",
-              "odds": "1.55",
-              "specialBetValue": "4.5"
+              "outcomeName": "小 3.5",
+              "odds": "1.85",
+              "specialBetValue": "3.5"
             }
           ]
         },
@@ -2326,14 +490,14 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 2.5",
-              "odds": "1.94",
-              "specialBetValue": "2.5"
+              "outcomeName": "大 1.5",
+              "odds": "1.50",
+              "specialBetValue": "1.5"
             },
             {
-              "outcomeName": "小 2.5",
-              "odds": "1.52",
-              "specialBetValue": "2.5"
+              "outcomeName": "小 1.5",
+              "odds": "1.96",
+              "specialBetValue": "1.5"
             }
           ]
         },
@@ -2355,98 +519,113 @@
       ]
     },
     {
-      "gameId": "3469752.1",
-      "homeTeamName": "科羅拉多落磯",
-      "awayTeamName": "德州遊騎兵",
-      "gameTime": "2026-05-21T03:10:00+08:00",
+      "gameId": "3470444.1",
+      "homeTeamName": "多倫多藍鳥",
+      "awayTeamName": "匹茲堡海盜",
+      "gameTime": "2026-05-24T03:07:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "德州遊騎兵",
-              "odds": "1.55",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "科羅拉多落磯",
-              "odds": "1.95",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "德州遊騎兵 -1.5",
-              "odds": "1.88",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "科羅拉多落磯 +1.5",
-              "odds": "1.62",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "德州遊騎兵 -2.5",
-              "odds": "2.20",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "科羅拉多落磯 +2.5",
-              "odds": "1.42",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 9.5",
-              "odds": "1.58",
-              "specialBetValue": "9.5"
-            },
-            {
-              "outcomeName": "小 9.5",
-              "odds": "1.92",
-              "specialBetValue": "9.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 10.5",
-              "odds": "1.78",
-              "specialBetValue": "10.5"
-            },
-            {
-              "outcomeName": "小 10.5",
-              "odds": "1.72",
-              "specialBetValue": "10.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 11.5",
-              "odds": "2.07",
-              "specialBetValue": "11.5"
-            },
-            {
-              "outcomeName": "小 11.5",
+              "outcomeName": "匹茲堡海盜",
               "odds": "1.46",
-              "specialBetValue": "11.5"
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "多倫多藍鳥",
+              "odds": "2.07",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "匹茲堡海盜 -1.5",
+              "odds": "1.85",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "多倫多藍鳥 +1.5",
+              "odds": "1.65",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "匹茲堡海盜 -2.5",
+              "odds": "2.30",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "多倫多藍鳥 +2.5",
+              "odds": "1.40",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 6.5",
+              "odds": "1.48",
+              "specialBetValue": "6.5"
+            },
+            {
+              "outcomeName": "小 6.5",
+              "odds": "2.05",
+              "specialBetValue": "6.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 7.5",
+              "odds": "1.80",
+              "specialBetValue": "7.5"
+            },
+            {
+              "outcomeName": "小 7.5",
+              "odds": "1.70",
+              "specialBetValue": "7.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 8.5",
+              "odds": "2.07",
+              "specialBetValue": "8.5"
+            },
+            {
+              "outcomeName": "小 8.5",
+              "odds": "1.46",
+              "specialBetValue": "8.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 2.5",
+              "odds": "1.52",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "小 2.5",
+              "odds": "1.94",
+              "specialBetValue": "2.5"
             }
           ]
         },
@@ -2455,28 +634,13 @@
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.70",
+              "odds": "1.90",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.73",
+              "odds": "1.55",
               "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.76",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.66",
-              "specialBetValue": "5.5"
             }
           ]
         },
@@ -2499,18 +663,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "德州遊騎兵",
-              "odds": "2.70",
+              "outcomeName": "匹茲堡海盜",
+              "odds": "2.85",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "1.65",
+              "odds": "1.45",
               "specialBetValue": null
             },
             {
-              "outcomeName": "科羅拉多落磯",
-              "odds": "3.05",
+              "outcomeName": "多倫多藍鳥",
+              "odds": "3.85",
               "specialBetValue": null
             }
           ]
@@ -2520,12 +684,12 @@
           "outcomes": [
             {
               "outcomeName": "大 0.5",
-              "odds": "1.55",
+              "odds": "1.82",
               "specialBetValue": "0.5"
             },
             {
               "outcomeName": "小 0.5",
-              "odds": "1.80",
+              "odds": "1.53",
               "specialBetValue": "0.5"
             }
           ]
@@ -2534,177 +698,19 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "德州遊騎兵",
-              "odds": "1.70",
+              "outcomeName": "匹茲堡海盜",
+              "odds": "1.60",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "5.25",
+              "odds": "4.20",
               "specialBetValue": null
             },
             {
-              "outcomeName": "科羅拉多落磯",
-              "odds": "1.95",
+              "outcomeName": "多倫多藍鳥",
+              "odds": "2.30",
               "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.70",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.63",
-              "specialBetValue": "5.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.85",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.60",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.66",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.76",
-              "specialBetValue": "2.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469748.1",
-      "homeTeamName": "亞歷桑那響尾蛇",
-      "awayTeamName": "舊金山巨人",
-      "gameTime": "2026-05-21T03:40:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "舊金山巨人",
-              "odds": "1.94",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "亞歷桑那響尾蛇",
-              "odds": "1.56",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "舊金山巨人 +2.5",
-              "odds": "1.32",
-              "specialBetValue": "-2.5"
-            },
-            {
-              "outcomeName": "亞歷桑那響尾蛇 -2.5",
-              "odds": "2.50",
-              "specialBetValue": "-2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "舊金山巨人 +1.5",
-              "odds": "1.48",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "亞歷桑那響尾蛇 -1.5",
-              "odds": "2.05",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "1.45",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "2.10",
-              "specialBetValue": "7.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "1.65",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.85",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 9.5",
-              "odds": "1.95",
-              "specialBetValue": "9.5"
-            },
-            {
-              "outcomeName": "小 9.5",
-              "odds": "1.55",
-              "specialBetValue": "9.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.75",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.68",
-              "specialBetValue": "4.5"
             }
           ]
         },
@@ -2718,8 +724,166 @@
             },
             {
               "outcomeName": "小 3.5",
-              "odds": "1.90",
+              "odds": "1.80",
               "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.88",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.56",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 2.5",
+              "odds": "1.96",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "小 2.5",
+              "odds": "1.50",
+              "specialBetValue": "2.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameId": "3470454.1",
+      "homeTeamName": "舊金山巨人",
+      "awayTeamName": "芝加哥白襪",
+      "gameTime": "2026-05-24T04:05:00+08:00",
+      "markets": [
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "芝加哥白襪",
+              "odds": "1.88",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "舊金山巨人",
+              "odds": "1.62",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "芝加哥白襪 +2.5",
+              "odds": "1.28",
+              "specialBetValue": "-2.5"
+            },
+            {
+              "outcomeName": "舊金山巨人 -2.5",
+              "odds": "2.70",
+              "specialBetValue": "-2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "芝加哥白襪 +1.5",
+              "odds": "1.43",
+              "specialBetValue": "-1.5"
+            },
+            {
+              "outcomeName": "舊金山巨人 -1.5",
+              "odds": "2.15",
+              "specialBetValue": "-1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 7.5",
+              "odds": "1.48",
+              "specialBetValue": "7.5"
+            },
+            {
+              "outcomeName": "小 7.5",
+              "odds": "2.05",
+              "specialBetValue": "7.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 8.5",
+              "odds": "1.71",
+              "specialBetValue": "8.5"
+            },
+            {
+              "outcomeName": "小 8.5",
+              "odds": "1.79",
+              "specialBetValue": "8.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 9.5",
+              "odds": "2.05",
+              "specialBetValue": "9.5"
+            },
+            {
+              "outcomeName": "小 9.5",
+              "odds": "1.48",
+              "specialBetValue": "9.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.85",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.60",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.90",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.55",
+              "specialBetValue": "4.5"
             }
           ]
         },
@@ -2728,12 +892,12 @@
           "outcomes": [
             {
               "outcomeName": "單",
-              "odds": "1.48",
+              "odds": "1.50",
               "specialBetValue": null
             },
             {
               "outcomeName": "雙",
-              "odds": "2.00",
+              "odds": "1.96",
               "specialBetValue": null
             }
           ]
@@ -2742,8 +906,8 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "舊金山巨人",
-              "odds": "3.25",
+              "outcomeName": "芝加哥白襪",
+              "odds": "3.10",
               "specialBetValue": null
             },
             {
@@ -2752,8 +916,8 @@
               "specialBetValue": null
             },
             {
-              "outcomeName": "亞歷桑那響尾蛇",
-              "odds": "2.70",
+              "outcomeName": "舊金山巨人",
+              "odds": "2.85",
               "specialBetValue": null
             }
           ]
@@ -2777,18 +941,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "舊金山巨人",
-              "odds": "2.00",
+              "outcomeName": "芝加哥白襪",
+              "odds": "1.90",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "5.00",
+              "odds": "4.90",
               "specialBetValue": null
             },
             {
-              "outcomeName": "亞歷桑那響尾蛇",
-              "odds": "1.65",
+              "outcomeName": "舊金山巨人",
+              "odds": "1.75",
               "specialBetValue": null
             }
           ]
@@ -2798,12 +962,12 @@
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.53",
+              "odds": "1.55",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.82",
+              "odds": "1.80",
               "specialBetValue": "4.5"
             }
           ]
@@ -2813,12 +977,12 @@
           "outcomes": [
             {
               "outcomeName": "大 2.5",
-              "odds": "1.76",
+              "odds": "1.85",
               "specialBetValue": "2.5"
             },
             {
               "outcomeName": "小 2.5",
-              "odds": "1.66",
+              "odds": "1.60",
               "specialBetValue": "2.5"
             }
           ]
@@ -2827,36 +991,36 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 1.5",
-              "odds": "1.50",
-              "specialBetValue": "1.5"
+              "outcomeName": "大 2.5",
+              "odds": "1.96",
+              "specialBetValue": "2.5"
             },
             {
-              "outcomeName": "小 1.5",
-              "odds": "1.96",
-              "specialBetValue": "1.5"
+              "outcomeName": "小 2.5",
+              "odds": "1.50",
+              "specialBetValue": "2.5"
             }
           ]
         }
       ]
     },
     {
-      "gameId": "3469751.1",
-      "homeTeamName": "西雅圖水手",
-      "awayTeamName": "芝加哥白襪",
-      "gameTime": "2026-05-21T04:10:00+08:00",
+      "gameId": "3470455.1",
+      "homeTeamName": "費城費城人",
+      "awayTeamName": "克里夫蘭守護者",
+      "gameTime": "2026-05-24T04:05:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "芝加哥白襪",
-              "odds": "2.05",
+              "outcomeName": "克里夫蘭守護者",
+              "odds": "2.33",
               "specialBetValue": null
             },
             {
-              "outcomeName": "西雅圖水手",
-              "odds": "1.48",
+              "outcomeName": "費城費城人",
+              "odds": "1.38",
               "specialBetValue": null
             }
           ]
@@ -2865,13 +1029,13 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "芝加哥白襪 +2.5",
-              "odds": "1.32",
+              "outcomeName": "克里夫蘭守護者 +2.5",
+              "odds": "1.40",
               "specialBetValue": "-2.5"
             },
             {
-              "outcomeName": "西雅圖水手 -2.5",
-              "odds": "2.50",
+              "outcomeName": "費城費城人 -2.5",
+              "odds": "2.30",
               "specialBetValue": "-2.5"
             }
           ]
@@ -2880,13 +1044,13 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "芝加哥白襪 +1.5",
-              "odds": "1.50",
+              "outcomeName": "克里夫蘭守護者 +1.5",
+              "odds": "1.65",
               "specialBetValue": "-1.5"
             },
             {
-              "outcomeName": "西雅圖水手 -1.5",
-              "odds": "2.00",
+              "outcomeName": "費城費城人 -1.5",
+              "odds": "1.85",
               "specialBetValue": "-1.5"
             }
           ]
@@ -2895,13 +1059,28 @@
           "marketCode": "OU",
           "outcomes": [
             {
+              "outcomeName": "大 5.5",
+              "odds": "1.40",
+              "specialBetValue": "5.5"
+            },
+            {
+              "outcomeName": "小 5.5",
+              "odds": "2.30",
+              "specialBetValue": "5.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
               "outcomeName": "大 6.5",
-              "odds": "1.43",
+              "odds": "1.58",
               "specialBetValue": "6.5"
             },
             {
               "outcomeName": "小 6.5",
-              "odds": "2.15",
+              "odds": "1.92",
               "specialBetValue": "6.5"
             }
           ]
@@ -2911,42 +1090,27 @@
           "outcomes": [
             {
               "outcomeName": "大 7.5",
-              "odds": "1.75",
+              "odds": "1.94",
               "specialBetValue": "7.5"
             },
             {
               "outcomeName": "小 7.5",
-              "odds": "1.75",
+              "odds": "1.56",
               "specialBetValue": "7.5"
             }
           ]
         },
         {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "1.98",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.52",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
           "marketCode": "TTO",
           "outcomes": [
             {
               "outcomeName": "大 3.5",
-              "odds": "1.55",
+              "odds": "1.56",
               "specialBetValue": "3.5"
             },
             {
               "outcomeName": "小 3.5",
-              "odds": "1.90",
+              "odds": "1.88",
               "specialBetValue": "3.5"
             }
           ]
@@ -2955,14 +1119,14 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 3.5",
-              "odds": "1.82",
-              "specialBetValue": "3.5"
+              "outcomeName": "大 2.5",
+              "odds": "1.66",
+              "specialBetValue": "2.5"
             },
             {
-              "outcomeName": "小 3.5",
-              "odds": "1.62",
-              "specialBetValue": "3.5"
+              "outcomeName": "小 2.5",
+              "odds": "1.76",
+              "specialBetValue": "2.5"
             }
           ]
         },
@@ -2985,18 +1149,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "芝加哥白襪",
-              "odds": "3.65",
+              "outcomeName": "克里夫蘭守護者",
+              "odds": "4.35",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "1.50",
+              "odds": "1.45",
               "specialBetValue": null
             },
             {
-              "outcomeName": "西雅圖水手",
-              "odds": "2.80",
+              "outcomeName": "費城費城人",
+              "odds": "2.65",
               "specialBetValue": null
             }
           ]
@@ -3006,12 +1170,12 @@
           "outcomes": [
             {
               "outcomeName": "大 0.5",
-              "odds": "1.75",
+              "odds": "1.82",
               "specialBetValue": "0.5"
             },
             {
               "outcomeName": "小 0.5",
-              "odds": "1.58",
+              "odds": "1.53",
               "specialBetValue": "0.5"
             }
           ]
@@ -3020,18 +1184,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "芝加哥白襪",
-              "odds": "2.15",
+              "outcomeName": "克里夫蘭守護者",
+              "odds": "2.50",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "4.45",
+              "odds": "4.15",
               "specialBetValue": null
             },
             {
-              "outcomeName": "西雅圖水手",
-              "odds": "1.65",
+              "outcomeName": "費城費城人",
+              "odds": "1.50",
               "specialBetValue": null
             }
           ]
@@ -3040,14 +1204,14 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 4.5",
-              "odds": "1.78",
-              "specialBetValue": "4.5"
+              "outcomeName": "大 3.5",
+              "odds": "1.58",
+              "specialBetValue": "3.5"
             },
             {
-              "outcomeName": "小 4.5",
-              "odds": "1.56",
-              "specialBetValue": "4.5"
+              "outcomeName": "小 3.5",
+              "odds": "1.75",
+              "specialBetValue": "3.5"
             }
           ]
         },
@@ -3071,278 +1235,35 @@
           "outcomes": [
             {
               "outcomeName": "大 1.5",
-              "odds": "1.72",
+              "odds": "2.00",
               "specialBetValue": "1.5"
             },
             {
               "outcomeName": "小 1.5",
-              "odds": "1.72",
-              "specialBetValue": "1.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469766.1",
-      "homeTeamName": "邁阿密馬林魚",
-      "awayTeamName": "亞特蘭大勇士",
-      "gameTime": "2026-05-21T06:40:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "亞特蘭大勇士",
-              "odds": "1.36",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "邁阿密馬林魚",
-              "odds": "2.40",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "亞特蘭大勇士 -1.5",
-              "odds": "1.68",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "邁阿密馬林魚 +1.5",
-              "odds": "1.82",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "亞特蘭大勇士 -2.5",
-              "odds": "2.00",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "邁阿密馬林魚 +2.5",
-              "odds": "1.50",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.50",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "2.00",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "1.85",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "1.65",
-              "specialBetValue": "7.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "2.10",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.45",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.66",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.76",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.80",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.63",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
               "odds": "1.48",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "2.00",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "亞特蘭大勇士",
-              "odds": "2.70",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.45",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "邁阿密馬林魚",
-              "odds": "4.10",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 0.5",
-              "odds": "1.80",
-              "specialBetValue": "0.5"
-            },
-            {
-              "outcomeName": "小 0.5",
-              "odds": "1.55",
-              "specialBetValue": "0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "亞特蘭大勇士",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "4.25",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "邁阿密馬林魚",
-              "odds": "2.50",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.53",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.82",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.94",
               "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.52",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.90",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.55",
-              "specialBetValue": "2.5"
             }
           ]
         }
       ]
     },
     {
-      "gameId": "3469809.1",
-      "homeTeamName": "底特律老虎",
-      "awayTeamName": "克里夫蘭守護者",
-      "gameTime": "2026-05-21T06:40:00+08:00",
+      "gameId": "3470456.1",
+      "homeTeamName": "巴爾的摩金鶯",
+      "awayTeamName": "底特律老虎",
+      "gameTime": "2026-05-24T04:05:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
-            {
-              "outcomeName": "克里夫蘭守護者",
-              "odds": "1.58",
-              "specialBetValue": null
-            },
             {
               "outcomeName": "底特律老虎",
-              "odds": "1.92",
+              "odds": "1.85",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "巴爾的摩金鶯",
+              "odds": "1.65",
               "specialBetValue": null
             }
           ]
@@ -3351,14 +1272,29 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "克里夫蘭守護者 -1.5",
-              "odds": "1.97",
-              "specialBetValue": "1.5"
+              "outcomeName": "底特律老虎 +2.5",
+              "odds": "1.25",
+              "specialBetValue": "-2.5"
             },
+            {
+              "outcomeName": "巴爾的摩金鶯 -2.5",
+              "odds": "2.85",
+              "specialBetValue": "-2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
             {
               "outcomeName": "底特律老虎 +1.5",
-              "odds": "1.53",
-              "specialBetValue": "1.5"
+              "odds": "1.40",
+              "specialBetValue": "-1.5"
+            },
+            {
+              "outcomeName": "巴爾的摩金鶯 -1.5",
+              "odds": "2.30",
+              "specialBetValue": "-1.5"
             }
           ]
         },
@@ -3366,29 +1302,14 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "克里夫蘭守護者 -2.5",
-              "odds": "2.45",
+              "outcomeName": "底特律老虎 -2.5",
+              "odds": "2.85",
               "specialBetValue": "2.5"
             },
             {
-              "outcomeName": "底特律老虎 +2.5",
-              "odds": "1.35",
+              "outcomeName": "巴爾的摩金鶯 +2.5",
+              "odds": "1.25",
               "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "克里夫蘭守護者 -3.5",
-              "odds": "3.00",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "底特律老虎 +3.5",
-              "odds": "1.22",
-              "specialBetValue": "3.5"
             }
           ]
         },
@@ -3397,12 +1318,12 @@
           "outcomes": [
             {
               "outcomeName": "大 6.5",
-              "odds": "1.43",
+              "odds": "1.42",
               "specialBetValue": "6.5"
             },
             {
               "outcomeName": "小 6.5",
-              "odds": "2.15",
+              "odds": "2.20",
               "specialBetValue": "6.5"
             }
           ]
@@ -3442,12 +1363,12 @@
           "outcomes": [
             {
               "outcomeName": "大 3.5",
-              "odds": "1.80",
+              "odds": "1.66",
               "specialBetValue": "3.5"
             },
             {
               "outcomeName": "小 3.5",
-              "odds": "1.63",
+              "odds": "1.76",
               "specialBetValue": "3.5"
             }
           ]
@@ -3457,13 +1378,256 @@
           "outcomes": [
             {
               "outcomeName": "大 3.5",
-              "odds": "1.56",
+              "odds": "1.66",
               "specialBetValue": "3.5"
             },
             {
               "outcomeName": "小 3.5",
-              "odds": "1.88",
+              "odds": "1.76",
               "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OE",
+          "outcomes": [
+            {
+              "outcomeName": "單",
+              "odds": "1.46",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "雙",
+              "odds": "2.05",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "底特律老虎",
+              "odds": "3.25",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "1.50",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "巴爾的摩金鶯",
+              "odds": "3.15",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 0.5",
+              "odds": "1.78",
+              "specialBetValue": "0.5"
+            },
+            {
+              "outcomeName": "小 0.5",
+              "odds": "1.56",
+              "specialBetValue": "0.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "底特律老虎",
+              "odds": "1.85",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "4.35",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "巴爾的摩金鶯",
+              "odds": "1.85",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.82",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.53",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.58",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.86",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.58",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.86",
+              "specialBetValue": "1.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameId": "3470457.1",
+      "homeTeamName": "堪薩斯皇家",
+      "awayTeamName": "西雅圖水手",
+      "gameTime": "2026-05-24T04:10:00+08:00",
+      "markets": [
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "西雅圖水手",
+              "odds": "1.53",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "堪薩斯皇家",
+              "odds": "1.97",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "西雅圖水手 -1.5",
+              "odds": "1.90",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "堪薩斯皇家 +1.5",
+              "odds": "1.60",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "西雅圖水手 -2.5",
+              "odds": "2.30",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "堪薩斯皇家 +2.5",
+              "odds": "1.40",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 7.5",
+              "odds": "1.53",
+              "specialBetValue": "7.5"
+            },
+            {
+              "outcomeName": "小 7.5",
+              "odds": "1.97",
+              "specialBetValue": "7.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 8.5",
+              "odds": "1.76",
+              "specialBetValue": "8.5"
+            },
+            {
+              "outcomeName": "小 8.5",
+              "odds": "1.74",
+              "specialBetValue": "8.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 9.5",
+              "odds": "2.07",
+              "specialBetValue": "9.5"
+            },
+            {
+              "outcomeName": "小 9.5",
+              "odds": "1.46",
+              "specialBetValue": "9.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.68",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
+              "odds": "1.75",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.75",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.68",
+              "specialBetValue": "4.5"
             }
           ]
         },
@@ -3481,26 +1645,126 @@
               "specialBetValue": null
             }
           ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "西雅圖水手",
+              "odds": "2.85",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "1.55",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "堪薩斯皇家",
+              "odds": "3.30",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 0.5",
+              "odds": "1.68",
+              "specialBetValue": "0.5"
+            },
+            {
+              "outcomeName": "小 0.5",
+              "odds": "1.65",
+              "specialBetValue": "0.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "西雅圖水手",
+              "odds": "1.70",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "4.75",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "堪薩斯皇家",
+              "odds": "2.00",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.62",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.71",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.55",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.90",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 2.5",
+              "odds": "1.85",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "小 2.5",
+              "odds": "1.60",
+              "specialBetValue": "2.5"
+            }
+          ]
         }
       ]
     },
     {
-      "gameId": "3469767.1",
-      "homeTeamName": "華盛頓國民",
-      "awayTeamName": "紐約大都會",
-      "gameTime": "2026-05-21T06:45:00+08:00",
+      "gameId": "3470469.1",
+      "homeTeamName": "亞特蘭大勇士",
+      "awayTeamName": "華盛頓國民",
+      "gameTime": "2026-05-24T04:10:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "紐約大都會",
-              "odds": "1.60",
-              "specialBetValue": null
-            },
-            {
               "outcomeName": "華盛頓國民",
-              "odds": "1.90",
+              "odds": "2.60",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "亞特蘭大勇士",
+              "odds": "1.30",
               "specialBetValue": null
             }
           ]
@@ -3508,30 +1772,30 @@
         {
           "marketCode": "HDC",
           "outcomes": [
-            {
-              "outcomeName": "紐約大都會 -1.5",
-              "odds": "1.94",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "華盛頓國民 +1.5",
-              "odds": "1.56",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "紐約大都會 -2.5",
-              "odds": "2.33",
-              "specialBetValue": "2.5"
-            },
             {
               "outcomeName": "華盛頓國民 +2.5",
-              "odds": "1.38",
-              "specialBetValue": "2.5"
+              "odds": "1.52",
+              "specialBetValue": "-2.5"
+            },
+            {
+              "outcomeName": "亞特蘭大勇士 -2.5",
+              "odds": "1.98",
+              "specialBetValue": "-2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 7.5",
+              "odds": "1.50",
+              "specialBetValue": "7.5"
+            },
+            {
+              "outcomeName": "小 7.5",
+              "odds": "2.00",
+              "specialBetValue": "7.5"
             }
           ]
         },
@@ -3540,12 +1804,12 @@
           "outcomes": [
             {
               "outcomeName": "大 8.5",
-              "odds": "1.46",
+              "odds": "1.73",
               "specialBetValue": "8.5"
             },
             {
               "outcomeName": "小 8.5",
-              "odds": "2.07",
+              "odds": "1.77",
               "specialBetValue": "8.5"
             }
           ]
@@ -3555,58 +1819,43 @@
           "outcomes": [
             {
               "outcomeName": "大 9.5",
-              "odds": "1.75",
+              "odds": "2.05",
               "specialBetValue": "9.5"
             },
             {
               "outcomeName": "小 9.5",
-              "odds": "1.75",
+              "odds": "1.48",
               "specialBetValue": "9.5"
             }
           ]
         },
         {
-          "marketCode": "OU",
+          "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 10.5",
-              "odds": "1.97",
-              "specialBetValue": "10.5"
+              "outcomeName": "大 4.5",
+              "odds": "1.55",
+              "specialBetValue": "4.5"
             },
             {
-              "outcomeName": "小 10.5",
+              "outcomeName": "小 4.5",
+              "odds": "1.90",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.93",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
               "odds": "1.53",
-              "specialBetValue": "10.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.80",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.63",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.60",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.85",
-              "specialBetValue": "4.5"
+              "specialBetValue": "3.5"
             }
           ]
         },
@@ -3629,18 +1878,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "紐約大都會",
-              "odds": "2.80",
+              "outcomeName": "華盛頓國民",
+              "odds": "4.15",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "1.65",
+              "odds": "1.60",
               "specialBetValue": null
             },
             {
-              "outcomeName": "華盛頓國民",
-              "odds": "3.00",
+              "outcomeName": "亞特蘭大勇士",
+              "odds": "2.35",
               "specialBetValue": null
             }
           ]
@@ -3650,12 +1899,270 @@
           "outcomes": [
             {
               "outcomeName": "大 0.5",
-              "odds": "1.56",
+              "odds": "1.63",
               "specialBetValue": "0.5"
             },
             {
               "outcomeName": "小 0.5",
+              "odds": "1.70",
+              "specialBetValue": "0.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "華盛頓國民",
+              "odds": "2.50",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "5.00",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "亞特蘭大勇士",
+              "odds": "1.45",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.58",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.75",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 2.5",
+              "odds": "1.62",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "小 2.5",
+              "odds": "1.82",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.76",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.66",
+              "specialBetValue": "1.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameId": "3470481.1",
+      "homeTeamName": "邁阿密馬林魚",
+      "awayTeamName": "紐約大都會",
+      "gameTime": "2026-05-24T04:10:00+08:00",
+      "markets": [
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "紐約大都會",
+              "odds": "1.84",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "邁阿密馬林魚",
+              "odds": "1.66",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "紐約大都會 +2.5",
+              "odds": "1.25",
+              "specialBetValue": "-2.5"
+            },
+            {
+              "outcomeName": "邁阿密馬林魚 -2.5",
+              "odds": "2.85",
+              "specialBetValue": "-2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "紐約大都會 +1.5",
+              "odds": "1.40",
+              "specialBetValue": "-1.5"
+            },
+            {
+              "outcomeName": "邁阿密馬林魚 -1.5",
+              "odds": "2.30",
+              "specialBetValue": "-1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "紐約大都會 -2.5",
+              "odds": "2.60",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "邁阿密馬林魚 +2.5",
+              "odds": "1.30",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 6.5",
+              "odds": "1.42",
+              "specialBetValue": "6.5"
+            },
+            {
+              "outcomeName": "小 6.5",
+              "odds": "2.20",
+              "specialBetValue": "6.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 7.5",
+              "odds": "1.73",
+              "specialBetValue": "7.5"
+            },
+            {
+              "outcomeName": "小 7.5",
+              "odds": "1.77",
+              "specialBetValue": "7.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 8.5",
+              "odds": "1.95",
+              "specialBetValue": "8.5"
+            },
+            {
+              "outcomeName": "小 8.5",
+              "odds": "1.55",
+              "specialBetValue": "8.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.66",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
+              "odds": "1.76",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.65",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
               "odds": "1.78",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OE",
+          "outcomes": [
+            {
+              "outcomeName": "單",
+              "odds": "1.46",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "雙",
+              "odds": "2.05",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "紐約大都會",
+              "odds": "3.35",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "1.50",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "邁阿密馬林魚",
+              "odds": "3.10",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 0.5",
+              "odds": "1.78",
+              "specialBetValue": "0.5"
+            },
+            {
+              "outcomeName": "小 0.5",
+              "odds": "1.56",
               "specialBetValue": "0.5"
             }
           ]
@@ -3665,48 +2172,18 @@
           "outcomes": [
             {
               "outcomeName": "紐約大都會",
-              "odds": "1.70",
+              "odds": "1.90",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "5.25",
+              "odds": "4.40",
               "specialBetValue": null
             },
             {
-              "outcomeName": "華盛頓國民",
-              "odds": "1.90",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.73",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.60",
-              "specialBetValue": "5.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
+              "outcomeName": "邁阿密馬林魚",
               "odds": "1.85",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.60",
-              "specialBetValue": "2.5"
+              "specialBetValue": null
             }
           ]
         },
@@ -3714,36 +2191,66 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 2.5",
-              "odds": "1.72",
-              "specialBetValue": "2.5"
+              "outcomeName": "大 4.5",
+              "odds": "1.85",
+              "specialBetValue": "4.5"
             },
             {
-              "outcomeName": "小 2.5",
-              "odds": "1.72",
-              "specialBetValue": "2.5"
+              "outcomeName": "小 4.5",
+              "odds": "1.50",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.58",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.86",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.63",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.80",
+              "specialBetValue": "1.5"
             }
           ]
         }
       ]
     },
     {
-      "gameId": "3469772.1",
-      "homeTeamName": "紐約洋基",
-      "awayTeamName": "多倫多藍鳥",
-      "gameTime": "2026-05-21T07:05:00+08:00",
+      "gameId": "3470543.1",
+      "homeTeamName": "波士頓紅襪",
+      "awayTeamName": "明尼蘇達雙城",
+      "gameTime": "2026-05-24T04:10:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "多倫多藍鳥",
-              "odds": "2.33",
+              "outcomeName": "明尼蘇達雙城",
+              "odds": "1.85",
               "specialBetValue": null
             },
             {
-              "outcomeName": "紐約洋基",
-              "odds": "1.38",
+              "outcomeName": "波士頓紅襪",
+              "odds": "1.65",
               "specialBetValue": null
             }
           ]
@@ -3752,13 +2259,13 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "多倫多藍鳥 +2.5",
-              "odds": "1.42",
+              "outcomeName": "明尼蘇達雙城 +2.5",
+              "odds": "1.25",
               "specialBetValue": "-2.5"
             },
             {
-              "outcomeName": "紐約洋基 -2.5",
-              "odds": "2.20",
+              "outcomeName": "波士頓紅襪 -2.5",
+              "odds": "2.85",
               "specialBetValue": "-2.5"
             }
           ]
@@ -3767,13 +2274,13 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "多倫多藍鳥 +1.5",
-              "odds": "1.68",
+              "outcomeName": "明尼蘇達雙城 +1.5",
+              "odds": "1.40",
               "specialBetValue": "-1.5"
             },
             {
-              "outcomeName": "紐約洋基 -1.5",
-              "odds": "1.82",
+              "outcomeName": "波士頓紅襪 -1.5",
+              "odds": "2.30",
               "specialBetValue": "-1.5"
             }
           ]
@@ -3798,12 +2305,12 @@
           "outcomes": [
             {
               "outcomeName": "大 8.5",
-              "odds": "1.87",
+              "odds": "1.85",
               "specialBetValue": "8.5"
             },
             {
               "outcomeName": "小 8.5",
-              "odds": "1.63",
+              "odds": "1.65",
               "specialBetValue": "8.5"
             }
           ]
@@ -3827,264 +2334,6 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 4.5",
-              "odds": "1.72",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.72",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.93",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.53",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.48",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "2.00",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "多倫多藍鳥",
-              "odds": "4.20",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "紐約洋基",
-              "odds": "2.50",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 0.5",
-              "odds": "1.73",
-              "specialBetValue": "0.5"
-            },
-            {
-              "outcomeName": "小 0.5",
-              "odds": "1.60",
-              "specialBetValue": "0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "多倫多藍鳥",
-              "odds": "2.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "4.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "紐約洋基",
-              "odds": "1.50",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.78",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.56",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.76",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.66",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.88",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.56",
-              "specialBetValue": "1.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469775.1",
-      "homeTeamName": "堪薩斯皇家",
-      "awayTeamName": "波士頓紅襪",
-      "gameTime": "2026-05-21T07:40:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "波士頓紅襪",
-              "odds": "1.87",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "堪薩斯皇家",
-              "odds": "1.63",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "波士頓紅襪 +2.5",
-              "odds": "1.26",
-              "specialBetValue": "-2.5"
-            },
-            {
-              "outcomeName": "堪薩斯皇家 -2.5",
-              "odds": "2.75",
-              "specialBetValue": "-2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "波士頓紅襪 +1.5",
-              "odds": "1.42",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "堪薩斯皇家 -1.5",
-              "odds": "2.20",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "波士頓紅襪 -1.5",
-              "odds": "2.45",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "堪薩斯皇家 +1.5",
-              "odds": "1.35",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.38",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "2.33",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "1.65",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "1.85",
-              "specialBetValue": "7.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "1.88",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.62",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
               "outcomeName": "大 3.5",
               "odds": "1.58",
               "specialBetValue": "3.5"
@@ -4101,12 +2350,12 @@
           "outcomes": [
             {
               "outcomeName": "大 3.5",
-              "odds": "1.65",
+              "odds": "1.60",
               "specialBetValue": "3.5"
             },
             {
               "outcomeName": "小 3.5",
-              "odds": "1.78",
+              "odds": "1.85",
               "specialBetValue": "3.5"
             }
           ]
@@ -4130,519 +2379,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "波士頓紅襪",
-              "odds": "3.40",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.50",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "堪薩斯皇家",
-              "odds": "3.00",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 0.5",
-              "odds": "1.75",
-              "specialBetValue": "0.5"
-            },
-            {
-              "outcomeName": "小 0.5",
-              "odds": "1.58",
-              "specialBetValue": "0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "波士頓紅襪",
-              "odds": "1.95",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "4.35",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "堪薩斯皇家",
-              "odds": "1.80",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 4.5",
-              "odds": "1.80",
-              "specialBetValue": "4.5"
-            },
-            {
-              "outcomeName": "小 4.5",
-              "odds": "1.55",
-              "specialBetValue": "4.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.52",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.94",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.63",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.80",
-              "specialBetValue": "1.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469776.1",
-      "homeTeamName": "芝加哥小熊",
-      "awayTeamName": "密爾瓦基釀酒人",
-      "gameTime": "2026-05-21T07:40:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "密爾瓦基釀酒人",
-              "odds": "1.85",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "芝加哥小熊",
-              "odds": "1.65",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "密爾瓦基釀酒人 +2.5",
-              "odds": "1.20",
-              "specialBetValue": "-2.5"
-            },
-            {
-              "outcomeName": "芝加哥小熊 -2.5",
-              "odds": "3.10",
-              "specialBetValue": "-2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "密爾瓦基釀酒人 +1.5",
-              "odds": "1.36",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "芝加哥小熊 -1.5",
-              "odds": "2.40",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "密爾瓦基釀酒人 -1.5",
-              "odds": "2.47",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "芝加哥小熊 +1.5",
-              "odds": "1.33",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 5.5",
-              "odds": "1.53",
-              "specialBetValue": "5.5"
-            },
-            {
-              "outcomeName": "小 5.5",
-              "odds": "1.97",
-              "specialBetValue": "5.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.79",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "1.71",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "2.20",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "1.42",
-              "specialBetValue": "7.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.52",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.94",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 2.5",
-              "odds": "1.53",
-              "specialBetValue": "2.5"
-            },
-            {
-              "outcomeName": "小 2.5",
-              "odds": "1.93",
-              "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.45",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "2.07",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "密爾瓦基釀酒人",
-              "odds": "3.65",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "1.40",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "芝加哥小熊",
-              "odds": "3.35",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 0.5",
-              "odds": "1.95",
-              "specialBetValue": "0.5"
-            },
-            {
-              "outcomeName": "小 0.5",
-              "odds": "1.45",
-              "specialBetValue": "0.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "密爾瓦基釀酒人",
-              "odds": "2.00",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "和局",
-              "odds": "3.70",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "芝加哥小熊",
-              "odds": "1.90",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.80",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.55",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.82",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.62",
-              "specialBetValue": "1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 1.5",
-              "odds": "1.88",
-              "specialBetValue": "1.5"
-            },
-            {
-              "outcomeName": "小 1.5",
-              "odds": "1.56",
-              "specialBetValue": "1.5"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "gameId": "3469777.1",
-      "homeTeamName": "聖路易紅雀",
-      "awayTeamName": "匹茲堡海盜",
-      "gameTime": "2026-05-21T07:45:00+08:00",
-      "markets": [
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "匹茲堡海盜",
-              "odds": "1.87",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "聖路易紅雀",
-              "odds": "1.63",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "匹茲堡海盜 +2.5",
-              "odds": "1.25",
-              "specialBetValue": "-2.5"
-            },
-            {
-              "outcomeName": "聖路易紅雀 -2.5",
-              "odds": "2.85",
-              "specialBetValue": "-2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "HDC",
-          "outcomes": [
-            {
-              "outcomeName": "匹茲堡海盜 +1.5",
-              "odds": "1.42",
-              "specialBetValue": "-1.5"
-            },
-            {
-              "outcomeName": "聖路易紅雀 -1.5",
-              "odds": "2.20",
-              "specialBetValue": "-1.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.42",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "2.20",
-              "specialBetValue": "6.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 7.5",
-              "odds": "1.72",
-              "specialBetValue": "7.5"
-            },
-            {
-              "outcomeName": "小 7.5",
-              "odds": "1.78",
-              "specialBetValue": "7.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 8.5",
-              "odds": "1.95",
-              "specialBetValue": "8.5"
-            },
-            {
-              "outcomeName": "小 8.5",
-              "odds": "1.55",
-              "specialBetValue": "8.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.63",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.80",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "TTO",
-          "outcomes": [
-            {
-              "outcomeName": "大 3.5",
-              "odds": "1.68",
-              "specialBetValue": "3.5"
-            },
-            {
-              "outcomeName": "小 3.5",
-              "odds": "1.75",
-              "specialBetValue": "3.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OE",
-          "outcomes": [
-            {
-              "outcomeName": "單",
-              "odds": "1.46",
-              "specialBetValue": null
-            },
-            {
-              "outcomeName": "雙",
-              "odds": "2.05",
-              "specialBetValue": null
-            }
-          ]
-        },
-        {
-          "marketCode": "MNL",
-          "outcomes": [
-            {
-              "outcomeName": "匹茲堡海盜",
+              "outcomeName": "明尼蘇達雙城",
               "odds": "3.30",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "1.50",
+              "odds": "1.45",
               "specialBetValue": null
             },
             {
-              "outcomeName": "聖路易紅雀",
-              "odds": "3.05",
+              "outcomeName": "波士頓紅襪",
+              "odds": "3.15",
               "specialBetValue": null
             }
           ]
@@ -4652,12 +2400,12 @@
           "outcomes": [
             {
               "outcomeName": "大 0.5",
-              "odds": "1.73",
+              "odds": "1.78",
               "specialBetValue": "0.5"
             },
             {
               "outcomeName": "小 0.5",
-              "odds": "1.60",
+              "odds": "1.56",
               "specialBetValue": "0.5"
             }
           ]
@@ -4666,18 +2414,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "匹茲堡海盜",
-              "odds": "1.95",
+              "outcomeName": "明尼蘇達雙城",
+              "odds": "1.90",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "4.40",
+              "odds": "4.45",
               "specialBetValue": null
             },
             {
-              "outcomeName": "聖路易紅雀",
-              "odds": "1.80",
+              "outcomeName": "波士頓紅襪",
+              "odds": "1.85",
               "specialBetValue": null
             }
           ]
@@ -4687,12 +2435,12 @@
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.75",
+              "odds": "1.80",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.58",
+              "odds": "1.55",
               "specialBetValue": "4.5"
             }
           ]
@@ -4702,12 +2450,12 @@
           "outcomes": [
             {
               "outcomeName": "大 1.5",
-              "odds": "1.52",
+              "odds": "1.55",
               "specialBetValue": "1.5"
             },
             {
               "outcomeName": "小 1.5",
-              "odds": "1.94",
+              "odds": "1.90",
               "specialBetValue": "1.5"
             }
           ]
@@ -4730,22 +2478,22 @@
       ]
     },
     {
-      "gameId": "3469785.1",
-      "homeTeamName": "聖地牙哥教士",
+      "gameId": "3470496.1",
+      "homeTeamName": "密爾瓦基釀酒人",
       "awayTeamName": "洛杉磯道奇",
-      "gameTime": "2026-05-21T08:40:00+08:00",
+      "gameTime": "2026-05-24T07:15:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
             {
               "outcomeName": "洛杉磯道奇",
-              "odds": "1.38",
+              "odds": "1.48",
               "specialBetValue": null
             },
             {
-              "outcomeName": "聖地牙哥教士",
-              "odds": "2.33",
+              "outcomeName": "密爾瓦基釀酒人",
+              "odds": "2.05",
               "specialBetValue": null
             }
           ]
@@ -4755,12 +2503,12 @@
           "outcomes": [
             {
               "outcomeName": "洛杉磯道奇 -1.5",
-              "odds": "1.68",
+              "odds": "1.84",
               "specialBetValue": "1.5"
             },
             {
-              "outcomeName": "聖地牙哥教士 +1.5",
-              "odds": "1.82",
+              "outcomeName": "密爾瓦基釀酒人 +1.5",
+              "odds": "1.66",
               "specialBetValue": "1.5"
             }
           ]
@@ -4770,28 +2518,13 @@
           "outcomes": [
             {
               "outcomeName": "洛杉磯道奇 -2.5",
-              "odds": "2.00",
+              "odds": "2.20",
               "specialBetValue": "2.5"
             },
             {
-              "outcomeName": "聖地牙哥教士 +2.5",
-              "odds": "1.50",
+              "outcomeName": "密爾瓦基釀酒人 +2.5",
+              "odds": "1.42",
               "specialBetValue": "2.5"
-            }
-          ]
-        },
-        {
-          "marketCode": "OU",
-          "outcomes": [
-            {
-              "outcomeName": "大 6.5",
-              "odds": "1.48",
-              "specialBetValue": "6.5"
-            },
-            {
-              "outcomeName": "小 6.5",
-              "odds": "2.05",
-              "specialBetValue": "6.5"
             }
           ]
         },
@@ -4800,12 +2533,12 @@
           "outcomes": [
             {
               "outcomeName": "大 7.5",
-              "odds": "1.80",
+              "odds": "1.45",
               "specialBetValue": "7.5"
             },
             {
               "outcomeName": "小 7.5",
-              "odds": "1.70",
+              "odds": "2.10",
               "specialBetValue": "7.5"
             }
           ]
@@ -4815,13 +2548,28 @@
           "outcomes": [
             {
               "outcomeName": "大 8.5",
-              "odds": "2.05",
+              "odds": "1.65",
               "specialBetValue": "8.5"
             },
             {
               "outcomeName": "小 8.5",
-              "odds": "1.48",
+              "odds": "1.85",
               "specialBetValue": "8.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 9.5",
+              "odds": "1.95",
+              "specialBetValue": "9.5"
+            },
+            {
+              "outcomeName": "小 9.5",
+              "odds": "1.55",
+              "specialBetValue": "9.5"
             }
           ]
         },
@@ -4829,14 +2577,14 @@
           "marketCode": "TTO",
           "outcomes": [
             {
-              "outcomeName": "大 2.5",
-              "odds": "1.68",
-              "specialBetValue": "2.5"
+              "outcomeName": "大 3.5",
+              "odds": "1.70",
+              "specialBetValue": "3.5"
             },
             {
-              "outcomeName": "小 2.5",
-              "odds": "1.75",
-              "specialBetValue": "2.5"
+              "outcomeName": "小 3.5",
+              "odds": "1.73",
+              "specialBetValue": "3.5"
             }
           ]
         },
@@ -4845,12 +2593,12 @@
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.78",
+              "odds": "1.63",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.65",
+              "odds": "1.80",
               "specialBetValue": "4.5"
             }
           ]
@@ -4875,17 +2623,17 @@
           "outcomes": [
             {
               "outcomeName": "洛杉磯道奇",
-              "odds": "2.65",
+              "odds": "2.70",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "1.45",
+              "odds": "1.55",
               "specialBetValue": null
             },
             {
-              "outcomeName": "聖地牙哥教士",
-              "odds": "4.10",
+              "outcomeName": "密爾瓦基釀酒人",
+              "odds": "3.50",
               "specialBetValue": null
             }
           ]
@@ -4895,12 +2643,12 @@
           "outcomes": [
             {
               "outcomeName": "大 0.5",
-              "odds": "1.78",
+              "odds": "1.66",
               "specialBetValue": "0.5"
             },
             {
               "outcomeName": "小 0.5",
-              "odds": "1.56",
+              "odds": "1.66",
               "specialBetValue": "0.5"
             }
           ]
@@ -4910,17 +2658,17 @@
           "outcomes": [
             {
               "outcomeName": "洛杉磯道奇",
-              "odds": "1.50",
+              "odds": "1.60",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "4.45",
+              "odds": "4.90",
               "specialBetValue": null
             },
             {
-              "outcomeName": "聖地牙哥教士",
-              "odds": "2.50",
+              "outcomeName": "密爾瓦基釀酒人",
+              "odds": "2.15",
               "specialBetValue": null
             }
           ]
@@ -4930,12 +2678,12 @@
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.85",
+              "odds": "1.58",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.50",
+              "odds": "1.75",
               "specialBetValue": "4.5"
             }
           ]
@@ -4945,12 +2693,12 @@
           "outcomes": [
             {
               "outcomeName": "大 1.5",
-              "odds": "1.94",
+              "odds": "1.60",
               "specialBetValue": "1.5"
             },
             {
               "outcomeName": "小 1.5",
-              "odds": "1.52",
+              "odds": "1.85",
               "specialBetValue": "1.5"
             }
           ]
@@ -4960,12 +2708,27 @@
           "outcomes": [
             {
               "outcomeName": "大 2.5",
-              "odds": "1.85",
+              "odds": "1.96",
               "specialBetValue": "2.5"
             },
             {
               "outcomeName": "小 2.5",
-              "odds": "1.60",
+              "odds": "1.50",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 2.5",
+              "odds": "1.75",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "小 2.5",
+              "odds": "1.68",
               "specialBetValue": "2.5"
             }
           ]
@@ -4973,22 +2736,22 @@
       ]
     },
     {
-      "gameId": "3469787.1",
-      "homeTeamName": "洛杉磯天使",
-      "awayTeamName": "運動家",
-      "gameTime": "2026-05-21T09:38:00+08:00",
+      "gameId": "3470497.1",
+      "homeTeamName": "辛辛那堤紅人",
+      "awayTeamName": "聖路易紅雀",
+      "gameTime": "2026-05-24T07:15:00+08:00",
       "markets": [
         {
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "運動家",
-              "odds": "1.65",
+              "outcomeName": "聖路易紅雀",
+              "odds": "1.80",
               "specialBetValue": null
             },
             {
-              "outcomeName": "洛杉磯天使",
-              "odds": "1.85",
+              "outcomeName": "辛辛那堤紅人",
+              "odds": "1.70",
               "specialBetValue": null
             }
           ]
@@ -4997,14 +2760,44 @@
           "marketCode": "HDC",
           "outcomes": [
             {
-              "outcomeName": "運動家 -1.5",
-              "odds": "1.94",
+              "outcomeName": "聖路易紅雀 -1.5",
+              "odds": "2.20",
               "specialBetValue": "1.5"
             },
             {
-              "outcomeName": "洛杉磯天使 +1.5",
-              "odds": "1.56",
+              "outcomeName": "辛辛那堤紅人 +1.5",
+              "odds": "1.42",
               "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "聖路易紅雀 -2.5",
+              "odds": "2.70",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "辛辛那堤紅人 +2.5",
+              "odds": "1.28",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 8.5",
+              "odds": "1.52",
+              "specialBetValue": "8.5"
+            },
+            {
+              "outcomeName": "小 8.5",
+              "odds": "1.98",
+              "specialBetValue": "8.5"
             }
           ]
         },
@@ -5013,27 +2806,42 @@
           "outcomes": [
             {
               "outcomeName": "大 9.5",
-              "odds": "1.77",
+              "odds": "1.82",
               "specialBetValue": "9.5"
             },
             {
               "outcomeName": "小 9.5",
-              "odds": "1.73",
+              "odds": "1.68",
               "specialBetValue": "9.5"
             }
           ]
         },
         {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 10.5",
+              "odds": "2.05",
+              "specialBetValue": "10.5"
+            },
+            {
+              "outcomeName": "小 10.5",
+              "odds": "1.48",
+              "specialBetValue": "10.5"
+            }
+          ]
+        },
+        {
           "marketCode": "TTO",
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.82",
+              "odds": "1.76",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.62",
+              "odds": "1.66",
               "specialBetValue": "4.5"
             }
           ]
@@ -5043,12 +2851,12 @@
           "outcomes": [
             {
               "outcomeName": "大 4.5",
-              "odds": "1.62",
+              "odds": "1.70",
               "specialBetValue": "4.5"
             },
             {
               "outcomeName": "小 4.5",
-              "odds": "1.82",
+              "odds": "1.73",
               "specialBetValue": "4.5"
             }
           ]
@@ -5058,12 +2866,12 @@
           "outcomes": [
             {
               "outcomeName": "單",
-              "odds": "1.48",
+              "odds": "1.50",
               "specialBetValue": null
             },
             {
               "outcomeName": "雙",
-              "odds": "1.90",
+              "odds": "1.96",
               "specialBetValue": null
             }
           ]
@@ -5072,8 +2880,8 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "運動家",
-              "odds": "2.85",
+              "outcomeName": "聖路易紅雀",
+              "odds": "2.95",
               "specialBetValue": null
             },
             {
@@ -5082,8 +2890,8 @@
               "specialBetValue": null
             },
             {
-              "outcomeName": "洛杉磯天使",
-              "odds": "3.00",
+              "outcomeName": "辛辛那堤紅人",
+              "odds": "2.85",
               "specialBetValue": null
             }
           ]
@@ -5107,18 +2915,18 @@
           "marketCode": "MNL",
           "outcomes": [
             {
-              "outcomeName": "運動家",
-              "odds": "1.70",
+              "outcomeName": "聖路易紅雀",
+              "odds": "1.80",
               "specialBetValue": null
             },
             {
               "outcomeName": "和局",
-              "odds": "5.05",
+              "odds": "5.20",
               "specialBetValue": null
             },
             {
-              "outcomeName": "洛杉磯天使",
-              "odds": "1.90",
+              "outcomeName": "辛辛那堤紅人",
+              "odds": "1.80",
               "specialBetValue": null
             }
           ]
@@ -5128,12 +2936,12 @@
           "outcomes": [
             {
               "outcomeName": "大 5.5",
-              "odds": "1.80",
+              "odds": "1.78",
               "specialBetValue": "5.5"
             },
             {
               "outcomeName": "小 5.5",
-              "odds": "1.55",
+              "odds": "1.56",
               "specialBetValue": "5.5"
             }
           ]
@@ -5143,12 +2951,12 @@
           "outcomes": [
             {
               "outcomeName": "大 2.5",
-              "odds": "1.90",
+              "odds": "1.80",
               "specialBetValue": "2.5"
             },
             {
               "outcomeName": "小 2.5",
-              "odds": "1.55",
+              "odds": "1.63",
               "specialBetValue": "2.5"
             }
           ]
@@ -5158,13 +2966,697 @@
           "outcomes": [
             {
               "outcomeName": "大 2.5",
-              "odds": "1.76",
+              "odds": "1.82",
               "specialBetValue": "2.5"
             },
             {
               "outcomeName": "小 2.5",
-              "odds": "1.66",
+              "odds": "1.62",
               "specialBetValue": "2.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameId": "3470522.1",
+      "homeTeamName": "聖地牙哥教士",
+      "awayTeamName": "運動家",
+      "gameTime": "2026-05-24T09:40:00+08:00",
+      "markets": [
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "運動家",
+              "odds": "1.75",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "聖地牙哥教士",
+              "odds": "1.75",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "運動家 -1.5",
+              "odds": "2.10",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "聖地牙哥教士 +1.5",
+              "odds": "1.45",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 7.5",
+              "odds": "1.65",
+              "specialBetValue": "7.5"
+            },
+            {
+              "outcomeName": "小 7.5",
+              "odds": "1.85",
+              "specialBetValue": "7.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.60",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
+              "odds": "1.85",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.60",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
+              "odds": "1.85",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OE",
+          "outcomes": [
+            {
+              "outcomeName": "單",
+              "odds": "1.45",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "雙",
+              "odds": "1.95",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "運動家",
+              "odds": "3.15",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "1.50",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "聖地牙哥教士",
+              "odds": "3.10",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 0.5",
+              "odds": "1.71",
+              "specialBetValue": "0.5"
+            },
+            {
+              "outcomeName": "小 0.5",
+              "odds": "1.62",
+              "specialBetValue": "0.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "運動家",
+              "odds": "1.80",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "4.50",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "聖地牙哥教士",
+              "odds": "1.90",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.71",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.62",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.53",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.93",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.50",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.96",
+              "specialBetValue": "1.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameId": "3470531.1",
+      "homeTeamName": "洛杉磯天使",
+      "awayTeamName": "德州遊騎兵",
+      "gameTime": "2026-05-24T10:05:00+08:00",
+      "markets": [
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "德州遊騎兵",
+              "odds": "1.52",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "洛杉磯天使",
+              "odds": "1.98",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "德州遊騎兵 -1.5",
+              "odds": "1.92",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "洛杉磯天使 +1.5",
+              "odds": "1.58",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "德州遊騎兵 -2.5",
+              "odds": "2.33",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "洛杉磯天使 +2.5",
+              "odds": "1.38",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 6.5",
+              "odds": "1.40",
+              "specialBetValue": "6.5"
+            },
+            {
+              "outcomeName": "小 6.5",
+              "odds": "2.30",
+              "specialBetValue": "6.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 7.5",
+              "odds": "1.68",
+              "specialBetValue": "7.5"
+            },
+            {
+              "outcomeName": "小 7.5",
+              "odds": "1.82",
+              "specialBetValue": "7.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 8.5",
+              "odds": "1.90",
+              "specialBetValue": "8.5"
+            },
+            {
+              "outcomeName": "小 8.5",
+              "odds": "1.60",
+              "specialBetValue": "8.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.78",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
+              "odds": "1.65",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.86",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.58",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OE",
+          "outcomes": [
+            {
+              "outcomeName": "單",
+              "odds": "1.48",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "雙",
+              "odds": "2.00",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "德州遊騎兵",
+              "odds": "3.00",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "1.50",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "洛杉磯天使",
+              "odds": "3.45",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 0.5",
+              "odds": "1.75",
+              "specialBetValue": "0.5"
+            },
+            {
+              "outcomeName": "小 0.5",
+              "odds": "1.58",
+              "specialBetValue": "0.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "德州遊騎兵",
+              "odds": "1.70",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "4.45",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "洛杉磯天使",
+              "odds": "2.05",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.80",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.55",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.66",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.76",
+              "specialBetValue": "1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 2.5",
+              "odds": "2.00",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "小 2.5",
+              "odds": "1.48",
+              "specialBetValue": "2.5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "gameId": "3470532.1",
+      "homeTeamName": "亞歷桑那響尾蛇",
+      "awayTeamName": "科羅拉多落磯",
+      "gameTime": "2026-05-24T10:10:00+08:00",
+      "markets": [
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "科羅拉多落磯",
+              "odds": "2.30",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "亞歷桑那響尾蛇",
+              "odds": "1.40",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "科羅拉多落磯 +2.5",
+              "odds": "1.42",
+              "specialBetValue": "-2.5"
+            },
+            {
+              "outcomeName": "亞歷桑那響尾蛇 -2.5",
+              "odds": "2.20",
+              "specialBetValue": "-2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "HDC",
+          "outcomes": [
+            {
+              "outcomeName": "科羅拉多落磯 +1.5",
+              "odds": "1.65",
+              "specialBetValue": "-1.5"
+            },
+            {
+              "outcomeName": "亞歷桑那響尾蛇 -1.5",
+              "odds": "1.85",
+              "specialBetValue": "-1.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 8.5",
+              "odds": "1.56",
+              "specialBetValue": "8.5"
+            },
+            {
+              "outcomeName": "小 8.5",
+              "odds": "1.94",
+              "specialBetValue": "8.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 9.5",
+              "odds": "1.87",
+              "specialBetValue": "9.5"
+            },
+            {
+              "outcomeName": "小 9.5",
+              "odds": "1.63",
+              "specialBetValue": "9.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OU",
+          "outcomes": [
+            {
+              "outcomeName": "大 10.5",
+              "odds": "2.07",
+              "specialBetValue": "10.5"
+            },
+            {
+              "outcomeName": "小 10.5",
+              "odds": "1.46",
+              "specialBetValue": "10.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 4.5",
+              "odds": "1.56",
+              "specialBetValue": "4.5"
+            },
+            {
+              "outcomeName": "小 4.5",
+              "odds": "1.88",
+              "specialBetValue": "4.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 3.5",
+              "odds": "1.62",
+              "specialBetValue": "3.5"
+            },
+            {
+              "outcomeName": "小 3.5",
+              "odds": "1.82",
+              "specialBetValue": "3.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "OE",
+          "outcomes": [
+            {
+              "outcomeName": "單",
+              "odds": "1.48",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "雙",
+              "odds": "2.00",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "科羅拉多落磯",
+              "odds": "3.50",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "1.65",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "亞歷桑那響尾蛇",
+              "odds": "2.50",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 0.5",
+              "odds": "1.58",
+              "specialBetValue": "0.5"
+            },
+            {
+              "outcomeName": "小 0.5",
+              "odds": "1.75",
+              "specialBetValue": "0.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "MNL",
+          "outcomes": [
+            {
+              "outcomeName": "科羅拉多落磯",
+              "odds": "2.20",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "和局",
+              "odds": "5.10",
+              "specialBetValue": null
+            },
+            {
+              "outcomeName": "亞歷桑那響尾蛇",
+              "odds": "1.55",
+              "specialBetValue": null
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 5.5",
+              "odds": "1.78",
+              "specialBetValue": "5.5"
+            },
+            {
+              "outcomeName": "小 5.5",
+              "odds": "1.56",
+              "specialBetValue": "5.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 2.5",
+              "odds": "1.63",
+              "specialBetValue": "2.5"
+            },
+            {
+              "outcomeName": "小 2.5",
+              "odds": "1.80",
+              "specialBetValue": "2.5"
+            }
+          ]
+        },
+        {
+          "marketCode": "TTO",
+          "outcomes": [
+            {
+              "outcomeName": "大 1.5",
+              "odds": "1.53",
+              "specialBetValue": "1.5"
+            },
+            {
+              "outcomeName": "小 1.5",
+              "odds": "1.93",
+              "specialBetValue": "1.5"
             }
           ]
         }

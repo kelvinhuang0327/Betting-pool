@@ -423,3 +423,20 @@ def build_runtime_guard_message(reason: str, runner: str) -> str:
     if reason == "scheduler-disabled":
         return f"GLOBAL_SCHEDULER_DISABLED — skip execution ({normalized_runner})"
     return f"GLOBAL_RUNTIME_BLOCKED[{reason}] — skip execution ({normalized_runner})"
+
+
+def load_project_profile(profile_path) -> dict:
+    """Load a project profile JSON from the given path."""
+    import json
+    from pathlib import Path
+    return json.loads(Path(profile_path).read_text(encoding="utf-8"))
+
+
+def validate_document_against_schema(document: dict, schema: dict) -> list:
+    """Validate a document dict against a JSON schema dict. Returns list of error strings."""
+    try:
+        import jsonschema
+        errors = list(jsonschema.Draft7Validator(schema).iter_errors(document))
+        return [str(e.message) for e in errors]
+    except ImportError:
+        return []

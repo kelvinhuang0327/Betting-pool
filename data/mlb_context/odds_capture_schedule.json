@@ -1,227 +1,7 @@
 {
   "games": {},
-  "last_run": "2026-05-20T09:58:52.440942Z",
+  "last_run": "2026-05-23T13:10:47.593100Z",
   "captures": [
-    {
-      "timestamp": "2026-05-17T07:36:35.544732Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "518.4min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T07:51:38.144009Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "503.3min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T08:06:41.739921Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "488.2min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T08:21:45.093631Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "473.2min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T08:36:47.688913Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "458.0min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T08:51:58.952307Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "443.0min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T12:31:14.907727Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "223.7min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T12:46:15.237390Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "208.7min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T13:04:03.039027Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 14,
-        "games_updated": 14,
-        "snapshots_added": 14,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "skipped_too_early",
-          "api_calls_today": 0,
-          "games_updated": 0,
-          "trigger_reason": "190.9min to first game (threshold=10min)"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-05-17T21:15:56.606891Z",
-      "windows": {
-        "continuous": true,
-        "decision": false,
-        "pregame": false,
-        "closing": false
-      },
-      "result": {
-        "snapshots_received": 1,
-        "games_updated": 1,
-        "snapshots_added": 1,
-        "duplicates_skipped": 0,
-        "unmatchable": 0,
-        "external_closing": {
-          "status": "failed",
-          "api_calls_today": 1,
-          "games_updated": 0,
-          "trigger_reason": "OddsAPI returned 0 games"
-        }
-      }
-    },
     {
       "timestamp": "2026-05-18T01:21:03.097574Z",
       "windows": {
@@ -1992,6 +1772,460 @@
         "snapshots_received": 0,
         "games_updated": 0,
         "snapshots_added": 0
+      }
+    },
+    {
+      "timestamp": "2026-05-23T08:47:04.437831Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false,
+        "_wbc_npb_audit": []
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "502.9min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T09:02:09.603967Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": true,
+        "closing": true,
+        "_wbc_npb_audit": [
+          {
+            "match_id": "3470472.1",
+            "home_team": "讀賣巨人",
+            "away_team": "阪神虎",
+            "game_time_utc": "2026-05-23T09:00:00Z",
+            "minutes_to_game": -2.2,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-2.2min)"
+          },
+          {
+            "match_id": "3470540.1",
+            "home_team": "中信兄弟",
+            "away_team": "味全龍",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": 2.8,
+            "trigger_types": [
+              "pregame",
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['pregame', 'closing'] (delta=2.8min)"
+          },
+          {
+            "match_id": "3470541.1",
+            "home_team": "樂天桃猿",
+            "away_team": "富邦悍將",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": 2.8,
+            "trigger_types": [
+              "pregame",
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['pregame', 'closing'] (delta=2.8min)"
+          }
+        ]
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "487.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T09:17:17.239136Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": true,
+        "_wbc_npb_audit": [
+          {
+            "match_id": "3470472.1",
+            "home_team": "讀賣巨人",
+            "away_team": "阪神虎",
+            "game_time_utc": "2026-05-23T09:00:00Z",
+            "minutes_to_game": -17.3,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-17.3min)"
+          },
+          {
+            "match_id": "3470540.1",
+            "home_team": "中信兄弟",
+            "away_team": "味全龍",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -12.3,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-12.3min)"
+          },
+          {
+            "match_id": "3470541.1",
+            "home_team": "樂天桃猿",
+            "away_team": "富邦悍將",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -12.3,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-12.3min)"
+          }
+        ]
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "472.7min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T09:32:20.595839Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": true,
+        "_wbc_npb_audit": [
+          {
+            "match_id": "3470472.1",
+            "home_team": "讀賣巨人",
+            "away_team": "阪神虎",
+            "game_time_utc": "2026-05-23T09:00:00Z",
+            "minutes_to_game": -32.3,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-32.3min)"
+          },
+          {
+            "match_id": "3470540.1",
+            "home_team": "中信兄弟",
+            "away_team": "味全龍",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -27.3,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-27.3min)"
+          },
+          {
+            "match_id": "3470541.1",
+            "home_team": "樂天桃猿",
+            "away_team": "富邦悍將",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -27.3,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-27.3min)"
+          }
+        ]
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "457.6min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T09:47:24.544648Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": true,
+        "_wbc_npb_audit": [
+          {
+            "match_id": "3470472.1",
+            "home_team": "讀賣巨人",
+            "away_team": "阪神虎",
+            "game_time_utc": "2026-05-23T09:00:00Z",
+            "minutes_to_game": -47.4,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-47.4min)"
+          },
+          {
+            "match_id": "3470540.1",
+            "home_team": "中信兄弟",
+            "away_team": "味全龍",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -42.4,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-42.4min)"
+          },
+          {
+            "match_id": "3470541.1",
+            "home_team": "樂天桃猿",
+            "away_team": "富邦悍將",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -42.4,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-42.4min)"
+          }
+        ]
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "442.5min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T10:02:30.786923Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": true,
+        "_wbc_npb_audit": [
+          {
+            "match_id": "3470472.1",
+            "home_team": "讀賣巨人",
+            "away_team": "阪神虎",
+            "game_time_utc": "2026-05-23T09:00:00Z",
+            "minutes_to_game": -62.5,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-62.5min)"
+          },
+          {
+            "match_id": "3470540.1",
+            "home_team": "中信兄弟",
+            "away_team": "味全龍",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -57.5,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-57.5min)"
+          },
+          {
+            "match_id": "3470541.1",
+            "home_team": "樂天桃猿",
+            "away_team": "富邦悍將",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -57.5,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-57.5min)"
+          }
+        ]
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "427.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T10:17:33.888724Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": true,
+        "_wbc_npb_audit": [
+          {
+            "match_id": "3470472.1",
+            "home_team": "讀賣巨人",
+            "away_team": "阪神虎",
+            "game_time_utc": "2026-05-23T09:00:00Z",
+            "minutes_to_game": -77.6,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-77.6min)"
+          },
+          {
+            "match_id": "3470540.1",
+            "home_team": "中信兄弟",
+            "away_team": "味全龍",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -72.6,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-72.6min)"
+          },
+          {
+            "match_id": "3470541.1",
+            "home_team": "樂天桃猿",
+            "away_team": "富邦悍將",
+            "game_time_utc": "2026-05-23T09:05:00Z",
+            "minutes_to_game": -72.6,
+            "trigger_types": [
+              "closing"
+            ],
+            "source": "data/tsl_odds_history.jsonl",
+            "trigger_reason": "WBC/NPB game triggered windows=['closing'] (delta=-72.6min)"
+          }
+        ]
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "412.4min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T12:07:56.667111Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false,
+        "_wbc_npb_audit": []
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "302.0min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T12:55:41.645007Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false,
+        "_wbc_npb_audit": []
+      },
+      "result": {
+        "snapshots_received": 15,
+        "games_updated": 15,
+        "snapshots_added": 15,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "254.3min to first game (threshold=10min)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-23T13:10:44.459984Z",
+      "windows": {
+        "continuous": true,
+        "decision": false,
+        "pregame": false,
+        "closing": false,
+        "_wbc_npb_audit": []
+      },
+      "result": {
+        "snapshots_received": 14,
+        "games_updated": 14,
+        "snapshots_added": 14,
+        "duplicates_skipped": 0,
+        "unmatchable": 0,
+        "external_closing": {
+          "status": "skipped_too_early",
+          "api_calls_today": 0,
+          "games_updated": 0,
+          "trigger_reason": "239.2min to first game (threshold=10min)"
+        }
       }
     }
   ]
