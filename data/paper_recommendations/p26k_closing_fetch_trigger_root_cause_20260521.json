@@ -1,0 +1,73 @@
+{
+  "artifact_id": "p26k_closing_fetch_trigger_root_cause_20260521",
+  "phase": "P26K",
+  "date": "2026-05-21",
+  "generated_at": "2026-05-23T00:00:00Z",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "read_only": true,
+  "production_proposal": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+  "task_id": "P26K_CLOSING_FETCH_TRIGGER_ROOT_CAUSE_DIAGNOSTIC_20260521",
+  "target_games": {
+    "match_id_1": "3469930.1",
+    "match_1_teams": "讀賣巨人 vs 養樂多燕子",
+    "match_id_2": "3469931.1",
+    "match_2_teams": "廣島東洋鯉魚 vs 橫濱海灣之星",
+    "league": "NPB",
+    "game_time_utc": "2026-05-21T09:00:00Z",
+    "game_time_taipei": "2026-05-21T17:00:00+08:00",
+    "closing_window_utc": "2026-05-21T07:00:00Z to 2026-05-21T09:00:00Z"
+  },
+  "primary_root_cause": "SOURCE_STATE_TRULY_EMPTY",
+  "primary_root_cause_detail": "TSL source genuinely stopped returning target NPB games (3469930.1, 3469931.1) from its pre-game betting menu before the closing window opened. Last TSL snapshots: 3469930.1 @ 03:24:52Z (T-335min), 3469931.1 @ 04:55:09Z (T-245min). Zero snapshots were returned for either game during 07:00-09:00Z. The daemon was running correctly and calling TSL every 15 min with force_closing=True, but the source had no data to return.",
+  "secondary_root_cause": "QUOTA_HARD_CAP",
+  "secondary_root_cause_detail": "OddsAPI MLB external daily closing: hard cap of 2 calls/day hit at 02:24Z. 2 calls consumed immediately after daemon restart at 02:09:35Z (P26G). All 8 closing-window cycles (07:10Z-08:56Z) blocked by: api_calls_today=2 >= cap=2.",
+  "ceo_hypothesis_evaluation": {
+    "hypothesis": "STARTUP_ONLY_FETCH_ARCHITECTURE",
+    "tsl_result": "STARTUP_ONLY_TRIGGER_REFUTED — TSL called every 15 min throughout day",
+    "odds_api_result": "STARTUP_ONLY_TRIGGER_PLAUSIBLE_NOT_PROVED — 2 OddsAPI calls consumed at startup, creating startup-only appearance; root cause is QUOTA_HARD_CAP",
+    "overall_status": "PARTIALLY_REFUTED"
+  },
+  "tsl_execution_status": {
+    "tsl_fetch_executing": true,
+    "force_closing_activated": true,
+    "force_closing_window_confirmed": "07:00-09:00Z UTC (game at 09:00Z, delta <= 120min)",
+    "tsl_crawler_called_every_cycle": true,
+    "source_returned_target_games_in_window": false,
+    "p26f_dedup_bypass_active": true,
+    "last_snapshot_3469930_1": "2026-05-21T03:24:52Z",
+    "last_snapshot_3469931_1": "2026-05-21T04:55:09Z",
+    "closing_window_snapshots_3469930_1": 0,
+    "closing_window_snapshots_3469931_1": 0
+  },
+  "daemon_heartbeat_clarifications": {
+    "status_captured_meaning": "Heartbeat written — NOT odds captured",
+    "fetched_false_meaning": "OddsAPI external closing not fetched — NOT that TSL did not run",
+    "api_calls_today_scope": "OddsAPI MLB external closing ONLY; does not reflect TSL",
+    "next_trigger_minutes_null_meaning": "Regex pattern finds no minutes in trigger_reason='cap=2 reached, calls=2'; expected when daily cap is blocked"
+  },
+  "source_removal_finding": {
+    "finding": "TSL_PREGAME_LIST_CLEARED_BEFORE_CLOSING_WINDOW",
+    "tsl_stopped_returning_games_at": "03:24:52Z - 04:55:09Z",
+    "hours_before_game_removed": "~4.1 to 5.6 hours before game start",
+    "p26j_source_unavailable_label": "RETIRED",
+    "correct_label": "TSL_PREGAME_LIST_CLEARED_BEFORE_CLOSING_WINDOW",
+    "markets_count_all_rows": "8-9 (all pregame rows, none in closing window)"
+  },
+  "p26_phase_closure": {
+    "p26k_status": "ROOT_CAUSE_IDENTIFIED",
+    "p26l_required": false,
+    "p26l_reason": "Root causes fully identified; fixes are separate concern outside P26K scope",
+    "actionable": true,
+    "recommended_next_action": "SOURCE_AVAILABILITY_MONITOR_REQUIRED",
+    "secondary_action": "QUOTA_POLICY_REVIEW_REQUIRED",
+    "startup_only_hypothesis_retired": true
+  },
+  "clv_sample_credibility": {
+    "complete_pair_at_p26j_time": 219,
+    "complete_pair_baseline": 220,
+    "complete_pair_current": 223,
+    "impact": "NONE — count recovered to 223 (>220 baseline); CLV sample not degraded"
+  }
+}

@@ -2,259 +2,294 @@
 
 ## 1. CTO Review Date
 
-2026-05-21 Asia/Taipei
+2026-05-23 Asia/Taipei
 
 ## 2. Input Sources
 
 Read / referenced:
 
 - [Confirmed] `00-Plan/roadmap/roadmap.md`
-- [Confirmed] `data/paper_recommendations/p26g_coverage_recheck_post_p26f_20260521.json`
-- [Confirmed] `report/p26g_coverage_recheck_post_p26f_20260521.md`
-- [Confirmed] `00-BettingPlan/20260521/p26g_coverage_recheck_post_p26f_20260521.md`
-- [Confirmed] `git log --oneline --decorate -8`
-- [Confirmed] `git status --short`
-- [Confirmed] User-provided P26G handoff report in this conversation.
+- [Confirmed] `00-Plan/roadmap/CTO-Analysis.md`
+- [Confirmed] `data/paper_recommendations/p26j_post_window_pair_verification_rerun_20260521.json`
+- [Confirmed] `data/paper_recommendations/p26j_daemon_continuity_verification_rerun_20260521.json`
+- [Confirmed] `report/p26j_post_window_pair_verification_rerun_20260521.md`
+- [Confirmed] `report/p26j_daemon_continuity_verification_rerun_20260521.md`
+- [Confirmed] `00-BettingPlan/20260521/p26j_post_window_pair_verification_rerun_20260521.md`
+- [Confirmed] `git rev-parse --show-toplevel`
+- [Confirmed] `git branch --show-current`
+- [Confirmed] `git status --short --branch`
+- [Confirmed] `git log --oneline --decorate -12`
+- [Confirmed] `rg` context contamination scan for `P48|P49|Stock-Prediction|golden fixture|paper simulation dry-run`
+- [Confirmed] User-provided Betting-pool context hygiene handoff report in this conversation.
 
 Not performed:
 
 - [Confirmed] No pytest rerun in this CTO review.
-- [Confirmed] No daemon restart, no scheduler/runtime change, no production write, no raw data modification, no PR merge.
-- [Confirmed] No `active_task.md` write because strict allowed-write list only permits `roadmap.md` and `CTO-Analysis.md`.
+- [Confirmed] No P26K execution.
+- [Confirmed] No daemon restart, scheduler change, crawler change, manual API call, raw data modification, production write, PR merge, branch creation, or worktree creation.
+- [Confirmed] No `active_task.md` write because the strict allowed-write list only permits `roadmap.md` and `CTO-Analysis.md`.
 - [Confirmed] No new worker task prompt emitted because the strict restriction says not to produce a new worker task prompt.
+- [Confirmed] No changes made to `00-Plan/roadmap/CEO-Decision.md` even though it is currently modified in the worktree.
 
 ## 3. Roadmap Alignment Assessment
 
 | Tag | Finding |
 |---|---|
-| [Aligned] | P26G correctly checked the runtime effect of P26F after daemon restart. |
-| [Aligned] | P26G correctly blocked P25C bootstrap because COMPLETE_PAIR remained 220 (<300). |
-| [Aligned] | P26G preserved paper-only / diagnostic-only governance and did not change champion/promotion/production state. |
-| [Drift] | Previous roadmap emphasized P29/P30A model-quality validation; current system state shows CLV pair formation is the immediate data maturity blocker. |
-| [Drift] | P26F code is committed (`8a98f52`), but P26G artifacts are untracked and therefore not fully delivered as versioned evidence. |
-| [Missing] | Roadmap did not explicitly separate "force-closing rows written" from "COMPLETE_PAIR formed." |
-| [Missing] | Roadmap did not yet require missing-pregame diagnosis for force-closing rows. |
-| [Outdated] | Any plan to run P25C immediately after force-closing success is outdated. Pair-level threshold still controls. |
-| [Blocked] | P25C bootstrap, strategy diagnostics, and promotion remain blocked by COMPLETE_PAIR=220. |
+| [Aligned] | Betting project identity is clean: repo root is `/Users/kelvin/Kelvin-WorkSpace/Betting-pool` and branch is `main`. |
+| [Aligned] | Recent git log is P26x Betting work ending at `0ccd06d`; no Stock/P48/P49 entries were observed. |
+| [Aligned] | `rg` scan across `00-Plan`, `00-BettingPlan`, `report`, and `data/paper_recommendations` found no Stock-Prediction / P48 / P49 contamination. |
+| [Aligned] | Returning to P26K matches the previous CTO roadmap: P26J proved daemon cycles existed but fetch did not execute in the closing window. |
+| [Aligned] | P25C bootstrap remains correctly blocked because the latest known COMPLETE_PAIR is 219 (<300). |
+| [Drift] | Conversation context drifted into Stock-Prediction-System, but repo evidence does not show Betting code/artifact contamination. |
+| [Drift] | `active_task.md` and `CEO-Decision.md` are modified in the worktree, but they are outside this CTO scope and were not touched. |
+| [Missing] | Roadmap did not yet encode context hygiene as a standing pre-flight for multi-project handoffs. |
+| [Missing] | Roadmap did not yet call out the four untracked `scripts/p26j_*.py` files as a commit-scope risk. |
+| [Outdated] | Any Stock/P48/P49 content must be ignored for Betting roadmap purposes unless a future scan proves actual contamination. |
+| [Blocked] | P26K is not blocked by context hygiene anymore; it is blocked only by execution. P25C, product release, strategy simulation, promotion, and production remain blocked. |
 
 ## 4. Completed Work Assessment
 
-### P26F
+### Context Hygiene
 
-- [Confirmed] HEAD commit is `8a98f52 fix(p26f): force-save closing snapshots through dedup bypass`.
-- [Confirmed] P26F dedup bypass is now loaded by the restarted daemon.
+- [Confirmed] Repo root check passed: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`.
+- [Confirmed] Branch check passed: `main`.
+- [Confirmed] Recent log check passed: latest commits are P26x Betting work, ending at `0ccd06d verify(p26j): post-window pair verification rerun - 09:12Z`.
+- [Confirmed] Content scan passed: no P48/P49/Stock-Prediction/golden fixture/paper simulation dry-run content found in the checked Betting directories.
+- [Confirmed] Current context classification: `BETTING_CONTEXT_CLEAN`.
+- [Confirmed] No repo cleanup or contamination repair is needed before returning to Betting P26K.
 
-### P26G
+### P26J Evidence Still Current
 
-- [Confirmed] Daemon restart succeeded: old PID `1715` -> new PID `15022`.
-- [Confirmed] First tick reported `TSL fetch OK: 7 snapshots`.
-- [Confirmed] P26G artifact classification is `P26G_FORCE_CLOSING_ROWS_CONFIRMED`.
-- [Confirmed] `force_closing_snapshot=True` rows = 10.
-- [Confirmed] `dedup_bypassed=True` rows = 7 in the artifact; user handoff said 2, so the repo artifact supersedes the pasted count.
-- [Confirmed] One row was in the closing window (`gap=-0.53h`), but lacked a matching pregame snapshot.
-- [Confirmed] COMPLETE_PAIR stayed at 220; delta = 0.
-- [Confirmed] P25C bootstrap did not run.
-- [Confirmed] P26G JSON/MD/BettingPlan artifacts exist locally.
-- [Confirmed] P26G artifacts are untracked in git status.
+- [Confirmed] P26J full post-window verification completed at commit `0ccd06d`.
+- [Confirmed] `3469930.1` is `PREGAME_ONLY_NO_CLOSING`: 7 rows, 0 closing rows, `markets=[]`.
+- [Confirmed] `3469931.1` is `PREGAME_ONLY_NO_CLOSING`: 8 rows, 0 closing rows, `markets=[]`.
+- [Confirmed] `target_pair_delta=0`.
+- [Confirmed] COMPLETE_PAIR changed `220 -> 219`, delta `-1`.
+- [Confirmed] P25C bootstrap did not run and remains not eligible.
+- [Confirmed] Daemon had 8 heartbeat cycles during `07:00Z-09:00Z`.
+- [Confirmed] Every closing-window cycle had `fetched=false`.
+- [Confirmed] `api_calls_today` stayed at 2 throughout the window.
+- [Confirmed] `next_trigger_minutes=null`.
 
-Interpretation:
+### Worktree State
 
-- [Confirmed] P26F is runtime-effective.
-- [Confirmed] Force-closing rows alone do not prove CLV pair growth.
-- [Confirmed] Pair formation requires both pregame and closing snapshots for the same match.
+- [Confirmed] Worktree contains many Betting runtime/daemon/data/output modified files.
+- [Confirmed] `00-Plan/roadmap/CEO-Decision.md` is modified but outside this CTO write scope.
+- [Confirmed] `00-Plan/roadmap/active_task.md` is modified but outside this CTO write scope.
+- [Confirmed] Four untracked P26J scripts exist:
+  - `scripts/p26j_phase2_analysis.py`
+  - `scripts/p26j_phase3_daemon.py`
+  - `scripts/p26j_phase3b_heartbeat.py`
+  - `scripts/p26j_phase4_coverage.py`
+- [Unknown] Whether the untracked P26J scripts are temporary analysis files or reusable diagnostic tools.
 
 ## 5. Unfinished Work Assessment
 
 | Item | Status |
 |---|---|
-| P26G validation closure | [Unknown] Phase 8 targeted tests / forbidden scan not rerun in this CTO review; handoff did not include complete test output. |
-| P26G versioned delivery | [Blocked] P26G artifacts exist but are untracked; no P26G commit hash found. |
-| Pair formation | [Blocked] COMPLETE_PAIR remains 220; first valid closing row had no pregame pair. |
-| P25C bootstrap | [Blocked] Threshold is 300; current COMPLETE_PAIR=220. |
-| Missing-pregame root cause | [Missing] Need match-level diagnosis of force-closing rows with/without pregame snapshots. |
-| 15-minute interval impact | [Unknown] P26E/P26G suggest cadence may matter, but impact has not been measured in a diagnostic-only way. |
-| Runtime dirty files | [Blocked for commits] Worktree contains many daemon/runtime/data/output modifications that must not be staged as code artifacts. |
+| P26K closing fetch trigger root cause | [Blocked] Not executed. P26J proves `fetched=false`; root cause remains unknown. |
+| Source vs trigger separation | [Missing] Need to separate source-side `markets=[]` from fetch-trigger failure. |
+| Quota / call limit gate | [Unknown] `api_calls_today=2` was stable; whether this is a hard cap, policy gate, or incidental state is not confirmed. |
+| `next_trigger_minutes=null` | [Unknown] Need to know whether null means no scheduled fetch, a scheduler bug, or expected idle state. |
+| COMPLETE_PAIR decrease | [Blocked] COMPLETE_PAIR dropped from 220 to 219; reason remains unexplained. |
+| P25C bootstrap | [Blocked] Needs COMPLETE_PAIR >=300; latest known value is 219. |
+| Untracked P26J script boundary | [Missing] Must be classified during P26K pre-flight and not staged accidentally. |
+| Context-lock pre-flight | [Missing] Should become standard for Betting / Stock / Lottery cross-project handoffs. |
+| Product recommendation release | [Blocked] MLB/TSL paper recommendations need traceable odds, model probability, edge, source time, risk gate, and validation evidence before release. |
+| Strategy optimization / simulation | [Blocked] Requires formal pregame odds, closing line, actual outcome, source trace, and sufficient validation data; no promotion path is open. |
 
 ## 6. P0 / P1 / P2 / P3-P10 Reprioritization
 
 | Priority | Phase | Why now |
 |---:|---|---|
-| **P0** | P26G Delivery Closure + P26H Pair Formation Monitor | It blocks trusted continuation: P26G artifacts are untracked, validation is not fully confirmed, and pair formation did not improve. |
-| **P1** | Missing-Pregame / Pair Formation Root Cause | First force-closing row had no pregame, so the next system question is why matched pairs are not forming. |
-| **P2** | Closing Cadence Impact Estimate | 15-minute cadence may still cause near misses, but it needs diagnostic evidence before runtime changes. |
-| **P3** | P25C Bootstrap Gate | Bootstrap only after COMPLETE_PAIR >=300 and line-comparable filters are satisfied. |
-| **P4** | P26 Runtime Validation Hygiene | Rerun targeted tests and forbidden scan; record results without staging raw feed/runtime files. |
-| **P5** | TSL CLV Data SSOT | Keep raw feed, daemon state, source snapshots, and derived artifacts separated. |
-| **P6** | MLB Prediction Quality Work Re-entry | P29/P30A remains useful but should not preempt CLV pair coverage gate today. |
-| **P7** | TSL Market Recommendation Contract | Keep product recommendation rows paper-only and source-traceable. |
-| **P8** | Daily Paper Ops / Drift Monitor | Monitor COMPLETE_PAIR and bootstrap readiness over time. |
-| **P9** | Repo / PR Governance Gate | Stay on canonical repo/branch; no new repo/worktree/branch unless explicitly authorized. |
-| **P10** | Production Proposal Gate | Remains blocked until formal evidence, live/licensed data path, fail-safe, monitoring, and explicit approval exist. |
+| **P0** | P26K Closing Fetch Trigger Root Cause Diagnostic | Context hygiene is clean; the direct blocker is still closing-window cycles with `fetched=false` and no closing rows. |
+| **P1** | Context-Lock Preflight + Commit-Scope Guard | Cross-project conversation drift happened; future Betting work must stop on Stock/P48/P49 contamination and must not stage runtime files. |
+| **P2** | Untracked P26J Script Boundary | Four untracked P26J scripts can pollute commit scope if not explicitly classified. |
+| **P3** | Scheduler / Quota / Next Trigger Decision Gate | Only after P26K should the team decide whether to patch scheduler, adjust quota/ops, monitor source, or no-op. |
+| **P4** | Heartbeat-vs-Fetch Watchdog Design | Prevents false confidence from daemon heartbeat when fetch does not execute. Design-only until authorized. |
+| **P5** | COMPLETE_PAIR Recovery Gate + P25C Bootstrap | Bootstrap remains blocked until COMPLETE_PAIR >=300 and line-comparable filters pass. |
+| **P6** | Coverage Stability Audit | COMPLETE_PAIR dropping `220 -> 219` must be explained before trusting coverage trend. |
+| **P7** | MLB Prediction Quality Work Re-entry | P29/P30A model work remains useful but should not preempt P26K data-capture root cause. |
+| **P8** | TSL Market Paper Recommendation Contract | Keep product design aligned to MLB/TSL paper recommendations; release remains blocked. |
+| **P9** | Repo / PR Governance Gate | No new repo/worktree/branch; no protected-branch bypass; keep raw feed/runtime files out of commits. |
+| **P10** | Production Proposal Gate | Production remains blocked until formal evidence, live/licensed data path, fail-safe, monitoring, and explicit approval exist. |
 
 Upgraded to P0:
 
-- [Confirmed] P26H pair-formation monitor.
-- [Confirmed] P26G artifact/validation delivery closure.
+- [Confirmed] P26K closing fetch trigger root-cause diagnostic.
 
 Upgraded to P1:
 
-- [Confirmed] Missing-pregame diagnosis for force-closing rows.
+- [Confirmed] Context-lock preflight and commit-scope guard.
+
+Upgraded to P2:
+
+- [Confirmed] Untracked P26J script boundary classification.
 
 Downgraded:
 
-- [Confirmed] P29/P30A Orchestrator validation. It remains valuable, but not today's first blocker.
-- [Confirmed] SP/bullpen/batting external data implementation.
-- [Confirmed] Optimizer / promotion / champion replacement.
+- [Confirmed] Repeating context hygiene as a standalone task; it is complete unless contamination reappears.
+- [Confirmed] P29/P30A Orchestrator validation; useful later, but not today's direct blocker.
+- [Confirmed] External SP/bullpen/batting implementation; contract/design only until data gates are healthier.
 
-Merged:
-
-- [Inferred] P26G delivery closure and P26H monitoring can be one focused next cycle if scope remains read-only plus artifact-only.
-
-Paused / retired:
+Paused:
 
 - [Confirmed] P25C bootstrap until COMPLETE_PAIR >=300.
-- [Confirmed] Manual snapshot fabrication.
-- [Confirmed] Daemon interval change until diagnostic-only impact estimate and explicit authorization.
-- [Confirmed] Assuming force-closing snapshot count equals COMPLETE_PAIR growth.
+- [Confirmed] Scheduler patch, daemon restart, crawler modification, live API call, manual snapshot fabrication unless explicitly authorized.
+- [Confirmed] Optimizer promotion, champion replacement, production proposal, paper recommendation release, and profitability claims.
+
+Retired:
+
+- [Confirmed] Treating Stock-Prediction conversation drift as Betting repo contamination after clean grep/log evidence.
+- [Confirmed] Including P48/P49/Stock summaries in Betting handoffs.
+- [Confirmed] Producing worker prompts from CTO roadmap analysis while the strict restriction forbids worker prompts.
 
 ## 7. Critical Blockers
 
-### Blocker 1: COMPLETE_PAIR Remains 220
+### Blocker 1: Closing Fetch Did Not Execute During True Window
 
-- Impact: CLV validation, bootstrap, strategy diagnostics.
-- Why blocker: P25C requires COMPLETE_PAIR >=300; P26G delta was 0.
-- Risk if ignored: bootstrap on insufficient sample and unreliable CLV inference.
+- Impact: CLV pair formation, closing-line evidence, P25C bootstrap, strategy validation, and paper recommendation credibility.
+- Why blocker: P26J observed 8 daemon cycles in `07:00Z-09:00Z`, but all had `fetched=false`; `api_calls_today=2` did not change.
+- Risk if ignored: The system may appear operational while collecting no closing evidence.
 - Priority: P0.
-- Acceptance: pair-level monitor reports coverage before/after and only runs bootstrap if >=300.
+- Acceptance: P26K classifies the cause as trigger rule, quota/call limit, `next_trigger_minutes`, timezone computation, schedule target, source state, governance flag, or inconclusive.
 
-### Blocker 2: Force-Closing Rows Not Yet Becoming Pairs
+### Blocker 2: Commit-Scope Risk From Dirty Runtime Files
 
-- Impact: data quality and coverage accumulation.
-- Why blocker: first closing-window row lacked corresponding pregame snapshot.
-- Risk if ignored: rows accumulate but CLV pair coverage does not improve.
+- Impact: repo governance and review safety.
+- Why blocker: Worktree includes many runtime/daemon/data/output modifications plus modified roadmap governance files outside this CTO scope.
+- Risk if ignored: raw feed, generated output, `CEO-Decision.md`, or `active_task.md` could be committed unintentionally.
 - Priority: P1.
-- Acceptance: every force-closing row is classified as complete, missing_pregame, missing_closing, or ambiguous with gap details.
+- Acceptance: Future task stages only whitelisted artifacts and explicitly reports ignored dirty files.
 
-### Blocker 3: P26G Delivery Closure Incomplete
+### Blocker 3: Untracked P26J Scripts
 
-- Impact: auditability and handoff reliability.
-- Why blocker: artifacts exist but are untracked; Phase 8 full validation / forbidden scan is not confirmed by this CTO review.
-- Risk if ignored: future agents may repeat work or rely on incomplete artifacts.
-- Priority: P0.
-- Acceptance: artifacts accounted for, validation result recorded, and raw feed/runtime files excluded from staging.
-
-### Blocker 4: 15-Minute Cadence Unquantified
-
-- Impact: closing capture coverage.
-- Why blocker: cadence may cause near misses, but changing runtime behavior without measurement is risky.
-- Risk if ignored: coverage may grow slowly; if changed prematurely, daemon load/noise can increase.
+- Impact: repo hygiene and future artifact scope.
+- Why blocker: Four untracked `scripts/p26j_*.py` files may be temporary scratch scripts or reusable diagnostic tools.
+- Risk if ignored: They may be accidentally committed or deleted without a policy decision.
 - Priority: P2.
-- Acceptance: diagnostic estimate compares 15-min vs 5-min expected coverage lift before any scheduler change.
+- Acceptance: P26K classifies them as temporary, reusable diagnostic candidates, or unknown without staging/deleting unless authorized.
 
-### Blocker 5: Runtime Dirty Worktree
+### Blocker 4: COMPLETE_PAIR Is 219, Below Bootstrap Threshold
 
-- Impact: repo governance and review quality.
-- Why blocker: many daemon/runtime/data/output files are modified and must not be committed as code artifacts.
-- Risk if ignored: raw/live feed or generated outputs pollute commits.
-- Priority: P4.
-- Acceptance: next artifact commit stages only report/artifact files explicitly allowed by that task.
+- Impact: P25C bootstrap, CLV significance checks, strategy simulation, and any model-to-bet validation.
+- Why blocker: Required threshold is 300; latest known value is 219.
+- Risk if ignored: Bootstrap or strategy conclusions would be underpowered and misleading.
+- Priority: P5.
+- Acceptance: Bootstrap remains blocked until COMPLETE_PAIR >=300 and line-comparable filters pass.
+
+### Blocker 5: Context Drift Risk
+
+- Impact: roadmap reliability across Betting / Stock / Lottery projects.
+- Why blocker: Conversation-level cross-project drift already occurred.
+- Risk if ignored: Wrong project summaries or artifacts may be written into Betting.
+- Priority: P1.
+- Acceptance: Project context lock and contamination grep are part of future pre-flight when project switching risk exists.
 
 ## 8. Recommended System Optimization Directions
 
-### Direction 1: Pair Formation Observability
+### Direction 1: Context-Locked P26K Root-Cause Isolation
 
 - Roadmap phase: P0/P1.
-- Why important: The system now writes force-closing snapshots, but CLV readiness depends on matched pregame+closing pairs.
-- Maturity gain: Moves from row-level observation to match-level evidence.
-- Expected benefit: Clear path to COMPLETE_PAIR >=300 or a concrete pregame capture blocker.
-- Risk: It may show coverage grows slowly even after P26F.
-- Acceptance: match-level force-closing inventory with pair formation status and COMPLETE_PAIR delta.
+- Why important: It resumes the correct Betting technical path after context hygiene clears.
+- Maturity gain: Converts "daemon alive but no fetch" into a concrete operational classification.
+- Expected benefit: Enables correct next action: scheduler patch, quota fix, source monitor, or no-op.
+- Risk: Root cause may remain inconclusive without deeper logs.
+- Acceptance: P26K produces one primary classification and keeps Stock/P48/P49 content out of Betting artifacts.
 - Priority: P0.
 
-### Direction 2: P26G Delivery Hygiene
+### Direction 2: Commit-Scope and Untracked Script Hygiene
 
-- Roadmap phase: P0/P4.
-- Why important: Existing P26G artifacts are untracked and validation is not fully confirmed in this CTO review.
-- Maturity gain: Makes runtime evidence auditable and prevents repeated verification loops.
-- Expected benefit: Cleaner handoff and safer next execution.
-- Risk: Staging could accidentally include raw daemon data if not tightly scoped.
-- Acceptance: only P26G/P26H artifact/report files are staged by a worker task; raw feed/runtime files remain unstaged.
-- Priority: P0.
+- Roadmap phase: P1/P2.
+- Why important: Dirty runtime files and untracked scripts are the easiest path to accidental repo pollution.
+- Maturity gain: Makes artifact-only work auditable.
+- Expected benefit: Cleaner commits and less handoff ambiguity.
+- Risk: Overly strict staging may delay useful diagnostic script preservation.
+- Acceptance: Future P26K commit is whitelist-only; `scripts/p26j_*.py` are classified but not staged unless explicitly scoped.
+- Priority: P1.
 
-### Direction 3: Bootstrap Gate Discipline
+### Direction 3: Heartbeat-vs-Fetch Observability
 
-- Roadmap phase: P3.
-- Why important: P25C bootstrap is tempting but invalid below 300 complete pairs.
-- Maturity gain: Protects statistical validity and avoids false CLV conclusions.
-- Expected benefit: Bootstrap runs only when enough data exists.
-- Risk: Delays downstream strategy analysis, but correctly.
-- Acceptance: bootstrap decision is machine-readable and tied to COMPLETE_PAIR threshold.
-- Priority: P1/P3.
+- Roadmap phase: P4.
+- Why important: P26J proves daemon health is not equivalent to fetch execution.
+- Maturity gain: Adds a future detection layer for closing-window silent failures.
+- Expected benefit: Reduces delayed discovery after windows close.
+- Risk: If implemented too soon, it may add alert noise; keep design-only until P26K classifies root cause.
+- Acceptance: Defined alert condition for "closing window active + heartbeat present + fetched=false + no API-call increment".
+- Priority: P2/P4.
 
-### Direction 4: Cadence Impact Estimation Before Runtime Change
+### Direction 4: Bootstrap Gate Discipline and Coverage Stability
 
-- Roadmap phase: P2.
-- Why important: 15-minute interval may be a residual blocker, but changing it affects daemon load and operational noise.
-- Maturity gain: Adds measurement before runtime mutation.
-- Expected benefit: A justified yes/no decision on 5-minute cadence.
-- Risk: Estimate may be inconclusive.
-- Acceptance: no daemon restart or scheduler change unless explicitly authorized after diagnostic estimate.
-- Priority: P2.
+- Roadmap phase: P5/P6.
+- Why important: Strategy validation needs sufficient, stable, line-comparable data.
+- Maturity gain: Prevents underpowered CLV conclusions and explains pair-count drift.
+- Expected benefit: Cleaner evidence before simulation/optimizer work.
+- Risk: Slows product-facing output, but correctly protects validity.
+- Acceptance: COMPLETE_PAIR threshold and coverage deltas are machine-readable in reports.
+- Priority: P3.
 
-### Direction 5: Product/Strategy Lane Gating
+### Direction 5: Product / Strategy Lane Gating
 
-- Roadmap phase: P6/P7.
-- Why important: MLB prediction/recommendation and strategy optimization require verified CLV coverage, not just runtime snapshots.
-- Maturity gain: Keeps product and optimizer work behind formal data-readiness gates.
-- Expected benefit: Prevents premature betting recommendations or strategy promotion.
-- Risk: Model-quality work is delayed while data gate matures.
-- Acceptance: product/strategy tasks resume only after CLV pair coverage or explicit CTO/CEO reprioritization.
+- Roadmap phase: P7/P8/P10.
+- Why important: The project has two clear product lanes: MLB prediction/paper recommendations and strategy simulation. Both require reliable formal data.
+- Maturity gain: Keeps roadmap pointed at product value without jumping over validation.
+- Expected benefit: Paper recommendation rows eventually include model probability, odds, edge, source, generated time, risk gate, and `paper_only=true`.
+- Risk: Product release remains delayed until capture reliability improves.
+- Acceptance: No recommendation release, promotion, or production proposal until data source trace and validation gates clear.
 - Priority: P3+.
 
 ## 9. Roadmap Changes Applied
 
-- [Confirmed] Updated `00-Plan/roadmap/roadmap.md` with P26G/P26H as the latest top section.
-- [Confirmed] Replaced `00-Plan/roadmap/CTO-Analysis.md` with this P26G CTO assessment.
-- [Confirmed] Marked P26F runtime mechanism as confirmed.
-- [Confirmed] Marked COMPLETE_PAIR=220 as the active blocker.
-- [Confirmed] Marked P25C bootstrap as blocked until COMPLETE_PAIR >=300.
-- [Confirmed] Downgraded P29/P30A model-quality work behind the current CLV coverage gate.
-- [Confirmed] Did not write `active_task.md` because it is outside the strict allowed-write list and prompt generation is explicitly restricted.
+- [Confirmed] Updated `00-Plan/roadmap/roadmap.md` with a new top section `0D. Latest CTO Update - Context Hygiene Clean, Return To P26K`.
+- [Confirmed] Updated active marker to `CTO_CANONICAL_ROADMAP_CONTEXT_CLEAN_RETURN_TO_P26K_20260523`.
+- [Confirmed] Updated CTO review date to 2026-05-23.
+- [Confirmed] Marked `BETTING_CONTEXT_CLEAN` as the current context state.
+- [Confirmed] Marked P26K as still not executed and still P0.
+- [Confirmed] Added context-lock preflight and untracked P26J script boundary as P1/P2 governance priorities.
+- [Confirmed] Kept P25C bootstrap blocked at latest known COMPLETE_PAIR=219.
+- [Confirmed] Did not write `active_task.md` because it is outside the strict allowed-write list.
+- [Confirmed] Did not emit a worker task prompt because the strict instruction forbids producing a new worker task prompt.
+- [Confirmed] Did not modify `CEO-Decision.md`.
 
 ## 10. Risks / Unknowns
 
-- [Unknown] Whether Phase 8 full validation / forbidden scan passed after P26G.
-- [Confirmed] P26G artifacts are present but untracked.
-- [Confirmed] P26F commit exists; P26G commit does not appear in recent git log.
-- [Unknown] Whether missing pregame is due to late TSL listing, pregame capture gap, or expected natural accumulation.
-- [Unknown] Whether 15-minute interval materially reduces pair formation.
-- [Confirmed] COMPLETE_PAIR remains 220 and bootstrap must not run.
-- [Confirmed] Worktree contains many runtime/data/output dirty files; staging must be tightly scoped.
-- [Confirmed] Tests were not rerun in this CTO analysis.
+- [Unknown] Whether `api_calls_today=2` is a hard quota, a daily policy cap, or incidental.
+- [Unknown] Whether `next_trigger_minutes=null` is expected idle behavior or a scheduler bug.
+- [Unknown] Whether source-side `markets=[]` would have persisted if the API fetch had actually run in the closing window.
+- [Unknown] Why COMPLETE_PAIR decreased from 220 to 219.
+- [Unknown] Whether the four untracked `scripts/p26j_*.py` files should be committed later, ignored, or removed.
+- [Confirmed] Betting context hygiene is clean as of this review.
+- [Confirmed] P25C bootstrap remains invalid at latest known COMPLETE_PAIR=219.
+- [Confirmed] Tests were not rerun by this CTO analysis.
+- [Confirmed] Current worktree contains many runtime/data/output dirty files plus modified files outside this CTO scope; future commits must be whitelist-only.
 
 ## 11. CTO Final Recommendation
 
-Today should not start P25C bootstrap, P29/P30A model work, optimizer promotion, or production proposal.
+The Betting repo is context-clean. Do not spend the next cycle on more Stock/P48/P49 contamination handling unless a new scan finds evidence.
 
-The next highest-value direction is **P26H force-closing pair formation monitoring plus P26G delivery closure**:
+Today should not run P25C bootstrap, P29/P30A model repair, strategy optimizer, paper recommendation release, scheduler patch, daemon restart, live API call, crawler modification, champion replacement, production proposal, or worker-prompt generation from CTO analysis.
 
-- Confirm P26G artifacts and validation state.
-- Classify every force-closing row by match-level pair formation status.
-- Recompute COMPLETE_PAIR before/after.
-- Run P25C bootstrap only if COMPLETE_PAIR >=300.
-- Keep daemon/runtime/raw data out of commits.
+The next highest-value system direction is still **P26K Closing Fetch Trigger Root Cause Diagnostic**, read-only and context-locked:
+
+- Verify Betting context at pre-flight.
+- Verify P26J commit and artifacts.
+- List but do not stage `scripts/p26j_*.py`.
+- Reconstruct the `07:00Z-09:00Z` closing-window timeline.
+- Determine why every cycle had `fetched=false`.
+- Separate source unavailability from trigger/quota/scheduler/timezone/governance causes.
+- Keep COMPLETE_PAIR and bootstrap gates explicit.
 
 Final classification: `CTO_ROADMAP_UPDATED_WITH_RISKS`
 
 ## 12. 10 行內 CTO 摘要
 
-1. P26F is committed at `8a98f52` and runtime-effective after daemon restart.
-2. P26G confirmed 10 force-closing rows and 7 dedup bypass rows.
-3. COMPLETE_PAIR stayed at 220; delta is 0.
-4. First closing-window row lacked pregame, so no new pair formed.
-5. P25C bootstrap remains blocked until COMPLETE_PAIR >=300.
-6. P26G artifacts exist but are untracked; validation/commit closure is still needed.
-7. P0 is P26G delivery closure + P26H pair formation monitor.
-8. P1 is missing-pregame root cause diagnosis.
-9. P2 is 15-min vs 5-min cadence impact estimate, diagnostic-only.
-10. No promotion, no production proposal, no manual snapshots, no daemon change without explicit authorization.
+1. Betting context hygiene is clean: repo=`Betting-pool`, branch=`main`.
+2. Recent git log is P26x Betting work; no Stock/P48/P49 contamination found.
+3. P26K has not executed; no P26K artifacts were found.
+4. P26J remains latest technical evidence at commit `0ccd06d`.
+5. P26J showed both targets are `PREGAME_ONLY_NO_CLOSING`.
+6. COMPLETE_PAIR latest known value is 219, so P25C bootstrap is blocked.
+7. P0 remains P26K read-only closing fetch trigger root-cause diagnostic.
+8. P1 is context-lock preflight and whitelist-only commit scope.
+9. P2 is untracked `scripts/p26j_*.py` boundary classification.
+10. No active_task write, no worker prompt, no daemon restart, no scheduler patch, no production proposal.

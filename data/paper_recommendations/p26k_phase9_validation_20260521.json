@@ -1,0 +1,80 @@
+{
+  "artifact_id": "p26k_phase9_validation_20260521",
+  "phase": "P26K",
+  "date": "2026-05-21",
+  "generated_at": "2026-05-23T00:00:00Z",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "read_only": true,
+  "forbidden_staging_scan": {
+    "status": "CLEAN",
+    "checked_patterns": [
+      "tsl_odds_history.jsonl",
+      "scripts/p26j_*.py",
+      "logs/",
+      "runtime/",
+      "data/learning_state.json"
+    ],
+    "dirty_files_count": 64,
+    "dirty_files_staged": 0
+  },
+  "targeted_tests": {
+    "p26_suite": {
+      "files": [
+        "tests/test_p26f_closing_dedup_bypass.py",
+        "tests/test_p26b_scheduler_extension.py",
+        "tests/test_p25_clv_construction_fix.py",
+        "tests/test_p26_clv_line_aware_matching.py"
+      ],
+      "passed": 75,
+      "failed": 0,
+      "status": "ALL_PASS"
+    },
+    "hold_state_suite": {
+      "files": [
+        "tests/test_blocked_state_daily_monitor_p12.py",
+        "tests/test_p13_minimal_monitor.py",
+        "tests/test_p14_no_expansion_guard.py",
+        "tests/test_p15_no_expansion_watch.py",
+        "tests/test_p16_no_expansion_hold.py",
+        "tests/test_p17_hold_state_continuity.py"
+      ],
+      "passed": 318,
+      "failed": 0,
+      "status": "ALL_PASS"
+    },
+    "total_passed": 393,
+    "total_failed": 0,
+    "regression_detected": false
+  },
+  "source_code_audit": {
+    "daily_closing_capture_py": {
+      "hard_cap_line": 164,
+      "hard_cap_value": 2,
+      "trigger_lead_minutes": 10,
+      "state_scope": "OddsAPI MLB external closing only"
+    },
+    "live_odds_collector_py": {
+      "tsl_called_every_cycle": true,
+      "force_closing_from_scheduler": true
+    },
+    "odds_capture_scheduler_py": {
+      "wbc_npb_closing_before_min": 120.0,
+      "wbc_npb_closing_after_min": 120.0,
+      "force_closing_true_confirmed_07h_09h": true
+    },
+    "tsl_snapshot_py": {
+      "dedup_bypass_active_when_force_closing": true,
+      "games_absent_from_response_not_appended": true
+    }
+  },
+  "data_integrity": {
+    "tsl_odds_history_contamination": "NONE",
+    "p26j_scripts_staged": false,
+    "production_proposal_blocked": true,
+    "axis_2_precondition_impact": "NONE"
+  },
+  "overall_validation_result": "PASSED",
+  "final_classification": "P26K_SOURCE_STATE_TRULY_EMPTY_CONFIRMED",
+  "secondary_classification": "P26K_QUOTA_HARD_CAP_SECONDARY"
+}
