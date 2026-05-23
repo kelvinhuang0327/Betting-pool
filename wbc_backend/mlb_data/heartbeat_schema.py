@@ -54,6 +54,12 @@ class SemanticHeartbeatRow:
         quota_reserved_for_closing      — True when quota was held for future closing
         fetch_skip_reason               — human-readable reason when fetch was skipped
         semantic_status_version         — schema version tag ("v2")
+
+    TSL monitor fields (P28D.1 — additive, always present with safe defaults):
+        tsl_monitor_alerts_count        — total match records tracked in monitor state
+        tsl_monitor_new_alerts_count    — newly classified alert events this poll cycle
+        tsl_monitor_has_withdrawal_early — True if any new alert is WITHDRAWAL_EARLY
+        tsl_monitor_status              — "ok" | "alert" | "error" | "no_data"
     """
 
     # ---- Preserved fields ---------------------------------------------------
@@ -75,6 +81,12 @@ class SemanticHeartbeatRow:
     external_fetch_blocked_by_quota: bool = False
     quota_reserved_for_closing: bool = False
     fetch_skip_reason: str | None = None
+
+    # ---- TSL monitor fields (P28D.1) ----------------------------------------
+    tsl_monitor_alerts_count: int = 0
+    tsl_monitor_new_alerts_count: int = 0
+    tsl_monitor_has_withdrawal_early: bool = False
+    tsl_monitor_status: str = "no_data"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -115,6 +127,28 @@ def make_semantic_heartbeat_row(
     # Inner result from capture_live_odds() — guard against non-dict values
     _inner_raw = result.get("result")
     inner: dict[str, Any] = _inner_raw if isinstance(_inner_raw, dict) else {}
+
+    # ---- TSL monitor fields (P28D.1) ----------------------------------------
+    _tsl_mon_raw = inner.get("tsl_monitor")
+    tsl_mon: dict[str, Any] = _tsl_mon_raw if isinstance(_tsl_mon_raw, dict) else {}
+
+    _new_alerts_raw = tsl_mon.get("new_alerts")
+    _new_alerts: list = _new_alerts_raw if isinstance(_new_alerts_raw, list) else []
+
+    tsl_monitor_new_alerts_count: int = len(_new_alerts)
+    tsl_monitor_alerts_count: int = int(tsl_mon.get("total_tracked") or 0)
+    tsl_monitor_has_withdrawal_early: bool = any(
+        isinstance(a, dict) and a.get("classification") == "TSL_MARKET_WITHDRAWAL_EARLY"
+        for a in _new_alerts
+    )
+    if not tsl_mon:
+        tsl_monitor_status: str = "no_data"
+    elif "error" in tsl_mon:
+        tsl_monitor_status = "error"
+    elif tsl_monitor_new_alerts_count > 0:
+        tsl_monitor_status = "alert"
+    else:
+        tsl_monitor_status = "ok"
 
     # External-closing daily result lives under inner["external_closing"].
     # (Historically the daemon looked at result["daily_closing"] which was
@@ -179,5 +213,9 @@ def make_semantic_heartbeat_row(
         quota_reserved_for_closing=quota_reserved_for_closing,
         fetch_skip_reason=fetch_skip_reason,
         semantic_status_version=SEMANTIC_STATUS_VERSION,
+        tsl_monitor_alerts_count=tsl_monitor_alerts_count,
+        tsl_monitor_new_alerts_count=tsl_monitor_new_alerts_count,
+        tsl_monitor_has_withdrawal_early=tsl_monitor_has_withdrawal_early,
+        tsl_monitor_status=tsl_monitor_status,
     )
     return row.to_dict()
