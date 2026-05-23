@@ -162,6 +162,15 @@ def _write_heartbeat(result: dict) -> None:
         _Path(HEARTBEAT_PATH).parent.mkdir(parents=True, exist_ok=True)
         with open(HEARTBEAT_PATH, "a", encoding="utf-8") as fh:
             fh.write(_json.dumps(row, ensure_ascii=False) + "\n")
+
+        # P28D.2 — surface TSL monitor alerts to operator log path
+        try:
+            from wbc_backend.mlb_data.tsl_monitor_alert_formatter import (
+                emit_alert_if_needed,
+            )
+            emit_alert_if_needed(row)
+        except Exception as _alert_exc:
+            logger.warning("TSL alert emission failed (non-fatal): %s", _alert_exc)
     except Exception as exc:
         logger.warning("heartbeat emission failed: %s", exc)
 
