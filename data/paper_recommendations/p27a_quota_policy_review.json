@@ -1,0 +1,100 @@
+{
+  "task_id": "P27A",
+  "artifact_type": "paper_policy_review",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "read_only": true,
+  "production_proposal": false,
+  "created_at": "2026-05-23T06:00:00Z",
+  "parent_task": "P26K",
+  "title": "OddsAPI Quota Policy Review — Paper Proposal",
+  "current_state": {
+    "cap_value": 2,
+    "cap_location": "daily_closing_capture.py:164",
+    "cap_logic": "if api_calls_today >= 2: skip and log 'cap=2 reached, calls=N'",
+    "scope": "OddsAPI MLB external closing only (not TSL)",
+    "state_persistence": "in-memory, reset on daemon restart",
+    "daily_budget": "2 calls total, allocated first-come-first-served"
+  },
+  "p26k_failure_reconstruction": {
+    "timeline": [
+      {
+        "time_utc": "2026-05-21T02:09:35Z",
+        "event": "P26G daemon restart",
+        "api_calls_at_restart": 0,
+        "note": "In-memory state reset to 0 on restart"
+      },
+      {
+        "time_utc": "2026-05-21T02:07:00Z",
+        "event": "1st OddsAPI call (cycle immediately after restart)",
+        "api_calls_after": 1
+      },
+      {
+        "time_utc": "2026-05-21T02:24:00Z",
+        "event": "2nd OddsAPI call (next 15-min cycle)",
+        "api_calls_after": 2,
+        "note": "QUOTA EXHAUSTED. All subsequent cycles blocked."
+      },
+      {
+        "time_range_utc": "2026-05-21T07:10:00Z to 2026-05-21T08:56:00Z",
+        "event": "Closing window — 8 cycles attempted",
+        "trigger_reason": "cap=2 reached, calls=2",
+        "api_calls": 2,
+        "fetched": false,
+        "closing_odds_captured": 0
+      }
+    ],
+    "total_wasted_calls_outside_closing_window": 2,
+    "total_calls_during_closing_window": 0,
+    "root_cause_classification": "QUOTA_HARD_CAP + RESTART_STATE_LOSS"
+  },
+  "failure_mode_analysis": {
+    "mode_1_restart_state_loss": {
+      "description": "Daemon restart causes api_calls_today counter to reset to 0, immediately re-consuming the full daily budget in the first 30 minutes after restart.",
+      "severity": "HIGH",
+      "frequency": "Every daemon restart",
+      "impact": "Full daily quota consumed before closing window on any restart day"
+    },
+    "mode_2_first_come_first_served": {
+      "description": "Current logic allocates quota to whichever cycle runs first, with no reservation for the closing window.",
+      "severity": "MEDIUM",
+      "impact": "Even without restarts, non-closing-window calls could exhaust budget"
+    },
+    "mode_3_cap_too_low": {
+      "description": "cap=2 provides zero fault tolerance. One unexpected restart or two early-day calls = complete closing window blackout.",
+      "severity": "HIGH",
+      "note": "Cap value may reflect actual OddsAPI tier subscription limit."
+    }
+  },
+  "proposed_policies": {
+    "POLICY_A_CLOSING_WINDOW_RESERVE": {
+      "description": "Reserve exactly 1 call for the closing window. Allow at most cap-1 calls outside the closing window per day.",
+      "implementation_sketch": "Define closing_window_start_utc and closing_window_end_utc per match. Before calling OddsAPI outside the window: check if (api_calls_today + calls_reserved) >= cap. calls_reserved=1 if any match has a future closing window today.",
+      "paper_only": true,
+      "tradeoff": "Reduces morning/afternoon data freshness by 1 call per day",
+      "p26k_outcome_if_applied": "At least 1 closing-window call would have been available at 07:10Z"
+    },
+    "POLICY_B_PERSIST_QUOTA_STATE": {
+      "description": "Persist api_calls_today to disk (e.g. data/mlb_context/external_closing_state.json already exists). On daemon restart, reload from disk instead of resetting to 0.",
+      "implementation_sketch": "Write api_calls_today to disk after each increment. On startup, read from disk and validate date matches today (UTC).",
+      "paper_only": true,
+      "tradeoff": "Requires atomic write; race condition if multiple daemon processes run",
+      "p26k_outcome_if_applied": "Restart at 02:09Z would have seen api_calls_today=N (prior value), preventing re-consumption"
+    },
+    "POLICY_C_COMBINED": {
+      "description": "Apply POLICY_B (persist state) + POLICY_A (reserve closing window call). Best protection against both failure modes.",
+      "paper_only": true,
+      "recommended": true,
+      "implementation_complexity": "LOW-MEDIUM"
+    }
+  },
+  "recommendation": {
+    "preferred_policy": "POLICY_C_COMBINED",
+    "rationale": "Addresses both restart-state-loss and first-come-first-served failure modes. Minimal complexity increase.",
+    "next_action": "IF cap=2 reflects actual OddsAPI subscription tier, escalate subscription review first. POLICY_C is viable regardless of cap value.",
+    "implementation_status": "NOT_IMPLEMENTED — paper proposal only",
+    "note": "No code changes made. This is a paper-only policy proposal under P27A."
+  },
+  "design_status": "PAPER_COMPLETE",
+  "implementation_status": "NOT_IMPLEMENTED — paper design only"
+}
