@@ -1,0 +1,91 @@
+{
+  "p39_generated_at_utc": "2026-05-24T13:55:54.928977Z",
+  "governance": {
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "t_locked": 0.5,
+    "live_api_calls": 0
+  },
+  "data_source": {
+    "game_log": "gl2024.txt",
+    "game_log_url": "https://www.retrosheet.org/gamelogs/gl2024.zip",
+    "fip_table": "data/mlb_2023_pitchers.py",
+    "fip_year": 2023,
+    "game_year": 2024
+  },
+  "fip_coverage": {
+    "total_unique_starters": 370,
+    "covered_by_fip_table": 160,
+    "fallback_to_lg_avg": 210,
+    "coverage_pct": 43.2,
+    "fallback_names_sample": [
+      "A.J. Puk",
+      "AJ Smith-Shawver",
+      "Aaron Brooks",
+      "Adam Mazur",
+      "Adam Oller",
+      "Adrian Houser",
+      "Alec Marsh",
+      "Allan Winans",
+      "Andrew Abbott",
+      "Andrew Walters",
+      "Anthony Banda",
+      "Anthony Maldonado",
+      "Anthony Molina",
+      "Antonio Senzatela",
+      "Austin Kitchen",
+      "Beau Brieske",
+      "Ben Brown",
+      "Ben Joyce",
+      "Ben Lively",
+      "Blair Henley"
+    ]
+  },
+  "coverage_analysis": {
+    "total_games": 2429,
+    "quality_records": 2158,
+    "quality_pct": 88.8,
+    "strong_edge_count": 955,
+    "strong_edge_pct_of_quality": 44.3,
+    "wfv_viable": true,
+    "source_distribution": {
+      "historical_proxy": 1117,
+      "mixed": 1041,
+      "league_average_fallback": 271
+    },
+    "strong_edge_accuracy_pct": 56.4,
+    "sp_fip_delta_mean": 0.009,
+    "sp_fip_delta_std": 0.606,
+    "sp_fip_delta_min": -1.82,
+    "sp_fip_delta_max": 1.8,
+    "t_locked": 0.5
+  },
+  "pit_audit": {
+    "total_records": 2429,
+    "pit_safe_count": 2429,
+    "pit_violations": 0,
+    "fip_data_year": 2023,
+    "game_data_year": 2024,
+    "fip_predates_games": true,
+    "snapshot_policy": "fip_data_year < game_year (2023 < 2024)",
+    "violation_details": []
+  },
+  "classification": {
+    "classification": "HOLDOUT_READY",
+    "description": "충분한 strong-edge 샘플과 PIT 안전 검증 완료.",
+    "strong_edge_count": 955,
+    "wfv_viable": true,
+    "pit_safe": true,
+    "total_games": 2429,
+    "quality_records": 2158,
+    "t_locked": 0.5,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "no_champion_modification": true
+  },
+  "output_files": {
+    "asplayed_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/mlb-2024-asplayed.csv",
+    "features_jsonl": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/mlb_2024_sp_fip_delta_features.jsonl",
+    "summary_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p39_2024_holdout_summary.json"
+  }
+}
