@@ -1,0 +1,264 @@
+{
+  "version": "p42_v1",
+  "governance": {
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "T_LOCKED": 0.5,
+    "live_api_calls": 0,
+    "no_champion_modification": true,
+    "kelly_deploy_allowed": false,
+    "p41_commit": "6ee4e57",
+    "p40_commit": "5870cef"
+  },
+  "data_inventory": {
+    "n_quality_total": 3586,
+    "n_quality_2024": 2158,
+    "n_quality_2025": 1428,
+    "T_LOCKED": 0.5
+  },
+  "tier_definitions": {
+    "A": {
+      "threshold_abs_delta": 1.5
+    },
+    "B": {
+      "threshold_abs_delta": 1.25
+    },
+    "C": {
+      "threshold_abs_delta": 0.5
+    }
+  },
+  "tiers": {
+    "A": {
+      "tier": "A",
+      "threshold": 1.5,
+      "n": 47,
+      "coverage_pct": 1.31,
+      "auc": 0.7038,
+      "favored_wr": 0.6596,
+      "brier_score": 0.2385,
+      "brier_skill": 0.0456,
+      "log_loss": 0.6776,
+      "ece": 0.1668,
+      "bootstrap_auc": {
+        "n_boot": 1000,
+        "mean": 0.7044,
+        "ci_95_low": 0.5417,
+        "ci_95_high": 0.8472,
+        "ci_excludes_050": true,
+        "ci_excludes_054": true
+      },
+      "bootstrap_wr": {
+        "mean": 0.6611,
+        "ci_95_low": 0.5319,
+        "ci_95_high": 0.7872,
+        "ci_excludes_050": true
+      },
+      "per_year": {
+        "2024": {
+          "n": 23,
+          "auc": 0.6364,
+          "favored_wr": 0.6087,
+          "auc_positive": true
+        },
+        "2025": {
+          "n": 24,
+          "auc": 0.7727,
+          "favored_wr": 0.7083,
+          "auc_positive": true
+        }
+      },
+      "cross_year_stable": true,
+      "kelly_diagnostic": [
+        {
+          "scenario": "fair_no_vig",
+          "decimal_odds": 2.0,
+          "p_win_assumed": 0.6596,
+          "full_kelly_fraction": 0.3191,
+          "quarter_kelly_fraction": 0.0798,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        },
+        {
+          "scenario": "tight_book",
+          "decimal_odds": 1.9,
+          "p_win_assumed": 0.6596,
+          "full_kelly_fraction": 0.2813,
+          "quarter_kelly_fraction": 0.0703,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        },
+        {
+          "scenario": "standard_book",
+          "decimal_odds": 1.85,
+          "p_win_assumed": 0.6596,
+          "full_kelly_fraction": 0.2591,
+          "quarter_kelly_fraction": 0.0648,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        }
+      ],
+      "classification": "SAMPLE_LIMITED_HIGH_AUC"
+    },
+    "B": {
+      "tier": "B",
+      "threshold": 1.25,
+      "n": 180,
+      "coverage_pct": 5.02,
+      "auc": 0.6476,
+      "favored_wr": 0.6111,
+      "brier_score": 0.2561,
+      "brier_skill": -0.0373,
+      "log_loss": 0.713,
+      "ece": 0.1555,
+      "bootstrap_auc": {
+        "n_boot": 1000,
+        "mean": 0.6473,
+        "ci_95_low": 0.5591,
+        "ci_95_high": 0.7323,
+        "ci_excludes_050": true,
+        "ci_excludes_054": true
+      },
+      "bootstrap_wr": {
+        "mean": 0.6103,
+        "ci_95_low": 0.5389,
+        "ci_95_high": 0.6833,
+        "ci_excludes_050": true
+      },
+      "per_year": {
+        "2024": {
+          "n": 82,
+          "auc": 0.6696,
+          "favored_wr": 0.6341,
+          "auc_positive": true
+        },
+        "2025": {
+          "n": 98,
+          "auc": 0.649,
+          "favored_wr": 0.5918,
+          "auc_positive": true
+        }
+      },
+      "cross_year_stable": true,
+      "kelly_diagnostic": [
+        {
+          "scenario": "fair_no_vig",
+          "decimal_odds": 2.0,
+          "p_win_assumed": 0.6111,
+          "full_kelly_fraction": 0.2222,
+          "quarter_kelly_fraction": 0.0556,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        },
+        {
+          "scenario": "tight_book",
+          "decimal_odds": 1.9,
+          "p_win_assumed": 0.6111,
+          "full_kelly_fraction": 0.179,
+          "quarter_kelly_fraction": 0.0448,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        },
+        {
+          "scenario": "standard_book",
+          "decimal_odds": 1.85,
+          "p_win_assumed": 0.6111,
+          "full_kelly_fraction": 0.1536,
+          "quarter_kelly_fraction": 0.0384,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        }
+      ],
+      "classification": "MEDIUM_CONFIDENCE_DIAGNOSTIC"
+    },
+    "C": {
+      "tier": "C",
+      "threshold": 0.5,
+      "n": 1490,
+      "coverage_pct": 41.55,
+      "auc": 0.5865,
+      "favored_wr": 0.5792,
+      "brier_score": 0.2517,
+      "brier_skill": -0.0123,
+      "log_loss": 0.6985,
+      "ece": 0.0877,
+      "bootstrap_auc": {
+        "n_boot": 1000,
+        "mean": 0.5861,
+        "ci_95_low": 0.5557,
+        "ci_95_high": 0.617,
+        "ci_excludes_050": true,
+        "ci_excludes_054": true
+      },
+      "bootstrap_wr": {
+        "mean": 0.5794,
+        "ci_95_low": 0.5537,
+        "ci_95_high": 0.6047,
+        "ci_excludes_050": true
+      },
+      "per_year": {
+        "2024": {
+          "n": 955,
+          "auc": 0.5748,
+          "favored_wr": 0.5644,
+          "auc_positive": true
+        },
+        "2025": {
+          "n": 535,
+          "auc": 0.602,
+          "favored_wr": 0.6056,
+          "auc_positive": true
+        }
+      },
+      "cross_year_stable": true,
+      "kelly_diagnostic": [
+        {
+          "scenario": "fair_no_vig",
+          "decimal_odds": 2.0,
+          "p_win_assumed": 0.5792,
+          "full_kelly_fraction": 0.1584,
+          "quarter_kelly_fraction": 0.0396,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        },
+        {
+          "scenario": "tight_book",
+          "decimal_odds": 1.9,
+          "p_win_assumed": 0.5792,
+          "full_kelly_fraction": 0.1116,
+          "quarter_kelly_fraction": 0.0279,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        },
+        {
+          "scenario": "standard_book",
+          "decimal_odds": 1.85,
+          "p_win_assumed": 0.5792,
+          "full_kelly_fraction": 0.0841,
+          "quarter_kelly_fraction": 0.021,
+          "positive_ev": true,
+          "note": "DIAGNOSTIC ONLY \u2014 theoretical, assumes p_win=favored_wr as oracle. NOT a live recommendation."
+        }
+      ],
+      "classification": "HIGH_CONFIDENCE_DIAGNOSTIC"
+    }
+  },
+  "comparison_tier_a_vs_c": {
+    "tier_a_auc": 0.7038,
+    "tier_c_auc": 0.5865,
+    "observed_delta": 0.1173,
+    "permutation_p_value": 0.0805,
+    "n_permutations": 2000,
+    "significance_05": "not_significant",
+    "tier_a_n": 47,
+    "caveat": "Tier A n=47 \u2014 insufficient for definitive statistical conclusion. P-value directional only."
+  },
+  "p41_reference": {
+    "combined_auc": 0.5865,
+    "combined_n": 1490,
+    "ci_95": [
+      0.5557,
+      0.617
+    ],
+    "commit": "6ee4e57"
+  }
+}
