@@ -338,3 +338,53 @@ Sigmoid mapping `p = sigmoid(0.8 * delta)` is not perfectly calibrated; Platt sc
 - Cumulative `pytest P41+P42+P43+P44 -q` → `153 passed`
 - Forbidden phrase scan → 0 hits
 
+---
+
+## P45 Execution Status Update (2026-05-26)
+
+- Status: `COMPLETED (diagnostic-only)`
+- Final classification: `P45_RECALIBRATION_HELPFUL`
+
+### P45.A — Train/Test Platt Pilot (80/20, seed=42)
+
+| Metric | Raw | Calibrated | Improvement |
+|--------|-----|------------|-------------|
+| ECE (test) | 0.097154 | 0.070058 | +0.027096 |
+| Brier (test) | 0.230849 | 0.226447 | +0.004402 |
+
+- platt_a: `0.435432`, platt_b: `0.245464`
+
+### P45.B — 5-Fold Cross Validation
+
+| Metric | Mean Raw | Mean Calibrated | Mean Improvement |
+|--------|----------|-----------------|------------------|
+| ECE | 0.116838 | 0.086164 | +0.030673 |
+| Brier | 0.248133 | 0.238477 | +0.009656 |
+
+**CV Classification: RECALIBRATION_HELPFUL** (mean ECE improvement > 0.02 across all 5 folds)
+
+### P45.C — Walk-Forward Monthly (5 evaluations)
+
+- All 5 walk-forward months show ECE improvement after Platt scaling
+- **Walk-Forward Classification: WALK_FORWARD_HELPFUL**
+
+### Known Limitations
+
+- 2024 closing-line data gap **remains unresolved**
+- Platt scaling is diagnostic only; no recalibrated model deployed
+- No production proposal. No champion replacement. Paper-only.
+
+### Deliverables Generated
+
+- `scripts/_p45_platt_recalibration_pilot.py`
+- `tests/test_p45_platt_recalibration_pilot.py` (16 tests PASS)
+- `data/mlb_2025/derived/p45_platt_recalibration_summary.json`
+- `report/p45_platt_recalibration_pilot_20260526.md`
+- `00-BettingPlan/20260526/p45_platt_recalibration_pilot_20260526.md`
+
+### Validation Results
+
+- `pytest tests/test_p45_platt_recalibration_pilot.py -v` → `16 passed`
+- Cumulative `pytest P41+P42+P43+P44+P45 -q` → `169 passed`
+- Forbidden phrase scan → 0 affirmative hits
+

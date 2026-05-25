@@ -1,0 +1,214 @@
+{
+  "version": "p45_v1",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false
+  },
+  "p44_baseline": {
+    "ece": 0.0953,
+    "brier": 0.2481,
+    "classification": "MODERATE_MISCALIBRATED"
+  },
+  "data_inventory": {
+    "phase56_rows": 2025,
+    "phase56_quality_rows": 1428,
+    "phase56_joined_rows": 1426,
+    "phase56_tier_c_rows": 535
+  },
+  "tier_c_n": 535,
+  "p45a_pilot": {
+    "train_n": 428,
+    "test_n": 107,
+    "split_seed": 42,
+    "platt_a": 0.435432,
+    "platt_b": 0.245464,
+    "raw_ece": 0.097154,
+    "calibrated_ece": 0.070058,
+    "ece_improvement": 0.027096,
+    "raw_brier": 0.230849,
+    "calibrated_brier": 0.226447,
+    "brier_improvement": 0.004402
+  },
+  "p45b_cv": {
+    "folds": [
+      {
+        "fold_id": 1,
+        "train_n": 428,
+        "test_n": 107,
+        "platt_a": 0.515423,
+        "platt_b": 0.304077,
+        "raw_ece": 0.115759,
+        "calibrated_ece": 0.100134,
+        "ece_improvement": 0.015625,
+        "raw_brier": 0.255029,
+        "calibrated_brier": 0.246461,
+        "brier_improvement": 0.008568
+      },
+      {
+        "fold_id": 2,
+        "train_n": 428,
+        "test_n": 107,
+        "platt_a": 0.550094,
+        "platt_b": 0.23089,
+        "raw_ece": 0.128832,
+        "calibrated_ece": 0.042333,
+        "ece_improvement": 0.086499,
+        "raw_brier": 0.26007,
+        "calibrated_brier": 0.239893,
+        "brier_improvement": 0.020176
+      },
+      {
+        "fold_id": 3,
+        "train_n": 428,
+        "test_n": 107,
+        "platt_a": 0.59653,
+        "platt_b": 0.290864,
+        "raw_ece": 0.151843,
+        "calibrated_ece": 0.115598,
+        "ece_improvement": 0.036244,
+        "raw_brier": 0.273737,
+        "calibrated_brier": 0.255702,
+        "brier_improvement": 0.018036
+      },
+      {
+        "fold_id": 4,
+        "train_n": 428,
+        "test_n": 107,
+        "platt_a": 0.411393,
+        "platt_b": 0.242308,
+        "raw_ece": 0.090601,
+        "calibrated_ece": 0.102698,
+        "ece_improvement": -0.012098,
+        "raw_brier": 0.220982,
+        "calibrated_brier": 0.223883,
+        "brier_improvement": -0.002902
+      },
+      {
+        "fold_id": 5,
+        "train_n": 428,
+        "test_n": 107,
+        "platt_a": 0.435432,
+        "platt_b": 0.245464,
+        "raw_ece": 0.097154,
+        "calibrated_ece": 0.070058,
+        "ece_improvement": 0.027096,
+        "raw_brier": 0.230849,
+        "calibrated_brier": 0.226447,
+        "brier_improvement": 0.004402
+      }
+    ],
+    "aggregate": {
+      "fold_count": 5,
+      "mean_raw_ece": 0.116838,
+      "mean_calibrated_ece": 0.086164,
+      "mean_ece_improvement": 0.030673,
+      "mean_raw_brier": 0.248133,
+      "mean_calibrated_brier": 0.238477,
+      "mean_brier_improvement": 0.009656
+    },
+    "classification": "RECALIBRATION_HELPFUL"
+  },
+  "p45c_walk_forward": {
+    "walk_forward_results": [
+      {
+        "train_months": [
+          "2025-04"
+        ],
+        "eval_month": "2025-05",
+        "train_n": 16,
+        "eval_n": 120,
+        "platt_a": 1.028399,
+        "platt_b": 0.041468,
+        "raw_ece": 0.11873,
+        "calibrated_ece": 0.105676,
+        "ece_improvement": 0.013054,
+        "raw_brier": 0.254468,
+        "calibrated_brier": 0.2545,
+        "brier_improvement": -3.2e-05
+      },
+      {
+        "train_months": [
+          "2025-04",
+          "2025-05"
+        ],
+        "eval_month": "2025-06",
+        "train_n": 136,
+        "eval_n": 101,
+        "platt_a": 0.474336,
+        "platt_b": 0.231198,
+        "raw_ece": 0.112149,
+        "calibrated_ece": 0.059887,
+        "ece_improvement": 0.052262,
+        "raw_brier": 0.232336,
+        "calibrated_brier": 0.231044,
+        "brier_improvement": 0.001292
+      },
+      {
+        "train_months": [
+          "2025-04",
+          "2025-05",
+          "2025-06"
+        ],
+        "eval_month": "2025-07",
+        "train_n": 237,
+        "eval_n": 92,
+        "platt_a": 0.576826,
+        "platt_b": 0.205943,
+        "raw_ece": 0.105737,
+        "calibrated_ece": 0.038174,
+        "ece_improvement": 0.067563,
+        "raw_brier": 0.240962,
+        "calibrated_brier": 0.229125,
+        "brier_improvement": 0.011836
+      },
+      {
+        "train_months": [
+          "2025-04",
+          "2025-05",
+          "2025-06",
+          "2025-07"
+        ],
+        "eval_month": "2025-08",
+        "train_n": 329,
+        "eval_n": 108,
+        "platt_a": 0.59391,
+        "platt_b": 0.267419,
+        "raw_ece": 0.134971,
+        "calibrated_ece": 0.073712,
+        "ece_improvement": 0.061259,
+        "raw_brier": 0.265996,
+        "calibrated_brier": 0.250864,
+        "brier_improvement": 0.015132
+      },
+      {
+        "train_months": [
+          "2025-04",
+          "2025-05",
+          "2025-06",
+          "2025-07",
+          "2025-08"
+        ],
+        "eval_month": "2025-09",
+        "train_n": 437,
+        "eval_n": 98,
+        "platt_a": 0.505059,
+        "platt_b": 0.245049,
+        "raw_ece": 0.134803,
+        "calibrated_ece": 0.052278,
+        "ece_improvement": 0.082525,
+        "raw_brier": 0.249282,
+        "calibrated_brier": 0.235073,
+        "brier_improvement": 0.014209
+      }
+    ],
+    "classification": "WALK_FORWARD_HELPFUL"
+  },
+  "p45_classification": "P45_RECALIBRATION_HELPFUL",
+  "framing_note": "Platt scaling diagnostic on 2025 Tier C (|sp_fip_delta| >= 0.50). No champion replacement. No production proposal. Paper-only. 2024 closing-line data gap remains unresolved.",
+  "limitation": "2024_closing_line_data_unavailable"
+}
