@@ -1,26 +1,30 @@
-# Active Task — P52 Formal Monitoring Contract V2
+# Active Task — P53 Sep 2025 校準 CRITICAL 根因審計
+
+> **[COMPLETED 2026-05-26]** `SEP_CALIBRATION_SAMPLE_SENSITIVE_DIAGNOSTIC`
+> **Issued by**: P52 V2 合約遺留問題 Sep 2025 CALIBRATION_CRITICAL 追蹤
+> **HEAD**: `e4463f1` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
+> **前置 Phase**: P52 `P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC`
+
+## P53 成果摘要
+
+- **Sep 2025 n**: 98 (< 100 SAMPLE_LIMITED 閾值)
+- **Sep platt_ece**: 0.122929 (超出 0.12 臨界 +0.002929)
+- **Bootstrap 95% CI**: [0.062, 0.215] → CI_low < 0.12 → **樣本敏感**
+- **5-bin ECE**: 0.122929 | **10-bin ECE**: 0.122929 | **adaptive ECE**: 0.134578
+- **4/5 方法超 CRITICAL**（僅 bootstrap CI_low 未超）
+- **最終分類**: `SEP_CALIBRATION_SAMPLE_SENSITIVE_DIAGNOSTIC`
+- **結論**: Sep 2025 校準超限在 bootstrap CI 分析下屬於樣本不足帶來的敏感性問題
+- **邊際健康確認**: fip_edge ≈ 0.147，CI_low > 0.130（P52 V2 confirmed）
+- **Governance**: paper_only=True, live_api_calls=0, p52_contract_overwritten=False
+
+---
+
+## P52 歷史記錄（已完成）
 
 > **[COMPLETED 2026-05-26]** `P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC`
 > **Issued by**: P51 找出假警報後正式確立 V2 合約
 > **HEAD**: `6aa9e1b` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
 > **前置 Phase**: P51 `P51_REVISED_CONTRACT_REDUCES_FALSE_ALERTS_DIAGNOSTIC` (20/20 PASS)
-
-## P52 成果摘要
-
-- **合約版本**: `P52_MONITORING_CONTRACT_V2`
-- **邊際流**: `RAW_SIGMOID` (fip_signal_side_aware_edge, sigmoid k=1.0)
-- **校準流**: `PLATT_CALIBRATED` (A=0.435432, B=0.245464，P45 鎖定)
-- **Tier C n**: 535（`|sp_fip_delta|>=0.5`，`p0_features.sp_fip_delta`）
-- **假 CRITICAL 消除**: 月度 -1、滾動 -3
-- **Sep 2025 校準問題**: platt_ece=0.1229 > 0.12，n=98，CALIBRATION_CRITICAL（已追蹤）
-- **2024 資料缺口**: cross-year blocker only，不阻擋 2025-only 重放
-- **Governance**: paper_only=True, live_api_calls=0, p48_artifact_overwritten=False
-
----
-
-## 下一步（P53）
-
-P53 應調查 Sep 2025 CALIBRATION_CRITICAL 根因（platt_ece=0.1229）。
 
 ---
 
