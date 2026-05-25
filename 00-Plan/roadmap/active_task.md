@@ -1,3 +1,12 @@
+
+## P59 — Monitoring Contract V2 First Monthly Report [2026-05-25] [COMPLETED]
+- Classification: `P59_FIRST_MONTHLY_REPORT_SAMPLE_LIMITED`
+- Report month: 2025-09 (HISTORICAL_DIAGNOSTIC_FIRST_REPORT)
+- global_alert_level: RED
+- platt_ece=0.122929, batch_n=98
+- Band annotations carry-forward: repeated_month_count=2
+- Validation: 10/10 PASS
+
 # Active Task — P58 Monitoring Contract V2 Monthly Report Template
 
 > **[COMPLETED 2026-05-26]** `P58_MONTHLY_REPORT_TEMPLATE_READY_DIAGNOSTIC`
