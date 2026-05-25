@@ -446,3 +446,59 @@ does not hold up in out-of-fold or out-of-month evaluation.
 - Cumulative `pytest P41+P42+P43+P44+P45+P46 -q` → `188 passed`
 - Forbidden phrase scan → 0 affirmative hits
 
+---
+
+## P47 Execution Status Update (2026-05-26)
+
+- Status: `COMPLETED (diagnostic-only, synthesis only)`
+- Final classification: `P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC`
+- Selected monitoring probability stream: `PLATT_CALIBRATED`
+
+### P43-P46 Synthesis Table
+
+| Phase | Key Result | Classification |
+|-------|-----------|----------------|
+| P43 | Tier C n=535, mean_edge=0.1059, CI fully positive | `EDGE_CONFIRMED` |
+| P44 temporal | 6/6 months STABLE, n=535 | `TEMPORAL_STABLE` |
+| P44 calibration | ECE=0.0953, Brier=0.2481 | `MODERATE_MISCALIBRATED` |
+| P45 Platt | CV ECE 0.1168→0.0862, WF HELPFUL | `P45_RECALIBRATION_HELPFUL` |
+| P46 Isotonic | CV ECE iso=0.0842 vs platt=0.0862, beats Platt 2/5 folds | `P46_MIXED_RECALIBRATION_DIAGNOSTIC` |
+
+### Monitoring Thresholds (Advisory Only)
+
+| Metric | Baseline | Warning | Critical |
+|--------|----------|---------|----------|
+| ECE | 0.0862 (Platt CV) | > 0.10 | > 0.12 |
+| Brier | 0.2385 (Platt CV) | > 0.25 | > 0.27 |
+| Mean Edge | 0.1059 (Tier C) | < 0.07 | CI crosses zero |
+| Monthly CI | All positive | Any crosses zero | Two consecutive |
+| Sample batch | — | — | n < 100 → SAMPLE_LIMITED |
+
+### Data Gaps Registered (5 items)
+
+1. **HIGH**: 2024 closing-line odds — blocks cross-year validation
+2. **HIGH**: Cross-year market-edge validation — blocked by #1
+3. **MEDIUM**: 2026 live odds — blocked by no-live-call governance
+4. **MEDIUM**: External odds source provenance documentation
+5. **LOW**: Approved paper-trading monitoring loop
+
+### Known Limitations
+
+- 2024 closing-line data gap **remains unresolved**
+- No model deployed, no runtime logic changed
+- No production proposal. No champion replacement. Paper-only.
+
+### Deliverables Generated
+
+- `scripts/_p47_calibration_synthesis_report.py`
+- `tests/test_p47_calibration_synthesis_report.py` (15 tests PASS)
+- `data/mlb_2025/derived/p47_calibration_synthesis_summary.json`
+- `report/p47_calibration_synthesis_report_20260526.md`
+- `00-BettingPlan/20260526/p47_calibration_synthesis_report_20260526.md`
+
+### Validation Results
+
+- `pytest tests/test_p47_calibration_synthesis_report.py -v` → `15 passed`
+- Cumulative `pytest P41+P42+P43+P44+P45+P46+P47 -q` → `203 passed`
+- Forbidden phrase scan → 0 affirmative hits
+

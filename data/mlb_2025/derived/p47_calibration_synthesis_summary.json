@@ -1,0 +1,176 @@
+{
+  "version": "p47_v1",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false
+  },
+  "source_artifacts": {
+    "p43": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p43_strong_edge_closing_line_edge_summary.json",
+    "p44_temporal": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p44_temporal_stability_summary.json",
+    "p44_calibration": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p44_calibration_audit_summary.json",
+    "p45": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p45_platt_recalibration_summary.json",
+    "p46": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p46_isotonic_recalibration_summary.json"
+  },
+  "p43_edge_summary": {
+    "tier_c_n": 535,
+    "mean_edge": 0.1059370704287176,
+    "positive_rate": 0.8953271028037383,
+    "ci_95_low": 0.09894192418511952,
+    "ci_95_high": 0.11323749170679107,
+    "classification": "EDGE_CONFIRMED",
+    "overall_p43_classification": "This analysis uses CSV closing-line implied probability vs model probability. CSV does not include opening/pregame snapshot trajectory, so this is edge vs closing line, not strict CLV (which requires pregame to closing comparison). P26 line-aware CLV diagnostic is separate and unchanged.",
+    "data_gap_2024": true
+  },
+  "p44_temporal_summary": {
+    "total_tier_c_n": 535,
+    "months_covered": [
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09"
+    ],
+    "stable_month_count": 6,
+    "stable_months": [
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09"
+    ],
+    "temporal_pattern_classification": "TEMPORAL_STABLE"
+  },
+  "p44_raw_calibration_summary": {
+    "raw_brier": 0.248133,
+    "raw_ece": 0.095289,
+    "calibration_classification": "MODERATE_MISCALIBRATED",
+    "n_bins": 10,
+    "ece_bins_used": 6
+  },
+  "p45_platt_summary": {
+    "platt_a": 0.435432,
+    "platt_b": 0.245464,
+    "test_raw_ece": 0.097154,
+    "test_platt_ece": 0.070058,
+    "test_ece_improvement": 0.027096,
+    "test_brier_improvement": 0.004402,
+    "cv_mean_raw_ece": 0.116838,
+    "cv_mean_platt_ece": 0.086164,
+    "cv_mean_ece_improvement": 0.030673,
+    "cv_mean_platt_brier": 0.238477,
+    "walk_forward_classification": "WALK_FORWARD_HELPFUL",
+    "p45_classification": "P45_RECALIBRATION_HELPFUL"
+  },
+  "p46_isotonic_comparison_summary": {
+    "isotonic_knot_count": 13,
+    "test_isotonic_ece": 0.057787,
+    "test_platt_ece": 0.070058,
+    "isotonic_vs_platt_ece": 0.012271,
+    "cv_mean_isotonic_ece": 0.084182,
+    "cv_mean_platt_ece": 0.086164,
+    "iso_beats_platt_fold_count": 2,
+    "cv_fold_count": 5,
+    "walk_forward_classification": "PLATT_WALK_FORWARD_PREFERRED",
+    "p46_classification": "P46_MIXED_RECALIBRATION_DIAGNOSTIC"
+  },
+  "selected_monitoring_probability_stream": "PLATT_CALIBRATED",
+  "rationale": [
+    "P45 Platt: CV mean ECE 0.1168 → 0.0862 (Δ +0.0307)",
+    "P45 Walk-forward: WALK_FORWARD_HELPFUL",
+    "P46 Isotonic: CV mean ECE 0.0842 vs Platt 0.0862 (Δ +0.0020)",
+    "P46 Isotonic beats Platt in 2/5 CV folds",
+    "P46 Walk-forward: PLATT_WALK_FORWARD_PREFERRED",
+    "Platt selected: CV ECE improvement confirmed (+0.0307), walk-forward helpful. Isotonic not preferred due to weak CV (beats Platt only 2/5 folds) and walk-forward preference for Platt (P46.C PLATT_WALK_FORWARD_PREFERRED)."
+  ],
+  "monitoring_thresholds": {
+    "ece_drift": {
+      "baseline_platt_cv_mean_ece": 0.086164,
+      "warning_threshold": 0.1,
+      "critical_threshold": 0.12,
+      "description": "Monitor rolling ECE on new 2026 games. Warning if ECE > 0.10; critical if ECE > 0.12. Diagnostic guardrail only — not a betting instruction."
+    },
+    "brier_drift": {
+      "baseline_platt_cv_mean_brier": 0.238477,
+      "warning_threshold": 0.25,
+      "critical_threshold": 0.27,
+      "description": "Monitor rolling Brier score. Warning if > 0.25; critical if > 0.27."
+    },
+    "edge_mean_drift": {
+      "baseline_tier_c_mean_edge": 0.1059,
+      "warning_threshold_mean_edge": 0.07,
+      "critical_threshold": "CI_CROSSES_ZERO",
+      "description": "Monitor rolling Tier C mean edge. Warning if mean_edge < 0.07; critical if bootstrap CI crosses zero."
+    },
+    "monthly_stability": {
+      "warning": "any_monthly_CI_crosses_zero",
+      "critical": "two_consecutive_months_CI_crosses_zero_or_mean_edge_lte_zero",
+      "description": "Monthly edge CI monitoring. One month CI crossing zero triggers a warning. Two consecutive months triggers a critical flag."
+    },
+    "sample_accumulation": {
+      "minimum_monitoring_batch_n": 100,
+      "sample_limited_threshold": 100,
+      "description": "Do not compute ECE/Brier drift until n >= 100 new games are available. Mark SAMPLE_LIMITED if n < 100."
+    }
+  },
+  "unresolved_data_gaps": [
+    {
+      "missing_data_item": "2024 MLB closing-line odds (Home ML / Away ML)",
+      "current_status": "UNAVAILABLE — no CSV or API source exists in repository",
+      "impact": "Cross-year (2024+2025) closing-line edge validation is blocked. P43 final classification remains P43_BLOCKED_BY_DATA_GAP. Only 2025 single-year EDGE_CONFIRMED available.",
+      "required_resolution": "Source a 2024 MLB moneyline odds CSV with schema matching mlb_odds_2025_real.csv (Date, Away, Home, Away ML, Home ML, Away Score, Home Score). Verified external source required — e.g., historical odds API or vendor export.",
+      "priority": "HIGH"
+    },
+    {
+      "missing_data_item": "Cross-year market-edge validation",
+      "current_status": "BLOCKED by 2024 closing-line odds gap",
+      "impact": "Cannot confirm that Tier C edge generalizes across seasons. Single-year 2025 finding could be spurious or season-specific.",
+      "required_resolution": "Depends on resolution of 2024 closing-line odds gap.",
+      "priority": "HIGH"
+    },
+    {
+      "missing_data_item": "2026 live odds (real-time TSL integration)",
+      "current_status": "BLOCKED by no-live-call governance (live_api_calls=0)",
+      "impact": "Cannot evaluate model on 2026 regular season games in real time. Paper-trading monitoring requires pre-game odds snapshot collection.",
+      "required_resolution": "Explicit governance authorization required to begin TSL live odds collection. Suggested: explicit CEO/CTO authorization for a limited capture window.",
+      "priority": "MEDIUM"
+    },
+    {
+      "missing_data_item": "External odds source provenance documentation",
+      "current_status": "mlb_odds_2025_real.csv marked is_verified_real=False for most rows",
+      "impact": "Cannot confirm that closing-line probabilities are authentic pre-game market odds. CSV was sourced from a single post-season scrape (all timestamps post-game). This makes edge vs closing-line a proxy measure, not true CLV.",
+      "required_resolution": "Source data with pre-game timestamps and multi-snapshot trajectory. Alternatively, document the data vendor and confirm pre-game capture time.",
+      "priority": "MEDIUM"
+    },
+    {
+      "missing_data_item": "Approved paper-trading monitoring loop",
+      "current_status": "Not approved — promotion_freeze=true",
+      "impact": "No automated monitoring pipeline for ongoing ECE/edge tracking. Monitoring thresholds defined in P47 are advisory only.",
+      "required_resolution": "Requires explicit CEO/CTO approval to implement an automated paper-only monitoring loop (no live bets, no Kelly deployment).",
+      "priority": "LOW"
+    }
+  ],
+  "final_p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+  "allowed_stream_values": [
+    "ISOTONIC_CALIBRATED",
+    "NO_SELECTION_SAMPLE_LIMITED",
+    "PLATT_CALIBRATED",
+    "RAW_SIGMOID"
+  ],
+  "allowed_p47_classifications": [
+    "P47_ISOTONIC_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+    "P47_NO_SELECTION_SAMPLE_LIMITED",
+    "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+    "P47_RAW_SIGMOID_RETAINED_DIAGNOSTIC"
+  ],
+  "framing_note": "Synthesis of P43-P46 calibration diagnostic arc. Platt scaling selected as monitoring baseline. No champion replacement. No production proposal. Paper-only. 2024 closing-line data gap remains unresolved.",
+  "limitation": "2024_closing_line_data_unavailable_cross_year_validation_blocked"
+}
