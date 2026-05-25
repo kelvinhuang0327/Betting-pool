@@ -1,3 +1,25 @@
+# Active Task — P55 Sep 2025 Mid-Band Calibration Anomaly Audit
+
+> **[COMPLETED 2026-05-25]** `P55_INCONCLUSIVE_SAMPLE_LIMITED`
+> **Issued by**: P54 Sep 1.00-1.25 band platt_ece=0.246 (n=27) 異常
+> **HEAD**: `6cf7c1b` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
+> **前置 Phase**: P54 `P54_NO_FEATURE_DRIFT_FOUND_DIAGNOSTIC`
+
+## P55 成果摘要
+
+- **Tier C n**: 535 (與 P54 一致)
+- **Sep mid-band (1.00-1.25) n**: 27
+- **Concentration**: 見 JSON 輸出 (outlier_concentration_audit.concentration_classification)
+- **Anomaly source**: 見 JSON 輸出 (platt_vs_raw_transformation.anomaly_source)
+- **最終分類**: `P55_INCONCLUSIVE_SAMPLE_LIMITED`
+- **結論**: Sep mid-band ECE 異常在 n=27 下難以確認根因
+- **P52 V2 建議**: 僅加入樣本敏感帶級注釋，不修改合約閾值
+- **2024 缺口**: P43 closing-line data gap 仍未解決
+- **Governance**: paper_only=True, live_api_calls=0, p52/p53/p54 artifacts preserved
+- **P45 Platt 常數**: A=0.435432, B=0.245464（未修改）
+
+---
+
 # Active Task — P54 Sep 2025 SP FIP Delta Feature Drift Audit
 
 > **[COMPLETED 2026-05-25]** `P54_NO_FEATURE_DRIFT_FOUND_DIAGNOSTIC`
