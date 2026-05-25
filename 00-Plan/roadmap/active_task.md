@@ -631,3 +631,47 @@ The CRITICAL alerts dissolve when the probability source is changed to match P44
 - **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 threshold(sp_fip_d- **(A)** Re-baseline P48 thresholds### Co- **(A)** Re-baseline scrip- **(A)** Re-baseline P48au- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 thresholds using ML model_hom-ft- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)**use_- **(A)** Re-baseline P48 thresholds using ML model_hom- **(_ro- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-bas data - **(Amains **u- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 thresholds usined.
 - No production proposal. No champion replacement. Paper-only offline audit.
 - Market odds source difference (closing-line CSV vs embedded no-vig) not fully quantified.
+
+---
+
+## P51 — Monitoring Contract Revision Audit (2026-05-26)
+
+**Final Classification:** `P51_REVISED_CONTRACT_REDUCES_FALSE_ALERTS_DIAGNOSTIC`  
+**Governance:** paper_only=True | diagnostic_only=True | live_api_calls=0 | promotion_freeze=True  
+**Tests:** 20 tests PASS  
+**Cumulative:** 311 tests passed (P40–P51)
+
+### Root Cause Applied
+
+P50 confirmed stream mismatch: P49 used PLATT_CALIBRATED (ML model_home_prob) for edge monitoring, but P44/P43 edge framework uses RAW_SIGMOID (sigmoid(sp_fip_delta), k=1.0). P51 applies the correct stream assignment:
+
+| Metric Family | Revised Stream |
+|---------------|---------------|
+| Edge monitoring | RAW_SIGMOID — `fip_signal_side_aware_edge` |
+| Calibration (ECE/Brier) | PLATT_CALIBRATED — unchanged from P49 |
+
+### Monthly Replay Under Revised Contract
+
+| Month | n | fip_edge | CI | Final Status | P49 Status | Changed |
+|-------|---|----------|-----|-------------|------------|---------|
+| 2025-04 | 16 | 0.1333 | [0.094, 0.173] | SAMPLE_LIMITED | SAMPLE_LIMITED | No |
+| 2025-05 | 120 | 0.1428 | [0.126, 0.160] | **MONITORING_OK** | EDGE_DRIFT_CRITICAL | ✓ |
+| 2025-06 | 101 | 0.1482 | [0.130, 0.168] | **MONITORING_OK** | EDGE_DRIFT_CRITICAL | ✓ |
+| 2025-07 | 92 | 0.1455 | [0.128, 0.164] | SAMPLE_LIMITED | SAMPLE_LIMITED | No |
+| 2025-08 | 108 | 0.1376 | [0.122, 0.153] | **MONITORING_OK** | EDGE_DRIFT_WARNING | ✓ |
+| 2025-09 | 98 | 0.1469 | [0.130, 0.163] | **CALIBRATION_CRITICAL** | SAMPLE_LIMITED | ✓ |
+
+Monthly false CRITICALs eliminated: 1 net (2 false CRITICAL removed, 1 genuine CALIBRATION_CRITICAL revealed)  
+Rolling false CRITICALs eliminated: 3 (P49: 5 CRITICAL → P51: 2 CRITICAL, in comparable batches)
+
+### Sep 2025 Calibration Issue
+
+Sep 2025 (n=98, platt_ece=0.1229) is a genuine calibration warning masked by P49's incorrect SAMPLE_LIMITED dominance over CRITICAL. Requires P52 investigation.
+
+### Deliverables
+
+- `scripts/_p51_monitoring_contract_revision_audit.py`
+- `tests/test_p51_monitoring_contract_revision_audit.py` (20 tests)
+- `data/mlb_2025/derived/p51_monitoring_contract_revision_summary.json`
+- `report/p51_monitoring_contract_revision_audit_20260526.md`
+- `00-BettingPlan/20260526/p51_monitoring_contract_revision_audit_20260526.md`
