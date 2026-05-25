@@ -598,3 +598,36 @@ Monthly: OK=0, Warning=1, Critical=2, SampleLMonthly: OK=0, Warning=1, Critical=
 - No production proposal. No champion replacement. Paper-only offline replay.
 - Edge CI uses normal approximation (n≥100). Not identical to P43 bootstrap but valid for large-sample batches.
 - CRITICAL classification driven by edge drift, not ECE/Brier. Platt calibration itself remains structurally sound but mean_edge falls below 0.07 in peak-season batches.
+
+---
+
+## P50 — Edge Drift Root-Cause Audit (2026-05-26)
+
+**Final Classification:** `P50_PROBABILITY_STREAM_MISMATCH_CONFIRMED_DIAGNOSTIC`
+**Reconciliation:** `METRICS_RECONCILED_PROBABILITY_STREAM_DIFFERENCE`
+**Governance:** paper_only=True | diagnostic_only=True | live_api_calls=0 | promotion_freeze=True
+
+### Root Cause Summary (Multi-Factorial)
+
+| Rank | Factor | Impact |
+|------|--------|--------|
+| 1 | MODEL_PROBABILITY_SOURCE_MISMATCH — P44 uses sigmoid(sp_fip_delta), P49 uses model_home_prob | PRIMARY |
+| 2 | EDGE_PERSPECTIVE_SIDE_AWARE_VS_HOME_PERSPECTIVE | SECONDARY |
+| 3 | CI_METHOD_BOOTSTRAP_VS_NORMAL_APPROXIMATION | TERTIARY |
+| 4 | MARKET_ODDS_SOURCE_CSV_CLOSING_LINE_VS_EMBEDDED_NO_VIG | QUATERNARY |
+
+### Key Proof
+
+`fip_signal_side_aware_edge` (P44-equivalent: sigmoid(sp_fip_delta), side-aware, embedded market):
+- Monthly CRITICAL = **0** | Monthly WARNING = **0** | SampleLimited = **3**
+- All 3 qualifying months (n≥100): **OK**
+
+P49 home-perspective ML-model edge: Monthly CRITICAL = **2**, Rolling CRITICAL = **6**
+
+The CRITICAL alerts dissolve when the probability source is changed to match P44's sigmoid(sp_fip_delta).
+
+### Resolution Paths
+
+- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 threshold(sp_fip_d- **(A)** Re-baseline P48 thresholds### Co- **(A)** Re-baseline scrip- **(A)** Re-baseline P48au- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 thresholds using ML model_hom-ft- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)**use_- **(A)** Re-baseline P48 thresholds using ML model_hom- **(_ro- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-bas data - **(Amains **u- **(A)** Re-baseline P48 thresholds using ML model_hom- **(A)** Re-baseline P48 thresholds usined.
+- No production proposal. No champion replacement. Paper-only offline audit.
+- Market odds source difference (closing-line CSV vs embedded no-vig) not fully quantified.
