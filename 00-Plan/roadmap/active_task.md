@@ -1,3 +1,51 @@
+# Active Task — P58 Monitoring Contract V2 Monthly Report Template
+
+> **[COMPLETED 2026-05-26]** `P58_MONTHLY_REPORT_TEMPLATE_READY_DIAGNOSTIC`
+> **Issued by**: P57 `P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC` → monthly report template needed
+> **HEAD**: `616448e` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
+> **前置 Phase**: P57 `P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC`
+
+## P58 成果摘要
+
+- **Template version**: `P58_MONITORING_CONTRACT_V2_MONTHLY_REPORT_TEMPLATE_V1`
+- **Monthly report schema**: `MonitoringContractV2MonthlyReport` v1.0 (10 required top-level fields)
+- **Global status section schema**: 15 required fields，global_status 由 P52 V2 閾值獨家控制
+- **Band annotations section schema**: 19 required fields per record，實作 P57 BandAnnotationRecord v1
+- **Sep 2025 example**: band_n=27, BAND_SAMPLE_INSUFFICIENT, TRACK_ONLY_NO_REFIT, should_trigger_refit=False
+- **VAL rules**: VAL01–VAL10 (10 條驗證規則供未來 Agent 使用)
+- **Invariants**: 8 條不變量
+- **P52 全局閾值**: UNCHANGED
+- **P45 Platt 常數**: A=0.435432, B=0.245464（未修改）
+- **最終分類**: `P58_MONTHLY_REPORT_TEMPLATE_READY_DIAGNOSTIC`
+- **Governance**: paper_only=True, live_api_calls=0, p52/p53/p54/p55/p56/p57 artifacts preserved
+- **2024 缺口**: P43 closing-line data gap 仍未解決
+
+---
+
+# Active Task — P58 Monitoring Contract V2 Monthly Report Template
+
+> **[COMPLETED 2026-05-26]** `P58_MONTHLY_REPORT_TEMPLATE_READY_DIAGNOSTIC`
+> **Issued by**: P57 `P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC` → monthly report template needed
+> **HEAD**: `616448e` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
+> **前置 Phase**: P57 `P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC`
+
+## P58 成果摘要
+
+- **Template version**: `P58_MONITORING_CONTRACT_V2_MONTHLY_REPORT_TEMPLATE_V1`
+- **Monthly report schema**: `MonitoringContractV2MonthlyReport` v1.0 (10 required top-level fields)
+- **Global status section schema**: 15 required fields，global_status 由 P52 V2 閾值獨家控制
+- **Band annotations section schema**: 19 required fields per record，實作 P57 BandAnnotationRecord v1
+- **Sep 2025 example**: band_n=27, BAND_SAMPLE_INSUFFICIENT, TRACK_ONLY_NO_REFIT, should_trigger_refit=False
+- **VAL rules**: VAL01–VAL10 (10 條驗證規則供未來 Agent 使用)
+- **Invariants**: 8 條不變量
+- **P52 全局閾值**: UNCHANGED
+- **P45 Platt 常數**: A=0.435432, B=0.245464（未修改）
+- **最終分類**: `P58_MONTHLY_REPORT_TEMPLATE_READY_DIAGNOSTIC`
+- **Governance**: paper_only=True, live_api_calls=0, p52/p53/p54/p55/p56/p57 artifacts preserved
+- **2024 缺口**: P43 closing-line data gap 仍未解決
+
+---
+
 # Active Task — P57 Monitoring Contract V2 Annotation Integration
 
 > **[COMPLETED 2026-05-26]** `P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC`
