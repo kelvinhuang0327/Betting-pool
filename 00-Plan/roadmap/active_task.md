@@ -1,6 +1,32 @@
-# Active Task — P43 sp_fip_delta Strong-Edge Closing-Line Edge Validation
+# Active Task — P52 Formal Monitoring Contract V2
 
-> **[ACTIVE 2026-05-25]** `P43_STRONG_EDGE_CLOSING_LINE_EDGE_VALIDATION`
+> **[COMPLETED 2026-05-26]** `P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC`
+> **Issued by**: P51 找出假警報後正式確立 V2 合約
+> **HEAD**: `6aa9e1b` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
+> **前置 Phase**: P51 `P51_REVISED_CONTRACT_REDUCES_FALSE_ALERTS_DIAGNOSTIC` (20/20 PASS)
+
+## P52 成果摘要
+
+- **合約版本**: `P52_MONITORING_CONTRACT_V2`
+- **邊際流**: `RAW_SIGMOID` (fip_signal_side_aware_edge, sigmoid k=1.0)
+- **校準流**: `PLATT_CALIBRATED` (A=0.435432, B=0.245464，P45 鎖定)
+- **Tier C n**: 535（`|sp_fip_delta|>=0.5`，`p0_features.sp_fip_delta`）
+- **假 CRITICAL 消除**: 月度 -1、滾動 -3
+- **Sep 2025 校準問題**: platt_ece=0.1229 > 0.12，n=98，CALIBRATION_CRITICAL（已追蹤）
+- **2024 資料缺口**: cross-year blocker only，不阻擋 2025-only 重放
+- **Governance**: paper_only=True, live_api_calls=0, p48_artifact_overwritten=False
+
+---
+
+## 下一步（P53）
+
+P53 應調查 Sep 2025 CALIBRATION_CRITICAL 根因（platt_ece=0.1229）。
+
+---
+
+## 歷史記錄 — P43（已完成）
+
+> **[COMPLETED 2026-05-25]** `P43_STRONG_EDGE_CLOSING_LINE_EDGE_VALIDATION`
 > **Issued by**: CEO Second-Level Review 2026-05-25
 > **CEO classification**: `CEO_DECISION_PARTIALLY_APPROVED`
 > **CTO P0 override**: P42 reconciliation 降為 P1；本任務為新 P0
