@@ -1,3 +1,25 @@
+# Active Task — P56 Sample-Sensitive Band Annotation Policy
+
+> **[COMPLETED 2026-05-26]** `P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC`
+> **Issued by**: P55 `P55_INCONCLUSIVE_SAMPLE_LIMITED` → band annotation layer needed
+> **HEAD**: `a9ecdf0` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
+> **前置 Phase**: P55 `P55_INCONCLUSIVE_SAMPLE_LIMITED`
+
+## P56 成果摘要
+
+- **政策名稱**: Sample-Sensitive Band Annotation Policy v1
+- **樣本層級**: INSUFFICIENT (n<30), WATCHLIST (30-99), MONITORABLE (n>=100)
+- **Sep 2025 1.00-1.25 帶**: sample_tier=BAND_SAMPLE_INSUFFICIENT, annotation=SAMPLE_SENSITIVE_BAND_ANOMALY, action=TRACK_ONLY_NO_REFIT
+- **Platt 降解注記**: ece_delta=+0.081 記錄在案，但不觸發重擬合
+- **P52 V2 相容性**: P56 不取代 P52，僅添加詮釋性注釋層
+- **P52 閾值**: UNCHANGED（未修改）
+- **最終分類**: `P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC`
+- **Governance**: paper_only=True, live_api_calls=0, p52/p53/p54/p55 artifacts preserved
+- **P45 Platt 常數**: A=0.435432, B=0.245464（未修改）
+- **2024 缺口**: P43 closing-line data gap 仍未解決
+
+---
+
 # Active Task — P55 Sep 2025 Mid-Band Calibration Anomaly Audit
 
 > **[COMPLETED 2026-05-25]** `P55_INCONCLUSIVE_SAMPLE_LIMITED`
