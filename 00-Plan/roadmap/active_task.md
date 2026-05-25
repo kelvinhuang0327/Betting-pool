@@ -550,3 +550,51 @@ does not hold up in out-of-fold or out-of-month evaluation.
 - No live API calls made. No runtime recommendation logic changed.
 - No production proposal. No champion replacement. Paper-only monitoring contract.
 
+
+---
+
+## P49 — Offline Historical Monitoring Replay Using P48 Contract
+
+**Status**: ✅ COMPLETE  
+**Commit**: (pending — staging in progress)  
+**Date**: 2026-05-26  
+**Tests**: 18 tests  
+**Cumulative**: 238 tests passed (220 + 18)
+
+### Final Classification
+
+**`P49_MONITORING_REPLAY_CRITICAL_DIAGNOSTIC`**
+
+### Tier C Verification
+
+| Metric | Value |
+|--------|-------|
+| Rebuilt Tier C n | 535 |
+| Expected n | 535 |
+| Match | True |
+| Date range | 2025-04-01 – 2025-09-28 |
+
+### Monthly Replay Summary (6 months, Apr–Sep 2025)
+
+| Month | n | Status | Alert |
+|-------|---|--------|-------|
+| 2025-04 | 16 | SAMPLE_LIMITED | WARNING |
+| 2025-05 | 120 | EDGE_DRIFT_CRITICAL | CRITICAL |
+| 2025-06 | 101 | EDGE_DRIFT_CRITICAL | CRITICAL |
+| 2025-07 | 92 | SAMPLE_LIMITED | WARNING |
+| 2025-08 | 108 | EDGE_DRIFT_WARNING | WARNING |
+| 2025-09 | 98 | SAMPLE_LIMITED | WARNING |
+
+Monthly: OK=0, Warning=1, Critical=2, SampleLMonthly: OK=0, Warning=1, Critical=2, SampleLMonthly: OK=0, Warning=1, Critical=2, SampleL=0, WarnMonthly: OK=0, Warning=1, Critical=2, SampleLMonthly: OK=0, Warring Monthly: OK=0, Warning=1, CMonthly: OK=0, Warning=1, Critical=2, SampleLMe Monthly: OK=0, WarninEDMonthly: OK=0, =0.07 iMonthly: OK=0, Warning=1, Critical=2, Santly Monthly: OK=0, Warning=ablMonthly: OK=0, Warning=1, Critical=2, Sampleical_Monthly: OK=0, Warnin
+- `- `- `- `- `- `- fline_historical_monitoring_replay.py` (18 tests)
+- `data/mlb_2025/derived/p49_offline_historical_monitoring_replay_summary.json`
+- `report/p49_offline_historical_monitoring_replay_20260526.md`
+- `00-BettingPlan/20260526/p49_offline_historical_monitoring_replay_20260526.md`
+
+### Known Limitations
+
+- 2024 closing-line data gap **remains unresolved** (P43_BLOCKED_BY_DATA_GAP)
+- No live API calls made. No runtime recommendation logic changed.
+- No production proposal. No champion replacement. Paper-only offline replay.
+- Edge CI uses normal approximation (n≥100). Not identical to P43 bootstrap but valid for large-sample batches.
+- CRITICAL classification driven by edge drift, not ECE/Brier. Platt calibration itself remains structurally sound but mean_edge falls below 0.07 in peak-season batches.
