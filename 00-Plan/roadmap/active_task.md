@@ -388,3 +388,61 @@ Sigmoid mapping `p = sigmoid(0.8 * delta)` is not perfectly calibrated; Platt sc
 - Cumulative `pytest P41+P42+P43+P44+P45 -q` → `169 passed`
 - Forbidden phrase scan → 0 affirmative hits
 
+---
+
+## P46 Execution Status Update (2026-05-26)
+
+- Status: `COMPLETED (diagnostic-only)`
+- Final classification: `P46_MIXED_RECALIBRATION_DIAGNOSTIC`
+
+### P46.A — Train/Test Comparison (80/20, seed=42)
+
+| Method | ECE | Brier |
+|--------|-----|-------|
+| Raw sigmoid | 0.0972 | 0.2308 |
+| Platt (P45) | 0.0701 | 0.2264 |
+| Isotonic (P46) | 0.0578 | — |
+
+- Isotonic knot count: 13 (reasonable, no overfit risk)
+- Isotonic achieves lower test-split ECE, but this is a single split
+
+### P46.B — 5-Fold CV
+
+| Metric | Mean Raw | Mean Platt | Mean Isotonic |
+|--------|----------|------------|---------------|
+| ECE | 0.1168 | 0.0862 | 0.0842 |
+
+- Iso beats Platt (ECE): 2/5 folds
+- **CV Classification: ISOTONIC_COMPARABLE** (Δ only 0.002)
+
+### P46.C — Walk-Forward Monthly (5 evaluations)
+
+- Platt performs better in 3/5 temporal evaluation months
+- **Walk-Forward Classification: PLATT_WALK_FORWARD_PREFERRED**
+
+### Interpretation
+
+Isotonic achieves marginally lower ECE in train/test split but is NOT consistently better in CV or walk-forward.
+**Platt scaling is more temporally stable.** The small test-split ECE advantage of isotonic (0.058 vs 0.070)
+does not hold up in out-of-fold or out-of-month evaluation.
+
+### Known Limitations
+
+- 2024 closing-line data gap **remains unresolved**
+- No isotonic or Platt model deployed; diagnostic only
+- No production proposal. No champion replacement. Paper-only.
+
+### Deliverables Generated
+
+- `scripts/_p46_isotonic_recalibration_comparison.py`
+- `tests/test_p46_isotonic_recalibration_comparison.py` (19 tests PASS)
+- `data/mlb_2025/derived/p46_isotonic_recalibration_summary.json`
+- `report/p46_isotonic_recalibration_comparison_20260526.md`
+- `00-BettingPlan/20260526/p46_isotonic_recalibration_comparison_20260526.md`
+
+### Validation Results
+
+- `pytest tests/test_p46_isotonic_recalibration_comparison.py -v` → `19 passed`
+- Cumulative `pytest P41+P42+P43+P44+P45+P46 -q` → `188 passed`
+- Forbidden phrase scan → 0 affirmative hits
+
