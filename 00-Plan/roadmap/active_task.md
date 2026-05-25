@@ -1,3 +1,24 @@
+# Active Task — P57 Monitoring Contract V2 Annotation Integration
+
+> **[COMPLETED 2026-05-26]** `P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC`
+> **Issued by**: P56 `P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC` → annotation integration needed
+> **HEAD**: `dbdf5b1` → 提交中 | **Branch**: `main` | **Mode**: `paper_only=True`
+> **前置 Phase**: P56 `P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC`
+
+## P57 成果摘要
+
+- **BandAnnotationRecord schema v1**: 17 個欄位，包含 annotation_scope, sample_tier, should_trigger_refit, should_change_thresholds 等
+- **Global vs Band 分離規則**: 6 條規則 SEP01-SEP06，明確禁止 band annotation 覆蓋 P52 全局狀態
+- **Sep 2025 1.00-1.25 帶 Carry-Forward**: sample_tier=BAND_SAMPLE_INSUFFICIENT, annotation=SAMPLE_SENSITIVE_BAND_ANOMALY, action=TRACK_ONLY_NO_REFIT, should_trigger_refit=false, should_change_global_status=false
+- **P52 V2 相容性**: P57 不取代 P52，僅添加詮釋性 metadata 層
+- **P52 全局閾值**: UNCHANGED（未修改）
+- **最終分類**: `P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC`
+- **Governance**: paper_only=True, live_api_calls=0, p52/p53/p54/p55/p56 artifacts preserved
+- **P45 Platt 常數**: A=0.435432, B=0.245464（未修改）
+- **2024 缺口**: P43 closing-line data gap 仍未解決
+
+---
+
 # Active Task — P56 Sample-Sensitive Band Annotation Policy
 
 > **[COMPLETED 2026-05-26]** `P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC`

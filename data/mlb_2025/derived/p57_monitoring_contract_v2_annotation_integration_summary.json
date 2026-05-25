@@ -1,0 +1,374 @@
+{
+  "p57_phase": "P57 — Monitoring Contract V2 Annotation Integration",
+  "run_date": "2026-05-25",
+  "source_artifacts": {
+    "p52": "data/mlb_2025/derived/p52_monitoring_contract_v2_summary.json",
+    "p53": "data/mlb_2025/derived/p53_sep_calibration_critical_audit_summary.json",
+    "p54": "data/mlb_2025/derived/p54_sep_sp_fip_delta_feature_drift_audit_summary.json",
+    "p55": "data/mlb_2025/derived/p55_sep_mid_band_calibration_anomaly_audit_summary.json",
+    "p56": "data/mlb_2025/derived/p56_sample_sensitive_band_annotation_policy_summary.json"
+  },
+  "p52_contract_recap": {
+    "contract_version": "P52_MONITORING_CONTRACT_V2",
+    "final_p52_classification": "P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC",
+    "global_status": "MONITORING_ACTIVE_DIAGNOSTIC",
+    "thresholds_unchanged": true,
+    "scope": "Tier C games: |sp_fip_delta| >= 0.5, market_home_prob_no_vig in (0,1), home_win defined. Total n=535 (2025 season).",
+    "tier_c_n": 535,
+    "platt_a": 0.435432,
+    "platt_b": 0.245464,
+    "note": "P52 owns global calibration monitoring. Band-level annotations (P56/P57) are metadata only. P57 does not add runtime monitoring or change P52 thresholds."
+  },
+  "p56_policy_recap": {
+    "final_p56_classification": "P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC",
+    "policy_name": "Sample-Sensitive Band Annotation Policy v1",
+    "policy_version": "1.0",
+    "tiers_defined": [
+      "BAND_SAMPLE_INSUFFICIENT",
+      "BAND_SAMPLE_WATCHLIST",
+      "BAND_SAMPLE_MONITORABLE"
+    ],
+    "rules_count": 6,
+    "sep_2025_mid_band": {
+      "band": "1.00_1.25",
+      "n": 27,
+      "sample_tier": "BAND_SAMPLE_INSUFFICIENT",
+      "annotation": "SAMPLE_SENSITIVE_BAND_ANOMALY",
+      "action": "TRACK_ONLY_NO_REFIT",
+      "platt_ece": 0.245988,
+      "raw_ece": 0.165456,
+      "ece_delta": 0.080532
+    }
+  },
+  "annotation_metadata_schema": {
+    "schema_name": "BandAnnotationRecord v1",
+    "schema_version": "1.0",
+    "description": "Schema for attaching band-level diagnostic annotations to monitoring reports. These records are metadata only and do not affect P52 global monitoring status or runtime recommendation logic.",
+    "fields": {
+      "annotation_scope": {
+        "type": "string",
+        "allowed_values": [
+          "BAND_LEVEL",
+          "GLOBAL_LEVEL"
+        ],
+        "description": "Scope of the annotation; BAND_LEVEL for sp_fip_delta sub-bands."
+      },
+      "metric_family": {
+        "type": "string",
+        "allowed_values": [
+          "CALIBRATION",
+          "EDGE_RATE",
+          "BRIER_SCORE",
+          "FEATURE_DRIFT"
+        ],
+        "description": "Metric domain this annotation belongs to."
+      },
+      "band_label": {
+        "type": "string",
+        "description": "Human-readable band definition, e.g. '1.00 <= |sp_fip_delta| < 1.25'."
+      },
+      "band_n": {
+        "type": "integer",
+        "description": "Number of games in this band for the reporting period."
+      },
+      "sample_tier": {
+        "type": "string",
+        "allowed_values": [
+          "BAND_SAMPLE_INSUFFICIENT",
+          "BAND_SAMPLE_WATCHLIST",
+          "BAND_SAMPLE_MONITORABLE"
+        ],
+        "description": "Sample size tier per P56 policy."
+      },
+      "annotation": {
+        "type": "string",
+        "allowed_values": [
+          "SAMPLE_SENSITIVE_BAND_ANOMALY",
+          "BAND_WATCHLIST",
+          "BAND_DRIFT_CANDIDATE",
+          "STABLE_BAND_EVIDENCE",
+          "PLATT_BAND_DEGRADATION_NOTE"
+        ],
+        "description": "Annotation label for the band finding."
+      },
+      "action": {
+        "type": "string",
+        "allowed_values": [
+          "TRACK_ONLY_NO_REFIT",
+          "FLAG_FOR_FOLLOW_UP",
+          "PROMOTE_TO_DRIFT_CANDIDATE_IF_CI_ELEVATED"
+        ],
+        "description": "Prescribed action from P56 policy."
+      },
+      "evidence_strength": {
+        "type": "string",
+        "allowed_values": [
+          "INSUFFICIENT",
+          "PRELIMINARY",
+          "MODERATE",
+          "STRONG"
+        ],
+        "description": "Evidence strength level for this annotation."
+      },
+      "platt_ece": {
+        "type": "float",
+        "description": "Platt-calibrated ECE for this band in the reporting period."
+      },
+      "raw_ece": {
+        "type": "float",
+        "description": "Raw (uncalibrated) model ECE for this band."
+      },
+      "ece_delta": {
+        "type": "float",
+        "description": "platt_ece minus raw_ece. Positive = Platt worsened ECE in this band."
+      },
+      "repeated_month_count": {
+        "type": "integer",
+        "description": "Number of separate months this band has shown elevated ECE."
+      },
+      "cumulative_band_n": {
+        "type": "integer",
+        "description": "Total games in this band across all monitored months."
+      },
+      "future_evidence_required": {
+        "type": "boolean",
+        "description": "Whether future evidence is required before any action escalation."
+      },
+      "should_change_global_status": {
+        "type": "boolean",
+        "description": "Whether this annotation should change P52 global monitoring status.",
+        "constraint": "MUST be false when sample_tier=BAND_SAMPLE_INSUFFICIENT."
+      },
+      "should_trigger_refit": {
+        "type": "boolean",
+        "description": "Whether this annotation should trigger a model refit.",
+        "constraint": "MUST be false when n < 30."
+      },
+      "should_change_thresholds": {
+        "type": "boolean",
+        "description": "Whether this annotation should change P52 global thresholds.",
+        "constraint": "MUST always be false for band-level annotations alone."
+      }
+    },
+    "invariants": [
+      "should_change_global_status MUST be false when sample_tier=BAND_SAMPLE_INSUFFICIENT.",
+      "should_trigger_refit MUST be false when n < 30.",
+      "should_change_thresholds MUST be false for all band-level annotations.",
+      "Band annotations are additive metadata only; they do not replace P52 status fields.",
+      "Records must preserve trace to source phase (e.g., p55_reference, p56_reference)."
+    ]
+  },
+  "global_vs_band_status_separation": {
+    "separation_principle": "P52 global monitoring status is governed by P52 V2 thresholds. Band-level annotations (P56, P57) are diagnostic metadata only. They coexist in monitoring reports without overriding global status.",
+    "rules": [
+      {
+        "rule_id": "SEP01",
+        "rule": "Global monitoring status is controlled exclusively by P52 V2 thresholds.",
+        "implication": "A band anomaly cannot change global status unless P52 thresholds are triggered."
+      },
+      {
+        "rule_id": "SEP02",
+        "rule": "Band annotation does not override global status unless future evidence requirements are met.",
+        "implication": "P55 Sep mid-band finding (n=27, SAMPLE_SENSITIVE_BAND_ANOMALY) leaves global status as P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC."
+      },
+      {
+        "rule_id": "SEP03",
+        "rule": "Band annotations appear in reports as warning metadata sections, clearly labelled.",
+        "implication": "Reports must distinguish 'GLOBAL STATUS' from 'BAND ANNOTATIONS' sections."
+      },
+      {
+        "rule_id": "SEP04",
+        "rule": "n < 30 cannot trigger model refit.",
+        "implication": "Sep 2025 1.00-1.25 band (n=27) → no refit, regardless of ECE value."
+      },
+      {
+        "rule_id": "SEP05",
+        "rule": "n < 30 cannot change P52 thresholds.",
+        "implication": "Even if platt_ece=0.246 in the Sep mid-band, P52 global ECE thresholds remain unchanged until n >= 100 and multi-month evidence exists."
+      },
+      {
+        "rule_id": "SEP06",
+        "rule": "Band-level annotation records must preserve trace to P55/P56 source evidence.",
+        "implication": "Each BandAnnotationRecord in a monitoring report must include p55_reference and p56_reference fields pointing to the source JSON artifacts."
+      }
+    ],
+    "current_global_status": {
+      "p52_classification": "P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC",
+      "global_thresholds_changed": false,
+      "band_annotations_present": true,
+      "band_annotations_affect_global_status": false
+    }
+  },
+  "sep_2025_mid_band_annotation_carry_forward": {
+    "record_type": "BandAnnotationRecord",
+    "schema_version": "1.0",
+    "source_phase": "P55 + P56",
+    "p55_reference": "data/mlb_2025/derived/p55_sep_mid_band_calibration_anomaly_audit_summary.json",
+    "p56_reference": "data/mlb_2025/derived/p56_sample_sensitive_band_annotation_policy_summary.json",
+    "annotation_scope": "BAND_LEVEL",
+    "metric_family": "CALIBRATION",
+    "band_label": "1.00 <= |sp_fip_delta| < 1.25",
+    "band_n": 27,
+    "sample_tier": "BAND_SAMPLE_INSUFFICIENT",
+    "annotation": "SAMPLE_SENSITIVE_BAND_ANOMALY",
+    "action": "TRACK_ONLY_NO_REFIT",
+    "evidence_strength": "INSUFFICIENT",
+    "platt_ece": 0.245988,
+    "raw_ece": 0.165456,
+    "ece_delta": 0.080532,
+    "repeated_month_count": 1,
+    "cumulative_band_n": 27,
+    "future_evidence_required": true,
+    "should_change_global_status": false,
+    "should_trigger_refit": false,
+    "should_change_thresholds": false,
+    "platt_degradation_note": "PLATT_BAND_DEGRADATION_NOTE",
+    "platt_degradation_ece_delta": 0.080532,
+    "carry_forward_status": "ACTIVE_TRACK_ONLY",
+    "carry_forward_reason": "n=27 < 30 (BAND_SAMPLE_INSUFFICIENT). Evidence is insufficient for any action escalation. This record is carried forward into future monitoring reports as TRACK_ONLY metadata until future evidence criteria are met.",
+    "required_future_evidence": [
+      {
+        "criterion_id": "FE01",
+        "description": "Same band n >= 30 in a future month (Sep 2026 or any month)",
+        "required": true
+      },
+      {
+        "criterion_id": "FE02",
+        "description": "Repeat elevated platt_ece in at least 2 separate months within the same band",
+        "required": true
+      },
+      {
+        "criterion_id": "FE03",
+        "description": "Cumulative band n >= 100 across all months with ECE CI lower bound > 0.08",
+        "required": false,
+        "note": "Alternative to FE01+FE02; stronger evidence path"
+      },
+      {
+        "criterion_id": "FE04",
+        "description": "Platt worsening ece_delta > 0.05 confirmed at n >= 30",
+        "required": false,
+        "note": "If met, warrants PLATT_BAND_DEGRADATION_CANDIDATE flag"
+      }
+    ],
+    "refit_trigger_conditions": "Model refit consideration requires: FE01 AND FE02 met, AND explicit senior review, AND paper_only constraints lifted by authorized user.",
+    "current_status": "Sep 2025 1.00-1.25 band: FE01 not yet met (n=27 < 30). FE02 not yet met (single month only). No refit warranted."
+  },
+  "future_monitoring_report_requirements": {
+    "description": "Future Monitoring Contract V2 reports (monthly or quarterly) must include a BAND ANNOTATIONS section when any active carry-forward records exist.",
+    "required_report_sections": [
+      "GLOBAL STATUS — P52 V2 threshold evaluation (ECE, Brier, edge rate)",
+      "BAND ANNOTATIONS — Active carry-forward BandAnnotationRecord list",
+      "DATA GAP STATUS — 2024 closing-line gap and cross-year analysis status",
+      "GOVERNANCE SUMMARY — paper_only, promotion_freeze, live_api_calls"
+    ],
+    "band_annotation_section_rules": [
+      "Each BandAnnotationRecord must show sample_tier, annotation, action, n, platt_ece.",
+      "Records with sample_tier=BAND_SAMPLE_INSUFFICIENT must be clearly labelled as TRACK_ONLY.",
+      "Records must show evidence progress toward future_evidence_required criteria.",
+      "The section must explicitly state: 'Band annotations do not change global P52 status.'",
+      "The section must state whether should_trigger_refit and should_change_thresholds are false."
+    ],
+    "graduation_criteria": "A BandAnnotationRecord graduates from TRACK_ONLY to FLAG_FOR_FOLLOW_UP when: band n >= 30 in a subsequent month AND repeated_month_count >= 2. A record graduates to PROMOTE_TO_DRIFT_CANDIDATE_IF_CI_ELEVATED when: cumulative_band_n >= 100 AND ECE CI lower bound > 0.08.",
+    "archival_criteria": "A BandAnnotationRecord is archived (removed from active list) when: 6 consecutive months pass without band n >= 10, OR when an explicit senior review concludes no systematic pattern exists."
+  },
+  "future_evidence_requirements": {
+    "for_sep_2025_mid_band": {
+      "description": "Evidence required to revisit the Sep 2025 1.00-1.25 band finding.",
+      "criteria": [
+        {
+          "criterion_id": "FE01",
+          "description": "Same band (1.00 <= |sp_fip_delta| < 1.25) achieves n >= 30 in a future month.",
+          "required": true,
+          "current_status": "NOT_MET — n=27 in Sep 2025 only."
+        },
+        {
+          "criterion_id": "FE02",
+          "description": "Repeated elevated platt_ece in at least 2 separate months within the same band.",
+          "required": true,
+          "current_status": "NOT_MET — single month observation only."
+        },
+        {
+          "criterion_id": "FE03",
+          "description": "Cumulative band n >= 100 across all months, with ECE CI lower bound > 0.08.",
+          "required": false,
+          "note": "Alternative stronger path to BAND_DRIFT_CANDIDATE.",
+          "current_status": "NOT_MET — cumulative_band_n=27."
+        },
+        {
+          "criterion_id": "FE04",
+          "description": "Platt worsening ece_delta > 0.05 confirmed at n >= 30.",
+          "required": false,
+          "note": "If met, warrants PLATT_BAND_DEGRADATION_CANDIDATE flag.",
+          "current_status": "NOT_MET — n < 30 prevents reliable ece_delta attribution."
+        }
+      ]
+    },
+    "for_platt_refit_consideration": {
+      "description": "Evidence required before a future task may consider Platt refit.",
+      "minimum_requirements": [
+        "FE01 AND FE02 both met.",
+        "Global P52 calibration alert triggered (not just band-level).",
+        "Explicit senior review approval.",
+        "paper_only constraint lifted by authorized user.",
+        "promotion_freeze removed by authorized user."
+      ],
+      "note": "None of these conditions are currently met. No Platt refit is warranted or proposed."
+    },
+    "for_p52_threshold_change": {
+      "description": "Evidence required before P52 global thresholds may be changed.",
+      "minimum_requirements": [
+        "Multiple global calibration alerts across different months.",
+        "Systematic ECE degradation confirmed at Tier C level (n=535 equivalent).",
+        "Explicit CTO authorization.",
+        "New diagnostic phase P5x completed with evidence."
+      ],
+      "note": "P52 thresholds are unchanged and will remain so based on current evidence."
+    }
+  },
+  "p52_v2_compatibility": {
+    "statement": "P57 does not supersede P52 and does not change P52 thresholds.",
+    "details": [
+      "P57 adds a BandAnnotationRecord schema to the P52 V2 reporting metadata layer.",
+      "P52 global monitoring thresholds (Tier C ECE, Brier score, edge rate) remain unchanged.",
+      "P52 global status remains P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC.",
+      "P57 annotation integration is additive; it does not replace any P52 field.",
+      "P57 must not modify runtime recommendation logic.",
+      "P57 must not change P45 Platt constants (A=0.435432, B=0.245464).",
+      "P57 must not overwrite P52/P53/P54/P55/P56 artifacts.",
+      "P57 must not change P52 thresholds.",
+      "The Sep 2025 mid-band annotation (SAMPLE_SENSITIVE_BAND_ANOMALY, TRACK_ONLY_NO_REFIT) does not affect P52 global monitoring status.",
+      "Future monitoring reports using P57 schema must explicitly state 'Band annotations do not change global P52 status.'"
+    ],
+    "p52_threshold_status": "UNCHANGED",
+    "p52_artifact_status": "PRESERVED",
+    "p53_artifact_status": "PRESERVED",
+    "p54_artifact_status": "PRESERVED",
+    "p55_artifact_status": "PRESERVED",
+    "p56_artifact_status": "PRESERVED",
+    "platt_constants_status": "UNCHANGED — A=0.435432, B=0.245464 (P45 locked)",
+    "global_monitoring_status": "P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC"
+  },
+  "data_gap_status": {
+    "p43_2024_closing_line_gap": "UNRESOLVED",
+    "note": "2024 closing-line data gap (P43_BLOCKED_BY_DATA_GAP) remains unresolved. Cross-year band analysis cannot be completed until 2024 historical odds are obtained. P57 annotation integration applies to 2025 Tier C data only."
+  },
+  "final_p57_classification": "P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC",
+  "governance_flags": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false,
+    "platt_constants_modified": false,
+    "p52_contract_overwritten": false,
+    "p53_artifact_overwritten": false,
+    "p54_artifact_overwritten": false,
+    "p55_artifact_overwritten": false,
+    "p56_artifact_overwritten": false,
+    "p52_thresholds_changed": false
+  }
+}
