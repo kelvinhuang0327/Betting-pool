@@ -288,3 +288,53 @@ P43 confirmed a positive closing-line edge for 2025 (Tier B/C), but two critical
 - `00-BettingPlan/20260525/p44_signal_temporal_stability_calibration_20260525.md` (NEW)
 - `00-Plan/roadmap/active_task.md` (this file, status update)
 
+---
+
+## P44 Execution Status Update (2026-05-25)
+
+- Status: `COMPLETED (diagnostic-only)`
+- Final classification: `P44_STABLE_AND_CALIBRATED` (temporal STABLE, calibration MODERATE_MISCALIBRATED)
+
+### P44.A — Temporal Stability Results (Tier C, n=535)
+
+| Month | n | Mean Edge | CI Low | CI High | Classification |
+|-------|---|-----------|--------|---------|----------------|
+| 2025-04 | 16 | 0.0954 | 0.0548 | 0.1344 | STABLE |
+| 2025-05 | 120 | 0.1050 | 0.0882 | 0.1212 | STABLE |
+| 2025-06 | 101 | 0.1101 | 0.0919 | 0.1275 | STABLE |
+| 2025-07 | 92 | 0.1083 | 0.0913 | 0.1253 | STABLE |
+| 2025-08 | 108 | 0.1003 | 0.0851 | 0.1159 | STABLE |
+| 2025-09 | 98 | 0.1084 | 0.0922 | 0.1246 | STABLE |
+
+**Overall Temporal Pattern: TEMPORAL_STABLE** — all 6 months show CI fully positive.
+
+### P44.B — Calibration Results (Tier C, 10-bin)
+
+- **Brier Score**: 0.248133
+- **ECE**: 0.095289 (bins with n >= 5 only)
+- **Calibration Classification**: MODERATE_MISCALIBRATED
+
+Observation: Low-prob bins (0.2-0.4) show model underconfidence; high-prob bins (0.7-0.8) show overconfidence.
+Sigmoid mapping `p = sigmoid(0.8 * delta)` is not perfectly calibrated; Platt scaling would improve ECE.
+
+### Known Limitation Remains
+
+- 2024 closing-line data gap **unresolved** — all analysis covers 2025 only.
+- This is edge vs closing-line, NOT strict CLV.
+- No production deployment. No champion replacement. Paper-only.
+
+### Deliverables Generated
+
+- `scripts/_p44_signal_temporal_stability_calibration.py`
+- `tests/test_p44_signal_temporal_stability_calibration.py` (14 tests PASS)
+- `data/mlb_2025/derived/p44_temporal_stability_summary.json`
+- `data/mlb_2025/derived/p44_calibration_audit_summary.json`
+- `report/p44_signal_temporal_stability_calibration_20260525.md`
+- `00-BettingPlan/20260525/p44_signal_temporal_stability_calibration_20260525.md`
+
+### Validation Results
+
+- `pytest tests/test_p44_signal_temporal_stability_calibration.py -v` → `14 passed`
+- Cumulative `pytest P41+P42+P43+P44 -q` → `153 passed`
+- Forbidden phrase scan → 0 hits
+

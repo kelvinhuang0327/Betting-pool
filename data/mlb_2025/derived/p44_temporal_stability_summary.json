@@ -1,0 +1,93 @@
+{
+  "version": "p44_temporal_v1",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "T_LOCKED": 0.5,
+    "live_api_calls": 0,
+    "no_champion_modification": true
+  },
+  "tier_c_threshold": 0.5,
+  "total_tier_c_n": 535,
+  "months_covered": [
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09"
+  ],
+  "monthly_breakdown": {
+    "2025-04": {
+      "month": "2025-04",
+      "n": 16,
+      "mean_edge": 0.095414,
+      "std_edge": 0.081611,
+      "positive_rate": 0.875,
+      "bootstrap_ci_low": 0.054817,
+      "bootstrap_ci_high": 0.134437,
+      "bootstrap_n_boot": 5000,
+      "classification": "STABLE"
+    },
+    "2025-05": {
+      "month": "2025-05",
+      "n": 120,
+      "mean_edge": 0.105019,
+      "std_edge": 0.092561,
+      "positive_rate": 0.875,
+      "bootstrap_ci_low": 0.088155,
+      "bootstrap_ci_high": 0.121162,
+      "bootstrap_n_boot": 5000,
+      "classification": "STABLE"
+    },
+    "2025-06": {
+      "month": "2025-06",
+      "n": 101,
+      "mean_edge": 0.110093,
+      "std_edge": 0.092209,
+      "positive_rate": 0.8713,
+      "bootstrap_ci_low": 0.091901,
+      "bootstrap_ci_high": 0.127548,
+      "bootstrap_n_boot": 5000,
+      "classification": "STABLE"
+    },
+    "2025-07": {
+      "month": "2025-07",
+      "n": 92,
+      "mean_edge": 0.1083,
+      "std_edge": 0.083783,
+      "positive_rate": 0.9239,
+      "bootstrap_ci_low": 0.091312,
+      "bootstrap_ci_high": 0.125307,
+      "bootstrap_n_boot": 5000,
+      "classification": "STABLE"
+    },
+    "2025-08": {
+      "month": "2025-08",
+      "n": 108,
+      "mean_edge": 0.100344,
+      "std_edge": 0.081345,
+      "positive_rate": 0.9074,
+      "bootstrap_ci_low": 0.085144,
+      "bootstrap_ci_high": 0.115883,
+      "bootstrap_n_boot": 5000,
+      "classification": "STABLE"
+    },
+    "2025-09": {
+      "month": "2025-09",
+      "n": 98,
+      "mean_edge": 0.108441,
+      "std_edge": 0.08297,
+      "positive_rate": 0.9082,
+      "bootstrap_ci_low": 0.092154,
+      "bootstrap_ci_high": 0.124587,
+      "bootstrap_n_boot": 5000,
+      "classification": "STABLE"
+    }
+  },
+  "temporal_pattern_classification": "TEMPORAL_STABLE",
+  "framing_note": "Temporal edge stability of Tier C (|sp_fip_delta| >= 0.50) vs closing-line market. 2024 closing-line data gap remains unresolved — this analysis covers 2025 only.",
+  "limitation": "2024_closing_line_data_unavailable"
+}
