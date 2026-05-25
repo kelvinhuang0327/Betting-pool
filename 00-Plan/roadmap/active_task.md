@@ -234,3 +234,57 @@ CEO directive: 回到資料驗證主線——確認模型是否穩定優於 clos
 - `pytest tests/test_p41_cross_year_combined_wfv.py tests/test_p42_signal_band_tier_kelly.py tests/test_p43_strong_edge_closing_line_edge_validation.py -q` → `139 passed`
 - Forbidden phrase scan (`guaranteed profit|profitability claim|production proposal|live odds api call`) on P43 artifacts → `0 hits`
 
+### Known Limitation — 2024 Closing-Line Data Gap (P43.1 Confirmed)
+
+> **Confirmed 2026-05-25 via P43.1 repo-wide search.**
+
+- `data/mlb_2025/derived/mlb_2024_sp_fip_delta_features.jsonl` (P39 frozen artifact): does **not** contain `Home ML`, `Away ML`, `home_implied_prob`, `away_implied_prob`, or `market_home_prob` columns. All 2429 rows have `null` market probability.
+- `data/mlb_2025/mlb-2024-asplayed.csv`: Retrosheet gamelog only (scores + starters). No odds columns.
+- No other 2024 closing-line odds CSV exists in the repository.
+- `data/mlb_context/odds_timeline.jsonl` and related files: 2025-season entries only.
+- **Implication**: Cross-year (2024+2025) closing-line edge validation cannot be completed without an external 2024 MLB moneyline odds CSV. The P43 final classification remains `P43_BLOCKED_BY_DATA_GAP`. The 2025-only result (Tier B/C `EDGE_CONFIRMED`) stands as a valid partial finding.
+- **Resolution path**: If `data/mlb_2025/mlb_odds_2024_real.csv` is ever sourced with matching schema (`Date, Away, Home, Away Score, Home Score, Away ML, Home ML`), re-run P43 script — `load_2024_unified()` already has the join logic stub.
+
+---
+
+## P44 Proposal — sp_fip_delta 2025 Signal Temporal Stability + Calibration Audit
+
+> **[PROPOSED 2026-05-25]** `P44_SIGNAL_TEMPORAL_STABILITY_CALIBRATION`
+> **Prerequisite**: P43 complete (committed `1e09997`).
+> **Classification**: `paper_only=true`, `diagnostic_only=true`, `promotion_freeze=true`, `kelly_deploy_allowed=false`
+
+### Rationale
+
+P43 confirmed a positive closing-line edge for 2025 (Tier B/C), but two critical questions remain unanswered before any paper-trading escalation:
+
+1. **Temporal stability**: Is the edge uniform across the 2025 season, or does it degrade in later months (signal decay, pitcher FIP regression, market adaptation)?
+2. **Calibration**: Does the sigmoid model probability (`p = 1/(1+exp(-0.8·delta))`) accurately reflect actual win rates, or is it systematically over/under-confident?
+
+### Proposed Scope
+
+#### P44.A — Monthly Temporal Edge Breakdown (2025 Tier C)
+- Split Tier C games (`|sp_fip_delta| >= 0.50`) by calendar month (Apr–Sep 2025).
+- Compute per-month: `n`, `mean_edge`, `positive_rate`, bootstrap 95% CI.
+- Classification: stable (all months CI overlap), degrading (late-season CI crosses 0), or improving.
+- Output: `data/mlb_2025/derived/p44_temporal_stability_summary.json`
+
+#### P44.B — Calibration Audit (2025 Tier C)
+- 10-bin reliability diagram: bin model_prob [0.0, 1.0], compute actual win rate per bin.
+- Brier score decomposition: reliability + resolution + uncertainty.
+- Expected Calibration Error (ECE).
+- Overconfidence / underconfidence diagnosis.
+- Output: `data/mlb_2025/derived/p44_calibration_audit_summary.json`
+
+### Tests Required
+- ≥ 8 deterministic tests covering both modules.
+- Re-run P41+P42+P43+P44 cumulative suite.
+
+### Whitelist for P44 Commit
+- `scripts/_p44_signal_temporal_stability_calibration.py` (NEW)
+- `tests/test_p44_signal_temporal_stability_calibration.py` (NEW)
+- `data/mlb_2025/derived/p44_temporal_stability_summary.json` (NEW)
+- `data/mlb_2025/derived/p44_calibration_audit_summary.json` (NEW)
+- `report/p44_signal_temporal_stability_calibration_20260525.md` (NEW)
+- `00-BettingPlan/20260525/p44_signal_temporal_stability_calibration_20260525.md` (NEW)
+- `00-Plan/roadmap/active_task.md` (this file, status update)
+
