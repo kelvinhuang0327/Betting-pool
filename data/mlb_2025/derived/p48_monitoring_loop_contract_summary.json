@@ -1,0 +1,503 @@
+{
+  "version": "p48_v1",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false
+  },
+  "p47_baseline": {
+    "commit": "17dad86",
+    "final_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+    "selected_stream": "PLATT_CALIBRATED",
+    "platt_cv_mean_ece": 0.086164,
+    "platt_cv_mean_brier": 0.238477,
+    "tier_c_mean_edge": 0.1059,
+    "tier_c_edge_ci": [
+      0.0989,
+      0.1132
+    ],
+    "data_gap_2024_acknowledged": true
+  },
+  "monitoring_row_schema": {
+    "fields": [
+      "monitoring_date",
+      "season",
+      "batch_id",
+      "batch_n",
+      "probability_stream",
+      "raw_ece",
+      "platt_ece",
+      "raw_brier",
+      "platt_brier",
+      "mean_edge",
+      "edge_ci_low",
+      "edge_ci_high",
+      "positive_edge_rate",
+      "monthly_bucket",
+      "status",
+      "alert_level",
+      "alert_reasons",
+      "governance_flags",
+      "source_trace"
+    ],
+    "allowed_streams": [
+      "ISOTONIC_CALIBRATED",
+      "PLATT_CALIBRATED",
+      "RAW_SIGMOID"
+    ],
+    "allowed_statuses": [
+      "BRIER_DRIFT_CRITICAL",
+      "BRIER_DRIFT_WARNING",
+      "DATA_GAP_BLOCKED",
+      "ECE_DRIFT_CRITICAL",
+      "ECE_DRIFT_WARNING",
+      "EDGE_DRIFT_CRITICAL",
+      "EDGE_DRIFT_WARNING",
+      "MIXED_ALERTS",
+      "MONITORING_OK",
+      "SAMPLE_LIMITED"
+    ],
+    "allowed_alert_levels": [
+      "BLOCKED",
+      "CRITICAL",
+      "NONE",
+      "WARNING"
+    ]
+  },
+  "alert_thresholds": {
+    "ece_warning": 0.1,
+    "ece_critical": 0.12,
+    "brier_warning": 0.25,
+    "brier_critical": 0.27,
+    "edge_warning_mean": 0.07,
+    "edge_critical_condition": "CI_CROSSES_ZERO",
+    "sample_limited_n": 100,
+    "blocked_condition": "closing_line_source_missing",
+    "priority_order": [
+      "DATA_GAP_BLOCKED overrides all",
+      "SAMPLE_LIMITED if batch_n < 100",
+      "CRITICAL dominates WARNING in multi-category alerts",
+      "MIXED_ALERTS when alerts span multiple categories",
+      "MONITORING_OK when no alert fires"
+    ]
+  },
+  "fixture_cases": [
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_01_healthy_baseline",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.0953,
+      "platt_ece": 0.082,
+      "raw_brier": 0.2481,
+      "platt_brier": 0.232,
+      "mean_edge": 0.1059,
+      "edge_ci_low": 0.0989,
+      "edge_ci_high": 0.1132,
+      "positive_edge_rate": 0.8953,
+      "monthly_bucket": "2025-06",
+      "status": "MONITORING_OK",
+      "alert_level": "NONE",
+      "alert_reasons": [],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_02_sample_limited",
+      "batch_n": 50,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": null,
+      "platt_ece": null,
+      "raw_brier": null,
+      "platt_brier": null,
+      "mean_edge": null,
+      "edge_ci_low": null,
+      "edge_ci_high": null,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "SAMPLE_LIMITED",
+      "alert_level": "WARNING",
+      "alert_reasons": [
+        "batch_n=50 < threshold=100"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_03_ece_warning",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.115,
+      "platt_ece": 0.108,
+      "raw_brier": 0.2481,
+      "platt_brier": 0.232,
+      "mean_edge": 0.1059,
+      "edge_ci_low": 0.0989,
+      "edge_ci_high": 0.1132,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "ECE_DRIFT_WARNING",
+      "alert_level": "WARNING",
+      "alert_reasons": [
+        "ece_warning: ece=0.1080 > warning_threshold=0.1"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_04_ece_critical",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.155,
+      "platt_ece": 0.135,
+      "raw_brier": 0.2481,
+      "platt_brier": 0.232,
+      "mean_edge": 0.1059,
+      "edge_ci_low": 0.0989,
+      "edge_ci_high": 0.1132,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "ECE_DRIFT_CRITICAL",
+      "alert_level": "CRITICAL",
+      "alert_reasons": [
+        "ece_critical: ece=0.1350 > critical_threshold=0.12"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_05_brier_warning",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.0953,
+      "platt_ece": 0.082,
+      "raw_brier": 0.27,
+      "platt_brier": 0.258,
+      "mean_edge": 0.1059,
+      "edge_ci_low": 0.0989,
+      "edge_ci_high": 0.1132,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "BRIER_DRIFT_WARNING",
+      "alert_level": "WARNING",
+      "alert_reasons": [
+        "brier_warning: brier=0.2580 > warning_threshold=0.25"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_06_brier_critical",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.0953,
+      "platt_ece": 0.082,
+      "raw_brier": 0.29,
+      "platt_brier": 0.278,
+      "mean_edge": 0.1059,
+      "edge_ci_low": 0.0989,
+      "edge_ci_high": 0.1132,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "BRIER_DRIFT_CRITICAL",
+      "alert_level": "CRITICAL",
+      "alert_reasons": [
+        "brier_critical: brier=0.2780 > critical_threshold=0.27"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_07_edge_warning",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.0953,
+      "platt_ece": 0.082,
+      "raw_brier": 0.2481,
+      "platt_brier": 0.232,
+      "mean_edge": 0.055,
+      "edge_ci_low": 0.012,
+      "edge_ci_high": 0.098,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "EDGE_DRIFT_WARNING",
+      "alert_level": "WARNING",
+      "alert_reasons": [
+        "edge_warning: mean_edge=0.0550 < warning_threshold=0.07"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_08_edge_critical",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.0953,
+      "platt_ece": 0.082,
+      "raw_brier": 0.2481,
+      "platt_brier": 0.232,
+      "mean_edge": 0.028,
+      "edge_ci_low": -0.008,
+      "edge_ci_high": 0.064,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "EDGE_DRIFT_CRITICAL",
+      "alert_level": "CRITICAL",
+      "alert_reasons": [
+        "edge_critical: CI crosses zero (ci_low=-0.0080 <= 0)"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_09_mixed_alerts",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": 0.155,
+      "platt_ece": 0.125,
+      "raw_brier": 0.2481,
+      "platt_brier": 0.232,
+      "mean_edge": 0.055,
+      "edge_ci_low": 0.012,
+      "edge_ci_high": 0.098,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "MIXED_ALERTS",
+      "alert_level": "CRITICAL",
+      "alert_reasons": [
+        "ece_critical: ece=0.1250 > critical_threshold=0.12",
+        "edge_warning: mean_edge=0.0550 < warning_threshold=0.07"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    },
+    {
+      "monitoring_date": "2026-05-26",
+      "season": 2025,
+      "batch_id": "fixture_10_data_gap_blocked",
+      "batch_n": 200,
+      "probability_stream": "PLATT_CALIBRATED",
+      "raw_ece": null,
+      "platt_ece": null,
+      "raw_brier": null,
+      "platt_brier": null,
+      "mean_edge": null,
+      "edge_ci_low": null,
+      "edge_ci_high": null,
+      "positive_edge_rate": null,
+      "monthly_bucket": null,
+      "status": "DATA_GAP_BLOCKED",
+      "alert_level": "BLOCKED",
+      "alert_reasons": [
+        "closing_line_source_missing"
+      ],
+      "governance_flags": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "promotion_freeze": true,
+        "kelly_deploy_allowed": false,
+        "live_api_calls": 0,
+        "tsl_crawler_modified": false,
+        "champion_strategy_changed": false,
+        "production_usage_proposed": false,
+        "runtime_recommendation_logic_changed": false
+      },
+      "source_trace": {
+        "p47_artifact": "data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+        "selected_stream": "PLATT_CALIBRATED",
+        "p47_classification": "P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC",
+        "p47_commit": "17dad86"
+      }
+    }
+  ],
+  "fixture_status_summary": {
+    "fixture_01_healthy_baseline": "MONITORING_OK",
+    "fixture_02_sample_limited": "SAMPLE_LIMITED",
+    "fixture_03_ece_warning": "ECE_DRIFT_WARNING",
+    "fixture_04_ece_critical": "ECE_DRIFT_CRITICAL",
+    "fixture_05_brier_warning": "BRIER_DRIFT_WARNING",
+    "fixture_06_brier_critical": "BRIER_DRIFT_CRITICAL",
+    "fixture_07_edge_warning": "EDGE_DRIFT_WARNING",
+    "fixture_08_edge_critical": "EDGE_DRIFT_CRITICAL",
+    "fixture_09_mixed_alerts": "MIXED_ALERTS",
+    "fixture_10_data_gap_blocked": "DATA_GAP_BLOCKED"
+  },
+  "expected_fixture_statuses": {
+    "fixture_01_healthy_baseline": "MONITORING_OK",
+    "fixture_02_sample_limited": "SAMPLE_LIMITED",
+    "fixture_03_ece_warning": "ECE_DRIFT_WARNING",
+    "fixture_04_ece_critical": "ECE_DRIFT_CRITICAL",
+    "fixture_05_brier_warning": "BRIER_DRIFT_WARNING",
+    "fixture_06_brier_critical": "BRIER_DRIFT_CRITICAL",
+    "fixture_07_edge_warning": "EDGE_DRIFT_WARNING",
+    "fixture_08_edge_critical": "EDGE_DRIFT_CRITICAL",
+    "fixture_09_mixed_alerts": "MIXED_ALERTS",
+    "fixture_10_data_gap_blocked": "DATA_GAP_BLOCKED"
+  },
+  "final_classification": "P48_MONITORING_CONTRACT_READY_DIAGNOSTIC",
+  "allowed_p48_classifications": [
+    "P48_MONITORING_CONTRACT_READY_DIAGNOSTIC",
+    "P48_MONITORING_CONTRACT_BLOCKED",
+    "P48_SAMPLE_LIMITED"
+  ],
+  "framing_note": "P48 defines a paper-only monitoring loop contract for the P47 Platt-calibrated probability stream. This is a diagnostic-only contract specification with offline fixture evaluation. No live API calls. No production usage. No runtime recommendation logic changes. 2024 closing-line data gap remains unresolved — cross-year edge validation is blocked. P43 final classification remains P43_BLOCKED_BY_DATA_GAP. All P48 monitoring thresholds are advisory guardrails for future paper-only observation, not betting instructions.",
+  "data_gap_2024_acknowledged": true
+}

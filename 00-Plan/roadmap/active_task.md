@@ -502,3 +502,51 @@ does not hold up in out-of-fold or out-of-month evaluation.
 - Cumulative `pytest P41+P42+P43+P44+P45+P46+P47 -q` → `203 passed`
 - Forbidden phrase scan → 0 affirmative hits
 
+---
+
+## P48 Execution Status Update (2026-05-26)
+
+- Status: `COMPLETED (diagnostic-only)`
+- Final classification: `P48_MONITORING_CONTRACT_READY_DIAGNOSTIC`
+- Selected probability stream: `PLATT_CALIBRATED` (P47 synthesis decision)
+- P47 baseline commit: `17dad86`
+
+### P48 Monitoring Contract Summary
+
+| Alert Threshold | Warning | Critical |
+|----------------|---------|----------|
+| ECE (Platt) | > 0.10 | > 0.12 |
+| Brier (Platt) | > 0.25 | > 0.27 |
+| Edge mean | < 0.07 | CI crosses zero |
+| Sample | — | SAMPLE_LIMITED if n < 100 |
+| Data gap | — | DATA_GAP_BLOCKED (overrides all) |
+
+### Fixture Validation Results
+
+| Fixture | Status |
+|---------|--------|
+| fixture_01_healthy_baseline | MONITORING_OK |
+| fixture_02_sample_limited | SAMPLE_LIMITED |
+| fixture_03_ece_warning | ECE_DRIFT_WARNING |
+| fixture_04_ece_critical | ECE_DRIFT_CRITICAL |
+| fixture_05_brier_warning | BRIER_DRIFT_WARNING |
+| fixture_06_brier_critical | BRIER_DRIFT_CRITICAL |
+| fixture_07_edge_warning | EDGE_DRIFT_WARNING |
+| fixture_08_edge_critical | EDGE_DRIFT_CRITICAL |
+| fixture_09_mixed_alerts | MIXED_ALERTS |
+| fixture_10_data_gap_blocked | DATA_GAP_BLOCKED |
+
+### Deliverables Generated
+
+- `scripts/_p48_monitoring_loop_contract.py`
+- `tests/test_p48_monitoring_loop_contract.py` (17 tests)
+- `data/mlb_2025/derived/p48_monitoring_loop_contract_summary.json`
+- `report/p48_monitoring_loop_contract_20260526.md`
+- `00-BettingPlan/20260526/p48_monitoring_loop_contract_20260526.md`
+
+### Known Limitations
+
+- 2024 closing-line data gap **remains unresolved** (P43_BLOCKED_BY_DATA_GAP)
+- No live API calls made. No runtime recommendation logic changed.
+- No production proposal. No champion replacement. Paper-only monitoring contract.
+
