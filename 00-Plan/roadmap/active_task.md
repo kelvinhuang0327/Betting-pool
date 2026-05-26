@@ -1,4 +1,42 @@
-# Active Task — P82B Raw Paid Odds Data Storage / Commit Policy Contract
+# Active Task — P82C Staging Guard Enforcement Dry-Run + Policy Drift Scanner
+
+> **[COMPLETED 2026-05-26]** `P82C_STAGING_GUARD_DRYRUN_READY`
+> **Issued by**: P82B handoff (P82B_RAW_PAID_DATA_POLICY_READY)
+> **Branch**: `main` | **Mode**: `paper_only=true`
+>
+> **P82C Result:** Staging guard dry-run scanner implemented from P82B contract.
+> All 6 P82B guard rules implemented as executable scanner functions.
+> Current repo scan: STAGE_CLEAN — no staged violations, no real odds files.
+>
+> **Guard rules implemented:**
+> - BLOCK_ENV_FILE → BLOCK_SECRET
+> - BLOCK_API_KEY_PATTERN → BLOCK_SECRET (with redaction)
+> - BLOCK_RAW_PAID_CSV → BLOCK_RAW_PAID_DATA (data/ prefix + filename pattern)
+> - BLOCK_REAL_ODDS_FILENAME → BLOCK_RAW_PAID_DATA
+> - BLOCK_CONTAINS_API_KEY_FLAG → BLOCK_SECRET
+> - BLOCK_ROW_LEVEL_ODDS → BLOCK_ROW_LEVEL_LEAKAGE
+>
+> **Mock fixture results (8/8 PASS):**
+> - 6 risky fixtures → correct guard states
+> - 2 safe fixtures (derived summary + policy report) → STAGE_CLEAN
+> - All in-memory only, no real files created
+>
+> **Current repo dry-run:**
+> - Staged files: 0 violations → STAGE_CLEAN
+> - Allowlisted paths (P-series JSONs): 0 violations → STAGE_CLEAN
+> - Working tree runtime files: RUNTIME_OUT_OF_SCOPE (no forbidden patterns)
+> - Overall: STAGE_CLEAN
+>
+> **P82 status:** BLOCKED_NO_REAL_DATASET (unchanged)
+> P-series contract files exempt from filename-based rules via `_is_pseries_contract()`.
+>
+> **Tests:** 50 PASS (P82C) + 734 PASS (P72A→P82B regression) = 784 total
+> **Forbidden scan:** 0 violations
+> **Classification:** `P82C_STAGING_GUARD_DRYRUN_READY`
+
+---
+
+## Prior Active Task: P82B Raw Paid Odds Data Storage / Commit Policy Contract
 
 > **[COMPLETED 2026-05-26]** `P82B_RAW_PAID_DATA_POLICY_READY`
 > **Issued by**: P82A handoff (P82A_REAL_LEGAL_ODDS_INTAKE_GATE_READY, commit `555b52a`)

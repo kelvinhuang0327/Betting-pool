@@ -1,0 +1,334 @@
+{
+  "phase": "P82C",
+  "date": "2026-05-26",
+  "p82c_classification": "P82C_STAGING_GUARD_DRYRUN_READY",
+  "allowed_classifications": [
+    "P82C_STAGING_GUARD_DRYRUN_READY",
+    "P82C_STAGING_GUARD_DRYRUN_READY_WITH_WARNINGS",
+    "P82C_BLOCKED_BY_MISSING_P82B_ARTIFACT",
+    "P82C_FAILED_VALIDATION"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "p82_unlocked": false
+  },
+  "prediction_boundary": "P82C is a diagnostic dry-run scanner only. Scanner output is a policy-compliance report \u2014 NOT a production deployment, NOT a betting recommendation, NOT a market-edge claim. paper_only=True, diagnostic_only=True.",
+  "source_artifacts": {
+    "p82b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82b_raw_paid_odds_data_policy_contract_summary.json",
+    "p82a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82a_real_legal_odds_intake_gate_summary.json",
+    "p81_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p81_legal_odds_dataset_validator_contract_summary.json",
+    "p80_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p80_market_edge_reentry_readiness_contract_summary.json",
+    "p79b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p79b_tier_b_vs_tier_c_comparison_harness_summary.json",
+    "p79a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p79a_tier_b_trigger_readiness_contract_summary.json",
+    "p78_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p78_monthly_shadow_tracker_report_template_summary.json",
+    "p77_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p77_prediction_only_shadow_tracker_contract_summary.json",
+    "p76_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p76_corrected_tier_c_final_rule_selection_summary.json",
+    "p75b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p75b_calibration_diagnostics_corrected_tier_c_summary.json",
+    "p75a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p75a_tier_c_corrected_rule_validator_summary.json",
+    "p74_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p74_tier_c_home_away_bias_correction_summary.json",
+    "p73_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p73_tier_stability_and_sample_expansion_summary.json",
+    "p72b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p72b_objective_metric_contract_summary.json",
+    "p72a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p72a_odds_free_strategy_accuracy_backtest_summary.json"
+  },
+  "step1_p82b_verification": {
+    "classification": "P82B_RAW_PAID_DATA_POLICY_READY",
+    "classification_ok": true,
+    "artifact_classes_count": 9,
+    "artifact_classes_ok": true,
+    "missing_artifact_classes": [],
+    "guard_rules_count": 6,
+    "guard_rules_ok": true,
+    "missing_guard_rules": [],
+    "guard_rule_ids": [
+      "BLOCK_ENV_FILE",
+      "BLOCK_API_KEY_PATTERN",
+      "BLOCK_RAW_PAID_CSV",
+      "BLOCK_REAL_ODDS_FILENAME",
+      "BLOCK_CONTAINS_API_KEY_FLAG",
+      "BLOCK_ROW_LEVEL_ODDS"
+    ],
+    "policy_matrix_classes": [
+      "RAW_PAID_ODDS_DATA",
+      "RAW_FREE_LEGAL_ODDS_DATA",
+      "VALIDATION_MANIFEST",
+      "CHECKSUM_ONLY_RECORD",
+      "DERIVED_VALIDATION_SUMMARY",
+      "DERIVED_MARKET_EDGE_SUMMARY",
+      "LOCAL_REPRODUCIBILITY_NOTE",
+      "SECRET_OR_API_KEY",
+      "MOCK_FIXTURE",
+      "_meta"
+    ],
+    "p82_unlock_status": "BLOCKED_NO_REAL_DATASET",
+    "p82_blocked": true,
+    "live_api_calls": 0,
+    "ev_clv_kelly_computed": false,
+    "governance_paper_only": true,
+    "governance_kelly_allowed": false,
+    "verification_ok": true
+  },
+  "step2_scanner_contract": {
+    "scanner_id": "P82C_STAGING_GUARD_DRYRUN_SCANNER",
+    "version": "1.0.0",
+    "scan_modes": [
+      "STAGED_FILES",
+      "WORKING_TREE",
+      "ALLOWLISTED_PATHS",
+      "INMEMORY_MOCK"
+    ],
+    "guard_rules": [
+      {
+        "rule_id": "BLOCK_ENV_FILE",
+        "type": "filename_pattern",
+        "guard_state": "BLOCK_SECRET"
+      },
+      {
+        "rule_id": "BLOCK_API_KEY_PATTERN",
+        "type": "content_regex",
+        "guard_state": "BLOCK_SECRET"
+      },
+      {
+        "rule_id": "BLOCK_RAW_PAID_CSV",
+        "type": "filename_pattern",
+        "guard_state": "BLOCK_RAW_PAID_DATA"
+      },
+      {
+        "rule_id": "BLOCK_REAL_ODDS_FILENAME",
+        "type": "filename_pattern",
+        "guard_state": "BLOCK_RAW_PAID_DATA"
+      },
+      {
+        "rule_id": "BLOCK_CONTAINS_API_KEY_FLAG",
+        "type": "content_match",
+        "guard_state": "BLOCK_SECRET"
+      },
+      {
+        "rule_id": "BLOCK_ROW_LEVEL_ODDS",
+        "type": "content_indicator",
+        "guard_state": "BLOCK_ROW_LEVEL_LEAKAGE"
+      }
+    ],
+    "output_fields": [
+      "scan_mode",
+      "files_scanned",
+      "violations",
+      "warnings",
+      "false_positive_suppression_notes",
+      "guard_state"
+    ],
+    "allowlist_patterns": [
+      "data/mlb_2025/derived/p*.json",
+      "report/p*_20260526.md",
+      "report/p*_20260*.md",
+      "00-BettingPlan/20260526/p*.md",
+      "scripts/_p*.py",
+      "tests/test_p*.py",
+      "00-Plan/roadmap/active_task.md",
+      "00-Plan/roadmap/roadmap.md"
+    ],
+    "runtime_patterns": [
+      "runtime/**",
+      "logs/**",
+      "data/.live_cache/**",
+      "data/derived/**",
+      "data/mlb_context/**",
+      "data/tsl_*.json",
+      "data/tsl_*.jsonl",
+      "data/learning_state.json",
+      "data/wbc_backend/**",
+      "outputs/**",
+      "00-BettingPlan/20260510/**",
+      "00-Plan/roadmap/CEO-Decision.md",
+      "00-Plan/roadmap/CTO-Analysis.md"
+    ],
+    "suppression_markers": [
+      "NO_REAL_BET",
+      "paper_only",
+      "diagnostic_only",
+      "BLOCK_RAW_PAID_CSV",
+      "BLOCK_REAL_ODDS_FILENAME",
+      "guard_state",
+      "P82B_RAW_PAID_DATA_POLICY_READY",
+      "MOCK_ONLY",
+      "MOCK_FIXTURE",
+      "governance_snapshot"
+    ],
+    "redaction_policy": "API keys and secrets are redacted \u2014 only first 4 / last 4 chars reported",
+    "no_real_odds_created": true,
+    "no_api_calls": true
+  },
+  "step3_mock_fixture_scan": {
+    "mock_fixture_count": 8,
+    "risky_fixtures": 6,
+    "safe_fixtures": 2,
+    "all_passed": true,
+    "results": [
+      {
+        "fixture_name": "env_file",
+        "filepath": ".env",
+        "is_risky": true,
+        "expected_guard_state": "BLOCK_SECRET",
+        "actual_guard_state": "BLOCK_SECRET",
+        "expected_rule_id": "BLOCK_ENV_FILE",
+        "triggered_rules": [
+          "BLOCK_ENV_FILE"
+        ],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      },
+      {
+        "fixture_name": "api_key_content",
+        "filepath": "data/config_backup.json",
+        "is_risky": true,
+        "expected_guard_state": "BLOCK_SECRET",
+        "actual_guard_state": "BLOCK_SECRET",
+        "expected_rule_id": "BLOCK_API_KEY_PATTERN",
+        "triggered_rules": [
+          "BLOCK_API_KEY_PATTERN"
+        ],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      },
+      {
+        "fixture_name": "raw_paid_csv_filename",
+        "filepath": "data/paid_odds_mlb_2025.csv",
+        "is_risky": true,
+        "expected_guard_state": "BLOCK_RAW_PAID_DATA",
+        "actual_guard_state": "BLOCK_RAW_PAID_DATA",
+        "expected_rule_id": "BLOCK_RAW_PAID_CSV",
+        "triggered_rules": [
+          "BLOCK_RAW_PAID_CSV",
+          "BLOCK_REAL_ODDS_FILENAME",
+          "BLOCK_ROW_LEVEL_ODDS"
+        ],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      },
+      {
+        "fixture_name": "real_odds_filename",
+        "filepath": "data/mlb_odds_2024_real.csv",
+        "is_risky": true,
+        "expected_guard_state": "BLOCK_RAW_PAID_DATA",
+        "actual_guard_state": "BLOCK_RAW_PAID_DATA",
+        "expected_rule_id": "BLOCK_REAL_ODDS_FILENAME",
+        "triggered_rules": [
+          "BLOCK_REAL_ODDS_FILENAME",
+          "BLOCK_ROW_LEVEL_ODDS"
+        ],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      },
+      {
+        "fixture_name": "contains_api_key_flag",
+        "filepath": "data/mlb_2025/odds_intake_test.json",
+        "is_risky": true,
+        "expected_guard_state": "BLOCK_SECRET",
+        "actual_guard_state": "BLOCK_SECRET",
+        "expected_rule_id": "BLOCK_CONTAINS_API_KEY_FLAG",
+        "triggered_rules": [
+          "BLOCK_CONTAINS_API_KEY_FLAG"
+        ],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      },
+      {
+        "fixture_name": "row_level_odds_leakage",
+        "filepath": "data/mlb_2025/game_analysis_export.json",
+        "is_risky": true,
+        "expected_guard_state": "BLOCK_ROW_LEVEL_LEAKAGE",
+        "actual_guard_state": "BLOCK_ROW_LEVEL_LEAKAGE",
+        "expected_rule_id": "BLOCK_ROW_LEVEL_ODDS",
+        "triggered_rules": [
+          "BLOCK_ROW_LEVEL_ODDS"
+        ],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      },
+      {
+        "fixture_name": "safe_derived_summary",
+        "filepath": "data/mlb_2025/derived/p82c_staging_guard_dryrun_scanner_summary.json",
+        "is_risky": false,
+        "expected_guard_state": "STAGE_CLEAN",
+        "actual_guard_state": "STAGE_CLEAN",
+        "expected_rule_id": null,
+        "triggered_rules": [],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      },
+      {
+        "fixture_name": "safe_policy_report",
+        "filepath": "report/p82b_raw_paid_odds_data_policy_contract_20260526.md",
+        "is_risky": false,
+        "expected_guard_state": "STAGE_CLEAN",
+        "actual_guard_state": "STAGE_CLEAN",
+        "expected_rule_id": null,
+        "triggered_rules": [],
+        "state_ok": true,
+        "rule_ok": true,
+        "passed": true,
+        "is_inmemory_only": true
+      }
+    ],
+    "no_files_created": true
+  },
+  "step4_current_repo_dryrun": {
+    "staged_files_result": {
+      "scan_mode": "STAGED_FILES",
+      "files_scanned_count": 0,
+      "violations_count": 0,
+      "warnings_count": 0,
+      "guard_state": "STAGE_CLEAN",
+      "files_scanned": []
+    },
+    "working_tree_result": {
+      "scan_mode": "WORKING_TREE",
+      "files_scanned_count": 77,
+      "violations_count": 0,
+      "runtime_out_of_scope_count": 59,
+      "warnings_count": 70,
+      "guard_state": "STAGE_CLEAN"
+    },
+    "allowlisted_paths_result": {
+      "scan_mode": "ALLOWLISTED_PATHS",
+      "files_scanned_count": 93,
+      "violations_count": 0,
+      "warnings_count": 3,
+      "guard_state": "STAGE_CLEAN"
+    },
+    "overall_guard_state": "STAGE_CLEAN",
+    "overall_clean": true,
+    "runtime_dirty_files_note": "Runtime/state files in working tree are marked RUNTIME_OUT_OF_SCOPE and do not trigger hard blocks unless they match forbidden patterns."
+  },
+  "p82_status": "BLOCKED_NO_REAL_DATASET",
+  "p82_unlock_condition": "Requires external legal odds dataset + P81 validator pass",
+  "forbidden_scan": {
+    "violations": [],
+    "result": "CLEAN"
+  }
+}
