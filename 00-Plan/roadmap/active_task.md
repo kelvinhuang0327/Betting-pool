@@ -1,4 +1,35 @@
-# Active Task — P76 Corrected Tier C Final Rule Selection + 2026 Accumulation Plan
+# Active Task — P77 2026 Prediction-Only Shadow Tracker Contract
+
+> **[COMPLETED 2026-05-26]** `P77_SHADOW_TRACKER_CONTRACT_READY`
+> **Issued by**: P76 handoff (P76_DUAL_FINALISTS_RETAINED_UNTIL_2026_DATA)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
+>
+> **P77 Result:** Formal 2026 shadow tracker contract defined and validated.
+> P76 dual-finalist decision verified (score_125=0.5543, score_100=0.5540, delta=0.0003 < threshold=0.02).
+>
+> **Contract summary:**
+> - Row schema: 28 fields, 8 governance booleans frozen (paper_only=True, production_ready=False, etc.)
+> - Primary tracking rule: `TIER_C_HOME_PLUS_AWAY_125` (home threshold=0.50, away threshold=1.25)
+> - Shadow tracking rule: `TIER_C_HOME_PLUS_AWAY_100` (home threshold=0.50, away threshold=1.00)
+> - Tier B accumulation: abs_sp_fip_delta in [0.25, 0.50) → P78 trigger at n≥200 (~2026-09)
+> - Tier A watchlist: abs_sp_fip_delta ≥ 1.50 → track only, no operationalization before n≥50
+> - Market-edge lane: DEFERRED (blocked in P77, requires odds API key for P80)
+>
+> **Semantic validation:** PASS — counts match P75B (HOME_ONLY=268, AWAY_100=373, AWAY_125=316)
+>
+> **Monthly metrics:** n, hit_rate, CI-95, AUC, Brier, ECE, home/away split, rolling-100
+> **Re-evaluation triggers:** n≥50, n≥100, n≥200, end-of-season; downgrade on rolling-100 < 0.55
+> **Downgrade criteria:** rolling_100_floor, consecutive_monthly_floor, ece_worsening
+>
+> **Research Roadmap:** P78 (Tier B n≥200 trigger ~2026-09) → P79 (Combined) → P80 (Odds-Lane) → P81 (Finalize)
+>
+> **Tests:** 69 PASS (P77) + 186 PASS (P72A→P76 regression) = 255 total
+> **Forbidden scan:** 0 violations (governance invariants verified directly)
+> **Classification:** `P77_SHADOW_TRACKER_CONTRACT_READY`
+
+---
+
+## Prior Active Task: P76 Corrected Tier C Final Rule Selection + 2026 Accumulation Plan
 
 > **[COMPLETED 2026-05-26]** `P76_DUAL_FINALISTS_RETAINED_UNTIL_2026_DATA`
 > **Issued by**: P75B handoff (P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE)
