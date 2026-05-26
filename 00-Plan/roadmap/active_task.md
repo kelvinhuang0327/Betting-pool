@@ -1,4 +1,26 @@
-# Active Task — P79A Tier B Trigger Readiness + 2026 Live Data Intake Contract
+# Active Task — P79B Tier B vs Tier C Comparison Harness Fixture Dry-Run
+
+> **[COMPLETED 2026-05-26]** `P79B_TIER_B_FIXTURE_RESEARCH_ONLY`
+> **Issued by**: P79A handoff (P79A_TIER_B_TRIGGER_READINESS_CONTRACT_READY)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
+>
+> **P79B Result:** Comparison harness implemented and validated on 2025 fixture frozen snapshot.
+> Tier B (n=219, abs_fip∈[0.25,0.50)): hit_rate=0.534, AUC=0.552, stability=MODERATE.
+> Primary 125 (n=247): hit_rate=0.583, AUC=0.570. Gate fails on `performance_ok`.
+> Fixture classification: TIER_B_RESEARCH_ONLY_FIXTURE (not a 2026 live claim).
+>
+> **Contract summary:**
+> - 4 candidates: tier_b, primary_125, shadow_100, baseline_50
+> - 10 metrics per candidate: n, hit_rate (+ CI), AUC (+ CI), Brier, log_loss, ECE, monthly stability, rolling 100, home/away split, concentration risk
+> - 6-condition operational research gate (gate fails on `performance_ok`)
+> - Future P79 execution prompt generated (trigger: 2026 live Tier B n≥200)
+> - Market-edge lane: blocked (deferred to P80)
+> - Forbidden scan: PASS (0 violations)
+> - **Commit**: (pending)
+
+---
+
+# Previous Task — P79A Tier B Trigger Readiness + 2026 Live Data Intake Contract
 
 > **[COMPLETED 2026-05-26]** `P79A_TIER_B_TRIGGER_READINESS_CONTRACT_READY`
 > **Issued by**: P78 handoff (P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY)
@@ -19,7 +41,7 @@
 > - Forbidden scan: PASS (0 violations)
 >
 > **Tests:** 60/60 PASS (P79A) + 328/328 PASS (regression P72A→P78) = 388 total
-> **Commit**: (pending)
+> **Commit**: `be682ea`
 
 ---
 

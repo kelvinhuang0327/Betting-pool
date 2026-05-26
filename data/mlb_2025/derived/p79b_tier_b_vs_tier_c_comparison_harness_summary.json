@@ -1,0 +1,504 @@
+{
+  "p79b_classification": "P79B_TIER_B_FIXTURE_RESEARCH_ONLY",
+  "schema_version": "p79b-v1",
+  "generated_at": "2026-05-26T17:12:31.576226",
+  "governance_snapshot": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "promotion_freeze": true
+  },
+  "source_artifacts_verified": [
+    "p79a_tier_b_trigger_readiness_contract_summary.json",
+    "p79a_tier_b_trigger_readiness_contract_20260526.md",
+    "_p79a_tier_b_trigger_readiness_contract.py",
+    "p78_monthly_shadow_tracker_report_template_summary.json",
+    "p77_prediction_only_shadow_tracker_contract_summary.json",
+    "p76_corrected_tier_c_final_rule_selection_summary.json",
+    "p75b_calibration_diagnostics_corrected_tier_c_summary.json",
+    "p75a_tier_c_corrected_rule_validator_summary.json",
+    "p74_tier_c_home_away_bias_correction_summary.json",
+    "p73_tier_stability_and_sample_expansion_summary.json",
+    "p72b_objective_metric_contract_summary.json",
+    "p72a_odds_free_strategy_accuracy_backtest_summary.json",
+    "mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl"
+  ],
+  "step1_p79a_verification": {
+    "verified": true,
+    "errors": [],
+    "classification": "P79A_TIER_B_TRIGGER_READINESS_CONTRACT_READY",
+    "snapshot_id": "tier_b_snapshot_2025_202507",
+    "trigger_n": 219,
+    "trigger_month": "2025-07",
+    "comparison_contract_present": true,
+    "market_edge_lane": "blocked",
+    "governance_clean": true,
+    "primary_rule_snapshot_n": 247,
+    "shadow_rule_snapshot_n": 269
+  },
+  "step2_comparison_schema": {
+    "schema_name": "P79B_TIER_B_VS_TIER_C_COMPARISON_HARNESS",
+    "schema_version": "p79b-v1",
+    "top_level_sections": [
+      "metadata",
+      "governance",
+      "source_snapshot",
+      "candidate_rule_metrics",
+      "head_to_head_comparison",
+      "operational_research_gate",
+      "stability_diagnostics",
+      "calibration_diagnostics",
+      "decision_summary",
+      "next_phase_recommendation"
+    ],
+    "section_definitions": {
+      "metadata": "script version, run timestamp, fixture season, snapshot_id, cutoff_month",
+      "governance": "all 16 governance flags (paper_only=True, production_ready=False, etc.)",
+      "source_snapshot": "frozen snapshot reconstruction summary (id, months, row counts)",
+      "candidate_rule_metrics": "per-candidate metrics (Tier B, Primary, Shadow, Baseline)",
+      "head_to_head_comparison": "Tier B vs each Tier C variant (deltas for each metric)",
+      "operational_research_gate": "6-condition gate: n≥200, AUC/hit_rate, stability, ECE, concentration, prediction_only",
+      "stability_diagnostics": "monthly hit_rates, chronological thirds, rolling 100",
+      "calibration_diagnostics": "ECE, Brier, log_loss per candidate",
+      "decision_summary": "fixture dry-run classification and rationale",
+      "next_phase_recommendation": "future P79 execution prompt template"
+    },
+    "governance_enforcement": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "ev_calculated": false,
+      "clv_calculated": false,
+      "kelly_calculated": false,
+      "production_ready": false,
+      "live_api_calls": 0
+    },
+    "candidate_definitions": {
+      "tier_b": {
+        "label": "Tier B Candidate",
+        "condition": "abs_sp_fip_delta in [0.25, 0.5)",
+        "directional": false
+      },
+      "primary_125": {
+        "label": "Tier C Primary — HOME_PLUS_AWAY_125",
+        "condition": "(home_pick AND abs_sp_fip_delta >= 0.5) OR (away_pick AND abs_sp_fip_delta >= 1.25)",
+        "directional": true
+      },
+      "shadow_100": {
+        "label": "Tier C Shadow — HOME_PLUS_AWAY_100",
+        "condition": "(home_pick AND abs_sp_fip_delta >= 0.5) OR (away_pick AND abs_sp_fip_delta >= 1.0)",
+        "directional": true
+      },
+      "baseline_50": {
+        "label": "Tier C Baseline — abs_sp_fip_delta >= 0.50",
+        "condition": "abs_sp_fip_delta >= 0.5",
+        "directional": false
+      }
+    },
+    "operational_gate_conditions": [
+      "n >= 200",
+      "AUC >= 0.60 OR hit_rate >= primary_hit_rate + 0.02",
+      "monthly_stability in [STRONG, MODERATE]",
+      "ECE delta vs primary_125 < 0.03",
+      "concentration_risk != SEVERE",
+      "prediction_only (GOVERNANCE.production_ready=False)"
+    ]
+  },
+  "step3_source_snapshot": {
+    "snapshot_id": "tier_b_snapshot_2025_202507",
+    "cutoff_month": "2025-07",
+    "snapshot_months": [
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07"
+    ],
+    "total_snapshot_rows": 1230,
+    "total_all_season_rows": 2025,
+    "monthly_row_counts": {
+      "2025-04": 53,
+      "2025-05": 411,
+      "2025-06": 397,
+      "2025-07": 369
+    },
+    "candidate_counts": {
+      "tier_b": 219,
+      "primary_125": 247,
+      "shadow_100": 269,
+      "baseline_50": 329
+    }
+  },
+  "step4_candidate_metrics": {
+    "tier_b": {
+      "candidate_key": "tier_b",
+      "n": 219,
+      "coverage": 0.178,
+      "hits": 117,
+      "hit_rate": 0.5342,
+      "hit_rate_ci_lower": 0.4682,
+      "hit_rate_ci_upper": 0.5992,
+      "auc": 0.5517,
+      "auc_ci_lower": 0.4756,
+      "auc_ci_upper": 0.6279,
+      "brier": 0.2468,
+      "log_loss": 0.6862,
+      "ece": 0.0433,
+      "monthly_stability": "MODERATE",
+      "monthly_results": {
+        "2025-04": {
+          "n": 9,
+          "hits": 5,
+          "hit_rate": 0.5556,
+          "ci_lower": 0.2666,
+          "ci_upper": 0.8112
+        },
+        "2025-05": {
+          "n": 76,
+          "hits": 43,
+          "hit_rate": 0.5658,
+          "ci_lower": 0.4539,
+          "ci_upper": 0.6714
+        },
+        "2025-06": {
+          "n": 69,
+          "hits": 34,
+          "hit_rate": 0.4928,
+          "ci_lower": 0.3783,
+          "ci_upper": 0.6079
+        },
+        "2025-07": {
+          "n": 65,
+          "hits": 35,
+          "hit_rate": 0.5385,
+          "ci_lower": 0.4185,
+          "ci_upper": 0.6541
+        }
+      },
+      "rolling_100_hit_rate": 0.54,
+      "chronological_thirds": [
+        {
+          "n": 73,
+          "hit_rate": 0.5479
+        },
+        {
+          "n": 73,
+          "hit_rate": 0.5205
+        },
+        {
+          "n": 73,
+          "hit_rate": 0.5342
+        }
+      ],
+      "n_home": 141,
+      "n_away": 78,
+      "home_hit_rate": 0.5319,
+      "away_hit_rate": 0.5385,
+      "concentration_risk": "LOW"
+    },
+    "primary_125": {
+      "candidate_key": "primary_125",
+      "n": 247,
+      "coverage": 0.2008,
+      "hits": 144,
+      "hit_rate": 0.583,
+      "hit_rate_ci_lower": 0.5207,
+      "hit_rate_ci_upper": 0.6428,
+      "auc": 0.5697,
+      "auc_ci_lower": 0.4979,
+      "auc_ci_upper": 0.6414,
+      "brier": 0.2386,
+      "log_loss": 0.6696,
+      "ece": 0.0162,
+      "monthly_stability": "MODERATE",
+      "monthly_results": {
+        "2025-04": {
+          "n": 14,
+          "hits": 7,
+          "hit_rate": 0.5,
+          "ci_lower": 0.268,
+          "ci_upper": 0.732
+        },
+        "2025-05": {
+          "n": 100,
+          "hits": 59,
+          "hit_rate": 0.59,
+          "ci_lower": 0.492,
+          "ci_upper": 0.6813
+        },
+        "2025-06": {
+          "n": 61,
+          "hits": 35,
+          "hit_rate": 0.5738,
+          "ci_lower": 0.449,
+          "ci_upper": 0.6898
+        },
+        "2025-07": {
+          "n": 72,
+          "hits": 43,
+          "hit_rate": 0.5972,
+          "ci_lower": 0.4818,
+          "ci_upper": 0.7028
+        }
+      },
+      "rolling_100_hit_rate": 0.6,
+      "chronological_thirds": [
+        {
+          "n": 82,
+          "hit_rate": 0.5488
+        },
+        {
+          "n": 82,
+          "hit_rate": 0.6098
+        },
+        {
+          "n": 83,
+          "hit_rate": 0.5904
+        }
+      ],
+      "n_home": 226,
+      "n_away": 21,
+      "home_hit_rate": 0.5973,
+      "away_hit_rate": 0.4286,
+      "concentration_risk": "SEVERE"
+    },
+    "shadow_100": {
+      "candidate_key": "shadow_100",
+      "n": 269,
+      "coverage": 0.2187,
+      "hits": 153,
+      "hit_rate": 0.5688,
+      "hit_rate_ci_lower": 0.509,
+      "hit_rate_ci_upper": 0.6266,
+      "auc": 0.5787,
+      "auc_ci_lower": 0.5105,
+      "auc_ci_upper": 0.6469,
+      "brier": 0.2398,
+      "log_loss": 0.672,
+      "ece": 0.0201,
+      "monthly_stability": "MODERATE",
+      "monthly_results": {
+        "2025-04": {
+          "n": 15,
+          "hits": 8,
+          "hit_rate": 0.5333,
+          "ci_lower": 0.3012,
+          "ci_upper": 0.7519
+        },
+        "2025-05": {
+          "n": 107,
+          "hits": 61,
+          "hit_rate": 0.5701,
+          "ci_lower": 0.4755,
+          "ci_upper": 0.6599
+        },
+        "2025-06": {
+          "n": 70,
+          "hits": 38,
+          "hit_rate": 0.5429,
+          "ci_lower": 0.427,
+          "ci_upper": 0.6543
+        },
+        "2025-07": {
+          "n": 77,
+          "hits": 46,
+          "hit_rate": 0.5974,
+          "ci_lower": 0.4858,
+          "ci_upper": 0.6998
+        }
+      },
+      "rolling_100_hit_rate": 0.62,
+      "chronological_thirds": [
+        {
+          "n": 89,
+          "hit_rate": 0.5393
+        },
+        {
+          "n": 89,
+          "hit_rate": 0.573
+        },
+        {
+          "n": 91,
+          "hit_rate": 0.5934
+        }
+      ],
+      "n_home": 226,
+      "n_away": 43,
+      "home_hit_rate": 0.5973,
+      "away_hit_rate": 0.4186,
+      "concentration_risk": "MODERATE"
+    },
+    "baseline_50": {
+      "candidate_key": "baseline_50",
+      "n": 329,
+      "coverage": 0.2675,
+      "hits": 186,
+      "hit_rate": 0.5653,
+      "hit_rate_ci_lower": 0.5113,
+      "hit_rate_ci_upper": 0.6179,
+      "auc": 0.596,
+      "auc_ci_lower": 0.535,
+      "auc_ci_upper": 0.6571,
+      "brier": 0.2386,
+      "log_loss": 0.6695,
+      "ece": 0.0332,
+      "monthly_stability": "MODERATE",
+      "monthly_results": {
+        "2025-04": {
+          "n": 16,
+          "hits": 9,
+          "hit_rate": 0.5625,
+          "ci_lower": 0.3318,
+          "ci_upper": 0.769
+        },
+        "2025-05": {
+          "n": 120,
+          "hits": 68,
+          "hit_rate": 0.5667,
+          "ci_lower": 0.4773,
+          "ci_upper": 0.6519
+        },
+        "2025-06": {
+          "n": 101,
+          "hits": 54,
+          "hit_rate": 0.5347,
+          "ci_lower": 0.4379,
+          "ci_upper": 0.6289
+        },
+        "2025-07": {
+          "n": 92,
+          "hits": 55,
+          "hit_rate": 0.5978,
+          "ci_lower": 0.4957,
+          "ci_upper": 0.6922
+        }
+      },
+      "rolling_100_hit_rate": 0.59,
+      "chronological_thirds": [
+        {
+          "n": 109,
+          "hit_rate": 0.578
+        },
+        {
+          "n": 109,
+          "hit_rate": 0.5229
+        },
+        {
+          "n": 111,
+          "hit_rate": 0.5946
+        }
+      ],
+      "n_home": 226,
+      "n_away": 103,
+      "home_hit_rate": 0.5973,
+      "away_hit_rate": 0.4951,
+      "concentration_risk": "LOW"
+    }
+  },
+  "step5_head_to_head": {
+    "comparisons": {
+      "vs_primary_125": {
+        "tier_b_n": 219,
+        "comparator_n": 247,
+        "n_delta": -28,
+        "hit_rate_delta": -0.0488,
+        "auc_delta": -0.018,
+        "brier_delta": 0.0082,
+        "ece_delta": 0.0271,
+        "tier_b_stability": "MODERATE",
+        "comparator_stability": "MODERATE",
+        "tier_b_concentration": "LOW",
+        "comparator_concentration": "SEVERE"
+      },
+      "vs_shadow_100": {
+        "tier_b_n": 219,
+        "comparator_n": 269,
+        "n_delta": -50,
+        "hit_rate_delta": -0.0346,
+        "auc_delta": -0.027,
+        "brier_delta": 0.007,
+        "ece_delta": 0.0232,
+        "tier_b_stability": "MODERATE",
+        "comparator_stability": "MODERATE",
+        "tier_b_concentration": "LOW",
+        "comparator_concentration": "MODERATE"
+      },
+      "vs_baseline_50": {
+        "tier_b_n": 219,
+        "comparator_n": 329,
+        "n_delta": -110,
+        "hit_rate_delta": -0.0311,
+        "auc_delta": -0.0443,
+        "brier_delta": 0.0082,
+        "ece_delta": 0.0101,
+        "tier_b_stability": "MODERATE",
+        "comparator_stability": "MODERATE",
+        "tier_b_concentration": "LOW",
+        "comparator_concentration": "LOW"
+      }
+    },
+    "operational_research_gate": {
+      "conditions": {
+        "n_gte_200": true,
+        "performance_ok": false,
+        "stability_ok": true,
+        "ece_ok": true,
+        "concentration_ok": true,
+        "prediction_only": true
+      },
+      "gate_passes": false,
+      "gate_fail_reasons": [
+        "performance_ok"
+      ]
+    },
+    "tier_b_cannot_become_production_ready": true,
+    "market_edge_lane": "blocked"
+  },
+  "step6_fixture_classification": {
+    "fixture_dry_run_classification": "TIER_B_RESEARCH_ONLY_FIXTURE",
+    "rationale": "Gate fails on: ['performance_ok']. Enough conditions pass for research-only status.",
+    "is_2026_live_conclusion": false,
+    "fixture_only_disclaimer": "This classification is based on 2025 fixture data only. It does NOT constitute a 2026 live performance claim. Champion strategy unchanged. No bets recommended.",
+    "tier_b_fixture_hit_rate": 0.5342,
+    "primary_125_fixture_hit_rate": 0.583,
+    "hit_rate_delta": -0.0488,
+    "gate_passes": false,
+    "gate_conditions": {
+      "n_gte_200": true,
+      "performance_ok": false,
+      "stability_ok": true,
+      "ece_ok": true,
+      "concentration_ok": true,
+      "prediction_only": true
+    }
+  },
+  "step7_future_p79_prompt": {
+    "prompt_text": "[P79 — Tier B Sample Expansion Analysis vs Tier C Finalists on 2026 Live Data]\n================================================================================\n\nTRIGGER CONDITION: Tier B cumulative n >= 200 in 2026 live accumulation\n\nREQUIRED SNAPSHOT PACKAGE:\n  - snapshot_id: tier_b_snapshot_2026_<YYYYMM>       ← set at trigger month\n  - trigger_date: <YYYY-MM>                           ← first month n >= 200\n  - season: 2026\n  - data_cutoff: <YYYY-MM-DD>                        ← last game date in trigger month\n  - tier_b_n: <int>                                   ← cumulative Tier B count\n  - tier_b_months_covered: list[str]\n  - governance_snapshot: all 9 flags from P79A schema\n\nREQUIRED SOURCE FILES:\n  - data/mlb_2025/derived/p79a_tier_b_trigger_readiness_contract_summary.json\n  - data/mlb_2025/derived/p78_monthly_shadow_tracker_report_template_summary.json\n  - data/mlb_2026/derived/mlb_2026_per_game_predictions_<version>.jsonl\n  - scripts/_p79b_tier_b_vs_tier_c_comparison_harness.py  ← run on 2026 data\n\nEXPECTED TRIGGER STATE: TIER_B_TRIGGER_FROZEN\n\nCOMPARISON HARNESS COMMAND:\n  .venv/bin/python scripts/_p79b_tier_b_vs_tier_c_comparison_harness.py \\\n      --snapshot-id tier_b_snapshot_2026_<YYYYMM> \\\n      --predictions data/mlb_2026/derived/mlb_2026_per_game_predictions_<ver>.jsonl \\\n      --output-dir data/mlb_2026/derived/\n\nOUTPUT LOCATIONS:\n  - data/mlb_2026/derived/p79_tier_b_comparison_harness_summary.json\n  - report/p79_tier_b_comparison_harness_<YYYYMMDD>.md\n\nSTOP CONDITIONS:\n  - predictions JSONL not found or empty\n  - trigger_n < 200\n  - governance_snapshot.production_ready == True\n  - governance_snapshot.ev_calculated == True\n  - governance_snapshot.odds_used == True\n  - governance_snapshot.live_api_calls > 0\n\nGOVERNANCE INVARIANTS (must all hold):\n  paper_only=True | diagnostic_only=True | production_ready=False\n  ev_calculated=False | clv_calculated=False | kelly_calculated=False\n  odds_used=False | market_edge_evaluated=False | live_api_calls=0\n\nEXPECTED CLASSIFICATION LIST:\n  - P79_TIER_B_FIXTURE_OUTPERFORMS_TIER_C\n  - P79_TIER_B_FIXTURE_COMPETITIVE_WITH_TIER_C\n  - P79_TIER_B_FIXTURE_RESEARCH_ONLY\n  - P79_TIER_B_FIXTURE_UNDERPERFORMS_TIER_C\n  - P79_TIER_B_FIXTURE_INCONCLUSIVE\n  - P79_BLOCKED_BY_MISSING_SOURCE_ARTIFACT\n  - P79_FAILED_VALIDATION\n\nMARKET-EDGE: DEFERRED to P80 (pending odds API key)\nPRODUCTION READINESS: NOT achievable in P79\n\n2025 FIXTURE DRY-RUN REFERENCE:\n  - P79B fixture classification: TIER_B_RESEARCH_ONLY_FIXTURE\n  - 2025 Tier B fixture n at trigger: 219\n  - Fixture snapshot: tier_b_snapshot_2025_202507\n================================================================================",
+    "trigger_condition": "2026 live Tier B n >= 200",
+    "expected_trigger_season": "2026",
+    "market_edge_note": "DEFERRED to P80",
+    "production_readiness_note": "NOT achievable in P79",
+    "fixture_reference_classification": "TIER_B_RESEARCH_ONLY_FIXTURE",
+    "fixture_reference_snapshot_id": "tier_b_snapshot_2025_202507"
+  },
+  "step8_forbidden_scan": {
+    "scan_passed": true,
+    "violations_count": 0,
+    "violations": []
+  },
+  "market_edge_lane": "blocked",
+  "fixture_dry_run_classification": "TIER_B_RESEARCH_ONLY_FIXTURE",
+  "fixture_is_2026_live_conclusion": false
+}
