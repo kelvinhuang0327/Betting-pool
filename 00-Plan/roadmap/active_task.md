@@ -1,13 +1,34 @@
-# Active Task — P68 (Pending)
+# Active Task — P69 (Pending)
 
-> **Next recommended scope**: P68 — OddsPortal Scraping Feasibility Probe
-> **Status**: Awaiting CEO/CTO authorization
+> **Next recommended scope**: P69 — CEO Decision Memo: P61 PATH_A Authorization (The Odds API)
+> **Status**: Awaiting CEO decision
 > **Mode**: `paper_only=true`, `diagnostic_only=true`
 >
-> P67 identified OddsPortal.com as a partial free source for 2024 MLB closing-line odds.
-> P68 must assess scraping feasibility (ToS review, pagination probe, schema alignment check).
-> If OddsPortal is ToS-blocked or technically infeasible: escalate to P61 PATH_A
-> (CEO decision for The Odds API paid historical pull, ~$30–50 one-time).
+> P68 confirmed OddsPortal is legally blocked (ToS Section 2.11 scraping prohibition +
+> robots.txt `Disallow: *-2024*` for all user-agents). All free public 2024 MLB
+> closing-line sources are now exhausted. Only remaining path: P61 PATH_A —
+> The Odds API paid historical pull (~$30–50 one-time). CEO authorization required.
+> P69 drafts the decision memo. No API calls in P69 (paper_only=True).
+
+---
+
+## Prior Completed Task: P68
+
+> **[COMPLETED 2026-05-26]** `P68_ODDSPORTAL_BLOCKED_BY_TOS`
+> **Branch**: `main` | **Mode**: `paper_only=true`, `diagnostic_only=true`
+> **Prior phase**: P67 `P67_PATH_B_PARTIAL_SOURCE_FOUND_NEEDS_REVIEW`
+>
+> **P68 Result:** OddsPortal ToS and scraping feasibility probe.
+> ToS Section 2.11 explicitly prohibits scraping and automated requests.
+> ToS Section 2.10 prohibits database extraction without express consent.
+> robots.txt `Disallow: *-2024*` for `User-agent: *` covers `/baseball/usa/mlb-2024/results/`.
+> Page probe (single manual load): data visible, 50 pages, decimal odds present, WS sample rows confirmed.
+> Schema: 6/9 required fields technically observable. Closing label absent. Doubleheader disambiguation absent.
+> 2024 gap: UNRESOLVED_PENDING_CEO_DECISION_ON_PATH_A.
+> Forbidden scan: 0 violations. No bulk scraping. No anti-bot bypass. Governance fully preserved.
+> **Tests:** 36 PASS (P68) + 296 PASS (P43+P59–P68 cumulative regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P68_ODDSPORTAL_BLOCKED_BY_TOS`
 
 ---
 
