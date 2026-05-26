@@ -1,4 +1,37 @@
-# Active Task — P72B Prediction-vs-Market Objective Contract
+# Active Task — P73A/B Tier Stability Deep-Dive + Sample Expansion
+
+> **[COMPLETED 2026-05-26]** `P73_TIER_C_OPERATIONAL_STABLE_TIER_B_RESEARCH_CONFIRMED`
+> **Issued by**: P72B handoff (P73A + P73B recommended as PRIMARY next steps)
+> **HEAD**: `9c04e50` (P72B) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P72B `P72B_OBJECTIVE_CONTRACT_READY`
+>
+> **P73A Result:** Tier C (n=535) full stability deep-dive.
+> Monthly stability: STABLE (range=0.099, 6/6 months). Hit rate=0.606, AUC=0.583.
+> Home/away split: home hit=0.672 vs away hit=0.539. Home picks ~50% of Tier C.
+> Delta bands: band_050_075 highest (hit=0.637), band_125_150 weakest (hit=0.554).
+> Concentration risk: single_band_dominance=True (spread >0.15), home_home_advantage_warning=False.
+> Rolling windows: 10 windows of 50 games, step=25 — stable trend.
+> Tier C classification: `TIER_C_OPERATIONAL_STABLE`
+>
+> **P73B Result:** 5 Tier B threshold variants analyzed.
+> TB_ORIGINAL: n=98, AUC=0.646, monthly UNSTABLE. Best AUC variant: TB_EXCL_WEAK_BAND (AUC=0.651).
+> All 5 variants show UNSTABLE monthly stability (small per-month n=14–23).
+> original_tier_b_signal: `SAMPLE_EXPANSION_CONFIRMED` (n>=75, AUC>=0.62, AUC_CI_low>0.50).
+> tier_b_can_be_operational: False (n=98 < 200 AND monthly UNSTABLE).
+>
+> **Decision Matrix:**
+> - S01 Tier C Directional → TIER_C_OPERATIONAL_STABLE (PRIMARY_OPERATIONAL_CANDIDATE)
+> - S02 Tier B Directional → RESEARCH_ONLY_SAMPLE_EXPANSION_CONFIRMED
+> - S03 Tier A Directional → WATCHLIST_ONLY (n=24)
+> - S04 Tier C Platt Calibrated → CALIBRATION_REFERENCE (AUC=0.593, better probability quality)
+>
+> **Tests:** 23 PASS (P73) + 68 PASS (P72A+P72B+P73 regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P73_TIER_C_OPERATIONAL_STABLE_TIER_B_RESEARCH_CONFIRMED`
+
+---
+
+## Prior Active Task: P72B Prediction-vs-Market Objective Contract
 
 > **[COMPLETED 2026-05-26]** `P72B_OBJECTIVE_CONTRACT_READY`
 > **Issued by**: CTO governance direction after P72A
