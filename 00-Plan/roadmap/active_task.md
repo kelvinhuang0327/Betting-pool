@@ -1,4 +1,39 @@
-# Active Task — P77 2026 Prediction-Only Shadow Tracker Contract
+# Active Task — P78 Monthly Rule Monitoring Template + Shadow Tracker Report Pack
+
+> **[COMPLETED 2026-05-26]** `P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY`
+> **Issued by**: P77 handoff (P77_SHADOW_TRACKER_CONTRACT_READY)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
+>
+> **P78 Result:** Monthly monitoring template defined, validated against 2025 fixture data.
+> Template produces monthly reports for all 4 tracking lanes with governance-frozen schema.
+>
+> **Template summary:**
+> - Schema: 7 sections, 42 fields per monthly report (p78-v1)
+> - Fixture period: 2025-04 through 2025-09 (6 months validated)
+> - Alert levels: GREEN / YELLOW / RED (sample limitation ≠ model failure)
+> - Primary lane: TIER_C_HOME_PLUS_AWAY_125 (primary_total_n=407 over fixture)
+> - Shadow lane: TIER_C_HOME_PLUS_AWAY_100 (shadow_total_n=445 over fixture)
+> - Tier B cumulative at 2025-09: 363 ≥ 200 → **Tier B n≥200 trigger fires in fixture!**
+> - Tier A watchlist: cumulative 24 through fixture period (watchlist_only)
+> - Market-edge lane: blocked (P80 deferred)
+>
+> **Key fixture findings:**
+> - Primary avg monthly hit_rate: 0.5814 (across 6 months)
+> - Shadow avg monthly hit_rate: 0.5771
+> - Primary monthly hit range: 0.50 (April n=14) to 0.6508 (September n=63)
+> - Rolling 100 ranged 0.55–0.61 in months with sufficient sample
+>
+> **Pack synthesis:** All 6 months schema-valid | All 6 months governance-clean
+>
+> **Research Roadmap:** P79 (Tier B n≥200, expected ~2026-09 for live 2026 data) → P80 (Odds-Lane) → P81 (Finalize)
+>
+> **Tests:** 73 PASS (P78) + 255 PASS (P72A→P77 regression) = 328 total
+> **Forbidden scan:** 0 violations (governance invariants verified directly)
+> **Classification:** `P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY`
+
+---
+
+# Prior Active Task — P77 2026 Prediction-Only Shadow Tracker Contract
 
 > **[COMPLETED 2026-05-26]** `P77_SHADOW_TRACKER_CONTRACT_READY`
 > **Issued by**: P76 handoff (P76_DUAL_FINALISTS_RETAINED_UNTIL_2026_DATA)
