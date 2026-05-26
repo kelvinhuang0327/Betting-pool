@@ -1,4 +1,19 @@
-# Active Task — P60 Historical Monthly Report Pack (EDGE-FIRST Validation)
+# Active Task — P61 2024 Closing-Line Data Gap Resolution Plan (CEO P1)
+
+> **[COMPLETED 2026-05-26]** `P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT`
+> **Issued by**: CEO P1 directive (elevated after P60 completion)
+> **HEAD**: `36a40f4` (P60) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P60 `P60_EDGE_STABLE_ACROSS_MONTHS` (commit `36a40f4`)
+>
+> **P61 Result:** 6 sources evaluated, 2 viable resolution paths (PATH_A: The Odds API ~$30-50;  
+> PATH_B: Kaggle/GitHub free search). Recommended: PATH_B first, PATH_A if PATH_B fails.  
+> **Tests:** 15 PASS (P61) + 68 PASS (P43+P59+P60+P61 regression)  
+> **Forbidden scan:** 0 violations  
+> **Classification:** `P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT`
+
+---
+
+## P60 Prior Completion Record
 
 > **[COMPLETED 2026-05-26]** `P60_EDGE_STABLE_ACROSS_MONTHS`
 > **Issued by**: CEO Second-Level Review 2026-05-26
