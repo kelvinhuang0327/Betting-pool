@@ -1,14 +1,41 @@
-# Active Task — P69 (Pending)
+# Active Task — P70 (Pending)
 
-> **Next recommended scope**: P69 — CEO Decision Memo: P61 PATH_A Authorization (The Odds API)
-> **Status**: Awaiting CEO decision
+> **Next recommended scope**: P70 — CEO Decision on P61 PATH_A
+> **Status**: Awaiting CEO response to P69 memo
 > **Mode**: `paper_only=true`, `diagnostic_only=true`
 >
-> P68 confirmed OddsPortal is legally blocked (ToS Section 2.11 scraping prohibition +
-> robots.txt `Disallow: *-2024*` for all user-agents). All free public 2024 MLB
-> closing-line sources are now exhausted. Only remaining path: P61 PATH_A —
-> The Odds API paid historical pull (~$30–50 one-time). CEO authorization required.
-> P69 drafts the decision memo. No API calls in P69 (paper_only=True).
+> P69 produced the CEO decision memo for P61 PATH_A authorization.
+> CEO must now choose one of the three decision phrases from the P69 memo:
+>
+> **APPROVE**: `YES authorize P61 PATH_A The Odds API historical 2024 MLB moneyline pull for paper-only validation`
+> **REJECT**: `NO reject P61 PATH_A and freeze 2024 closing-line scope`
+> **DEFER**: `DEFER P61 PATH_A pending more information`
+>
+> P70 scope depends on CEO decision. If approved → execute The Odds API pull.
+> If rejected → freeze 2024 scope, accept P43_BLOCKED_BY_DATA_GAP as permanent.
+> If deferred → document open questions and re-present.
+
+---
+
+## Prior Completed Task: P69
+
+> **[COMPLETED 2026-05-26]** `P69_CEO_DECISION_MEMO_READY`
+> **Branch**: `main` | **Mode**: `paper_only=true`, `diagnostic_only=true`
+> **Prior phase**: P68 `P68_ODDSPORTAL_BLOCKED_BY_TOS`
+>
+> **P69 Result:** CEO decision memo drafted for P61 PATH_A authorization.
+> Evidence trail P61→P67→P68 verified: all 3 prior-phase classifications confirmed.
+> Free-source PATH_B exhausted: 6 sources evaluated, 0 usable 2024 ML odds found.
+> OddsPortal block confirmed: ToS Section 2.11 scraping prohibition + robots.txt `*-2024*`.
+> PATH_A spec: The Odds API, ~$30–50 one-time, HIGH data quality, 9 required fields documented.
+> CEO decision options: APPROVE / REJECT / DEFER — exact copy-paste phrases provided.
+> Allowed use: paper-only, diagnostic-only, research validation only.
+> Prohibited use: live betting, Kelly, production, champion replacement, redistribution.
+> 2024 gap: UNRESOLVED_PENDING_CEO_DECISION_ON_PATH_A.
+> Forbidden scan: 0 violations. No API calls. Governance fully preserved.
+> **Tests:** 42 PASS (P69) + 338 PASS (P43+P59–P69 cumulative regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P69_CEO_DECISION_MEMO_READY`
 
 ---
 
