@@ -1,0 +1,464 @@
+{
+  "contract_version": "P62_v1_20260526",
+  "contract_date": "2026-05-26",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false,
+    "data_download_attempted": false,
+    "paid_api_called": false,
+    "real_bet_allowed": false,
+    "actual_rows_emitted": false,
+    "p45_platt_constants_modified": false,
+    "p52_thresholds_modified": false,
+    "p60_artifacts_overwritten": false,
+    "p61_artifacts_overwritten": false
+  },
+  "platt_constants": {
+    "platt_A": 0.435432,
+    "platt_B": 0.245464,
+    "calibration_method": "platt_scaled",
+    "source": "P45 \u2014 locked, never refit",
+    "verification": {
+      "verified": false,
+      "platt_A_locked": 0.435432,
+      "platt_B_locked": 0.245464,
+      "platt_A_artifact": null,
+      "platt_B_artifact": null,
+      "A_match": false,
+      "B_match": false,
+      "note": "Constants locked from P45 \u2014 never refit in P62"
+    }
+  },
+  "signal": {
+    "name": "sp_fip_delta",
+    "tier": "Tier_C",
+    "tier_threshold": 0.5,
+    "t_locked": true,
+    "market": "moneyline"
+  },
+  "eligibility_gate": {
+    "n_conditions": 17,
+    "conditions": [
+      {
+        "id": "EG01",
+        "condition": "paper_only=True",
+        "description": "All operations strictly paper-only \u2014 no live deployment"
+      },
+      {
+        "id": "EG02",
+        "condition": "diagnostic_only=True",
+        "description": "Diagnostic mode only \u2014 contract defines schema, emits no rows"
+      },
+      {
+        "id": "EG03",
+        "condition": "promotion_freeze=True",
+        "description": "Champion promotion frozen \u2014 no strategy replacement allowed"
+      },
+      {
+        "id": "EG04",
+        "condition": "live_api_calls=0",
+        "description": "Zero live API calls made during contract draft"
+      },
+      {
+        "id": "EG05",
+        "condition": "kelly_deploy_allowed=False",
+        "description": "Kelly criterion may be computed theoretically but never deployed"
+      },
+      {
+        "id": "EG06",
+        "condition": "runtime_recommendation_logic_changed=False",
+        "description": "Runtime recommendation logic unchanged from P52 SSOT"
+      },
+      {
+        "id": "EG07",
+        "condition": "champion_replacement=False",
+        "description": "fixed_edge_5pct champion strategy not replaced"
+      },
+      {
+        "id": "EG08",
+        "condition": "production_ready=False",
+        "description": "Contract is not a production deployment proposal"
+      },
+      {
+        "id": "EG09",
+        "condition": "real_bet_allowed=False",
+        "description": "No real betting allowed at any stage of this contract"
+      },
+      {
+        "id": "EG10",
+        "condition": "signal=sp_fip_delta",
+        "description": "Recommendation signal must be sp_fip_delta (no other signals substituted)"
+      },
+      {
+        "id": "EG11",
+        "condition": "tier=Tier_C",
+        "description": "Only Tier C games qualify (|sp_fip_delta| >= T_LOCKED)"
+      },
+      {
+        "id": "EG12",
+        "condition": "threshold=abs(sp_fip_delta)>=0.50",
+        "description": "T_LOCKED=0.50 \u2014 threshold must not be re-optimized"
+      },
+      {
+        "id": "EG13",
+        "condition": "calibration=P45_Platt_constants",
+        "description": "Calibration must use P45 locked constants A=0.435432, B=0.245464"
+      },
+      {
+        "id": "EG14",
+        "condition": "odds_source_trace_required",
+        "description": "Odds traceability reference required \u2014 no odds without source audit trail"
+      },
+      {
+        "id": "EG15",
+        "condition": "timestamps_required",
+        "description": "game_start_utc, prediction_timestamp_utc, odds_timestamp_utc must all be pregame"
+      },
+      {
+        "id": "EG16",
+        "condition": "no_postgame_leakage",
+        "description": "No postgame data used in prediction or odds \u2014 pregame isolation required"
+      },
+      {
+        "id": "EG17",
+        "condition": "2024_data_gap_documented",
+        "description": "2024 closing-line data gap explicitly documented; contract covers 2025-only evidence"
+      }
+    ]
+  },
+  "row_schema": {
+    "n_required_fields": 33,
+    "fields": [
+      {
+        "field": "contract_version",
+        "type": "str",
+        "description": "Contract version string, e.g. P62_v1_20260526"
+      },
+      {
+        "field": "game_id",
+        "type": "str",
+        "description": "Unique game identifier (MLB game ID)"
+      },
+      {
+        "field": "game_start_utc",
+        "type": "str",
+        "description": "Game start time in ISO8601 UTC \u2014 pregame only"
+      },
+      {
+        "field": "generated_at_utc",
+        "type": "str",
+        "description": "Timestamp this contract row was generated"
+      },
+      {
+        "field": "prediction_timestamp_utc",
+        "type": "str",
+        "description": "Timestamp model prediction was made (must be pregame)"
+      },
+      {
+        "field": "odds_timestamp_utc",
+        "type": "str",
+        "description": "Timestamp odds were captured (must be pregame)"
+      },
+      {
+        "field": "market",
+        "type": "str",
+        "description": "Market type \u2014 always 'moneyline' for P62"
+      },
+      {
+        "field": "side",
+        "type": "str",
+        "description": "Home or Away \u2014 whichever model favors"
+      },
+      {
+        "field": "model_signal_name",
+        "type": "str",
+        "description": "Signal driving recommendation \u2014 always 'sp_fip_delta'"
+      },
+      {
+        "field": "sp_fip_delta",
+        "type": "float",
+        "description": "Raw FIP differential for this game"
+      },
+      {
+        "field": "signal_tier",
+        "type": "str",
+        "description": "Tier classification \u2014 must be 'Tier_C'"
+      },
+      {
+        "field": "tier_threshold",
+        "type": "float",
+        "description": "Locked threshold \u2014 0.50"
+      },
+      {
+        "field": "model_prob_home",
+        "type": "float",
+        "description": "Raw sigmoid model probability for home team"
+      },
+      {
+        "field": "model_prob_away",
+        "type": "float",
+        "description": "Raw sigmoid model probability for away team"
+      },
+      {
+        "field": "calibration_method",
+        "type": "str",
+        "description": "Always 'platt_scaled' \u2014 P45 locked"
+      },
+      {
+        "field": "platt_A",
+        "type": "float",
+        "description": "Platt A constant \u2014 locked 0.435432"
+      },
+      {
+        "field": "platt_B",
+        "type": "float",
+        "description": "Platt B constant \u2014 locked 0.245464"
+      },
+      {
+        "field": "calibrated_prob",
+        "type": "float",
+        "description": "Platt-calibrated model probability for favored side"
+      },
+      {
+        "field": "odds_source",
+        "type": "str",
+        "description": "Source of odds data (e.g. mlb_odds_2025_real.csv)"
+      },
+      {
+        "field": "odds_source_trace",
+        "type": "str",
+        "description": "Traceability reference \u2014 file + row hash or URL"
+      },
+      {
+        "field": "decimal_odds",
+        "type": "float",
+        "description": "Decimal odds for favored side"
+      },
+      {
+        "field": "implied_probability",
+        "type": "float",
+        "description": "Implied probability from decimal odds"
+      },
+      {
+        "field": "edge_pct",
+        "type": "float",
+        "description": "calibrated_prob - implied_probability (positive = model edge)"
+      },
+      {
+        "field": "paper_stake_units",
+        "type": "float",
+        "description": "Theoretical paper stake in units (never deployed)"
+      },
+      {
+        "field": "kelly_fraction_theoretical",
+        "type": "float",
+        "description": "Kelly criterion fraction (theoretical only, not deployed)"
+      },
+      {
+        "field": "kelly_deploy_allowed",
+        "type": "bool",
+        "description": "Always False \u2014 paper-only"
+      },
+      {
+        "field": "recommendation_status",
+        "type": "str",
+        "description": "One of 9 allowed status values"
+      },
+      {
+        "field": "gate_status",
+        "type": "str",
+        "description": "GATE_PASS or GATE_BLOCK"
+      },
+      {
+        "field": "gate_reasons",
+        "type": "list",
+        "description": "List of gate failure reasons (empty if GATE_PASS)"
+      },
+      {
+        "field": "paper_only",
+        "type": "bool",
+        "description": "Always True"
+      },
+      {
+        "field": "diagnostic_only",
+        "type": "bool",
+        "description": "Always True"
+      },
+      {
+        "field": "production_ready",
+        "type": "bool",
+        "description": "Always False"
+      },
+      {
+        "field": "real_bet_allowed",
+        "type": "bool",
+        "description": "Always False"
+      }
+    ]
+  },
+  "allowed_status_values": {
+    "n_values": 9,
+    "values": [
+      "PAPER_ELIGIBLE_CONTRACT_ONLY",
+      "BLOCKED_MISSING_ODDS_SOURCE_TRACE",
+      "BLOCKED_MISSING_TIMESTAMP",
+      "BLOCKED_POSTGAME_LEAKAGE_RISK",
+      "BLOCKED_SIGNAL_BELOW_TIER_C",
+      "BLOCKED_CALIBRATION_SOURCE_INVALID",
+      "BLOCKED_PROMOTION_FREEZE",
+      "BLOCKED_PRODUCTION_NOT_ALLOWED",
+      "BLOCKED_2024_DATA_GAP_UNRESOLVED"
+    ]
+  },
+  "governance_exclusions": {
+    "n_exclusions": 10,
+    "exclusions": [
+      {
+        "exclusion": "NO_LIVE_DEPLOYMENT",
+        "detail": "Contract rows must never be used for live betting decisions"
+      },
+      {
+        "exclusion": "NO_CHAMPION_REPLACEMENT",
+        "detail": "fixed_edge_5pct strategy remains champion; contract does not propose replacement"
+      },
+      {
+        "exclusion": "NO_PRODUCTION_PROPOSAL",
+        "detail": "This contract is explicitly NOT a production readiness proposal"
+      },
+      {
+        "exclusion": "NO_KELLY_DEPLOYMENT",
+        "detail": "Kelly fractions are theoretical only; kelly_deploy_allowed=False always"
+      },
+      {
+        "exclusion": "NO_PAID_API_USAGE",
+        "detail": "No paid odds API called during contract draft (P61 PATH_A/B pending CEO auth)"
+      },
+      {
+        "exclusion": "NO_TSL_CRAWLER_MODIFICATION",
+        "detail": "TSL crawler unchanged; all odds from existing 2025 CSV artifacts"
+      },
+      {
+        "exclusion": "NO_P45_CONSTANT_REFITTING",
+        "detail": "Platt constants A=0.435432, B=0.245464 are permanently locked from P45"
+      },
+      {
+        "exclusion": "NO_P52_THRESHOLD_MODIFICATION",
+        "detail": "P52 monitoring thresholds unchanged"
+      },
+      {
+        "exclusion": "NO_PROFIT_CLAIMS",
+        "detail": "Zero affirmative profit or deployment claims issued \u2014 diagnostic-only framing enforced"
+      },
+      {
+        "exclusion": "NO_2024_INFERENCE",
+        "detail": "2024 closing-line data gap unresolved; contract evidence is 2025-only"
+      }
+    ]
+  },
+  "p61_relationship": {
+    "p61_classification": "P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT",
+    "data_gap_status": "UNRESOLVED_AS_OF_P62",
+    "gap_description": "2024 MLB closing-line odds are missing from available data sources. P43 final classification was P43_BLOCKED_BY_DATA_GAP despite confirmed 2025 edge (mean_edge=0.1059, CI=[0.0989, 0.1132], Tier C, n=535). P61 identified two viable resolution paths: PATH_A (The Odds API, ~$30-50, MEDIUM effort, requires CEO authorization) and PATH_B (Kaggle/GitHub, $0, try first). Neither path has been executed as of P62 contract draft.",
+    "impact_on_p62": "P62 contract rows covering 2025 games can be fully defined. However, rows that would reference 2024 games are BLOCKED_2024_DATA_GAP_UNRESOLVED. The P43 potential upgrade from BLOCKED to CONFIRMED is contingent on P61 resolution.",
+    "resolution_paths": {
+      "PATH_A": "The Odds API historical data (~$30-50, MEDIUM effort) \u2014 requires CEO auth",
+      "PATH_B": "Kaggle/GitHub free search ($0, MEDIUM effort) \u2014 try first"
+    },
+    "recommended_order": "PATH_B first, PATH_A if PATH_B fails",
+    "ceo_auth_required": true,
+    "data_download_attempted": false
+  },
+  "p43_context": {
+    "p43_classification": "P43_BLOCKED_BY_DATA_GAP",
+    "tier_c_n": 535,
+    "edge_mean_2025": 0.1059370704287176,
+    "blocked_by_data_gap": true
+  },
+  "p60_context": {
+    "p60_classification": "P60_EDGE_STABLE_ACROSS_MONTHS",
+    "cross_month_edge_stability": null,
+    "months_with_edge_within_threshold": null,
+    "total_months": null
+  },
+  "p61_context": {
+    "p61_classification": "P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT",
+    "gap_resolvable": true,
+    "recommended_path": "PATH_A"
+  },
+  "sample_row_illustration": {
+    "note": "Hypothetical illustrative row \u2014 no actual game data, paper_only=True",
+    "actual_rows_emitted": false,
+    "row": {
+      "contract_version": "P62_v1_20260526",
+      "game_id": "HYPOTHETICAL_SAMPLE_2025_ABC123",
+      "game_start_utc": "2025-07-15T23:05:00Z",
+      "generated_at_utc": "2026-05-26T00:00:00Z",
+      "prediction_timestamp_utc": "2025-07-15T18:30:00Z",
+      "odds_timestamp_utc": "2025-07-15T20:00:00Z",
+      "market": "moneyline",
+      "side": "Home",
+      "model_signal_name": "sp_fip_delta",
+      "sp_fip_delta": 0.72,
+      "signal_tier": "Tier_C",
+      "tier_threshold": 0.5,
+      "model_prob_home": 0.640146,
+      "model_prob_away": 0.359854,
+      "calibration_method": "platt_scaled",
+      "platt_A": 0.435432,
+      "platt_B": 0.245464,
+      "calibrated_prob": 0.621583,
+      "odds_source": "mlb_odds_2025_real.csv",
+      "odds_source_trace": "mlb_odds_2025_real.csv:row_hash=HYPOTHETICAL",
+      "decimal_odds": 1.85,
+      "implied_probability": 0.540541,
+      "edge_pct": 0.081042,
+      "paper_stake_units": 1.0,
+      "kelly_fraction_theoretical": 0.176387,
+      "kelly_deploy_allowed": false,
+      "recommendation_status": "PAPER_ELIGIBLE_CONTRACT_ONLY",
+      "gate_status": "GATE_PASS",
+      "gate_reasons": [],
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "real_bet_allowed": false
+    }
+  },
+  "contract_coverage": {
+    "year_covered": "2025",
+    "year_excluded": "2024",
+    "exclusion_reason": "2024 closing-line data gap unresolved (P61 PATH_A/B pending)",
+    "months_validated_by_p60": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep"
+    ],
+    "cross_month_edge_stability": "EDGE_STABLE_ACROSS_MONTHS (6/6 months, per P60)"
+  },
+  "p62_classification": "P62_CONTRACT_DRAFT_READY_FOR_CEO_REVIEW",
+  "allowed_classifications": [
+    "P62_CONTRACT_DRAFT_READY_FOR_CEO_REVIEW",
+    "P62_CONTRACT_DRAFT_INCOMPLETE",
+    "P62_CONTRACT_DRAFT_BLOCKED"
+  ],
+  "forbidden_claims_scan": {
+    "affirmative_profit_claim_found": false,
+    "affirmative_profitability_claim_found": false,
+    "affirmative_production_status_found": false,
+    "affirmative_live_promotion_found": false,
+    "affirmative_deployment_status_found": false,
+    "affirmative_production_recommendation_found": false,
+    "affirmative_live_escalation_found": false,
+    "result": "CLEAN"
+  }
+}

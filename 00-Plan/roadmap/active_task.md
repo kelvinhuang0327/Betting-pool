@@ -1,4 +1,20 @@
-# Active Task — P61 2024 Closing-Line Data Gap Resolution Plan (CEO P1)
+# Active Task — P62 MLB Paper Recommendation Contract Draft (CEO P2)
+
+> **[COMPLETED 2026-05-26]** `P62_CONTRACT_DRAFT_READY_FOR_CEO_REVIEW`
+> **Issued by**: CEO P2 directive (after P61 completion)
+> **HEAD**: `d8b3ef5` (P61) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P61 `P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT` (commit `d8b3ef5`)
+>
+> **P62 Result:** Contract schema fully defined — 17-condition eligibility gate, 33-field row schema,
+> 9 allowed status values, 10 governance exclusions, P61 data gap documented.
+> No live rows emitted. No production deployment proposed. Paper-only diagnostic contract.
+> **Tests:** 20 PASS (P62) + regression PASS
+> **Forbidden scan:** 0 violations
+> **Classification:** `P62_CONTRACT_DRAFT_READY_FOR_CEO_REVIEW`
+
+---
+
+## P61 Prior Completion Record
 
 > **[COMPLETED 2026-05-26]** `P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT`
 > **Issued by**: CEO P1 directive (elevated after P60 completion)
