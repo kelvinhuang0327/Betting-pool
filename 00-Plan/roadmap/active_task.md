@@ -1,4 +1,38 @@
-# Active Task — P65 Walk-Forward Validation
+# Active Task — P67 (Pending)
+
+> **Next recommended scope**: P67 — 2024 Data Gap Resolution OR Doubleheader Join Disambiguation
+> **Status**: Awaiting CEO/CTO authorization
+> **Mode**: `paper_only=true`, `diagnostic_only=true`
+>
+> P66 confirmed the stable negative edge is genuine. Two candidate P67 paths:
+> - **Path A (Data Gap):** Resolve 2024 data gap (`data_year_2024_gap_remains_unresolved=True`).
+>   Expand paper simulation to 2024 season for cross-season validation.
+> - **Path B (Join Disambiguation):** Replace P64's `(date, home_team)` join with `game_id`-based
+>   join to explicitly handle 28 doubleheader duplicate keys found in P66.
+
+---
+
+## Prior Completed Task: P66
+
+> **[COMPLETED 2026-05-26]** `P66_ODDS_MAPPING_INTEGRITY_CONFIRMED`
+> **Branch**: `main` | **Mode**: `paper_only=true`, `diagnostic_only=true`
+> **Prior phase**: P65 `P65_EDGE_STABLE_NEGATIVE`
+>
+> **P66 Result:** 5-step odds mapping integrity audit of 535 P64 paper simulation rows.
+> Join: 0 unmatched, 28 doubleheader duplicate keys (last-row-wins dedup, documented not an error).
+> Side mapping: 535/535 PASS — no inversions.
+> Odds conversion: 535/535 PASS — American ML → decimal exact to 6 dp.
+> Edge recalculation: 535/535 PASS — max delta = 0.000000, mean edge −0.032473 (original = recomputed).
+> Positive edge rows: 200/535 (original) = 200/535 (recomputed).
+> Forbidden scan: 0 violations (CLEAN). All governance invariants enforced.
+> 2024 data gap: UNRESOLVED. Negative edge confirmed genuine after full mapping validation.
+> **Tests:** 36 PASS (P66) + 227 PASS (P43+P59+P60+P61+P62+P63+P64+P65+P66 regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P66_ODDS_MAPPING_INTEGRITY_CONFIRMED`
+
+---
+
+## Prior Completed Task: P65
 
 > **[COMPLETED 2026-05-26]** `P65_EDGE_STABLE_NEGATIVE`
 > **Branch**: `main` | **Mode**: `paper_only=true`, `diagnostic_only=true`
@@ -10,30 +44,19 @@
 > Edge is consistently negative across all temporal windows — no unstable regime detected.
 > Third means: third_1=-0.0301, third_2=-0.0242, third_3=-0.0431.
 > Rolling window range: edge_mean from -0.0104 (best) to -0.0685 (worst).
-> Recommendations: RESOLVE_2024_DATA_GAP, DO_NOT_PROCEED_TO_PRODUCT, REVIEW_MODEL_CALIBRATION, REVIEW_ODDS_MAPPING, ALLOW_CONTRACT_ITERATION_ONLY.
 > Forbidden scan: 0 violations (CLEAN). All governance invariants enforced.
-> 2024 data gap: UNRESOLVED (2025-only data, no paid API called).
+> 2024 data gap: UNRESOLVED.
 > **Tests:** 36 PASS (P65) + 191 PASS (P43+P59+P60+P61+P62+P63+P64+P65 regression)
-> **Forbidden scan:** 0 violations
 > **Classification:** `P65_EDGE_STABLE_NEGATIVE`
->
-> ---
->
-> ## Prior Completed Task: P64
->
+
+---
+
+## Prior Completed Task: P64
+
 > **[COMPLETED 2026-05-26]** `P64_PAPER_SIMULATION_FIRST_RUN_READY`
 > **Commit**: `c4a3375`
 > First paper-only simulation run. 535 Tier C rows. Edge mean = -0.032473. 200/535 positive edge.
 > P45 Platt constants locked: A=0.435432, B=0.245464.
->
-> ---
->
-> ## Recommended Next Steps
->
-> **Path A (Calibration Fix):** P66 — re-calibrate Platt scaling with 2025 data to see if edge can be improved.
-> **Path B (Data Gap):** P61 PATH_B — resolve 2024 data gap via free-source historical odds search.
-> **Path C (Odds Mapping):** Audit odds matching join (date+home_team) for systematic mismatches contributing to negative edge.
-> CEO authorization required before proceeding to any production-facing task.
 
 ---
 
