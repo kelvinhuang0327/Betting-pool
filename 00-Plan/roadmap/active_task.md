@@ -1,14 +1,36 @@
-# Active Task — P67 (Pending)
+# Active Task — P68 (Pending)
 
-> **Next recommended scope**: P67 — 2024 Data Gap Resolution OR Doubleheader Join Disambiguation
+> **Next recommended scope**: P68 — OddsPortal Scraping Feasibility Probe
 > **Status**: Awaiting CEO/CTO authorization
 > **Mode**: `paper_only=true`, `diagnostic_only=true`
 >
-> P66 confirmed the stable negative edge is genuine. Two candidate P67 paths:
-> - **Path A (Data Gap):** Resolve 2024 data gap (`data_year_2024_gap_remains_unresolved=True`).
->   Expand paper simulation to 2024 season for cross-season validation.
-> - **Path B (Join Disambiguation):** Replace P64's `(date, home_team)` join with `game_id`-based
->   join to explicitly handle 28 doubleheader duplicate keys found in P66.
+> P67 identified OddsPortal.com as a partial free source for 2024 MLB closing-line odds.
+> P68 must assess scraping feasibility (ToS review, pagination probe, schema alignment check).
+> If OddsPortal is ToS-blocked or technically infeasible: escalate to P61 PATH_A
+> (CEO decision for The Odds API paid historical pull, ~$30–50 one-time).
+
+---
+
+## Prior Completed Task: P67
+
+> **[COMPLETED 2026-05-26]** `P67_PATH_B_PARTIAL_SOURCE_FOUND_NEEDS_REVIEW`
+> **Branch**: `main` | **Mode**: `paper_only=true`, `diagnostic_only=true`
+> **Prior phase**: P66 `P66_ODDS_MAPPING_INTEGRITY_CONFIRMED`
+>
+> **P67 Result:** Exhaustive free-source search (PATH_B execution) — 13 search queries across
+> Kaggle, GitHub, OddsPortal, SportsbookReviewsOnline.com, aussportsbetting.com.
+> SBRO archive frozen at 2021 (SOURCE_NO_2024). Kaggle: 27 MLB 2024 datasets, all game stats,
+> no betting odds (SOURCE_NO_MONEYLINE). GitHub: 0 repos for 3 MLB odds queries; topic mlb-betting
+> = 0 public repos (SOURCE_UNUSABLE). Kaggle synthetic dataset (Faker, SOURCE_UNUSABLE).
+> OddsPortal: **2024 data confirmed in web UI** (WS Game 1 LAD 1.71/NYY 2.37);
+> no bulk CSV, requires JS scraping, ToS Section 5 restricts automated extraction.
+> OddsPortal classified SOURCE_PARTIAL_NEEDS_SCHEMA_PROBE.
+> aussportsbetting.com: HTTP 403 blocked, SOURCE_LICENSE_UNCLEAR.
+> 2024 data gap: UNRESOLVED_PENDING_P68_SCRAPE_FEASIBILITY.
+> Forbidden scan: 0 violations (CLEAN). All governance invariants enforced.
+> **Tests:** 33 PASS (P67) + 260 PASS (P43+P59–P67 cumulative regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P67_PATH_B_PARTIAL_SOURCE_FOUND_NEEDS_REVIEW`
 
 ---
 
