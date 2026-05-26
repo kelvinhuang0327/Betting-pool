@@ -1,19 +1,19 @@
-# Active Task — P70 (Pending)
+# Active Task — P71 (Pending)
 
-> **Next recommended scope**: P70 — CEO Decision on P61 PATH_A
-> **Status**: Awaiting CEO response to P69 memo
+> **Next recommended scope**: P71 — The Odds API Live Pull Execution
+> **Status**: Awaiting `THE_ODDS_API_KEY` in `.env`
 > **Mode**: `paper_only=true`, `diagnostic_only=true`
 >
-> P69 produced the CEO decision memo for P61 PATH_A authorization.
-> CEO must now choose one of the three decision phrases from the P69 memo:
+> P70 created the complete pull script and validated it in dry-run mode.
+> CEO authorization is confirmed (`P70_PATH_A_AUTHORIZED_AWAITING_API_KEY`).
 >
-> **APPROVE**: `YES authorize P61 PATH_A The Odds API historical 2024 MLB moneyline pull for paper-only validation`
-> **REJECT**: `NO reject P61 PATH_A and freeze 2024 closing-line scope`
-> **DEFER**: `DEFER P61 PATH_A pending more information`
+> **To trigger actual 2024 MLB data pull:**
+> 1. Register at https://the-odds-api.com and purchase historical data access
+> 2. Add to `.env`: `THE_ODDS_API_KEY=<your_key>`
+> 3. Run: `.venv/bin/python scripts/_p70_path_a_the_odds_api_historical_pull.py`
+> 4. Script auto-switches to LIVE mode and writes `data/mlb_2025/mlb_odds_2024_real.csv`
 >
-> P70 scope depends on CEO decision. If approved → execute The Odds API pull.
-> If rejected → freeze 2024 scope, accept P43_BLOCKED_BY_DATA_GAP as permanent.
-> If deferred → document open questions and re-present.
+> P71 = verify the resulting CSV, validate schema, run P43 cross-year bootstrap CI.
 
 ---
 
