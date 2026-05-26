@@ -17,7 +17,7 @@
 > - Forbidden scan: PASS (0 violations) | live_api_calls=0 | p82_unlocked=False
 > - 69/69 tests PASS | Full regression: 664/664 PASS (P72A→P82A)
 > - **P82 unlock status**: BLOCKED_NO_REAL_DATASET
-> - **Commit**: TBD (pending)
+> - **Commit**: `555b52a`
 
 ---
 
