@@ -1,4 +1,27 @@
-# Active Task — P63 Paper Recommendation Contract Review Readiness Gate
+# Active Task — P64 Paper Simulation First Run
+
+> **[COMPLETED 2026-05-26]** `P64_PAPER_SIMULATION_FIRST_RUN_READY`
+> **Issued by**: CEO approval phrase: `YES approve P62 contract and proceed with P64 paper simulation first run`
+> **HEAD**: `2a0052a` → pending commit | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P63 `P63_READY_FOR_CEO_REVIEW`
+>
+> **P64 Result:** First paper-only simulation run using 2025 local data only.
+> 535 Tier C games (|sp_fip_delta| >= 0.50) loaded from predictions JSONL.
+> 535/535 matched to odds via mlb_odds_2025_real.csv (date+home_team join).
+> All 535 rows emitted with all 33 P62 contract fields. All rows GATE_PASS / PAPER_ELIGIBLE_CONTRACT_ONLY.
+> Edge mean = -0.032473 (market has edge overall). Positive edge rows = 200/535.
+> Forbidden scan: 0 violations (CLEAN). All governance invariants enforced.
+> P45 Platt constants locked: A=0.435432, B=0.245464. P52 thresholds unchanged.
+> 2024 data gap: UNRESOLVED (2025-only simulation, no paid API called).
+> **Tests:** 36 PASS (P64) + 155 PASS (P43+P59+P60+P61+P62+P63+P64 regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P64_PAPER_SIMULATION_FIRST_RUN_READY`
+> **Recommended next step:** CEO reviews P64 edge distribution → authorize P65 (walk-forward validation)
+> or proceed with P61 PATH_B 2024 data gap resolution (free-source search)
+
+---
+
+## P63 Prior Completion Record
 
 > **[COMPLETED 2026-05-26]** `P63_READY_FOR_CEO_REVIEW`
 > **Issued by**: CTO Agent (CEO review readiness gate for P62)
@@ -12,7 +35,6 @@
 > **Tests:** 31 PASS (P63) + 119 PASS (P43+P59+P60+P61+P62+P63 regression)
 > **Forbidden scan:** 0 violations
 > **Classification:** `P63_READY_FOR_CEO_REVIEW`
-> **Recommended next step:** CEO approves P62 contract → P64 paper simulation (2025 only, zero live API)
 
 ---
 
