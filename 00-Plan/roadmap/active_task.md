@@ -1,3 +1,34 @@
+# Active Task — P83C 2026 Prediction Schema Producer Contract
+
+> **[COMPLETED 2026-05-26]** `P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA`
+> **Issued by**: P83B handoff (P83B_INGEST_CONTRACT_READY_AWAITING_DATA)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=True`
+>
+> **P83C Result:** 2026 prediction schema producer contract defined.
+> No upstream data fetched. Schema-only dry-run validates 19-field schema in-memory.
+> Snapshot unlock blocked (0 real rows in canonical path).
+>
+> **Contract deliverables:**
+> - Upstream input contract: P83C_UPSTREAM_INPUT_CONTRACT_V1 (5 input groups, AWAITING)
+> - Producer output schema: P83C_PRODUCER_OUTPUT_SCHEMA_V1 (19 required fields, jsonl)
+> - Rule flag computation: P83C_RULE_FLAG_COMPUTATION_CONTRACT_V1 (5 cases, all deterministic)
+> - Schema-only dry-run: 4 MOCK_SCHEMA_ONLY rows validated in-memory, not written to canonical
+> - P83D prompt generated: triggers when upstream 2026 FIP data + schedule available
+> - Forbidden scan: CLEAN (0 violations)
+>
+> **Output artifacts:**
+> - `scripts/_p83c_2026_prediction_schema_producer_contract.py`
+> - `tests/test_p83c_2026_prediction_schema_producer_contract.py`
+> - `data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json`
+> - `report/p83c_2026_prediction_schema_producer_contract_20260526.md`
+> - `00-BettingPlan/20260526/p83c_2026_prediction_schema_producer_contract_20260526.md`
+>
+> **Tests:** 38 PASS (P83C) + regression suite PASS
+> **Forbidden scan:** 0 violations
+> **Classification:** `P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA`
+
+---
+
 # Active Task — P83B 2026 Prediction Data Ingest Contract / Awaiting Stub
 
 > **[COMPLETED 2026-05-26]** `P83B_INGEST_CONTRACT_READY_AWAITING_DATA`

@@ -1,0 +1,479 @@
+{
+  "phase": "P83C",
+  "date": "2026-05-26",
+  "p83c_classification": "P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA",
+  "allowed_classifications": [
+    "P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA",
+    "P83C_SCHEMA_PRODUCER_READY_WITH_EXISTING_UPSTREAM_DATA",
+    "P83C_BLOCKED_BY_MISSING_P83B_ARTIFACT",
+    "P83C_FAILED_VALIDATION"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "odds_used": false
+  },
+  "prediction_boundary": "P83C is a schema producer contract definition only. No upstream 2026 game data is fetched; no market edge is computed. Mock dry-run row is in-memory only and cannot trigger real snapshots. paper_only=True, diagnostic_only=True.",
+  "source_artifacts": {
+    "p83b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+    "p83a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json",
+    "p82c_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82c_staging_guard_dryrun_scanner_summary.json",
+    "p82b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82b_raw_paid_odds_data_policy_contract_summary.json",
+    "p77_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p77_prediction_only_shadow_tracker_contract_summary.json",
+    "p76_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p76_corrected_tier_c_final_rule_selection_summary.json"
+  },
+  "step1_p83b_verification": {
+    "artifact_loaded": true,
+    "artifact_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+    "p83b_classification": "P83B_INGEST_CONTRACT_READY_AWAITING_DATA",
+    "classification_ok": true,
+    "canonical_paths_count": 4,
+    "canonical_paths_ok": true,
+    "prediction_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "schema_id": "P83B_2026_PREDICTION_ROW_SCHEMA_V1",
+    "schema_id_ok": true,
+    "required_fields_count": 19,
+    "required_fields_count_ok": true,
+    "governance_enforced_ok": true,
+    "runtime_paper_noncanonical": true,
+    "live_api_calls": 0,
+    "live_api_ok": true,
+    "verification_ok": true
+  },
+  "step2_upstream_input_contract": {
+    "contract_id": "P83C_UPSTREAM_INPUT_CONTRACT_V1",
+    "version": "1.0.0",
+    "status": "AWAITING",
+    "fetch_instruction": "DO NOT FETCH IN P83C. This is a contract definition only. P83D will fetch when upstream data exists.",
+    "live_api_calls": 0,
+    "required_input_groups": {
+      "game_schedule": {
+        "description": "2026 MLB game schedule with unique game identifiers",
+        "fields": [
+          "game_id",
+          "game_date",
+          "season"
+        ],
+        "field_notes": {
+          "game_id": "Unique identifier e.g. MLB2026_CLE_BOS_2026-04-01",
+          "game_date": "ISO-8601 date string YYYY-MM-DD",
+          "season": "Must equal 2026"
+        },
+        "source_hint": "statsapi.mlb.com schedule endpoint (DO NOT CALL IN P83C)",
+        "availability": "AWAITING"
+      },
+      "team_identifiers": {
+        "description": "Home and away team names for each game",
+        "fields": [
+          "home_team",
+          "away_team"
+        ],
+        "field_notes": {
+          "home_team": "Home team name (string)",
+          "away_team": "Away team name (string)"
+        },
+        "source_hint": "Derived from game schedule",
+        "availability": "AWAITING"
+      },
+      "starting_pitcher_features": {
+        "description": "Starting pitcher FIP data required to compute sp_fip_delta. FIP formula: (13*HR + 3*(BB+HBP) - 2*K) / IP + FIP_constant",
+        "fields": [
+          "home_sp_fip",
+          "away_sp_fip"
+        ],
+        "derived_fields": [
+          "sp_fip_delta",
+          "abs_sp_fip_delta"
+        ],
+        "fip_formula": "FIP = (13*HR + 3*(BB+HBP) - 2*K) / IP + FIP_constant",
+        "sp_fip_delta_formula": "sp_fip_delta = home_sp_fip - away_sp_fip",
+        "abs_sp_fip_delta_formula": "abs_sp_fip_delta = abs(sp_fip_delta)",
+        "field_notes": {
+          "sp_fip_delta": "Positive = home pitcher favored per this convention",
+          "abs_sp_fip_delta": "Absolute magnitude; determines tier/rule flags"
+        },
+        "source_hint": "statsapi.mlb.com or FIP table from 2026 pitcher stats (DO NOT CALL IN P83C)",
+        "availability": "AWAITING",
+        "no_retraining_required": true
+      },
+      "model_output": {
+        "description": "Ensemble model probability output for each game",
+        "fields": [
+          "model_probability",
+          "predicted_side",
+          "source_prediction_version"
+        ],
+        "field_notes": {
+          "model_probability": "P(predicted_side wins) from ensemble model [0.0, 1.0]",
+          "predicted_side": "'home' if sp_fip_delta > 0 else 'away'. Ties excluded.",
+          "source_prediction_version": "Must equal 'mlb_2026_prediction_rows_v1'"
+        },
+        "source_hint": "P83D will call 2025 ensemble model with 2026 pitcher features",
+        "availability": "AWAITING"
+      },
+      "governance_flags": {
+        "description": "Governance enforcement fields \u2014 all values pre-defined",
+        "fields": [
+          "paper_only",
+          "diagnostic_only",
+          "odds_used",
+          "market_edge_evaluated",
+          "production_ready"
+        ],
+        "enforced_values": {
+          "season": 2026,
+          "paper_only": true,
+          "diagnostic_only": true,
+          "odds_used": false,
+          "market_edge_evaluated": false,
+          "production_ready": false
+        },
+        "availability": "READY",
+        "note": "These fields are constants \u2014 no upstream data needed."
+      }
+    },
+    "upstream_data_exists": false,
+    "upstream_data_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "upstream_data_found": false,
+    "required_input_group_count": 5,
+    "required_input_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "home_sp_fip",
+      "away_sp_fip",
+      "model_probability",
+      "predicted_side",
+      "source_prediction_version",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "market_edge_evaluated",
+      "production_ready"
+    ]
+  },
+  "step3_producer_output_schema": {
+    "schema_id": "P83C_PRODUCER_OUTPUT_SCHEMA_V1",
+    "inherits_from": "P83B_2026_PREDICTION_ROW_SCHEMA_V1",
+    "version": "1.0.0",
+    "output_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "output_format": "jsonl",
+    "required_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "predicted_side",
+      "model_probability",
+      "sp_fip_delta",
+      "abs_sp_fip_delta",
+      "source_prediction_version",
+      "rule_primary_125_flag",
+      "rule_shadow_100_flag",
+      "tier_b_candidate_flag",
+      "tier_a_watchlist_flag",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "market_edge_evaluated",
+      "production_ready"
+    ],
+    "required_fields_count": 19,
+    "optional_outcome_fields": [
+      "actual_winner",
+      "is_correct",
+      "outcome_source",
+      "outcome_available",
+      "outcome_finalized_at"
+    ],
+    "optional_outcome_fields_count": 5,
+    "governance_enforced_values": {
+      "season": 2026,
+      "paper_only": true,
+      "diagnostic_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "production_ready": false
+    },
+    "field_derivation": {
+      "directly_sourced": [
+        "game_id",
+        "game_date",
+        "season",
+        "home_team",
+        "away_team",
+        "model_probability",
+        "source_prediction_version"
+      ],
+      "derived_from_sp_fip": [
+        "sp_fip_delta",
+        "abs_sp_fip_delta",
+        "predicted_side",
+        "rule_primary_125_flag",
+        "rule_shadow_100_flag",
+        "tier_b_candidate_flag",
+        "tier_a_watchlist_flag"
+      ],
+      "governance_constants": [
+        "paper_only",
+        "diagnostic_only",
+        "odds_used",
+        "market_edge_evaluated",
+        "production_ready"
+      ]
+    },
+    "odds_required": false,
+    "no_odds_fields": true,
+    "outcome_fields_status": "OPTIONAL_PENDING",
+    "no_market_edge_required": true
+  },
+  "step4_rule_flag_computation": {
+    "contract_id": "P83C_RULE_FLAG_COMPUTATION_CONTRACT_V1",
+    "formulas": {
+      "abs_sp_fip_delta": "abs_sp_fip_delta = abs(sp_fip_delta)",
+      "rule_primary_125_flag": "home pick: abs_sp_fip_delta >= 0.50 | away pick: abs_sp_fip_delta >= 1.25 (TIER_C_HOME_PLUS_AWAY_125 per P76/P83B)",
+      "rule_shadow_100_flag": "home pick: abs_sp_fip_delta >= 0.50 | away pick: abs_sp_fip_delta >= 1.00 (TIER_C_HOME_PLUS_AWAY_100 per P76/P83B)",
+      "tier_b_candidate_flag": "0.25 <= abs_sp_fip_delta < 0.50",
+      "tier_a_watchlist_flag": "abs_sp_fip_delta < 0.25"
+    },
+    "thresholds": {
+      "home_pick_min_abs": 0.5,
+      "away_pick_primary_min_abs": 1.25,
+      "away_pick_shadow_min_abs": 1.0,
+      "tier_b_lower": 0.25,
+      "tier_b_upper": 0.5,
+      "tier_a_upper": 0.25
+    },
+    "verification_cases": [
+      {
+        "label": "home_strong_1.30",
+        "sp_fip_delta": 1.3,
+        "predicted_side": "home",
+        "computed": {
+          "rule_primary_125_flag": true,
+          "rule_shadow_100_flag": true,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": false,
+          "abs_sp_fip_delta": 1.3
+        },
+        "expected": {
+          "abs_sp_fip_delta": 1.3,
+          "rule_primary_125_flag": true,
+          "rule_shadow_100_flag": true,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": false
+        },
+        "pass": true
+      },
+      {
+        "label": "away_strong_1.40",
+        "sp_fip_delta": -1.4,
+        "predicted_side": "away",
+        "computed": {
+          "rule_primary_125_flag": true,
+          "rule_shadow_100_flag": true,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": false,
+          "abs_sp_fip_delta": 1.4
+        },
+        "expected": {
+          "abs_sp_fip_delta": 1.4,
+          "rule_primary_125_flag": true,
+          "rule_shadow_100_flag": true,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": false
+        },
+        "pass": true
+      },
+      {
+        "label": "away_medium_1.10",
+        "sp_fip_delta": -1.1,
+        "predicted_side": "away",
+        "computed": {
+          "rule_primary_125_flag": false,
+          "rule_shadow_100_flag": true,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": false,
+          "abs_sp_fip_delta": 1.1
+        },
+        "expected": {
+          "abs_sp_fip_delta": 1.1,
+          "rule_primary_125_flag": false,
+          "rule_shadow_100_flag": true,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": false
+        },
+        "pass": true
+      },
+      {
+        "label": "home_tier_b_0.35",
+        "sp_fip_delta": 0.35,
+        "predicted_side": "home",
+        "computed": {
+          "rule_primary_125_flag": false,
+          "rule_shadow_100_flag": false,
+          "tier_b_candidate_flag": true,
+          "tier_a_watchlist_flag": false,
+          "abs_sp_fip_delta": 0.35
+        },
+        "expected": {
+          "abs_sp_fip_delta": 0.35,
+          "rule_primary_125_flag": false,
+          "rule_shadow_100_flag": false,
+          "tier_b_candidate_flag": true,
+          "tier_a_watchlist_flag": false
+        },
+        "pass": true
+      },
+      {
+        "label": "home_tier_a_0.15",
+        "sp_fip_delta": 0.15,
+        "predicted_side": "home",
+        "computed": {
+          "rule_primary_125_flag": false,
+          "rule_shadow_100_flag": false,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": true,
+          "abs_sp_fip_delta": 0.15
+        },
+        "expected": {
+          "abs_sp_fip_delta": 0.15,
+          "rule_primary_125_flag": false,
+          "rule_shadow_100_flag": false,
+          "tier_b_candidate_flag": false,
+          "tier_a_watchlist_flag": true
+        },
+        "pass": true
+      }
+    ],
+    "verification_all_pass": true,
+    "deterministic": true,
+    "no_ml_required_for_flags": true
+  },
+  "step5_schema_only_dry_run": {
+    "dry_run_id": "P83C_MOCK_SCHEMA_ONLY_DRY_RUN_V1",
+    "mock_row_count": 4,
+    "mock_tag": "MOCK_SCHEMA_ONLY",
+    "mock_rows_in_memory_only": true,
+    "mock_row_written_to_canonical": false,
+    "canonical_prediction_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "canonical_path_exists": false,
+    "real_row_count_in_canonical": 0,
+    "snapshot_unlock_blocked": true,
+    "schema_pass": true,
+    "governance_pass": true,
+    "rule_flags_pass": true,
+    "row_results": [
+      {
+        "mock_label": "home_strong",
+        "mock_tag": "MOCK_SCHEMA_ONLY",
+        "schema_pass": true,
+        "schema_violations": [],
+        "governance_pass": true,
+        "governance_violations": [],
+        "rule_flags_pass": true,
+        "rule_flag_violations": []
+      },
+      {
+        "mock_label": "away_strong",
+        "mock_tag": "MOCK_SCHEMA_ONLY",
+        "schema_pass": true,
+        "schema_violations": [],
+        "governance_pass": true,
+        "governance_violations": [],
+        "rule_flags_pass": true,
+        "rule_flag_violations": []
+      },
+      {
+        "mock_label": "home_tier_b",
+        "mock_tag": "MOCK_SCHEMA_ONLY",
+        "schema_pass": true,
+        "schema_violations": [],
+        "governance_pass": true,
+        "governance_violations": [],
+        "rule_flags_pass": true,
+        "rule_flag_violations": []
+      },
+      {
+        "mock_label": "home_tier_a",
+        "mock_tag": "MOCK_SCHEMA_ONLY",
+        "schema_pass": true,
+        "schema_violations": [],
+        "governance_pass": true,
+        "governance_violations": [],
+        "rule_flags_pass": true,
+        "rule_flag_violations": []
+      }
+    ],
+    "classification_unchanged": "P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA",
+    "note": "Mock rows are validated in-memory only. They are NOT written to canonical prediction path. They cannot trigger P83A/P83B snapshot flow. Real 2026 prediction data must come from P83D."
+  },
+  "step6_p83d_prompt": {
+    "future_phase": "P83D",
+    "trigger_condition": "Upstream 2026 pitcher FIP data and game schedule are available. Use P83C_UPSTREAM_INPUT_CONTRACT_V1 to fetch required inputs.",
+    "minimum_rows_to_trigger": 1,
+    "preferred_rows_to_trigger": 10,
+    "p83d_tasks": [
+      "1. Load 2026 game schedule from statsapi.mlb.com (season=2026).",
+      "2. Load 2026 starting pitcher FIP data; compute sp_fip_delta per game.",
+      "3. Apply ensemble model (same as 2025; no retraining) to compute model_probability.",
+      "4. For each game: derive predicted_side from sp_fip_delta sign.",
+      "5. Compute all rule flags using P83C_RULE_FLAG_COMPUTATION_CONTRACT_V1.",
+      "6. Enforce all governance values per P83C_PRODUCER_OUTPUT_SCHEMA_V1.",
+      "7. Write rows to: data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+      "8. Run P83B_ROW_VALIDATOR_V1 on each written row.",
+      "9. Trigger P83A/P83B snapshot flow once n>=1 valid rows present.",
+      "10. Update p83_live_accumulation_latest_summary.json and report."
+    ],
+    "must_not_do": [
+      "Must NOT use real odds data.",
+      "Must NOT compute EV / CLV / Kelly.",
+      "Must NOT set production_ready=True.",
+      "Must NOT call live betting API.",
+      "Must NOT modify TSL crawler."
+    ],
+    "governance_inherited": {
+      "season": 2026,
+      "paper_only": true,
+      "diagnostic_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "production_ready": false
+    },
+    "reference_baseline": {
+      "rule": "TIER_C_HOME_PLUS_AWAY_125",
+      "hit_rate_2025": 0.6392,
+      "auc_2025": 0.5787,
+      "cal_brier_2025": 0.2274,
+      "n_2025": 316
+    },
+    "canonical_output_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "schema_ref": "P83C_PRODUCER_OUTPUT_SCHEMA_V1",
+    "upstream_contract_ref": "P83C_UPSTREAM_INPUT_CONTRACT_V1",
+    "prompt_template": "[P83D \u2014 2026 Prediction Row Generator]\n\nContinue from P83C (schema producer contract). P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA is in place.\n\nUpstream 2026 pitcher FIP data and game schedule are now available.\n\nP83D must:\n1. Load 2026 game schedule + SP FIP data.\n2. Compute sp_fip_delta = home_sp_fip - away_sp_fip per game.\n3. Apply ensemble model \u2192 model_probability + predicted_side.\n4. Compute rule flags per P83C_RULE_FLAG_COMPUTATION_CONTRACT_V1.\n5. Write governance-clean rows to canonical JSONL path.\n6. Run P83B_ROW_VALIDATOR_V1 on all rows.\n7. Trigger P83A snapshot flow if n>=1 valid rows.\n8. Compare 2026 hit_rate to 2025 baseline (HOME+AWAY_125: hit=0.6392, AUC=0.5787).\n\npaper_only=True | diagnostic_only=True | NO_REAL_BET=True"
+  },
+  "p82_status": "BLOCKED_NO_REAL_DATASET",
+  "p82_unlock_condition": "Requires external legal odds dataset + P81 validator pass",
+  "forbidden_scan": {
+    "violations": [],
+    "violation_count": 0,
+    "result": "CLEAN"
+  }
+}
