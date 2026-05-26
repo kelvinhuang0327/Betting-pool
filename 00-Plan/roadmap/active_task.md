@@ -1,4 +1,20 @@
-# Active Task — P72A Odds-Free Strategy Accuracy Backtest
+# Active Task — P72B Prediction-vs-Market Objective Contract
+
+> **[COMPLETED 2026-05-26]** `P72B_OBJECTIVE_CONTRACT_READY`
+> **Issued by**: CTO governance direction after P72A
+> **HEAD**: `5c2a26b` (P72A) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P72A `P72A_ODDS_FREE_PREDICTIVE_SIGNAL_CONFIRMED` (commit `5c2a26b`)
+>
+> **P72B Result:** 5-lane objective contract defined. P72A strategies classified.
+> Tier C = PRIMARY_OPERATIONAL_CANDIDATE. Tier B = BEST_AUC_RESEARCH. Tier A = SAMPLE_LIMITED.
+> Production BLOCKED (7/8 gates pending). Recommended next: P73A + P73B.
+> **Tests:** 23 PASS (P72B) + regression PASS
+> **Forbidden scan:** 0 violations
+> **Classification:** `P72B_OBJECTIVE_CONTRACT_READY`
+
+---
+
+## Prior Active Task: P72A Odds-Free Strategy Accuracy Backtest
 
 > **[COMPLETED 2026-05-26]** `P72A_ODDS_FREE_PREDICTIVE_SIGNAL_CONFIRMED`
 > **Issued by**: CTO direction — API key NOT required for accuracy backtest
