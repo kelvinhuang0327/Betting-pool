@@ -1,4 +1,33 @@
-# Active Task — P82C Staging Guard Enforcement Dry-Run + Policy Drift Scanner
+# Active Task — P83A 2026 Live Accumulation First Snapshot / Awaiting Contract
+
+> **[COMPLETED 2026-05-26]** `P83A_AWAITING_2026_DATA`
+> **Issued by**: P82C handoff (P82C_STAGING_GUARD_DRYRUN_READY)
+> **Branch**: `main` | **Mode**: `paper_only=true`
+>
+> **P83A Result:** Searched all local candidate paths for 2026 prediction-only rows
+> (sp_fip_delta schema). No qualifying rows found → formal awaiting-data contract issued.
+>
+> **Discovery result:**
+> - `data/mlb_2026/` does not exist (primary canonical path)
+> - `outputs/recommendations/PAPER/2026-05-11/` contains 1 runtime file (LAA-CLE)
+>   but uses market-pipeline schema (no sp_fip_delta / predicted_side) — NOT P83A-qualifying
+> - Total 2026 rows with required schema: 0
+>
+> **Awaiting-data contract:**
+> - Expected path: `data/mlb_2026/predictions/mlb_2026_prediction_only_sp_fip_delta_v1.jsonl`
+> - Thresholds: smoke n=1 / sample_limited n=10 / checkpoint_1 n=50 / checkpoint_2 n=100 / operational n=200
+> - Rerun trigger: any file matching P83A schema in data/mlb_2026/ or outputs/online_validation/
+> - Primary rule: TIER_C_HOME_PLUS_AWAY_125 | Shadow: TIER_C_HOME_PLUS_AWAY_100
+> - P82 market-edge: BLOCKED — requires external legal odds dataset
+> - Next phase: P83B once data arrives
+>
+> **Tests:** 46 PASS (P83A) + 784 PASS (P72A→P82C regression) = 830 total
+> **Forbidden scan:** 0 violations
+> **Classification:** `P83A_AWAITING_2026_DATA`
+
+---
+
+## Prior Active Task: P82C Staging Guard Enforcement Dry-Run + Policy Drift Scanner
 
 > **[COMPLETED 2026-05-26]** `P82C_STAGING_GUARD_DRYRUN_READY`
 > **Issued by**: P82B handoff (P82B_RAW_PAID_DATA_POLICY_READY)
