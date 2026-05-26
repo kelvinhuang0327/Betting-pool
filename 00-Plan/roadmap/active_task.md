@@ -1,4 +1,29 @@
-# Active Task — P78 Monthly Rule Monitoring Template + Shadow Tracker Report Pack
+# Active Task — P79A Tier B Trigger Readiness + 2026 Live Data Intake Contract
+
+> **[COMPLETED 2026-05-26]** `P79A_TIER_B_TRIGGER_READINESS_CONTRACT_READY`
+> **Issued by**: P78 handoff (P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
+>
+> **P79A Result:** Tier B trigger readiness contract defined + 2026 live data intake contract.
+> State machine: 6 states (NOT_READY → EARLY_OBSERVATION → ACCUMULATING → TRIGGER_READY → FROZEN/REJECTED).
+> Fixture confirms trigger fires at 2025-07 (cumulative Tier B n=219 ≥ 200).
+>
+> **Contract summary:**
+> - Intake row contract: 30 fields, governance enforcement (paper_only=True, production_ready=False)
+> - Tier B trigger states: 6 (trigger threshold n=200)
+> - Comparison metrics: 18 (Tier B vs Tier C finalists)
+> - Handoff package schema: 13 required fields (schema p79a-v1)
+> - Fixture trigger month: 2025-07 (n=219), frozen snapshot generated
+> - Snapshot ID: tier_b_snapshot_2025_202507
+> - Market-edge lane: blocked (deferred to P80)
+> - Forbidden scan: PASS (0 violations)
+>
+> **Tests:** 60/60 PASS (P79A) + 328/328 PASS (regression P72A→P78) = 388 total
+> **Commit**: (pending)
+
+---
+
+# Previous Task — P78 Monthly Rule Monitoring Template + Shadow Tracker Report Pack
 
 > **[COMPLETED 2026-05-26]** `P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY`
 > **Issued by**: P77 handoff (P77_SHADOW_TRACKER_CONTRACT_READY)
