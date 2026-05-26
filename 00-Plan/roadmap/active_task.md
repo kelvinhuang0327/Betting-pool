@@ -17,7 +17,7 @@
 > - 9 output decision states defined; current=BLOCKED_NO_REAL_DATASET
 > - Forbidden scan: PASS (0 violations) | live_api_calls=0
 > - 64/64 tests PASS | Full regression: 595/595 PASS (P72A→P81)
-> - **Commit**: (see below)
+> - **Commit**: `da626c9`
 
 ---
 
