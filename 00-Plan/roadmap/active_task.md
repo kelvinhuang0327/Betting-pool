@@ -1,4 +1,19 @@
-# Active Task — P72 (Pending)
+# Active Task — P72A Odds-Free Strategy Accuracy Backtest
+
+> **[COMPLETED 2026-05-26]** `P72A_ODDS_FREE_PREDICTIVE_SIGNAL_CONFIRMED`
+> **Issued by**: CTO direction — API key NOT required for accuracy backtest
+> **HEAD**: `1d8adb8` (P71) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P71 `P71_PATH_A_STILL_AWAITING_API_KEY` (commit `1d8adb8`)
+>
+> **P72A Result:** 7 strategies evaluated. Best: S02_TIER_B_DIRECTIONAL (AUC=0.646, n=98).
+> Tier C directional: hit_rate=0.606, AUC=0.583. All without odds. No EV/CLV/Kelly.
+> **Tests:** P72A PASS + regression PASS
+> **Forbidden scan:** 0 violations
+> **Classification:** `P72A_ODDS_FREE_PREDICTIVE_SIGNAL_CONFIRMED`
+
+---
+
+## Prior Active Task: P72 (Pending)
 
 > **Next recommended scope**: P72 — Live Pull Re-execution on Key Configuration
 > **Status**: Awaiting `THE_ODDS_API_KEY` in `.env` (same blocker as P71)
