@@ -1,0 +1,561 @@
+{
+  "phase": "P83D",
+  "date": "2026-05-26",
+  "generated_at": "2026-05-26T14:26:51.454756+00:00",
+  "p83d_classification": "P83D_AWAITING_UPSTREAM_DATA",
+  "allowed_classifications": [
+    "P83D_AWAITING_UPSTREAM_DATA",
+    "P83D_PRODUCER_ACTIVATION_READY",
+    "P83D_BLOCKED_BY_MISSING_P83C_ARTIFACT",
+    "P83D_FAILED_VALIDATION"
+  ],
+  "prediction_boundary": "P83D is a local-only upstream data availability probe. No external API calls are made. No market edge is computed. No canonical 2026 prediction rows are written unless upstream is complete and task explicitly authorizes activation. paper_only=True, diagnostic_only=True.",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "odds_used": false
+  },
+  "step1_p83c_verification": {
+    "artifact_loaded": true,
+    "artifact_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json",
+    "p83c_classification": "P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA",
+    "classification_ok": true,
+    "live_api_calls": 0,
+    "live_api_ok": true,
+    "canonical_prediction_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "canonical_path_defined": true,
+    "upstream_contract_exists": true,
+    "upstream_contract_id": "P83C_UPSTREAM_INPUT_CONTRACT_V1",
+    "snapshot_unlock_blocked": true,
+    "required_input_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "home_sp_fip",
+      "away_sp_fip",
+      "model_probability",
+      "predicted_side",
+      "source_prediction_version",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "market_edge_evaluated",
+      "production_ready"
+    ],
+    "required_input_groups": {
+      "game_schedule": {
+        "description": "2026 MLB game schedule with unique game identifiers",
+        "fields": [
+          "game_id",
+          "game_date",
+          "season"
+        ],
+        "field_notes": {
+          "game_id": "Unique identifier e.g. MLB2026_CLE_BOS_2026-04-01",
+          "game_date": "ISO-8601 date string YYYY-MM-DD",
+          "season": "Must equal 2026"
+        },
+        "source_hint": "statsapi.mlb.com schedule endpoint (DO NOT CALL IN P83C)",
+        "availability": "AWAITING"
+      },
+      "team_identifiers": {
+        "description": "Home and away team names for each game",
+        "fields": [
+          "home_team",
+          "away_team"
+        ],
+        "field_notes": {
+          "home_team": "Home team name (string)",
+          "away_team": "Away team name (string)"
+        },
+        "source_hint": "Derived from game schedule",
+        "availability": "AWAITING"
+      },
+      "starting_pitcher_features": {
+        "description": "Starting pitcher FIP data required to compute sp_fip_delta. FIP formula: (13*HR + 3*(BB+HBP) - 2*K) / IP + FIP_constant",
+        "fields": [
+          "home_sp_fip",
+          "away_sp_fip"
+        ],
+        "derived_fields": [
+          "sp_fip_delta",
+          "abs_sp_fip_delta"
+        ],
+        "fip_formula": "FIP = (13*HR + 3*(BB+HBP) - 2*K) / IP + FIP_constant",
+        "sp_fip_delta_formula": "sp_fip_delta = home_sp_fip - away_sp_fip",
+        "abs_sp_fip_delta_formula": "abs_sp_fip_delta = abs(sp_fip_delta)",
+        "field_notes": {
+          "sp_fip_delta": "Positive = home pitcher favored per this convention",
+          "abs_sp_fip_delta": "Absolute magnitude; determines tier/rule flags"
+        },
+        "source_hint": "statsapi.mlb.com or FIP table from 2026 pitcher stats (DO NOT CALL IN P83C)",
+        "availability": "AWAITING",
+        "no_retraining_required": true
+      },
+      "model_output": {
+        "description": "Ensemble model probability output for each game",
+        "fields": [
+          "model_probability",
+          "predicted_side",
+          "source_prediction_version"
+        ],
+        "field_notes": {
+          "model_probability": "P(predicted_side wins) from ensemble model [0.0, 1.0]",
+          "predicted_side": "'home' if sp_fip_delta > 0 else 'away'. Ties excluded.",
+          "source_prediction_version": "Must equal 'mlb_2026_prediction_rows_v1'"
+        },
+        "source_hint": "P83D will call 2025 ensemble model with 2026 pitcher features",
+        "availability": "AWAITING"
+      },
+      "governance_flags": {
+        "description": "Governance enforcement fields \u2014 all values pre-defined",
+        "fields": [
+          "paper_only",
+          "diagnostic_only",
+          "odds_used",
+          "market_edge_evaluated",
+          "production_ready"
+        ],
+        "enforced_values": {
+          "season": 2026,
+          "paper_only": true,
+          "diagnostic_only": true,
+          "odds_used": false,
+          "market_edge_evaluated": false,
+          "production_ready": false
+        },
+        "availability": "READY",
+        "note": "These fields are constants \u2014 no upstream data needed."
+      }
+    },
+    "mock_rows_noncanonical": true,
+    "verification_ok": true
+  },
+  "step2_upstream_probe": {
+    "dirs_probed": [
+      "data/mlb_2026",
+      "data/mlb_2026/derived",
+      "outputs/recommendations/PAPER",
+      "outputs/predictions/PAPER"
+    ],
+    "dirs_missing": [
+      "data/mlb_2026/schedule",
+      "data/mlb_2026/pitchers",
+      "data/mlb_2026/features",
+      "data/mlb_2026/model_outputs",
+      "data/mlb_2026/predictions",
+      "outputs/online_validation"
+    ],
+    "files_by_category": {
+      "schedule_candidate": [],
+      "pitcher_feature_candidate": [],
+      "model_probability_candidate": [],
+      "canonical_prediction_candidate": [],
+      "runtime_paper_candidate": [
+        "outputs/recommendations/PAPER/2026-05-11/2026-05-11-AWY-HOM-824441.jsonl",
+        "outputs/recommendations/PAPER/2026-05-11/2026-05-11-LAA-CLE-824441.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/ablation/ablation_leaderboard.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/ablation_plan.json",
+        "outputs/predictions/PAPER/2026-05-11/ablation/ablation_results.json",
+        "outputs/predictions/PAPER/2026-05-11/ablation/ablation_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_all_features.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_bullpen_only.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_market_or_base_only_baseline.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_bullpen.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_context_features.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_recent.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_rest.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_starter.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_no_weather.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_recent_only.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_recent_plus_rest.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_recent_rest_starter.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_rest_only.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_starter_only.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_starter_plus_bullpen.csv",
+        "outputs/predictions/PAPER/2026-05-11/ablation/variant_weather_only.csv",
+        "outputs/predictions/PAPER/2026-05-11/calibration_candidate_evaluation.json",
+        "outputs/predictions/PAPER/2026-05-11/context_safety/context_safety_audit.json",
+        "outputs/predictions/PAPER/2026-05-11/context_safety/context_safety_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/feature_candidate_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/feature_only/feature_candidate_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/feature_only/independent_feature_coverage.json",
+        "outputs/predictions/PAPER/2026-05-11/feature_only/mlb_feature_candidate_probabilities.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/feature_only/mlb_independent_features.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/feature_only/mlb_odds_with_feature_candidate_probabilities.csv",
+        "outputs/predictions/PAPER/2026-05-11/feature_only/mlb_odds_with_independent_features.csv",
+        "outputs/predictions/PAPER/2026-05-11/independent_feature_coverage.json",
+        "outputs/predictions/PAPER/2026-05-11/mlb_feature_candidate_probabilities.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/mlb_independent_features.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/mlb_model_probabilities.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/mlb_odds_with_calibrated_probabilities.csv",
+        "outputs/predictions/PAPER/2026-05-11/mlb_odds_with_feature_candidate_probabilities.csv",
+        "outputs/predictions/PAPER/2026-05-11/mlb_odds_with_independent_features.csv",
+        "outputs/predictions/PAPER/2026-05-11/mlb_odds_with_model_probabilities.csv",
+        "outputs/predictions/PAPER/2026-05-11/mlb_odds_with_oof_calibrated_probabilities.csv",
+        "outputs/predictions/PAPER/2026-05-11/mlb_odds_with_repaired_features.csv",
+        "outputs/predictions/PAPER/2026-05-11/mlb_repaired_model_probabilities.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/model_deep_diagnostics_oof.json",
+        "outputs/predictions/PAPER/2026-05-11/model_deep_diagnostics_raw.json",
+        "outputs/predictions/PAPER/2026-05-11/model_deep_diagnostics_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/model_join_integrity_audit.json",
+        "outputs/predictions/PAPER/2026-05-11/model_probability_audit.json",
+        "outputs/predictions/PAPER/2026-05-11/model_probability_segment_audit.json",
+        "outputs/predictions/PAPER/2026-05-11/model_worst_segments.json",
+        "outputs/predictions/PAPER/2026-05-11/oof_calibration_evaluation.json",
+        "outputs/predictions/PAPER/2026-05-11/oof_calibration_folds.json",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/ml_candidate_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/ml_feature_matrix.csv",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/ml_model_metadata.json",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/ml_odds_with_walk_forward_predictions.csv",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/ml_walk_forward_predictions.jsonl",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/mlb_odds_with_oof_calibrated_probabilities.csv",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/oof_calibration_evaluation.json",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/oof_calibration_folds.json",
+        "outputs/predictions/PAPER/2026-05-11/p13_ml/p7_oof_calibration_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/p6_audit_repair_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/p7_oof_calibration_summary.md",
+        "outputs/predictions/PAPER/2026-05-11/repaired_feature_metadata.json",
+        "outputs/predictions/PAPER/2026-05-11/repaired_probability_summary.md",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/bad_source.csv",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_deep_diagnostics_oof.json",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_deep_diagnostics_raw.json",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_deep_diagnostics_summary.md",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_join_integrity_audit.json",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_worst_segments.json",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/oof_model.csv",
+        "outputs/predictions/PAPER/__pytest_p8_deep_diag__/raw_model.csv",
+        "outputs/predictions/PAPER/_test_p10_feature_candidate/feature_candidate_summary.md",
+        "outputs/predictions/PAPER/_test_p10_feature_candidate/independent_feature_coverage.json",
+        "outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_feature_candidate_probabilities.jsonl",
+        "outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_independent_features.jsonl",
+        "outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_odds_with_feature_candidate_probabilities.csv",
+        "outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_odds_with_independent_features.csv",
+        "outputs/predictions/PAPER/_test_p10_feature_only/feature_candidate_summary.md",
+        "outputs/predictions/PAPER/_test_p10_feature_only/independent_feature_coverage.json",
+        "outputs/predictions/PAPER/_test_p10_feature_only/mlb_feature_candidate_probabilities.jsonl",
+        "outputs/predictions/PAPER/_test_p10_feature_only/mlb_independent_features.jsonl",
+        "outputs/predictions/PAPER/_test_p10_feature_only/mlb_odds_with_feature_candidate_probabilities.csv",
+        "outputs/predictions/PAPER/_test_p10_feature_only/mlb_odds_with_independent_features.csv",
+        "outputs/predictions/PAPER/_test_p10_stdout/feature_candidate_summary.md",
+        "outputs/predictions/PAPER/_test_p10_stdout/independent_feature_coverage.json",
+        "outputs/predictions/PAPER/_test_p10_stdout/mlb_feature_candidate_probabilities.jsonl",
+        "outputs/predictions/PAPER/_test_p10_stdout/mlb_independent_features.jsonl",
+        "outputs/predictions/PAPER/_test_p10_stdout/mlb_odds_with_feature_candidate_probabilities.csv",
+        "outputs/predictions/PAPER/_test_p10_stdout/mlb_odds_with_independent_features.csv",
+        "outputs/predictions/PAPER/_test_p9_exit/mlb_odds_with_repaired_features.csv",
+        "outputs/predictions/PAPER/_test_p9_exit/mlb_repaired_model_probabilities.jsonl",
+        "outputs/predictions/PAPER/_test_p9_exit/repaired_feature_metadata.json",
+        "outputs/predictions/PAPER/_test_p9_exit/repaired_probability_summary.md",
+        "outputs/predictions/PAPER/_test_p9_repaired_export/mlb_odds_with_repaired_features.csv",
+        "outputs/predictions/PAPER/_test_p9_repaired_export/mlb_repaired_model_probabilities.jsonl",
+        "outputs/predictions/PAPER/_test_p9_repaired_export/repaired_feature_metadata.json",
+        "outputs/predictions/PAPER/_test_p9_repaired_export/repaired_probability_summary.md",
+        "outputs/predictions/PAPER/_test_p9_stdout/mlb_odds_with_repaired_features.csv",
+        "outputs/predictions/PAPER/_test_p9_stdout/mlb_repaired_model_probabilities.jsonl",
+        "outputs/predictions/PAPER/_test_p9_stdout/repaired_feature_metadata.json",
+        "outputs/predictions/PAPER/_test_p9_stdout/repaired_probability_summary.md"
+      ],
+      "contract_artifact": [
+        "data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json",
+        "data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+        "data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json",
+        "data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json",
+        "data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+        "data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json"
+      ],
+      "noncanonical": []
+    },
+    "canonical_prediction_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "canonical_prediction_exists": false,
+    "canonical_prediction_row_count": 0,
+    "runtime_paper_files_2026": [
+      "outputs/recommendations/PAPER/2026-05-11/2026-05-11-AWY-HOM-824441.jsonl",
+      "outputs/recommendations/PAPER/2026-05-11/2026-05-11-LAA-CLE-824441.jsonl"
+    ],
+    "runtime_paper_file_count": 2,
+    "runtime_paper_noncanonical": true
+  },
+  "step3_runtime_paper_analysis": {
+    "files_read": 2,
+    "runtime_paper_fields_available": [
+      "edge_pct",
+      "game_id",
+      "game_start_utc",
+      "gate_reasons",
+      "gate_status",
+      "generated_at_utc",
+      "kelly_fraction",
+      "model_ensemble_version",
+      "model_prob_away",
+      "model_prob_home",
+      "paper_only",
+      "source_trace",
+      "stake_units_paper",
+      "tsl_decimal_odds",
+      "tsl_line",
+      "tsl_market",
+      "tsl_side"
+    ],
+    "p83b_fields_present_in_paper": [
+      "game_id",
+      "paper_only"
+    ],
+    "p83b_fields_missing_from_paper": [
+      "abs_sp_fip_delta",
+      "away_team",
+      "diagnostic_only",
+      "game_date",
+      "home_team",
+      "market_edge_evaluated",
+      "model_probability",
+      "odds_used",
+      "predicted_side",
+      "primary_125",
+      "production_ready",
+      "season",
+      "shadow_100",
+      "source_prediction_version",
+      "sp_fip_delta",
+      "tier_a_candidate",
+      "tier_b_candidate"
+    ],
+    "extra_fields_in_paper": [
+      "edge_pct",
+      "game_start_utc",
+      "gate_reasons",
+      "gate_status",
+      "generated_at_utc",
+      "kelly_fraction",
+      "model_ensemble_version",
+      "model_prob_away",
+      "model_prob_home",
+      "source_trace",
+      "stake_units_paper",
+      "tsl_decimal_odds",
+      "tsl_line",
+      "tsl_market",
+      "tsl_side"
+    ],
+    "runtime_paper_noncanonical": true,
+    "reason_noncanonical": "Runtime PAPER files use a different schema (recommendation schema) and lack required P83B fields: game_date, home_team, away_team, sp_fip_delta, abs_sp_fip_delta, source_prediction_version, diagnostic_only, odds_used, market_edge_evaluated, production_ready, primary_125, shadow_100, tier_b_candidate, tier_a_candidate."
+  },
+  "step4_gate_results": {
+    "gates": {
+      "SCHEDULE_GATE": {
+        "gate_name": "SCHEDULE_GATE",
+        "gate_pass": false,
+        "required_fields": [
+          "away_team",
+          "game_date",
+          "game_id",
+          "home_team"
+        ],
+        "candidate_files": [],
+        "runtime_paper_partial": true,
+        "missing_fields": [
+          "game_date",
+          "home_team",
+          "away_team"
+        ],
+        "note": "Runtime PAPER files have game_id only (in filename pattern). No canonical data/mlb_2026/schedule/ file with game_date + team identifiers."
+      },
+      "PITCHER_FEATURE_GATE": {
+        "gate_name": "PITCHER_FEATURE_GATE",
+        "gate_pass": false,
+        "required_fields": [
+          "away_sp_fip",
+          "home_sp_fip"
+        ],
+        "derived_fields": [
+          "sp_fip_delta",
+          "abs_sp_fip_delta"
+        ],
+        "candidate_files": [],
+        "missing_fields": [
+          "away_sp_fip",
+          "home_sp_fip"
+        ],
+        "note": "No data/mlb_2026/pitchers/ directory or file with home_sp_fip / away_sp_fip. 2026 starting pitcher FIP stats not locally available."
+      },
+      "MODEL_OUTPUT_GATE": {
+        "gate_name": "MODEL_OUTPUT_GATE",
+        "gate_pass": false,
+        "required_fields": [
+          "model_probability",
+          "predicted_side",
+          "source_prediction_version"
+        ],
+        "runtime_paper_partial": true,
+        "runtime_paper_field_mapping": {
+          "model_prob_home": "noncanonical \u2014 maps to model_probability for home side only",
+          "model_prob_away": "noncanonical \u2014 separate field, not unified model_probability"
+        },
+        "missing_canonical_fields": [
+          "model_probability",
+          "source_prediction_version"
+        ],
+        "note": "Runtime PAPER files have model_prob_home/away in recommendation schema. Canonical P83B model_probability + source_prediction_version not present."
+      },
+      "PREDICTED_SIDE_GATE": {
+        "gate_name": "PREDICTED_SIDE_GATE",
+        "gate_pass": false,
+        "logic_available": true,
+        "logic_definition": "predicted_side = 'home' if sp_fip_delta > 0 else 'away'; ties excluded",
+        "data_available": false,
+        "missing_dependency": "sp_fip_delta requires home_sp_fip and away_sp_fip from PITCHER_FEATURE_GATE",
+        "note": "Deterministic logic defined in P83C. Blocked because pitcher FIP inputs unavailable."
+      },
+      "GOVERNANCE_GATE": {
+        "gate_name": "GOVERNANCE_GATE",
+        "gate_pass": true,
+        "enforced_values": {
+          "season": 2026,
+          "paper_only": true,
+          "diagnostic_only": true,
+          "odds_used": false,
+          "market_edge_evaluated": false,
+          "production_ready": false
+        },
+        "note": "Governance flags are pre-defined constants. No upstream data needed."
+      },
+      "PRODUCER_ACTIVATION_GATE": {
+        "gate_name": "PRODUCER_ACTIVATION_GATE",
+        "gate_pass": false,
+        "prerequisite_gates": [
+          "SCHEDULE_GATE",
+          "PITCHER_FEATURE_GATE",
+          "MODEL_OUTPUT_GATE",
+          "PREDICTED_SIDE_GATE",
+          "GOVERNANCE_GATE"
+        ],
+        "failing_prerequisite_gates": [
+          "SCHEDULE_GATE",
+          "PITCHER_FEATURE_GATE",
+          "MODEL_OUTPUT_GATE",
+          "PREDICTED_SIDE_GATE"
+        ],
+        "passing_prerequisite_gates": [
+          "GOVERNANCE_GATE"
+        ],
+        "note": "Blocked by 4 failing prerequisite gate(s)."
+      }
+    },
+    "passing_gates": [
+      "GOVERNANCE_GATE"
+    ],
+    "failing_gates": [
+      "SCHEDULE_GATE",
+      "PITCHER_FEATURE_GATE",
+      "MODEL_OUTPUT_GATE",
+      "PREDICTED_SIDE_GATE",
+      "PRODUCER_ACTIVATION_GATE"
+    ],
+    "total_gates": 6,
+    "gates_passing": 1,
+    "gates_failing": 5,
+    "producer_activation_allowed": false
+  },
+  "step5_missing_data_checklist": {
+    "missing_item_count": 4,
+    "missing_items": [
+      {
+        "gate": "SCHEDULE_GATE",
+        "missing": "2026 MLB game schedule with game_id, game_date, home_team, away_team",
+        "expected_path": "data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+        "source_hint": "statsapi.mlb.com schedule endpoint OR manual fixture for testing",
+        "priority": "HIGH"
+      },
+      {
+        "gate": "PITCHER_FEATURE_GATE",
+        "missing": "2026 starting pitcher FIP stats: home_sp_fip, away_sp_fip per game",
+        "expected_path": "data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+        "source_hint": "statsapi.mlb.com pitcher stats OR 2026 FIP lookup table",
+        "priority": "HIGH"
+      },
+      {
+        "gate": "MODEL_OUTPUT_GATE",
+        "missing": "Canonical model_probability + source_prediction_version per game (P83B schema)",
+        "expected_path": "data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
+        "source_hint": "Apply 2025-trained ensemble model to 2026 features. Runtime PAPER files have model_prob_home/away but not in P83B format.",
+        "priority": "HIGH"
+      },
+      {
+        "gate": "PREDICTED_SIDE_GATE",
+        "missing": "sp_fip_delta (computed from home_sp_fip - away_sp_fip)",
+        "expected_path": "derived from PITCHER_FEATURE_GATE data",
+        "source_hint": "Unblocked automatically once PITCHER_FEATURE_GATE passes",
+        "priority": "DEPENDENT"
+      }
+    ],
+    "rerun_triggers": [
+      "When data/mlb_2026/schedule/ contains canonical game schedule file",
+      "When data/mlb_2026/pitchers/ contains 2026 SP FIP features",
+      "When data/mlb_2026/model_outputs/ contains canonical model output file",
+      "When all 3 HIGH priority items above are resolved"
+    ],
+    "notes": "GOVERNANCE_GATE always passes (constants). PREDICTED_SIDE_GATE unblocks automatically when PITCHER_FEATURE_GATE passes."
+  },
+  "step6_producer_activation_status": {
+    "activation_allowed": false,
+    "canonical_rows_written": false,
+    "canonical_prediction_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "canonical_prediction_exists": false,
+    "canonical_prediction_row_count": 0,
+    "reason": "Blocked by failing gates: ['SCHEDULE_GATE', 'PITCHER_FEATURE_GATE', 'MODEL_OUTPUT_GATE', 'PREDICTED_SIDE_GATE', 'PRODUCER_ACTIVATION_GATE']",
+    "note": "P83D does not write canonical rows. Canonical row production is delegated to P83E."
+  },
+  "step7_p83e_prompt": "[P83E \u2014 2026 Canonical Prediction Row Producer]\n\n# Prerequisites\n- P83D classification must be P83D_PRODUCER_ACTIVATION_READY\n- P83D commit must be present on main branch\n\n# Trigger conditions\nRun P83E only when ALL of the following files exist locally:\n  1. data/mlb_2026/schedule/mlb_2026_schedule.jsonl    (game_id, game_date, home_team, away_team)\n  2. data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl    (game_id, home_sp_fip, away_sp_fip)\n  3. data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl    (game_id, model_probability, source_prediction_version)\n\n# Goal\nP83E must:\n  1. Re-run P83D probe to confirm all gates now pass.\n  2. Join schedule + pitcher features + model outputs by game_id.\n  3. Compute sp_fip_delta, abs_sp_fip_delta, predicted_side, rule flags.\n  4. Enforce governance: paper_only=True, diagnostic_only=True, odds_used=False.\n  5. Write canonical rows to: data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl\n  6. Update P83A snapshot unlock gate.\n  7. Update P83D summary with producer_activated=True.\n\n# Rules\n- No external API calls\n- No odds data\n- No edge / EV / CLV / Kelly calculation\n- Keep paper_only=True, diagnostic_only=True\n- Do NOT fabricate pitcher FIP values\n",
+  "forbidden_scan": {
+    "live_api_calls": 0,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_calculated": false,
+    "odds_used": false,
+    "production_ready": false,
+    "kelly_deploy_allowed": false,
+    "real_bet_allowed": false,
+    "profitability_claim": false,
+    "canonical_rows_written_in_p83d": false,
+    "forbidden_scan_pass": true
+  },
+  "source_artifacts": {
+    "p83c_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json",
+    "p83b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+    "p83a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json",
+    "p82c_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82c_staging_guard_dryrun_scanner_summary.json",
+    "p77_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p77_prediction_only_shadow_tracker_contract_summary.json",
+    "p76_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p76_corrected_tier_c_final_rule_selection_summary.json"
+  },
+  "canonical_prediction_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+  "probe_paths": [
+    "data/mlb_2026",
+    "data/mlb_2026/schedule",
+    "data/mlb_2026/pitchers",
+    "data/mlb_2026/features",
+    "data/mlb_2026/model_outputs",
+    "data/mlb_2026/predictions",
+    "data/mlb_2026/derived",
+    "outputs/online_validation",
+    "outputs/recommendations/PAPER",
+    "outputs/predictions/PAPER"
+  ]
+}

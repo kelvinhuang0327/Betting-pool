@@ -1,4 +1,47 @@
-# Active Task — P83C 2026 Prediction Schema Producer Contract
+# Active Task — P83D 2026 Upstream Data Availability Probe + Producer Activation Gate
+
+> **[COMPLETED 2026-05-26]** `P83D_AWAITING_UPSTREAM_DATA`
+> **Issued by**: P83C handoff (P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA, commit `01a38c4`)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=True`
+>
+> **P83D Result:** Local filesystem probe for upstream 2026 MLB data.
+> Zero API calls made. Probe confirmed: no canonical 2026 schedule, pitcher FIP, or model output files.
+> 6 readiness gates evaluated: GOVERNANCE_GATE=PASS (constants); remaining 5 gates FAIL.
+>
+> **Gate results (6 gates):**
+> - SCHEDULE_GATE: FAIL — no data/mlb_2026/schedule/ with game_date + team identifiers
+> - PITCHER_FEATURE_GATE: FAIL — no home_sp_fip / away_sp_fip for 2026 games
+> - MODEL_OUTPUT_GATE: FAIL — no canonical model_probability in P83B schema format
+> - PREDICTED_SIDE_GATE: FAIL — blocked by PITCHER_FEATURE_GATE (logic defined but data absent)
+> - GOVERNANCE_GATE: PASS — constants always available
+> - PRODUCER_ACTIVATION_GATE: FAIL — 4 prerequisite gates failing
+>
+> **Runtime PAPER files (noncanonical):**
+> - outputs/recommendations/PAPER/2026-05-11/ has game_id + model_prob_home/away
+> - Missing: game_date, home_team, away_team, sp_fip_delta, source_prediction_version (P83B format)
+> - Classification: runtime_paper_candidate = noncanonical per P83B
+>
+> **Missing data checklist (3 HIGH priority items):**
+> 1. data/mlb_2026/schedule/mlb_2026_schedule.jsonl (game_id, game_date, home_team, away_team)
+> 2. data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl (home_sp_fip, away_sp_fip)
+> 3. data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl (model_probability, source_prediction_version)
+>
+> **P83E trigger:** Rerun when all 3 HIGH priority missing items exist locally.
+> **Forbidden scan:** CLEAN (0 violations) | live_api_calls=0
+>
+> **Output artifacts:**
+> - `scripts/_p83d_2026_upstream_data_availability_probe.py`
+> - `tests/test_p83d_2026_upstream_data_availability_probe.py`
+> - `data/mlb_2026/derived/p83d_2026_upstream_data_availability_probe_summary.json`
+> - `report/p83d_2026_upstream_data_availability_probe_20260526.md`
+>
+> **Tests:** 37 PASS (P83D) + 986 PASS (P72A→P83D full regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P83D_AWAITING_UPSTREAM_DATA`
+
+---
+
+# Prior Active Task — P83C 2026 Prediction Schema Producer Contract
 
 > **[COMPLETED 2026-05-26]** `P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA`
 > **Issued by**: P83B handoff (P83B_INGEST_CONTRACT_READY_AWAITING_DATA)
