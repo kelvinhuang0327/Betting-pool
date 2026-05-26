@@ -1,0 +1,682 @@
+{
+  "p63_phase": "P63_PAPER_RECOMMENDATION_CONTRACT_REVIEW_READINESS",
+  "generated_at_utc": "2026-05-26T03:11:43.005512+00:00",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "actual_rows_emitted": false,
+    "runtime_recommendation_logic_changed": false,
+    "champion_strategy_changed": false,
+    "p45_platt_constants_modified": false,
+    "p52_thresholds_modified": false,
+    "real_bet_allowed": false,
+    "production_usage_proposed": false
+  },
+  "p62_artifact_inventory": {
+    "summary_json_exists": true,
+    "report_md_exists": true,
+    "bettingplan_md_exists": true,
+    "p62_classification": "P62_CONTRACT_DRAFT_READY_FOR_CEO_REVIEW",
+    "contract_version": "P62_v1_20260526",
+    "load_error": null
+  },
+  "gate_audit": {
+    "n_gates_audited": 17,
+    "gate_statuses": {
+      "EG01": "TESTABLE",
+      "EG02": "TESTABLE",
+      "EG03": "TESTABLE",
+      "EG04": "TESTABLE",
+      "EG05": "TESTABLE",
+      "EG06": "TESTABLE",
+      "EG07": "TESTABLE",
+      "EG08": "TESTABLE",
+      "EG09": "TESTABLE",
+      "EG10": "TESTABLE",
+      "EG11": "TESTABLE",
+      "EG12": "TESTABLE",
+      "EG13": "TESTABLE",
+      "EG14": "NOT_TESTABLE_YET",
+      "EG15": "NOT_TESTABLE_YET",
+      "EG16": "NOT_TESTABLE_YET",
+      "EG17": "TESTABLE"
+    },
+    "gates_blocking_ceo_review_that_failed": [],
+    "detail": [
+      {
+        "gate_id": "EG01",
+        "gate_name": "paper_only flag",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: paper_only=True",
+        "required_future_evidence": "Must be True in every future paper row",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG02",
+        "gate_name": "diagnostic_only flag",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: diagnostic_only=True",
+        "required_future_evidence": "Must be True in every future paper row",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG03",
+        "gate_name": "promotion_freeze flag",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: promotion_freeze=True",
+        "required_future_evidence": "Must remain True until CEO explicitly lifts",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG04",
+        "gate_name": "live_api_calls=0",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: live_api_calls=0",
+        "required_future_evidence": "Must remain 0 during paper simulation",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG05",
+        "gate_name": "kelly_deploy_allowed=False",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: kelly_deploy_allowed=False",
+        "required_future_evidence": "Must be False in every future paper row",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG06",
+        "gate_name": "runtime_recommendation_logic_changed=False",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: runtime_recommendation_logic_changed=False",
+        "required_future_evidence": "Future phases must not modify runtime logic without CEO gate",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG07",
+        "gate_name": "champion_replacement=False",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: champion_strategy_changed=False",
+        "required_future_evidence": "fixed_edge_5pct remains champion until explicit CEO auth",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG08",
+        "gate_name": "production_ready=False",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: production_usage_proposed=False",
+        "required_future_evidence": "Must remain False — no production proposal",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG09",
+        "gate_name": "real_bet_allowed=False",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: real_bet_allowed=False",
+        "required_future_evidence": "Must be False in every future paper row",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG10",
+        "gate_name": "signal=sp_fip_delta",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: name=sp_fip_delta",
+        "required_future_evidence": "model_signal_name field must equal sp_fip_delta in all rows",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG11",
+        "gate_name": "tier=Tier_C",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: tier=Tier_C",
+        "required_future_evidence": "signal_tier field must equal Tier_C — any sub-threshold row is BLOCKED",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG12",
+        "gate_name": "threshold=0.50 (T_LOCKED)",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: tier_threshold=0.5",
+        "required_future_evidence": "tier_threshold field must equal 0.50 — must not be re-optimised",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG13",
+        "gate_name": "calibration=P45 Platt constants A=0.435432 B=0.245464",
+        "audit_status": "TESTABLE",
+        "reason": "platt_A=0.435432 platt_B=0.245464 — match locked constants",
+        "required_future_evidence": "platt_A and platt_B must match locked values in every row",
+        "blocks_ceo_review": true,
+        "passed": true
+      },
+      {
+        "gate_id": "EG14",
+        "gate_name": "odds_source_trace_required",
+        "audit_status": "NOT_TESTABLE_YET",
+        "reason": "Schema field(s) ['odds_source_trace'] present in contract. Runtime enforcement testable only after rows are emitted.",
+        "required_future_evidence": "Each future row must carry a non-null odds_source_trace; not testable until rows emitted",
+        "blocks_ceo_review": false,
+        "passed": true
+      },
+      {
+        "gate_id": "EG15",
+        "gate_name": "timestamps_required (game_start_utc, prediction_timestamp_utc, odds_timestamp_utc must be pregame)",
+        "audit_status": "NOT_TESTABLE_YET",
+        "reason": "Schema field(s) ['game_start_utc', 'prediction_timestamp_utc', 'odds_timestamp_utc'] present in contract. Runtime enforcement testable only after rows are emitted.",
+        "required_future_evidence": "Each timestamp must precede game_start_utc; not testable until rows emitted",
+        "blocks_ceo_review": false,
+        "passed": true
+      },
+      {
+        "gate_id": "EG16",
+        "gate_name": "no_postgame_leakage (pregame isolation required)",
+        "audit_status": "NOT_TESTABLE_YET",
+        "reason": "Schema field(s) ['prediction_timestamp_utc'] present in contract. Runtime enforcement testable only after rows are emitted.",
+        "required_future_evidence": "Leakage guard must be enforced row-by-row during simulation; not testable until rows emitted",
+        "blocks_ceo_review": false,
+        "passed": true
+      },
+      {
+        "gate_id": "EG17",
+        "gate_name": "2024_data_gap_documented",
+        "audit_status": "TESTABLE",
+        "reason": "Flag confirmed: data_gap_status=UNRESOLVED_AS_OF_P62",
+        "required_future_evidence": "P61 PATH_A or PATH_B resolution required before 2024 rows can be added",
+        "blocks_ceo_review": false,
+        "passed": true
+      }
+    ]
+  },
+  "schema_audit": {
+    "n_fields_audited": 33,
+    "n_fields_in_p62": 33,
+    "all_fields_accounted": true,
+    "fields_missing_from_schema": [],
+    "detail": [
+      {
+        "field": "contract_version",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — contract metadata",
+        "source_needed": "contract metadata",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "game_id",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — MLB game schedule data",
+        "source_needed": "MLB game schedule data",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "game_start_utc",
+        "category": "REQUIRED_FOR_LEAKAGE_GUARD",
+        "rationale": "Category: REQUIRED_FOR_LEAKAGE_GUARD — MLB schedule (existing CSV)",
+        "source_needed": "MLB schedule (existing CSV)",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "generated_at_utc",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — system timestamp at generation",
+        "source_needed": "system timestamp at generation",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "prediction_timestamp_utc",
+        "category": "REQUIRED_FOR_LEAKAGE_GUARD",
+        "rationale": "Category: REQUIRED_FOR_LEAKAGE_GUARD — model execution timestamp",
+        "source_needed": "model execution timestamp",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "odds_timestamp_utc",
+        "category": "REQUIRED_FOR_LEAKAGE_GUARD",
+        "rationale": "Category: REQUIRED_FOR_LEAKAGE_GUARD — odds capture timestamp from CSV",
+        "source_needed": "odds capture timestamp from CSV",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "market",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — fixed value: moneyline",
+        "source_needed": "fixed value: moneyline",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "side",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — model output (Home/Away)",
+        "source_needed": "model output (Home/Away)",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "model_signal_name",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — fixed value: sp_fip_delta",
+        "source_needed": "fixed value: sp_fip_delta",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "sp_fip_delta",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — pitching FIP data (existing CSV)",
+        "source_needed": "pitching FIP data (existing CSV)",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "signal_tier",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — threshold gate computation",
+        "source_needed": "threshold gate computation",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "tier_threshold",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — locked constant 0.50",
+        "source_needed": "locked constant 0.50",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "model_prob_home",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — model sigmoid output",
+        "source_needed": "model sigmoid output",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "model_prob_away",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — model sigmoid output (1 - home)",
+        "source_needed": "model sigmoid output (1 - home)",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "calibration_method",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — fixed value: platt_scaled",
+        "source_needed": "fixed value: platt_scaled",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "platt_A",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — P45 locked constant 0.435432",
+        "source_needed": "P45 locked constant 0.435432",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "platt_B",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — P45 locked constant 0.245464",
+        "source_needed": "P45 locked constant 0.245464",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "calibrated_prob",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — Platt(model_prob_home; A, B)",
+        "source_needed": "Platt(model_prob_home; A, B)",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "odds_source",
+        "category": "REQUIRED_FOR_LEAKAGE_GUARD",
+        "rationale": "Category: REQUIRED_FOR_LEAKAGE_GUARD — odds CSV filename",
+        "source_needed": "odds CSV filename",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "odds_source_trace",
+        "category": "REQUIRED_FOR_LEAKAGE_GUARD",
+        "rationale": "Category: REQUIRED_FOR_LEAKAGE_GUARD — CSV path + row hash or URL",
+        "source_needed": "CSV path + row hash or URL",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "decimal_odds",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — existing 2025 odds CSV",
+        "source_needed": "existing 2025 odds CSV",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "implied_probability",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — derived from decimal_odds",
+        "source_needed": "derived from decimal_odds",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "edge_pct",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — calibrated_prob - implied_probability",
+        "source_needed": "calibrated_prob - implied_probability",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "paper_stake_units",
+        "category": "OPTIONAL_DIAGNOSTIC",
+        "rationale": "Category: OPTIONAL_DIAGNOSTIC — fixed unit value (e.g. 1.0)",
+        "source_needed": "fixed unit value (e.g. 1.0)",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "kelly_fraction_theoretical",
+        "category": "OPTIONAL_DIAGNOSTIC",
+        "rationale": "Category: OPTIONAL_DIAGNOSTIC — Kelly formula (theoretical only)",
+        "source_needed": "Kelly formula (theoretical only)",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "kelly_deploy_allowed",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — fixed value: False",
+        "source_needed": "fixed value: False",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "recommendation_status",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — gate evaluation output",
+        "source_needed": "gate evaluation output",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "gate_status",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — eligibility gate result",
+        "source_needed": "eligibility gate result",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "gate_reasons",
+        "category": "REQUIRED_FOR_AUDIT",
+        "rationale": "Category: REQUIRED_FOR_AUDIT — gate failure log list",
+        "source_needed": "gate failure log list",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "paper_only",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — fixed value: True",
+        "source_needed": "fixed value: True",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "diagnostic_only",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — fixed value: True",
+        "source_needed": "fixed value: True",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "production_ready",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — fixed value: False",
+        "source_needed": "fixed value: False",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      },
+      {
+        "field": "real_bet_allowed",
+        "category": "REQUIRED_FOR_RISK_GOVERNANCE",
+        "rationale": "Category: REQUIRED_FOR_RISK_GOVERNANCE — fixed value: False",
+        "source_needed": "fixed value: False",
+        "can_populate_without_live_api": true,
+        "present_in_p62_schema": true
+      }
+    ]
+  },
+  "status_value_audit": {
+    "n_values_audited": 9,
+    "n_values_in_p62": 9,
+    "all_safe": true,
+    "any_implies_production": false,
+    "any_implies_real_betting": false,
+    "detail": [
+      {
+        "status": "PAPER_ELIGIBLE_CONTRACT_ONLY",
+        "category": "ELIGIBLE_PAPER_ONLY",
+        "safe": true,
+        "reason": "Explicitly scoped to paper-only contract; no deployment, betting, or production implication",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_MISSING_ODDS_SOURCE_TRACE",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — covers missing odds trace. Cannot be misread as production-ready",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_MISSING_TIMESTAMP",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — covers missing pregame timestamp. Prevents leakage risk row from passing",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_POSTGAME_LEAKAGE_RISK",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — explicitly flags any postgame data contamination",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_SIGNAL_BELOW_TIER_C",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — ensures only |sp_fip_delta| >= 0.50 rows proceed",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_CALIBRATION_SOURCE_INVALID",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — guards against non-P45 Platt constants being used",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_PROMOTION_FREEZE",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — enforces promotion_freeze=True at row level",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_PRODUCTION_NOT_ALLOWED",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — hard wall against any production interpretation of the row",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      },
+      {
+        "status": "BLOCKED_2024_DATA_GAP_UNRESOLVED",
+        "category": "BLOCKED",
+        "safe": true,
+        "reason": "Blocked status — ensures no 2024-game rows can pass until P61 resolution is completed",
+        "present_in_p62_contract": true,
+        "implies_production_readiness": false,
+        "implies_real_betting": false,
+        "implies_kelly_deployment": false
+      }
+    ]
+  },
+  "governance_preservation": {
+    "all_flags_preserved": true,
+    "flags": {
+      "paper_only": {
+        "expected": true,
+        "actual": true,
+        "pass": true
+      },
+      "diagnostic_only": {
+        "expected": true,
+        "actual": true,
+        "pass": true
+      },
+      "promotion_freeze": {
+        "expected": true,
+        "actual": true,
+        "pass": true
+      },
+      "kelly_deploy_allowed": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      },
+      "live_api_calls": {
+        "expected": 0,
+        "actual": 0,
+        "pass": true
+      },
+      "actual_rows_emitted": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      },
+      "runtime_recommendation_logic_changed": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      },
+      "champion_strategy_changed": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      },
+      "p45_platt_constants_modified": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      },
+      "p52_thresholds_modified": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      },
+      "real_bet_allowed": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      },
+      "production_usage_proposed": {
+        "expected": false,
+        "actual": false,
+        "pass": true
+      }
+    }
+  },
+  "forbidden_scan": {
+    "terms_checked": 16,
+    "violations_found": 0,
+    "violations": [],
+    "result": "CLEAN"
+  },
+  "data_gap_status": {
+    "gap_status_in_p62": "UNRESOLVED_AS_OF_P62",
+    "expected": "UNRESOLVED_AS_OF_P62",
+    "gap_remains_unresolved": true
+  },
+  "platt_constants": {
+    "platt_A_in_p62": 0.435432,
+    "platt_B_in_p62": 0.245464,
+    "platt_A_locked": 0.435432,
+    "platt_B_locked": 0.245464,
+    "constants_unchanged": true
+  },
+  "p52_thresholds_unchanged": true,
+  "runtime_recommendation_logic_unchanged": true,
+  "ceo_readiness": {
+    "final_classification": "P63_READY_FOR_CEO_REVIEW",
+    "allowed_classifications": [
+      "P63_READY_FOR_CEO_REVIEW",
+      "P63_READY_WITH_MINOR_CLARIFICATIONS",
+      "P63_NOT_READY_SCHEMA_AMBIGUITY",
+      "P63_BLOCKED_BY_CONTRACT_GAP",
+      "P63_BLOCKED_BY_GOVERNANCE_RISK"
+    ],
+    "blocking_issues": [],
+    "summary_verdict": "All P62 artifacts exist. Contract is internally consistent. All governance flags preserved. No actual rows emitted. No forbidden claims. All CEO-blocking gates pass. 2024 data gap remains clearly unresolved. Recommended next step: CEO reviews P62 contract and authorises paper simulation.",
+    "ceo_review_recommended": true,
+    "recommended_next_step": "CEO reviews P62 contract → approves paper simulation scope → P64 paper simulation implementation begins (no rows until CEO gate clears)"
+  },
+  "p63_classification": "P63_READY_FOR_CEO_REVIEW",
+  "allowed_p63_classifications": [
+    "P63_READY_FOR_CEO_REVIEW",
+    "P63_READY_WITH_MINOR_CLARIFICATIONS",
+    "P63_NOT_READY_SCHEMA_AMBIGUITY",
+    "P63_BLOCKED_BY_CONTRACT_GAP",
+    "P63_BLOCKED_BY_GOVERNANCE_RISK"
+  ]
+}
