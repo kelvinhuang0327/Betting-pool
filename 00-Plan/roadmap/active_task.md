@@ -1,4 +1,38 @@
-# Active Task — P75A Tier C Corrected Rule Validator
+# Active Task — P75B Calibration Diagnostics for Corrected Tier C Candidates
+
+> **[COMPLETED 2026-05-26]** `P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE`
+> **Issued by**: P75A handoff (P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION)
+> **HEAD**: `7773624` (P75A) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P75A `P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION`
+>
+> **P75B Result:** Calibration diagnostics applied to all 5 P75A candidate rules.
+> Calibration module: `wbc_backend/calibration/probability_calibrator.py` (AVAILABLE).
+> Methods tested per rule: no_calibration / Platt / Temperature / Isotonic (70/30 chrono split or K-fold).
+>
+> **Uncalibrated metrics (full sample):**
+> - BASELINE: hit=0.606, AUC=0.583, brier=0.2385, ECE=~0.036
+> - HOME_ONLY: hit=0.672, AUC=0.559, brier=0.2292, ECE=~0.040
+> - HOME_PLUS_AWAY_100: hit=0.633, AUC=0.560, brier=0.2344, ECE=~0.040
+> - HOME_PLUS_AWAY_125: hit=0.639, AUC=0.579, brier=0.2340, ECE=~0.035
+> - BAND_FILTERED: hit=0.637, AUC=0.630, brier=0.2312, ECE=~0.037
+>
+> **Calibration gate results (test-split Platt/Temp calibration):**
+> - HOME_ONLY: OPERATIONAL_WITH_CAVEATS (cal_brier=0.220, cal_ece=0.059 — severe home-only dep)
+> - HOME_PLUS_AWAY_100: OPERATIONAL_CALIBRATED (cal_brier=0.225, cal_ece=0.071 ✅)
+> - HOME_PLUS_AWAY_125: OPERATIONAL_CALIBRATED (cal_brier=0.227, cal_ece=0.088 ✅)
+> - BAND_FILTERED: RESEARCH_ONLY (n=168 < 200)
+>
+> **Preferred rule:** `TIER_C_HOME_PLUS_AWAY_125`
+> Best AUC balance (0.579), OPERATIONAL_CALIBRATED, no concentration risk.
+> HOME_PLUS_AWAY_100 is close rival (within 0.015 hit) → multi-candidate declared.
+>
+> **Tests:** 29 PASS (P75B) + 150 PASS (P72A+P72B+P73+P74+P75A+P75B regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE`
+
+---
+
+## Prior Active Task: P75A Tier C Corrected Rule Validator
 
 > **[COMPLETED 2026-05-26]** `P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION`
 > **Issued by**: P74 handoff (P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED)
