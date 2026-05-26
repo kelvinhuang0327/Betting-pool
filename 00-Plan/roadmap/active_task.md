@@ -1,4 +1,26 @@
-# Active Task — P79B Tier B vs Tier C Comparison Harness Fixture Dry-Run
+# Active Task — P80 Market-Edge Lane Re-entry Readiness Contract
+
+> **[COMPLETED 2026-05-26]** `P80_MARKET_EDGE_REENTRY_CONTRACT_READY`
+> **Issued by**: P79B handoff (P79B_TIER_B_FIXTURE_RESEARCH_ONLY)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
+>
+> **P80 Result:** Contract-only phase. Defines readiness gates and data contract required
+> before market-edge lane may resume. No odds pulled, no EV/CLV/Kelly computed.
+>
+> **Contract summary:**
+> - 6 active market-edge blockers (EDGE_STABLE_NEGATIVE, NO_LEGAL_2024_ODDS, ODDSPORTAL_TOS, API_KEY_MISSING, RAW_DATA_POLICY_MISSING, PRODUCTION_GOVERNANCE)
+> - 21-field legal odds data contract defined (schema, legality, timestamp, side-mapping requirements)
+> - 4 candidates: primary_125 (ELIGIBLE), shadow_100 (ELIGIBLE), tier_b_conditional (CONDITIONAL), baseline_50 (BENCHMARK)
+> - 6 validation gates (A→B→C→D→E→F) defined; Gate F (governance) currently open; Gates A-E blocked
+> - Future path: P81 (validator) → P82 (edge dry-run) → P83 (CLV) → P84 (cross-year synthesis)
+> - Prediction-only lane remains ACTIVE; Tier B remains RESEARCH_ONLY
+> - Forbidden scan: PASS (0 violations) | live_api_calls=0
+> - 53/53 tests PASS | Full regression: 531/531 PASS (P72A→P80)
+> - **Commit**: (see below)
+
+---
+
+# Previous: P79B Tier B vs Tier C Comparison Harness Fixture Dry-Run
 
 > **[COMPLETED 2026-05-26]** `P79B_TIER_B_FIXTURE_RESEARCH_ONLY`
 > **Issued by**: P79A handoff (P79A_TIER_B_TRIGGER_READINESS_CONTRACT_READY)
@@ -16,7 +38,7 @@
 > - Future P79 execution prompt generated (trigger: 2026 live Tier B n≥200)
 > - Market-edge lane: blocked (deferred to P80)
 > - Forbidden scan: PASS (0 violations)
-> - **Commit**: (pending)
+> - **Commit**: `520206c`
 
 ---
 
