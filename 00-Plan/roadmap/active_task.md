@@ -1,4 +1,27 @@
-# Active Task — P81 Legal Odds Dataset Validator Contract
+# Active Task — P82A Real Legal Odds Dataset Intake Gate
+
+> **[COMPLETED 2026-05-26]** `P82A_REAL_LEGAL_ODDS_INTAKE_GATE_READY`
+> **Issued by**: P81 handoff (P81_VALIDATOR_CONTRACT_READY_MOCK_ONLY, commit `da626c9`)
+> **Branch**: `main` | **Mode**: `paper_only=True | diagnostic_only=True | NO_REAL_BET=True`
+>
+> **P82A Result:** Intake gate and blocker closure plan defined. No real odds pulled.
+> No EV/CLV/Kelly computed. P82 remains BLOCKED_NO_REAL_DATASET.
+>
+> **Contract summary:**
+> - 23-field intake manifest schema (requires dataset_type=REAL_LEGAL_ODDS_DATASET, source_license_status=LEGAL_OR_LICENSED, contains_api_key=False)
+> - Allowed raw_data_policy: COMMIT_ALLOWED / LOCAL_ONLY_HASH_COMMITTED / DERIVED_ONLY_COMMIT
+> - 12 blockers: 10 BLOCKED_PENDING_REAL_DATASET, 2 ACTIVE_GUARDRAIL
+> - Unlock decision function: 7 conditions; 8 scenarios tested; only REAL_LEGAL passes
+> - P82 dry-run scope: 6 allowed, 9 prohibited; CLV BLOCKED_UNTIL_P83
+> - Source artifacts: 13/13 present (P72A→P81)
+> - Forbidden scan: PASS (0 violations) | live_api_calls=0 | p82_unlocked=False
+> - 69/69 tests PASS | Full regression: 664/664 PASS (P72A→P82A)
+> - **P82 unlock status**: BLOCKED_NO_REAL_DATASET
+> - **Commit**: TBD (pending)
+
+---
+
+# Previous: P81 Legal Odds Dataset Validator Contract
 
 > **[COMPLETED 2026-05-26]** `P81_VALIDATOR_CONTRACT_READY_MOCK_ONLY`
 > **Issued by**: P80 handoff (P80_MARKET_EDGE_REENTRY_CONTRACT_READY, commit `ecbcc37`)
