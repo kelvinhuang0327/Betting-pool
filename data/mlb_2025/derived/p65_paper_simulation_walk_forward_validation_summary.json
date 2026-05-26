@@ -1,0 +1,514 @@
+{
+  "p65_classification": "P65_EDGE_STABLE_NEGATIVE",
+  "generated_at_utc": "2026-05-26T03:57:44Z",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "runtime_recommendation_logic_changed": false,
+    "real_bet_allowed": false,
+    "production_ready": false,
+    "data_year_2024_gap_remains_unresolved": true
+  },
+  "p64_baseline": {
+    "classification": "P64_PAPER_SIMULATION_FIRST_RUN_READY",
+    "total_rows": 535,
+    "edge_mean": -0.032473,
+    "positive_edge_count": 200,
+    "negative_edge_count": 335
+  },
+  "walk_forward": {
+    "monthly_windows": {
+      "2025-04": {
+        "n": 16,
+        "mean_edge": -0.02533,
+        "median_edge": 0.011128,
+        "std_edge": 0.115037,
+        "min_edge": -0.249121,
+        "max_edge": 0.119873,
+        "positive_edge_count": 9,
+        "negative_edge_count": 7,
+        "positive_edge_rate": 0.5625,
+        "mean_calibrated_prob": 0.57437,
+        "mean_implied_prob": 0.5997,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 16
+        },
+        "gate_distribution": {
+          "GATE_PASS": 16
+        }
+      },
+      "2025-05": {
+        "n": 120,
+        "mean_edge": -0.029238,
+        "median_edge": -0.024436,
+        "std_edge": 0.088812,
+        "min_edge": -0.237764,
+        "max_edge": 0.169932,
+        "positive_edge_count": 50,
+        "negative_edge_count": 70,
+        "positive_edge_rate": 0.416667,
+        "mean_calibrated_prob": 0.570228,
+        "mean_implied_prob": 0.599466,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 120
+        },
+        "gate_distribution": {
+          "GATE_PASS": 120
+        }
+      },
+      "2025-06": {
+        "n": 101,
+        "mean_edge": -0.033884,
+        "median_edge": -0.044885,
+        "std_edge": 0.096273,
+        "min_edge": -0.209857,
+        "max_edge": 0.225797,
+        "positive_edge_count": 33,
+        "negative_edge_count": 68,
+        "positive_edge_rate": 0.326733,
+        "mean_calibrated_prob": 0.5395,
+        "mean_implied_prob": 0.573384,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 101
+        },
+        "gate_distribution": {
+          "GATE_PASS": 101
+        }
+      },
+      "2025-07": {
+        "n": 92,
+        "mean_edge": -0.021995,
+        "median_edge": -0.028259,
+        "std_edge": 0.085915,
+        "min_edge": -0.20627,
+        "max_edge": 0.182571,
+        "positive_edge_count": 33,
+        "negative_edge_count": 59,
+        "positive_edge_rate": 0.358696,
+        "mean_calibrated_prob": 0.551691,
+        "mean_implied_prob": 0.573686,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 92
+        },
+        "gate_distribution": {
+          "GATE_PASS": 92
+        }
+      },
+      "2025-08": {
+        "n": 108,
+        "mean_edge": -0.012696,
+        "median_edge": -0.005125,
+        "std_edge": 0.101249,
+        "min_edge": -0.28208,
+        "max_edge": 0.205632,
+        "positive_edge_count": 53,
+        "negative_edge_count": 55,
+        "positive_edge_rate": 0.490741,
+        "mean_calibrated_prob": 0.578366,
+        "mean_implied_prob": 0.591062,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 108
+        },
+        "gate_distribution": {
+          "GATE_PASS": 108
+        }
+      },
+      "2025-09": {
+        "n": 98,
+        "mean_edge": -0.06778,
+        "median_edge": -0.070143,
+        "std_edge": 0.082997,
+        "min_edge": -0.24754,
+        "max_edge": 0.141012,
+        "positive_edge_count": 22,
+        "negative_edge_count": 76,
+        "positive_edge_rate": 0.22449,
+        "mean_calibrated_prob": 0.533673,
+        "mean_implied_prob": 0.601454,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 98
+        },
+        "gate_distribution": {
+          "GATE_PASS": 98
+        }
+      }
+    },
+    "chronological_thirds": {
+      "third_1": {
+        "n": 178,
+        "mean_edge": -0.030058,
+        "median_edge": -0.0293,
+        "std_edge": 0.092612,
+        "min_edge": -0.249121,
+        "max_edge": 0.225797,
+        "positive_edge_count": 71,
+        "negative_edge_count": 107,
+        "positive_edge_rate": 0.398876,
+        "mean_calibrated_prob": 0.561863,
+        "mean_implied_prob": 0.591922,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 178
+        },
+        "gate_distribution": {
+          "GATE_PASS": 178
+        },
+        "start": "2025-04-27",
+        "end": "2025-06-13"
+      },
+      "third_2": {
+        "n": 178,
+        "mean_edge": -0.024175,
+        "median_edge": -0.031607,
+        "std_edge": 0.093926,
+        "min_edge": -0.25668,
+        "max_edge": 0.201837,
+        "positive_edge_count": 69,
+        "negative_edge_count": 109,
+        "positive_edge_rate": 0.38764,
+        "mean_calibrated_prob": 0.552819,
+        "mean_implied_prob": 0.576994,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 178
+        },
+        "gate_distribution": {
+          "GATE_PASS": 178
+        },
+        "start": "2025-06-13",
+        "end": "2025-08-08"
+      },
+      "third_3": {
+        "n": 179,
+        "mean_edge": -0.043127,
+        "median_edge": -0.036374,
+        "std_edge": 0.093745,
+        "min_edge": -0.28208,
+        "max_edge": 0.205632,
+        "positive_edge_count": 60,
+        "negative_edge_count": 119,
+        "positive_edge_rate": 0.335196,
+        "mean_calibrated_prob": 0.55426,
+        "mean_implied_prob": 0.597387,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 179
+        },
+        "gate_distribution": {
+          "GATE_PASS": 179
+        },
+        "start": "2025-08-08",
+        "end": "2025-09-28"
+      }
+    },
+    "rolling_windows": [
+      {
+        "n": 100,
+        "mean_edge": -0.026357,
+        "median_edge": -0.015329,
+        "std_edge": 0.092959,
+        "min_edge": -0.249121,
+        "max_edge": 0.162175,
+        "positive_edge_count": 44,
+        "negative_edge_count": 56,
+        "positive_edge_rate": 0.44,
+        "mean_calibrated_prob": 0.572466,
+        "mean_implied_prob": 0.598823,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 0,
+        "window_end_idx": 99,
+        "date_start": "2025-04-27",
+        "date_end": "2025-05-21"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.027732,
+        "median_edge": -0.026953,
+        "std_edge": 0.085018,
+        "min_edge": -0.237764,
+        "max_edge": 0.169932,
+        "positive_edge_count": 40,
+        "negative_edge_count": 60,
+        "positive_edge_rate": 0.4,
+        "mean_calibrated_prob": 0.565778,
+        "mean_implied_prob": 0.593511,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 50,
+        "window_end_idx": 149,
+        "date_start": "2025-05-09",
+        "date_end": "2025-06-05"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.030544,
+        "median_edge": -0.042816,
+        "std_edge": 0.093583,
+        "min_edge": -0.237764,
+        "max_edge": 0.225797,
+        "positive_edge_count": 38,
+        "negative_edge_count": 62,
+        "positive_edge_rate": 0.38,
+        "mean_calibrated_prob": 0.54681,
+        "mean_implied_prob": 0.577354,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 100,
+        "window_end_idx": 199,
+        "date_start": "2025-05-23",
+        "date_end": "2025-06-19"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.03314,
+        "median_edge": -0.041787,
+        "std_edge": 0.098284,
+        "min_edge": -0.209857,
+        "max_edge": 0.225797,
+        "positive_edge_count": 34,
+        "negative_edge_count": 66,
+        "positive_edge_rate": 0.34,
+        "mean_calibrated_prob": 0.54661,
+        "mean_implied_prob": 0.579751,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 150,
+        "window_end_idx": 249,
+        "date_start": "2025-06-05",
+        "date_end": "2025-07-03"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.033238,
+        "median_edge": -0.036152,
+        "std_edge": 0.089216,
+        "min_edge": -0.20627,
+        "max_edge": 0.201837,
+        "positive_edge_count": 30,
+        "negative_edge_count": 70,
+        "positive_edge_rate": 0.3,
+        "mean_calibrated_prob": 0.553722,
+        "mean_implied_prob": 0.586959,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 200,
+        "window_end_idx": 299,
+        "date_start": "2025-06-19",
+        "date_end": "2025-07-21"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.016313,
+        "median_edge": -0.023294,
+        "std_edge": 0.091672,
+        "min_edge": -0.25668,
+        "max_edge": 0.182571,
+        "positive_edge_count": 41,
+        "negative_edge_count": 59,
+        "positive_edge_rate": 0.41,
+        "mean_calibrated_prob": 0.554687,
+        "mean_implied_prob": 0.570999,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 250,
+        "window_end_idx": 349,
+        "date_start": "2025-07-05",
+        "date_end": "2025-08-05"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.010435,
+        "median_edge": 0.004696,
+        "std_edge": 0.09896,
+        "min_edge": -0.28208,
+        "max_edge": 0.188544,
+        "positive_edge_count": 51,
+        "negative_edge_count": 49,
+        "positive_edge_rate": 0.51,
+        "mean_calibrated_prob": 0.565851,
+        "mean_implied_prob": 0.576286,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 300,
+        "window_end_idx": 399,
+        "date_start": "2025-07-21",
+        "date_end": "2025-08-22"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.022489,
+        "median_edge": -0.01304,
+        "std_edge": 0.09757,
+        "min_edge": -0.28208,
+        "max_edge": 0.205632,
+        "positive_edge_count": 43,
+        "negative_edge_count": 57,
+        "positive_edge_rate": 0.43,
+        "mean_calibrated_prob": 0.572797,
+        "mean_implied_prob": 0.595286,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 350,
+        "window_end_idx": 449,
+        "date_start": "2025-08-06",
+        "date_end": "2025-09-06"
+      },
+      {
+        "n": 100,
+        "mean_edge": -0.051595,
+        "median_edge": -0.039809,
+        "std_edge": 0.089481,
+        "min_edge": -0.257343,
+        "max_edge": 0.205632,
+        "positive_edge_count": 26,
+        "negative_edge_count": 74,
+        "positive_edge_rate": 0.26,
+        "mean_calibrated_prob": 0.54774,
+        "mean_implied_prob": 0.599335,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 100
+        },
+        "gate_distribution": {
+          "GATE_PASS": 100
+        },
+        "window_start_idx": 400,
+        "window_end_idx": 499,
+        "date_start": "2025-08-22",
+        "date_end": "2025-09-18"
+      },
+      {
+        "n": 85,
+        "mean_edge": -0.068508,
+        "median_edge": -0.070907,
+        "std_edge": 0.084612,
+        "min_edge": -0.24754,
+        "max_edge": 0.141012,
+        "positive_edge_count": 19,
+        "negative_edge_count": 66,
+        "positive_edge_rate": 0.223529,
+        "mean_calibrated_prob": 0.534274,
+        "mean_implied_prob": 0.602782,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 85
+        },
+        "gate_distribution": {
+          "GATE_PASS": 85
+        },
+        "window_start_idx": 450,
+        "window_end_idx": 534,
+        "date_start": "2025-09-06",
+        "date_end": "2025-09-28"
+      }
+    ],
+    "half_split": {
+      "first_half": {
+        "n": 267,
+        "mean_edge": -0.030551,
+        "median_edge": -0.031467,
+        "std_edge": 0.0927,
+        "min_edge": -0.249121,
+        "max_edge": 0.225797,
+        "positive_edge_count": 102,
+        "negative_edge_count": 165,
+        "positive_edge_rate": 0.382022,
+        "mean_calibrated_prob": 0.557984,
+        "mean_implied_prob": 0.588535,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 267
+        },
+        "gate_distribution": {
+          "GATE_PASS": 267
+        },
+        "start": "2025-04-27",
+        "end": "2025-07-08"
+      },
+      "second_half": {
+        "n": 268,
+        "mean_edge": -0.034388,
+        "median_edge": -0.0322,
+        "std_edge": 0.094607,
+        "min_edge": -0.28208,
+        "max_edge": 0.205632,
+        "positive_edge_count": 98,
+        "negative_edge_count": 170,
+        "positive_edge_rate": 0.365672,
+        "mean_calibrated_prob": 0.554642,
+        "mean_implied_prob": 0.589031,
+        "status_distribution": {
+          "PAPER_ELIGIBLE_CONTRACT_ONLY": 268
+        },
+        "gate_distribution": {
+          "GATE_PASS": 268
+        },
+        "start": "2025-07-08",
+        "end": "2025-09-28"
+      }
+    }
+  },
+  "stability": {
+    "classification": "P65_EDGE_STABLE_NEGATIVE",
+    "allowed_values": [
+      "P65_BLOCKED_BY_P64_SCHEMA_GAP",
+      "P65_BLOCKED_BY_TEST_FAILURE",
+      "P65_EDGE_INSUFFICIENT_WINDOW_SAMPLE",
+      "P65_EDGE_MIXED_TIME_DEPENDENT",
+      "P65_EDGE_STABLE_NEGATIVE",
+      "P65_EDGE_STABLE_POSITIVE"
+    ]
+  },
+  "diagnostic_recommendations": [
+    "RESOLVE_2024_DATA_GAP",
+    "DO_NOT_PROCEED_TO_PRODUCT",
+    "REVIEW_MODEL_CALIBRATION",
+    "REVIEW_ODDS_MAPPING",
+    "ALLOW_CONTRACT_ITERATION_ONLY"
+  ],
+  "recommendation_notes": {
+    "DO_NOT_PROCEED_TO_PRODUCT": "Edge pattern does not support product deployment.",
+    "REVIEW_MODEL_CALIBRATION": "Platt constants are locked; consider re-examining feature set.",
+    "REVIEW_ODDS_MAPPING": "Closing-line odds source may introduce systematic bias.",
+    "REVIEW_TIER_THRESHOLD": "Tier C 0.50 threshold may be filtering out mixed-quality rows.",
+    "RESOLVE_2024_DATA_GAP": "2024 data gap unresolved; multi-year validation impossible.",
+    "ALLOW_CONTRACT_ITERATION_ONLY": "Only schema/contract iteration is safe. No live deployment."
+  },
+  "forbidden_scan": {
+    "result": "CLEAN",
+    "violations": 0,
+    "details": [],
+    "terms_scanned": 10
+  }
+}

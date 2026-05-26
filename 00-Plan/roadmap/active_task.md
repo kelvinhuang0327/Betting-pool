@@ -1,23 +1,39 @@
-# Active Task — P64 Paper Simulation First Run
+# Active Task — P65 Walk-Forward Validation
 
-> **[COMPLETED 2026-05-26]** `P64_PAPER_SIMULATION_FIRST_RUN_READY`
-> **Issued by**: CEO approval phrase: `YES approve P62 contract and proceed with P64 paper simulation first run`
-> **HEAD**: `2a0052a` → pending commit | **Branch**: `main` | **Mode**: `paper_only=true`
-> **Prior phase**: P63 `P63_READY_FOR_CEO_REVIEW`
+> **[COMPLETED 2026-05-26]** `P65_EDGE_STABLE_NEGATIVE`
+> **Branch**: `main` | **Mode**: `paper_only=true`, `diagnostic_only=true`
+> **Prior phase**: P64 `P64_PAPER_SIMULATION_FIRST_RUN_READY`
 >
-> **P64 Result:** First paper-only simulation run using 2025 local data only.
-> 535 Tier C games (|sp_fip_delta| >= 0.50) loaded from predictions JSONL.
-> 535/535 matched to odds via mlb_odds_2025_real.csv (date+home_team join).
-> All 535 rows emitted with all 33 P62 contract fields. All rows GATE_PASS / PAPER_ELIGIBLE_CONTRACT_ONLY.
-> Edge mean = -0.032473 (market has edge overall). Positive edge rows = 200/535.
+> **P65 Result:** Walk-forward validation of 535 P64 paper simulation rows.
+> 6 monthly windows (2025-04 → 2025-09) + 3 chronological thirds + 10 rolling windows + half split.
+> All thirds show mean_edge < -0.01. Classification: `P65_EDGE_STABLE_NEGATIVE`.
+> Edge is consistently negative across all temporal windows — no unstable regime detected.
+> Third means: third_1=-0.0301, third_2=-0.0242, third_3=-0.0431.
+> Rolling window range: edge_mean from -0.0104 (best) to -0.0685 (worst).
+> Recommendations: RESOLVE_2024_DATA_GAP, DO_NOT_PROCEED_TO_PRODUCT, REVIEW_MODEL_CALIBRATION, REVIEW_ODDS_MAPPING, ALLOW_CONTRACT_ITERATION_ONLY.
 > Forbidden scan: 0 violations (CLEAN). All governance invariants enforced.
-> P45 Platt constants locked: A=0.435432, B=0.245464. P52 thresholds unchanged.
-> 2024 data gap: UNRESOLVED (2025-only simulation, no paid API called).
-> **Tests:** 36 PASS (P64) + 155 PASS (P43+P59+P60+P61+P62+P63+P64 regression)
+> 2024 data gap: UNRESOLVED (2025-only data, no paid API called).
+> **Tests:** 36 PASS (P65) + 191 PASS (P43+P59+P60+P61+P62+P63+P64+P65 regression)
 > **Forbidden scan:** 0 violations
-> **Classification:** `P64_PAPER_SIMULATION_FIRST_RUN_READY`
-> **Recommended next step:** CEO reviews P64 edge distribution → authorize P65 (walk-forward validation)
-> or proceed with P61 PATH_B 2024 data gap resolution (free-source search)
+> **Classification:** `P65_EDGE_STABLE_NEGATIVE`
+>
+> ---
+>
+> ## Prior Completed Task: P64
+>
+> **[COMPLETED 2026-05-26]** `P64_PAPER_SIMULATION_FIRST_RUN_READY`
+> **Commit**: `c4a3375`
+> First paper-only simulation run. 535 Tier C rows. Edge mean = -0.032473. 200/535 positive edge.
+> P45 Platt constants locked: A=0.435432, B=0.245464.
+>
+> ---
+>
+> ## Recommended Next Steps
+>
+> **Path A (Calibration Fix):** P66 — re-calibrate Platt scaling with 2025 data to see if edge can be improved.
+> **Path B (Data Gap):** P61 PATH_B — resolve 2024 data gap via free-source historical odds search.
+> **Path C (Odds Mapping):** Audit odds matching join (date+home_team) for systematic mismatches contributing to negative edge.
+> CEO authorization required before proceeding to any production-facing task.
 
 ---
 
