@@ -1,0 +1,77 @@
+{
+  "p71_version": "p71_v1",
+  "p71_classification": "P71_PATH_A_STILL_AWAITING_API_KEY",
+  "execution_date": "2026-05-26",
+  "mode": "AWAITING_KEY",
+  "api_key_status": "API_KEY_MISSING",
+  "ceo_authorization_confirmed": true,
+  "ceo_authorization_phrase": "YES authorize P61 PATH_A The Odds API historical 2024 MLB moneyline pull for paper-only validation",
+  "paid_api_called": false,
+  "live_api_calls": 0,
+  "p70_context": {
+    "p70_classification": "P70_PATH_A_AUTHORIZED_AWAITING_API_KEY",
+    "pull_date": "2026-05-26",
+    "pull_config": {
+      "sport": "baseball_mlb",
+      "season_start": "2024-03-20",
+      "season_end": "2024-09-29",
+      "market": "h2h",
+      "regions": "us",
+      "bookmakers": [
+        "pinnacle",
+        "draftkings",
+        "fanduel",
+        "betmgm"
+      ],
+      "preferred_bookmaker": "pinnacle",
+      "odds_format": "american",
+      "target_rows_estimate": 2430,
+      "api_endpoint_base": "https://api.the-odds-api.com/v4",
+      "rate_limit_seconds": 1.0,
+      "max_retries": 3,
+      "retry_backoff_seconds": 5.0
+    }
+  },
+  "required_schema_fields": [
+    "game_date",
+    "home_team",
+    "away_team",
+    "home_ml",
+    "away_ml",
+    "bookmaker",
+    "odds_timestamp",
+    "closing_indicator",
+    "source_trace"
+  ],
+  "output_csv_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/mlb_odds_2024_real.csv",
+  "min_rows_required": 500,
+  "setup_required_for_live_pull": {
+    "step_1": "Register at https://the-odds-api.com",
+    "step_2": "Subscribe to a plan with historical data access (~$30-50)",
+    "step_3": "Locate API key in account dashboard",
+    "step_4": "Add to .env: THE_ODDS_API_KEY=<your_key>",
+    "step_5": "Re-run P70 script: .venv/bin/python scripts/_p70_path_a_the_odds_api_historical_pull.py",
+    "step_6": "Script auto-detects key → LIVE mode → writes mlb_odds_2024_real.csv",
+    "step_7": "Re-run P71 script to validate CSV and advance classification"
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "real_bet_allowed": false,
+    "production_ready": false,
+    "runtime_recommendation_logic_changed": false,
+    "tsl_crawler_called": false,
+    "bulk_scraping_performed": false,
+    "anti_bot_bypass_attempted": false,
+    "paid_api_called": false,
+    "platt_a": 0.435432,
+    "platt_b": 0.245464,
+    "p52_ece_warn": 0.1,
+    "p52_ece_crit": 0.12,
+    "p52_brier_warn": 0.25,
+    "p52_brier_crit": 0.27,
+    "p52_edge_warn": 0.07
+  }
+}

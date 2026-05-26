@@ -1,19 +1,42 @@
-# Active Task — P71 (Pending)
+# Active Task — P72 (Pending)
 
-> **Next recommended scope**: P71 — The Odds API Live Pull Execution
-> **Status**: Awaiting `THE_ODDS_API_KEY` in `.env`
+> **Next recommended scope**: P72 — Live Pull Re-execution on Key Configuration
+> **Status**: Awaiting `THE_ODDS_API_KEY` in `.env` (same blocker as P71)
 > **Mode**: `paper_only=true`, `diagnostic_only=true`
 >
-> P70 created the complete pull script and validated it in dry-run mode.
-> CEO authorization is confirmed (`P70_PATH_A_AUTHORIZED_AWAITING_API_KEY`).
+> P71 confirmed API_KEY_MISSING and executed awaiting-key closure.
+> Classification: `P71_PATH_A_STILL_AWAITING_API_KEY`.
+> P70 pull script ready to auto-switch to LIVE mode on key detection.
 >
-> **To trigger actual 2024 MLB data pull:**
+> **To unblock P72 / execute actual 2024 MLB data pull:**
 > 1. Register at https://the-odds-api.com and purchase historical data access
 > 2. Add to `.env`: `THE_ODDS_API_KEY=<your_key>`
-> 3. Run: `.venv/bin/python scripts/_p70_path_a_the_odds_api_historical_pull.py`
-> 4. Script auto-switches to LIVE mode and writes `data/mlb_2025/mlb_odds_2024_real.csv`
+> 3. Run P70: `.venv/bin/python scripts/_p70_path_a_the_odds_api_historical_pull.py`
+> 4. Script auto-switches to LIVE mode → writes `data/mlb_2025/mlb_odds_2024_real.csv`
+> 5. Re-run P71: `.venv/bin/python scripts/_p71_the_odds_api_live_pull_execution.py`
+> 6. P71 auto-advances to `P71_PATH_A_PULL_COMPLETE` once CSV validates
 >
-> P71 = verify the resulting CSV, validate schema, run P43 cross-year bootstrap CI.
+> **Alternatively**: If deferring API key purchase permanently, P72 documents the
+> 2024 real-odds gap as a permanent research limitation and closes the PATH_A track.
+
+---
+
+## Prior Completed Task: P71
+
+> **[COMPLETED 2026-05-26]** `P71_PATH_A_STILL_AWAITING_API_KEY`
+> **Branch**: `main` | **Mode**: `paper_only=true`, `diagnostic_only=true`
+> **Prior phase**: P70 `P70_PATH_A_AUTHORIZED_AWAITING_API_KEY`
+>
+> **P71 Result:** Awaiting-key closure (Step 3A).
+> API key status confirmed: API_KEY_MISSING (no `THE_ODDS_API_KEY` in `.env`).
+> P70 context loaded and verified: `P70_PATH_A_AUTHORIZED_AWAITING_API_KEY`.
+> live_api_calls=0, paid_api_called=False.
+> CEO authorization confirmed (inherited from P70).
+> Setup instructions documented: 7-step process to configure key and execute pull.
+> CSV validator implemented: schema validation, row count ≥500, moneyline numeric.
+> Forbidden scan: 0 violations. No API calls. Governance fully preserved.
+> **Tests:** 48 PASS (P71) + 437 PASS (P43+P59–P71 cumulative regression)
+> **Classification:** `P71_PATH_A_STILL_AWAITING_API_KEY`
 
 ---
 
