@@ -1,4 +1,52 @@
-# Active Task — P83D 2026 Upstream Data Availability Probe + Producer Activation Gate
+# Active Task — P83E 2026 Canonical Prediction Row Producer
+
+> **[COMPLETED 2026-05-26]** `P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA`
+> **Issued by**: P83D handoff (P83D_AWAITING_UPSTREAM_DATA, commit `ffa16ca`)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=True`
+>
+> **P83E Result:** Full canonical row producer implemented with blocked state.
+> All upstream files confirmed missing on local filesystem → rows not written.
+> Producer logic complete: schema validators, join-by-game_id, sp_fip_delta computation,
+> rule flag computation, governance enforcement, canonical row writer.
+> In-memory mock fixture (5 games, all rule-flag cases) validated against P83C contract.
+>
+> **Gate recheck (STOP: 3 upstream files missing):**
+> - SCHEDULE_GATE: ❌ FAIL — data/mlb_2026/schedule/ missing
+> - PITCHER_FEATURE_GATE: ❌ FAIL — data/mlb_2026/pitchers/ missing
+> - MODEL_OUTPUT_GATE: ❌ FAIL — data/mlb_2026/model_outputs/ missing
+> - PREDICTED_SIDE_GATE: ❌ FAIL — blocked by PITCHER_FEATURE_GATE
+> - GOVERNANCE_GATE: ✅ PASS — constants
+> - PRODUCER_ACTIVATION_GATE: ❌ FAIL
+>
+> **sp_fip_delta convention (P83C_UPSTREAM_INPUT_CONTRACT_V1):**
+> - sp_fip_delta = home_sp_fip - away_sp_fip
+> - Positive → home pitcher favored (system convention)
+> - predicted_side = 'home' if sp_fip_delta > 0 else 'away'; ties excluded
+>
+> **Rule flags (verified against P83C 5 test cases, all PASS):**
+> - primary_125: home abs>=0.50 OR away abs>=1.25
+> - shadow_100: home abs>=0.50 OR away abs>=1.00
+> - tier_b: 0.25 <= abs < 0.50
+> - tier_a: abs < 0.25
+>
+> **Rerun trigger:** When all 3 upstream files exist locally:
+> - data/mlb_2026/schedule/mlb_2026_schedule.jsonl
+> - data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl
+> - data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl
+>
+> **Output artifacts:**
+> - `scripts/_p83e_2026_canonical_prediction_row_producer.py`
+> - `tests/test_p83e_2026_canonical_prediction_row_producer.py`
+> - `data/mlb_2026/derived/p83e_2026_canonical_prediction_row_producer_summary.json`
+> - `report/p83e_2026_canonical_prediction_row_producer_20260526.md`
+>
+> **Tests:** 36 PASS (P83E) + 1022 PASS (P72A→P83E full regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA`
+
+---
+
+# Prior Active Task — P83D 2026 Upstream Data Availability Probe + Producer Activation Gate
 
 > **[COMPLETED 2026-05-26]** `P83D_AWAITING_UPSTREAM_DATA`
 > **Issued by**: P83C handoff (P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA, commit `01a38c4`)
