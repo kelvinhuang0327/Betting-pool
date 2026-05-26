@@ -1,4 +1,27 @@
-# Active Task — P80 Market-Edge Lane Re-entry Readiness Contract
+# Active Task — P81 Legal Odds Dataset Validator Contract
+
+> **[COMPLETED 2026-05-26]** `P81_VALIDATOR_CONTRACT_READY_MOCK_ONLY`
+> **Issued by**: P80 handoff (P80_MARKET_EDGE_REENTRY_CONTRACT_READY, commit `ecbcc37`)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
+>
+> **P81 Result:** Legal odds dataset schema, legality, and policy validator implemented.
+> No real odds pulled. No EV/CLV/Kelly computed. Validator ready; awaiting real legal dataset.
+>
+> **Contract summary:**
+> - 5 validator input types defined (REAL_LEGAL_ODDS_DATASET / MOCK / UNKNOWN / SCRAPING_PROHIBITED / RAW_PAID_UNPOLICIED)
+> - Only REAL_LEGAL_ODDS_DATASET can unlock P82 (not available yet)
+> - 21-field P80 schema validator implemented with type and range rules
+> - 5 validator gates: LEGALITY, RAW_DATA_POLICY, TIMESTAMP, MONEYLINE, IDENTITY
+> - Valid mock fixture: schema PASS, all gates PASS, P82 unlock=False
+> - Invalid mock fixture: LEGALITY_GATE + RAW_DATA_POLICY_GATE both FAIL (expected)
+> - 9 output decision states defined; current=BLOCKED_NO_REAL_DATASET
+> - Forbidden scan: PASS (0 violations) | live_api_calls=0
+> - 64/64 tests PASS | Full regression: 595/595 PASS (P72A→P81)
+> - **Commit**: (see below)
+
+---
+
+# Previous: P80 Market-Edge Lane Re-entry Readiness Contract
 
 > **[COMPLETED 2026-05-26]** `P80_MARKET_EDGE_REENTRY_CONTRACT_READY`
 > **Issued by**: P79B handoff (P79B_TIER_B_FIXTURE_RESEARCH_ONLY)
