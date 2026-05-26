@@ -1,4 +1,37 @@
-# Active Task — P75B Calibration Diagnostics for Corrected Tier C Candidates
+# Active Task — P76 Corrected Tier C Final Rule Selection + 2026 Accumulation Plan
+
+> **[COMPLETED 2026-05-26]** `P76_DUAL_FINALISTS_RETAINED_UNTIL_2026_DATA`
+> **Issued by**: P75B handoff (P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE)
+> **Branch**: `main` | **Mode**: `paper_only=true`
+>
+> **P76 Result:** Weighted scorecard tie-break between TIER_C_HOME_PLUS_AWAY_125 vs TIER_C_HOME_PLUS_AWAY_100.
+> Score delta = 0.0003 < threshold 0.02 → dual finalists retained.
+>
+> **Scorecard summary (5 axes):**
+> - Directional (30%): 125 wins (AUC=0.579 vs 0.560, hit_delta=0.034 vs 0.027)
+> - Calibration (25%): 100 wins (cal_brier=0.2254, cal_ece=0.071 vs 0.2274/0.088)
+> - Coverage (20%): 100 wins (n=373, cov=0.70 vs n=316, cov=0.59)
+> - Stability/Risk (15%): TIE (both MODERATE, no caveats)
+> - Future Readiness (10%): 125 wins (AUC + temperature method)
+> - Final: 125=0.5543 vs 100=0.5540 — too close to select
+>
+> **2026 Accumulation Plan:**
+> - Primary tracking: TIER_C_HOME_PLUS_AWAY_125
+> - Shadow tracking: TIER_C_HOME_PLUS_AWAY_100
+> - Monthly cadence: Jun-Nov 2026
+> - Stop criteria: rolling 100-game hit_rate < 0.55
+> - Tier B trigger: n >= 200 (~2026-09) → P78
+> - Market-edge: DEFERRED until odds API key acquired
+>
+> **Research Roadmap:** P77 (2026-06) → P78 (Tier B) → P79 (Combined) → P80 (Odds-Lane) → P81 (Finalize)
+>
+> **Tests:** 36 PASS (P76) + 150 PASS (P72A→P75B regression) = 186 total
+> **Forbidden scan:** 0 violations
+> **Classification:** `P76_DUAL_FINALISTS_RETAINED_UNTIL_2026_DATA`
+
+---
+
+## Prior Active Task: P75B Calibration Diagnostics for Corrected Tier C Candidates
 
 > **[COMPLETED 2026-05-26]** `P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE`
 > **Issued by**: P75A handoff (P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION)
