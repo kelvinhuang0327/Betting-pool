@@ -1,4 +1,39 @@
-# Active Task — P73A/B Tier Stability Deep-Dive + Sample Expansion
+# Active Task — P74 Tier C Home/Away Bias Correction Research
+
+> **[COMPLETED 2026-05-26]** `P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED`
+> **Issued by**: P73A/B handoff (home/away gap = 0.132 identified as primary research direction)
+> **HEAD**: `5fda71b` (P73A/B) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P73 `P73_TIER_C_OPERATIONAL_STABLE_TIER_B_RESEARCH_CONFIRMED`
+>
+> **P74 Result:** Home/away bias confirmed and corrected rules evaluated.
+> Tier C (n=535) reconstructed with hit_rate=0.606, AUC=0.583 — exact P73A match.
+> Home hit_rate=0.672 (n=268, MODERATE stability), away hit_rate=0.539 (n=267, MODERATE stability).
+> Hit gap = 0.132. Away weakness is GENERAL (not month/band-specific).
+>
+> **Away rescue filters (8 tested):**
+> Best n>=75 filter: AWAY_HIGH_CONF_DELTA_075 — no single filter clearly beats baseline by >2pp with n>=75.
+> away_rescue_found=False — no rescue filter met the improvement threshold.
+>
+> **Home robustness:** KEEP_FULL_HOME_TIER_C — narrowing threshold does not improve meaningfully.
+> Home stable at full threshold (0.50) = MODERATE.
+>
+> **Candidate corrected rules (best performers):**
+> - TIER_C_HOME_ONLY: n=268, hit=0.672, AUC=0.559, MODERATE → STRONG_CANDIDATE
+> - TIER_C_HOME_PLUS_AWAY_125: n=316, hit=0.639, AUC=0.579, MODERATE → STRONG_CANDIDATE
+> - TIER_C_HOME_PLUS_AWAY_100: n=373, hit=0.633, AUC=0.560, MODERATE → STRONG_CANDIDATE
+> - TIER_C_ALL_BASELINE: n=535, hit=0.606, AUC=0.583, STABLE → CANDIDATE
+>
+> **Classification: `P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED`**
+> Multiple corrected rules (HOME_ONLY, HOME_PLUS_AWAY_100, HOME_PLUS_AWAY_125) beat baseline hit rate
+> with n>=200 and MODERATE+ stability. Home correction is confirmed as the primary improvement lever.
+>
+> **Tests:** 24 PASS (P74) + 92 PASS (P72A+P72B+P73+P74 regression)
+> **Forbidden scan:** 0 violations
+> **Governance:** paper_only=True, diagnostic_only=True, live_api_calls=0, production_ready=False
+
+---
+
+## Prior Active Task: P73A/B Tier Stability Deep-Dive + Sample Expansion
 
 > **[COMPLETED 2026-05-26]** `P73_TIER_C_OPERATIONAL_STABLE_TIER_B_RESEARCH_CONFIRMED`
 > **Issued by**: P72B handoff (P73A + P73B recommended as PRIMARY next steps)
