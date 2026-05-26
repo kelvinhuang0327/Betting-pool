@@ -1,4 +1,39 @@
-# Active Task — P83A 2026 Live Accumulation First Snapshot / Awaiting Contract
+# Active Task — P83B 2026 Prediction Data Ingest Contract / Awaiting Stub
+
+> **[COMPLETED 2026-05-26]** `P83B_INGEST_CONTRACT_READY_AWAITING_DATA`
+> **Issued by**: P83A handoff (P83A_AWAITING_2026_DATA)
+> **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=True`
+>
+> **P83B Result:** Full 2026 prediction data ingest contract defined.
+> No live data processed. No market edge computed. Contract only — awaiting first 2026 rows.
+>
+> **Contract deliverables:**
+> - Canonical paths (4 defined): `data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl` (primary)
+> - Runtime PAPER output classified as NON_CANONICAL (lacks sp_fip_delta); adapter deferred
+> - Row schema V1: 19 required fields + 5 optional outcome fields (P83B_2026_PREDICTION_ROW_SCHEMA_V1)
+> - New fields vs 2025: rule_primary_125_flag, rule_shadow_100_flag, tier_b_candidate_flag, tier_a_watchlist_flag
+> - 2025→2026 extension contract: no retraining required, no live API required; FIP formula preserved
+> - Validator: P83B_ROW_VALIDATOR_V1 (8 checks: required fields, season=2026, governance, abs_fip tolerance, rule flags, no odds, outcomes pending, is_correct validation)
+> - Snapshot triggers: smoke n=1, sample_limited n=10, checkpoint_1 n=50, checkpoint_2 n=100, operational n=200
+> - P83C prompt generated: trigger = n≥1 rows in canonical JSONL
+> - 2025 baseline reference: HOME_PLUS_AWAY_125 hit=0.6392, AUC=0.5787, n=316
+> - P82 market-edge: BLOCKED_NO_REAL_DATASET (unchanged)
+> - Forbidden scan: CLEAN (0 violations)
+>
+> **Output artifacts:**
+> - `scripts/_p83b_2026_prediction_data_ingest_contract.py`
+> - `tests/test_p83b_2026_prediction_data_ingest_contract.py`
+> - `data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json`
+> - `report/p83b_2026_prediction_data_ingest_contract_20260526.md`
+> - `00-BettingPlan/20260526/p83b_2026_prediction_data_ingest_contract_20260526.md`
+>
+> **Tests:** 67 PASS (P83B) + 830 PASS (P72A→P83A regression) = 897 total
+> **Forbidden scan:** 0 violations
+> **Classification:** `P83B_INGEST_CONTRACT_READY_AWAITING_DATA`
+
+---
+
+## Prior Active Task: P83A 2026 Live Accumulation First Snapshot / Awaiting Contract
 
 > **[COMPLETED 2026-05-26]** `P83A_AWAITING_2026_DATA`
 > **Issued by**: P82C handoff (P82C_STAGING_GUARD_DRYRUN_READY)
@@ -19,7 +54,7 @@
 > - Rerun trigger: any file matching P83A schema in data/mlb_2026/ or outputs/online_validation/
 > - Primary rule: TIER_C_HOME_PLUS_AWAY_125 | Shadow: TIER_C_HOME_PLUS_AWAY_100
 > - P82 market-edge: BLOCKED — requires external legal odds dataset
-> - Next phase: P83B once data arrives
+> - Next phase: P83B (ingest contract definition)
 >
 > **Tests:** 46 PASS (P83A) + 784 PASS (P72A→P82C regression) = 830 total
 > **Forbidden scan:** 0 violations
