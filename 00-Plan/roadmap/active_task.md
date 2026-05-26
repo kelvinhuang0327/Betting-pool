@@ -1,4 +1,28 @@
-# Active Task — P82A Real Legal Odds Dataset Intake Gate
+# Active Task — P82B Raw Paid Odds Data Storage / Commit Policy Contract
+
+> **[COMPLETED 2026-05-26]** `P82B_RAW_PAID_DATA_POLICY_READY`
+> **Issued by**: P82A handoff (P82A_REAL_LEGAL_ODDS_INTAKE_GATE_READY, commit `555b52a`)
+> **Branch**: `main` | **Mode**: `paper_only=True | diagnostic_only=True | NO_REAL_BET=True`
+>
+> **P82B Result:** Raw paid odds data storage and commit policy contract defined.
+> No real odds files created. No API calls. No EV/CLV/Kelly computed.
+> P82 remains BLOCKED_NO_REAL_DATASET.
+>
+> **Contract summary:**
+> - 9 artifact classes defined (RAW_PAID_ODDS_DATA → MOCK_FIXTURE)
+> - RAW_PAID_ODDS_DATA: can_commit=False, local_external_only
+> - Commit policy matrix: 9 entries with can_commit, storage_location, stop_condition per class
+> - Staging guard: 6 rules (BLOCK_ENV_FILE, BLOCK_API_KEY_PATTERN, BLOCK_RAW_PAID_CSV, BLOCK_REAL_ODDS_FILENAME, BLOCK_CONTAINS_API_KEY_FLAG, BLOCK_ROW_LEVEL_ODDS) → 6 guard states
+> - Manifest integration: 4 allowed raw_data_policy values (LOCAL_ONLY_HASH_COMMITTED / DERIVED_ONLY_COMMIT / COMMIT_ALLOWED_LICENSE_VERIFIED / MOCK_ONLY); 4 forbidden (UNKNOWN / COMMIT_RAW_PAID_DATA / EMBED_SECRET / UNLICENSED_SOURCE)
+> - Future workflow: 7 steps (acquire → store local → manifest+checksum → P81 validate → commit derived only → P82 dry-run → hard forbidden rule)
+> - Forbidden scan: PASS (0 violations) | live_api_calls=0 | p82_unlocked=False
+> - 69/69 tests PASS | Full regression: 679/679 PASS (P72A→P82B)
+> - **P82 unlock status**: BLOCKED_NO_REAL_DATASET
+> - **Commit**: TBD (pending)
+
+---
+
+# Previous: P82A Real Legal Odds Dataset Intake Gate
 
 > **[COMPLETED 2026-05-26]** `P82A_REAL_LEGAL_ODDS_INTAKE_GATE_READY`
 > **Issued by**: P81 handoff (P81_VALIDATOR_CONTRACT_READY_MOCK_ONLY, commit `da626c9`)
