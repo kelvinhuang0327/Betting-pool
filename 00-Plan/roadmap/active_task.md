@@ -16,7 +16,7 @@
 > - Prediction-only lane remains ACTIVE; Tier B remains RESEARCH_ONLY
 > - Forbidden scan: PASS (0 violations) | live_api_calls=0
 > - 53/53 tests PASS | Full regression: 531/531 PASS (P72A→P80)
-> - **Commit**: (see below)
+> - **Commit**: `ecbcc37`
 
 ---
 
