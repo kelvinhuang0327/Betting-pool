@@ -1,4 +1,37 @@
-# Active Task — P74 Tier C Home/Away Bias Correction Research
+# Active Task — P75A Tier C Corrected Rule Validator
+
+> **[COMPLETED 2026-05-26]** `P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION`
+> **Issued by**: P74 handoff (P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED)
+> **HEAD**: `fb2af84` (P74) | **Branch**: `main` | **Mode**: `paper_only=true`
+> **Prior phase**: P74 `P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED`
+>
+> **P75A Result:** Formal validation of P74 top corrected Tier C rules.
+> All 5 P74 candidate rules reconstructed and matched within tolerance (all_valid=True).
+>
+> **Operational Gate Results:**
+> - TIER_C_HOME_ONLY: OPERATIONAL_WITH_CAVEATS (n=268, hit=0.672, CI_low=0.616 ✅ — but severe home-only dependency)
+> - TIER_C_HOME_PLUS_AWAY_100: OPERATIONAL_CANDIDATE (n=373, hit=0.633, CI_low=0.585 ✅)
+> - TIER_C_HOME_PLUS_AWAY_125: OPERATIONAL_CANDIDATE (n=316, hit=0.639, CI_low=0.585 ✅)
+> - TIER_C_BAND_FILTERED: RESEARCH_ONLY (n=168 < 200, good AUC=0.630)
+>
+> **Head-to-Head vs Baseline (hit=0.606, AUC=0.583, STABLE):**
+> - HOME_ONLY: +0.066 hit, −0.024 AUC (home-only subset explanation provided)
+> - HOME_PLUS_AWAY_125: +0.034 hit, −0.005 AUC (best AUC balance)
+> - HOME_PLUS_AWAY_100: +0.027 hit, −0.023 AUC
+> - BAND_FILTERED: +0.031 hit, +0.047 AUC (best AUC overall but n<200)
+>
+> **Preferred rule:** `TIER_C_HOME_ONLY` (highest hit_rate=0.672)
+> **Multi-candidate note:** HOME_PLUS_AWAY_100 and HOME_PLUS_AWAY_125 also pass operational gate.
+> Calibration diagnostics (P75B) needed to break tie.
+> **Correction robustness:** True — improvement is statistically robust.
+>
+> **Tests:** 29 PASS (P75A) + 121 PASS (P72A+P72B+P73+P74+P75A regression)
+> **Forbidden scan:** 0 violations
+> **Classification:** `P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION`
+
+---
+
+## Prior Active Task: P74 Tier C Home/Away Bias Correction Research
 
 > **[COMPLETED 2026-05-26]** `P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED`
 > **Issued by**: P73A/B handoff (home/away gap = 0.132 identified as primary research direction)

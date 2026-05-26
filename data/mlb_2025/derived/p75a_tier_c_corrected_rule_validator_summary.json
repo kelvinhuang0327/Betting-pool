@@ -1,0 +1,1081 @@
+{
+  "phase": "P75A",
+  "date": "2026-05-26",
+  "p75a_classification": "P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION",
+  "allowed_classifications": [
+    "P75A_HOME_ONLY_VALIDATED_AS_DIAGNOSTIC_CANDIDATE",
+    "P75A_HOME_PLUS_AWAY_100_VALIDATED_AS_DIAGNOSTIC_CANDIDATE",
+    "P75A_HOME_PLUS_AWAY_125_VALIDATED_AS_DIAGNOSTIC_CANDIDATE",
+    "P75A_BASELINE_TIER_C_REMAINS_PREFERRED",
+    "P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION",
+    "P75A_CORRECTION_INCONCLUSIVE",
+    "P75A_BLOCKED_BY_MISSING_SOURCE_ARTIFACT",
+    "P75A_FAILED_VALIDATION"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false
+  },
+  "forbidden_scan": {
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_deployed": false,
+    "production_proposed": false,
+    "profitability_asserted": false,
+    "live_api_calls": 0,
+    "result": "CLEAN"
+  },
+  "source_artifacts": {
+    "predictions_jsonl": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+    "p72a_json": "data/mlb_2025/derived/p72a_odds_free_strategy_accuracy_backtest_summary.json",
+    "p72b_json": "data/mlb_2025/derived/p72b_objective_metric_contract_summary.json",
+    "p73_json": "data/mlb_2025/derived/p73_tier_stability_and_sample_expansion_summary.json",
+    "p74_json": "data/mlb_2025/derived/p74_tier_c_home_away_bias_correction_summary.json"
+  },
+  "step1_reconstruction": {
+    "reconstructions": {
+      "TIER_C_ALL_BASELINE": {
+        "n": 535,
+        "hit_rate": 0.6056,
+        "auc": 0.5834,
+        "expected_n": 535,
+        "expected_hit_rate": 0.6056,
+        "expected_auc": 0.5834,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_HOME_ONLY": {
+        "n": 268,
+        "hit_rate": 0.6716,
+        "auc": 0.5591,
+        "expected_n": 268,
+        "expected_hit_rate": 0.6716,
+        "expected_auc": 0.5591,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_HOME_PLUS_AWAY_100": {
+        "n": 373,
+        "hit_rate": 0.6327,
+        "auc": 0.5603,
+        "expected_n": 373,
+        "expected_hit_rate": 0.6327,
+        "expected_auc": 0.5603,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_HOME_PLUS_AWAY_125": {
+        "n": 316,
+        "hit_rate": 0.6392,
+        "auc": 0.5787,
+        "expected_n": 316,
+        "expected_hit_rate": 0.6392,
+        "expected_auc": 0.5787,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_BAND_FILTERED": {
+        "n": 168,
+        "hit_rate": 0.6369,
+        "auc": 0.6303,
+        "expected_n": 168,
+        "expected_hit_rate": 0.6369,
+        "expected_auc": 0.6303,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      }
+    },
+    "all_valid": true
+  },
+  "step2_robustness": {
+    "rule_metrics": {
+      "TIER_C_ALL_BASELINE": {
+        "rule_id": "TIER_C_ALL_BASELINE",
+        "n": 535,
+        "coverage": 1.0,
+        "hit_rate": 0.6056,
+        "hit_rate_ci_95": [
+          0.5607,
+          0.6467
+        ],
+        "auc": 0.5834,
+        "auc_ci_95": [
+          0.5358,
+          0.635
+        ],
+        "brier": 0.2385,
+        "monthly_stability": "STABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "hit_rate": 0.625,
+            "auc": 0.4833,
+            "brier": 0.2469
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "hit_rate": 0.575,
+            "auc": 0.6206,
+            "brier": 0.2341
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "hit_rate": 0.6634,
+            "auc": 0.5568,
+            "brier": 0.2404
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "hit_rate": 0.6196,
+            "auc": 0.5526,
+            "brier": 0.2411
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "hit_rate": 0.5648,
+            "auc": 0.5654,
+            "brier": 0.2449
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "hit_rate": 0.6122,
+            "auc": 0.6436,
+            "brier": 0.2309
+          }
+        ],
+        "chronological_thirds": [
+          {
+            "third": 1,
+            "n": 178,
+            "hit_rate": 0.6011,
+            "brier": 0.237
+          },
+          {
+            "third": 2,
+            "n": 178,
+            "hit_rate": 0.6292,
+            "brier": 0.239
+          },
+          {
+            "third": 3,
+            "n": 179,
+            "hit_rate": 0.5866,
+            "brier": 0.2394
+          }
+        ],
+        "rolling_window_stability": [
+          {
+            "window_start": "2025-04-27",
+            "window_end": "2025-05-09",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-05-03",
+            "window_end": "2025-05-15",
+            "n": 50,
+            "hit_rate": 0.54
+          },
+          {
+            "window_start": "2025-05-09",
+            "window_end": "2025-05-21",
+            "n": 50,
+            "hit_rate": 0.5
+          },
+          {
+            "window_start": "2025-05-16",
+            "window_end": "2025-05-28",
+            "n": 50,
+            "hit_rate": 0.58
+          },
+          {
+            "window_start": "2025-05-23",
+            "window_end": "2025-06-05",
+            "n": 50,
+            "hit_rate": 0.66
+          },
+          {
+            "window_start": "2025-05-29",
+            "window_end": "2025-06-12",
+            "n": 50,
+            "hit_rate": 0.64
+          },
+          {
+            "window_start": "2025-06-05",
+            "window_end": "2025-06-19",
+            "n": 50,
+            "hit_rate": 0.64
+          },
+          {
+            "window_start": "2025-06-12",
+            "window_end": "2025-06-26",
+            "n": 50,
+            "hit_rate": 0.64
+          },
+          {
+            "window_start": "2025-06-19",
+            "window_end": "2025-07-03",
+            "n": 50,
+            "hit_rate": 0.72
+          },
+          {
+            "window_start": "2025-06-26",
+            "window_end": "2025-07-12",
+            "n": 50,
+            "hit_rate": 0.68
+          },
+          {
+            "window_start": "2025-07-05",
+            "window_end": "2025-07-21",
+            "n": 50,
+            "hit_rate": 0.62
+          },
+          {
+            "window_start": "2025-07-12",
+            "window_end": "2025-07-29",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-07-21",
+            "window_end": "2025-08-05",
+            "n": 50,
+            "hit_rate": 0.52
+          },
+          {
+            "window_start": "2025-07-29",
+            "window_end": "2025-08-14",
+            "n": 50,
+            "hit_rate": 0.58
+          },
+          {
+            "window_start": "2025-08-06",
+            "window_end": "2025-08-22",
+            "n": 50,
+            "hit_rate": 0.62
+          },
+          {
+            "window_start": "2025-08-14",
+            "window_end": "2025-08-29",
+            "n": 50,
+            "hit_rate": 0.62
+          },
+          {
+            "window_start": "2025-08-22",
+            "window_end": "2025-09-06",
+            "n": 50,
+            "hit_rate": 0.58
+          },
+          {
+            "window_start": "2025-08-29",
+            "window_end": "2025-09-12",
+            "n": 50,
+            "hit_rate": 0.52
+          },
+          {
+            "window_start": "2025-09-06",
+            "window_end": "2025-09-18",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-09-13",
+            "window_end": "2025-09-24",
+            "n": 50,
+            "hit_rate": 0.6
+          }
+        ],
+        "max_losing_streak": 6,
+        "concentration_risk": {
+          "home_fraction": 0.5009,
+          "severe_home_only_dependency": false,
+          "band_hit_spread": 0.1543,
+          "severe_band_dominance": false,
+          "max_month_fraction": 0.2243,
+          "severe_month_dominance": false,
+          "severe_any": false
+        }
+      },
+      "TIER_C_HOME_ONLY": {
+        "rule_id": "TIER_C_HOME_ONLY",
+        "n": 268,
+        "coverage": 0.5009,
+        "hit_rate": 0.6716,
+        "hit_rate_ci_95": [
+          0.6157,
+          0.7276
+        ],
+        "auc": 0.5591,
+        "auc_ci_95": [
+          0.4921,
+          0.6281
+        ],
+        "brier": 0.2292,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 8,
+            "hit_rate": 0.625,
+            "auc": null,
+            "brier": 0.2229
+          },
+          {
+            "month": "2025-05",
+            "n": 62,
+            "hit_rate": 0.6452,
+            "auc": 0.6136,
+            "brier": 0.225
+          },
+          {
+            "month": "2025-06",
+            "n": 50,
+            "hit_rate": 0.72,
+            "auc": 0.496,
+            "brier": 0.2436
+          },
+          {
+            "month": "2025-07",
+            "n": 45,
+            "hit_rate": 0.7111,
+            "auc": 0.506,
+            "brier": 0.2294
+          },
+          {
+            "month": "2025-08",
+            "n": 54,
+            "hit_rate": 0.6111,
+            "auc": 0.5859,
+            "brier": 0.2328
+          },
+          {
+            "month": "2025-09",
+            "n": 49,
+            "hit_rate": 0.6939,
+            "auc": 0.6971,
+            "brier": 0.2165
+          }
+        ],
+        "chronological_thirds": [
+          {
+            "third": 1,
+            "n": 89,
+            "hit_rate": 0.6517,
+            "brier": 0.232
+          },
+          {
+            "third": 2,
+            "n": 89,
+            "hit_rate": 0.7303,
+            "brier": 0.2275
+          },
+          {
+            "third": 3,
+            "n": 90,
+            "hit_rate": 0.6333,
+            "brier": 0.228
+          }
+        ],
+        "rolling_window_stability": [
+          {
+            "window_start": "2025-04-27",
+            "window_end": "2025-05-21",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-05-11",
+            "window_end": "2025-06-01",
+            "n": 50,
+            "hit_rate": 0.64
+          },
+          {
+            "window_start": "2025-05-23",
+            "window_end": "2025-06-18",
+            "n": 50,
+            "hit_rate": 0.72
+          },
+          {
+            "window_start": "2025-06-03",
+            "window_end": "2025-07-02",
+            "n": 50,
+            "hit_rate": 0.74
+          },
+          {
+            "window_start": "2025-06-19",
+            "window_end": "2025-07-21",
+            "n": 50,
+            "hit_rate": 0.78
+          },
+          {
+            "window_start": "2025-07-02",
+            "window_end": "2025-08-07",
+            "n": 50,
+            "hit_rate": 0.68
+          },
+          {
+            "window_start": "2025-07-21",
+            "window_end": "2025-08-22",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-08-08",
+            "window_end": "2025-09-06",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-08-23",
+            "window_end": "2025-09-19",
+            "n": 50,
+            "hit_rate": 0.66
+          }
+        ],
+        "max_losing_streak": 4,
+        "concentration_risk": {
+          "home_fraction": 1.0,
+          "severe_home_only_dependency": true,
+          "band_hit_spread": 0.1231,
+          "severe_band_dominance": false,
+          "max_month_fraction": 0.2313,
+          "severe_month_dominance": false,
+          "severe_any": true
+        }
+      },
+      "TIER_C_HOME_PLUS_AWAY_100": {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_100",
+        "n": 373,
+        "coverage": 0.6972,
+        "hit_rate": 0.6327,
+        "hit_rate_ci_95": [
+          0.5845,
+          0.6836
+        ],
+        "auc": 0.5603,
+        "auc_ci_95": [
+          0.5032,
+          0.6207
+        ],
+        "brier": 0.2365,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 11,
+            "hit_rate": 0.6364,
+            "auc": 0.3929,
+            "brier": 0.2499
+          },
+          {
+            "month": "2025-05",
+            "n": 87,
+            "hit_rate": 0.5977,
+            "auc": 0.594,
+            "brier": 0.2332
+          },
+          {
+            "month": "2025-06",
+            "n": 67,
+            "hit_rate": 0.6716,
+            "auc": 0.5323,
+            "brier": 0.2435
+          },
+          {
+            "month": "2025-07",
+            "n": 62,
+            "hit_rate": 0.7097,
+            "auc": 0.4388,
+            "brier": 0.2409
+          },
+          {
+            "month": "2025-08",
+            "n": 74,
+            "hit_rate": 0.5541,
+            "auc": 0.6208,
+            "brier": 0.2378
+          },
+          {
+            "month": "2025-09",
+            "n": 72,
+            "hit_rate": 0.6528,
+            "auc": 0.6447,
+            "brier": 0.2267
+          }
+        ],
+        "chronological_thirds": [
+          {
+            "third": 1,
+            "n": 124,
+            "hit_rate": 0.6129,
+            "brier": 0.2391
+          },
+          {
+            "third": 2,
+            "n": 124,
+            "hit_rate": 0.6855,
+            "brier": 0.2354
+          },
+          {
+            "third": 3,
+            "n": 125,
+            "hit_rate": 0.6,
+            "brier": 0.2349
+          }
+        ],
+        "rolling_window_stability": [
+          {
+            "window_start": "2025-04-27",
+            "window_end": "2025-05-13",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-05-06",
+            "window_end": "2025-05-23",
+            "n": 50,
+            "hit_rate": 0.54
+          },
+          {
+            "window_start": "2025-05-13",
+            "window_end": "2025-06-01",
+            "n": 50,
+            "hit_rate": 0.62
+          },
+          {
+            "window_start": "2025-05-23",
+            "window_end": "2025-06-13",
+            "n": 50,
+            "hit_rate": 0.7
+          },
+          {
+            "window_start": "2025-06-01",
+            "window_end": "2025-06-22",
+            "n": 50,
+            "hit_rate": 0.64
+          },
+          {
+            "window_start": "2025-06-13",
+            "window_end": "2025-07-05",
+            "n": 50,
+            "hit_rate": 0.74
+          },
+          {
+            "window_start": "2025-06-24",
+            "window_end": "2025-07-18",
+            "n": 50,
+            "hit_rate": 0.74
+          },
+          {
+            "window_start": "2025-07-06",
+            "window_end": "2025-07-29",
+            "n": 50,
+            "hit_rate": 0.66
+          },
+          {
+            "window_start": "2025-07-18",
+            "window_end": "2025-08-10",
+            "n": 50,
+            "hit_rate": 0.64
+          },
+          {
+            "window_start": "2025-07-29",
+            "window_end": "2025-08-23",
+            "n": 50,
+            "hit_rate": 0.58
+          },
+          {
+            "window_start": "2025-08-10",
+            "window_end": "2025-08-31",
+            "n": 50,
+            "hit_rate": 0.54
+          },
+          {
+            "window_start": "2025-08-23",
+            "window_end": "2025-09-12",
+            "n": 50,
+            "hit_rate": 0.58
+          },
+          {
+            "window_start": "2025-08-31",
+            "window_end": "2025-09-20",
+            "n": 50,
+            "hit_rate": 0.58
+          }
+        ],
+        "max_losing_streak": 4,
+        "concentration_risk": {
+          "home_fraction": 0.7185,
+          "severe_home_only_dependency": false,
+          "band_hit_spread": 0.1602,
+          "severe_band_dominance": false,
+          "max_month_fraction": 0.2332,
+          "severe_month_dominance": false,
+          "severe_any": false
+        }
+      },
+      "TIER_C_HOME_PLUS_AWAY_125": {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_125",
+        "n": 316,
+        "coverage": 0.5907,
+        "hit_rate": 0.6392,
+        "hit_rate_ci_95": [
+          0.5854,
+          0.693
+        ],
+        "auc": 0.5787,
+        "auc_ci_95": [
+          0.5187,
+          0.6434
+        ],
+        "brier": 0.2324,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 9,
+            "hit_rate": 0.5556,
+            "auc": null,
+            "brier": 0.2426
+          },
+          {
+            "month": "2025-05",
+            "n": 75,
+            "hit_rate": 0.6267,
+            "auc": 0.6041,
+            "brier": 0.2268
+          },
+          {
+            "month": "2025-06",
+            "n": 59,
+            "hit_rate": 0.7119,
+            "auc": 0.5154,
+            "brier": 0.2439
+          },
+          {
+            "month": "2025-07",
+            "n": 52,
+            "hit_rate": 0.6731,
+            "auc": 0.5067,
+            "brier": 0.2343
+          },
+          {
+            "month": "2025-08",
+            "n": 65,
+            "hit_rate": 0.5538,
+            "auc": 0.6504,
+            "brier": 0.2351
+          },
+          {
+            "month": "2025-09",
+            "n": 56,
+            "hit_rate": 0.6607,
+            "auc": 0.6949,
+            "brier": 0.2214
+          }
+        ],
+        "chronological_thirds": [
+          {
+            "third": 1,
+            "n": 105,
+            "hit_rate": 0.6286,
+            "brier": 0.2362
+          },
+          {
+            "third": 2,
+            "n": 105,
+            "hit_rate": 0.6952,
+            "brier": 0.2298
+          },
+          {
+            "third": 3,
+            "n": 106,
+            "hit_rate": 0.5943,
+            "brier": 0.2313
+          }
+        ],
+        "rolling_window_stability": [
+          {
+            "window_start": "2025-04-27",
+            "window_end": "2025-05-17",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-05-09",
+            "window_end": "2025-05-28",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-05-17",
+            "window_end": "2025-06-09",
+            "n": 50,
+            "hit_rate": 0.64
+          },
+          {
+            "window_start": "2025-05-29",
+            "window_end": "2025-06-20",
+            "n": 50,
+            "hit_rate": 0.66
+          },
+          {
+            "window_start": "2025-06-09",
+            "window_end": "2025-07-02",
+            "n": 50,
+            "hit_rate": 0.78
+          },
+          {
+            "window_start": "2025-06-20",
+            "window_end": "2025-07-20",
+            "n": 50,
+            "hit_rate": 0.76
+          },
+          {
+            "window_start": "2025-07-05",
+            "window_end": "2025-08-02",
+            "n": 50,
+            "hit_rate": 0.62
+          },
+          {
+            "window_start": "2025-07-20",
+            "window_end": "2025-08-16",
+            "n": 50,
+            "hit_rate": 0.6
+          },
+          {
+            "window_start": "2025-08-02",
+            "window_end": "2025-08-28",
+            "n": 50,
+            "hit_rate": 0.58
+          },
+          {
+            "window_start": "2025-08-17",
+            "window_end": "2025-09-10",
+            "n": 50,
+            "hit_rate": 0.56
+          },
+          {
+            "window_start": "2025-08-29",
+            "window_end": "2025-09-21",
+            "n": 50,
+            "hit_rate": 0.6
+          }
+        ],
+        "max_losing_streak": 4,
+        "concentration_risk": {
+          "home_fraction": 0.8481,
+          "severe_home_only_dependency": false,
+          "band_hit_spread": 0.1602,
+          "severe_band_dominance": false,
+          "max_month_fraction": 0.2373,
+          "severe_month_dominance": false,
+          "severe_any": false
+        }
+      },
+      "TIER_C_BAND_FILTERED": {
+        "rule_id": "TIER_C_BAND_FILTERED",
+        "n": 168,
+        "coverage": 0.314,
+        "hit_rate": 0.6369,
+        "hit_rate_ci_95": [
+          0.5655,
+          0.7024
+        ],
+        "auc": 0.6303,
+        "auc_ci_95": [
+          0.5391,
+          0.7164
+        ],
+        "brier": 0.2312,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 4,
+            "hit_rate": 0.0,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 43,
+            "hit_rate": 0.5814,
+            "auc": 0.5933,
+            "brier": 0.2356
+          },
+          {
+            "month": "2025-06",
+            "n": 33,
+            "hit_rate": 0.697,
+            "auc": 0.6609,
+            "brier": 0.2195
+          },
+          {
+            "month": "2025-07",
+            "n": 29,
+            "hit_rate": 0.6552,
+            "auc": 0.7579,
+            "brier": 0.2222
+          },
+          {
+            "month": "2025-08",
+            "n": 34,
+            "hit_rate": 0.6471,
+            "auc": 0.5833,
+            "brier": 0.2376
+          },
+          {
+            "month": "2025-09",
+            "n": 25,
+            "hit_rate": 0.72,
+            "auc": 0.6032,
+            "brier": 0.2298
+          }
+        ],
+        "chronological_thirds": [
+          {
+            "third": 1,
+            "n": 56,
+            "hit_rate": 0.5714,
+            "brier": 0.2383
+          },
+          {
+            "third": 2,
+            "n": 56,
+            "hit_rate": 0.6429,
+            "brier": 0.2224
+          },
+          {
+            "third": 3,
+            "n": 56,
+            "hit_rate": 0.6964,
+            "brier": 0.233
+          }
+        ],
+        "rolling_window_stability": [
+          {
+            "window_start": "2025-04-30",
+            "window_end": "2025-05-28",
+            "n": 42,
+            "hit_rate": 0.4762
+          },
+          {
+            "window_start": "2025-05-18",
+            "window_end": "2025-06-14",
+            "n": 42,
+            "hit_rate": 0.6667
+          },
+          {
+            "window_start": "2025-05-29",
+            "window_end": "2025-07-02",
+            "n": 42,
+            "hit_rate": 0.7143
+          },
+          {
+            "window_start": "2025-06-16",
+            "window_end": "2025-07-27",
+            "n": 42,
+            "hit_rate": 0.6429
+          },
+          {
+            "window_start": "2025-07-05",
+            "window_end": "2025-08-15",
+            "n": 42,
+            "hit_rate": 0.6429
+          },
+          {
+            "window_start": "2025-07-27",
+            "window_end": "2025-09-04",
+            "n": 42,
+            "hit_rate": 0.6429
+          },
+          {
+            "window_start": "2025-08-17",
+            "window_end": "2025-09-26",
+            "n": 42,
+            "hit_rate": 0.7143
+          }
+        ],
+        "max_losing_streak": 6,
+        "concentration_risk": {
+          "home_fraction": 0.4583,
+          "severe_home_only_dependency": false,
+          "band_hit_spread": null,
+          "severe_band_dominance": false,
+          "max_month_fraction": 0.256,
+          "severe_month_dominance": false,
+          "severe_any": false
+        }
+      }
+    },
+    "baseline_n": 535
+  },
+  "step3_head_to_head": {
+    "comparisons": [
+      {
+        "rule_id": "TIER_C_HOME_ONLY",
+        "hit_delta_vs_baseline": 0.066,
+        "auc_delta_vs_baseline": -0.0243,
+        "brier_delta_vs_baseline": -0.0093,
+        "sample_loss_pct": 49.9,
+        "hit_ci_overlaps_baseline": true,
+        "monthly_stability_change": "DEGRADED",
+        "auc_drop_note": "AUC drops because home-only subset has less probability spread (fewer away-side picks where model is more uncertain). Hit rate improves because home advantage is a genuine signal; AUC measures rank ordering which is weaker within the home subset."
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_100",
+        "hit_delta_vs_baseline": 0.0271,
+        "auc_delta_vs_baseline": -0.0231,
+        "brier_delta_vs_baseline": -0.002,
+        "sample_loss_pct": 30.3,
+        "hit_ci_overlaps_baseline": true,
+        "monthly_stability_change": "DEGRADED",
+        "auc_drop_note": "AUC drops by 0.0231 while hit rate improves. Restricting away picks reduces the harder-to-rank subset, improving directional accuracy but reducing rank discrimination opportunity."
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_125",
+        "hit_delta_vs_baseline": 0.0336,
+        "auc_delta_vs_baseline": -0.0047,
+        "brier_delta_vs_baseline": -0.0061,
+        "sample_loss_pct": 40.9,
+        "hit_ci_overlaps_baseline": true,
+        "monthly_stability_change": "DEGRADED",
+        "auc_drop_note": null
+      },
+      {
+        "rule_id": "TIER_C_BAND_FILTERED",
+        "hit_delta_vs_baseline": 0.0313,
+        "auc_delta_vs_baseline": 0.0469,
+        "brier_delta_vs_baseline": -0.0073,
+        "sample_loss_pct": 68.6,
+        "hit_ci_overlaps_baseline": true,
+        "monthly_stability_change": "DEGRADED",
+        "auc_drop_note": null
+      }
+    ],
+    "baseline_hit_rate": 0.6056,
+    "baseline_auc": 0.5834,
+    "baseline_monthly_stability": "STABLE"
+  },
+  "step4_gate": {
+    "gate_results": [
+      {
+        "rule_id": "TIER_C_HOME_ONLY",
+        "gate_status": "OPERATIONAL_WITH_CAVEATS",
+        "gate_checks": {
+          "n_ge_200": true,
+          "hit_beats_baseline_by_002": true,
+          "ci_low_ge_055": true,
+          "monthly_stability_moderate_or_better": true,
+          "no_severe_concentration_risk": false
+        },
+        "n": 268,
+        "hit_rate": 0.6716,
+        "hit_rate_ci_low": 0.6157,
+        "monthly_stability": "MODERATE",
+        "severe_concentration_risk": true,
+        "operational_pass": true
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_100",
+        "gate_status": "OPERATIONAL_CANDIDATE",
+        "gate_checks": {
+          "n_ge_200": true,
+          "hit_beats_baseline_by_002": true,
+          "ci_low_ge_055": true,
+          "monthly_stability_moderate_or_better": true,
+          "no_severe_concentration_risk": true
+        },
+        "n": 373,
+        "hit_rate": 0.6327,
+        "hit_rate_ci_low": 0.5845,
+        "monthly_stability": "MODERATE",
+        "severe_concentration_risk": false,
+        "operational_pass": true
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_125",
+        "gate_status": "OPERATIONAL_CANDIDATE",
+        "gate_checks": {
+          "n_ge_200": true,
+          "hit_beats_baseline_by_002": true,
+          "ci_low_ge_055": true,
+          "monthly_stability_moderate_or_better": true,
+          "no_severe_concentration_risk": true
+        },
+        "n": 316,
+        "hit_rate": 0.6392,
+        "hit_rate_ci_low": 0.5854,
+        "monthly_stability": "MODERATE",
+        "severe_concentration_risk": false,
+        "operational_pass": true
+      },
+      {
+        "rule_id": "TIER_C_BAND_FILTERED",
+        "gate_status": "RESEARCH_ONLY",
+        "gate_checks": {
+          "n_ge_200": false,
+          "hit_beats_baseline_by_002": true,
+          "ci_low_ge_055": true,
+          "monthly_stability_moderate_or_better": true,
+          "no_severe_concentration_risk": true
+        },
+        "n": 168,
+        "hit_rate": 0.6369,
+        "hit_rate_ci_low": 0.5655,
+        "monthly_stability": "MODERATE",
+        "severe_concentration_risk": false,
+        "operational_pass": false
+      }
+    ],
+    "operational_candidates": [
+      "TIER_C_HOME_ONLY",
+      "TIER_C_HOME_PLUS_AWAY_100",
+      "TIER_C_HOME_PLUS_AWAY_125"
+    ],
+    "research_candidates": [
+      "TIER_C_BAND_FILTERED"
+    ],
+    "n_operational": 3
+  },
+  "step5_preferred_rule": {
+    "preferred_rule": "TIER_C_HOME_ONLY",
+    "preferred_hit_rate": 0.6716,
+    "preferred_n": 268,
+    "preferred_monthly_stability": "MODERATE",
+    "preferred_auc": 0.5591,
+    "p75a_status": "P75A_MULTI_CANDIDATE_REQUIRES_CALIBRATION",
+    "reason": "Multiple operational candidates. Selected TIER_C_HOME_ONLY for highest hit_rate=0.6716. Remaining candidates: ['TIER_C_HOME_PLUS_AWAY_125', 'TIER_C_HOME_PLUS_AWAY_100']. Recommend P75B calibration diagnostics for top candidate.",
+    "correction_is_robust": true,
+    "correction_note": "Correction is statistically robust: the preferred corrected rule improves hit_rate by >=2pp, maintains n>=200, and shows MODERATE+ temporal stability."
+  },
+  "prediction_boundary": "P75A results are odds-free outcome-prediction accuracy only. 'Validated as diagnostic candidate' means research-priority status, NOT production deployment, NOT betting recommendation, NOT market-edge claim. paper_only=True, diagnostic_only=True."
+}
