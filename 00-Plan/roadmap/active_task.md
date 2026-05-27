@@ -237,3 +237,11 @@ P84G commit `021a8a8`、classification `P84G_SIDE_MAPPING_FIXED_METRICS_REGENERA
 - **Summary**: data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json
 - **Report**: report/p84h_corrected_signal_validation_coverage_guard_20260527.md
 - **Governance**: paper_only=True, diagnostic_only=True, production_ready=False
+
+## P85 — Prediction Convention Invariant Gate
+- **Status**: COMPLETED
+- **Classification**: `P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY`
+- **Generated**: 2026-05-27T07:20:29.172331+00:00
+- **Invariants checked**: 9 steps (FIP+/-, zero-delta policy, prob semantics, actual_winner derivation, is_correct consistency, AUC/hit_rate guard, governance)
+- **Violations**: 0
+- **Note**: Paper-only diagnostic gate. Not a production recommendation.
