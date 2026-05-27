@@ -1,0 +1,166 @@
+{
+  "p84f_classification": "P84F_SIDE_MAPPING_INVERTED",
+  "generated_at": "2026-05-27T05:27:40.023966+00:00",
+  "step1_verify_p84e": {
+    "p84e_summary_exists": true,
+    "p84e_derived_exists": true,
+    "canonical_pred_exists": true,
+    "p84e_classification": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+    "n_canonical_rows": 828,
+    "n_outcome_available": 808,
+    "n_outcome_pending": 20,
+    "original_hit_rate": 0.430693,
+    "original_auc": 0.594315,
+    "auc_direction_from_p84e": "home_positive",
+    "odds_api_called": false,
+    "production_ready": false,
+    "status": "P84E_VERIFIED",
+    "issues": []
+  },
+  "step2_score_label_audit": {
+    "n_outcome_available": 808,
+    "auc_prob_home_win": 0.594315,
+    "auc_flipped_score_home_win": 0.405685,
+    "auc_prob_away_win": 0.405685,
+    "auc_prob_is_correct": 0.475337,
+    "model_probability_interpretation": "P_HOME_WIN",
+    "note": "auc_prob_home_win > 0.5 confirms model_probability = P(home wins). auc_prob_is_correct < 0.5 exposes direction inversion in predicted_side."
+  },
+  "step3_predicted_side_consistency": {
+    "n_outcome_available": 808,
+    "n_home_predicted": 396,
+    "n_away_predicted": 412,
+    "n_prob_ge_05": 412,
+    "n_prob_lt_05": 396,
+    "prob_ge_05_maps_to_home": 0,
+    "prob_ge_05_maps_to_away": 412,
+    "prob_lt_05_maps_to_home": 396,
+    "prob_lt_05_maps_to_away": 0,
+    "mapping_pattern": "PROB_GE_05_MAPS_TO_AWAY",
+    "n_consistent_with_standard_convention": 0,
+    "n_inverted_from_standard_convention": 808,
+    "current_hit_rate": 0.430693,
+    "flipped_hit_rate": 0.569307,
+    "probability_threshold_hit_rate": 0.569307,
+    "home_predicted_hit_rate": 0.454545,
+    "away_predicted_hit_rate": 0.407767,
+    "hit_rate_improvement_if_flipped": 0.138614,
+    "note": "PROB_GE_05_MAPS_TO_AWAY means predicted_side='away' when model_probability >= 0.5 — this is the direct inversion indicator."
+  },
+  "step4_fip_delta_sign_audit": {
+    "n_pos_delta": 396,
+    "n_neg_delta": 412,
+    "n_zero_delta": 0,
+    "pos_delta_mean": 1.308994,
+    "neg_delta_mean": -1.367908,
+    "pos_delta_away_win_rate": 0.545455,
+    "pos_delta_home_win_rate": 0.454545,
+    "neg_delta_home_win_rate": 0.592233,
+    "neg_delta_away_win_rate": 0.407767,
+    "fip_direction_hit_rate": 0.569307,
+    "predicted_side_fip_consistency_rate": 0.0,
+    "fip_signal": "VALID_AWAY_EDGE_WHEN_DELTA_POSITIVE",
+    "note": "fip_direction_hit_rate = win rate if we bet 'away' when delta>0 and 'home' when delta<0 (the FIP-correct direction)."
+  },
+  "step5_rule_subset_audit": {
+    "all": {
+      "n": 808,
+      "sample_limited": false,
+      "current_hit_rate": 0.430693,
+      "flipped_hit_rate": 0.569307,
+      "probability_threshold_hit_rate": 0.569307
+    },
+    "primary_125": {
+      "n": 496,
+      "sample_limited": false,
+      "current_hit_rate": 0.423387,
+      "flipped_hit_rate": 0.576613,
+      "probability_threshold_hit_rate": 0.576613
+    },
+    "shadow_100": {
+      "n": 537,
+      "sample_limited": false,
+      "current_hit_rate": 0.426443,
+      "flipped_hit_rate": 0.573557,
+      "probability_threshold_hit_rate": 0.573557
+    },
+    "tier_b": {
+      "n": 94,
+      "sample_limited": false,
+      "current_hit_rate": 0.43617,
+      "flipped_hit_rate": 0.56383,
+      "probability_threshold_hit_rate": 0.56383
+    },
+    "home_predicted": {
+      "n": 396,
+      "sample_limited": false,
+      "current_hit_rate": 0.454545,
+      "flipped_hit_rate": 0.545455,
+      "probability_threshold_hit_rate": 0.545455
+    },
+    "away_predicted": {
+      "n": 412,
+      "sample_limited": false,
+      "current_hit_rate": 0.407767,
+      "flipped_hit_rate": 0.592233,
+      "probability_threshold_hit_rate": 0.592233
+    }
+  },
+  "step6_calibration_buckets": [
+    {
+      "prob_bucket": "0.3-0.4",
+      "n": 276,
+      "actual_home_win_rate": 0.4384,
+      "actual_away_win_rate": 0.5616
+    },
+    {
+      "prob_bucket": "0.4-0.5",
+      "n": 120,
+      "actual_home_win_rate": 0.4917,
+      "actual_away_win_rate": 0.5083
+    },
+    {
+      "prob_bucket": "0.5-0.6",
+      "n": 121,
+      "actual_home_win_rate": 0.5289,
+      "actual_away_win_rate": 0.4711
+    },
+    {
+      "prob_bucket": "0.6-0.7",
+      "n": 128,
+      "actual_home_win_rate": 0.5781,
+      "actual_away_win_rate": 0.4219
+    },
+    {
+      "prob_bucket": "0.7-0.8",
+      "n": 163,
+      "actual_home_win_rate": 0.6503,
+      "actual_away_win_rate": 0.3497
+    }
+  ],
+  "step7_diagnosis": {
+    "classification": "P84F_SIDE_MAPPING_INVERTED",
+    "remediation_path": "P84G: Fix `compute_predicted_side` in P83E to use 'away' if sp_fip_delta > 0 else 'home' (lower FIP = better pitcher = favoured side). Regenerate canonical prediction rows and rerun P84A→P84E chain.",
+    "evidence": [
+      "AUC(prob, home_win)=0.5943 > 0.5 → model_probability = P(home wins)",
+      "AUC(prob, is_correct)=0.4753 < 0.5 → predicted_side direction inverted",
+      "prob >= 0.5 maps to predicted_side='away' in 100% of cases — threshold inverted",
+      "current hit_rate=0.4307 < 0.5 — below random baseline",
+      "flipped hit_rate=0.5693 > 0.5 — inversion recovers signal",
+      "hit_rate improvement if flipped: +0.1386",
+      "FIP delta sign valid: delta>0 → away wins more often (correct FIP edge direction)",
+      "predicted_side FIP consistency rate=0.0000 — predicted_side inverted vs FIP"
+    ]
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "live_api_calls": 0,
+    "odds_api_called": false,
+    "ev": false,
+    "clv": false,
+    "kelly": false,
+    "fabricated_outcomes": false
+  }
+}

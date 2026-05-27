@@ -65,3 +65,9 @@
 <!-- P84C: P84C_PARTIAL_SNAPSHOT_READY_OUTCOMES_PENDING -->
 <!-- P84D: P84D_PITCHER_COVERAGE_AUDIT_READY_NO_BACKFILL -->
 <!-- P84E: P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS -->
+
+## P84F — Predicted-Side Direction / Calibration Diagnostic
+- Status: COMPLETE
+- Classification: P84F_SIDE_MAPPING_INVERTED
+- Artefacts: p84f_predicted_side_calibration_diagnostic_summary.json
+- Report: report/p84f_predicted_side_calibration_diagnostic_20260526.md
