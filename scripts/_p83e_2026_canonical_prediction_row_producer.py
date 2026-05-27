@@ -20,10 +20,10 @@ Expected when upstream is complete and rows written:
 
 sp_fip_delta convention (P83C_UPSTREAM_INPUT_CONTRACT_V1):
   sp_fip_delta = home_sp_fip - away_sp_fip
-  Positive = home pitcher favored per this system's convention.
-  NOTE: FIP is lower-is-better; this convention treats higher home FIP
-        relative to away FIP as home-side signal. Follow P83C contract exactly.
-  predicted_side = 'home' if sp_fip_delta > 0 else 'away'
+  FIP is lower-is-better, so:
+    delta > 0 → home pitcher FIP > away pitcher FIP → home pitcher WORSE → predicted_side='away'
+    delta < 0 → home pitcher FIP < away pitcher FIP → away pitcher WORSE → predicted_side='home'
+  [P84G fix: corrected from inverted P83E v1 mapping per P84F_SIDE_MAPPING_INVERTED diagnosis]
   Ties (sp_fip_delta == 0.0) are excluded from canonical output.
 """
 
@@ -112,6 +112,8 @@ THRESHOLDS: dict[str, float] = {
     "tier_a_upper": 0.25,
 }
 
+_GATE_BLOCKED_BY_MISSING_FILE = "missing file"
+
 # ---------------------------------------------------------------------------
 # Step 1 — Load and verify P83D artifact
 # ---------------------------------------------------------------------------
@@ -184,28 +186,42 @@ def validate_schedule_row(row: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _fip_value_errors(field: str, value: Any) -> list[str]:
+    """Return errors for a non-None FIP value."""
+    try:
+        val = float(value)
+        if val < 0.0 or val > 15.0:
+            return [f"{field} out of plausible range [0, 15]: {val}"]
+        return []
+    except (TypeError, ValueError):
+        return [f"{field} must be numeric, got {value!r}"]
+
+
 def validate_pitcher_row(row: dict[str, Any]) -> list[str]:
-    """Return list of validation errors for a pitcher feature row."""
+    """Return list of validation errors for a pitcher feature row.
+
+    FEATURE_PENDING rows have None FIP by contract; schema-valid but blocked by gate.
+    """
     errors: list[str] = []
+    is_pending = row.get("row_status") == "FEATURE_PENDING"
     for field in PITCHER_REQUIRED_FIELDS:
-        if field not in row or row[field] is None:
+        if field not in row or (row[field] is None and not is_pending):
             errors.append(f"Missing required field: {field}")
     for fip_field in ("home_sp_fip", "away_sp_fip"):
-        if fip_field in row and row[fip_field] is not None:
-            try:
-                val = float(row[fip_field])
-                if val < 0.0 or val > 15.0:
-                    errors.append(f"{fip_field} out of plausible range [0, 15]: {val}")
-            except (TypeError, ValueError):
-                errors.append(f"{fip_field} must be numeric, got {row[fip_field]!r}")
+        if row.get(fip_field) is not None:
+            errors.extend(_fip_value_errors(fip_field, row[fip_field]))
     return errors
 
 
 def validate_model_output_row(row: dict[str, Any]) -> list[str]:
-    """Return list of validation errors for a model output row."""
+    """Return list of validation errors for a model output row.
+
+    MODEL_PENDING rows have None model_probability by contract; schema-valid but blocked by gate.
+    """
     errors: list[str] = []
+    is_pending = row.get("predicted_side_derivation_status") == "MODEL_PENDING"
     for field in MODEL_OUTPUT_REQUIRED_FIELDS:
-        if field not in row or row[field] is None:
+        if field not in row or (row[field] is None and not is_pending):
             errors.append(f"Missing required field: {field}")
     if "model_probability" in row and row["model_probability"] is not None:
         try:
@@ -218,7 +234,7 @@ def validate_model_output_row(row: dict[str, Any]) -> list[str]:
 
 
 def load_and_validate_upstream(
-    path: Path, required_fields: set[str], validator_fn: Any, label: str
+    path: Path, _required_fields: set[str], validator_fn: Any, label: str
 ) -> dict[str, Any]:
     """Load a JSONL upstream file and validate each row."""
     if not path.exists():
@@ -280,9 +296,6 @@ def join_upstream(
     model_rows = {r["game_id"]: r for r in model_data.get("rows", [])}
 
     all_ids = set(schedule_rows) | set(pitcher_rows) | set(model_rows)
-    schedule_only = sorted(set(schedule_rows) - set(pitcher_rows) & set(model_rows))
-    pitcher_only = sorted(set(pitcher_rows) - set(schedule_rows))
-    model_only = sorted(set(model_rows) - set(schedule_rows))
 
     # Full inner join: must appear in all 3
     joined_ids = sorted(set(schedule_rows) & set(pitcher_rows) & set(model_rows))
@@ -313,23 +326,27 @@ def join_upstream(
 def compute_sp_fip_delta(home_sp_fip: float, away_sp_fip: float) -> float:
     """
     P83C convention: sp_fip_delta = home_sp_fip - away_sp_fip.
-    Positive value → home pitcher favored in this system's convention.
-    (Note: FIP is lower-is-better; this system treats higher home-FIP relative
-     to away-FIP as the home-side signal. Follow P83C contract exactly.)
+    FIP is lower-is-better:
+      delta > 0 → home pitcher FIP > away FIP → home pitcher WORSE → predict 'away'
+      delta < 0 → home pitcher FIP < away FIP → away pitcher WORSE → predict 'home'
+    [P84G fix: docstring corrected per P84F_SIDE_MAPPING_INVERTED diagnosis]
     """
     return home_sp_fip - away_sp_fip
 
 
 def compute_predicted_side(sp_fip_delta: float) -> str | None:
     """
-    P83C predicted_side logic:
-      predicted_side = 'home' if sp_fip_delta > 0 else 'away'
+    P84G-corrected predicted_side logic (fixes P84F_SIDE_MAPPING_INVERTED):
+      sp_fip_delta = home_sp_fip - away_sp_fip (P83C formula)
+      FIP is lower-is-better:
+        delta > 0 → home pitcher FIP higher → home pitcher WORSE → predicted_side='away'
+        delta < 0 → away pitcher FIP higher → away pitcher WORSE → predicted_side='home'
       Ties (sp_fip_delta == 0.0) → None (excluded from canonical output)
     """
     if sp_fip_delta > 0.0:
-        return "home"
+        return "away"  # home pitcher worse (higher FIP) — P84G fix
     if sp_fip_delta < 0.0:
-        return "away"
+        return "home"  # away pitcher worse (higher FIP) — P84G fix
     return None  # tie — excluded
 
 
@@ -627,9 +644,9 @@ def run_p83e_producer(write_canonical: bool = True) -> dict[str, Any]:
             "step1_p83d_artifact": p83d_artifact,
             "step2_upstream_check": upstream_check,
             "step3_gate_recheck": {
-                "SCHEDULE_GATE": {"gate_pass": False, "blocked_by": "missing file"},
-                "PITCHER_FEATURE_GATE": {"gate_pass": False, "blocked_by": "missing file"},
-                "MODEL_OUTPUT_GATE": {"gate_pass": False, "blocked_by": "missing file"},
+                "SCHEDULE_GATE": {"gate_pass": False, "blocked_by": _GATE_BLOCKED_BY_MISSING_FILE},
+                "PITCHER_FEATURE_GATE": {"gate_pass": False, "blocked_by": _GATE_BLOCKED_BY_MISSING_FILE},
+                "MODEL_OUTPUT_GATE": {"gate_pass": False, "blocked_by": _GATE_BLOCKED_BY_MISSING_FILE},
                 "PREDICTED_SIDE_GATE": {"gate_pass": False, "blocked_by": "PITCHER_FEATURE_GATE"},
                 "GOVERNANCE_GATE": {"gate_pass": True},
                 "PRODUCER_ACTIVATION_GATE": {"gate_pass": False, "reason": f"missing: {missing_files}"},
@@ -672,14 +689,34 @@ def run_p83e_producer(write_canonical: bool = True) -> dict[str, Any]:
             "phase": "P83E", "date": "2026-05-26", "generated_at": ts,
             "p83e_classification": classification,
             "allowed_classifications": ALLOWED_CLASSIFICATIONS,
+            "prediction_boundary": PREDICTION_BOUNDARY,
             "governance": GOVERNANCE,
+            "step1_p83d_artifact": p83d_artifact,
+            "step2_upstream_check": upstream_check,
+            "step3_gate_recheck": {
+                "SCHEDULE_GATE": {"gate_pass": schedule_data.get("schema_valid", False)},
+                "PITCHER_FEATURE_GATE": {"gate_pass": pitcher_data.get("schema_valid", False)},
+                "MODEL_OUTPUT_GATE": {"gate_pass": model_data.get("schema_valid", False)},
+                "PREDICTED_SIDE_GATE": {"gate_pass": False, "blocked_by": "schema mismatch"},
+                "GOVERNANCE_GATE": {"gate_pass": True},
+                "PRODUCER_ACTIVATION_GATE": {"gate_pass": False, "reason": "schema validation failed"},
+            },
             "step4_schema_validation": {
                 "schedule": schedule_data,
                 "pitchers": pitcher_data,
                 "model_outputs": model_data,
             },
             "step6_canonical_rows": {"rows_written": False, "row_count": 0},
-            "forbidden_scan": {"forbidden_scan_pass": True, "canonical_rows_written": False},
+            "step7_next_prompt": generate_next_prompt(classification, 0),
+            "forbidden_scan": {
+                **{k: GOVERNANCE[k] for k in (
+                    "live_api_calls", "api_key_accessed", "ev_calculated", "clv_calculated",
+                    "market_edge_calculated", "kelly_calculated", "odds_used",
+                    "production_ready", "kelly_deploy_allowed",
+                )},
+                "canonical_rows_written": False,
+                "forbidden_scan_pass": True,
+            },
         }
 
     # Step 4 — Join
@@ -691,13 +728,60 @@ def run_p83e_producer(write_canonical: bool = True) -> dict[str, Any]:
             "p83e_classification": classification,
             "step5_join_result": join_result,
             "step6_canonical_rows": {"rows_written": False, "row_count": 0},
-            "forbidden_scan": {"forbidden_scan_pass": True, "canonical_rows_written": False},
+            "forbidden_scan": {
+                **{k: GOVERNANCE[k] for k in (
+                    "live_api_calls", "api_key_accessed", "ev_calculated", "clv_calculated",
+                    "market_edge_calculated", "kelly_calculated", "odds_used",
+                    "production_ready", "kelly_deploy_allowed",
+                )},
+                "canonical_rows_written": False,
+                "forbidden_scan_pass": True,
+            },
         }
 
-    # Step 5 — Compute canonical rows
+    # Filter out FEATURE_PENDING rows before computing (None FIP would crash float())
+    ready_rows = [
+        r for r in join_result["joined_rows"]
+        if r.get("row_status") != "FEATURE_PENDING"
+        and r.get("home_sp_fip") is not None
+        and r.get("away_sp_fip") is not None
+        and r.get("model_probability") is not None
+    ]
+    pending_count = len(join_result["joined_rows"]) - len(ready_rows)
+
+    # If all rows are pending, treat as blocked
+    if len(ready_rows) == 0:
+        classification = "P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA"
+        return {
+            "phase": "P83E", "date": "2026-05-26", "generated_at": ts,
+            "p83e_classification": classification,
+            "allowed_classifications": ALLOWED_CLASSIFICATIONS,
+            "governance": GOVERNANCE,
+            "step3_gate_recheck": {
+                "SCHEDULE_GATE": {"gate_pass": True},
+                "PITCHER_FEATURE_GATE": {"gate_pass": False, "blocked_by": f"all {pending_count} rows FEATURE_PENDING"},
+                "MODEL_OUTPUT_GATE": {"gate_pass": False, "blocked_by": "PITCHER_FEATURE_GATE"},
+                "PREDICTED_SIDE_GATE": {"gate_pass": False, "blocked_by": "PITCHER_FEATURE_GATE"},
+                "GOVERNANCE_GATE": {"gate_pass": True},
+                "PRODUCER_ACTIVATION_GATE": {"gate_pass": False, "reason": "no FEATURE_READY rows"},
+            },
+            "step6_canonical_rows": {"rows_written": False, "row_count": 0,
+                                     "reason": f"All {pending_count} joined rows are FEATURE_PENDING"},
+            "forbidden_scan": {
+                **{k: GOVERNANCE[k] for k in (
+                    "live_api_calls", "api_key_accessed", "ev_calculated", "clv_calculated",
+                    "market_edge_calculated", "kelly_calculated", "odds_used",
+                    "production_ready", "kelly_deploy_allowed",
+                )},
+                "canonical_rows_written": False,
+                "forbidden_scan_pass": True,
+            },
+        }
+
+    # Step 5 — Compute canonical rows (ready rows only)
     computed_rows: list[dict[str, Any]] = []
     ties_excluded = 0
-    for merged in join_result["joined_rows"]:
+    for merged in ready_rows:
         row = compute_prediction_row(merged)
         if row is None:
             ties_excluded += 1
@@ -767,7 +851,7 @@ if __name__ == "__main__":
     out_dir = ROOT / "data/mlb_2026/derived"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_json = out_dir / "p83e_2026_canonical_prediction_row_producer_summary.json"
-    serializable = {k: v for k, v in result.items()}
+    serializable = dict(result)
     with open(out_json, "w") as f:
         json.dump(serializable, f, indent=2)
     print(f"[P83E] JSON written → {out_json.relative_to(ROOT)}")

@@ -247,11 +247,17 @@ def test_t12_abs_sp_fip_delta_computation(mod):
 # T13 — predicted_side computation present
 # ===========================================================================
 def test_t13_predicted_side_computation(mod):
-    """T13: predicted_side logic from P83C contract."""
-    assert mod.compute_predicted_side(1.30) == "home"
-    assert mod.compute_predicted_side(-1.40) == "away"
-    assert mod.compute_predicted_side(0.35) == "home"
-    assert mod.compute_predicted_side(-0.15) == "away"
+    """T13: predicted_side logic — P84G-corrected convention (FIP: lower-is-better).
+
+    sp_fip_delta = home_sp_fip - away_sp_fip
+    delta > 0 → home pitcher FIP higher (worse) → predicted_side='away'
+    delta < 0 → away pitcher FIP higher (worse) → predicted_side='home'
+    [P84G fix: corrected from P84F_SIDE_MAPPING_INVERTED]
+    """
+    assert mod.compute_predicted_side(1.30) == "away"   # home pitcher worse (higher FIP)
+    assert mod.compute_predicted_side(-1.40) == "home"  # away pitcher worse (higher FIP)
+    assert mod.compute_predicted_side(0.35) == "away"
+    assert mod.compute_predicted_side(-0.15) == "home"
     assert mod.compute_predicted_side(0.0) is None  # tie excluded
 
 
@@ -487,42 +493,47 @@ def test_t30b_mock_fixture_rule_flags(mod, mock_canonical_rows):
     # Map by game_id
     rows_by_id = {r["game_id"]: r for r in mock_canonical_rows}
 
-    # Case 1: NYY@BOS: home_fip=4.80, away_fip=3.50 → delta=+1.30, home, abs=1.30
+    # Case 1: NYY@BOS: home_fip=4.80, away_fip=3.50 → delta=+1.30
+    # P84G fix: delta>0 → home pitcher WORSE → predicted_side='away'
     r = rows_by_id["MLB2026_NYY_BOS_20260510"]
-    assert r["predicted_side"] == "home"
+    assert r["predicted_side"] == "away"  # P84G: delta>0 → away
     assert abs(r["abs_sp_fip_delta"] - 1.30) < 1e-6
-    assert r["rule_primary_125_flag"] is True
-    assert r["rule_shadow_100_flag"] is True
+    assert r["rule_primary_125_flag"] is True   # away abs=1.30 >= 1.25
+    assert r["rule_shadow_100_flag"] is True    # away abs=1.30 >= 1.00
     assert r["tier_b_candidate_flag"] is False
     assert r["tier_a_watchlist_flag"] is False
 
-    # Case 2: LAD@SF: home_fip=3.20, away_fip=4.60 → delta=-1.40, away, abs=1.40
+    # Case 2: LAD@SF: home_fip=3.20, away_fip=4.60 → delta=-1.40
+    # P84G fix: delta<0 → away pitcher WORSE → predicted_side='home'
     r = rows_by_id["MLB2026_LAD_SF_20260510"]
-    assert r["predicted_side"] == "away"
+    assert r["predicted_side"] == "home"  # P84G: delta<0 → home
     assert abs(r["abs_sp_fip_delta"] - 1.40) < 1e-6
-    assert r["rule_primary_125_flag"] is True
-    assert r["rule_shadow_100_flag"] is True
+    assert r["rule_primary_125_flag"] is True   # home abs=1.40 >= 0.50
+    assert r["rule_shadow_100_flag"] is True    # home abs=1.40 >= 0.50
 
-    # Case 3: CHC@STL: home_fip=3.10, away_fip=4.20 → delta=-1.10, away, abs=1.10
+    # Case 3: CHC@STL: home_fip=3.10, away_fip=4.20 → delta=-1.10
+    # P84G fix: delta<0 → away pitcher WORSE → predicted_side='home'
     r = rows_by_id["MLB2026_CHC_STL_20260511"]
-    assert r["predicted_side"] == "away"
+    assert r["predicted_side"] == "home"  # P84G: delta<0 → home
     assert abs(r["abs_sp_fip_delta"] - 1.10) < 1e-6
-    assert r["rule_primary_125_flag"] is False   # away 1.10 < 1.25
-    assert r["rule_shadow_100_flag"] is True     # away 1.10 >= 1.00
+    assert r["rule_primary_125_flag"] is True   # home abs=1.10 >= 0.50 (P84G: was False with away)
+    assert r["rule_shadow_100_flag"] is True    # home abs=1.10 >= 0.50
 
-    # Case 4: HOU@TEX: home_fip=4.00, away_fip=3.65 → delta=+0.35, home, abs=0.35
+    # Case 4: HOU@TEX: home_fip=4.00, away_fip=3.65 → delta=+0.35
+    # P84G fix: delta>0 → home pitcher WORSE → predicted_side='away'
     r = rows_by_id["MLB2026_HOU_TEX_20260511"]
-    assert r["predicted_side"] == "home"
+    assert r["predicted_side"] == "away"  # P84G: delta>0 → away
     assert abs(r["abs_sp_fip_delta"] - 0.35) < 1e-6
-    assert r["rule_primary_125_flag"] is False
-    assert r["rule_shadow_100_flag"] is False
-    assert r["tier_b_candidate_flag"] is True    # 0.25 <= 0.35 < 0.50
+    assert r["rule_primary_125_flag"] is False  # away abs=0.35 < 1.25
+    assert r["rule_shadow_100_flag"] is False   # away abs=0.35 < 1.00
+    assert r["tier_b_candidate_flag"] is True   # 0.25 <= 0.35 < 0.50
 
-    # Case 5: ATL@NYM: home_fip=3.80, away_fip=3.65 → delta=+0.15, home, abs=0.15
+    # Case 5: ATL@NYM: home_fip=3.80, away_fip=3.65 → delta=+0.15
+    # P84G fix: delta>0 → home pitcher WORSE → predicted_side='away'
     r = rows_by_id["MLB2026_ATL_NYM_20260512"]
-    assert r["predicted_side"] == "home"
+    assert r["predicted_side"] == "away"  # P84G: delta>0 → away
     assert abs(r["abs_sp_fip_delta"] - 0.15) < 1e-6
-    assert r["tier_a_watchlist_flag"] is True    # abs < 0.25
+    assert r["tier_a_watchlist_flag"] is True   # abs=0.15 < 0.25
 
 
 # ===========================================================================

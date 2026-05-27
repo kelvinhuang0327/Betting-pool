@@ -135,9 +135,13 @@ def test_t08_auc_flipped_score_lt_05(summary):
 
 
 def test_t09_auc_is_correct_lt_05(summary):
-    """T09: AUC(model_probability, is_correct) < 0.5 — direction inversion exposed."""
+    """T09 (P84G-updated): AUC(model_probability, is_correct) > 0.5 — post-fix, mapping correct.
+
+    Before P84G fix: AUC was 0.475337 < 0.5 (inverted mapping degraded signal).
+    After P84G fix: AUC is 0.524663 > 0.5 (inversion resolved by P83E code fix).
+    """
     auc = summary["step2_score_label_audit"]["auc_prob_is_correct"]
-    assert auc < 0.5, f"Expected AUC(prob, is_correct) < 0.5, got {auc}"
+    assert auc > 0.5, f"Expected AUC(prob, is_correct) > 0.5 (post-P84G fix), got {auc}"
 
 
 def test_t10_model_probability_interpretation(summary):
@@ -156,15 +160,27 @@ def test_t11_step3_predicted_side_consistency_exists(summary):
 
 
 def test_t12_current_hit_rate_lt_05(summary):
-    """T12: Current hit_rate < 0.5 — as-stored predicted_side performs below random."""
+    """T12 (P84G-updated): Current hit_rate > 0.5 — post-fix, mapping is FIP-correct.
+
+    Before P84G fix: hit_rate=0.430693 < 0.5 (inverted predicted_side).
+    After P84G fix: hit_rate=0.569307 > 0.5 (corrected predicted_side in P83E).
+    """
     hr = summary["step3_predicted_side_consistency"]["current_hit_rate"]
-    assert hr < 0.5, f"Expected current_hit_rate < 0.5, got {hr}"
+    assert hr > 0.5, f"Expected current_hit_rate > 0.5 (post-P84G fix), got {hr}"
 
 
 def test_t13_flipped_hit_rate_gt_05(summary):
-    """T13: Flipped hit_rate > 0.5 — inversion recovers above-random signal."""
-    hr = summary["step3_predicted_side_consistency"]["flipped_hit_rate"]
-    assert hr > 0.5, f"Expected flipped_hit_rate > 0.5, got {hr}"
+    """T13 (P84G-updated): current_hit_rate > flipped_hit_rate — post-fix, current mapping wins.
+
+    Before P84G fix: flipped_hit_rate > current_hit_rate (inversion proof).
+    After P84G fix: current_hit_rate > flipped_hit_rate (mapping is now correct).
+    """
+    s3 = summary["step3_predicted_side_consistency"]
+    current = s3["current_hit_rate"]
+    flipped = s3["flipped_hit_rate"]
+    assert current > flipped, (
+        f"Post-fix: current_hit_rate ({current}) should exceed flipped ({flipped})"
+    )
 
 
 def test_t14_probability_threshold_hit_rate_computed(summary):
@@ -175,9 +191,13 @@ def test_t14_probability_threshold_hit_rate_computed(summary):
 
 
 def test_t15_mapping_pattern_inverted(summary):
-    """T15: Mapping pattern is PROB_GE_05_MAPS_TO_AWAY (direct inversion indicator)."""
+    """T15 (P84G-updated): Mapping pattern is PROB_GE_05_MAPS_TO_HOME (FIP-correct post-fix).
+
+    Before P84G fix: PROB_GE_05_MAPS_TO_AWAY (prob>=0.5 → predicted away — wrong).
+    After P84G fix: PROB_GE_05_MAPS_TO_HOME (prob>=0.5 → predicted home — correct).
+    """
     mp = summary["step3_predicted_side_consistency"]["mapping_pattern"]
-    assert mp == "PROB_GE_05_MAPS_TO_AWAY"
+    assert mp == "PROB_GE_05_MAPS_TO_HOME", f"Expected PROB_GE_05_MAPS_TO_HOME (post-fix), got {mp}"
 
 
 # ---------------------------------------------------------------------------
@@ -210,10 +230,14 @@ def test_t19_fip_signal_valid(summary):
 
 
 def test_t20_predicted_side_fip_consistency_rate_zero(summary):
-    """T20: predicted_side FIP consistency rate = 0.0 — predicted_side is fully inverted vs FIP."""
+    """T20 (P84G-updated): predicted_side FIP consistency rate > 0.9 — fully consistent post-fix.
+
+    Before P84G fix: rate=0.0 (fully inverted — predicted_side contradicted FIP in all 808 rows).
+    After P84G fix: rate=1.0 (fully consistent — every row now follows FIP convention).
+    """
     rate = summary["step4_fip_delta_sign_audit"]["predicted_side_fip_consistency_rate"]
     assert rate is not None
-    assert rate < 0.05, f"Expected near-zero consistency rate, got {rate}"
+    assert rate > 0.9, f"Expected fip_consistency_rate > 0.9 (post-P84G fix), got {rate}"
 
 
 # ---------------------------------------------------------------------------
@@ -289,8 +313,14 @@ def test_t30_governance_no_ev_clv_kelly(summary):
 # ---------------------------------------------------------------------------
 
 def test_t31_p84f_classification_is_inverted(summary):
-    """T31: Top-level p84f_classification = P84F_SIDE_MAPPING_INVERTED."""
-    assert summary["p84f_classification"] == "P84F_SIDE_MAPPING_INVERTED"
+    """T31 (P84G-updated): Top-level p84f_classification = P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK.
+
+    Before P84G fix: P84F_SIDE_MAPPING_INVERTED (committed at 9175759).
+    After P84G fix: P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK (inversion resolved).
+    """
+    assert summary["p84f_classification"] == "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK", (
+        f"Expected P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK (post-fix), got {summary['p84f_classification']}"
+    )
 
 
 def test_t32_step7_diagnosis_exists(summary):
@@ -308,17 +338,26 @@ def test_t33_remediation_path_mentions_p84g(summary):
 
 
 def test_t34_evidence_list_nonempty(summary):
-    """T34: Evidence list has at least 3 entries supporting the classification."""
+    """T34 (P84G-updated): Evidence list has at least 1 entry supporting the classification.
+
+    Post-fix P84F has 2 evidence entries (AUC + FIP delta sign).
+    """
     evidence = summary["step7_diagnosis"]["evidence"]
     assert isinstance(evidence, list)
-    assert len(evidence) >= 3
+    assert len(evidence) >= 1, f"Expected at least 1 evidence entry, got {len(evidence)}"
 
 
 def test_t35_flipped_hr_exceeds_current_hr_by_meaningful_margin(summary):
-    """T35: flipped_hit_rate - current_hit_rate > 0.10 — substantial improvement."""
+    """T35 (P84G-updated): current_hit_rate exceeds flipped_hit_rate by > 0.10 — fix confirmed.
+
+    Before P84G fix: flipped_hit_rate - current_hit_rate = +0.138614 (inverted mapping).
+    After P84G fix: current_hit_rate - flipped_hit_rate = +0.138614 (mapping corrected).
+    """
     s3 = summary["step3_predicted_side_consistency"]
-    improvement = s3["flipped_hit_rate"] - s3["current_hit_rate"]
-    assert improvement > 0.10, f"Expected improvement > 0.10, got {improvement}"
+    current_advantage = s3["current_hit_rate"] - s3["flipped_hit_rate"]
+    assert current_advantage > 0.10, (
+        f"Expected current_hit_rate to exceed flipped_hit_rate by > 0.10 (post-fix), got {current_advantage}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -339,11 +378,12 @@ def test_t37_derived_rows_not_modified_by_p84f(derived_rows):
 
 
 def test_t38_p84f_report_exists_and_has_content():
-    """T38: P84F markdown report exists and contains key diagnostic sections."""
+    """T38 (P84G-updated): P84F markdown report exists and contains post-fix diagnostic sections."""
     assert P84F_REPORT.exists(), f"P84F report not found: {P84F_REPORT}"
     text = P84F_REPORT.read_text(encoding="utf-8")
-    assert "P84F_SIDE_MAPPING_INVERTED" in text
-    assert "Remediation" in text
+    assert "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK" in text, (
+        "Report must contain post-fix classification P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK"
+    )
     assert "FIP" in text
 
 

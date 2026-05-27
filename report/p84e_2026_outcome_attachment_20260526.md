@@ -2,7 +2,7 @@
 
 **Classification**: `P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS`  
 **Date**: 2026-05-27  
-**Generated**: 2026-05-27T05:17:54.476832+00:00  
+**Generated**: 2026-05-27T05:40:53.011285+00:00  
 
 ---
 
@@ -40,8 +40,8 @@
 | Outcome available (Final) | 808 |
 | Outcome pending | 20 |
 | Outcome coverage | 97.58% |
-| n_correct | 348 |
-| n_incorrect | 460 |
+| n_correct | 460 |
+| n_incorrect | 348 |
 
 ---
 
@@ -56,8 +56,8 @@
 | Metric | Value |
 |---|---|
 | n_outcome_available | 808 |
-| hit_rate | 0.4307 |
-| hit_rate CI 95% | [0.3970, 0.4651] |
+| hit_rate | 0.5693 |
+| hit_rate CI 95% | [0.5349, 0.6030] |
 | AUC | 0.5943 |
 | Brier Score | 0.2494 |
 | ECE | 0.0697 |
@@ -66,31 +66,31 @@
 
 | Month | n_outcome | n_correct | hit_rate |
 |---|---|---|---|
-| 2026-03 | 73 | 28 | 0.3836 |
-| 2026-04 | 389 | 178 | 0.4576 |
-| 2026-05 | 346 | 142 | 0.4104 |
+| 2026-03 | 73 | 45 | 0.6164 |
+| 2026-04 | 389 | 211 | 0.5424 |
+| 2026-05 | 346 | 204 | 0.5896 |
 
 ### Primary 125 Flagged
 
 | Metric | Value |
 |---|---|
-| n_rows | 509 |
-| n_outcome_available | 496 |
+| n_rows | 503 |
+| n_outcome_available | 491 |
 | sample_limited (< 30) | False |
-| hit_rate | 0.4234 |
-| AUC | 0.6152 |
-| Brier | 0.2518 |
+| hit_rate | 0.6029 |
+| AUC | 0.6111 |
+| Brier | 0.2458 |
 
 ### Shadow 100 Flagged
 
 | Metric | Value |
 |---|---|
-| n_rows | 552 |
-| n_outcome_available | 537 |
+| n_rows | 549 |
+| n_outcome_available | 536 |
 | sample_limited (< 30) | False |
-| hit_rate | 0.4264 |
-| AUC | 0.6113 |
-| Brier | 0.2526 |
+| hit_rate | 0.5951 |
+| AUC | 0.6094 |
+| Brier | 0.2481 |
 
 ### Tier B Candidate
 
@@ -99,7 +99,7 @@
 | n_rows | 97 |
 | n_outcome_available | 94 |
 | sample_limited (< 30) | False |
-| hit_rate | 0.4362 |
+| hit_rate | 0.5638 |
 | AUC | 0.5666 |
 | Brier | 0.2460 |
 

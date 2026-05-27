@@ -1,0 +1,158 @@
+{
+  "p84g_classification": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T05:44:56.048139+00:00",
+  "allowed_classifications": [
+    "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+    "P84G_FIX_BLOCKED_BY_CONTRADICTORY_EVIDENCE",
+    "P84G_FAILED_VALIDATION"
+  ],
+  "mapping_convention": {
+    "formula": "sp_fip_delta = home_sp_fip - away_sp_fip",
+    "fip_semantics": "lower_is_better",
+    "delta_positive_means": "home pitcher FIP higher \u2192 home pitcher WORSE",
+    "corrected_positive_mapping": "predicted_side='away'",
+    "corrected_negative_mapping": "predicted_side='home'",
+    "pre_fix_positive_mapping": "predicted_side='home' (BUG)",
+    "evidence_source": "P84F commit 9175759"
+  },
+  "prefix_state": {
+    "p84f_classification": "P84F_SIDE_MAPPING_INVERTED",
+    "commit": "9175759",
+    "mapping_pattern": "PROB_GE_05_MAPS_TO_AWAY",
+    "current_hit_rate": 0.430693,
+    "flipped_hit_rate": 0.569307,
+    "auc_prob_home_win": 0.594315,
+    "auc_prob_is_correct": 0.475337,
+    "n_consistent_with_standard_convention": 0,
+    "n_inverted_from_standard_convention": 808,
+    "predicted_side_fip_consistency_rate": 0.0
+  },
+  "step1_verify_prefix": {
+    "status": "P84G_PREFIX_VERIFIED",
+    "prefix_classification": "P84F_SIDE_MAPPING_INVERTED",
+    "postfix_classification": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+    "fix_applied_confirmed": true,
+    "p84f_artifact_path": "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+    "ok": true
+  },
+  "step2_inspect_p83e_mapping": {
+    "status": "P83E_MAPPING_INSPECTED",
+    "has_away_if_pos_delta": true,
+    "has_home_if_neg_delta": true,
+    "old_inverted_logic_absent": true,
+    "has_p84g_fix_marker": true,
+    "convention_correct": true,
+    "convention": "delta>0 \u2192 away (home pitcher worse), delta<0 \u2192 home (away pitcher worse)",
+    "formula": "sp_fip_delta = home_sp_fip - away_sp_fip",
+    "ok": true
+  },
+  "step3_verify_canonical_rows": {
+    "status": "CANONICAL_ROWS_VERIFIED",
+    "total_rows": 828,
+    "expected_total": 828,
+    "count_stable": true,
+    "n_home_predicted": 423,
+    "n_away_predicted": 405,
+    "n_none": 0,
+    "pos_delta_maps_to_away": true,
+    "neg_delta_maps_to_home": true,
+    "mapping_correct": true,
+    "governance_sample_ok": true,
+    "ok": true
+  },
+  "step4_corrected_p84e_metrics": {
+    "status": "P84E_METRICS_LOADED",
+    "p84e_classification": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+    "n_canonical_rows": 828,
+    "n_outcome_available": 808,
+    "n_outcome_pending": 20,
+    "all": {
+      "hit_rate": 0.569307,
+      "auc": 0.594315,
+      "brier": 0.249408,
+      "ece": 0.069682,
+      "n": 808
+    },
+    "primary_125": {
+      "hit_rate": 0.602851,
+      "auc": 0.611055,
+      "n": 491
+    },
+    "shadow_100": {
+      "hit_rate": 0.595149,
+      "auc": 0.609431,
+      "n": 536
+    },
+    "tier_b": {
+      "hit_rate": 0.56383,
+      "n": 94
+    },
+    "ok": true
+  },
+  "step5_corrected_p84f_diagnostic": {
+    "status": "P84F_POSTFIX_LOADED",
+    "p84f_classification": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+    "not_inverted": true,
+    "mapping_pattern": "PROB_GE_05_MAPS_TO_HOME",
+    "mapping_correct": true,
+    "current_hit_rate": 0.569307,
+    "flipped_hit_rate": 0.430693,
+    "n_consistent": 808,
+    "n_inverted": 0,
+    "auc_prob_home_win": 0.594315,
+    "auc_prob_is_correct": 0.524663,
+    "fip_signal": "VALID_AWAY_EDGE_WHEN_DELTA_POSITIVE",
+    "predicted_side_fip_consistency_rate": 1.0,
+    "all_consistent": true,
+    "fip_consistent": true,
+    "ok": true
+  },
+  "step6_before_after": {
+    "before": {
+      "p84f_classification": "P84F_SIDE_MAPPING_INVERTED",
+      "commit": "9175759",
+      "mapping_pattern": "PROB_GE_05_MAPS_TO_AWAY",
+      "hit_rate": 0.430693,
+      "auc_prob_home_win": 0.594315,
+      "auc_prob_is_correct": 0.475337,
+      "n_consistent_with_standard": 0,
+      "n_inverted": 808,
+      "predicted_side_fip_consistency_rate": 0.0
+    },
+    "after": {
+      "p84f_classification": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+      "mapping_pattern": "PROB_GE_05_MAPS_TO_HOME",
+      "hit_rate": 0.569307,
+      "auc_prob_home_win": 0.594315,
+      "auc_prob_is_correct": 0.524663,
+      "n_consistent_with_standard": 808,
+      "n_inverted": 0,
+      "predicted_side_fip_consistency_rate": 1.0,
+      "p84e_hit_rate_all": 0.569307,
+      "p84e_auc_all": 0.594315,
+      "p84e_brier_all": 0.249408,
+      "p84e_ece_all": 0.069682,
+      "p84e_hit_rate_primary_125": 0.602851,
+      "p84e_hit_rate_shadow_100": 0.595149
+    },
+    "delta": {
+      "hit_rate_improvement": 0.138614,
+      "auc_is_correct_improvement": 0.049326
+    }
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "live_api_calls": 0,
+    "odds_api_called": false,
+    "ev": false,
+    "clv": false,
+    "kelly": false,
+    "fabricated_outcomes": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false
+  }
+}

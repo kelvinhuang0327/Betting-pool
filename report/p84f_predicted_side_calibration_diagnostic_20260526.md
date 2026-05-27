@@ -1,5 +1,5 @@
     # P84F — Predicted-Side Direction / Calibration Diagnostic
-    *Generated: 2026-05-27T05:27:40Z*
+    *Generated: 2026-05-27T05:41:03Z*
 
     ---
 
@@ -7,15 +7,15 @@
 
     | Metric | Value |
     |---|---|
-    | Classification | **P84F_SIDE_MAPPING_INVERTED** |
+    | Classification | **P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK** |
     | AUC(prob, home_win) | 0.594315 |
-    | AUC(prob, is_correct) | 0.475337 |
+    | AUC(prob, is_correct) | 0.524663 |
     | model_probability interpretation | P_HOME_WIN |
-    | Current hit_rate | 0.430693 |
-    | Flipped hit_rate | 0.569307 |
+    | Current hit_rate | 0.569307 |
+    | Flipped hit_rate | 0.430693 |
     | Probability-threshold hit_rate | 0.569307 |
-    | Hit-rate improvement if flipped | +0.138614 |
-    | Mapping pattern | PROB_GE_05_MAPS_TO_AWAY |
+    | Hit-rate improvement if flipped | +-0.138614 |
+    | Mapping pattern | PROB_GE_05_MAPS_TO_HOME |
 
     ---
 
@@ -38,7 +38,7 @@
     | AUC(model_probability, home_win) | 0.594315 |
     | AUC(1 - model_probability, home_win) | 0.405685 |
     | AUC(model_probability, away_win) | 0.405685 |
-    | AUC(model_probability, is_correct) | 0.475337 |
+    | AUC(model_probability, is_correct) | 0.524663 |
 
     **model_probability interpretation**: P_HOME_WIN
 
@@ -48,20 +48,20 @@
 
     ## Step 3 — Predicted-Side Consistency Audit
 
-    ### Mapping pattern: `PROB_GE_05_MAPS_TO_AWAY`
+    ### Mapping pattern: `PROB_GE_05_MAPS_TO_HOME`
 
     | prob bucket | n | predicted home | predicted away |
     |---|---|---|---|
-    | prob >= 0.5 | 412 | 0 | 412 |
-    | prob < 0.5  | 396 | 396 | 0 |
+    | prob >= 0.5 | 412 | 412 | 0 |
+    | prob < 0.5  | 396 | 0 | 396 |
 
     | Hit-rate variant | Value |
     |---|---|
-    | Current (as-stored) | 0.430693 |
-    | Flipped predicted_side | 0.569307 |
+    | Current (as-stored) | 0.569307 |
+    | Flipped predicted_side | 0.430693 |
     | Probability-threshold (home if prob≥0.5) | 0.569307 |
-    | Home-predicted subset | 0.454545 |
-    | Away-predicted subset | 0.407767 |
+    | Home-predicted subset | 0.592233 |
+    | Away-predicted subset | 0.545455 |
 
     ---
 
@@ -77,7 +77,7 @@
     | delta < 0 (home favoured) | 412 | 0.407767 | 0.592233 |
 
     - FIP direction hit_rate (correct direction): **0.569307**
-    - predicted_side FIP consistency rate: **0.0**
+    - predicted_side FIP consistency rate: **1.0**
     - FIP signal: `VALID_AWAY_EDGE_WHEN_DELTA_POSITIVE`
 
     fip_direction_hit_rate = win rate if we bet 'away' when delta>0 and 'home' when delta<0 (the FIP-correct direction).
@@ -88,12 +88,12 @@
 
     | Subset               | n (+sample flag) | current HR |  flipped HR | thresh HR |
     |---|---|---|---|---|
-    | all                  |    808                 | 0.430693 | 0.569307 | 0.569307 |
-| primary_125          |    496                 | 0.423387 | 0.576613 | 0.576613 |
-| shadow_100           |    537                 | 0.426443 | 0.573557 | 0.573557 |
-| tier_b               |     94                 |  0.43617 |  0.56383 |  0.56383 |
-| home_predicted       |    396                 | 0.454545 | 0.545455 | 0.545455 |
-| away_predicted       |    412                 | 0.407767 | 0.592233 | 0.592233 |
+    | all                  |    808                 | 0.569307 | 0.430693 | 0.569307 |
+| primary_125          |    491                 | 0.602851 | 0.397149 | 0.602851 |
+| shadow_100           |    536                 | 0.595149 | 0.404851 | 0.595149 |
+| tier_b               |     94                 |  0.56383 |  0.43617 |  0.56383 |
+| home_predicted       |    412                 | 0.592233 | 0.407767 | 0.592233 |
+| away_predicted       |    396                 | 0.545455 | 0.454545 | 0.545455 |
 
     ---
 
@@ -111,22 +111,16 @@
 
     ## Step 7 — Diagnostic Classification
 
-    **Classification**: `P84F_SIDE_MAPPING_INVERTED`
+    **Classification**: `P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK`
 
     ### Evidence Chain
 
   - AUC(prob, home_win)=0.5943 > 0.5 → model_probability = P(home wins)
-  - AUC(prob, is_correct)=0.4753 < 0.5 → predicted_side direction inverted
-  - prob >= 0.5 maps to predicted_side='away' in 100% of cases — threshold inverted
-  - current hit_rate=0.4307 < 0.5 — below random baseline
-  - flipped hit_rate=0.5693 > 0.5 — inversion recovers signal
-  - hit_rate improvement if flipped: +0.1386
   - FIP delta sign valid: delta>0 → away wins more often (correct FIP edge direction)
-  - predicted_side FIP consistency rate=0.0000 — predicted_side inverted vs FIP
 
     ### Remediation Path (P84G)
 
-    P84G: Fix `compute_predicted_side` in P83E to use 'away' if sp_fip_delta > 0 else 'home' (lower FIP = better pitcher = favoured side). Regenerate canonical prediction rows and rerun P84A→P84E chain.
+    P84G: Apply Platt scaling or isotonic regression to recalibrate model_probability to genuine win probabilities.
 
     ---
 

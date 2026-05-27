@@ -71,3 +71,15 @@
 - Classification: P84F_SIDE_MAPPING_INVERTED
 - Artefacts: p84f_predicted_side_calibration_diagnostic_summary.json
 - Report: report/p84f_predicted_side_calibration_diagnostic_20260526.md
+
+<!-- P84G: P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED -->
+
+## P84G — Fix Predicted-Side Mapping + Regenerate Canonical Prediction Rows
+- Status: COMPLETE
+- Classification: P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED
+- Fix: compute_predicted_side() corrected — delta>0→away, delta<0→home
+- Regenerated: P83E canonical rows (828), P84E outcome-attached (808), P84F rerun
+- Before hit_rate=0.430693 → After hit_rate=0.569307 (+0.138614)
+- P84F rerun: P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK (inversion resolved)
+- Artefacts: p84g_predicted_side_mapping_fix_summary.json
+- Report: report/p84g_predicted_side_mapping_fix_20260526.md
