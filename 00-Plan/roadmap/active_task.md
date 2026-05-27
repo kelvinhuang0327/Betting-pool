@@ -1,19 +1,17 @@
-# Active Task — P92 Prediction-Only Side Bias and Baseline Decomposition Gate
+# Active Task — P93 Prediction-Only Coverage and Feature Bias Audit Gate
 
 ## Current Task
-P92 — Prediction-Only Side Bias and Baseline Decomposition Gate
+P93 — Prediction-Only Coverage and Feature Bias Audit Gate
 
 ## Classification
-P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE
+P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP
 
 ## Summary
-P91 STABLE classification confirmed under side-split and monthly baseline decomposition.
-Signal (hit_rate=0.5693, AUC=0.5943) exceeds both home baseline (0.5248) and away baseline (0.4752).
-Side split near-balanced (51/49). Both home-predicted and away-predicted subsets above 50%.
-No confound detected. Market-edge lane remains BLOCKED (no legal odds dataset).
+Signal is concentrated in high abs_sp_fip_delta rows (>=1.5). High-FIP games: hit_rate=0.641 consistently across all months. Low-FIP games: inconsistent (Apr 48.7%). Q4 dominates at 65.8%. P91 STABLE remains valid but signal is FIP-stratified.
 
 ## Next Phase
-P93 — Coverage / Bias Audit or continued paper tracking.
+P94 — High-FIP subset deeper diagnostic or FIP-stratified paper tracking.
+Market-edge lane: BLOCKED (no legal odds dataset).
 
 ## Historical Classification Log
 <!-- P82: P82 completed -->
@@ -35,3 +33,5 @@ P93 — Coverage / Bias Audit or continued paper tracking.
 <!-- P90: P90_POST_RECOVERY_CLOSURE_READY -->
 <!-- P91: P91_TRACKING_ACTIVE_SIGNAL_STABLE -->
 <!-- P92: P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE -->
+<!-- P93: P93_SIGNAL_BROADLY_DISTRIBUTED -->
+<!-- P93: P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP -->
