@@ -1,8 +1,8 @@
 {
   "phase": "P83E",
   "date": "2026-05-26",
-  "generated_at": "2026-05-26T14:49:19.137415+00:00",
-  "p83e_classification": "P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA",
+  "generated_at": "2026-05-27T03:56:35.352675+00:00",
+  "p83e_classification": "P83E_CANONICAL_ROWS_READY",
   "allowed_classifications": [
     "P83E_CANONICAL_ROWS_READY",
     "P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA",
@@ -40,61 +40,87 @@
     "file_checks": {
       "schedule": {
         "path": "data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
-        "exists": false,
-        "size_bytes": 0
+        "exists": true,
+        "size_bytes": 595998
       },
       "pitchers": {
         "path": "data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
-        "exists": false,
-        "size_bytes": 0
+        "exists": true,
+        "size_bytes": 1119852
       },
       "model_outputs": {
         "path": "data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
-        "exists": false,
-        "size_bytes": 0
+        "exists": true,
+        "size_bytes": 887599
       }
     },
-    "all_present": false,
-    "missing_files": [
-      "schedule",
-      "pitchers",
-      "model_outputs"
-    ],
-    "missing_count": 3
+    "all_present": true,
+    "missing_files": [],
+    "missing_count": 0
   },
   "step3_gate_recheck": {
     "SCHEDULE_GATE": {
-      "gate_pass": false,
-      "blocked_by": "missing file"
+      "gate_pass": true
     },
     "PITCHER_FEATURE_GATE": {
-      "gate_pass": false,
-      "blocked_by": "missing file"
+      "gate_pass": true
     },
     "MODEL_OUTPUT_GATE": {
-      "gate_pass": false,
-      "blocked_by": "missing file"
+      "gate_pass": true
     },
     "PREDICTED_SIDE_GATE": {
-      "gate_pass": false,
-      "blocked_by": "PITCHER_FEATURE_GATE"
+      "gate_pass": true,
+      "note": "Logic defined, data present"
     },
     "GOVERNANCE_GATE": {
       "gate_pass": true
     },
     "PRODUCER_ACTIVATION_GATE": {
-      "gate_pass": false,
-      "reason": "missing: ['schedule', 'pitchers', 'model_outputs']"
+      "gate_pass": true
     }
   },
-  "step4_schema_validation": null,
-  "step5_join_result": null,
-  "step6_canonical_rows": {
-    "rows_written": false,
-    "row_count": 0,
-    "reason": "Blocked by missing upstream files: ['schedule', 'pitchers', 'model_outputs']"
+  "step4_schema_validation": {
+    "schedule": {
+      "loaded": true,
+      "path": "data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+      "row_count": 2430,
+      "validation_errors": [],
+      "duplicate_game_ids": [],
+      "schema_valid": true
+    },
+    "pitchers": {
+      "loaded": true,
+      "path": "data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+      "row_count": 2430,
+      "validation_errors": [],
+      "duplicate_game_ids": [],
+      "schema_valid": true
+    },
+    "model_outputs": {
+      "loaded": true,
+      "path": "data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
+      "row_count": 2430,
+      "validation_errors": [],
+      "duplicate_game_ids": [],
+      "schema_valid": true
+    }
   },
-  "step7_next_prompt": "[P83E Retry \u2014 Upstream Data Availability]\n\nP83E remains blocked. Re-run when all three files exist locally:\n  1. data/mlb_2026/schedule/mlb_2026_schedule.jsonl\n     Fields: game_id, game_date, season, home_team, away_team\n  2. data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl\n     Fields: game_id, home_sp_fip, away_sp_fip\n  3. data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl\n     Fields: game_id, model_probability, source_prediction_version\n\nData sources (no API call in P83E):\n  - statsapi.mlb.com/api/v1/schedule (free, public)\n  - statsapi.mlb.com/api/v1/people (pitcher stats)\n  - 2025-trained ensemble model applied to 2026 features\n\nRules: no external API calls in P83E itself | no odds | paper_only=True",
+  "step5_join_result": {
+    "total_unique_game_ids": 2430,
+    "joined_row_count": 2430,
+    "unmatched_schedule_ids": [],
+    "unmatched_pitcher_ids": [],
+    "unmatched_model_ids": [],
+    "join_ok": true
+  },
+  "step5_ties_excluded": 0,
+  "step6_canonical_rows": {
+    "rows_written": true,
+    "path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "row_count": 828,
+    "schema_errors": []
+  },
+  "step7_next_prompt": "[P83F / P84A \u2014 2026 Prediction Snapshot Execution]\n\nP83E wrote 828 canonical rows to data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl.\n\nNext step:\n1. Re-run P83A snapshot unlock gate with canonical row count = 828.\n2. Compute primary_125 / shadow_100 / tier_b / tier_a counts from canonical rows.\n3. If outcomes available (result_home_score / result_away_score): compute hit_rate metrics.\n4. Compare against 2025 baseline (HOME_PLUS_AWAY_125 hit=0.6392, AUC=0.5787, n=316).\n5. Maintain paper_only=True until real outcomes reach n\u226550 threshold.\n\nRules: no odds | no EV/CLV/Kelly | paper_only=True | diagnostic_only=True",
   "forbidden_scan": {
     "live_api_calls": 0,
     "api_key_accessed": false,
@@ -102,10 +128,10 @@
     "clv_calculated": false,
     "market_edge_calculated": false,
     "kelly_calculated": false,
-    "kelly_deploy_allowed": false,
-    "production_ready": false,
     "odds_used": false,
-    "canonical_rows_written": false,
+    "production_ready": false,
+    "kelly_deploy_allowed": false,
+    "canonical_rows_written": true,
     "forbidden_scan_pass": true
   },
   "source_artifacts": {
@@ -113,11 +139,6 @@
     "p83c_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json",
     "p83b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
     "p83a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json"
-  },
-  "upstream_files": {
-    "schedule": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
-    "pitchers": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
-    "model_outputs": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl"
   },
   "canonical_output_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl"
 }

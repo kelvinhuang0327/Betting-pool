@@ -1,7 +1,7 @@
 {
   "phase": "P83C",
   "date": "2026-05-26",
-  "p83c_classification": "P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA",
+  "p83c_classification": "P83C_SCHEMA_PRODUCER_READY_WITH_EXISTING_UPSTREAM_DATA",
   "allowed_classifications": [
     "P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA",
     "P83C_SCHEMA_PRODUCER_READY_WITH_EXISTING_UPSTREAM_DATA",
@@ -148,7 +148,7 @@
     },
     "upstream_data_exists": false,
     "upstream_data_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
-    "upstream_data_found": false,
+    "upstream_data_found": true,
     "required_input_group_count": 5,
     "required_input_fields": [
       "game_id",
@@ -374,9 +374,9 @@
     "mock_rows_in_memory_only": true,
     "mock_row_written_to_canonical": false,
     "canonical_prediction_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
-    "canonical_path_exists": false,
-    "real_row_count_in_canonical": 0,
-    "snapshot_unlock_blocked": true,
+    "canonical_path_exists": true,
+    "real_row_count_in_canonical": 828,
+    "snapshot_unlock_blocked": false,
     "schema_pass": true,
     "governance_pass": true,
     "rule_flags_pass": true,

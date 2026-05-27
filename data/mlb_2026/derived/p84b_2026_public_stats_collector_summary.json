@@ -1,0 +1,108 @@
+{
+  "phase": "P84B",
+  "date": "2026-05-26",
+  "generated_at": "2026-05-27T03:33:32.409072+00:00",
+  "p84b_classification": "P84B_SCHEDULE_READY_PITCHER_MODEL_BLOCKED",
+  "allowed_classifications": [
+    "P84B_PUBLIC_STATS_COLLECTOR_READY",
+    "P84B_SCHEDULE_READY_PITCHER_MODEL_BLOCKED",
+    "P84B_BLOCKED_PUBLIC_SCHEDULE_UNAVAILABLE",
+    "P84B_BLOCKED_BY_MISSING_P84A_ARTIFACT",
+    "P84B_FAILED_VALIDATION"
+  ],
+  "prediction_boundary": "P84B collects public MLB schedule/pitcher stats (no odds) and applies a deterministic baseline model to produce P83E upstream files. No edge/EV/CLV/Kelly computed. paper_only=True, diagnostic_only=True.",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "mlb_stats_api_calls": 256,
+    "the_odds_api_key_required": false,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "odds_used": false
+  },
+  "step1_p84a_state": {
+    "loaded": true,
+    "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p84a_2026_upstream_data_collector_contract_summary.json",
+    "p84a_classification": "P84A_UPSTREAM_COLLECTOR_CONTRACT_READY",
+    "classification_ok": true,
+    "schedule_contract": "P84A_SCHEDULE_COLLECTOR_CONTRACT_V1",
+    "pitcher_contract": "P84A_PITCHER_FIP_CONTRACT_V1",
+    "model_contract": "P84A_MODEL_OUTPUT_CONTRACT_V1",
+    "mock_noncanonical": true,
+    "p83e_blocked": true,
+    "odds_ok": true,
+    "production_ok": true
+  },
+  "step2_schedule": {
+    "ok": true,
+    "rows_collected": 2443,
+    "total_api_games": 2443,
+    "endpoint": "https://statsapi.mlb.com/api/v1/schedule?sportId=1&season=2026&gameType=R&hydrate=probablePitcher(note)",
+    "written": true,
+    "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+    "source_trace": "MLB_STATS_API_PUBLIC_SCHEDULE"
+  },
+  "step3_pitcher_features": {
+    "rows_total": 2443,
+    "feature_ready_count": 837,
+    "feature_pending_count": 1606,
+    "gate_pass": false,
+    "written": true,
+    "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+    "pending_reasons_sample": [
+      "mlb_2026_822834: home=INSUFFICIENT_IP_2.1, away=OK",
+      "mlb_2026_825108: home=OK, away=INSUFFICIENT_IP_3.2",
+      "mlb_2026_824861: home=INSUFFICIENT_IP_3.2, away=OK",
+      "mlb_2026_824053: home=INSUFFICIENT_IP_4.2, away=OK",
+      "mlb_2026_824535: home=OK, away=INSUFFICIENT_IP_4.2",
+      "mlb_2026_823391: home=OK, away=INSUFFICIENT_IP_4.1",
+      "mlb_2026_823062: home=NO_PROBABLE_PITCHER, away=NO_PROBABLE_PITCHER",
+      "mlb_2026_823955: home=INSUFFICIENT_IP_3.0, away=OK",
+      "mlb_2026_824766: home=NO_PROBABLE_PITCHER, away=NO_PROBABLE_PITCHER",
+      "mlb_2026_823709: home=OK, away=INSUFFICIENT_IP_4.1"
+    ]
+  },
+  "step4_model_outputs": {
+    "rows_total": 2443,
+    "model_ready_count": 837,
+    "model_pending_count": 1606,
+    "gate_pass": false,
+    "written": true,
+    "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
+    "model_source": "DIAGNOSTIC_BASELINE_MODEL",
+    "source_prediction_version": "p84b_diagnostic_baseline_v1"
+  },
+  "step5_p83e_retry": {
+    "ok": false,
+    "p83e_classification": "P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA",
+    "rows_written": false,
+    "row_count": 0,
+    "skip_reason": "PITCHER_FEATURE_GATE FAIL (1606 pending) | MODEL_OUTPUT_GATE FAIL (1606 pending)"
+  },
+  "forbidden_scan": {
+    "live_api_calls_odds": 0,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "odds_used": false,
+    "forbidden_scan_pass": true
+  },
+  "mlb_stats_api_calls": 256,
+  "public_api_endpoint_schedule": "https://statsapi.mlb.com/api/v1/schedule",
+  "public_api_endpoint_player_stats": "https://statsapi.mlb.com/api/v1/people/{id}/stats"
+}

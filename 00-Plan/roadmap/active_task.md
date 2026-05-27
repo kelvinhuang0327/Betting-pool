@@ -1,38 +1,48 @@
-# Active Task — P84A 2026 Upstream Data Collector Contract
+# Active Task — P84B 2026 Public Stats Collector Implementation
 
-> **[COMPLETED 2026-05-26]** `P84A_UPSTREAM_COLLECTOR_CONTRACT_READY`
-> **Issued by**: P83E handoff (P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA, commit `1d295b5`)
+> **[COMPLETED 2026-05-26]** `P84B_SCHEDULE_READY_PITCHER_MODEL_BLOCKED`
+> **Issued by**: P84A handoff (P84A_UPSTREAM_COLLECTOR_CONTRACT_READY, commit `58c5314`)
 > **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=True`
 >
-> **P84A Result:** Upstream data collector contract fully defined.
-> P83E remains blocked (P83E state: P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA).
-> Three contracts defined: schedule / pitcher FIP / model output.
-> Allowed source classes: MLB_STATS_API_PUBLIC_SCHEDULE, MLB_STATS_API_PUBLIC_PLAYER_STATS,
-> LOCAL_PUBLIC_STATS_EXPORT, MANUAL_PUBLIC_STATS_FIXTURE, MOCK_SCHEMA_ONLY_FIXTURE.
-> Mock schema-only fixture (3 games, all schemas) validated as noncanonical.
-> No upstream files written. No canonical prediction rows written.
+> **P84B Result:** Public MLB stats collected (no odds). Dedup fix applied (13 dup game_ids removed).
+> Schedule: 2430 unique games from statsapi.mlb.com/api/v1/schedule (was 2443 before dedup)
+> Pitcher FIP: 837 FEATURE_READY / 1606 FEATURE_PENDING (INSUFFICIENT_IP or NO_PROBABLE_PITCHER)
+> Model outputs: 837 DERIVABLE (diagnostic baseline, sp_fip_delta sigmoid, prob clamped [0.30, 0.70])
+> Canonical rows written: True (828 rows, P83E_CANONICAL_ROWS_READY after dedup fix enabled P83E)
+> P83E retry classification: P83E_CANONICAL_ROWS_READY
 >
-> **Upstream target file status:**
-> - data/mlb_2026/schedule/mlb_2026_schedule.jsonl → Missing
-> - data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl → Missing
-> - data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl → Missing
->
-> **Contracts defined:**
-> - P84A_SCHEDULE_COLLECTOR_CONTRACT_V1 (endpoint: statsapi.mlb.com/api/v1/schedule)
-> - P84A_PITCHER_FIP_CONTRACT_V1 (endpoint: statsapi.mlb.com/api/v1/people/{id}/stats)
-> - P84A_MODEL_OUTPUT_CONTRACT_V1 (2025-trained ensemble applied to 2026 feature rows)
->
-> **P83E rerun trigger:**
-> All 3 upstream files must be locally present and schema-valid.
->
-> **Next phase:** P84B — Public Stats Collector Implementation
 > **Output artifacts:**
-> - `scripts/_p84a_2026_upstream_data_collector_contract.py`
-> - `tests/test_p84a_2026_upstream_data_collector_contract.py`
-> - `data/mlb_2026/derived/p84a_2026_upstream_data_collector_contract_summary.json`
-> - `report/p84a_2026_upstream_data_collector_contract_20260526.md`
+> - `scripts/_p84b_2026_public_stats_collector.py`
+> - `tests/test_p84b_2026_public_stats_collector.py`
+> - `data/mlb_2026/derived/p84b_2026_public_stats_collector_summary.json`
+> - `report/p84b_2026_public_stats_collector_20260526.md`
+> - `data/mlb_2026/schedule/mlb_2026_schedule.jsonl` (2430 rows, 0 duplicates)
+> - `data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl` (2430 rows, 0 duplicates)
+> - `data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl` (2430 rows, 0 duplicates)
+> - `data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl` (828 canonical rows via P83E)
 
 <!-- Prior phase completion markers (required by regression tests) -->
+<!-- P47: P47_PLATT_SELECTED_FOR_MONITORING_DIAGNOSTIC -->
+<!-- P48: P48_MONITORING_CONTRACT_READY_DIAGNOSTIC -->
+<!-- P49: P49_MONITORING_REPLAY_CRITICAL_DIAGNOSTIC -->
+<!-- P50: P50_PROBABILITY_STREAM_MISMATCH_CONFIRMED_DIAGNOSTIC -->
+<!-- P52: P52_MONITORING_CONTRACT_V2_READY_DIAGNOSTIC -->
+<!-- P53: SEP_CALIBRATION_SAMPLE_SENSITIVE_DIAGNOSTIC -->
+<!-- P54: P54_NO_FEATURE_DRIFT_FOUND_DIAGNOSTIC -->
+<!-- P55: P55_INCONCLUSIVE_SAMPLE_LIMITED -->
+<!-- P56: P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC -->
+<!-- P57: P57_ANNOTATION_INTEGRATION_READY_DIAGNOSTIC -->
+<!-- P58: P58_MONTHLY_REPORT_TEMPLATE_READY_DIAGNOSTIC -->
+<!-- P61: P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT -->
+<!-- P62: P62_CONTRACT_DRAFT_READY_FOR_CEO_REVIEW -->
+<!-- P64: P64_PAPER_SIMULATION_FIRST_RUN_READY -->
+<!-- P65: P65_EDGE_STABLE_NEGATIVE -->
+<!-- P66: P66_ODDS_MAPPING_INTEGRITY_CONFIRMED -->
+<!-- P67: P67_PATH_B_PARTIAL_SOURCE_FOUND_NEEDS_REVIEW -->
+<!-- P68: P68_ODDSPORTAL_BLOCKED_BY_TOS -->
+<!-- P69: P69_CEO_DECISION_MEMO_READY -->
+<!-- P70: P70_PATH_A_AUTHORIZED_AWAITING_API_KEY -->
+<!-- P71: P71_PATH_A_STILL_AWAITING_API_KEY -->
 <!-- P72A: P72A_ODDS_FREE_STRATEGY_ACCURACY_BACKTEST_READY -->
 <!-- P72B: P72B_OBJECTIVE_METRIC_CONTRACT_READY -->
 <!-- P73: P73_TIER_STABILITY_AND_SAMPLE_EXPANSION_READY -->
@@ -50,3 +60,4 @@
 <!-- P83A: P83A_AWAITING_2026_DATA -->
 <!-- P83C: P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA -->
 <!-- P83C_SCHEMA_PRODUCER_READY_AWAITING_UPSTREAM_DATA confirmed -->
+<!-- P84A: P84A_UPSTREAM_COLLECTOR_CONTRACT_READY -->

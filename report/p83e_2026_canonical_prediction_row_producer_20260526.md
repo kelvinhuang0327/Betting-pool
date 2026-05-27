@@ -1,6 +1,6 @@
 # P83E — 2026 Canonical Prediction Row Producer
 **Date:** 2026-05-26
-**Classification:** `P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA`
+**Classification:** `P83E_CANONICAL_ROWS_READY`
 **Mode:** paper_only=True | diagnostic_only=True | NO_REAL_BET=True
 
 ---
@@ -10,7 +10,7 @@
 P83E attempted to produce canonical 2026 prediction rows by loading upstream
 schedule, pitcher FIP, and model output files.
 
-**Result:** `P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA`
+**Result:** `P83E_CANONICAL_ROWS_READY`
 
 ---
 
@@ -18,12 +18,12 @@ schedule, pitcher FIP, and model output files.
 
 | Gate | Status |
 |---|---|
-| SCHEDULE_GATE | ❌ FAIL |
-| PITCHER_FEATURE_GATE | ❌ FAIL |
-| MODEL_OUTPUT_GATE | ❌ FAIL |
-| PREDICTED_SIDE_GATE | ❌ FAIL |
+| SCHEDULE_GATE | ✅ PASS |
+| PITCHER_FEATURE_GATE | ✅ PASS |
+| MODEL_OUTPUT_GATE | ✅ PASS |
+| PREDICTED_SIDE_GATE | ✅ PASS |
 | GOVERNANCE_GATE | ✅ PASS |
-| PRODUCER_ACTIVATION_GATE | ❌ FAIL |
+| PRODUCER_ACTIVATION_GATE | ✅ PASS |
 
 ---
 
@@ -31,19 +31,19 @@ schedule, pitcher FIP, and model output files.
 
 | File | Status |
 |---|---|
-| data/mlb_2026/schedule/mlb_2026_schedule.jsonl | ❌ Missing |
-| data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl | ❌ Missing |
-| data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl | ❌ Missing |
+| data/mlb_2026/schedule/mlb_2026_schedule.jsonl | ✅ Present |
+| data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl | ✅ Present |
+| data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl | ✅ Present |
 
-**Missing count:** 3
+**Missing count:** 0
 
 ---
 
 ## Canonical Rows Status
 
-- **Rows written:** False
-- **Row count:** 0
-- **Reason:** Blocked by missing upstream files: ['schedule', 'pitchers', 'model_outputs']
+- **Rows written:** True
+- **Row count:** 828
+- **Reason:** N/A
 
 ---
 
@@ -71,22 +71,18 @@ Per P83C_UPSTREAM_INPUT_CONTRACT_V1:
 ## Next Steps
 
 ```
-[P83E Retry — Upstream Data Availability]
+[P83F / P84A — 2026 Prediction Snapshot Execution]
 
-P83E remains blocked. Re-run when all three files exist locally:
-  1. data/mlb_2026/schedule/mlb_2026_schedule.jsonl
-     Fields: game_id, game_date, season, home_team, away_team
-  2. data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl
-     Fields: game_id, home_sp_fip, away_sp_fip
-  3. data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl
-     Fields: game_id, model_probability, source_prediction_version
+P83E wrote 828 canonical rows to data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl.
 
-Data sources (no API call in P83E):
-  - statsapi.mlb.com/api/v1/schedule (free, public)
-  - statsapi.mlb.com/api/v1/people (pitcher stats)
-  - 2025-trained ensemble model applied to 2026 features
+Next step:
+1. Re-run P83A snapshot unlock gate with canonical row count = 828.
+2. Compute primary_125 / shadow_100 / tier_b / tier_a counts from canonical rows.
+3. If outcomes available (result_home_score / result_away_score): compute hit_rate metrics.
+4. Compare against 2025 baseline (HOME_PLUS_AWAY_125 hit=0.6392, AUC=0.5787, n=316).
+5. Maintain paper_only=True until real outcomes reach n≥50 threshold.
 
-Rules: no external API calls in P83E itself | no odds | paper_only=True
+Rules: no odds | no EV/CLV/Kelly | paper_only=True | diagnostic_only=True
 ```
 
 ---
@@ -103,13 +99,13 @@ Rules: no external API calls in P83E itself | no odds | paper_only=True
 | clv_calculated | False |
 | kelly_calculated | False |
 | production_ready | False |
-| canonical_rows_written | False |
+| canonical_rows_written | True |
 | forbidden_scan_pass | True |
 
 ---
 
 ## Final Classification
 
-**`P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA`**
+**`P83E_CANONICAL_ROWS_READY`**
 
 P83E is the canonical 2026 prediction row producer. No external API calls are made. No market edge is computed. Canonical rows written only if all upstream gates pass. paper_only=True, diagnostic_only=True.
