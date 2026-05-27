@@ -1,0 +1,381 @@
+{
+  "p90_classification": "P90_POST_RECOVERY_CLOSURE_READY",
+  "allowed_classifications": [
+    "P90_POST_RECOVERY_CLOSURE_READY",
+    "P90_POST_RECOVERY_CLOSURE_BLOCKED_BY_PREFLIGHT",
+    "P90_POST_RECOVERY_CLOSURE_FAILED_CLASSIFICATION_MISMATCH",
+    "P90_POST_RECOVERY_CLOSURE_FAILED_GOVERNANCE_MISMATCH",
+    "P90_POST_RECOVERY_CLOSURE_BLOCKED_BY_SCOPE_DRIFT"
+  ],
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T10:14:26.246202+00:00",
+  "phase": "diagnostic-only",
+  "git_head": "b6fc542 feat(P89): Authorized Recovery Executor — P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+  "phase_chain_summary": {
+    "p84h": {
+      "classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+      "expected": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+      "match": true
+    },
+    "p85": {
+      "classification": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+      "expected": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+      "match": true
+    },
+    "p86": {
+      "classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+      "expected": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+      "match": true
+    },
+    "p87": {
+      "classification": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+      "expected": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+      "match": true
+    },
+    "p88": {
+      "classification": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+      "expected": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+      "match": true
+    },
+    "p89": {
+      "classification": "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+      "expected": "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+      "match": true
+    }
+  },
+  "recovery_status": {
+    "authorization_status": "GRANTED",
+    "contract_restored": true,
+    "stale_risk_resolved": true,
+    "metrics_all_within_tolerance": true,
+    "p86_current_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p86_is_ready": true,
+    "recovery_complete": true,
+    "regression_record": "P83A–P89: 1364 passed, 4 skipped, 0 failed"
+  },
+  "p86_contract_status": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+  "stale_downstream_risk_present": false,
+  "remaining_risks": [
+    "P84H signal is coverage-limited (early season 2026 data only)"
+  ],
+  "structural_blockers": [
+    "No real legal odds dataset (P81 confirmed blocked)",
+    "No coverage improvement from pitcher/relief data (not yet integrated)",
+    "Champion strategy unchanged — coverage-limited signal not promoted to production"
+  ],
+  "governance_status": {
+    "p90_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "no_real_bet": true,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_production_betting_recommendation": true,
+      "no_taiwan_lottery_betting_recommendation": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_modification": true,
+      "no_raw_data_modification": true,
+      "no_historical_artifact_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_real_bet": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_production_betting": true,
+      "no_taiwan_lottery": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_mod": true,
+      "no_raw_data_mod": true,
+      "no_historical_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "n_flags": 20,
+    "governance_all_pass": true
+  },
+  "governance_all_pass": true,
+  "next_phase_recommendation": "Prediction-only tracking",
+  "next_phase_lanes": [
+    {
+      "priority": 1,
+      "lane": "Prediction-only tracking",
+      "description": "Continue paper tracking of P84H signal on 2026 season data. As more games complete, coverage improves and AUC stability can be assessed.",
+      "blocker": null,
+      "status": "OPEN"
+    },
+    {
+      "priority": 2,
+      "lane": "Coverage improvement — pitcher / bullpen data",
+      "description": "Integrate SP and bullpen usage data to improve feature coverage beyond the current coverage-limited state.",
+      "blocker": "Data integration work required",
+      "status": "OPEN"
+    },
+    {
+      "priority": 3,
+      "lane": "Broader regression gate",
+      "description": "Expand targeted regression (P83A–P90) to full repo regression once the phase chain stabilizes after P90 closure.",
+      "blocker": null,
+      "status": "DEFERRED"
+    },
+    {
+      "priority": 4,
+      "lane": "Market-edge lane",
+      "description": "EV / CLV analysis requires a verified legal odds dataset. P81 confirmed this is blocked.",
+      "blocker": "P81: No legal odds dataset available",
+      "status": "BLOCKED"
+    },
+    {
+      "priority": 5,
+      "lane": "Product recommendation lane",
+      "description": "No betting recommendation or stake sizing until market-edge lane unblocks and production_ready is confirmed.",
+      "blocker": "Requires market-edge lane + production gate",
+      "status": "BLOCKED"
+    }
+  ],
+  "classification_table": {
+    "p84h": {
+      "expected": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+      "actual": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+      "match": true
+    },
+    "p85": {
+      "expected": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+      "actual": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+      "match": true
+    },
+    "p86": {
+      "expected": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+      "actual": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+      "match": true
+    },
+    "p87": {
+      "expected": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+      "actual": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+      "match": true
+    },
+    "p88": {
+      "expected": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+      "actual": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+      "match": true
+    },
+    "p89": {
+      "expected": "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+      "actual": "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+      "match": true
+    }
+  },
+  "all_classifications_match": true,
+  "final_classification": "P90_POST_RECOVERY_CLOSURE_READY",
+  "step1_preflight": {
+    "step": "step1_preflight",
+    "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "branch": "main",
+    "repo_ok": true,
+    "branch_ok": true,
+    "status": "PASSED"
+  },
+  "step2_load_chain": {
+    "step": "step2_load_phase_chain",
+    "phases_loaded": [
+      "p84h",
+      "p85",
+      "p86",
+      "p87",
+      "p88",
+      "p89"
+    ],
+    "phases_missing": [],
+    "status": "PASSED"
+  },
+  "step3_validate_classifications": {
+    "step": "step3_validate_classifications",
+    "classification_table": {
+      "p84h": {
+        "expected": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+        "actual": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+        "match": true
+      },
+      "p85": {
+        "expected": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+        "actual": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+        "match": true
+      },
+      "p86": {
+        "expected": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+        "actual": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+        "match": true
+      },
+      "p87": {
+        "expected": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+        "actual": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+        "match": true
+      },
+      "p88": {
+        "expected": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+        "actual": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+        "match": true
+      },
+      "p89": {
+        "expected": "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+        "actual": "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+        "match": true
+      }
+    },
+    "all_classifications_match": true,
+    "status": "PASSED"
+  },
+  "step4_recovery_status": {
+    "step": "step4_recovery_status",
+    "authorization_status": "GRANTED",
+    "contract_restored": true,
+    "stale_risk_resolved": true,
+    "metrics_all_within_tolerance": true,
+    "p86_pre_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p86_post_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p86_current_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p86_is_ready": true,
+    "recovery_complete": true,
+    "regression_record": "P83A–P89: 1364 passed, 4 skipped, 0 failed",
+    "status": "PASSED"
+  },
+  "step5_remaining_risks": {
+    "step": "step5_remaining_risks",
+    "stale_downstream_risk": false,
+    "production_risk": false,
+    "betting_recommendation_risk": false,
+    "ev_clv_kelly_risk": false,
+    "live_api_risk": false,
+    "risks": [
+      "P84H signal is coverage-limited (early season 2026 data only)"
+    ],
+    "blockers": [
+      "No real legal odds dataset (P81 confirmed blocked)",
+      "No coverage improvement from pitcher/relief data (not yet integrated)",
+      "Champion strategy unchanged — coverage-limited signal not promoted to production"
+    ],
+    "status": "PASSED"
+  },
+  "step6_governance_scan": {
+    "step": "step6_governance_scan",
+    "p90_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "no_real_bet": true,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_production_betting_recommendation": true,
+      "no_taiwan_lottery_betting_recommendation": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_modification": true,
+      "no_raw_data_modification": true,
+      "no_historical_artifact_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_real_bet": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_production_betting": true,
+      "no_taiwan_lottery": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_mod": true,
+      "no_raw_data_mod": true,
+      "no_historical_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "n_flags": 20,
+    "n_checks": 20,
+    "governance_all_pass": true,
+    "status": "PASSED"
+  },
+  "step7_next_phase_recommendation": {
+    "step": "step7_next_phase_recommendation",
+    "recommended_next_lane": "Prediction-only tracking",
+    "lanes": [
+      {
+        "priority": 1,
+        "lane": "Prediction-only tracking",
+        "description": "Continue paper tracking of P84H signal on 2026 season data. As more games complete, coverage improves and AUC stability can be assessed.",
+        "blocker": null,
+        "status": "OPEN"
+      },
+      {
+        "priority": 2,
+        "lane": "Coverage improvement — pitcher / bullpen data",
+        "description": "Integrate SP and bullpen usage data to improve feature coverage beyond the current coverage-limited state.",
+        "blocker": "Data integration work required",
+        "status": "OPEN"
+      },
+      {
+        "priority": 3,
+        "lane": "Broader regression gate",
+        "description": "Expand targeted regression (P83A–P90) to full repo regression once the phase chain stabilizes after P90 closure.",
+        "blocker": null,
+        "status": "DEFERRED"
+      },
+      {
+        "priority": 4,
+        "lane": "Market-edge lane",
+        "description": "EV / CLV analysis requires a verified legal odds dataset. P81 confirmed this is blocked.",
+        "blocker": "P81: No legal odds dataset available",
+        "status": "BLOCKED"
+      },
+      {
+        "priority": 5,
+        "lane": "Product recommendation lane",
+        "description": "No betting recommendation or stake sizing until market-edge lane unblocks and production_ready is confirmed.",
+        "blocker": "Requires market-edge lane + production gate",
+        "status": "BLOCKED"
+      }
+    ],
+    "immediate_next_action": "Close stale-risk lane (P87/P88 now archived by P89 recovery). Begin P91 paper tracking with 2026 season ongoing data.",
+    "status": "PASSED"
+  },
+  "step8_final_classification": {
+    "step": "step8_final_classification",
+    "classification": "P90_POST_RECOVERY_CLOSURE_READY",
+    "rationale": "All phase classifications match. P89 recovery confirmed complete. P86 contract READY. Governance all pass. Stale-risk lane closed.",
+    "preflight_ok": true,
+    "classifications_ok": true,
+    "recovery_ok": true,
+    "governance_ok": true,
+    "n_checks_passed": 4,
+    "n_checks_total": 4
+  }
+}
