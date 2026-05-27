@@ -261,3 +261,12 @@ P84G commit `021a8a8`、classification `P84G_SIDE_MAPPING_FIXED_METRICS_REGENERA
 - Classification: P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK
 - Checks: artifact existence (8 files), dependency graph (6 nodes), classification lock (6 phases), row counts (828/808), metric consistency (4 metrics), report-vs-JSON (6 phases), mtime ordering (0 stale risks)
 - Governance: diagnostic-only, no EV/CLV/Kelly/odds/production
+
+
+## P87 — Stale Downstream Recovery Dry-Run [2026-05-27]
+- Classification: `P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES`
+- Content drift likely: False
+- Mtime-only stale: True
+- Explicit YES required for regeneration
+- Summary: data/mlb_2026/derived/p87_stale_downstream_recovery_dry_run_summary.json
+- Report: report/p87_stale_downstream_recovery_dry_run_20260527.md

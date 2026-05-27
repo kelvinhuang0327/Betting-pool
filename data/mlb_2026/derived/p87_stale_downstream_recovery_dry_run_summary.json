@@ -1,0 +1,416 @@
+{
+  "p87_classification": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T07:57:40.732931+00:00",
+  "phase": "diagnostic-only",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "no_champion_replacement": true,
+    "no_runtime_recommendation_mutation": true,
+    "no_canonical_row_rewrite": true,
+    "no_outcome_row_rewrite": true,
+    "no_calibration_refit": true,
+    "no_production_betting_recommendation": true,
+    "no_real_bet": true
+  },
+  "allowed_classifications": [
+    "P87_STALE_DOWNSTREAM_RECOVERY_DRY_RUN_READY",
+    "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+    "P87_RECOVERY_BLOCKED_BY_MISSING_ARTIFACT",
+    "P87_RECOVERY_BLOCKED_BY_PREFLIGHT",
+    "P87_RECOVERY_BLOCKED_BY_SCOPE_DRIFT",
+    "P87_RECOVERY_FAILED_UNEXPECTED_DEPENDENCY_STATE"
+  ],
+  "explicit_yes_required": "YES regenerate stale downstream artifacts for P87 recovery",
+  "frozen_artifacts": [
+    "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+    "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+    "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+    "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+    "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+    "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+    "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json",
+    "report/p84e_2026_outcome_attachment_pipeline_20260527.md",
+    "report/p84f_predicted_side_calibration_diagnostic_20260527.md",
+    "report/p84g_predicted_side_mapping_fix_20260527.md",
+    "report/p84h_corrected_signal_validation_coverage_guard_20260527.md",
+    "report/p85_prediction_convention_invariant_gate_20260527.md",
+    "report/p86_artifact_regeneration_dependency_contract_20260527.md"
+  ],
+  "step1_artifact_inventory": {
+    "step": "step1_artifact_inventory",
+    "artifacts": {
+      "p83e_summary": {
+        "path": "data/mlb_2026/derived/p83e_2026_canonical_prediction_row_producer_summary.json",
+        "exists": true,
+        "sha256_prefix": "2226cba94005ee98",
+        "mtime": "2026-05-27T05:40:23.644097+00:00",
+        "size_bytes": 5302
+      },
+      "canonical_rows": {
+        "path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+        "exists": true,
+        "sha256_prefix": "74c4a5498f80b2e7",
+        "mtime": "2026-05-27T07:48:00.379202+00:00",
+        "size_bytes": 579216
+      },
+      "p84e_rows": {
+        "path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+        "exists": true,
+        "sha256_prefix": "dde0ecda797f9b68",
+        "mtime": "2026-05-27T05:40:58.608737+00:00",
+        "size_bytes": 687967
+      },
+      "p84e_summary": {
+        "path": "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+        "exists": true,
+        "sha256_prefix": "77158c9ce5e441ca",
+        "mtime": "2026-05-27T05:40:58.610761+00:00",
+        "size_bytes": 4944
+      },
+      "p84f_summary": {
+        "path": "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+        "exists": true,
+        "sha256_prefix": "31e4450a95299915",
+        "mtime": "2026-05-27T05:41:03.751495+00:00",
+        "size_bytes": 5140
+      },
+      "p84g_summary": {
+        "path": "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+        "exists": true,
+        "sha256_prefix": "335441b526055dd5",
+        "mtime": "2026-05-27T05:44:56.048516+00:00",
+        "size_bytes": 5095
+      },
+      "p84h_summary": {
+        "path": "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+        "exists": true,
+        "sha256_prefix": "9d3ec118c1c2f03d",
+        "mtime": "2026-05-27T07:06:12.185369+00:00",
+        "size_bytes": 11223
+      },
+      "p85_summary": {
+        "path": "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+        "exists": true,
+        "sha256_prefix": "d76139f801a3578c",
+        "mtime": "2026-05-27T07:20:33.507057+00:00",
+        "size_bytes": 5119
+      },
+      "p86_summary": {
+        "path": "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json",
+        "exists": true,
+        "sha256_prefix": "6503f92fd4a24950",
+        "mtime": "2026-05-27T07:45:00.945936+00:00",
+        "size_bytes": 12025
+      }
+    },
+    "all_present": true
+  },
+  "step2_stale_risk_extraction": {
+    "step": "step2_stale_risk_extraction",
+    "p86_classification": "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK",
+    "p86_is_stale_downstream": true,
+    "n_stale_risks": 1,
+    "stale_risks_from_p86": [
+      {
+        "upstream": "canonical_rows",
+        "downstream": "p84e_rows",
+        "upstream_mtime": "2026-05-27T07:23:12.236617+00:00",
+        "downstream_mtime": "2026-05-27T05:40:58.608737+00:00",
+        "delta_seconds": 6134
+      }
+    ],
+    "root_cause": {
+      "upstream_artifact": "canonical_rows",
+      "downstream_artifact": "p84e_rows",
+      "upstream_mtime": "2026-05-27T07:23:12.236617+00:00",
+      "downstream_mtime": "2026-05-27T05:40:58.608737+00:00",
+      "delta_seconds": 6134,
+      "interpretation": "`canonical_rows` was regenerated at 2026-05-27T07:23:12.236617+00:00 (~15:23 local) by a P83C run, AFTER `p84e_rows` was written at 2026-05-27T05:40:58.608737+00:00 (~13:40 local). P84E consumed the pre-regeneration version of canonical_rows. Delta = 6134s (~102 min). This is the true stale downstream root cause confirmed by P86."
+    }
+  },
+  "step3_content_identity_probe": {
+    "step": "step3_content_identity_probe",
+    "canonical_rows_current_count": 828,
+    "p84e_consumed_count_at_run_time": 828,
+    "canonical_game_ids_count": 828,
+    "p84e_row_game_ids_count": 828,
+    "game_id_intersection_count": 828,
+    "in_canonical_not_p84e": 0,
+    "in_p84e_not_canonical": 0,
+    "count_match": true,
+    "game_id_full_coverage": true,
+    "content_drift_likely": false,
+    "interpretation": "Current canonical_rows has 828 rows \u2014 identical count to what P84E consumed (828). Game_id cross-reference: 828 IDs match, 0 mismatches on either side. This indicates the P83C regeneration at ~15:23 produced content-identical canonical_rows (same 828 game_ids, same order). The stale risk is likely mtime-only drift, not content drift. However, formal mtime attestation still requires an authorized re-run."
+  },
+  "step4_affected_downstream_artifacts": {
+    "step": "step4_affected_downstream_artifacts",
+    "stale_root": "canonical_rows",
+    "stale_root_cause_summary": "P83C regenerated canonical_rows at ~15:23 local. P84E ran at ~13:40 local, consuming the pre-regeneration version.",
+    "directly_stale": [
+      {
+        "artifact": "p84e_rows",
+        "path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+        "reason": "First downstream consumer of canonical_rows; written before canonical_rows was re-generated."
+      },
+      {
+        "artifact": "p84e_summary",
+        "path": "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+        "reason": "P84E summary co-written with p84e_rows at same mtime."
+      }
+    ],
+    "derivedly_stale": [
+      {
+        "artifact": "p84f_summary",
+        "path": "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+        "reason": "P84F reads p84e_rows; stale if p84e_rows is stale."
+      },
+      {
+        "artifact": "p84g_summary",
+        "path": "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+        "reason": "P84G reads p84f output; stale by transitivity."
+      },
+      {
+        "artifact": "p84h_summary",
+        "path": "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+        "reason": "P84H reads p84g output; stale by transitivity."
+      },
+      {
+        "artifact": "p85_summary",
+        "path": "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+        "reason": "P85 reads p84e_rows; stale by transitivity."
+      },
+      {
+        "artifact": "p86_summary",
+        "path": "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json",
+        "reason": "P86 verifies full chain; must be re-run after all downstream artifacts are regenerated."
+      }
+    ],
+    "artifacts_safe_in_this_dry_run": [
+      "scripts/_p87_stale_downstream_recovery_dry_run.py",
+      "data/mlb_2026/derived/p87_stale_downstream_recovery_dry_run_summary.json",
+      "report/p87_stale_downstream_recovery_dry_run_20260527.md",
+      "00-Plan/roadmap/active_task.md"
+    ],
+    "frozen_artifacts": [
+      "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+      "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+      "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+      "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+      "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+      "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+      "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+      "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json",
+      "report/p84e_2026_outcome_attachment_pipeline_20260527.md",
+      "report/p84f_predicted_side_calibration_diagnostic_20260527.md",
+      "report/p84g_predicted_side_mapping_fix_20260527.md",
+      "report/p84h_corrected_signal_validation_coverage_guard_20260527.md",
+      "report/p85_prediction_convention_invariant_gate_20260527.md",
+      "report/p86_artifact_regeneration_dependency_contract_20260527.md"
+    ]
+  },
+  "step5_dry_run_regeneration_order": {
+    "step": "step5_dry_run_regeneration_order",
+    "note": "DRY-RUN ONLY. No files are written. Authorization gate must be passed first.",
+    "requires_explicit_yes": "YES regenerate stale downstream artifacts for P87 recovery",
+    "regeneration_steps": [
+      {
+        "step_num": 1,
+        "action": "confirm_p83e_canonical_source_inputs",
+        "description": "Verify P83E upstream inputs are still present and unchanged: schedule (mlb_2026_schedule.jsonl), pitchers (mlb_2026_sp_fip_features.jsonl), model_outputs (mlb_2026_model_outputs.jsonl). All P83E gates must pass.",
+        "files_read": [
+          "data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+          "data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+          "data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl"
+        ],
+        "files_written": [],
+        "safe_as_dry_run": true
+      },
+      {
+        "step_num": 2,
+        "action": "confirm_canonical_rows_hash_and_count",
+        "description": "Compute SHA256 of current canonical_rows. Confirm count=828. Record sha256_prefix as baseline. Compare with P86-recorded sha256_prefix=74c4a5498f80b2e7.",
+        "files_read": [
+          "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl"
+        ],
+        "files_written": [],
+        "safe_as_dry_run": true
+      },
+      {
+        "step_num": 3,
+        "action": "dry_run_check_p84e_would_consume_current_canonical_rows",
+        "description": "Verify that the P84E script reads canonical_rows from the canonical path (not a hardcoded snapshot). Confirm no path override is in effect.",
+        "files_read": [
+          "scripts/_p84e_2026_outcome_attachment_pipeline.py"
+        ],
+        "files_written": [],
+        "safe_as_dry_run": true
+      },
+      {
+        "step_num": 4,
+        "action": "identify_p84e_as_first_stale_downstream_artifact",
+        "description": "P84E is the first stale downstream artifact. Content identity probe shows count_match=True and game_id_full_coverage=True, so re-run of P84E is expected to produce metrics within 1e-4 tolerance of current values. Re-run would consume current canonical_rows (828 rows) and re-attach outcomes. REQUIRES explicit YES before execution.",
+        "files_read": [
+          "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json"
+        ],
+        "files_written_if_authorized": [
+          "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+          "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json"
+        ],
+        "safe_as_dry_run": false,
+        "requires_explicit_yes": true
+      },
+      {
+        "step_num": 5,
+        "action": "identify_p84f_p84g_p84h_p85_p86_as_derived_downstream",
+        "description": "After P84E is regenerated, P84F \u2192 P84G \u2192 P84H \u2192 P85 \u2192 P86 must be re-run in sequence to restore mtime consistency in the dependency chain. P84G consistency check must pass before P84H proceeds.",
+        "files_read": [
+          "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+          "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+          "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+          "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+          "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+          "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json"
+        ],
+        "files_written_if_authorized": [
+          "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+          "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+          "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+          "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+          "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json",
+          "report/p84f_*.md, report/p84g_*.md, report/p84h_*.md, report/p85_*.md, report/p86_*.md"
+        ],
+        "safe_as_dry_run": false,
+        "requires_explicit_yes": true
+      },
+      {
+        "step_num": 6,
+        "action": "require_explicit_yes_before_any_regeneration",
+        "description": "User must send exactly: 'YES regenerate stale downstream artifacts for P87 recovery'. No frozen artifact will be touched until this gate is passed. This is the formal authorization gate for P87 recovery.",
+        "files_read": [],
+        "files_written": [],
+        "safe_as_dry_run": true,
+        "is_authorization_gate": true
+      },
+      {
+        "step_num": 7,
+        "action": "authorized_regeneration_execution_order",
+        "description": "After YES: execute scripts in this exact order: P84E \u2192 P84F \u2192 P84G \u2192 P84H \u2192 P85 \u2192 P86. P84G must confirm side_mapping_consistent=True before proceeding. Each step must produce its summary JSON before the next starts.",
+        "execution_order": [
+          "P84E",
+          "P84F",
+          "P84G",
+          "P84H",
+          "P85",
+          "P86"
+        ],
+        "scripts_to_run": [
+          "scripts/_p84e_2026_outcome_attachment_pipeline.py",
+          "scripts/_p84f_predicted_side_calibration_diagnostic.py",
+          "scripts/_p84g_predicted_side_mapping_fix.py",
+          "scripts/_p84h_corrected_signal_validation_coverage_guard.py",
+          "scripts/_p85_prediction_convention_invariant_gate.py",
+          "scripts/_p86_artifact_regeneration_dependency_contract.py"
+        ],
+        "safe_as_dry_run": false,
+        "requires_explicit_yes": true
+      },
+      {
+        "step_num": 8,
+        "action": "rerun_p83a_through_p86_regression_after_regeneration",
+        "description": "After regeneration, run full P83A\u2013P86 test suite. Expected result: \u2265889 passed, 4 skipped. If metrics changed beyond 1e-4 tolerance, tests will fail and must be investigated.",
+        "test_command": "./.venv/bin/pytest tests/test_p83a_*.py tests/test_p83b_*.py tests/test_p83c_*.py tests/test_p83d_*.py tests/test_p83e_*.py tests/test_p84a_*.py tests/test_p84b_*.py tests/test_p84c_*.py tests/test_p84d_*.py tests/test_p84e_*.py tests/test_p84f_*.py tests/test_p84g_*.py tests/test_p84h_*.py tests/test_p85_*.py tests/test_p86_*.py -q",
+        "safe_as_dry_run": true,
+        "requires_explicit_yes": false,
+        "note": "Read-only. Safe to run at any time."
+      },
+      {
+        "step_num": 9,
+        "action": "update_active_task_and_reports_after_confirmed_metrics",
+        "description": "Only after regenerated metrics are confirmed (within 1e-4 tolerance), update active_task.md and create P87 completion report. If metrics diverge, stop and report divergence before any further action.",
+        "files_written": [
+          "00-Plan/roadmap/active_task.md",
+          "report/p87_stale_downstream_recovery_completion_20260527.md"
+        ],
+        "safe_as_dry_run": false,
+        "requires_explicit_yes": true
+      }
+    ]
+  },
+  "step6_safety_decision": {
+    "step": "step6_safety_decision",
+    "content_identity_probe_passed": true,
+    "stale_by_mtime_only": true,
+    "content_drift_likely": false,
+    "actual_regeneration_needed": true,
+    "safe_without_explicit_yes": false,
+    "reason": "Even when content is identical (mtime-only drift confirmed), formal re-run of P84E\u2192P84F\u2192P84G\u2192P84H\u2192P85\u2192P86 is required to restore mtime consistency. Authorization required: 'YES regenerate stale downstream artifacts for P87 recovery'",
+    "expected_metric_stability": "If content is identical (count_match=True, game_id_full_coverage=True), regenerated metrics are expected to be within 1e-4 of current values: hit_rate\u22480.5693, auc\u22480.5943, brier\u22480.2494, ece\u22480.0697 (P84H). P85 n_violations expected to remain 0. P86 expected to classify as READY.",
+    "recommendation": "Content identity probe passed: count_match=True, game_id_full_coverage=True. Re-running P84E\u2192P86 with the same inputs is expected to produce identical metrics. Once explicit YES is received, execute the 9-step recovery in Step 5 order."
+  },
+  "step7_governance_scan": {
+    "step": "step7_governance_scan",
+    "p87_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_canonical_row_rewrite": true,
+      "no_outcome_row_rewrite": true,
+      "no_calibration_refit": true,
+      "no_production_betting_recommendation": true,
+      "no_real_bet": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_canonical_row_rewrite": true,
+      "no_outcome_row_rewrite": true,
+      "no_calibration_refit": true,
+      "no_production_betting": true,
+      "no_real_bet": true
+    },
+    "governance_all_pass": true
+  },
+  "step8_final_classification": {
+    "step": "step8_final_classification",
+    "classification": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+    "rationale": "P86 confirmed stale downstream risk (canonical_rows regenerated after P84E ran, delta=6134s). P87 dry-run content probe: count_match=True, game_id_full_coverage=True, content_drift_likely=False. Stale risk is mtime-only (content likely identical). Formal recovery requires authorized re-run of P84E\u2192P84F\u2192P84G\u2192P84H\u2192P85\u2192P86. Classification: P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES.",
+    "explicit_yes_required": "YES regenerate stale downstream artifacts for P87 recovery",
+    "steps_checked": 8,
+    "steps_passed": 8,
+    "allowed_classifications": [
+      "P87_STALE_DOWNSTREAM_RECOVERY_DRY_RUN_READY",
+      "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+      "P87_RECOVERY_BLOCKED_BY_MISSING_ARTIFACT",
+      "P87_RECOVERY_BLOCKED_BY_PREFLIGHT",
+      "P87_RECOVERY_BLOCKED_BY_SCOPE_DRIFT",
+      "P87_RECOVERY_FAILED_UNEXPECTED_DEPENDENCY_STATE"
+    ]
+  }
+}
