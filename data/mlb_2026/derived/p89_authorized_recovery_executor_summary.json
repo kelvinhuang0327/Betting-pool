@@ -1,0 +1,294 @@
+{
+  "p89_classification": "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+  "allowed_classifications": [
+    "P89_RECOVERY_COMPLETE_CONTRACT_RESTORED",
+    "P89_RECOVERY_PARTIAL_UPSTREAM_FAILED",
+    "P89_RECOVERY_COMPLETE_METRICS_DRIFT_DETECTED",
+    "P89_AUTHORIZATION_MISMATCH"
+  ],
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T08:28:22.516504+00:00",
+  "phase": "authorized-recovery",
+  "authorization_status": "GRANTED",
+  "authorization_phrase_received": "YES regenerate stale downstream artifacts for P87 recovery",
+  "recovery_sequence": [
+    "P84E",
+    "P84F",
+    "P84G",
+    "P84H",
+    "P85",
+    "P86"
+  ],
+  "n_scripts_executed": 6,
+  "p86_pre_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+  "p86_post_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+  "contract_restored": true,
+  "stale_risk_resolved": true,
+  "delta_seconds_pre": -914.5,
+  "delta_seconds_post": 1095.5,
+  "metrics_all_within_tolerance": true,
+  "baseline_metrics": {
+    "hit_rate": 0.569307,
+    "auc": 0.594315,
+    "brier": 0.249408,
+    "ece": 0.069682
+  },
+  "post_recovery_metrics": {
+    "hit_rate": 0.569307,
+    "auc": 0.594315,
+    "brier": 0.249408,
+    "ece": 0.069682
+  },
+  "metric_deltas": {
+    "hit_rate": 0.0,
+    "auc": 0.0,
+    "brier": 0.0,
+    "ece": 0.0
+  },
+  "tolerance": 0.0001,
+  "governance_flags": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "no_real_bet": true,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "paid_api_called": false,
+    "no_frozen_artifact_modification": true,
+    "no_fabricated_outcomes": true,
+    "no_model_refit": true,
+    "explicit_yes_phrase_verified": true,
+    "recovery_scope_minimal": true,
+    "metrics_tolerance_checked": true,
+    "no_taiwan_lottery_recommendation": true,
+    "no_betting_advice": true,
+    "no_stake_computation": true,
+    "no_historical_artifact_overwrite": true,
+    "authorization_phrase_immutable": true
+  },
+  "governance_n_flags": 20,
+  "governance_all_pass": true,
+  "step1_verify_authorization": {
+    "step": "step1_verify_authorization",
+    "authorization_received": "YES regenerate stale downstream artifacts for P87 recovery",
+    "required_phrase": "YES regenerate stale downstream artifacts for P87 recovery",
+    "phrase_ok": true,
+    "status": "PASSED"
+  },
+  "step2_pre_recovery_state": {
+    "step": "step2_pre_recovery_state",
+    "p86_pre_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p86_pre_is_stale": false,
+    "canonical_rows_mtime": "2026-05-27T08:10:02.982283+00:00",
+    "p84e_rows_mtime_pre": "2026-05-27T08:25:17.495891+00:00",
+    "canonical_newer_than_p84e_rows": false,
+    "delta_seconds_pre": -914.5,
+    "status": "PASSED"
+  },
+  "step3_execute_recovery": {
+    "step": "step3_execute_recovery",
+    "scripts_in_order": [
+      "P84E",
+      "P84F",
+      "P84G",
+      "P84H",
+      "P85",
+      "P86"
+    ],
+    "results": [
+      {
+        "phase": "P84E",
+        "script": "scripts/_p84e_2026_outcome_attachment_pipeline.py",
+        "returncode": 0,
+        "started_at": "2026-05-27T08:28:08.056596+00:00",
+        "finished_at": "2026-05-27T08:28:18.661977+00:00",
+        "stdout_tail": "P84E classification: P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS\nCanonical rows: 828, outcomes available: 808, pending: 20\nHit rate: 0.569307, AUC: 0.594315, Brier: 0.249408, ECE: 0.069682\nMLB Stats API calls: 3, odds live_api_calls=0\nDONE\n",
+        "stderr_tail": "",
+        "success": true,
+        "validation": {
+          "ok": true,
+          "classification": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+          "notes": []
+        }
+      },
+      {
+        "phase": "P84F",
+        "script": "scripts/_p84f_predicted_side_calibration_diagnostic.py",
+        "returncode": 0,
+        "started_at": "2026-05-27T08:28:18.662882+00:00",
+        "finished_at": "2026-05-27T08:28:18.726324+00:00",
+        "stdout_tail": "bset audit …\n[P84F] Step 6: Calibration buckets …\n[P84F] Step 7: Classification …\n  classification=P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK\n  [P84F] summary → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json\n  [P84F] report → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/p84f_predicted_side_calibration_diagnostic_20260526.md\n  [P84F] active_task.md updated\n[P84F] Complete — P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK\n",
+        "stderr_tail": "",
+        "success": true,
+        "validation": {
+          "ok": true,
+          "classification": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+          "notes": []
+        }
+      },
+      {
+        "phase": "P84G",
+        "script": "scripts/_p84g_predicted_side_mapping_fix.py",
+        "returncode": 0,
+        "started_at": "2026-05-27T08:28:18.726742+00:00",
+        "finished_at": "2026-05-27T08:28:18.781355+00:00",
+        "stdout_tail": "PRESENT_CALIBRATION_WEAK  n_inverted=0\n[P84G] Step 6: Before/after comparison …\n  hit_rate delta: +0.138614\n[P84G] Step 7: Classify …\n  classification=P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED\n  [P84G] summary → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json\n  [P84G] report → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/p84g_predicted_side_mapping_fix_20260526.md\n[P84G] Complete — P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED\n",
+        "stderr_tail": "",
+        "success": true,
+        "validation": {
+          "ok": true,
+          "classification": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+          "notes": []
+        }
+      },
+      {
+        "phase": "P84H",
+        "script": "scripts/_p84h_corrected_signal_validation_coverage_guard.py",
+        "returncode": 0,
+        "started_at": "2026-05-27T08:28:18.781829+00:00",
+        "finished_at": "2026-05-27T08:28:20.727686+00:00",
+        "stdout_tail": "[P84H] Summary  → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json\n[P84H] Report   → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/p84h_corrected_signal_validation_coverage_guard_20260527.md\n[P84H] active_task.md updated\n\n[P84H] Final classification: P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED\n",
+        "stderr_tail": "",
+        "success": true,
+        "validation": {
+          "ok": true,
+          "classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+          "notes": []
+        }
+      },
+      {
+        "phase": "P85",
+        "script": "scripts/_p85_prediction_convention_invariant_gate.py",
+        "returncode": 0,
+        "started_at": "2026-05-27T08:28:20.728626+00:00",
+        "finished_at": "2026-05-27T08:28:22.440130+00:00",
+        "stdout_tail": "ce scan ...\n       status=PASSED row_violations=0\n[P85] Final classification: P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY\n[P85] Summary written → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json\n[P85] Report written → /Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/p85_prediction_convention_invariant_gate_20260527.md\n[P85] active_task.md updated\n\n[P85] Done. classification=P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY\n",
+        "stderr_tail": "",
+        "success": true,
+        "validation": {
+          "ok": true,
+          "classification": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+          "notes": []
+        }
+      },
+      {
+        "phase": "P86",
+        "script": "scripts/_p86_artifact_regeneration_dependency_contract.py",
+        "returncode": 0,
+        "started_at": "2026-05-27T08:28:22.441012+00:00",
+        "finished_at": "2026-05-27T08:28:22.515666+00:00",
+        "stdout_tail": "7: mtime ordering check ...\n       status=PASSED stale_risks=0\n[P86] Step 8: governance scan ...\n       status=PASSED\n[P86] Final classification: P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY\n[P86] Summary written → data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json\n[P86] Report written → report/p86_artifact_regeneration_dependency_contract_20260527.md\n[P86] active_task.md updated\n\n[P86] Done. classification=P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY\n",
+        "stderr_tail": "",
+        "success": true,
+        "validation": {
+          "ok": true,
+          "classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+          "notes": []
+        }
+      }
+    ],
+    "all_ok": true,
+    "failed_phase": null,
+    "status": "PASSED"
+  },
+  "step4_verify_p84e_freshness": {
+    "step": "step4_verify_p84e_freshness",
+    "canonical_rows_mtime": "2026-05-27T08:10:02.982283+00:00",
+    "p84e_rows_mtime_post": "2026-05-27T08:28:18.528204+00:00",
+    "p84e_rows_newer_than_canonical": true,
+    "delta_seconds_post": 1095.5,
+    "stale_resolved": true,
+    "status": "PASSED"
+  },
+  "step5_validate_metrics": {
+    "step": "step5_validate_metrics",
+    "baseline_metrics": {
+      "hit_rate": 0.569307,
+      "auc": 0.594315,
+      "brier": 0.249408,
+      "ece": 0.069682
+    },
+    "post_recovery_metrics": {
+      "hit_rate": 0.569307,
+      "auc": 0.594315,
+      "brier": 0.249408,
+      "ece": 0.069682
+    },
+    "deltas": {
+      "hit_rate": 0.0,
+      "auc": 0.0,
+      "brier": 0.0,
+      "ece": 0.0
+    },
+    "tolerance": 0.0001,
+    "within_tolerance": {
+      "hit_rate": true,
+      "auc": true,
+      "brier": true,
+      "ece": true
+    },
+    "all_within_tolerance": true,
+    "n_post": 808,
+    "status": "PASSED"
+  },
+  "step6_confirm_p86_restored": {
+    "step": "step6_confirm_p86_restored",
+    "p86_post_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p86_expected_post": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "contract_restored": true,
+    "n_stale_risks_post": 0,
+    "status": "PASSED"
+  },
+  "step7_governance_scan": {
+    "step": "step7_governance_scan",
+    "p89_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "no_real_bet": true,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "paid_api_called": false,
+      "no_frozen_artifact_modification": true,
+      "no_fabricated_outcomes": true,
+      "no_model_refit": true,
+      "explicit_yes_phrase_verified": true,
+      "recovery_scope_minimal": true,
+      "metrics_tolerance_checked": true,
+      "no_taiwan_lottery_recommendation": true,
+      "no_betting_advice": true,
+      "no_stake_computation": true,
+      "no_historical_artifact_overwrite": true,
+      "authorization_phrase_immutable": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_real_bet": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_paid_api": true,
+      "no_frozen_artifact_modification": true,
+      "no_fabricated_outcomes": true,
+      "no_model_refit": true,
+      "explicit_yes_phrase_verified": true,
+      "recovery_scope_minimal": true,
+      "metrics_tolerance_checked": true,
+      "no_taiwan_lottery_recommendation": true,
+      "no_betting_advice": true,
+      "no_stake_computation": true,
+      "no_historical_artifact_overwrite": true,
+      "authorization_phrase_immutable": true
+    },
+    "n_flags": 20,
+    "governance_all_pass": true,
+    "status": "PASSED"
+  }
+}

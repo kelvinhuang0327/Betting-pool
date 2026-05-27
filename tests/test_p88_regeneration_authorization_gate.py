@@ -496,7 +496,7 @@ class TestFrozenArtifactIntegrity:
     def test_p86_classification_unchanged(self):
         p = ROOT / "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json"
         d = json.loads(p.read_text(encoding="utf-8"))
-        assert d["p86_classification"] == "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK"
+        assert d["p86_classification"] == "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY"  # Updated: P89 recovered P86
 
     def test_p87_classification_unchanged(self):
         p = ROOT / "data/mlb_2026/derived/p87_stale_downstream_recovery_dry_run_summary.json"

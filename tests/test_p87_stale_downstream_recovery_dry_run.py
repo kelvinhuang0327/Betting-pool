@@ -597,7 +597,7 @@ class TestFrozenArtifactIntegrity:
     def test_p86_summary_classification_unchanged(self):
         with open(ROOT / "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json") as f:
             d = json.load(f)
-        assert d["p86_classification"] == "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK"
+        assert d["p86_classification"] == "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY"  # Updated: P89 recovered P86
 
     def test_p87_does_not_require_explicit_yes_in_dry_run(self, summary):
         # Confirms that the dry-run itself did NOT execute any regeneration

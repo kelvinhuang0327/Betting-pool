@@ -25,7 +25,7 @@ SCRIPT = ROOT / "scripts" / "_p86_artifact_regeneration_dependency_contract.py"
 SUMMARY_PATH = DERIVED / "p86_artifact_regeneration_dependency_contract_summary.json"
 REPORT_PATH = REPORT_DIR / "p86_artifact_regeneration_dependency_contract_20260527.md"
 
-EXPECTED_CLASSIFICATION = "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK"
+EXPECTED_CLASSIFICATION = "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY"  # Updated post P89 authorized recovery
 
 ALLOWED_CLASSIFICATIONS = [
     "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
@@ -457,29 +457,29 @@ class TestStep6ReportVsJson:
 
 class TestStep7MtimeOrdering:
     def test_step7_status_failed(self, summary):
-        """Step 7 must be FAILED — the stale downstream risk is real."""
+        """Post P89 recovery: step 7 passes (no stale risks)."""
         s = summary["step7_mtime_ordering"]
-        assert s["status"] == "FAILED"
+        assert s["status"] == "PASSED"
 
     def test_step7_exactly_one_stale_risk(self, summary):
-        """Exactly one stale risk: canonical_rows regenerated after P84E ran."""
+        """Post P89 recovery: zero stale risks."""
         s = summary["step7_mtime_ordering"]
-        assert s["n_stale_risks"] == 1
+        assert s["n_stale_risks"] == 0
 
     def test_step7_stale_risk_upstream_is_canonical_rows(self, summary):
+        # Post P89 recovery: no stale risks — stale_risks list is empty
         s = summary["step7_mtime_ordering"]
-        risk = s["stale_risks"][0]
-        assert risk["upstream"] == "canonical_rows"
+        assert s["stale_risks"] == []
 
     def test_step7_stale_risk_downstream_is_p84e_rows(self, summary):
+        # Post P89 recovery: p84e_rows is now fresh — no stale downstream risk
         s = summary["step7_mtime_ordering"]
-        risk = s["stale_risks"][0]
-        assert risk["downstream"] == "p84e_rows"
+        assert len(s["stale_risks"]) == 0
 
     def test_step7_stale_risk_delta_positive(self, summary):
+        # Post P89 recovery: no stale risks; p84e_rows newer than canonical_rows
         s = summary["step7_mtime_ordering"]
-        risk = s["stale_risks"][0]
-        assert risk["delta_seconds"] > 0
+        assert s["n_stale_risks"] == 0
 
     def test_step7_order_has_eight_entries(self, summary):
         s = summary["step7_mtime_ordering"]
@@ -505,11 +505,11 @@ class TestStep7MtimeOrdering:
         assert cr_entry["status"] == "OK"
 
     def test_step7_p84e_rows_is_stale(self, summary):
-        """p84e_rows must be flagged as STALE_DOWNSTREAM_RISK."""
+        """Post P89 recovery: p84e_rows is OK (freshly regenerated)."""
         order = summary["step7_mtime_ordering"]["order"]
         p84e_rows_entry = next((e for e in order if e["id"] == "p84e_rows"), None)
         assert p84e_rows_entry is not None
-        assert p84e_rows_entry["status"] == "STALE_DOWNSTREAM_RISK"
+        assert p84e_rows_entry["status"] == "OK"
 
 
 # ---------------------------------------------------------------------------
@@ -596,8 +596,9 @@ class TestStep8GovernanceScan:
 
 class TestStep9FinalClassification:
     def test_final_cls_is_stale_downstream_risk(self, summary):
+        # Post P89 recovery: P86 is now READY
         fc = summary["step9_final_classification"]
-        assert fc["classification"] == "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK"
+        assert fc["classification"] == "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY"
 
     def test_final_cls_rationale_present(self, summary):
         fc = summary["step9_final_classification"]
@@ -610,16 +611,18 @@ class TestStep9FinalClassification:
 
     def test_final_n_steps_passed(self, summary):
         fc = summary["step9_final_classification"]
-        # Steps 1,2,3,4,5,6,8 pass (7 passes) — step 7 fails
-        assert fc["n_steps_passed"] == 7
+        # Post P89 recovery: all 8 steps pass
+        assert fc["n_steps_passed"] == 8
 
     def test_final_n_steps_failed(self, summary):
         fc = summary["step9_final_classification"]
-        assert fc["n_steps_failed"] == 1
+        # Post P89 recovery: no steps fail
+        assert fc["n_steps_failed"] == 0
 
     def test_final_failed_steps_contains_step7(self, summary):
         fc = summary["step9_final_classification"]
-        assert "step7" in fc["failed_steps"]
+        # Post P89 recovery: no steps failed
+        assert fc["failed_steps"] == []
 
     def test_p86_top_level_cls_matches_final(self, summary):
         top = summary["p86_classification"]

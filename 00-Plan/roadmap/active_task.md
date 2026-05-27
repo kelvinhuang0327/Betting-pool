@@ -1,28 +1,25 @@
-# Active Task — P84C 2026 Canonical Prediction Partial Snapshot + Coverage Gap Audit
+# Active Task — P89 Authorized Recovery Executor
 
 ## Current Task
-P88 — Regeneration Authorization Gate and Safe Recovery Readiness Check
+P89 — Authorized Recovery Executor (P87 Stale Downstream Recovery)
 
 ## Classification
-P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION
+P89_RECOVERY_COMPLETE_CONTRACT_RESTORED
 
 ## Authorization Status
-NOT GRANTED — awaiting explicit YES phrase
+GRANTED — "YES regenerate stale downstream artifacts for P87 recovery"
 
-## Required Phrase
-YES regenerate stale downstream artifacts for P87 recovery
-
-## State Summary
-- P87 classification: P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES
-- P86 classification: P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK
-- content_drift_likely: False (mtime-only drift confirmed)
-- count_match: True (828/828 game_ids)
-- safe_without_explicit_yes: False
-- P88 is gate-only: no frozen artifacts modified
-
-## Next Steps
-Once explicit YES is received → execute P89 recovery sequence:
+## Recovery Sequence Executed
 P84E → P84F → P84G → P84H → P85 → P86
+
+## Post-Recovery P86 State
+P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY
+
+## Metrics (n=808, tolerance=1e-4)
+- hit_rate: 0.569307 (within tolerance)
+- auc: 0.594315 (within tolerance)
+- brier: 0.249408 (within tolerance)
+- ece: 0.069682 (within tolerance)
 
 ## Historical Classification Log
 <!-- P82: P82 completed -->
@@ -37,6 +34,7 @@ P84E → P84F → P84G → P84H → P85 → P86
 <!-- P84G: P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED -->
 <!-- P84H: P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED -->
 <!-- P85: P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY -->
-<!-- P86: P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK -->
+<!-- P86: P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY (recovered) -->
 <!-- P87: P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES -->
 <!-- P88: P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION -->
+<!-- P89: P89_RECOVERY_COMPLETE_CONTRACT_RESTORED -->
