@@ -1,0 +1,201 @@
+{
+  "p92_classification": "P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+  "final_classification": "P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+  "allowed_classifications": [
+    "P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+    "P92_HOME_BASELINE_CONFOUNDED",
+    "P92_AWAY_BASELINE_CONFOUNDED",
+    "P92_INSUFFICIENT_SIDE_SPLIT_EVIDENCE",
+    "P92_SIDE_BIAS_GATE_BLOCKED_BY_PREFLIGHT",
+    "P92_SIDE_BIAS_GATE_BLOCKED_BY_SCOPE_DRIFT"
+  ],
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T14:06:19.084235+00:00",
+  "git_head": "f0816ba feat(P91): Prediction-Only Tracking Gate \u2014 P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+  "phase": "paper-only, diagnostic-only",
+  "p91_metrics": {
+    "hit_rate": 0.569307,
+    "auc": 0.594315,
+    "n_rows_tracked": 808,
+    "signal_stability_assessment": "STABLE"
+  },
+  "step1_preflight": {
+    "step": "step1_preflight",
+    "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "branch": "main",
+    "git_dir": ".git",
+    "repo_ok": true,
+    "branch_ok": true,
+    "worktree_ok": true,
+    "status": "PASSED"
+  },
+  "step2_classification_locks": {
+    "step": "step2_classification_locks",
+    "p91_classification": "P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+    "p90_classification": "P90_POST_RECOVERY_CLOSURE_READY",
+    "p86_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p91_ok": true,
+    "p90_ok": true,
+    "p86_ok": true,
+    "all_ok": true,
+    "status": "PASSED"
+  },
+  "step3_load_rows": {
+    "step": "step3_load_rows",
+    "n_total_rows": 828,
+    "n_outcome_rows": 808,
+    "seasons": [
+      2026
+    ],
+    "date_range_start": "2026-03-25",
+    "date_range_end": "2026-05-31",
+    "status": "PASSED"
+  },
+  "step4_side_distribution": {
+    "step": "step4_side_distribution",
+    "n_outcome_rows": 808,
+    "predicted_home_count": 412,
+    "predicted_away_count": 396,
+    "predicted_home_ratio": 0.509901,
+    "predicted_away_ratio": 0.490099,
+    "actual_home_count": 424,
+    "actual_away_count": 384,
+    "status": "PASSED"
+  },
+  "step5_baseline_comparison": {
+    "step": "step5_baseline_comparison",
+    "n_outcome_rows": 808,
+    "n_correct": 460,
+    "model_hit_rate": 0.569307,
+    "home_baseline_hit_rate": 0.524752,
+    "away_baseline_hit_rate": 0.475248,
+    "model_vs_home_baseline_delta": 0.044554,
+    "model_vs_away_baseline_delta": 0.094059,
+    "status": "PASSED"
+  },
+  "step6_side_split": {
+    "step": "step6_side_split",
+    "home_predicted_count": 412,
+    "away_predicted_count": 396,
+    "home_predicted_hit_rate": 0.592233,
+    "away_predicted_hit_rate": 0.545455,
+    "home_split_sufficient": true,
+    "away_split_sufficient": true,
+    "status": "PASSED"
+  },
+  "step7_monthly_decomposition": {
+    "step": "step7_monthly_decomposition",
+    "n_months": 3,
+    "monthly_results": [
+      {
+        "month": "2026-03",
+        "n": 73,
+        "model_hit_rate": 0.6164,
+        "home_baseline_hit_rate": 0.589,
+        "away_baseline_hit_rate": 0.411,
+        "predicted_home_count": 37,
+        "predicted_away_count": 36,
+        "model_vs_home_baseline_delta": 0.0274
+      },
+      {
+        "month": "2026-04",
+        "n": 389,
+        "model_hit_rate": 0.5424,
+        "home_baseline_hit_rate": 0.527,
+        "away_baseline_hit_rate": 0.473,
+        "predicted_home_count": 203,
+        "predicted_away_count": 186,
+        "model_vs_home_baseline_delta": 0.0154
+      },
+      {
+        "month": "2026-05",
+        "n": 346,
+        "model_hit_rate": 0.5896,
+        "home_baseline_hit_rate": 0.5087,
+        "away_baseline_hit_rate": 0.4913,
+        "predicted_home_count": 172,
+        "predicted_away_count": 174,
+        "model_vs_home_baseline_delta": 0.0809
+      }
+    ],
+    "status": "PASSED"
+  },
+  "step8_side_bias_assessment": {
+    "step": "step8_side_bias_assessment",
+    "model_hit_rate": 0.569307,
+    "home_baseline_hit_rate": 0.524752,
+    "away_baseline_hit_rate": 0.475248,
+    "model_vs_home_delta": 0.044555,
+    "model_vs_away_delta": 0.094059,
+    "predicted_home_ratio": 0.509901,
+    "home_confound_threshold": 0.015,
+    "away_confound_threshold": 0.015,
+    "side_imbalance_threshold": 0.7,
+    "min_side_split_rows": 50,
+    "side_bias_assessment": "SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+    "rationale": "model_hr=0.5693 exceeds both home_baseline=0.5248 (+0.0446) and away_baseline=0.4752 (+0.0941). Side split near balanced (home_ratio=0.510). Both home_pred_hr=0.5922 and away_pred_hr=0.5455 remain above 50%. AUC=0.594315.",
+    "status": "PASSED"
+  },
+  "step9_governance_scan": {
+    "step": "step9_governance_scan",
+    "p92_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_real_bet": true,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_production_betting_recommendation": true,
+      "no_taiwan_lottery_betting_recommendation": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_modification": true,
+      "no_raw_data_modification": true,
+      "no_historical_artifact_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_real_bet": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_production_betting": true,
+      "no_taiwan_lottery": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_mod": true,
+      "no_raw_data_mod": true,
+      "no_historical_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "n_flags": 20,
+    "n_checks": 20,
+    "governance_all_pass": true,
+    "status": "PASSED"
+  },
+  "step10_final_classification": {
+    "step": "step10_final_classification",
+    "final_classification": "P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+    "side_bias_assessment": "SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+    "rationale": "model_hr=0.5693 exceeds both home_baseline=0.5248 (+0.0446) and away_baseline=0.4752 (+0.0941). Side split near balanced (home_ratio=0.510). Both home_pred_hr=0.5922 and away_pred_hr=0.5455 remain above 50%. AUC=0.594315.",
+    "preflight_ok": true,
+    "lock_ok": true,
+    "governance_ok": true
+  },
+  "governance_all_pass": true,
+  "production_ready": false
+}

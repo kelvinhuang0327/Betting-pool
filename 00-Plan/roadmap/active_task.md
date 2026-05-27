@@ -1,25 +1,19 @@
-# Active Task — P89 Authorized Recovery Executor
+# Active Task — P92 Prediction-Only Side Bias and Baseline Decomposition Gate
 
 ## Current Task
-P89 — Authorized Recovery Executor (P87 Stale Downstream Recovery)
+P92 — Prediction-Only Side Bias and Baseline Decomposition Gate
 
 ## Classification
-P89_RECOVERY_COMPLETE_CONTRACT_RESTORED
+P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE
 
-## Authorization Status
-GRANTED — "YES regenerate stale downstream artifacts for P87 recovery"
+## Summary
+P91 STABLE classification confirmed under side-split and monthly baseline decomposition.
+Signal (hit_rate=0.5693, AUC=0.5943) exceeds both home baseline (0.5248) and away baseline (0.4752).
+Side split near-balanced (51/49). Both home-predicted and away-predicted subsets above 50%.
+No confound detected. Market-edge lane remains BLOCKED (no legal odds dataset).
 
-## Recovery Sequence Executed
-P84E → P84F → P84G → P84H → P85 → P86
-
-## Post-Recovery P86 State
-P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY
-
-## Metrics (n=808, tolerance=1e-4)
-- hit_rate: 0.569307 (within tolerance)
-- auc: 0.594315 (within tolerance)
-- brier: 0.249408 (within tolerance)
-- ece: 0.069682 (within tolerance)
+## Next Phase
+P93 — Coverage / Bias Audit or continued paper tracking.
 
 ## Historical Classification Log
 <!-- P82: P82 completed -->
@@ -40,3 +34,4 @@ P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY
 <!-- P89: P89_RECOVERY_COMPLETE_CONTRACT_RESTORED -->
 <!-- P90: P90_POST_RECOVERY_CLOSURE_READY -->
 <!-- P91: P91_TRACKING_ACTIVE_SIGNAL_STABLE -->
+<!-- P92: P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE -->
