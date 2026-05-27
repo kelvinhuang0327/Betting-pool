@@ -245,3 +245,19 @@ P84G commit `021a8a8`、classification `P84G_SIDE_MAPPING_FIXED_METRICS_REGENERA
 - **Invariants checked**: 9 steps (FIP+/-, zero-delta policy, prob semantics, actual_winner derivation, is_correct consistency, AUC/hit_rate guard, governance)
 - **Violations**: 0
 - **Note**: Paper-only diagnostic gate. Not a production recommendation.
+
+
+## P86 — Artifact Regeneration / Dependency Contract
+- Status: COMPLETED
+- Date: 2026-05-27
+- Classification: P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK
+- Checks: artifact existence (8 files), dependency graph (6 nodes), classification lock (6 phases), row counts (828/808), metric consistency (4 metrics), report-vs-JSON (6 phases), mtime ordering (0 stale risks)
+- Governance: diagnostic-only, no EV/CLV/Kelly/odds/production
+
+
+## P86 — Artifact Regeneration / Dependency Contract
+- Status: COMPLETED
+- Date: 2026-05-27
+- Classification: P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK
+- Checks: artifact existence (8 files), dependency graph (6 nodes), classification lock (6 phases), row counts (828/808), metric consistency (4 metrics), report-vs-JSON (6 phases), mtime ordering (0 stale risks)
+- Governance: diagnostic-only, no EV/CLV/Kelly/odds/production
