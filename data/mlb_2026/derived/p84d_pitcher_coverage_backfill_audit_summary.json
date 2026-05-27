@@ -1,0 +1,361 @@
+{
+  "p84d_classification": "P84D_PITCHER_COVERAGE_AUDIT_READY_NO_BACKFILL",
+  "step1_verify_p84c": {
+    "ok": true,
+    "errors": [],
+    "p84c_classification": "P84C_PARTIAL_SNAPSHOT_READY_OUTCOMES_PENDING",
+    "canonical_rows_p84c": 828,
+    "schedule_total_p84c": 2430,
+    "coverage_pct_p84c": 34.07,
+    "outcomes_available": false,
+    "p84b_summary_loaded": true,
+    "p84b_rows_total": null,
+    "p84b_feature_ready": null
+  },
+  "step2_fip_gap": {
+    "total_fip_rows": 2430,
+    "feature_ready_count": 828,
+    "feature_pending_count": 1602,
+    "no_prob_home_slots": 1584,
+    "no_prob_away_slots": 1583,
+    "no_prob_both_sides": 1577,
+    "insuff_ip_home_slots": 6,
+    "insuff_ip_away_slots": 6,
+    "insuff_ip_game_count": 12,
+    "no_prob_future_games": 1587,
+    "no_prob_past_or_today_games": 3,
+    "monthly_pending": {
+      "2026-03": 3,
+      "2026-04": 3,
+      "2026-05": 53,
+      "2026-06": 400,
+      "2026-07": 370,
+      "2026-08": 413,
+      "2026-09": 360
+    },
+    "team_dist_no_prob_top10": {
+      "Milwaukee Brewers": 109,
+      "Tampa Bay Rays": 109,
+      "St. Louis Cardinals": 108,
+      "Boston Red Sox": 108,
+      "Baltimore Orioles": 107,
+      "Arizona Diamondbacks": 107,
+      "Detroit Tigers": 106,
+      "New York Yankees": 106,
+      "Toronto Blue Jays": 106,
+      "Chicago White Sox": 106
+    },
+    "ready_with_valid_source_trace": 828,
+    "insuff_ip_actionable_pitcher_ids": [
+      "664074",
+      "434378",
+      "621107",
+      "691946",
+      "690928",
+      "605483",
+      "666129",
+      "671111",
+      "804267",
+      "696136"
+    ],
+    "insuff_ip_pitcher_count": 10,
+    "sample_no_probable_pitcher_rows": [
+      {
+        "game_id": "mlb_2026_823062",
+        "home_pitcher_id": null,
+        "away_pitcher_id": null,
+        "home_fip_status": "NO_PROBABLE_PITCHER",
+        "away_fip_status": "NO_PROBABLE_PITCHER"
+      },
+      {
+        "game_id": "mlb_2026_824766",
+        "home_pitcher_id": null,
+        "away_pitcher_id": null,
+        "home_fip_status": "NO_PROBABLE_PITCHER",
+        "away_fip_status": "NO_PROBABLE_PITCHER"
+      },
+      {
+        "game_id": "mlb_2026_824273",
+        "home_pitcher_id": null,
+        "away_pitcher_id": 676440,
+        "home_fip_status": "NO_PROBABLE_PITCHER",
+        "away_fip_status": "OK"
+      }
+    ],
+    "sample_insufficient_ip_rows": [
+      {
+        "game_id": "mlb_2026_822834",
+        "home_pitcher_id": 664074,
+        "away_pitcher_id": 608372,
+        "home_fip_status": "INSUFFICIENT_IP_2.1",
+        "away_fip_status": "OK"
+      },
+      {
+        "game_id": "mlb_2026_825108",
+        "home_pitcher_id": 647336,
+        "away_pitcher_id": 434378,
+        "home_fip_status": "OK",
+        "away_fip_status": "INSUFFICIENT_IP_3.2"
+      },
+      {
+        "game_id": "mlb_2026_824861",
+        "home_pitcher_id": 621107,
+        "away_pitcher_id": 594798,
+        "home_fip_status": "INSUFFICIENT_IP_3.2",
+        "away_fip_status": "OK"
+      }
+    ],
+    "today_str": "2026-05-27"
+  },
+  "step3_backfill_probe": {
+    "probe_ran": true,
+    "api_error": null,
+    "insuff_ip_pitcher_ids_probed": [
+      "664074",
+      "434378",
+      "621107",
+      "691946",
+      "690928",
+      "605483",
+      "666129",
+      "671111",
+      "804267",
+      "696136"
+    ],
+    "insuff_ip_stats_found": {
+      "664074": true,
+      "434378": true,
+      "621107": true,
+      "691946": true,
+      "690928": true,
+      "605483": true,
+      "666129": true,
+      "671111": true,
+      "804267": true,
+      "696136": true
+    },
+    "near_future_games_scanned": 85,
+    "near_future_probe_ran": true,
+    "near_future_game_pks_probed": [
+      823783,
+      824836,
+      824757,
+      824834,
+      824515,
+      822732,
+      823377,
+      824835,
+      824433,
+      822978,
+      823055,
+      824594,
+      822894,
+      824191,
+      824353,
+      825002,
+      823135,
+      823946,
+      824593,
+      822731,
+      822893,
+      824833,
+      823375,
+      824431,
+      822975,
+      824190,
+      823054,
+      824513,
+      824352,
+      825000,
+      823132,
+      823945,
+      824832,
+      822729,
+      823373,
+      824430,
+      822976,
+      824512,
+      824592,
+      824187,
+      822895,
+      824354,
+      825001,
+      823133,
+      823944,
+      823053,
+      822974,
+      822730,
+      824510,
+      823702,
+      823781,
+      823050,
+      824027,
+      825078,
+      823131,
+      822971,
+      823460,
+      824754,
+      822728,
+      823541,
+      824511,
+      824918,
+      823700,
+      823782,
+      823052,
+      824675,
+      824189,
+      824026,
+      825079,
+      823129,
+      822727,
+      822973,
+      823701,
+      823130,
+      823456,
+      824755,
+      823540,
+      824509,
+      824917,
+      823780,
+      823051,
+      824671,
+      824188,
+      824024,
+      825077
+    ],
+    "probable_pitcher_finds": {
+      "mlb_2026_823783": {
+        "home_pitcher_id": null,
+        "away_pitcher_id": 669160,
+        "home_pitcher_name": null,
+        "away_pitcher_name": "Dustin May"
+      },
+      "mlb_2026_824836": {
+        "home_pitcher_id": null,
+        "away_pitcher_id": 571927,
+        "home_pitcher_name": null,
+        "away_pitcher_name": "Steven Matz"
+      },
+      "mlb_2026_824757": {
+        "home_pitcher_id": null,
+        "away_pitcher_id": 519242,
+        "home_pitcher_name": null,
+        "away_pitcher_name": "Chris Sale"
+      },
+      "mlb_2026_824515": {
+        "home_pitcher_id": 663978,
+        "away_pitcher_id": null,
+        "home_pitcher_name": "Chris Paddack",
+        "away_pitcher_name": null
+      },
+      "mlb_2026_822732": {
+        "home_pitcher_id": null,
+        "away_pitcher_id": 608337,
+        "home_pitcher_name": null,
+        "away_pitcher_name": "Lucas Giolito"
+      },
+      "mlb_2026_824433": {
+        "home_pitcher_id": 677944,
+        "away_pitcher_id": null,
+        "home_pitcher_name": "Slade Cecconi",
+        "away_pitcher_name": null
+      },
+      "mlb_2026_824191": {
+        "home_pitcher_id": null,
+        "away_pitcher_id": 689441,
+        "home_pitcher_name": null,
+        "away_pitcher_name": "Coleman Crow"
+      },
+      "mlb_2026_825002": {
+        "home_pitcher_id": 622663,
+        "away_pitcher_id": null,
+        "home_pitcher_name": "Luis Severino",
+        "away_pitcher_name": null
+      },
+      "mlb_2026_822731": {
+        "home_pitcher_id": null,
+        "away_pitcher_id": 650633,
+        "home_pitcher_name": null,
+        "away_pitcher_name": "Michael King"
+      },
+      "mlb_2026_824431": {
+        "home_pitcher_id": 800048,
+        "away_pitcher_id": null,
+        "home_pitcher_name": "Parker Messick",
+        "away_pitcher_name": null
+      },
+      "mlb_2026_824513": {
+        "home_pitcher_id": 663903,
+        "away_pitcher_id": null,
+        "home_pitcher_name": "Brady Singer",
+        "away_pitcher_name": null
+      },
+      "mlb_2026_824430": {
+        "home_pitcher_id": 676440,
+        "away_pitcher_id": null,
+        "home_pitcher_name": "Tanner Bibee",
+        "away_pitcher_name": null
+      }
+    },
+    "hbp_missing_policy": "If hitBatsmen/hitByPitch is absent from the MLB Stats API pitching stats response, treat as 0 (conservative diagnostic assumption, not fabrication). Only applied when the pitcher ID and all other required stats are present. FIP formula: ((13*HR + 3*(BB+HBP) - 2*K) / IP) + FIP_CONSTANT.",
+    "fip_formula": "FIP = ((13*HR + 3*(BB+HBP) - 2*K) / IP) + FIP_CONSTANT [FIP_CONSTANT=3.1, MIN_IP=5.0]",
+    "fip_required_stat_fields": [
+      "homeRuns",
+      "baseOnBalls",
+      "strikeOuts",
+      "inningsPitched"
+    ],
+    "fip_constant": 3.1,
+    "min_ip_for_fip": 5.0
+  },
+  "step4_fip_compute": {
+    "candidate_count": 0,
+    "insuff_ip_candidates": 0,
+    "no_prob_candidates": 0
+  },
+  "step5_update_result": {
+    "updated": false,
+    "reason": "NO_BACKFILL_CANDIDATES",
+    "canonical_rows_before": 828,
+    "canonical_rows_after": 828,
+    "delta": 0,
+    "coverage_before_pct": 34.07,
+    "coverage_after_pct": 34.07,
+    "p83e_rerun_command": null,
+    "p84c_rerun_command": null,
+    "rows_written": 0,
+    "model_rows_written": 0
+  },
+  "coverage_summary": {
+    "canonical_rows_before": 828,
+    "canonical_rows_after": 828,
+    "delta": 0,
+    "coverage_before_pct": 34.07,
+    "coverage_after_pct": 34.07,
+    "schedule_total": 2430,
+    "remaining_gap": 1602
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "live_api_calls": 0,
+    "mlb_stats_api_calls": 23,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_calculated": false,
+    "odds_used": false,
+    "uses_historical_odds": false,
+    "real_bet_allowed": false,
+    "fabricated_fip_values": false,
+    "odds_api_called": false
+  },
+  "remaining_blockers": [
+    "NO_PROBABLE_PITCHER: 1587 future games await MLB schedule announcement (months ahead)",
+    "INSUFFICIENT_IP: 12 game(s) still have pitchers below 5.0 IP threshold",
+    "NO_PROBABLE_PITCHER_PAST: 3 past game(s) had no probable pitcher recorded",
+    "OUTCOMES_PENDING: hit_rate/AUC/Brier/ECE not computable until game outcomes available",
+    "P84E_REQUIRED: outcome attachment pipeline needed for model accuracy evaluation"
+  ]
+}
