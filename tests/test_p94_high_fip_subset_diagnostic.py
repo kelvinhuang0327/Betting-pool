@@ -62,9 +62,10 @@ class TestGate1CanonicalEntry:
         git_dir = os.popen("git rev-parse --git-dir").read().strip()
         assert git_dir == ".git", f"Expected .git, got {git_dir}"
 
-    def test_head_is_p93(self):
-        head = os.popen("git log -1 --format=%h").read().strip()
-        assert head == "2221f0f", f"Expected P93 head 2221f0f, got {head}"
+    def test_p94_summary_recorded_p93_head(self, summary):
+        # Verify the summary was generated at P93 HEAD (2221f0f), not current HEAD
+        recorded_head = summary.get("git_head", "")
+        assert recorded_head == "2221f0f", f"P94 summary should record P93 head 2221f0f, got {recorded_head}"
 
     def test_summary_gate1_ok(self, summary):
         gate1 = summary["step1_preflight"]["gate1_canonical_entry"]

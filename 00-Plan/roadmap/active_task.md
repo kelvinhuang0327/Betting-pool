@@ -7,12 +7,12 @@
 > **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0I
 
 ## Current Task
-P94 — COMPLETED（2026-05-28）
+P95 — COMPLETED（2026-05-28）
 
 ## Final Classification
-✅ `P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY`
+✅ `P95_FIP_STRATIFIED_SHADOW_TRACKER_READY_WITH_LIMITED_COVERAGE`
 
-**rationale**: Bootstrap ci_low=0.5819 > 0.55 (STRONG); all 3 temporal thirds > 0.55 (0.663/0.615/0.646); side_balanced=True (delta=0.032 < 0.10); monthly_limited=False (Mar n=34, Apr n=143, May n=110); segment_qualification=LOW_MID_FIP_NOT_TRACKABLE
+**rationale**: All tolerance checks passed（high/mid/low FIP segment metrics match P93/P94 within 1e-4）. Partial coverage 828/2430=34.07% (March–May only) → READY_WITH_LIMITED_COVERAGE. High-FIP diagnostic tracking allowed; mid/low FIP watch-only. No EV/CLV/Kelly/recommendation/production.
 
 ---
 
@@ -251,3 +251,4 @@ git log -1 --oneline
 <!-- P92: P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE -->
 <!-- P93: P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP -->
 <!-- P94: P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY —— Bootstrap ci_low=0.582 (STRONG), temporal 3/3 > 0.55, side_balanced, monthly_limited=False -->
+<!-- P95: P95_FIP_STRATIFIED_SHADOW_TRACKER_READY_WITH_LIMITED_COVERAGE —— HIGH_FIP diagnostic tracking allowed; mid/low watch-only; partial coverage 34.07% (March–May 2026) -->
