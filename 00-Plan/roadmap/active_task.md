@@ -1,28 +1,41 @@
-# Active Task — P97 HIGH_FIP Production-Gate Preflight
+# Active Task — P98 Data Coverage Accumulation Gate
 
 > **[P0 Active — Issued by CEO 2026-05-28 Asia/Taipei]**
-> **Predecessor**: P96 committed at `73edb41` (`P96_HIGH_FIP_DRIFT_MONITOR_STABLE_COVERAGE_LIMITED`)
+> **Predecessor**: P97 committed at `6ef4c49` (`P97_HIGH_FIP_PREFLIGHT_SIGNAL_PASS_PRODUCTION_BLOCKED`)
 > **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
 > **CEO Decision reference**: `00-Plan/roadmap/CEO-Decision.md` (2026-05-28, `CEO_DECISION_PARTIALLY_APPROVED`)
-> **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0J
+> **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0K
 
 ## Current Task
-P97 — COMPLETED（2026-05-28）
+P98 — COMPLETED（2026-05-28）
 
 ## Final Classification
+✅ `P98_WAIT_ACCUMULATE_COVERAGE_UNCHANGED`
+
+**rationale**: No new rows since P97 baseline (delta_outcome_rows=0). schedule_coverage_pct=34.0741% (threshold: 60.0%). observed_months=3 (threshold: 4). Coverage unchanged — system must remain in wait/accumulate mode. No P96/P97 rerun justified. All 5 recheck thresholds: WAIT. p96_rerun_ready=False.
+
+## Blocker Summary (Primary: DATA_COVERAGE_BLOCKER)
+- `DATA_COVERAGE_BLOCKER` — 34.07% coverage, 3 months only (need >=60%, >=4 months) → WAIT
+- Recheck trigger: run P98 again when new 2026 outcome rows arrive; rerun P96 only when coverage>=60% AND months>=4
+- delta_canonical_rows=0, delta_outcome_rows=0, delta_high_fip_rows=0 (no new data since P97)
+
+## Committed Artifacts
+- `scripts/_p98_data_coverage_accumulation_gate.py`
+- `tests/test_p98_data_coverage_accumulation_gate.py` (20/20 PASSED)
+- `data/mlb_2026/derived/p98_data_coverage_accumulation_gate_summary.json`
+- `report/p98_data_coverage_accumulation_gate_20260528.md`
+
+---
+
+## Previous Task
+P97 — COMPLETED（2026-05-28）
+
+## Final Classification (P97)
 ✅ `P97_HIGH_FIP_PREFLIGHT_SIGNAL_PASS_PRODUCTION_BLOCKED`
 
 **rationale**: Signal gate PASS (P94/P95/P96 all stable, HIGH_FIP hit_rate=0.641115). Segment gate PASS (HIGH_FIP diagnostic-only, MID/LOW watch-only). Production BLOCKED by 8 failing gates: calibration_gate, coverage_gate, market_edge_gate, odds_dataset_gate, production_governance_gate, recommendation_contract_gate, risk_control_gate, season_span_gate. readiness_ratio=0.2000 (2/10). No production promotion. No EV/CLV/Kelly/recommendation/odds.
 
-## Blocker Summary
-- `DATA_COVERAGE_BLOCKER` — 34.07% coverage, 3 months only (need >=60%, >=4 months)
-- `CALIBRATION_BLOCKER` — no OOS calibration diagnostic
-- `LEGAL_ODDS_BLOCKER` — no legal odds dataset
-- `MARKET_EDGE_BLOCKER` — no EV/CLV validation
-- `RISK_CONTROL_BLOCKER` — no stake/risk caps approved
-- `PRODUCT_GOVERNANCE_BLOCKER` — no CEO production-review authorization
-
-## Committed Artifacts
+## Committed Artifacts (P97)
 - `scripts/_p97_high_fip_production_gate_preflight.py`
 - `tests/test_p97_high_fip_production_gate_preflight.py` (20/20 PASSED)
 - `data/mlb_2026/derived/p97_high_fip_production_gate_preflight_summary.json`
