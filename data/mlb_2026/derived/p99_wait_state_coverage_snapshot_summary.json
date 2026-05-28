@@ -1,0 +1,293 @@
+{
+  "phase": "P99",
+  "final_classification": "P99_WAIT_STATE_CONFIRMED_NO_RERUN",
+  "classification_rationale": "No material change since P98 (delta_outcome_rows=0). schedule_coverage_pct=34.0741% (threshold: 60.0%). observed_months=3 (threshold: 4). Wait-state confirmed. No P96/P97 rerun justified. Ingestion readiness confirmed for future outcome append.",
+  "allowed_classifications": [
+    "P99_WAIT_STATE_CONFIRMED_NO_RERUN",
+    "P99_WAIT_STATE_UPDATED_BUT_NO_RERUN",
+    "P99_READY_FOR_P96_RERUN_AUTHORIZATION",
+    "P99_WAIT_STATE_SNAPSHOT_FAILED_VALIDATION"
+  ],
+  "date": "2026-05-28",
+  "generated_at": "2026-05-28T11:35:24.548829Z",
+  "git_head": "61063ba",
+  "step1_upstream_verification": {
+    "step": "step1_upstream_verification",
+    "all_gates_ok": true,
+    "gates_passed": [
+      "P98_file_exists",
+      "P97_file_exists",
+      "P96_file_exists",
+      "P95_file_exists",
+      "P94_file_exists",
+      "P84E_file_exists",
+      "P98_classification_ok",
+      "P97_classification_ok",
+      "P96_classification_ok",
+      "P95_classification_ok",
+      "P94_classification_ok",
+      "P98_p96_rerun_ready_false",
+      "P98_all_thresholds_wait",
+      "P98_governance_flags_clean",
+      "P98_paper_diagnostic_governance_ok"
+    ],
+    "failures": []
+  },
+  "step2_coverage_snapshot": {
+    "step": "step2_coverage_snapshot",
+    "schedule_rows": 2430,
+    "total_canonical_rows": 828,
+    "outcome_available_rows": 808,
+    "rows_with_sp_fip_delta": 808,
+    "high_fip_rows": 287,
+    "mid_fip_rows": 343,
+    "low_fip_rows": 178,
+    "observed_months": [
+      "2026-03",
+      "2026-04",
+      "2026-05"
+    ],
+    "n_observed_months": 3,
+    "date_range": {
+      "min": "2026-03-25",
+      "max": "2026-05-31"
+    },
+    "schedule_coverage_pct": 34.0741,
+    "outcome_coverage_pct": 33.251,
+    "p98_baseline_comparison": {
+      "p98_baseline_canonical_rows": 828,
+      "p98_baseline_outcome_rows": 808,
+      "p98_baseline_high_fip_n": 287,
+      "p98_baseline_mid_fip_n": 343,
+      "p98_baseline_low_fip_n": 178,
+      "p98_baseline_coverage_pct": 34.0741,
+      "p98_baseline_observed_months": 3,
+      "delta_canonical_rows": 0,
+      "delta_outcome_rows": 0,
+      "delta_high_fip_rows": 0,
+      "delta_mid_fip_rows": 0,
+      "delta_low_fip_rows": 0,
+      "delta_observed_months": 0,
+      "delta_schedule_coverage_pct": 0.0,
+      "coverage_unchanged": true,
+      "material_change": false
+    },
+    "status": "PASSED"
+  },
+  "step3_ingestion_readiness": {
+    "step": "step3_ingestion_readiness",
+    "ingestion_readiness": "READY_FOR_FUTURE_OUTCOME_APPEND",
+    "checks": {
+      "p84e_source_rows_exist": true,
+      "p84e_jsonl_parseable": true,
+      "total_rows_parsed": 828,
+      "parse_errors": 0,
+      "required_fields_present": true,
+      "fields_missing_counts": {},
+      "fip_segmentation_possible": true,
+      "outcome_rows_count": 808,
+      "segmentable_rows_count": 808,
+      "no_production_ready_rows": true,
+      "no_odds_used_rows": true,
+      "no_paper_only_false_rows": true,
+      "no_diagnostic_only_false_rows": true,
+      "governance_row_violations": {
+        "production_ready_true": 0,
+        "odds_used_true": 0,
+        "paper_only_false": 0,
+        "diagnostic_only_false": 0
+      }
+    },
+    "failures": [],
+    "required_fields_checked": [
+      "game_date",
+      "game_id",
+      "outcome_available",
+      "sp_fip_delta",
+      "predicted_side",
+      "actual_winner",
+      "is_correct",
+      "model_probability",
+      "paper_only",
+      "diagnostic_only",
+      "production_ready",
+      "odds_used"
+    ],
+    "status": "PASSED"
+  },
+  "step4_recheck_trigger_state": {
+    "step": "step4_recheck_trigger_state",
+    "thresholds": [
+      {
+        "threshold": "coverage_threshold_for_p96_rerun",
+        "current_value": 34.0741,
+        "required_value": 60.0,
+        "unit": "percent",
+        "status": "WAIT"
+      },
+      {
+        "threshold": "season_span_threshold",
+        "current_value": 3,
+        "required_value": 4,
+        "unit": "months",
+        "status": "WAIT"
+      },
+      {
+        "threshold": "incremental_outcome_rows_since_p98",
+        "current_value": 0,
+        "required_value": 150,
+        "unit": "rows",
+        "status": "WAIT"
+      },
+      {
+        "threshold": "incremental_high_fip_rows_since_p98",
+        "current_value": 0,
+        "required_value": 50,
+        "unit": "rows",
+        "status": "WAIT"
+      },
+      {
+        "threshold": "combined_rerun_gate",
+        "requires": [
+          "coverage_threshold_for_p96_rerun=READY",
+          "season_span_threshold=READY"
+        ],
+        "status": "WAIT",
+        "note": "READY only if coverage>=60% AND observed_months>=4"
+      }
+    ],
+    "ready_count": 0,
+    "wait_count": 5,
+    "p96_rerun_ready": false,
+    "status": "PASSED"
+  },
+  "step5_wait_state_recommendation": {
+    "step": "step5_wait_state_recommendation",
+    "state": "WAIT_ACCUMULATE",
+    "recommendation": "NO_RERUN",
+    "reason": "COVERAGE_UNCHANGED_OR_INSUFFICIENT",
+    "coverage_unchanged": true,
+    "material_change": false,
+    "p96_rerun_ready": false,
+    "allowed_next_actions": [
+      {
+        "action": "monitor_coverage",
+        "description": "Continue watching 2026 schedule_coverage_pct. No action until thresholds trigger.",
+        "safe": true
+      },
+      {
+        "action": "accumulate_2026_outcomes",
+        "description": "Let 2026 season proceed. Accumulate outcome-attached rows as games complete.",
+        "safe": true
+      },
+      {
+        "action": "rerun_p99_when_new_outcomes_arrive",
+        "description": "Rerun P99 after materially more 2026 outcomes are available. Compare delta vs P98 baseline.",
+        "safe": true
+      },
+      {
+        "action": "rerun_p96_only_when_thresholds_met",
+        "description": "Rerun P96 drift monitor only when: schedule_coverage_pct >= 60 AND observed_months >= 4. Do not rerun prematurely.",
+        "safe": true
+      },
+      {
+        "action": "design_ingestion_pipeline_diagnostic_plan",
+        "description": "May design or review the outcome-ingestion pipeline for future data append. No model fitting, no score transforms, no production mutation.",
+        "safe": true
+      }
+    ],
+    "prohibited_next_actions": [
+      {
+        "action": "production_promotion",
+        "reason": "production_governance_gate=FAIL in P97. CEO authorization required."
+      },
+      {
+        "action": "recommendation_surface",
+        "reason": "recommendation_contract_gate=FAIL in P97. No paper rec contract."
+      },
+      {
+        "action": "odds_integration",
+        "reason": "odds_dataset_gate=FAIL in P97. No legal odds dataset."
+      },
+      {
+        "action": "ev_clv_kelly_computation",
+        "reason": "market_edge_gate=FAIL in P97. No legal odds data."
+      },
+      {
+        "action": "calibration_refit",
+        "reason": "calibration_gate=FAIL in P97. No refit authorized."
+      },
+      {
+        "action": "champion_replacement",
+        "reason": "production_governance_gate=FAIL in P97. No champion mutation."
+      },
+      {
+        "action": "taiwan_lottery_paper_recommendation",
+        "reason": "recommendation_allowed=false. governance lock."
+      },
+      {
+        "action": "stake_sizing",
+        "reason": "risk_control_gate=FAIL in P97. Kelly not computed."
+      },
+      {
+        "action": "rerun_p96_p97_before_coverage_threshold",
+        "reason": "Premature rerun wastes diagnostic credibility; wait for thresholds."
+      }
+    ],
+    "next_recheck_trigger": {
+      "schedule_coverage_pct_threshold": 60.0,
+      "observed_months_threshold": 4,
+      "new_outcome_rows_threshold": 150,
+      "new_high_fip_rows_threshold": 50,
+      "trigger_description": "Rerun P99 when any of these conditions change materially. Rerun P96 only when schedule_coverage_pct >= 60 AND observed_months >= 4."
+    },
+    "status": "PASSED"
+  },
+  "step6_final_classification": {
+    "step": "step6_final_classification",
+    "final_classification": "P99_WAIT_STATE_CONFIRMED_NO_RERUN",
+    "rationale": "No material change since P98 (delta_outcome_rows=0). schedule_coverage_pct=34.0741% (threshold: 60.0%). observed_months=3 (threshold: 4). Wait-state confirmed. No P96/P97 rerun justified. Ingestion readiness confirmed for future outcome append.",
+    "coverage_pct": 34.0741,
+    "n_observed_months": 3,
+    "coverage_unchanged": true,
+    "material_change": false,
+    "delta_outcome_rows": 0,
+    "p96_rerun_ready": false,
+    "ingestion_readiness": "READY_FOR_FUTURE_OUTCOME_APPEND",
+    "wait_state_recommendation": "NO_RERUN"
+  },
+  "governance_guards": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "platt_scaling": false,
+    "isotonic_scaling": false,
+    "score_transform_refit": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false,
+    "source_artifacts_modified": false,
+    "status": "PASSED"
+  },
+  "governance_all_pass": true,
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_ready": false,
+  "real_bet_allowed": false,
+  "recommendation_allowed": false,
+  "product_surface_allowed": false
+}

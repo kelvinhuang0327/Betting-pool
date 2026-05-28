@@ -1,25 +1,42 @@
-# Active Task — P98 Data Coverage Accumulation Gate
+# Active Task — P99 Wait-State Coverage Snapshot
 
 > **[P0 Active — Issued by CEO 2026-05-28 Asia/Taipei]**
-> **Predecessor**: P97 committed at `6ef4c49` (`P97_HIGH_FIP_PREFLIGHT_SIGNAL_PASS_PRODUCTION_BLOCKED`)
+> **Predecessor**: P98 committed at `61063ba` (`P98_WAIT_ACCUMULATE_COVERAGE_UNCHANGED`)
 > **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
 > **CEO Decision reference**: `00-Plan/roadmap/CEO-Decision.md` (2026-05-28, `CEO_DECISION_PARTIALLY_APPROVED`)
 > **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0K
 
 ## Current Task
-P98 — COMPLETED（2026-05-28）
+P99 — COMPLETED（2026-05-28）
 
 ## Final Classification
+✅ `P99_WAIT_STATE_CONFIRMED_NO_RERUN`
+
+**rationale**: No material change since P98 (delta_outcome_rows=0, delta_canonical_rows=0). schedule_coverage_pct=34.0741% (threshold: 60%). observed_months=3 (threshold: 4). Coverage unchanged — wait-state confirmed. Ingestion readiness: READY_FOR_FUTURE_OUTCOME_APPEND. All 5 recheck thresholds: WAIT. p96_rerun_ready=False.
+
+## Blocker Summary (Primary: DATA_COVERAGE_BLOCKER)
+- `DATA_COVERAGE_BLOCKER` — 34.07% coverage, 3 months only (need >=60%, >=4 months) → WAIT
+- `ingestion_readiness=READY_FOR_FUTURE_OUTCOME_APPEND` — schema and governance checks pass for future appends
+- delta_canonical_rows=0, delta_outcome_rows=0, delta_high_fip_rows=0 (no new data since P98)
+- Recheck trigger: rerun P99 when new 2026 outcomes arrive; rerun P96 only when coverage>=60% AND months>=4
+
+## Committed Artifacts
+- `scripts/_p99_wait_state_coverage_snapshot.py`
+- `tests/test_p99_wait_state_coverage_snapshot.py` (20/20 PASSED)
+- `data/mlb_2026/derived/p99_wait_state_coverage_snapshot_summary.json`
+- `report/p99_wait_state_coverage_snapshot_20260528.md`
+
+---
+
+## Previous Task
+P98 — COMPLETED（2026-05-28）
+
+## Final Classification (P98)
 ✅ `P98_WAIT_ACCUMULATE_COVERAGE_UNCHANGED`
 
 **rationale**: No new rows since P97 baseline (delta_outcome_rows=0). schedule_coverage_pct=34.0741% (threshold: 60.0%). observed_months=3 (threshold: 4). Coverage unchanged — system must remain in wait/accumulate mode. No P96/P97 rerun justified. All 5 recheck thresholds: WAIT. p96_rerun_ready=False.
 
-## Blocker Summary (Primary: DATA_COVERAGE_BLOCKER)
-- `DATA_COVERAGE_BLOCKER` — 34.07% coverage, 3 months only (need >=60%, >=4 months) → WAIT
-- Recheck trigger: run P98 again when new 2026 outcome rows arrive; rerun P96 only when coverage>=60% AND months>=4
-- delta_canonical_rows=0, delta_outcome_rows=0, delta_high_fip_rows=0 (no new data since P97)
-
-## Committed Artifacts
+## Committed Artifacts (P98)
 - `scripts/_p98_data_coverage_accumulation_gate.py`
 - `tests/test_p98_data_coverage_accumulation_gate.py` (20/20 PASSED)
 - `data/mlb_2026/derived/p98_data_coverage_accumulation_gate_summary.json`
