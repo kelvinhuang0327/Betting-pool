@@ -1,16 +1,16 @@
-# Active Task — P94 High-FIP Subset Diagnostic / FIP-Stratified Tracking Gate
+# Active Task — P96 High-FIP Segment Drift Monitor
 
 > **[P0 Active — Issued by CEO 2026-05-28 Asia/Taipei]**
-> **Predecessor**: P93 committed at `2221f0f` (`P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP`)
+> **Predecessor**: P95 committed at `25eced8` (`P95_FIP_STRATIFIED_SHADOW_TRACKER_READY_WITH_LIMITED_COVERAGE`)
 > **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
 > **CEO Decision reference**: `00-Plan/roadmap/CEO-Decision.md` (2026-05-28, `CEO_DECISION_PARTIALLY_APPROVED`)
-> **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0I
+> **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0J
 
 ## Current Task
-P95 — COMPLETED（2026-05-28）
+P96 — COMPLETED（2026-05-28）
 
 ## Final Classification
-✅ `P95_FIP_STRATIFIED_SHADOW_TRACKER_READY_WITH_LIMITED_COVERAGE`
+✅ `P96_HIGH_FIP_DRIFT_MONITOR_STABLE_COVERAGE_LIMITED`
 
 **rationale**: All tolerance checks passed（high/mid/low FIP segment metrics match P93/P94 within 1e-4）. Partial coverage 828/2430=34.07% (March–May only) → READY_WITH_LIMITED_COVERAGE. High-FIP diagnostic tracking allowed; mid/low FIP watch-only. No EV/CLV/Kelly/recommendation/production.
 
