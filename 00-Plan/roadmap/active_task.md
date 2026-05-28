@@ -1,15 +1,39 @@
-# Active Task — P96 High-FIP Segment Drift Monitor
+# Active Task — P97 HIGH_FIP Production-Gate Preflight
 
 > **[P0 Active — Issued by CEO 2026-05-28 Asia/Taipei]**
-> **Predecessor**: P95 committed at `25eced8` (`P95_FIP_STRATIFIED_SHADOW_TRACKER_READY_WITH_LIMITED_COVERAGE`)
+> **Predecessor**: P96 committed at `73edb41` (`P96_HIGH_FIP_DRIFT_MONITOR_STABLE_COVERAGE_LIMITED`)
 > **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
 > **CEO Decision reference**: `00-Plan/roadmap/CEO-Decision.md` (2026-05-28, `CEO_DECISION_PARTIALLY_APPROVED`)
 > **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0J
 
 ## Current Task
-P96 — COMPLETED（2026-05-28）
+P97 — COMPLETED（2026-05-28）
 
 ## Final Classification
+✅ `P97_HIGH_FIP_PREFLIGHT_SIGNAL_PASS_PRODUCTION_BLOCKED`
+
+**rationale**: Signal gate PASS (P94/P95/P96 all stable, HIGH_FIP hit_rate=0.641115). Segment gate PASS (HIGH_FIP diagnostic-only, MID/LOW watch-only). Production BLOCKED by 8 failing gates: calibration_gate, coverage_gate, market_edge_gate, odds_dataset_gate, production_governance_gate, recommendation_contract_gate, risk_control_gate, season_span_gate. readiness_ratio=0.2000 (2/10). No production promotion. No EV/CLV/Kelly/recommendation/odds.
+
+## Blocker Summary
+- `DATA_COVERAGE_BLOCKER` — 34.07% coverage, 3 months only (need >=60%, >=4 months)
+- `CALIBRATION_BLOCKER` — no OOS calibration diagnostic
+- `LEGAL_ODDS_BLOCKER` — no legal odds dataset
+- `MARKET_EDGE_BLOCKER` — no EV/CLV validation
+- `RISK_CONTROL_BLOCKER` — no stake/risk caps approved
+- `PRODUCT_GOVERNANCE_BLOCKER` — no CEO production-review authorization
+
+## Committed Artifacts
+- `scripts/_p97_high_fip_production_gate_preflight.py`
+- `tests/test_p97_high_fip_production_gate_preflight.py` (20/20 PASSED)
+- `data/mlb_2026/derived/p97_high_fip_production_gate_preflight_summary.json`
+- `report/p97_high_fip_production_gate_preflight_20260528.md`
+
+---
+
+## Previous Task
+P96 — COMPLETED（2026-05-28）
+
+## Final Classification (P96)
 ✅ `P96_HIGH_FIP_DRIFT_MONITOR_STABLE_COVERAGE_LIMITED`
 
 **rationale**: All tolerance checks passed（high/mid/low FIP segment metrics match P93/P94 within 1e-4）. Partial coverage 828/2430=34.07% (March–May only) → READY_WITH_LIMITED_COVERAGE. High-FIP diagnostic tracking allowed; mid/low FIP watch-only. No EV/CLV/Kelly/recommendation/production.
