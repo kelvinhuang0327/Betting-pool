@@ -1,26 +1,42 @@
-# Active Task — P99 Wait-State Coverage Snapshot
+# Active Task — P100 Wait-State No-Op Guard
 
-> **[P0 Active — Issued by CEO 2026-05-28 Asia/Taipei]**
-> **Predecessor**: P98 committed at `61063ba` (`P98_WAIT_ACCUMULATE_COVERAGE_UNCHANGED`)
+> **[P0 Active — Issued by CEO 2026-05-29 Asia/Taipei]**
+> **Predecessor**: P99 committed at `4b62513` (`P99_WAIT_STATE_CONFIRMED_NO_RERUN`)
 > **Branch**: `main` | **Mode**: `paper_only=true | diagnostic_only=true | NO_REAL_BET=true`
 > **CEO Decision reference**: `00-Plan/roadmap/CEO-Decision.md` (2026-05-28, `CEO_DECISION_PARTIALLY_APPROVED`)
 > **Roadmap reference**: `00-Plan/roadmap/roadmap.md` Section 0K
 
 ## Current Task
-P99 — COMPLETED（2026-05-28）
+P100 — COMPLETED（2026-05-29）
 
 ## Final Classification
+✅ `P100_WAIT_STATE_NOOP_CONFIRMED`
+
+**rationale**: No new data since P99 (delta_outcome_rows=0, delta_canonical_rows=0). schedule_coverage_pct=34.0741% (threshold: 60%). observed_months=3 (threshold: 4). No-op confirmed. Agent must NOT run any new phase today. All upstream gates (P94–P99) verified. Governance guards clean. action=DO_NOT_RUN_NEW_PHASE. reason=NO_NEW_DATA_AND_THRESHOLDS_NOT_MET.
+
+## Blocker Summary (Primary: DATA_COVERAGE_BLOCKER)
+- `DATA_COVERAGE_BLOCKER` — 34.07% coverage, 3 months only (need >=60%, >=4 months) → WAIT
+- `noop_confirmed=true` — delta_canonical_rows=0, delta_outcome_rows=0, delta_high_fip_rows=0 (no new data since P99)
+- `p96_rerun_ready=False` — upstream P99 confirmed
+- Next check triggers: delta_outcome_rows>0 OR coverage>=60% OR months>=4 OR explicit CEO authorization
+
+## Committed Artifacts
+- `scripts/_p100_wait_state_noop_guard.py`
+- `tests/test_p100_wait_state_noop_guard.py` (20/20 PASSED)
+- `data/mlb_2026/derived/p100_wait_state_noop_guard_summary.json`
+- `report/p100_wait_state_noop_guard_20260529.md`
+
+---
+
+## Previous Task
+P99 — COMPLETED（2026-05-28）
+
+## Final Classification (P99)
 ✅ `P99_WAIT_STATE_CONFIRMED_NO_RERUN`
 
 **rationale**: No material change since P98 (delta_outcome_rows=0, delta_canonical_rows=0). schedule_coverage_pct=34.0741% (threshold: 60%). observed_months=3 (threshold: 4). Coverage unchanged — wait-state confirmed. Ingestion readiness: READY_FOR_FUTURE_OUTCOME_APPEND. All 5 recheck thresholds: WAIT. p96_rerun_ready=False.
 
-## Blocker Summary (Primary: DATA_COVERAGE_BLOCKER)
-- `DATA_COVERAGE_BLOCKER` — 34.07% coverage, 3 months only (need >=60%, >=4 months) → WAIT
-- `ingestion_readiness=READY_FOR_FUTURE_OUTCOME_APPEND` — schema and governance checks pass for future appends
-- delta_canonical_rows=0, delta_outcome_rows=0, delta_high_fip_rows=0 (no new data since P98)
-- Recheck trigger: rerun P99 when new 2026 outcomes arrive; rerun P96 only when coverage>=60% AND months>=4
-
-## Committed Artifacts
+## Committed Artifacts (P99)
 - `scripts/_p99_wait_state_coverage_snapshot.py`
 - `tests/test_p99_wait_state_coverage_snapshot.py` (20/20 PASSED)
 - `data/mlb_2026/derived/p99_wait_state_coverage_snapshot_summary.json`
