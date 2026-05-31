@@ -1,8 +1,9 @@
 
-# Active Task — P101 Two-Lane Product Roadmap Re-alignment
+# Active Task — P102 Outcome-Only Strategy Backtest Scorecard
 
-- Final Classification: P101_TWO_LANE_ROADMAP_READY_DIAGNOSTIC_ONLY
-- Lane A: Taiwan Sports Lottery Pregame Market Contract (paper-only)
-- Lane B: Outcome-Only Strategy Backtest and Learning Plan (diagnostic-only)
-- Governance: paper_only=true, diagnostic_only=true, production_ready=false
+- Final Classification: P102_OUTCOME_ONLY_SCORECARD_READY_DIAGNOSTIC_ONLY
+- Scorecard: see summary/report
+- Strongest: HIGH_FIP
+- Watch-only: ['MID_FIP', 'LOW_FIP']
 - Date: 2026-05-31
+- Governance: paper_only=true, diagnostic_only=true, production_ready=false
