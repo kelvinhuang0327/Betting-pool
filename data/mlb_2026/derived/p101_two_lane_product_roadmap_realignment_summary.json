@@ -1,0 +1,92 @@
+{
+  "classification": "P101_TWO_LANE_ROADMAP_READY_DIAGNOSTIC_ONLY",
+  "lane_a": {
+    "lane": "A",
+    "title": "Taiwan Sports Lottery Pregame Market Contract",
+    "markets": [
+      {
+        "type": "moneyline",
+        "supported": true,
+        "required_fields": [
+          "game_id",
+          "predicted_side",
+          "source_trace",
+          "odds"
+        ],
+        "blocked_reason": "legal odds missing if not present"
+      },
+      {
+        "type": "run_line",
+        "supported": false,
+        "required_fields": [
+          "game_id",
+          "predicted_side",
+          "source_trace",
+          "odds"
+        ],
+        "blocked_reason": "future odds data required"
+      },
+      {
+        "type": "total_runs",
+        "supported": false,
+        "required_fields": [
+          "game_id",
+          "predicted_side",
+          "source_trace",
+          "odds"
+        ],
+        "blocked_reason": "future odds data required"
+      },
+      {
+        "type": "first_five_innings",
+        "supported": false,
+        "required_fields": [
+          "game_id",
+          "predicted_side",
+          "source_trace",
+          "odds"
+        ],
+        "blocked_reason": "future odds data required"
+      }
+    ],
+    "unsupported_market_status": true,
+    "required_source_trace": true,
+    "required_odds_fields": true,
+    "recommendation_allowed": false
+  },
+  "lane_b": {
+    "lane": "B",
+    "title": "Outcome-Only Strategy Backtest and Learning Plan",
+    "strategies": [
+      "HIGH_FIP_diagnostic_segment",
+      "MID_FIP_watch_only",
+      "LOW_FIP_watch_only"
+    ],
+    "scorecard_fields": [
+      "hit_rate",
+      "AUC",
+      "Brier",
+      "ECE",
+      "monthly_stability",
+      "side_split",
+      "rolling_drift"
+    ],
+    "strategy_comparison_matrix": true,
+    "learning_loop_proposal": "Based on prediction success rate, update strategy weights (paper-only)",
+    "win_loss_score_simulation": "If source data supports, simulate win/loss and scores",
+    "calibration_refit": false,
+    "production_mutation": false
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false
+  }
+}
