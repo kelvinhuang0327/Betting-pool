@@ -1,4 +1,4 @@
-P114 Legal Odds Source Requirements Spec
-final_classification: P114_LEGAL_ODDS_SOURCE_REQUIREMENTS_READY_WITH_BLOCKERS
+P115 Paper-Only Odds Ingestion Contract Fixture
+final_classification: P115_PAPER_ONLY_ODDS_INGESTION_CONTRACT_READY_WITH_BLOCKERS
 status: IN_PROGRESS
 
