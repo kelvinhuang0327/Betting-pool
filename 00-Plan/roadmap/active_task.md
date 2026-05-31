@@ -1,8 +1,8 @@
 
-# Active Task — P108 Outcome-Only Diagnostic Tracking Report
+# Active Task — P109 Outcome-Only Tracking Drift Snapshot
 
-- Final Classification: P108_DIAGNOSTIC_TRACKING_REPORT_READY
-- Tracking: HIGH_FIP=IMMEDIATE_DIAGNOSTIC_TRACKING, MID_FIP/LOW_FIP/ALL_ROWS=WATCH_ONLY_CONTINUE, 其他依 summary
+- Final Classification: P109_TRACKING_DRIFT_SNAPSHOT_READY_DIAGNOSTIC_ONLY
+- Drift Snapshot: HIGH_FIP, MID_FIP, LOW_FIP, ALL_ROWS
 - Governance: paper_only=true, diagnostic_only=true, production_ready=false
-- Next Implementation Target: P109 Outcome-Only Tracking Drift Snapshot
+- Next Implementation Target: P110 Outcome-Only Tracking Dashboard Contract
 - Date: 2026-05-31
