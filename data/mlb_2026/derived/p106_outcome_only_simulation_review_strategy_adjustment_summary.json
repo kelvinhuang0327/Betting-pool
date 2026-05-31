@@ -1,0 +1,257 @@
+{
+  "date": "2026-05-31",
+  "final_classification": "P106_SIMULATION_REVIEW_ADJUSTMENT_READY_DIAGNOSTIC_ONLY",
+  "adjustment_plan": {
+    "ALL_ROWS": {
+      "decision": "WATCH_ONLY",
+      "rationale": "維持觀察，暫不升級。",
+      "hit_rate": 0.5555555555555556,
+      "eligible_rows": 828,
+      "monthly_accuracy": {
+        "2026-05": 0.5573770491803278,
+        "2026-04": 0.5424164524421594,
+        "2026-03": 0.6164383561643836
+      },
+      "side_split_accuracy": {
+        "home": 0.5768321513002365,
+        "away": 0.5333333333333333
+      },
+      "average_score_margin": 0.818069306930693,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-2--1": 175,
+        "5-9": 131,
+        "-4--3": 88,
+        ">=10": 23,
+        "<=-10": 6,
+        "1-2": 185,
+        "-9--5": 79,
+        "3-4": 121
+      }
+    },
+    "HIGH_FIP": {
+      "decision": "TRACK_DIAGNOSTIC",
+      "rationale": "高命中率且樣本數足夠，維持診斷追蹤。",
+      "hit_rate": 0.5596330275229358,
+      "eligible_rows": 218,
+      "monthly_accuracy": {
+        "2026-05": 0.5729166666666666,
+        "2026-04": 0.5567010309278351,
+        "2026-03": 0.52
+      },
+      "side_split_accuracy": {
+        "home": null,
+        "away": 0.5596330275229358
+      },
+      "average_score_margin": 1.0467289719626167,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-2--1": 51,
+        "<=-10": 3,
+        "5-9": 42,
+        "3-4": 32,
+        "1-2": 42,
+        "-4--3": 21,
+        "-9--5": 17,
+        ">=10": 6
+      }
+    },
+    "MID_FIP": {
+      "decision": "WATCH_ONLY",
+      "rationale": "樣本數或穩定性不足，僅觀察不升級。",
+      "hit_rate": 0.5497382198952879,
+      "eligible_rows": 191,
+      "monthly_accuracy": {
+        "2026-05": 0.5542168674698795,
+        "2026-04": 0.5531914893617021,
+        "2026-03": 0.5
+      },
+      "side_split_accuracy": {
+        "home": 0.6170212765957447,
+        "away": 0.4845360824742268
+      },
+      "average_score_margin": 0.6417112299465241,
+      "median_score_margin": 1,
+      "score_margin_buckets": {
+        "5-9": 33,
+        "-4--3": 21,
+        "-2--1": 44,
+        "3-4": 24,
+        "1-2": 47,
+        "-9--5": 17,
+        ">=10": 1
+      }
+    },
+    "LOW_FIP": {
+      "decision": "WATCH_ONLY",
+      "rationale": "樣本數或穩定性不足，僅觀察不升級。",
+      "hit_rate": 0.5164835164835165,
+      "eligible_rows": 182,
+      "monthly_accuracy": {
+        "2026-05": 0.5376344086021505,
+        "2026-04": 0.4868421052631579,
+        "2026-03": 0.5384615384615384
+      },
+      "side_split_accuracy": {
+        "home": 0.5108695652173914,
+        "away": 0.5222222222222223
+      },
+      "average_score_margin": -0.11797752808988764,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-2--1": 32,
+        "-4--3": 28,
+        "-9--5": 21,
+        "1-2": 51,
+        "5-9": 12,
+        "3-4": 27,
+        "<=-10": 3,
+        ">=10": 4
+      }
+    },
+    "PRIMARY_125": {
+      "decision": "WATCH_ONLY",
+      "rationale": "維持觀察，暫不升級。",
+      "hit_rate": 0.588469184890656,
+      "eligible_rows": 503,
+      "monthly_accuracy": {
+        "2026-05": 0.5741626794258373,
+        "2026-04": 0.5867768595041323,
+        "2026-03": 0.6538461538461539
+      },
+      "side_split_accuracy": {
+        "home": 0.595166163141994,
+        "away": 0.5755813953488372
+      },
+      "average_score_margin": 1.2484725050916496,
+      "median_score_margin": 1,
+      "score_margin_buckets": {
+        ">=10": 17,
+        "-2--1": 108,
+        "1-2": 108,
+        "5-9": 93,
+        "-9--5": 46,
+        "3-4": 78,
+        "-4--3": 40,
+        "<=-10": 1
+      }
+    },
+    "SHADOW_100": {
+      "decision": "WATCH_ONLY",
+      "rationale": "維持觀察，暫不升級。",
+      "hit_rate": 0.581056466302368,
+      "eligible_rows": 549,
+      "monthly_accuracy": {
+        "2026-05": 0.5818965517241379,
+        "2026-04": 0.5708812260536399,
+        "2026-03": 0.625
+      },
+      "side_split_accuracy": {
+        "home": 0.595166163141994,
+        "away": 0.5596330275229358
+      },
+      "average_score_margin": 1.1548507462686568,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        ">=10": 18,
+        "-2--1": 117,
+        "<=-10": 3,
+        "1-2": 116,
+        "5-9": 101,
+        "-9--5": 51,
+        "3-4": 84,
+        "-4--3": 46
+      }
+    },
+    "TIER_A": {
+      "decision": "NEED_MORE_SAMPLE",
+      "rationale": "樣本數過少，需更多資料。",
+      "hit_rate": 0.4823529411764706,
+      "eligible_rows": 85,
+      "monthly_accuracy": {
+        "2026-05": 0.5531914893617021,
+        "2026-04": 0.38235294117647056,
+        "2026-03": 0.5
+      },
+      "side_split_accuracy": {
+        "home": 0.4878048780487805,
+        "away": 0.4772727272727273
+      },
+      "average_score_margin": 0,
+      "median_score_margin": -1.0,
+      "score_margin_buckets": {
+        "-2--1": 18,
+        "5-9": 8,
+        "-4--3": 13,
+        "1-2": 19,
+        "-9--5": 12,
+        "3-4": 12,
+        ">=10": 2
+      }
+    },
+    "TIER_B": {
+      "decision": "NEED_MORE_SAMPLE",
+      "rationale": "樣本數過少，需更多資料。",
+      "hit_rate": 0.5463917525773195,
+      "eligible_rows": 97,
+      "monthly_accuracy": {
+        "2026-05": 0.5217391304347826,
+        "2026-04": 0.5714285714285714,
+        "2026-03": 0.5555555555555556
+      },
+      "side_split_accuracy": {
+        "home": 0.5294117647058824,
+        "away": 0.5652173913043478
+      },
+      "average_score_margin": -0.22340425531914893,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-4--3": 15,
+        "-9--5": 9,
+        "1-2": 32,
+        "-2--1": 14,
+        "3-4": 15,
+        "<=-10": 3,
+        ">=10": 2,
+        "5-9": 4
+      }
+    }
+  },
+  "strongest_strategy": "PRIMARY_125",
+  "weakest_strategy": "LOW_FIP",
+  "sample_limited_strategies": [
+    "TIER_A",
+    "TIER_B"
+  ],
+  "learning_rules": {
+    "improvement_metric": "hit_rate >= 0.60 且樣本數 >= 150",
+    "downgrade_metric": "hit_rate < 0.50 或月穩定性顯著下滑",
+    "minimum_sample_threshold": 100,
+    "next_data_checkpoint": "2026-06-15",
+    "allowed_next_action": "維持診斷/觀察，嚴禁推薦/production/投注/EV/CLV/Kelly/台灣運彩/實盤/資料異動",
+    "prohibited_action": "任何 production、推薦、投注、EV、CLV、Kelly、台灣運彩、資料異動、production_mutation"
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false
+  },
+  "next_implementation_target": "P107 Outcome-Only Strategy Adjustment Backlog"
+}
