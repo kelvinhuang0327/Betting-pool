@@ -1,4 +1,4 @@
-P113 Paper-Only Market Contract Schema Fixture
-final_classification: P113_MARKET_CONTRACT_SCHEMA_FIXTURE_READY_WITH_BLOCKERS
+P114 Legal Odds Source Requirements Spec
+final_classification: P114_LEGAL_ODDS_SOURCE_REQUIREMENTS_READY_WITH_BLOCKERS
 status: IN_PROGRESS
 
