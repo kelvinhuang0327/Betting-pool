@@ -1,0 +1,50 @@
+{
+  "date": "2026-05-31",
+  "final_classification": "P112_LANE_A_MARKET_CONTRACT_GAP_REVIEW_READY_DIAGNOSTIC_ONLY",
+  "market_gaps": [
+    {
+      "market_type": "moneyline",
+      "gap_type": "missing_odds",
+      "required_fields": ["game_id", "predicted_side", "source_trace", "odds"],
+      "pipeline_fields": ["game_id", "predicted_side", "source_prediction_version"],
+      "strategy_coverage": ["HIGH_FIP", "MID_FIP", "LOW_FIP"],
+      "note": "outcome-only pipeline 不產生 odds，無法對齊合約要求"
+    },
+    {
+      "market_type": "run_line",
+      "gap_type": "market_not_supported",
+      "required_fields": ["game_id", "predicted_side", "source_trace", "odds"],
+      "pipeline_fields": [],
+      "strategy_coverage": [],
+      "note": "run_line 市場 outcome-only pipeline 未覆蓋"
+    },
+    {
+      "market_type": "total_runs",
+      "gap_type": "market_not_supported",
+      "required_fields": ["game_id", "predicted_side", "source_trace", "odds"],
+      "pipeline_fields": [],
+      "strategy_coverage": [],
+      "note": "total_runs 市場 outcome-only pipeline 未覆蓋"
+    },
+    {
+      "market_type": "first_five_innings",
+      "gap_type": "market_not_supported",
+      "required_fields": ["game_id", "predicted_side", "source_trace", "odds"],
+      "pipeline_fields": [],
+      "strategy_coverage": [],
+      "note": "first_five_innings 市場 outcome-only pipeline 未覆蓋"
+    }
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false
+  }
+}
