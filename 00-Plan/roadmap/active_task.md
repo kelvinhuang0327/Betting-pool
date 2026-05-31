@@ -1,4 +1,4 @@
-P112 Lane A Market-Contract Gap Review
-final_classification: P112_LANE_A_MARKET_CONTRACT_GAP_REVIEW_READY_DIAGNOSTIC_ONLY
+P113 Paper-Only Market Contract Schema Fixture
+final_classification: P113_MARKET_CONTRACT_SCHEMA_FIXTURE_READY_WITH_BLOCKERS
 status: IN_PROGRESS
 
