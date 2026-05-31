@@ -1,0 +1,1269 @@
+{
+  "violation_fixture_metadata": {
+    "fixture_version": "P119.20260531",
+    "generated_at": "2026-05-31",
+    "final_classification": "P119_GATE_VIOLATION_FIXTURE_READY_WITH_BLOCKERS"
+  },
+  "source_p118_gate_reference": "data/mlb_2026/derived/p118_recommendation_row_validation_gate_summary.json",
+  "negative_fixture_scope": "Synthetic negative-test fixture for recommendation row gate validation. All cases are expected to be blocked by the P118 gate.",
+  "invalid_recommendation_rows": 65,
+  "violation_cases": [
+    {
+      "violation_id": "recommendation_allowed_true_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "recommendation_allowed": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks recommendation_allowed_true_violation for moneyline_winner",
+      "blocked_fields": [
+        "recommendation_allowed"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "production_ready_true_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "production_ready": true
+      },
+      "violated_invariants": [
+        "NO_PRODUCTION_READY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks production_ready_true_violation for moneyline_winner",
+      "blocked_fields": [
+        "production_ready"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "real_odds_present_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "odds": 1.95,
+        "real_odds": 1.95
+      },
+      "violated_invariants": [
+        "NO_REAL_ODDS"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks real_odds_present_violation for moneyline_winner",
+      "blocked_fields": [
+        "odds",
+        "real_odds"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "ev_field_present_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "ev": 0.12
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks ev_field_present_violation for moneyline_winner",
+      "blocked_fields": [
+        "ev"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "clv_field_present_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "clv": 0.08
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks clv_field_present_violation for moneyline_winner",
+      "blocked_fields": [
+        "clv"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "kelly_field_present_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "kelly": 0.05
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks kelly_field_present_violation for moneyline_winner",
+      "blocked_fields": [
+        "kelly"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "stake_field_present_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "stake": 100
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks stake_field_present_violation for moneyline_winner",
+      "blocked_fields": [
+        "stake"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "profit_field_present_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "profit": 50
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks profit_field_present_violation for moneyline_winner",
+      "blocked_fields": [
+        "profit"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_source_trace_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "provider_id": null,
+        "fetch_time": null
+      },
+      "violated_invariants": [
+        "SOURCE_TRACE_REQUIRED"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_source_trace_violation for moneyline_winner",
+      "blocked_fields": [
+        "provider_id",
+        "fetch_time"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_legal_provider_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "legal_provider_authorized": false
+      },
+      "violated_invariants": [
+        "LEGAL_PROVIDER_REQUIRED_BEFORE_ACTIVATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_legal_provider_violation for moneyline_winner",
+      "blocked_fields": [
+        "legal_provider_authorized"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "canonical_row_mutation_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "canonical_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_CANONICAL_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks canonical_row_mutation_violation for moneyline_winner",
+      "blocked_fields": [
+        "canonical_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "outcome_row_mutation_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "outcome_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_OUTCOME_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks outcome_row_mutation_violation for moneyline_winner",
+      "blocked_fields": [
+        "outcome_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "taiwan_lottery_recommendation_true_violation",
+      "market_id": "moneyline_winner",
+      "invalid_row_patch": {
+        "taiwan_lottery_recommendation": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks taiwan_lottery_recommendation_true_violation for moneyline_winner",
+      "blocked_fields": [
+        "taiwan_lottery_recommendation"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "recommendation_allowed_true_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "recommendation_allowed": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks recommendation_allowed_true_violation for run_line_handicap",
+      "blocked_fields": [
+        "recommendation_allowed"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "production_ready_true_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "production_ready": true
+      },
+      "violated_invariants": [
+        "NO_PRODUCTION_READY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks production_ready_true_violation for run_line_handicap",
+      "blocked_fields": [
+        "production_ready"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "real_odds_present_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "odds": 1.95,
+        "real_odds": 1.95
+      },
+      "violated_invariants": [
+        "NO_REAL_ODDS"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks real_odds_present_violation for run_line_handicap",
+      "blocked_fields": [
+        "odds",
+        "real_odds"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "ev_field_present_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "ev": 0.12
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks ev_field_present_violation for run_line_handicap",
+      "blocked_fields": [
+        "ev"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "clv_field_present_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "clv": 0.08
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks clv_field_present_violation for run_line_handicap",
+      "blocked_fields": [
+        "clv"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "kelly_field_present_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "kelly": 0.05
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks kelly_field_present_violation for run_line_handicap",
+      "blocked_fields": [
+        "kelly"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "stake_field_present_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "stake": 100
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks stake_field_present_violation for run_line_handicap",
+      "blocked_fields": [
+        "stake"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "profit_field_present_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "profit": 50
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks profit_field_present_violation for run_line_handicap",
+      "blocked_fields": [
+        "profit"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_source_trace_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "provider_id": null,
+        "fetch_time": null
+      },
+      "violated_invariants": [
+        "SOURCE_TRACE_REQUIRED"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_source_trace_violation for run_line_handicap",
+      "blocked_fields": [
+        "provider_id",
+        "fetch_time"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_legal_provider_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "legal_provider_authorized": false
+      },
+      "violated_invariants": [
+        "LEGAL_PROVIDER_REQUIRED_BEFORE_ACTIVATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_legal_provider_violation for run_line_handicap",
+      "blocked_fields": [
+        "legal_provider_authorized"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "canonical_row_mutation_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "canonical_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_CANONICAL_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks canonical_row_mutation_violation for run_line_handicap",
+      "blocked_fields": [
+        "canonical_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "outcome_row_mutation_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "outcome_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_OUTCOME_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks outcome_row_mutation_violation for run_line_handicap",
+      "blocked_fields": [
+        "outcome_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "taiwan_lottery_recommendation_true_violation",
+      "market_id": "run_line_handicap",
+      "invalid_row_patch": {
+        "taiwan_lottery_recommendation": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks taiwan_lottery_recommendation_true_violation for run_line_handicap",
+      "blocked_fields": [
+        "taiwan_lottery_recommendation"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "recommendation_allowed_true_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "recommendation_allowed": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks recommendation_allowed_true_violation for total_runs_over_under",
+      "blocked_fields": [
+        "recommendation_allowed"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "production_ready_true_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "production_ready": true
+      },
+      "violated_invariants": [
+        "NO_PRODUCTION_READY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks production_ready_true_violation for total_runs_over_under",
+      "blocked_fields": [
+        "production_ready"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "real_odds_present_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "odds": 1.95,
+        "real_odds": 1.95
+      },
+      "violated_invariants": [
+        "NO_REAL_ODDS"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks real_odds_present_violation for total_runs_over_under",
+      "blocked_fields": [
+        "odds",
+        "real_odds"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "ev_field_present_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "ev": 0.12
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks ev_field_present_violation for total_runs_over_under",
+      "blocked_fields": [
+        "ev"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "clv_field_present_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "clv": 0.08
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks clv_field_present_violation for total_runs_over_under",
+      "blocked_fields": [
+        "clv"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "kelly_field_present_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "kelly": 0.05
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks kelly_field_present_violation for total_runs_over_under",
+      "blocked_fields": [
+        "kelly"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "stake_field_present_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "stake": 100
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks stake_field_present_violation for total_runs_over_under",
+      "blocked_fields": [
+        "stake"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "profit_field_present_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "profit": 50
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks profit_field_present_violation for total_runs_over_under",
+      "blocked_fields": [
+        "profit"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_source_trace_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "provider_id": null,
+        "fetch_time": null
+      },
+      "violated_invariants": [
+        "SOURCE_TRACE_REQUIRED"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_source_trace_violation for total_runs_over_under",
+      "blocked_fields": [
+        "provider_id",
+        "fetch_time"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_legal_provider_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "legal_provider_authorized": false
+      },
+      "violated_invariants": [
+        "LEGAL_PROVIDER_REQUIRED_BEFORE_ACTIVATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_legal_provider_violation for total_runs_over_under",
+      "blocked_fields": [
+        "legal_provider_authorized"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "canonical_row_mutation_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "canonical_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_CANONICAL_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks canonical_row_mutation_violation for total_runs_over_under",
+      "blocked_fields": [
+        "canonical_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "outcome_row_mutation_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "outcome_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_OUTCOME_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks outcome_row_mutation_violation for total_runs_over_under",
+      "blocked_fields": [
+        "outcome_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "taiwan_lottery_recommendation_true_violation",
+      "market_id": "total_runs_over_under",
+      "invalid_row_patch": {
+        "taiwan_lottery_recommendation": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks taiwan_lottery_recommendation_true_violation for total_runs_over_under",
+      "blocked_fields": [
+        "taiwan_lottery_recommendation"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "recommendation_allowed_true_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "recommendation_allowed": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks recommendation_allowed_true_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "recommendation_allowed"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "production_ready_true_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "production_ready": true
+      },
+      "violated_invariants": [
+        "NO_PRODUCTION_READY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks production_ready_true_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "production_ready"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "real_odds_present_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "odds": 1.95,
+        "real_odds": 1.95
+      },
+      "violated_invariants": [
+        "NO_REAL_ODDS"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks real_odds_present_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "odds",
+        "real_odds"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "ev_field_present_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "ev": 0.12
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks ev_field_present_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "ev"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "clv_field_present_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "clv": 0.08
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks clv_field_present_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "clv"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "kelly_field_present_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "kelly": 0.05
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks kelly_field_present_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "kelly"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "stake_field_present_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "stake": 100
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks stake_field_present_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "stake"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "profit_field_present_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "profit": 50
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks profit_field_present_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "profit"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_source_trace_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "provider_id": null,
+        "fetch_time": null
+      },
+      "violated_invariants": [
+        "SOURCE_TRACE_REQUIRED"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_source_trace_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "provider_id",
+        "fetch_time"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_legal_provider_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "legal_provider_authorized": false
+      },
+      "violated_invariants": [
+        "LEGAL_PROVIDER_REQUIRED_BEFORE_ACTIVATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_legal_provider_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "legal_provider_authorized"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "canonical_row_mutation_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "canonical_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_CANONICAL_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks canonical_row_mutation_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "canonical_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "outcome_row_mutation_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "outcome_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_OUTCOME_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks outcome_row_mutation_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "outcome_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "taiwan_lottery_recommendation_true_violation",
+      "market_id": "first_five_innings_if_supported_later",
+      "invalid_row_patch": {
+        "taiwan_lottery_recommendation": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks taiwan_lottery_recommendation_true_violation for first_five_innings_if_supported_later",
+      "blocked_fields": [
+        "taiwan_lottery_recommendation"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "recommendation_allowed_true_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "recommendation_allowed": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks recommendation_allowed_true_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "recommendation_allowed"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "production_ready_true_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "production_ready": true
+      },
+      "violated_invariants": [
+        "NO_PRODUCTION_READY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks production_ready_true_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "production_ready"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "real_odds_present_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "odds": 1.95,
+        "real_odds": 1.95
+      },
+      "violated_invariants": [
+        "NO_REAL_ODDS"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks real_odds_present_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "odds",
+        "real_odds"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "ev_field_present_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "ev": 0.12
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks ev_field_present_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "ev"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "clv_field_present_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "clv": 0.08
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks clv_field_present_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "clv"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "kelly_field_present_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "kelly": 0.05
+      },
+      "violated_invariants": [
+        "NO_EV_CLV_KELLY"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks kelly_field_present_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "kelly"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "stake_field_present_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "stake": 100
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks stake_field_present_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "stake"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "profit_field_present_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "profit": 50
+      },
+      "violated_invariants": [
+        "NO_STAKE_OR_PROFIT"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks profit_field_present_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "profit"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_source_trace_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "provider_id": null,
+        "fetch_time": null
+      },
+      "violated_invariants": [
+        "SOURCE_TRACE_REQUIRED"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_source_trace_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "provider_id",
+        "fetch_time"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "missing_legal_provider_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "legal_provider_authorized": false
+      },
+      "violated_invariants": [
+        "LEGAL_PROVIDER_REQUIRED_BEFORE_ACTIVATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks missing_legal_provider_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "legal_provider_authorized"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "canonical_row_mutation_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "canonical_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_CANONICAL_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks canonical_row_mutation_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "canonical_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "outcome_row_mutation_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "outcome_rows_modified": true
+      },
+      "violated_invariants": [
+        "NO_OUTCOME_ROW_MUTATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks outcome_row_mutation_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "outcome_rows_modified"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    },
+    {
+      "violation_id": "taiwan_lottery_recommendation_true_violation",
+      "market_id": "unsupported_market_placeholder",
+      "invalid_row_patch": {
+        "taiwan_lottery_recommendation": true
+      },
+      "violated_invariants": [
+        "NO_RECOMMENDATION"
+      ],
+      "expected_gate_status": "BLOCKED",
+      "expected_failure_message": "Gate blocks taiwan_lottery_recommendation_true_violation for unsupported_market_placeholder",
+      "blocked_fields": [
+        "taiwan_lottery_recommendation"
+      ],
+      "governance_expected_result": "BLOCKED",
+      "allowed_future_action": "None",
+      "prohibited_action": "Production/Recommendation/Real Odds"
+    }
+  ],
+  "expected_gate_failures": 65,
+  "market_violation_matrix": [
+    "moneyline_winner",
+    "run_line_handicap",
+    "total_runs_over_under",
+    "first_five_innings_if_supported_later",
+    "unsupported_market_placeholder"
+  ],
+  "governance_violation_matrix": [
+    "recommendation_allowed_true_violation",
+    "production_ready_true_violation",
+    "real_odds_present_violation",
+    "ev_field_present_violation",
+    "clv_field_present_violation",
+    "kelly_field_present_violation",
+    "stake_field_present_violation",
+    "profit_field_present_violation",
+    "missing_source_trace_violation",
+    "missing_legal_provider_violation",
+    "canonical_row_mutation_violation",
+    "outcome_row_mutation_violation",
+    "taiwan_lottery_recommendation_true_violation"
+  ],
+  "odds_safety_violation_matrix": [
+    "real_odds_present_violation"
+  ],
+  "source_trace_violation_matrix": [
+    "missing_source_trace_violation"
+  ],
+  "failure_messages": [
+    "Gate blocks recommendation_allowed_true_violation",
+    "Gate blocks production_ready_true_violation",
+    "Gate blocks real_odds_present_violation",
+    "Gate blocks ev_field_present_violation",
+    "Gate blocks clv_field_present_violation",
+    "Gate blocks kelly_field_present_violation",
+    "Gate blocks stake_field_present_violation",
+    "Gate blocks profit_field_present_violation",
+    "Gate blocks missing_source_trace_violation",
+    "Gate blocks missing_legal_provider_violation",
+    "Gate blocks canonical_row_mutation_violation",
+    "Gate blocks outcome_row_mutation_violation",
+    "Gate blocks taiwan_lottery_recommendation_true_violation"
+  ],
+  "allowed_future_actions": [
+    "None"
+  ],
+  "prohibited_actions": [
+    "Production",
+    "Recommendation",
+    "Real Odds"
+  ],
+  "invariant_coverage": [
+    "ROW_IS_PAPER_ONLY",
+    "ROW_IS_DIAGNOSTIC_ONLY",
+    "ROW_IS_BLOCKED",
+    "NO_REAL_ODDS",
+    "NO_RECOMMENDATION",
+    "NO_EV_CLV_KELLY",
+    "NO_STAKE_OR_PROFIT",
+    "NO_PRODUCTION_READY",
+    "NO_LIVE_API_CALLS",
+    "NO_CANONICAL_ROW_MUTATION",
+    "NO_OUTCOME_ROW_MUTATION",
+    "SOURCE_TRACE_REQUIRED",
+    "LEGAL_PROVIDER_REQUIRED_BEFORE_ACTIVATION"
+  ]
+}
