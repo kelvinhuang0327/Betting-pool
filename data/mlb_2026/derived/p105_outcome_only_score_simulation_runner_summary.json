@@ -1,0 +1,305 @@
+{
+  "date": "2026-05-31",
+  "final_classification": "P105_SCORE_SIMULATION_RUNNER_READY_DIAGNOSTIC_ONLY",
+  "supported_simulations": [
+    "win_loss_simulation_by_strategy",
+    "side_accuracy_by_strategy",
+    "monthly_win_loss_simulation",
+    "score_margin_descriptive_analysis"
+  ],
+  "blocked_simulations": [
+    "profit_simulation_blocked",
+    "ev_simulation_blocked",
+    "clv_simulation_blocked",
+    "kelly_or_stake_simulation_blocked",
+    "taiwan_lottery_recommendation_blocked"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false
+  },
+  "strategies": {
+    "ALL_ROWS": {
+      "strategy_id": "ALL_ROWS",
+      "strategy_name": "ALL_ROWS",
+      "eligible_rows": 828,
+      "wins": 460,
+      "losses": 368,
+      "hit_rate": 0.5555555555555556,
+      "home_predicted_count": 423,
+      "away_predicted_count": 405,
+      "side_split_accuracy": {
+        "home": 0.5768321513002365,
+        "away": 0.5333333333333333
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5573770491803278,
+        "2026-04": 0.5424164524421594,
+        "2026-03": 0.6164383561643836
+      },
+      "average_score_margin": 0.818069306930693,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-2--1": 175,
+        "5-9": 131,
+        "-4--3": 88,
+        ">=10": 23,
+        "<=-10": 6,
+        "1-2": 185,
+        "-9--5": 79,
+        "3-4": 121
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "WATCH_ONLY"
+    },
+    "HIGH_FIP": {
+      "strategy_id": "HIGH_FIP",
+      "strategy_name": "HIGH_FIP",
+      "eligible_rows": 218,
+      "wins": 122,
+      "losses": 96,
+      "hit_rate": 0.5596330275229358,
+      "home_predicted_count": 0,
+      "away_predicted_count": 218,
+      "side_split_accuracy": {
+        "home": null,
+        "away": 0.5596330275229358
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5729166666666666,
+        "2026-04": 0.5567010309278351,
+        "2026-03": 0.52
+      },
+      "average_score_margin": 1.0467289719626167,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-2--1": 51,
+        "<=-10": 3,
+        "5-9": 42,
+        "3-4": 32,
+        "1-2": 42,
+        "-4--3": 21,
+        "-9--5": 17,
+        ">=10": 6
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "TRACK_DIAGNOSTIC"
+    },
+    "MID_FIP": {
+      "strategy_id": "MID_FIP",
+      "strategy_name": "MID_FIP",
+      "eligible_rows": 191,
+      "wins": 105,
+      "losses": 86,
+      "hit_rate": 0.5497382198952879,
+      "home_predicted_count": 94,
+      "away_predicted_count": 97,
+      "side_split_accuracy": {
+        "home": 0.6170212765957447,
+        "away": 0.4845360824742268
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5542168674698795,
+        "2026-04": 0.5531914893617021,
+        "2026-03": 0.5
+      },
+      "average_score_margin": 0.6417112299465241,
+      "median_score_margin": 1,
+      "score_margin_buckets": {
+        "5-9": 33,
+        "-4--3": 21,
+        "-2--1": 44,
+        "3-4": 24,
+        "1-2": 47,
+        "-9--5": 17,
+        ">=10": 1
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "WATCH_ONLY"
+    },
+    "LOW_FIP": {
+      "strategy_id": "LOW_FIP",
+      "strategy_name": "LOW_FIP",
+      "eligible_rows": 182,
+      "wins": 94,
+      "losses": 88,
+      "hit_rate": 0.5164835164835165,
+      "home_predicted_count": 92,
+      "away_predicted_count": 90,
+      "side_split_accuracy": {
+        "home": 0.5108695652173914,
+        "away": 0.5222222222222223
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5376344086021505,
+        "2026-04": 0.4868421052631579,
+        "2026-03": 0.5384615384615384
+      },
+      "average_score_margin": -0.11797752808988764,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-2--1": 32,
+        "-4--3": 28,
+        "-9--5": 21,
+        "1-2": 51,
+        "5-9": 12,
+        "3-4": 27,
+        "<=-10": 3,
+        ">=10": 4
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "WATCH_ONLY"
+    },
+    "PRIMARY_125": {
+      "strategy_id": "PRIMARY_125",
+      "strategy_name": "PRIMARY_125",
+      "eligible_rows": 503,
+      "wins": 296,
+      "losses": 207,
+      "hit_rate": 0.588469184890656,
+      "home_predicted_count": 331,
+      "away_predicted_count": 172,
+      "side_split_accuracy": {
+        "home": 0.595166163141994,
+        "away": 0.5755813953488372
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5741626794258373,
+        "2026-04": 0.5867768595041323,
+        "2026-03": 0.6538461538461539
+      },
+      "average_score_margin": 1.2484725050916496,
+      "median_score_margin": 1,
+      "score_margin_buckets": {
+        ">=10": 17,
+        "-2--1": 108,
+        "1-2": 108,
+        "5-9": 93,
+        "-9--5": 46,
+        "3-4": 78,
+        "-4--3": 40,
+        "<=-10": 1
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "WATCH_ONLY"
+    },
+    "SHADOW_100": {
+      "strategy_id": "SHADOW_100",
+      "strategy_name": "SHADOW_100",
+      "eligible_rows": 549,
+      "wins": 319,
+      "losses": 230,
+      "hit_rate": 0.581056466302368,
+      "home_predicted_count": 331,
+      "away_predicted_count": 218,
+      "side_split_accuracy": {
+        "home": 0.595166163141994,
+        "away": 0.5596330275229358
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5818965517241379,
+        "2026-04": 0.5708812260536399,
+        "2026-03": 0.625
+      },
+      "average_score_margin": 1.1548507462686568,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        ">=10": 18,
+        "-2--1": 117,
+        "<=-10": 3,
+        "1-2": 116,
+        "5-9": 101,
+        "-9--5": 51,
+        "3-4": 84,
+        "-4--3": 46
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "WATCH_ONLY"
+    },
+    "TIER_A": {
+      "strategy_id": "TIER_A",
+      "strategy_name": "TIER_A",
+      "eligible_rows": 85,
+      "wins": 41,
+      "losses": 44,
+      "hit_rate": 0.4823529411764706,
+      "home_predicted_count": 41,
+      "away_predicted_count": 44,
+      "side_split_accuracy": {
+        "home": 0.4878048780487805,
+        "away": 0.4772727272727273
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5531914893617021,
+        "2026-04": 0.38235294117647056,
+        "2026-03": 0.5
+      },
+      "average_score_margin": 0,
+      "median_score_margin": -1.0,
+      "score_margin_buckets": {
+        "-2--1": 18,
+        "5-9": 8,
+        "-4--3": 13,
+        "1-2": 19,
+        "-9--5": 12,
+        "3-4": 12,
+        ">=10": 2
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "WATCH_ONLY"
+    },
+    "TIER_B": {
+      "strategy_id": "TIER_B",
+      "strategy_name": "TIER_B",
+      "eligible_rows": 97,
+      "wins": 53,
+      "losses": 44,
+      "hit_rate": 0.5463917525773195,
+      "home_predicted_count": 51,
+      "away_predicted_count": 46,
+      "side_split_accuracy": {
+        "home": 0.5294117647058824,
+        "away": 0.5652173913043478
+      },
+      "monthly_accuracy": {
+        "2026-05": 0.5217391304347826,
+        "2026-04": 0.5714285714285714,
+        "2026-03": 0.5555555555555556
+      },
+      "average_score_margin": -0.22340425531914893,
+      "median_score_margin": 1.0,
+      "score_margin_buckets": {
+        "-4--3": 15,
+        "-9--5": 9,
+        "1-2": 32,
+        "-2--1": 14,
+        "3-4": 15,
+        "<=-10": 3,
+        ">=10": 2,
+        "5-9": 4
+      },
+      "sample_status": "OK",
+      "diagnostic_status": "WATCH_ONLY"
+    }
+  },
+  "note": "診斷專用，未計算任何 betting/EV/CLV/Kelly/production 相關模組。",
+  "next_implementation_target": "P106 Outcome-Only Simulation Review and Strategy Adjustment Plan"
+}
