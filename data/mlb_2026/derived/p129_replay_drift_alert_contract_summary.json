@@ -1,0 +1,266 @@
+{
+  "replay_drift_alert_contract_status": "READY_WITH_BLOCKERS",
+  "source_replay_gate_status": "READY_WITH_BLOCKERS",
+  "source_replay_run_count": 3,
+  "source_fixture_count": 19,
+  "source_baseline_fingerprint": "d29fcde955c321e384caf65f5add03e8a719ecbb1c6e8fb57177aee04dab5b40",
+  "source_drift_detected": false,
+  "alert_level_definitions": {
+    "GREEN_NO_DRIFT": {
+      "severity": 0,
+      "condition": "No drift across fingerprint/verdict/blocked reasons/rule matrix/unlock prevention",
+      "required_action": "Record pass and continue paper-only diagnostics"
+    },
+    "YELLOW_METADATA_ONLY_DRIFT": {
+      "severity": 1,
+      "condition": "Only reproducibility metadata changed; no verdict/rule/unlock impact",
+      "required_action": "Open baseline change review request and await approval"
+    },
+    "ORANGE_BLOCKED_REASON_OR_RULE_DRIFT": {
+      "severity": 2,
+      "condition": "Blocked reason matrix or rule matrix changed while verdict remains BLOCKED",
+      "required_action": "Block release path, require rule review and approval"
+    },
+    "RED_VERDICT_OR_UNLOCK_DRIFT": {
+      "severity": 3,
+      "condition": "Any verdict changes or any unlock prevention field becomes true",
+      "required_action": "Immediate block and incident review"
+    },
+    "CRITICAL_PROVIDER_OR_PRODUCTION_UNLOCK_DRIFT": {
+      "severity": 4,
+      "condition": "Provider approval/authorization/production unlock indicators become true without legal evidence",
+      "required_action": "Hard block, compliance escalation, and rollback execution"
+    }
+  },
+  "alert_escalation_rules": [
+    {
+      "from_level": "GREEN_NO_DRIFT",
+      "to_level": "YELLOW_METADATA_ONLY_DRIFT",
+      "trigger": "fingerprint changed with metadata-only deltas",
+      "block_required": true
+    },
+    {
+      "from_level": "YELLOW_METADATA_ONLY_DRIFT",
+      "to_level": "ORANGE_BLOCKED_REASON_OR_RULE_DRIFT",
+      "trigger": "blocked reasons or rule matrix changed",
+      "block_required": true
+    },
+    {
+      "from_level": "ORANGE_BLOCKED_REASON_OR_RULE_DRIFT",
+      "to_level": "RED_VERDICT_OR_UNLOCK_DRIFT",
+      "trigger": "any verdict drift or unlock-prevention drift",
+      "block_required": true
+    },
+    {
+      "from_level": "RED_VERDICT_OR_UNLOCK_DRIFT",
+      "to_level": "CRITICAL_PROVIDER_OR_PRODUCTION_UNLOCK_DRIFT",
+      "trigger": "provider/authorization/production flags turn true without verified legal evidence",
+      "block_required": true
+    }
+  ],
+  "blocking_conditions": [
+    {
+      "condition_id": "C001_PREVIOUSLY_BLOCKED_BECOMES_ALLOWED",
+      "condition": "Any previously BLOCKED verdict becomes ALLOWED",
+      "alert_level": "RED_VERDICT_OR_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C002_UNEXPECTED_ALLOWED_COUNT_GT_ZERO",
+      "condition": "unexpected_allowed_count > 0",
+      "alert_level": "RED_VERDICT_OR_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C003_ACTUAL_BLOCKED_LT_EXPECTED_BLOCKED",
+      "condition": "actual_blocked_count < expected_blocked_count",
+      "alert_level": "RED_VERDICT_OR_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C004_RECOMMENDATION_UNLOCK_TRUE",
+      "condition": "recommendation_unlock_allowed becomes true",
+      "alert_level": "RED_VERDICT_OR_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C005_PRODUCTION_UNLOCK_TRUE",
+      "condition": "production_unlock_allowed becomes true",
+      "alert_level": "CRITICAL_PROVIDER_OR_PRODUCTION_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C006_EV_CLV_KELLY_STAKE_PROFIT_UNLOCK_TRUE",
+      "condition": "any EV/CLV/Kelly/stake/profit unlock becomes true",
+      "alert_level": "RED_VERDICT_OR_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C007_PROVIDER_APPROVED_WITHOUT_VERIFIED_LEGAL_EVIDENCE",
+      "condition": "provider_approved=true without verified legal evidence",
+      "alert_level": "CRITICAL_PROVIDER_OR_PRODUCTION_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C008_AUTH_EVIDENCE_PRESENT_WITHOUT_VERIFIED_LEGAL_EVIDENCE",
+      "condition": "authorization_evidence_present=true without verified legal evidence",
+      "alert_level": "CRITICAL_PROVIDER_OR_PRODUCTION_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C009_REAL_ODDS_INGESTED_WITHOUT_APPROVAL",
+      "condition": "real_legal_odds_ingested=true without explicit legal/provider approval",
+      "alert_level": "CRITICAL_PROVIDER_OR_PRODUCTION_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C010_LIVE_OR_PAID_API_CALLS_NON_ZERO",
+      "condition": "live_api_calls>0 or paid_api_called=true",
+      "alert_level": "CRITICAL_PROVIDER_OR_PRODUCTION_UNLOCK_DRIFT"
+    },
+    {
+      "condition_id": "C011_BASELINE_FINGERPRINT_CHANGED_WITHOUT_APPROVAL",
+      "condition": "baseline fingerprint changed and baseline change approval missing",
+      "alert_level": "ORANGE_BLOCKED_REASON_OR_RULE_DRIFT"
+    },
+    {
+      "condition_id": "C012_DRIFT_DETAILS_MISSING_WHEN_DRIFT_DETECTED",
+      "condition": "drift_detected=true but drift_details missing/empty",
+      "alert_level": "ORANGE_BLOCKED_REASON_OR_RULE_DRIFT"
+    }
+  ],
+  "baseline_hash_change_review_rules": {
+    "required_fields": [
+      "baseline_change_request_id",
+      "baseline_change_owner",
+      "baseline_change_reason",
+      "source_fixture_version_before",
+      "source_fixture_version_after",
+      "old_fingerprint",
+      "new_fingerprint",
+      "rule_change_summary",
+      "expected_verdict_delta",
+      "reviewer_approval_status",
+      "reviewer_identity",
+      "approval_timestamp",
+      "rollback_plan",
+      "non_unlock_attestation"
+    ],
+    "approval_policy": "Any baseline fingerprint change requires completed request with reviewer approval before acceptance.",
+    "non_unlock_attestation_required": "Baseline change does not unlock provider/odds/recommendation/production.",
+    "template": {
+      "baseline_change_request_id": "<REQUIRED>",
+      "baseline_change_owner": "<REQUIRED>",
+      "baseline_change_reason": "<REQUIRED>",
+      "source_fixture_version_before": "<REQUIRED>",
+      "source_fixture_version_after": "<REQUIRED>",
+      "old_fingerprint": "<REQUIRED>",
+      "new_fingerprint": "<REQUIRED>",
+      "rule_change_summary": "<REQUIRED>",
+      "expected_verdict_delta": "<REQUIRED>",
+      "reviewer_approval_status": "<REQUIRED>",
+      "reviewer_identity": "<REQUIRED>",
+      "approval_timestamp": "<REQUIRED>",
+      "rollback_plan": "<REQUIRED>",
+      "non_unlock_attestation": "Baseline change does not unlock provider/odds/recommendation/production."
+    }
+  },
+  "verdict_drift_rules": {
+    "rule": "Any verdict transition BLOCKED->ALLOWED or BLOCKED->UNKNOWN is blocking drift",
+    "required_alert_level": "RED_VERDICT_OR_UNLOCK_DRIFT",
+    "block_required": true
+  },
+  "blocked_reason_drift_rules": {
+    "rule": "Blocked reason set changes require rule review even if verdict remains BLOCKED",
+    "required_alert_level": "ORANGE_BLOCKED_REASON_OR_RULE_DRIFT",
+    "block_required": true
+  },
+  "rule_matrix_drift_rules": {
+    "rule": "Rule ID/name mapping drift requires approval before baseline update",
+    "required_alert_level": "ORANGE_BLOCKED_REASON_OR_RULE_DRIFT",
+    "block_required": true
+  },
+  "unlock_prevention_drift_rules": {
+    "rule": "Any unlock-prevention field drift to true is hard-blocking",
+    "required_alert_level": "RED_VERDICT_OR_UNLOCK_DRIFT",
+    "block_required": true
+  },
+  "fingerprint_drift_rules": {
+    "rule": "Fingerprint drift is blocking unless approved baseline-change request exists",
+    "required_alert_level": "YELLOW_METADATA_ONLY_DRIFT",
+    "block_required": true
+  },
+  "reproducibility_metadata_drift_rules": {
+    "rule": "Metadata-only drift can be reviewed under controlled baseline-change workflow",
+    "required_alert_level": "YELLOW_METADATA_ONLY_DRIFT",
+    "block_required": true
+  },
+  "drift_details_required_fields": [
+    "run_id",
+    "drift_type",
+    "observed_value",
+    "expected_value",
+    "impact_scope",
+    "requires_block",
+    "alert_level",
+    "mitigation_action"
+  ],
+  "governance_invariants": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "regression_status": {
+    "targeted_p118_p129_tests_status": "PASS",
+    "targeted_p118_p129_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p129_replay_drift_alert_contract.py tests/test_p128_deterministic_replay_consistency_gate.py tests/test_p127_intake_payload_evaluation_runner_verdict_report.py tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression evidence captured for P129 task."
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Use replay drift alert contract for governance diagnostics only",
+    "Open baseline change request when fingerprint changes",
+    "Keep full regression state explicit: PASS/FAIL/NOT_RUN"
+  ],
+  "prohibited_actions": [
+    "Do not ingest real odds or call live/paid APIs",
+    "Do not activate providers or approve authorization from placeholders",
+    "Do not unlock recommendation/production/EV/CLV/Kelly/stake/profit",
+    "Do not bypass baseline hash change review workflow"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "BASELINE_CHANGE_APPROVAL_REQUIRED_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER"
+  ],
+  "final_classification": "P129_REPLAY_DRIFT_ALERT_CONTRACT_READY_WITH_BLOCKERS",
+  "final_classification_options": [
+    "P129_REPLAY_DRIFT_ALERT_CONTRACT_READY_WITH_BLOCKERS",
+    "P129_REPLAY_DRIFT_ALERT_CONTRACT_BLOCKED_BY_MISSING_ARTIFACTS",
+    "P129_REPLAY_DRIFT_ALERT_CONTRACT_FAILED_VALIDATION"
+  ]
+}
