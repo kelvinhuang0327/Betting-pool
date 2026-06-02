@@ -1,0 +1,1702 @@
+{
+  "drift_alert_replay_drift_execution_gate_status": "READY_WITH_BLOCKERS",
+  "source_drift_alert_replay_drift_contract_status": "READY_WITH_BLOCKERS",
+  "source_replay_run_count": 3,
+  "source_evaluated_drift_event_count": 18,
+  "source_baseline_fingerprint": "4b59b1cedd31a6b303270ce2e223b3a1b7554c4ab0ba274b2bf6cb4f9fb95780",
+  "evaluated_execution_case_count": 25,
+  "execution_cases": [
+    {
+      "execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+      "drift_type": "NO_DRIFT",
+      "alert_level": "GREEN_NO_REPLAY_DRIFT",
+      "source_matrix_or_packet": "no_drift_record_packet",
+      "verdict": "ALLOW_RECORD_ONLY",
+      "blocked": false,
+      "critical_stop": false,
+      "baseline_change_required": false,
+      "drift_details_required": false,
+      "drift_details_complete": true,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "record_only",
+      "sla_class": "SLA_NONE_RECORD_ONLY",
+      "required_owners": [
+        "engineering_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Record-only trace; keep governance locks.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED",
+      "drift_type": "FINGERPRINT_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "source_baseline_fingerprint",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Submit approved baseline change request.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "ALERT_VERDICT_DRIFT_BLOCKED",
+      "drift_type": "ALERT_VERDICT_DRIFT",
+      "alert_level": "RED_REPLAY_VERDICT_OR_BLOCKED_ACTION_DRIFT",
+      "source_matrix_or_packet": "alert_verdict_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "legal_review",
+      "sla_class": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Legal/compliance review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED",
+      "drift_type": "ESCALATION_DECISION_PACKET_DRIFT",
+      "alert_level": "ORANGE_REPLAY_MATRIX_OR_PACKET_DRIFT",
+      "source_matrix_or_packet": "escalation_decision_packet_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_CTO_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "CTO review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED",
+      "drift_type": "ALERT_LEVEL_MATRIX_DRIFT",
+      "alert_level": "ORANGE_REPLAY_MATRIX_OR_PACKET_DRIFT",
+      "source_matrix_or_packet": "alert_level_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_CTO_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "CTO review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED",
+      "drift_type": "DRIFT_TYPE_MATRIX_DRIFT",
+      "alert_level": "ORANGE_REPLAY_MATRIX_OR_PACKET_DRIFT",
+      "source_matrix_or_packet": "drift_type_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_CTO_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "CTO review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED",
+      "drift_type": "ESCALATION_PATH_MATRIX_DRIFT",
+      "alert_level": "ORANGE_REPLAY_MATRIX_OR_PACKET_DRIFT",
+      "source_matrix_or_packet": "escalation_path_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_CTO_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "CTO review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "SLA_MATRIX_DRIFT_BLOCKED",
+      "drift_type": "SLA_MATRIX_DRIFT",
+      "alert_level": "ORANGE_REPLAY_MATRIX_OR_PACKET_DRIFT",
+      "source_matrix_or_packet": "sla_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_CTO_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "CTO review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED",
+      "drift_type": "REQUIRED_OWNER_MATRIX_DRIFT",
+      "alert_level": "ORANGE_REPLAY_MATRIX_OR_PACKET_DRIFT",
+      "source_matrix_or_packet": "required_owner_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "compliance_review",
+      "sla_class": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "compliance_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Compliance review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED",
+      "drift_type": "BLOCKED_ACTION_MATRIX_DRIFT",
+      "alert_level": "RED_REPLAY_VERDICT_OR_BLOCKED_ACTION_DRIFT",
+      "source_matrix_or_packet": "blocked_action_matrix",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "legal_review",
+      "sla_class": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "legal_owner",
+        "compliance_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Legal/compliance review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP",
+      "drift_type": "UNLOCK_PREVENTION_MATRIX_DRIFT",
+      "alert_level": "CRITICAL_REPLAY_UNLOCK_OR_PROVIDER_DRIFT",
+      "source_matrix_or_packet": "unlock_prevention_matrix",
+      "verdict": "CRITICAL_STOP",
+      "blocked": true,
+      "critical_stop": true,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_owners": [
+        "engineering_owner",
+        "security_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Immediate stop, rollback, and executive approval required.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "FINAL_CLASSIFICATION_DRIFT_BLOCKED",
+      "drift_type": "FINAL_CLASSIFICATION_DRIFT",
+      "alert_level": "RED_REPLAY_VERDICT_OR_BLOCKED_ACTION_DRIFT",
+      "source_matrix_or_packet": "final_classification",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_EXECUTIVE_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "ceo_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Executive review and approved baseline change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "REPLAY_RUN_COUNT_DRIFT_BLOCKED",
+      "drift_type": "REPLAY_RUN_COUNT_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "replay_run_count",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Baseline review for replay run count change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "SOURCE_EVENT_COUNT_DRIFT_BLOCKED",
+      "drift_type": "SOURCE_EVENT_COUNT_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "source_evaluated_drift_event_count",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Baseline review for source event count change.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP",
+      "drift_type": "PROVIDER_UNLOCK_DRIFT",
+      "alert_level": "CRITICAL_REPLAY_UNLOCK_OR_PROVIDER_DRIFT",
+      "source_matrix_or_packet": "provider_approved",
+      "verdict": "CRITICAL_STOP",
+      "blocked": true,
+      "critical_stop": true,
+      "baseline_change_required": false,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_owners": [
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Immediate stop: provider unlock drift forbidden.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP",
+      "drift_type": "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT",
+      "alert_level": "CRITICAL_REPLAY_UNLOCK_OR_PROVIDER_DRIFT",
+      "source_matrix_or_packet": "authorization_evidence_present",
+      "verdict": "CRITICAL_STOP",
+      "blocked": true,
+      "critical_stop": true,
+      "baseline_change_required": false,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_owners": [
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Immediate stop: authorization evidence unlock drift forbidden.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP",
+      "drift_type": "RECOMMENDATION_UNLOCK_DRIFT",
+      "alert_level": "CRITICAL_REPLAY_UNLOCK_OR_PROVIDER_DRIFT",
+      "source_matrix_or_packet": "recommendation_allowed",
+      "verdict": "CRITICAL_STOP",
+      "blocked": true,
+      "critical_stop": true,
+      "baseline_change_required": false,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_owners": [
+        "cto_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Immediate stop: recommendation unlock drift forbidden.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP",
+      "drift_type": "PRODUCTION_UNLOCK_DRIFT",
+      "alert_level": "CRITICAL_REPLAY_UNLOCK_OR_PROVIDER_DRIFT",
+      "source_matrix_or_packet": "production_ready",
+      "verdict": "CRITICAL_STOP",
+      "blocked": true,
+      "critical_stop": true,
+      "baseline_change_required": false,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_owners": [
+        "cto_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Immediate stop: production unlock drift forbidden.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP",
+      "drift_type": "REAL_ODDS_INGESTION_DRIFT",
+      "alert_level": "CRITICAL_REPLAY_UNLOCK_OR_PROVIDER_DRIFT",
+      "source_matrix_or_packet": "real_legal_odds_ingested",
+      "verdict": "CRITICAL_STOP",
+      "blocked": true,
+      "critical_stop": true,
+      "baseline_change_required": false,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_owners": [
+        "legal_owner",
+        "data_rights_owner",
+        "compliance_owner",
+        "security_owner",
+        "ceo_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Immediate stop: real odds ingestion forbidden.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP",
+      "drift_type": "LIVE_OR_PAID_API_DRIFT",
+      "alert_level": "CRITICAL_REPLAY_UNLOCK_OR_PROVIDER_DRIFT",
+      "source_matrix_or_packet": "live_api_calls_or_paid_api_called",
+      "verdict": "CRITICAL_STOP",
+      "blocked": true,
+      "critical_stop": true,
+      "baseline_change_required": false,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_owners": [
+        "security_owner",
+        "compliance_owner",
+        "ceo_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Immediate stop: live/paid API drift forbidden.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "DRIFT_DETAILS_MISSING_BLOCKED",
+      "drift_type": "REPLAY_METADATA_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "drift_details",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": false,
+      "drift_details_required": true,
+      "drift_details_complete": false,
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Provide complete drift details schema.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED",
+      "drift_type": "BASELINE_CHANGE_PROCESS_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "baseline_change_request",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Provide baseline_change_request_id and required fields.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED",
+      "drift_type": "BASELINE_CHANGE_PROCESS_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "baseline_change_reviewer_approval",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "escalation_path": "compliance_review",
+      "sla_class": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "legal_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Reviewer approval must be APPROVED.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED",
+      "drift_type": "BASELINE_CHANGE_PROCESS_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "baseline_change_non_unlock_attestation",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "escalation_path": "compliance_review",
+      "sla_class": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "legal_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Provide non-unlock attestation.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    {
+      "execution_case_id": "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED",
+      "drift_type": "BASELINE_CHANGE_PROCESS_DRIFT",
+      "alert_level": "YELLOW_REPLAY_METADATA_ONLY_DRIFT",
+      "source_matrix_or_packet": "baseline_change_rollback_plan",
+      "verdict": "BLOCKED",
+      "blocked": true,
+      "critical_stop": false,
+      "baseline_change_required": true,
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "compliance_owner"
+      ],
+      "blocked_actions": [
+        "provider_unlock",
+        "odds_unlock",
+        "recommendation_unlock",
+        "production_unlock",
+        "ev_clv_kelly_unlock"
+      ],
+      "next_required_action": "Provide rollback plan.",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    }
+  ],
+  "execution_verdict_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": "ALLOW_RECORD_ONLY",
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": "BLOCKED",
+    "ALERT_VERDICT_DRIFT_BLOCKED": "BLOCKED",
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": "BLOCKED",
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": "BLOCKED",
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": "BLOCKED",
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": "BLOCKED",
+    "SLA_MATRIX_DRIFT_BLOCKED": "BLOCKED",
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": "BLOCKED",
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": "BLOCKED",
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": "CRITICAL_STOP",
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": "BLOCKED",
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": "BLOCKED",
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": "BLOCKED",
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": "CRITICAL_STOP",
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": "CRITICAL_STOP",
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": "CRITICAL_STOP",
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": "CRITICAL_STOP",
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": "CRITICAL_STOP",
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": "CRITICAL_STOP",
+    "DRIFT_DETAILS_MISSING_BLOCKED": "BLOCKED",
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": "BLOCKED",
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": "BLOCKED",
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": "BLOCKED",
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": "BLOCKED"
+  },
+  "blocking_condition_enforcement_matrix": {
+    "BLOCKED_OR_CRITICAL_STOP_ENFORCED": [
+      "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED",
+      "ALERT_VERDICT_DRIFT_BLOCKED",
+      "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED",
+      "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED",
+      "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED",
+      "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED",
+      "SLA_MATRIX_DRIFT_BLOCKED",
+      "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED",
+      "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED",
+      "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP",
+      "FINAL_CLASSIFICATION_DRIFT_BLOCKED",
+      "REPLAY_RUN_COUNT_DRIFT_BLOCKED",
+      "SOURCE_EVENT_COUNT_DRIFT_BLOCKED",
+      "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP",
+      "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP",
+      "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP",
+      "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP",
+      "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP",
+      "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP",
+      "DRIFT_DETAILS_MISSING_BLOCKED",
+      "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED",
+      "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED",
+      "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED",
+      "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED"
+    ],
+    "NO_DRIFT_RECORD_ONLY_ENFORCED": [
+      "NO_REPLAY_DRIFT_RECORD_ONLY"
+    ],
+    "CRITICAL_STOP_ENFORCED": [
+      "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP",
+      "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP",
+      "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP",
+      "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP",
+      "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP",
+      "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP",
+      "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP"
+    ]
+  },
+  "baseline_change_review_enforcement_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "ALERT_VERDICT_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "SLA_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "DRIFT_DETAILS_MISSING_BLOCKED": {
+      "baseline_change_review_required": false,
+      "baseline_change_review_complete": true,
+      "enforcement_status": "ENFORCED"
+    },
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "enforcement_status": "BLOCKED"
+    },
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "enforcement_status": "BLOCKED"
+    },
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "enforcement_status": "BLOCKED"
+    },
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": {
+      "baseline_change_review_required": true,
+      "baseline_change_review_complete": false,
+      "enforcement_status": "BLOCKED"
+    }
+  },
+  "drift_detail_validation_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": {
+      "drift_details_required": false,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "ALERT_VERDICT_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "SLA_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "DRIFT_DETAILS_MISSING_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": false,
+      "validation_status": "INVALID"
+    },
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    },
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": {
+      "drift_details_required": true,
+      "drift_details_complete": true,
+      "validation_status": "VALID"
+    }
+  },
+  "escalation_path_execution_matrix": {
+    "case_to_escalation_path": {
+      "NO_REPLAY_DRIFT_RECORD_ONLY": "record_only",
+      "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": "engineering_review",
+      "ALERT_VERDICT_DRIFT_BLOCKED": "legal_review",
+      "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": "cto_review",
+      "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": "cto_review",
+      "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": "cto_review",
+      "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": "cto_review",
+      "SLA_MATRIX_DRIFT_BLOCKED": "cto_review",
+      "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": "compliance_review",
+      "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": "legal_review",
+      "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": "immediate_stop",
+      "FINAL_CLASSIFICATION_DRIFT_BLOCKED": "cto_review",
+      "REPLAY_RUN_COUNT_DRIFT_BLOCKED": "engineering_review",
+      "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": "engineering_review",
+      "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+      "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+      "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+      "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+      "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": "immediate_stop",
+      "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": "immediate_stop",
+      "DRIFT_DETAILS_MISSING_BLOCKED": "engineering_review",
+      "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": "engineering_review",
+      "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": "compliance_review",
+      "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": "compliance_review",
+      "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": "engineering_review"
+    },
+    "escalation_path_counts": {
+      "record_only": 1,
+      "engineering_review": 6,
+      "legal_review": 2,
+      "cto_review": 6,
+      "compliance_review": 3,
+      "immediate_stop": 7
+    }
+  },
+  "sla_execution_matrix": {
+    "case_to_sla_class": {
+      "NO_REPLAY_DRIFT_RECORD_ONLY": "SLA_NONE_RECORD_ONLY",
+      "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "ALERT_VERDICT_DRIFT_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+      "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+      "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+      "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+      "SLA_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+      "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+      "FINAL_CLASSIFICATION_DRIFT_BLOCKED": "SLA_EXECUTIVE_REVIEW",
+      "REPLAY_RUN_COUNT_DRIFT_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+      "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+      "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+      "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+      "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+      "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+      "DRIFT_DETAILS_MISSING_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW"
+    },
+    "sla_class_counts": {
+      "SLA_NONE_RECORD_ONLY": 1,
+      "SLA_STANDARD_ENGINEERING_REVIEW": 6,
+      "SLA_LEGAL_COMPLIANCE_REVIEW": 5,
+      "SLA_CTO_REVIEW": 5,
+      "SLA_IMMEDIATE_STOP": 7,
+      "SLA_EXECUTIVE_REVIEW": 1
+    }
+  },
+  "required_owner_execution_matrix": {
+    "case_to_required_owners": {
+      "NO_REPLAY_DRIFT_RECORD_ONLY": [
+        "engineering_owner"
+      ],
+      "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "ALERT_VERDICT_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner"
+      ],
+      "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "SLA_MATRIX_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner",
+        "compliance_owner"
+      ],
+      "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "legal_owner",
+        "compliance_owner"
+      ],
+      "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": [
+        "engineering_owner",
+        "security_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner"
+      ],
+      "FINAL_CLASSIFICATION_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "cto_owner",
+        "ceo_owner"
+      ],
+      "REPLAY_RUN_COUNT_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": [
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": [
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": [
+        "cto_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": [
+        "cto_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": [
+        "legal_owner",
+        "data_rights_owner",
+        "compliance_owner",
+        "security_owner",
+        "ceo_owner"
+      ],
+      "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": [
+        "security_owner",
+        "compliance_owner",
+        "ceo_owner"
+      ],
+      "DRIFT_DETAILS_MISSING_BLOCKED": [
+        "engineering_owner",
+        "compliance_owner"
+      ],
+      "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": [
+        "engineering_owner",
+        "compliance_owner"
+      ],
+      "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": [
+        "engineering_owner",
+        "compliance_owner",
+        "legal_owner"
+      ],
+      "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": [
+        "engineering_owner",
+        "compliance_owner",
+        "legal_owner"
+      ],
+      "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": [
+        "engineering_owner",
+        "cto_owner",
+        "compliance_owner"
+      ]
+    },
+    "required_owner_counts": {
+      "engineering_owner": 19,
+      "data_rights_owner": 4,
+      "cto_owner": 11,
+      "legal_owner": 8,
+      "compliance_owner": 15,
+      "security_owner": 7,
+      "ceo_owner": 8
+    }
+  },
+  "unlock_prevention_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "ALERT_VERDICT_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "SLA_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "DRIFT_DETAILS_MISSING_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    },
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": {
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false
+    }
+  },
+  "no_unlock_governance_matrix": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "recommendation_allowed": false,
+    "production_ready": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "any_unlock_allowed": false
+  },
+  "invalid_drift_detail_cases": [
+    "DRIFT_DETAILS_MISSING_BLOCKED"
+  ],
+  "invalid_baseline_change_cases": [
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED",
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED",
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED",
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED"
+  ],
+  "enforcement_counts": {
+    "verdict_counts": {
+      "ALLOW_RECORD_ONLY": 1,
+      "BLOCKED": 17,
+      "CRITICAL_STOP": 7
+    },
+    "blocked_case_count": 24,
+    "critical_stop_case_count": 7,
+    "baseline_change_required_case_count": 17,
+    "drift_details_required_case_count": 24,
+    "blocking_condition_enforced_count": 24,
+    "escalation_path_counts": {
+      "record_only": 1,
+      "engineering_review": 6,
+      "legal_review": 2,
+      "cto_review": 6,
+      "compliance_review": 3,
+      "immediate_stop": 7
+    },
+    "sla_class_counts": {
+      "SLA_NONE_RECORD_ONLY": 1,
+      "SLA_STANDARD_ENGINEERING_REVIEW": 6,
+      "SLA_LEGAL_COMPLIANCE_REVIEW": 5,
+      "SLA_CTO_REVIEW": 5,
+      "SLA_IMMEDIATE_STOP": 7,
+      "SLA_EXECUTIVE_REVIEW": 1
+    },
+    "required_owner_counts": {
+      "engineering_owner": 19,
+      "data_rights_owner": 4,
+      "cto_owner": 11,
+      "legal_owner": 8,
+      "compliance_owner": 15,
+      "security_owner": 7,
+      "ceo_owner": 8
+    }
+  },
+  "governance_invariant_summary": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "governance_statement": "Drift execution gate does not imply legal provider approval, real odds approval, recommendation readiness, or production readiness.",
+  "regression_status": {
+    "targeted_p118_p139_tests_status": "PASS",
+    "targeted_p118_p139_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p139_drift_alert_replay_drift_execution_gate.py tests/test_p138_drift_alert_replay_drift_contract.py tests/test_p137_drift_alert_replay_consistency_gate.py tests/test_p136_signoff_drift_alert_runner_escalation_decision_packet.py tests/test_p135_signoff_evidence_drift_alert_contract.py tests/test_p134_signoff_evidence_replay_consistency_gate.py tests/test_p133_escalation_signoff_evidence_packet_validator.py tests/test_p132_decision_card_escalation_router.py tests/test_p131_baseline_change_review_packet_runner_decision_card.py tests/test_p130_baseline_change_review_packet_validator.py tests/test_p129_replay_drift_alert_contract.py tests/test_p128_deterministic_replay_consistency_gate.py tests/test_p127_intake_payload_evaluation_runner_verdict_report.py tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression evidence captured for P139 task."
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Execute drift diagnostics and blocker enforcement only",
+    "Require baseline change review packet before accepting any drift deltas",
+    "Keep targeted/full regression status explicit and truthful"
+  ],
+  "prohibited_actions": [
+    "Do not ingest real odds or call live/paid APIs",
+    "Do not unlock provider/recommendation/production/EV/CLV/Kelly/stake/profit",
+    "Do not treat execution gate output as legal provider approval",
+    "Do not treat execution gate output as real odds approval or recommendation readiness",
+    "Do not treat execution gate output as production readiness"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "BASELINE_CHANGE_APPROVAL_REQUIRED_BLOCKER",
+    "BASELINE_PACKET_REVIEW_REQUIRED_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "DECISION_CARD_ESCALATION_ROUTER_GOVERNANCE_ONLY_BLOCKER",
+    "DECISION_CARD_GOVERNANCE_ONLY_BLOCKER",
+    "DRIFT_ALERT_REPLAY_CONSISTENCY_GOVERNANCE_ONLY_BLOCKER",
+    "DRIFT_ALERT_REPLAY_DRIFT_CONTRACT_GOVERNANCE_ONLY_BLOCKER",
+    "DRIFT_ALERT_REPLAY_DRIFT_EXECUTION_GOVERNANCE_ONLY_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "LEGAL_PROVIDER_EVIDENCE_NOT_APPROVED_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SIGNOFF_DRIFT_ALERT_CONTRACT_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_DRIFT_ALERT_RUNNER_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_EVIDENCE_PACKET_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_REPLAY_CONSISTENCY_GOVERNANCE_ONLY_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER"
+  ],
+  "final_classification": "P139_DRIFT_ALERT_REPLAY_DRIFT_EXECUTION_GATE_READY_WITH_BLOCKERS",
+  "final_classification_options": [
+    "P139_DRIFT_ALERT_REPLAY_DRIFT_EXECUTION_GATE_READY_WITH_BLOCKERS",
+    "P139_DRIFT_ALERT_REPLAY_DRIFT_EXECUTION_GATE_BLOCKED_BY_MISSING_ARTIFACTS",
+    "P139_DRIFT_ALERT_REPLAY_DRIFT_EXECUTION_GATE_FAILED_VALIDATION"
+  ]
+}

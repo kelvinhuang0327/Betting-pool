@@ -1,0 +1,488 @@
+{
+  "signoff_drift_alert_contract_status": "READY_WITH_BLOCKERS",
+  "source_signoff_replay_gate_status": "READY_WITH_BLOCKERS",
+  "source_replay_run_count": 3,
+  "source_signoff_packet_count": 22,
+  "source_invalid_packet_count": 21,
+  "source_baseline_fingerprint": "e085e3d8b4dfa34ad8ede6a6be3fd1df355cfea3d2ad233bb9a0061a88ce3e00",
+  "source_drift_detected": false,
+  "alert_level_definitions": {
+    "GREEN_NO_SIGNOFF_DRIFT": "No drift detected; consistency checks all pass.",
+    "YELLOW_SIGNOFF_METADATA_ONLY_DRIFT": "Metadata-only replay deviations detected.",
+    "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT": "Blocker/evidence matrix drift detected.",
+    "RED_SIGNOFF_VERDICT_OR_ESCALATION_COVERAGE_DRIFT": "Verdict matrix or escalation coverage drift detected.",
+    "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT": "Unlock/provider/governance invariant drift detected."
+  },
+  "drift_type_definitions": {
+    "FINGERPRINT_DRIFT": "Deterministic replay fingerprint mismatch.",
+    "SIGNOFF_VERDICT_MATRIX_DRIFT": "Sign-off verdict matrix differs across runs.",
+    "BLOCKER_CLASSIFICATION_DRIFT": "Blocker classification set differs across runs.",
+    "REQUIRED_EVIDENCE_MATRIX_DRIFT": "Required evidence matrix differs across runs.",
+    "ESCALATION_LEVEL_COVERAGE_DRIFT": "Escalation coverage mapping differs across runs.",
+    "GOVERNANCE_INVARIANT_DRIFT": "Governance invariant values changed.",
+    "UNLOCK_PREVENTION_DRIFT": "Unlock prevention matrix changed.",
+    "SIGNOFF_PACKET_COUNT_DRIFT": "Sign-off packet count changed unexpectedly.",
+    "INVALID_PACKET_COUNT_DRIFT": "Invalid packet count changed unexpectedly.",
+    "REPLAY_METADATA_DRIFT": "Replay metadata changed unexpectedly."
+  },
+  "escalation_path_definitions": {
+    "record_only": "Record event in governance audit log only.",
+    "engineering_review": "Route to engineering owner for review.",
+    "cto_review": "Escalate to CTO governance owner.",
+    "legal_review": "Escalate to legal owner.",
+    "compliance_review": "Escalate to compliance owner.",
+    "security_review": "Escalate to security owner.",
+    "ceo_review": "Escalate to executive/CEO review.",
+    "immediate_stop": "Immediate stop: no governance progression."
+  },
+  "sla_class_definitions": {
+    "SLA_NONE_RECORD_ONLY": "No response time requirement; archival record.",
+    "SLA_STANDARD_ENGINEERING_REVIEW": "Standard engineering review window.",
+    "SLA_CTO_REVIEW": "Expedited CTO review window.",
+    "SLA_LEGAL_COMPLIANCE_REVIEW": "Legal/compliance review required.",
+    "SLA_SECURITY_REVIEW": "Security review required.",
+    "SLA_EXECUTIVE_REVIEW": "Executive review required.",
+    "SLA_IMMEDIATE_STOP": "Immediate stop and incident-style escalation."
+  },
+  "required_signoff_owner_matrix": {
+    "GREEN_NO_SIGNOFF_DRIFT": [
+      "engineering_owner"
+    ],
+    "YELLOW_SIGNOFF_METADATA_ONLY_DRIFT": [
+      "engineering_owner",
+      "compliance_owner"
+    ],
+    "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT": [
+      "engineering_owner",
+      "compliance_owner",
+      "cto_owner"
+    ],
+    "RED_SIGNOFF_VERDICT_OR_ESCALATION_COVERAGE_DRIFT": [
+      "engineering_owner",
+      "cto_owner",
+      "legal_owner",
+      "compliance_owner"
+    ],
+    "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT": [
+      "engineering_owner",
+      "cto_owner",
+      "legal_owner",
+      "compliance_owner",
+      "ceo_owner",
+      "data_rights_owner",
+      "security_owner"
+    ]
+  },
+  "blocking_conditions": [
+    {
+      "condition_id": "C001",
+      "condition": "any previously BLOCKED sign-off verdict becomes ALLOWED",
+      "classification": "BLOCKED",
+      "alert_level": "RED_SIGNOFF_VERDICT_OR_ESCALATION_COVERAGE_DRIFT",
+      "drift_type": "SIGNOFF_VERDICT_MATRIX_DRIFT",
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_CTO_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner"
+      ]
+    },
+    {
+      "condition_id": "C002",
+      "condition": "valid_signoff_packet_template becomes production-ready",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "UNLOCK_PREVENTION_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C003",
+      "condition": "source_signoff_packet_count changes without approved baseline update",
+      "classification": "BLOCKED",
+      "alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+      "drift_type": "SIGNOFF_PACKET_COUNT_DRIFT",
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "cto_owner"
+      ]
+    },
+    {
+      "condition_id": "C004",
+      "condition": "source_invalid_packet_count changes without approved baseline update",
+      "classification": "BLOCKED",
+      "alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+      "drift_type": "INVALID_PACKET_COUNT_DRIFT",
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "cto_owner"
+      ]
+    },
+    {
+      "condition_id": "C005",
+      "condition": "blocker classifications change without approved review",
+      "classification": "BLOCKED",
+      "alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+      "drift_type": "BLOCKER_CLASSIFICATION_DRIFT",
+      "escalation_path": "compliance_review",
+      "sla_class": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "cto_owner"
+      ]
+    },
+    {
+      "condition_id": "C006",
+      "condition": "required evidence matrix changes without approved review",
+      "classification": "BLOCKED",
+      "alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+      "drift_type": "REQUIRED_EVIDENCE_MATRIX_DRIFT",
+      "escalation_path": "legal_review",
+      "sla_class": "SLA_LEGAL_COMPLIANCE_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "cto_owner"
+      ]
+    },
+    {
+      "condition_id": "C007",
+      "condition": "escalation coverage changes without approved review",
+      "classification": "BLOCKED",
+      "alert_level": "RED_SIGNOFF_VERDICT_OR_ESCALATION_COVERAGE_DRIFT",
+      "drift_type": "ESCALATION_LEVEL_COVERAGE_DRIFT",
+      "escalation_path": "cto_review",
+      "sla_class": "SLA_CTO_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner"
+      ]
+    },
+    {
+      "condition_id": "C008",
+      "condition": "governance invariants become false",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "GOVERNANCE_INVARIANT_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C009",
+      "condition": "provider_approved becomes true without verified legal evidence",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "GOVERNANCE_INVARIANT_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C010",
+      "condition": "authorization_evidence_present becomes true without verified legal evidence",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "GOVERNANCE_INVARIANT_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C011",
+      "condition": "recommendation_allowed becomes true",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "UNLOCK_PREVENTION_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C012",
+      "condition": "production_ready becomes true",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "UNLOCK_PREVENTION_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C013",
+      "condition": "EV/CLV/Kelly/stake/profit unlock becomes true",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "UNLOCK_PREVENTION_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C014",
+      "condition": "real_legal_odds_ingested becomes true without explicit legal/provider approval",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "UNLOCK_PREVENTION_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C015",
+      "condition": "live_api_calls or paid_api_called becomes non-zero",
+      "classification": "BLOCKED",
+      "alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+      "drift_type": "UNLOCK_PREVENTION_DRIFT",
+      "escalation_path": "immediate_stop",
+      "sla_class": "SLA_IMMEDIATE_STOP",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "data_rights_owner",
+        "security_owner"
+      ]
+    },
+    {
+      "condition_id": "C016",
+      "condition": "drift_detected=true but drift_details is missing or incomplete",
+      "classification": "BLOCKED",
+      "alert_level": "RED_SIGNOFF_VERDICT_OR_ESCALATION_COVERAGE_DRIFT",
+      "drift_type": "REPLAY_METADATA_DRIFT",
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner"
+      ]
+    },
+    {
+      "condition_id": "C017",
+      "condition": "fingerprint consistency status changes from CONSISTENT",
+      "classification": "BLOCKED",
+      "alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+      "drift_type": "FINGERPRINT_DRIFT",
+      "escalation_path": "engineering_review",
+      "sla_class": "SLA_STANDARD_ENGINEERING_REVIEW",
+      "required_signoff_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "cto_owner"
+      ]
+    }
+  ],
+  "verdict_matrix_drift_rules": {
+    "blocked_to_allowed_is_blocking": true,
+    "valid_template_status_must_remain_governance_only_pending_review": true,
+    "required_alert_level_for_verdict_drift": "RED_SIGNOFF_VERDICT_OR_ESCALATION_COVERAGE_DRIFT",
+    "required_escalation_path": "cto_review"
+  },
+  "blocker_classification_drift_rules": {
+    "blocker_set_change_without_review_is_blocking": true,
+    "required_alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+    "required_escalation_path": "compliance_review"
+  },
+  "required_evidence_matrix_drift_rules": {
+    "evidence_matrix_change_without_review_is_blocking": true,
+    "required_alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+    "required_escalation_path": "legal_review"
+  },
+  "escalation_level_coverage_drift_rules": {
+    "coverage_change_without_review_is_blocking": true,
+    "required_alert_level": "RED_SIGNOFF_VERDICT_OR_ESCALATION_COVERAGE_DRIFT",
+    "required_escalation_path": "cto_review"
+  },
+  "governance_invariant_drift_rules": {
+    "any_false_invariant_is_critical_blocking": true,
+    "required_alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+    "required_escalation_path": "immediate_stop"
+  },
+  "unlock_prevention_drift_rules": {
+    "any_unlock_flag_true_is_critical_blocking": true,
+    "provider_or_authorization_true_without_legal_evidence_is_critical": true,
+    "live_or_paid_api_nonzero_is_critical": true,
+    "required_alert_level": "CRITICAL_SIGNOFF_UNLOCK_OR_PROVIDER_DRIFT",
+    "required_escalation_path": "immediate_stop"
+  },
+  "fingerprint_drift_rules": {
+    "fingerprint_mismatch_is_blocking": true,
+    "required_alert_level": "ORANGE_SIGNOFF_BLOCKER_OR_EVIDENCE_MATRIX_DRIFT",
+    "required_escalation_path": "engineering_review",
+    "hash_algorithm": "sha256"
+  },
+  "drift_details_required_fields": [
+    "drift_event_id",
+    "drift_type",
+    "alert_level",
+    "source_packet_id_or_matrix",
+    "baseline_value",
+    "observed_value",
+    "affected_roles",
+    "affected_blocker_codes",
+    "affected_unlock_flags",
+    "escalation_path",
+    "sla_class",
+    "required_signoff_owners",
+    "reviewer_owner",
+    "remediation_required",
+    "rollback_required",
+    "non_unlock_attestation_required",
+    "created_at",
+    "final_blocked_status"
+  ],
+  "governance_invariant_summary": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "governance_statement": "Sign-off drift alert review does not imply legal provider approval, real odds approval, recommendation readiness, or production readiness.",
+  "regression_status": {
+    "targeted_p118_p135_tests_status": "PASS",
+    "targeted_p118_p135_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p135_signoff_evidence_drift_alert_contract.py tests/test_p134_signoff_evidence_replay_consistency_gate.py tests/test_p133_escalation_signoff_evidence_packet_validator.py tests/test_p132_decision_card_escalation_router.py tests/test_p131_baseline_change_review_packet_runner_decision_card.py tests/test_p130_baseline_change_review_packet_validator.py tests/test_p129_replay_drift_alert_contract.py tests/test_p128_deterministic_replay_consistency_gate.py tests/test_p127_intake_payload_evaluation_runner_verdict_report.py tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression evidence captured for P135 task."
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Use drift alert contract for governance diagnostics only",
+    "Require approved baseline review before accepting structural drift",
+    "Keep full regression state explicit: PASS/FAIL/NOT_RUN"
+  ],
+  "prohibited_actions": [
+    "Do not ingest real odds or call live/paid APIs",
+    "Do not unlock provider/recommendation/production/EV/CLV/Kelly/stake/profit",
+    "Do not treat drift alert review as legal provider approval or production readiness",
+    "Do not bypass blocker resolution and sign-off owner requirements"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "BASELINE_CHANGE_APPROVAL_REQUIRED_BLOCKER",
+    "BASELINE_PACKET_REVIEW_REQUIRED_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "DECISION_CARD_ESCALATION_ROUTER_GOVERNANCE_ONLY_BLOCKER",
+    "DECISION_CARD_GOVERNANCE_ONLY_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SIGNOFF_DRIFT_ALERT_CONTRACT_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_EVIDENCE_PACKET_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_REPLAY_CONSISTENCY_GOVERNANCE_ONLY_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER"
+  ],
+  "final_classification": "P135_SIGNOFF_EVIDENCE_DRIFT_ALERT_CONTRACT_READY_WITH_BLOCKERS",
+  "final_classification_options": [
+    "P135_SIGNOFF_EVIDENCE_DRIFT_ALERT_CONTRACT_READY_WITH_BLOCKERS",
+    "P135_SIGNOFF_EVIDENCE_DRIFT_ALERT_CONTRACT_BLOCKED_BY_MISSING_ARTIFACTS",
+    "P135_SIGNOFF_EVIDENCE_DRIFT_ALERT_CONTRACT_FAILED_VALIDATION"
+  ]
+}
