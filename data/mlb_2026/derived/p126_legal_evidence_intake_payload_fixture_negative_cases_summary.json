@@ -1,0 +1,1128 @@
+{
+  "fixture_metadata": {
+    "fixture_version": "P126.20260601",
+    "generated_at": "2026-06-01",
+    "source_p121_reference": "data/mlb_2026/derived/p121_provider_authorization_evidence_placeholder_summary.json",
+    "source_p125_reference": "data/mlb_2026/derived/p125_legal_evidence_intake_schema_review_owner_gate_summary.json",
+    "source_p125_final_classification": "P125_LEGAL_EVIDENCE_INTAKE_SCHEMA_REVIEW_OWNER_GATE_READY_WITH_BLOCKERS",
+    "final_classification": "P126_LEGAL_EVIDENCE_INTAKE_PAYLOAD_FIXTURE_NEGATIVE_CASES_READY_WITH_BLOCKERS"
+  },
+  "fixture_status": "READY_WITH_BLOCKERS",
+  "negative_gate_case_status": "BLOCKED",
+  "valid_minimal_payload_template": {
+    "intake_id": "INTAKE_PLACEHOLDER_001",
+    "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+    "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+    "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+    "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+    "submitted_by": "<SUBMITTER_REQUIRED>",
+    "submitted_at": "<ISO8601_REQUIRED>",
+    "review_owner": "<REVIEW_OWNER_REQUIRED>",
+    "review_status": "pending",
+    "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+    "authorized_sports": [
+      "baseball"
+    ],
+    "authorized_leagues": [
+      "WBC"
+    ],
+    "authorized_markets": [
+      "moneyline_winner"
+    ],
+    "authorized_data_types": [
+      "odds_reference_metadata_only"
+    ],
+    "authorized_usage_scope": "paper_only_research",
+    "authorized_environment": "paper_only",
+    "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+    "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+    "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+    "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+    "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+    "restriction_notes": "No recommendation/production unlock.",
+    "repository_storage_policy": "No private legal body and no secrets in repo.",
+    "secret_exclusion_attestation": true,
+    "private_contract_body_excluded": true,
+    "row_level_proprietary_odds_excluded": true
+  },
+  "negative_cases": [
+    {
+      "case_id": "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "MISSING_REVIEW_OWNER_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "MISSING_APPROVAL_OWNER_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "REVIEW_STATUS_NOT_APPROVED_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "PLACEHOLDER_AS_EVIDENCE_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<REQUIRED FUTURE FIELD>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "PROVIDER_IDENTITY_MISSING_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "MARKET_SCOPE_MISSING_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "DATA_USAGE_SCOPE_MISSING_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "EFFECTIVE_DATE_MISSING_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "SOURCE_TRACE_MISSING_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "AUDIT_TRAIL_MISSING_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true
+      }
+    },
+    {
+      "case_id": "SECRET_OR_AUTH_URL_PRESENT_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true,
+        "api_key": "REAL_API_KEY_SHOULD_NOT_EXIST",
+        "private_auth_url": "https://private-auth.example.com"
+      }
+    },
+    {
+      "case_id": "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true,
+        "private_contract_body": "PRIVATE CONTRACT CONTENT"
+      }
+    },
+    {
+      "case_id": "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true,
+        "row_level_proprietary_odds": [
+          {
+            "market": "moneyline_winner",
+            "odds": 1.95
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true,
+        "request_recommendation_unlock": true
+      }
+    },
+    {
+      "case_id": "PRODUCTION_UNLOCK_REQUEST_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true,
+        "request_production_unlock": true
+      }
+    },
+    {
+      "case_id": "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED",
+      "payload": {
+        "intake_id": "INTAKE_PLACEHOLDER_001",
+        "evidence_type": "LEGAL_PROVIDER_AUTHORIZATION",
+        "legal_document_reference_id": "<LEGAL_DOC_REFERENCE_REQUIRED>",
+        "provider_legal_name": "<PROVIDER_LEGAL_NAME_REQUIRED>",
+        "provider_identifier": "<PROVIDER_IDENTIFIER_REQUIRED>",
+        "submitted_by": "<SUBMITTER_REQUIRED>",
+        "submitted_at": "<ISO8601_REQUIRED>",
+        "review_owner": "<REVIEW_OWNER_REQUIRED>",
+        "review_status": "pending",
+        "approval_owner": "<APPROVAL_OWNER_REQUIRED>",
+        "authorized_sports": [
+          "baseball"
+        ],
+        "authorized_leagues": [
+          "WBC"
+        ],
+        "authorized_markets": [
+          "moneyline_winner"
+        ],
+        "authorized_data_types": [
+          "odds_reference_metadata_only"
+        ],
+        "authorized_usage_scope": "paper_only_research",
+        "authorized_environment": "paper_only",
+        "effective_date": "<EFFECTIVE_DATE_REQUIRED>",
+        "expiration_date": "<EXPIRATION_DATE_REQUIRED>",
+        "renewal_review_date": "<RENEWAL_REVIEW_DATE_REQUIRED>",
+        "source_trace_reference": "<SOURCE_TRACE_REFERENCE_REQUIRED>",
+        "audit_trail_reference": "<AUDIT_TRAIL_REFERENCE_REQUIRED>",
+        "restriction_notes": "No recommendation/production unlock.",
+        "repository_storage_policy": "No private legal body and no secrets in repo.",
+        "secret_exclusion_attestation": true,
+        "private_contract_body_excluded": true,
+        "row_level_proprietary_odds_excluded": true,
+        "request_ev_unlock": true,
+        "request_clv_unlock": true,
+        "request_kelly_unlock": true
+      }
+    }
+  ],
+  "expected_gate_results": [
+    {
+      "case_id": "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "MISSING_REVIEW_OWNER_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "MISSING_APPROVAL_OWNER_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "REVIEW_STATUS_NOT_APPROVED_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "PLACEHOLDER_AS_EVIDENCE_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "PROVIDER_IDENTITY_MISSING_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "MARKET_SCOPE_MISSING_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "DATA_USAGE_SCOPE_MISSING_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "EFFECTIVE_DATE_MISSING_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "SOURCE_TRACE_MISSING_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "AUDIT_TRAIL_MISSING_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "SECRET_OR_AUTH_URL_PRESENT_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "PRODUCTION_UNLOCK_REQUEST_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    },
+    {
+      "case_id": "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED",
+      "expected_status": "BLOCKED",
+      "expected_provider_approved": false,
+      "expected_authorization_evidence_present": false,
+      "expected_recommendation_unlock_allowed": false,
+      "expected_production_unlock_allowed": false,
+      "expected_real_legal_odds_ingested": false
+    }
+  ],
+  "blocked_reason_matrix": {
+    "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": [
+      "PROVIDER_NOT_APPROVED_BLOCKER",
+      "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER"
+    ],
+    "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": [
+      "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER"
+    ],
+    "MISSING_REVIEW_OWNER_BLOCKED": [
+      "REVIEW_OWNER_MISSING_BLOCKER"
+    ],
+    "MISSING_APPROVAL_OWNER_BLOCKED": [
+      "APPROVAL_OWNER_MISSING_BLOCKER"
+    ],
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKED": [
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKER"
+    ],
+    "PLACEHOLDER_AS_EVIDENCE_BLOCKED": [
+      "PLACEHOLDER_DETECTED_BLOCKER"
+    ],
+    "PROVIDER_IDENTITY_MISSING_BLOCKED": [
+      "PROVIDER_IDENTITY_MISSING_BLOCKER"
+    ],
+    "MARKET_SCOPE_MISSING_BLOCKED": [
+      "MARKET_SCOPE_MISSING_BLOCKER"
+    ],
+    "DATA_USAGE_SCOPE_MISSING_BLOCKED": [
+      "DATA_USAGE_SCOPE_MISSING_BLOCKER"
+    ],
+    "EFFECTIVE_DATE_MISSING_BLOCKED": [
+      "EFFECTIVE_DATE_MISSING_BLOCKER"
+    ],
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": [
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER"
+    ],
+    "SOURCE_TRACE_MISSING_BLOCKED": [
+      "SOURCE_TRACE_MISSING_BLOCKER"
+    ],
+    "AUDIT_TRAIL_MISSING_BLOCKED": [
+      "AUDIT_TRAIL_MISSING_BLOCKER"
+    ],
+    "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": [
+      "SECRET_OR_AUTH_URL_DETECTED_BLOCKER"
+    ],
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": [
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER"
+    ],
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": [
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER"
+    ],
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": [
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER"
+    ],
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKED": [
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKER"
+    ],
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": [
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER"
+    ]
+  },
+  "placeholder_rejection_cases": [
+    "PLACEHOLDER_AS_EVIDENCE_BLOCKED",
+    "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED"
+  ],
+  "review_owner_failure_cases": [
+    "MISSING_REVIEW_OWNER_BLOCKED",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKED"
+  ],
+  "approval_workflow_failure_cases": [
+    "MISSING_APPROVAL_OWNER_BLOCKED",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKED"
+  ],
+  "legal_document_reference_failure_cases": [
+    "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED",
+    "PLACEHOLDER_AS_EVIDENCE_BLOCKED"
+  ],
+  "scope_failure_cases": [
+    "MARKET_SCOPE_MISSING_BLOCKED",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKED"
+  ],
+  "date_failure_cases": [
+    "EFFECTIVE_DATE_MISSING_BLOCKED",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED"
+  ],
+  "source_trace_failure_cases": [
+    "SOURCE_TRACE_MISSING_BLOCKED",
+    "AUDIT_TRAIL_MISSING_BLOCKED"
+  ],
+  "repository_safety_failure_cases": [
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED"
+  ],
+  "secret_detection_failure_cases": [
+    "SECRET_OR_AUTH_URL_PRESENT_BLOCKED"
+  ],
+  "unlock_request_failure_cases": [
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKED",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED"
+  ],
+  "governance_invariants": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "regression_status": {
+    "targeted_p118_p125_tests_status": "PASS",
+    "targeted_p118_p126_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression artifact found in P121 packet."
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Use fixture results only for governance gate validation",
+    "Collect real legal evidence through compliance workflow before any approval consideration",
+    "Keep full regression explicitly PASS/FAIL/NOT_RUN"
+  ],
+  "prohibited_actions": [
+    "Do not approve provider from fixture-only payloads",
+    "Do not unlock recommendation/EV/CLV/Kelly/stake/profit/production",
+    "Do not ingest real legal odds or activate providers",
+    "Do not store secret-like values, auth URLs, or private contract body in repo artifacts"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER"
+  ],
+  "final_classification_options": [
+    "P126_LEGAL_EVIDENCE_INTAKE_PAYLOAD_FIXTURE_NEGATIVE_CASES_READY_WITH_BLOCKERS",
+    "P126_LEGAL_EVIDENCE_INTAKE_PAYLOAD_FIXTURE_NEGATIVE_CASES_BLOCKED_BY_MISSING_P121_OR_P125",
+    "P126_LEGAL_EVIDENCE_INTAKE_PAYLOAD_FIXTURE_NEGATIVE_CASES_FAILED_VALIDATION"
+  ]
+}
