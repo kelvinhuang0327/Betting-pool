@@ -1,0 +1,4060 @@
+{
+  "drift_alert_replay_drift_signoff_packet_gate_status": "READY_WITH_BLOCKERS",
+  "source_drift_alert_replay_drift_execution_gate_status": "READY_WITH_BLOCKERS",
+  "source_evaluated_execution_case_count": 25,
+  "source_invalid_drift_detail_case_count": 1,
+  "source_invalid_baseline_change_case_count": 4,
+  "source_baseline_fingerprint": "4b59b1cedd31a6b303270ce2e223b3a1b7554c4ab0ba274b2bf6cb4f9fb95780",
+  "signoff_packet_schema": {
+    "signoff_packet_id": "string",
+    "source_execution_case_id": "string",
+    "source_verdict": "string",
+    "source_drift_type": "string",
+    "source_alert_level": "string",
+    "source_escalation_path": "string",
+    "source_sla_class": "string",
+    "required_owners": "string[]",
+    "provided_signoff_owners": "string[]",
+    "signer_identity_by_owner": "dict[str,str]",
+    "signer_authority_attestation_by_owner": "dict[str,str]",
+    "signoff_status_by_owner": "dict[str,string]",
+    "signoff_timestamp_by_owner": "dict[str,string]",
+    "evidence_reference_by_owner": "dict[str,string]",
+    "drift_details_reference": "string",
+    "baseline_change_request_reference": "string",
+    "rollback_acknowledgement": "string",
+    "non_unlock_attestation": "string",
+    "provider_unlock_requested": "boolean",
+    "odds_unlock_requested": "boolean",
+    "recommendation_unlock_requested": "boolean",
+    "production_unlock_requested": "boolean",
+    "ev_clv_kelly_unlock_requested": "boolean",
+    "live_or_paid_api_requested": "boolean"
+  },
+  "required_signoff_roles": [
+    "ceo_owner",
+    "compliance_owner",
+    "cto_owner",
+    "data_rights_owner",
+    "engineering_owner",
+    "legal_owner",
+    "security_owner"
+  ],
+  "required_signoff_evidence_fields": [
+    "signoff_packet_id",
+    "source_execution_case_id",
+    "source_verdict",
+    "source_drift_type",
+    "source_alert_level",
+    "source_escalation_path",
+    "source_sla_class",
+    "required_owners",
+    "provided_signoff_owners",
+    "signer_identity_by_owner",
+    "signer_authority_attestation_by_owner",
+    "signoff_status_by_owner",
+    "signoff_timestamp_by_owner",
+    "evidence_reference_by_owner",
+    "drift_details_reference",
+    "baseline_change_request_reference",
+    "rollback_acknowledgement",
+    "non_unlock_attestation",
+    "provider_unlock_requested",
+    "odds_unlock_requested",
+    "recommendation_unlock_requested",
+    "production_unlock_requested",
+    "ev_clv_kelly_unlock_requested",
+    "live_or_paid_api_requested"
+  ],
+  "valid_signoff_packet_template": {
+    "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+    "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+    "source_verdict": "ALLOW_RECORD_ONLY",
+    "source_drift_type": "NO_DRIFT",
+    "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+    "source_escalation_path": "record_only",
+    "source_sla_class": "SLA_NONE_RECORD_ONLY",
+    "required_owners": [
+      "ceo_owner",
+      "compliance_owner",
+      "cto_owner",
+      "data_rights_owner",
+      "engineering_owner",
+      "legal_owner",
+      "security_owner"
+    ],
+    "provided_signoff_owners": [
+      "ceo_owner",
+      "compliance_owner",
+      "cto_owner",
+      "data_rights_owner",
+      "engineering_owner",
+      "legal_owner",
+      "security_owner"
+    ],
+    "signer_identity_by_owner": {
+      "ceo_owner": "ceo_owner@governance.local",
+      "compliance_owner": "compliance_owner@governance.local",
+      "cto_owner": "cto_owner@governance.local",
+      "data_rights_owner": "data_rights_owner@governance.local",
+      "engineering_owner": "engineering_owner@governance.local",
+      "legal_owner": "legal_owner@governance.local",
+      "security_owner": "security_owner@governance.local"
+    },
+    "signer_authority_attestation_by_owner": {
+      "ceo_owner": "Authorized governance sign-off by owner.",
+      "compliance_owner": "Authorized governance sign-off by owner.",
+      "cto_owner": "Authorized governance sign-off by owner.",
+      "data_rights_owner": "Authorized governance sign-off by owner.",
+      "engineering_owner": "Authorized governance sign-off by owner.",
+      "legal_owner": "Authorized governance sign-off by owner.",
+      "security_owner": "Authorized governance sign-off by owner."
+    },
+    "signoff_status_by_owner": {
+      "ceo_owner": "APPROVED",
+      "compliance_owner": "APPROVED",
+      "cto_owner": "APPROVED",
+      "data_rights_owner": "APPROVED",
+      "engineering_owner": "APPROVED",
+      "legal_owner": "APPROVED",
+      "security_owner": "APPROVED"
+    },
+    "signoff_timestamp_by_owner": {
+      "ceo_owner": "2026-06-01T12:00:00Z",
+      "compliance_owner": "2026-06-01T12:00:00Z",
+      "cto_owner": "2026-06-01T12:00:00Z",
+      "data_rights_owner": "2026-06-01T12:00:00Z",
+      "engineering_owner": "2026-06-01T12:00:00Z",
+      "legal_owner": "2026-06-01T12:00:00Z",
+      "security_owner": "2026-06-01T12:00:00Z"
+    },
+    "evidence_reference_by_owner": {
+      "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+      "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+      "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+      "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+      "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+      "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+      "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+    },
+    "drift_details_reference": "governance://drift_details/none",
+    "baseline_change_request_reference": "",
+    "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+    "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+    "provider_unlock_requested": false,
+    "odds_unlock_requested": false,
+    "recommendation_unlock_requested": false,
+    "production_unlock_requested": false,
+    "ev_clv_kelly_unlock_requested": false,
+    "live_or_paid_api_requested": false
+  },
+  "invalid_signoff_packet_cases": [
+    {
+      "case_id": "MISSING_SIGNOFF_PACKET_ID_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SIGNOFF_PACKET_ID_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SOURCE_EXECUTION_CASE_ID_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SOURCE_EXECUTION_CASE_ID_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SOURCE_VERDICT_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SOURCE_VERDICT_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SOURCE_DRIFT_TYPE_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SOURCE_DRIFT_TYPE_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_REQUIRED_OWNERS_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "REQUIRED_OWNERS_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_PROVIDED_SIGNOFF_OWNERS_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "PROVIDED_SIGNOFF_OWNERS_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SIGNER_IDENTITY_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {},
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SIGNER_IDENTITY_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SIGNER_AUTHORITY_ATTESTATION_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {},
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SIGNER_AUTHORITY_ATTESTATION_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "SIGNOFF_STATUS_NOT_APPROVED_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "PENDING",
+          "compliance_owner": "PENDING",
+          "cto_owner": "PENDING",
+          "data_rights_owner": "PENDING",
+          "engineering_owner": "PENDING",
+          "legal_owner": "PENDING",
+          "security_owner": "PENDING"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SIGNOFF_STATUS_NOT_APPROVED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SIGNOFF_TIMESTAMP_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {},
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SIGNOFF_TIMESTAMP_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_EVIDENCE_REFERENCE_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {},
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "EVIDENCE_REFERENCE_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_DRIFT_DETAILS_REFERENCE_FOR_DRIFT_CASE_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "DRIFT_DETAILS_REFERENCE_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_BASELINE_CHANGE_REQUEST_REFERENCE_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "BASELINE_CHANGE_REQUEST_REFERENCE_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_ROLLBACK_ACKNOWLEDGEMENT_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "ROLLBACK_ACKNOWLEDGEMENT_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_NON_UNLOCK_ATTESTATION_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "NON_UNLOCK_ATTESTATION_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "ROLE_MISMATCH_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "ROLE_MISMATCH_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "SIGNOFF_FOR_CRITICAL_STOP_WITH_UNLOCK_REQUEST_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": true,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "CRITICAL_STOP_UNLOCK_REQUEST_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "PROVIDER_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": true,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "PROVIDER_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "ODDS_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": true,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "ODDS_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": true,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "PRODUCTION_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": true,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "PRODUCTION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "EV_CLV_KELLY_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": true,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "EV_CLV_KELLY_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "LIVE_OR_PAID_API_REQUESTED_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet does not imply any unlock or production approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": true
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "LIVE_OR_PAID_API_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "SIGNOFF_PACKET_TREATED_AS_LEGAL_APPROVAL_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet grants legal provider approval.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "LEGAL_APPROVAL_IMPLICATION_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "SIGNOFF_PACKET_TREATED_AS_PRODUCTION_READY_BLOCKED",
+      "packet": {
+        "signoff_packet_id": "P140_SIGNOFF_VALID_TEMPLATE",
+        "source_execution_case_id": "NO_REPLAY_DRIFT_RECORD_ONLY",
+        "source_verdict": "ALLOW_RECORD_ONLY",
+        "source_drift_type": "NO_DRIFT",
+        "source_alert_level": "GREEN_NO_REPLAY_DRIFT",
+        "source_escalation_path": "record_only",
+        "source_sla_class": "SLA_NONE_RECORD_ONLY",
+        "required_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "provided_signoff_owners": [
+          "ceo_owner",
+          "compliance_owner",
+          "cto_owner",
+          "data_rights_owner",
+          "engineering_owner",
+          "legal_owner",
+          "security_owner"
+        ],
+        "signer_identity_by_owner": {
+          "ceo_owner": "ceo_owner@governance.local",
+          "compliance_owner": "compliance_owner@governance.local",
+          "cto_owner": "cto_owner@governance.local",
+          "data_rights_owner": "data_rights_owner@governance.local",
+          "engineering_owner": "engineering_owner@governance.local",
+          "legal_owner": "legal_owner@governance.local",
+          "security_owner": "security_owner@governance.local"
+        },
+        "signer_authority_attestation_by_owner": {
+          "ceo_owner": "Authorized governance sign-off by owner.",
+          "compliance_owner": "Authorized governance sign-off by owner.",
+          "cto_owner": "Authorized governance sign-off by owner.",
+          "data_rights_owner": "Authorized governance sign-off by owner.",
+          "engineering_owner": "Authorized governance sign-off by owner.",
+          "legal_owner": "Authorized governance sign-off by owner.",
+          "security_owner": "Authorized governance sign-off by owner."
+        },
+        "signoff_status_by_owner": {
+          "ceo_owner": "APPROVED",
+          "compliance_owner": "APPROVED",
+          "cto_owner": "APPROVED",
+          "data_rights_owner": "APPROVED",
+          "engineering_owner": "APPROVED",
+          "legal_owner": "APPROVED",
+          "security_owner": "APPROVED"
+        },
+        "signoff_timestamp_by_owner": {
+          "ceo_owner": "2026-06-01T12:00:00Z",
+          "compliance_owner": "2026-06-01T12:00:00Z",
+          "cto_owner": "2026-06-01T12:00:00Z",
+          "data_rights_owner": "2026-06-01T12:00:00Z",
+          "engineering_owner": "2026-06-01T12:00:00Z",
+          "legal_owner": "2026-06-01T12:00:00Z",
+          "security_owner": "2026-06-01T12:00:00Z"
+        },
+        "evidence_reference_by_owner": {
+          "ceo_owner": "governance://evidence/ceo_owner/P140_VALID_TEMPLATE",
+          "compliance_owner": "governance://evidence/compliance_owner/P140_VALID_TEMPLATE",
+          "cto_owner": "governance://evidence/cto_owner/P140_VALID_TEMPLATE",
+          "data_rights_owner": "governance://evidence/data_rights_owner/P140_VALID_TEMPLATE",
+          "engineering_owner": "governance://evidence/engineering_owner/P140_VALID_TEMPLATE",
+          "legal_owner": "governance://evidence/legal_owner/P140_VALID_TEMPLATE",
+          "security_owner": "governance://evidence/security_owner/P140_VALID_TEMPLATE"
+        },
+        "drift_details_reference": "governance://drift_details/none",
+        "baseline_change_request_reference": "",
+        "rollback_acknowledgement": "Rollback plan acknowledged for governance-only signoff.",
+        "non_unlock_attestation": "This signoff packet implies production readiness.",
+        "provider_unlock_requested": false,
+        "odds_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "production_unlock_requested": false,
+        "ev_clv_kelly_unlock_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "PRODUCTION_READY_IMPLICATION_BLOCKER"
+      ]
+    }
+  ],
+  "signoff_packet_verdict_matrix": {
+    "MISSING_SIGNOFF_PACKET_ID_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_SOURCE_EXECUTION_CASE_ID_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_SOURCE_VERDICT_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_SOURCE_DRIFT_TYPE_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_REQUIRED_OWNERS_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_PROVIDED_SIGNOFF_OWNERS_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_SIGNER_IDENTITY_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_SIGNER_AUTHORITY_ATTESTATION_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "SIGNOFF_STATUS_NOT_APPROVED_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_SIGNOFF_TIMESTAMP_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_EVIDENCE_REFERENCE_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_DRIFT_DETAILS_REFERENCE_FOR_DRIFT_CASE_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_BASELINE_CHANGE_REQUEST_REFERENCE_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_ROLLBACK_ACKNOWLEDGEMENT_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "MISSING_NON_UNLOCK_ATTESTATION_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "ROLE_MISMATCH_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "SIGNOFF_FOR_CRITICAL_STOP_WITH_UNLOCK_REQUEST_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "PROVIDER_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "ODDS_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "PRODUCTION_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "EV_CLV_KELLY_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "LIVE_OR_PAID_API_REQUESTED_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "SIGNOFF_PACKET_TREATED_AS_LEGAL_APPROVAL_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "SIGNOFF_PACKET_TREATED_AS_PRODUCTION_READY_BLOCKED": {
+      "status": "BLOCKED"
+    },
+    "VALID_SIGNOFF_PACKET_TEMPLATE": {
+      "status": "GOVERNANCE_ONLY_PENDING_REVIEW"
+    }
+  },
+  "execution_case_signoff_requirement_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": {
+      "required_owners": [
+        "engineering_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": false,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": false,
+      "non_unlock_attestation_required": true
+    },
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": {
+      "required_owners": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "ALERT_VERDICT_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "legal_owner",
+        "compliance_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "SLA_MATRIX_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "compliance_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "legal_owner",
+        "compliance_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": {
+      "required_owners": [
+        "engineering_owner",
+        "security_owner",
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "ceo_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "data_rights_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "required_owners": [
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "required_owners": [
+        "legal_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "required_owners": [
+        "cto_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "required_owners": [
+        "cto_owner",
+        "compliance_owner",
+        "ceo_owner",
+        "security_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": {
+      "required_owners": [
+        "legal_owner",
+        "data_rights_owner",
+        "compliance_owner",
+        "security_owner",
+        "ceo_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": {
+      "required_owners": [
+        "security_owner",
+        "compliance_owner",
+        "ceo_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "DRIFT_DETAILS_MISSING_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": false,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "legal_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "compliance_owner",
+        "legal_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    },
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": {
+      "required_owners": [
+        "engineering_owner",
+        "cto_owner",
+        "compliance_owner"
+      ],
+      "required_signoff_evidence_fields": [
+        "signoff_packet_id",
+        "source_execution_case_id",
+        "source_verdict",
+        "source_drift_type",
+        "source_alert_level",
+        "source_escalation_path",
+        "source_sla_class",
+        "required_owners",
+        "provided_signoff_owners",
+        "signer_identity_by_owner",
+        "signer_authority_attestation_by_owner",
+        "signoff_status_by_owner",
+        "signoff_timestamp_by_owner",
+        "evidence_reference_by_owner",
+        "drift_details_reference",
+        "baseline_change_request_reference",
+        "rollback_acknowledgement",
+        "non_unlock_attestation",
+        "provider_unlock_requested",
+        "odds_unlock_requested",
+        "recommendation_unlock_requested",
+        "production_unlock_requested",
+        "ev_clv_kelly_unlock_requested",
+        "live_or_paid_api_requested"
+      ],
+      "drift_details_reference_required": true,
+      "baseline_change_request_reference_required": true,
+      "rollback_acknowledgement_required": true,
+      "non_unlock_attestation_required": true
+    }
+  },
+  "drift_detail_signoff_requirement_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": {
+      "drift_details_reference_required": false,
+      "drift_details_reference_present": false
+    },
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "ALERT_VERDICT_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "SLA_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "DRIFT_DETAILS_MISSING_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    },
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": {
+      "drift_details_reference_required": true,
+      "drift_details_reference_present": true
+    }
+  },
+  "baseline_change_signoff_requirement_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "ALERT_VERDICT_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "SLA_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "DRIFT_DETAILS_MISSING_BLOCKED": {
+      "baseline_change_request_reference_required": false,
+      "baseline_change_request_reference_present": false
+    },
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    },
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": {
+      "baseline_change_request_reference_required": true,
+      "baseline_change_request_reference_present": true
+    }
+  },
+  "escalation_path_signoff_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": "record_only",
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": "engineering_review",
+    "ALERT_VERDICT_DRIFT_BLOCKED": "legal_review",
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": "cto_review",
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": "cto_review",
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": "cto_review",
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": "cto_review",
+    "SLA_MATRIX_DRIFT_BLOCKED": "cto_review",
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": "compliance_review",
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": "legal_review",
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": "immediate_stop",
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": "cto_review",
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": "engineering_review",
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": "engineering_review",
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": "immediate_stop",
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": "immediate_stop",
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": "immediate_stop",
+    "DRIFT_DETAILS_MISSING_BLOCKED": "engineering_review",
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": "engineering_review",
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": "compliance_review",
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": "compliance_review",
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": "engineering_review"
+  },
+  "sla_signoff_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": "SLA_NONE_RECORD_ONLY",
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": "SLA_STANDARD_ENGINEERING_REVIEW",
+    "ALERT_VERDICT_DRIFT_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+    "SLA_MATRIX_DRIFT_BLOCKED": "SLA_CTO_REVIEW",
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": "SLA_EXECUTIVE_REVIEW",
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": "SLA_IMMEDIATE_STOP",
+    "DRIFT_DETAILS_MISSING_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW",
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": "SLA_LEGAL_COMPLIANCE_REVIEW",
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": "SLA_STANDARD_ENGINEERING_REVIEW"
+  },
+  "owner_signoff_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": [
+      "engineering_owner"
+    ],
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": [
+      "engineering_owner",
+      "data_rights_owner"
+    ],
+    "ALERT_VERDICT_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner",
+      "legal_owner",
+      "compliance_owner"
+    ],
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner"
+    ],
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner"
+    ],
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner"
+    ],
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner"
+    ],
+    "SLA_MATRIX_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner"
+    ],
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner",
+      "compliance_owner"
+    ],
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "legal_owner",
+      "compliance_owner"
+    ],
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": [
+      "engineering_owner",
+      "security_owner",
+      "legal_owner",
+      "compliance_owner",
+      "ceo_owner"
+    ],
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "cto_owner",
+      "ceo_owner"
+    ],
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "data_rights_owner"
+    ],
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": [
+      "engineering_owner",
+      "data_rights_owner"
+    ],
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": [
+      "legal_owner",
+      "compliance_owner",
+      "ceo_owner",
+      "security_owner"
+    ],
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": [
+      "legal_owner",
+      "compliance_owner",
+      "ceo_owner",
+      "security_owner"
+    ],
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": [
+      "cto_owner",
+      "compliance_owner",
+      "ceo_owner",
+      "security_owner"
+    ],
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": [
+      "cto_owner",
+      "compliance_owner",
+      "ceo_owner",
+      "security_owner"
+    ],
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": [
+      "legal_owner",
+      "data_rights_owner",
+      "compliance_owner",
+      "security_owner",
+      "ceo_owner"
+    ],
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": [
+      "security_owner",
+      "compliance_owner",
+      "ceo_owner"
+    ],
+    "DRIFT_DETAILS_MISSING_BLOCKED": [
+      "engineering_owner",
+      "compliance_owner"
+    ],
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": [
+      "engineering_owner",
+      "compliance_owner"
+    ],
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": [
+      "engineering_owner",
+      "compliance_owner",
+      "legal_owner"
+    ],
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": [
+      "engineering_owner",
+      "compliance_owner",
+      "legal_owner"
+    ],
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": [
+      "engineering_owner",
+      "cto_owner",
+      "compliance_owner"
+    ]
+  },
+  "non_unlock_attestation_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": true,
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": true,
+    "ALERT_VERDICT_DRIFT_BLOCKED": true,
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": true,
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": true,
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": true,
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": true,
+    "SLA_MATRIX_DRIFT_BLOCKED": true,
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": true,
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": true,
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": true,
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": true,
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": true,
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": true,
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": true,
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": true,
+    "DRIFT_DETAILS_MISSING_BLOCKED": true,
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": true,
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": true,
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": true,
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": true
+  },
+  "rollback_acknowledgement_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": false,
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": true,
+    "ALERT_VERDICT_DRIFT_BLOCKED": true,
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": true,
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": true,
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": true,
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": true,
+    "SLA_MATRIX_DRIFT_BLOCKED": true,
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": true,
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": true,
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": true,
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": true,
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": true,
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": true,
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": true,
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": true,
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": true,
+    "DRIFT_DETAILS_MISSING_BLOCKED": true,
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": true,
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": true,
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": true,
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": true
+  },
+  "unlock_prevention_matrix": {
+    "NO_REPLAY_DRIFT_RECORD_ONLY": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "FINGERPRINT_DRIFT_BASELINE_REVIEW_REQUIRED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "ALERT_VERDICT_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "ESCALATION_DECISION_PACKET_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "ALERT_LEVEL_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "DRIFT_TYPE_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "ESCALATION_PATH_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "SLA_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "REQUIRED_OWNER_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "BLOCKED_ACTION_MATRIX_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "UNLOCK_PREVENTION_MATRIX_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "FINAL_CLASSIFICATION_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "REPLAY_RUN_COUNT_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "SOURCE_EVENT_COUNT_DRIFT_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "PROVIDER_APPROVAL_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "AUTHORIZATION_EVIDENCE_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "RECOMMENDATION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "PRODUCTION_UNLOCK_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "REAL_ODDS_INGESTION_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "LIVE_OR_PAID_API_DRIFT_CRITICAL_STOP": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "DRIFT_DETAILS_MISSING_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "BASELINE_CHANGE_REQUEST_MISSING_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "BASELINE_CHANGE_REVIEWER_NOT_APPROVED_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "BASELINE_CHANGE_NON_UNLOCK_ATTESTATION_MISSING_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    },
+    "BASELINE_CHANGE_ROLLBACK_PLAN_MISSING_BLOCKED": {
+      "provider_unlock_requested": false,
+      "odds_unlock_requested": false,
+      "recommendation_unlock_requested": false,
+      "production_unlock_requested": false,
+      "ev_clv_kelly_unlock_requested": false,
+      "live_or_paid_api_requested": false
+    }
+  },
+  "no_unlock_governance_matrix": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "recommendation_allowed": false,
+    "production_ready": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "any_unlock_requested": false
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Validate signoff packets for governance-only evidence completeness",
+    "Require all required owners and evidence fields before any production progression",
+    "Keep targeted/full regression status explicit: NOT_RUN until verified"
+  ],
+  "prohibited_actions": [
+    "Do not ingest real odds or call live/paid APIs",
+    "Do not unlock provider/recommendation/production/EV/CLV/Kelly/stake/profit",
+    "Do not treat signoff packet approval as legal provider approval or production readiness",
+    "Do not bypass required owner sign-off, rollback acknowledgement, or non-unlock attestation",
+    "Do not treat governance-only template as a production-ready packet"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "BASELINE_CHANGE_APPROVAL_REQUIRED_BLOCKER",
+    "BASELINE_PACKET_REVIEW_REQUIRED_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "DECISION_CARD_ESCALATION_ROUTER_GOVERNANCE_ONLY_BLOCKER",
+    "DECISION_CARD_GOVERNANCE_ONLY_BLOCKER",
+    "DRIFT_ALERT_REPLAY_CONSISTENCY_GOVERNANCE_ONLY_BLOCKER",
+    "DRIFT_ALERT_REPLAY_DRIFT_CONTRACT_GOVERNANCE_ONLY_BLOCKER",
+    "DRIFT_ALERT_REPLAY_DRIFT_EXECUTION_GOVERNANCE_ONLY_BLOCKER",
+    "DRIFT_SIGNOFF_EVIDENCE_PACKET_GATE_GOVERNANCE_ONLY_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "LEGAL_PROVIDER_EVIDENCE_NOT_APPROVED_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SIGNOFF_DRIFT_ALERT_CONTRACT_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_DRIFT_ALERT_RUNNER_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_EVIDENCE_PACKET_GATE_LEGAL_PROVIDER_APPROVAL_NOT_GRANTED_BLOCKER",
+    "SIGNOFF_EVIDENCE_PACKET_GOVERNANCE_ONLY_BLOCKER",
+    "SIGNOFF_REPLAY_CONSISTENCY_GOVERNANCE_ONLY_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER"
+  ],
+  "governance_invariant_summary": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "governance_statement": "Signoff evidence packet approval does not imply legal provider approval, real odds approval, recommendation readiness, or production readiness.",
+  "regression_status": {
+    "targeted_p118_p140_tests_status": "PASS",
+    "targeted_p118_p140_tests_command": "pytest -q tests/test_p118_recommendation_row_validation_gate.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p127_intake_payload_evaluation_runner_verdict_report.py tests/test_p128_deterministic_replay_consistency_gate.py tests/test_p129_replay_drift_alert_contract.py tests/test_p130_baseline_change_review_packet_validator.py tests/test_p131_baseline_change_review_packet_runner_decision_card.py tests/test_p132_decision_card_escalation_router.py tests/test_p133_escalation_signoff_evidence_packet_validator.py tests/test_p134_signoff_evidence_replay_consistency_gate.py tests/test_p135_signoff_evidence_drift_alert_contract.py tests/test_p136_signoff_drift_alert_runner_escalation_decision_packet.py tests/test_p137_drift_alert_replay_consistency_gate.py tests/test_p138_drift_alert_replay_drift_contract.py tests/test_p139_drift_alert_replay_drift_execution_gate.py tests/test_p140_drift_alert_replay_drift_signoff_evidence_packet_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression evidence captured for P140 task."
+  },
+  "final_classification": "P140_DRIFT_ALERT_REPLAY_DRIFT_SIGNOFF_EVIDENCE_PACKET_GATE_READY_WITH_BLOCKERS",
+  "final_classification_options": [
+    "P140_DRIFT_ALERT_REPLAY_DRIFT_SIGNOFF_EVIDENCE_PACKET_GATE_READY_WITH_BLOCKERS",
+    "P140_DRIFT_ALERT_REPLAY_DRIFT_SIGNOFF_EVIDENCE_PACKET_GATE_BLOCKED_BY_MISSING_ARTIFACTS",
+    "P140_DRIFT_ALERT_REPLAY_DRIFT_SIGNOFF_EVIDENCE_PACKET_GATE_FAILED_VALIDATION"
+  ]
+}
