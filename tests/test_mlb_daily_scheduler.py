@@ -48,6 +48,7 @@ from orchestrator.mlb_daily_scheduler import (
     run_daily_mlb_scheduler,
     run_postgame_review_job,
     run_pregame_advisory_job,
+    run_paper_recommendation_job,
     validate_daily_manifest,
     write_daily_manifest,
     DEFAULT_FIXTURE_PATH,
@@ -776,3 +777,115 @@ def test_23_prior_modules_still_importable():
 
     # Metrics SSOT: verify key constants/classes
     assert hasattr(ms, "MODULE_VERSION") or hasattr(ms, "MetricsPayload") or hasattr(ms, "BrierResult")
+
+
+# ── P141: run_paper_recommendation_job tests (tests 24–27) ───────────────────
+
+P141_DATE = "2026-06-03"
+_FIXTURE_GAME_P141 = {
+    "gamePk": 999001,
+    "gameDate": f"{P141_DATE}T18:05:00Z",
+    "status": {"detailedState": "Scheduled"},
+    "teams": {
+        "home": {"team": {"name": "New York Yankees", "abbreviation": "NYY"}},
+        "away": {"team": {"name": "Boston Red Sox", "abbreviation": "BOS"}},
+    },
+}
+
+
+def test_24_run_paper_recommendation_job_returns_daily_job_result(tmp_path, monkeypatch):
+    """run_paper_recommendation_job returns a DailyJobResult with paper safety flags."""
+    import importlib
+    import sys
+
+    # Patch the script inside the scheduler's lazy import
+    mod_name = "scripts.run_mlb_tsl_paper_recommendation"
+    script = sys.modules.get(mod_name) or importlib.import_module(mod_name)
+    monkeypatch.setattr(script, "_pick_game", lambda *a, **kw: _FIXTURE_GAME_P141)
+    monkeypatch.setattr(script, "_probe_tsl", lambda: (False, "mocked 403"))
+
+    result = run_paper_recommendation_job(
+        run_date=P141_DATE,
+        allow_replay=False,
+        allow_missing_simulation_gate=True,
+        output_base_dir=str(tmp_path),
+    )
+
+    assert isinstance(result, DailyJobResult)
+    assert result.job_name == "paper_recommendation"
+    assert result.status in {JOB_STATUS_SUCCESS, JOB_STATUS_FAILED, JOB_STATUS_DATA_LIMITED}
+
+
+def test_25_run_paper_recommendation_job_paper_safety_flags(tmp_path, monkeypatch):
+    """Safety flags in the DailyJobResult must enforce paper-only invariants."""
+    import importlib
+    import sys
+
+    mod_name = "scripts.run_mlb_tsl_paper_recommendation"
+    script = sys.modules.get(mod_name) or importlib.import_module(mod_name)
+    monkeypatch.setattr(script, "_pick_game", lambda *a, **kw: _FIXTURE_GAME_P141)
+    monkeypatch.setattr(script, "_probe_tsl", lambda: (False, "mocked 403"))
+
+    result = run_paper_recommendation_job(
+        run_date=P141_DATE,
+        allow_replay=False,
+        allow_missing_simulation_gate=True,
+        output_base_dir=str(tmp_path),
+    )
+
+    flags = result.safety_flags
+    assert flags.get("paper_only") is True
+    assert flags.get("no_real_bet") is True
+    assert flags.get("production_modified") is False
+    assert flags.get("no_auto_execution") is True
+
+
+def test_26_run_paper_recommendation_job_output_path_under_paper_dir(tmp_path, monkeypatch):
+    """Successful job writes output under outputs/recommendations/PAPER/<date>/."""
+    import importlib
+    import sys
+
+    mod_name = "scripts.run_mlb_tsl_paper_recommendation"
+    script = sys.modules.get(mod_name) or importlib.import_module(mod_name)
+    monkeypatch.setattr(script, "_pick_game", lambda *a, **kw: _FIXTURE_GAME_P141)
+    monkeypatch.setattr(script, "_probe_tsl", lambda: (False, "mocked 403"))
+
+    result = run_paper_recommendation_job(
+        run_date=P141_DATE,
+        allow_replay=False,
+        allow_missing_simulation_gate=True,
+        output_base_dir=str(tmp_path),
+    )
+
+    if result.status == JOB_STATUS_SUCCESS:
+        assert len(result.output_paths) >= 1
+        out_path = result.output_paths[0]
+        assert "PAPER" in out_path
+        assert P141_DATE in out_path
+        import json
+        payload = json.loads(open(out_path, encoding="utf-8").read())
+        assert payload.get("paper_only") is True
+
+
+def test_27_run_paper_recommendation_job_replay_when_no_games(tmp_path, monkeypatch):
+    """When no games found and allow_replay=True, job uses synthetic fixture and succeeds."""
+    import importlib
+    import sys
+
+    mod_name = "scripts.run_mlb_tsl_paper_recommendation"
+    script = sys.modules.get(mod_name) or importlib.import_module(mod_name)
+    # Simulate no live games
+    monkeypatch.setattr(script, "_pick_game", lambda *a, **kw: None)
+    monkeypatch.setattr(script, "_probe_tsl", lambda: (False, "mocked 403"))
+
+    result = run_paper_recommendation_job(
+        run_date=P141_DATE,
+        allow_replay=True,
+        allow_missing_simulation_gate=True,
+        output_base_dir=str(tmp_path),
+    )
+
+    # With allow_replay=True the job should succeed (using synthetic fixture)
+    assert result.status == JOB_STATUS_SUCCESS
+    assert result.safety_flags.get("paper_only") is True
+    assert any("replay" in w.lower() for w in result.warnings)
