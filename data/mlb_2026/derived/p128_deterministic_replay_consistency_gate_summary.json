@@ -1,0 +1,881 @@
+{
+  "replay_consistency_gate_status": "READY_WITH_BLOCKERS",
+  "replay_run_count": 3,
+  "source_fixture_count": 19,
+  "baseline_fingerprint": "d29fcde955c321e384caf65f5add03e8a719ecbb1c6e8fb57177aee04dab5b40",
+  "replay_fingerprints": [
+    {
+      "run_id": "run_1",
+      "fingerprint": "d29fcde955c321e384caf65f5add03e8a719ecbb1c6e8fb57177aee04dab5b40",
+      "evaluated_fixture_count": 19,
+      "expected_blocked_count": 19,
+      "actual_blocked_count": 19,
+      "unexpected_allowed_count": 0
+    },
+    {
+      "run_id": "run_2",
+      "fingerprint": "d29fcde955c321e384caf65f5add03e8a719ecbb1c6e8fb57177aee04dab5b40",
+      "evaluated_fixture_count": 19,
+      "expected_blocked_count": 19,
+      "actual_blocked_count": 19,
+      "unexpected_allowed_count": 0
+    },
+    {
+      "run_id": "run_3",
+      "fingerprint": "d29fcde955c321e384caf65f5add03e8a719ecbb1c6e8fb57177aee04dab5b40",
+      "evaluated_fixture_count": 19,
+      "expected_blocked_count": 19,
+      "actual_blocked_count": 19,
+      "unexpected_allowed_count": 0
+    }
+  ],
+  "fingerprint_consistency_status": "CONSISTENT",
+  "verdict_consistency_status": "CONSISTENT",
+  "blocked_reason_consistency_status": "CONSISTENT",
+  "rule_matrix_consistency_status": "CONSISTENT",
+  "unlock_prevention_consistency_status": "CONSISTENT",
+  "drift_detected": false,
+  "drift_details": [],
+  "replay_verdict_matrix": {
+    "run_1": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": "BLOCKED",
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": "BLOCKED",
+      "EFFECTIVE_DATE_MISSING_BLOCKED": "BLOCKED",
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": "BLOCKED",
+      "MARKET_SCOPE_MISSING_BLOCKED": "BLOCKED",
+      "MISSING_APPROVAL_OWNER_BLOCKED": "BLOCKED",
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": "BLOCKED",
+      "MISSING_REVIEW_OWNER_BLOCKED": "BLOCKED",
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": "BLOCKED",
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": "BLOCKED",
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": "BLOCKED",
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": "BLOCKED",
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": "BLOCKED",
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": "BLOCKED",
+      "SOURCE_TRACE_MISSING_BLOCKED": "BLOCKED",
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": "BLOCKED"
+    },
+    "run_2": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": "BLOCKED",
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": "BLOCKED",
+      "EFFECTIVE_DATE_MISSING_BLOCKED": "BLOCKED",
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": "BLOCKED",
+      "MARKET_SCOPE_MISSING_BLOCKED": "BLOCKED",
+      "MISSING_APPROVAL_OWNER_BLOCKED": "BLOCKED",
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": "BLOCKED",
+      "MISSING_REVIEW_OWNER_BLOCKED": "BLOCKED",
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": "BLOCKED",
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": "BLOCKED",
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": "BLOCKED",
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": "BLOCKED",
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": "BLOCKED",
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": "BLOCKED",
+      "SOURCE_TRACE_MISSING_BLOCKED": "BLOCKED",
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": "BLOCKED"
+    },
+    "run_3": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": "BLOCKED",
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": "BLOCKED",
+      "EFFECTIVE_DATE_MISSING_BLOCKED": "BLOCKED",
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": "BLOCKED",
+      "MARKET_SCOPE_MISSING_BLOCKED": "BLOCKED",
+      "MISSING_APPROVAL_OWNER_BLOCKED": "BLOCKED",
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": "BLOCKED",
+      "MISSING_REVIEW_OWNER_BLOCKED": "BLOCKED",
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": "BLOCKED",
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": "BLOCKED",
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": "BLOCKED",
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": "BLOCKED",
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": "BLOCKED",
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": "BLOCKED",
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": "BLOCKED",
+      "SOURCE_TRACE_MISSING_BLOCKED": "BLOCKED",
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": "BLOCKED"
+    }
+  },
+  "replay_blocked_reason_matrix": {
+    "run_1": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": [
+        "AUDIT_TRAIL_MISSING_BLOCKER"
+      ],
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": [
+        "DATA_USAGE_SCOPE_MISSING_BLOCKER"
+      ],
+      "EFFECTIVE_DATE_MISSING_BLOCKED": [
+        "EFFECTIVE_DATE_MISSING_BLOCKER"
+      ],
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": [
+        "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": [
+        "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER"
+      ],
+      "MARKET_SCOPE_MISSING_BLOCKED": [
+        "MARKET_SCOPE_MISSING_BLOCKER"
+      ],
+      "MISSING_APPROVAL_OWNER_BLOCKED": [
+        "APPROVAL_OWNER_MISSING_BLOCKER"
+      ],
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": [
+        "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER"
+      ],
+      "MISSING_REVIEW_OWNER_BLOCKED": [
+        "REVIEW_OWNER_MISSING_BLOCKER"
+      ],
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": [
+        "PLACEHOLDER_DETECTED_BLOCKER"
+      ],
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": [
+        "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER"
+      ],
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": [
+        "PRODUCTION_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": [
+        "PROVIDER_IDENTITY_MISSING_BLOCKER"
+      ],
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": [
+        "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": [
+        "REVIEW_STATUS_NOT_APPROVED_BLOCKER"
+      ],
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": [
+        "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER"
+      ],
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": [
+        "SECRET_OR_AUTH_URL_DETECTED_BLOCKER"
+      ],
+      "SOURCE_TRACE_MISSING_BLOCKED": [
+        "SOURCE_TRACE_MISSING_BLOCKER"
+      ],
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": [
+        "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+        "PROVIDER_NOT_APPROVED_BLOCKER"
+      ]
+    },
+    "run_2": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": [
+        "AUDIT_TRAIL_MISSING_BLOCKER"
+      ],
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": [
+        "DATA_USAGE_SCOPE_MISSING_BLOCKER"
+      ],
+      "EFFECTIVE_DATE_MISSING_BLOCKED": [
+        "EFFECTIVE_DATE_MISSING_BLOCKER"
+      ],
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": [
+        "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": [
+        "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER"
+      ],
+      "MARKET_SCOPE_MISSING_BLOCKED": [
+        "MARKET_SCOPE_MISSING_BLOCKER"
+      ],
+      "MISSING_APPROVAL_OWNER_BLOCKED": [
+        "APPROVAL_OWNER_MISSING_BLOCKER"
+      ],
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": [
+        "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER"
+      ],
+      "MISSING_REVIEW_OWNER_BLOCKED": [
+        "REVIEW_OWNER_MISSING_BLOCKER"
+      ],
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": [
+        "PLACEHOLDER_DETECTED_BLOCKER"
+      ],
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": [
+        "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER"
+      ],
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": [
+        "PRODUCTION_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": [
+        "PROVIDER_IDENTITY_MISSING_BLOCKER"
+      ],
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": [
+        "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": [
+        "REVIEW_STATUS_NOT_APPROVED_BLOCKER"
+      ],
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": [
+        "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER"
+      ],
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": [
+        "SECRET_OR_AUTH_URL_DETECTED_BLOCKER"
+      ],
+      "SOURCE_TRACE_MISSING_BLOCKED": [
+        "SOURCE_TRACE_MISSING_BLOCKER"
+      ],
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": [
+        "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+        "PROVIDER_NOT_APPROVED_BLOCKER"
+      ]
+    },
+    "run_3": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": [
+        "AUDIT_TRAIL_MISSING_BLOCKER"
+      ],
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": [
+        "DATA_USAGE_SCOPE_MISSING_BLOCKER"
+      ],
+      "EFFECTIVE_DATE_MISSING_BLOCKED": [
+        "EFFECTIVE_DATE_MISSING_BLOCKER"
+      ],
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": [
+        "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": [
+        "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER"
+      ],
+      "MARKET_SCOPE_MISSING_BLOCKED": [
+        "MARKET_SCOPE_MISSING_BLOCKER"
+      ],
+      "MISSING_APPROVAL_OWNER_BLOCKED": [
+        "APPROVAL_OWNER_MISSING_BLOCKER"
+      ],
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": [
+        "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER"
+      ],
+      "MISSING_REVIEW_OWNER_BLOCKED": [
+        "REVIEW_OWNER_MISSING_BLOCKER"
+      ],
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": [
+        "PLACEHOLDER_DETECTED_BLOCKER"
+      ],
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": [
+        "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER"
+      ],
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": [
+        "PRODUCTION_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": [
+        "PROVIDER_IDENTITY_MISSING_BLOCKER"
+      ],
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": [
+        "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER"
+      ],
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": [
+        "REVIEW_STATUS_NOT_APPROVED_BLOCKER"
+      ],
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": [
+        "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER"
+      ],
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": [
+        "SECRET_OR_AUTH_URL_DETECTED_BLOCKER"
+      ],
+      "SOURCE_TRACE_MISSING_BLOCKED": [
+        "SOURCE_TRACE_MISSING_BLOCKER"
+      ],
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": [
+        "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+        "PROVIDER_NOT_APPROVED_BLOCKER"
+      ]
+    }
+  },
+  "replay_unlock_prevention_matrix": {
+    "run_1": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EFFECTIVE_DATE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MARKET_SCOPE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_APPROVAL_OWNER_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_REVIEW_OWNER_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "SOURCE_TRACE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      }
+    },
+    "run_2": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EFFECTIVE_DATE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MARKET_SCOPE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_APPROVAL_OWNER_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_REVIEW_OWNER_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "SOURCE_TRACE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      }
+    },
+    "run_3": {
+      "AUDIT_TRAIL_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "DATA_USAGE_SCOPE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EFFECTIVE_DATE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "EXPIRATION_OR_RENEWAL_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MARKET_SCOPE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_APPROVAL_OWNER_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_LEGAL_DOCUMENT_REFERENCE_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "MISSING_REVIEW_OWNER_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PLACEHOLDER_AS_EVIDENCE_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PRODUCTION_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "PROVIDER_IDENTITY_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "RECOMMENDATION_UNLOCK_REQUEST_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "REVIEW_STATUS_NOT_APPROVED_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "SECRET_OR_AUTH_URL_PRESENT_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "SOURCE_TRACE_MISSING_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      },
+      "VALID_SCHEMA_BUT_NOT_APPROVED_BLOCKED": {
+        "recommendation_unlock_allowed": false,
+        "production_unlock_allowed": false,
+        "ev_unlock_allowed": false,
+        "clv_unlock_allowed": false,
+        "kelly_unlock_allowed": false,
+        "stake_unlock_allowed": false,
+        "profit_unlock_allowed": false
+      }
+    }
+  },
+  "governance_invariants": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "regression_status": {
+    "targeted_p118_p128_tests_status": "PASS",
+    "targeted_p118_p128_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p128_deterministic_replay_consistency_gate.py tests/test_p127_intake_payload_evaluation_runner_verdict_report.py tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression evidence captured for P128 task."
+  },
+  "reproducibility_metadata": {
+    "gate_version": "P128.20260601",
+    "replay_mode": "deterministic_snapshot_replay",
+    "replay_input_source": "data/mlb_2026/derived/p127_intake_payload_evaluation_runner_verdict_report_summary.json",
+    "source_p127_final_classification": "P127_INTAKE_PAYLOAD_EVALUATION_RUNNER_VERDICT_REPORT_READY_WITH_BLOCKERS",
+    "source_p126_final_classification": "P126_LEGAL_EVIDENCE_INTAKE_PAYLOAD_FIXTURE_NEGATIVE_CASES_READY_WITH_BLOCKERS",
+    "determinism_scope": "counts + verdict_matrix + blocked_reason_matrix + rule_matrix + unlock_prevention_matrix"
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Use replay consistency outputs for governance diagnostics only",
+    "Collect real legal evidence via legal/compliance workflow before approval consideration",
+    "Keep full regression status explicit: PASS/FAIL/NOT_RUN"
+  ],
+  "prohibited_actions": [
+    "Do not ingest real odds or call live/paid APIs",
+    "Do not activate providers or approve authorization from placeholder data",
+    "Do not unlock recommendation/production/EV/CLV/Kelly/stake/profit",
+    "Do not store secrets, auth URLs, private contract body, or row-level proprietary odds"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER"
+  ],
+  "final_classification": "P128_DETERMINISTIC_REPLAY_CONSISTENCY_GATE_READY_WITH_BLOCKERS",
+  "final_classification_options": [
+    "P128_DETERMINISTIC_REPLAY_CONSISTENCY_GATE_READY_WITH_BLOCKERS",
+    "P128_DETERMINISTIC_REPLAY_CONSISTENCY_GATE_BLOCKED_BY_MISSING_ARTIFACTS",
+    "P128_DETERMINISTIC_REPLAY_CONSISTENCY_GATE_FAILED_VALIDATION"
+  ]
+}

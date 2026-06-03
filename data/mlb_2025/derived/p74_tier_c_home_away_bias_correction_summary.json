@@ -1,0 +1,1870 @@
+{
+  "phase": "P74",
+  "date": "2026-05-26",
+  "p74_classification": "P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED",
+  "allowed_classifications": [
+    "P74_TIER_C_HOME_AWAY_CORRECTION_CONFIRMED",
+    "P74_TIER_C_HOME_ONLY_OPERATIONAL_CANDIDATE",
+    "P74_TIER_C_AWAY_RESCUE_FILTER_FOUND",
+    "P74_TIER_C_BASELINE_STILL_BEST",
+    "P74_TIER_C_HOME_AWAY_INCONCLUSIVE",
+    "P74_BLOCKED_BY_MISSING_SOURCE_ARTIFACT",
+    "P74_FAILED_VALIDATION"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false
+  },
+  "forbidden_scan": {
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_deployed": false,
+    "production_proposed": false,
+    "profitability_asserted": false,
+    "live_api_calls": 0,
+    "result": "CLEAN"
+  },
+  "source_artifacts": {
+    "predictions_jsonl": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+    "p72a_json": "data/mlb_2025/derived/p72a_odds_free_strategy_accuracy_backtest_summary.json",
+    "p72b_json": "data/mlb_2025/derived/p72b_objective_metric_contract_summary.json",
+    "p73_json": "data/mlb_2025/derived/p73_tier_stability_and_sample_expansion_summary.json"
+  },
+  "step1_reconstruction": {
+    "n": 535,
+    "hit_rate": 0.6056,
+    "hit_rate_ci_95": [
+      0.5607,
+      0.6467
+    ],
+    "auc": 0.5834,
+    "auc_ci_95": [
+      0.5358,
+      0.635
+    ],
+    "brier": 0.2385,
+    "monthly_stability": "STABLE",
+    "reconstruction_valid": true,
+    "n_match": true,
+    "hit_rate_match": true,
+    "auc_match": true,
+    "expected_n": 535,
+    "expected_hit_rate": 0.6056,
+    "expected_auc": 0.5834
+  },
+  "step2_home_away_decomposition": {
+    "home": {
+      "label": "TIER_C_HOME",
+      "n": 268,
+      "hit_rate": 0.6716,
+      "hit_rate_ci_95": [
+        0.6157,
+        0.7276
+      ],
+      "auc": 0.5591,
+      "auc_ci_95": [
+        0.4921,
+        0.6281
+      ],
+      "brier": 0.2292,
+      "monthly_stability": "MODERATE",
+      "monthly_breakdown": [
+        {
+          "month": "2025-04",
+          "n": 8,
+          "hit_rate": 0.625,
+          "auc": null,
+          "brier": 0.2229
+        },
+        {
+          "month": "2025-05",
+          "n": 62,
+          "hit_rate": 0.6452,
+          "auc": 0.6136,
+          "brier": 0.225
+        },
+        {
+          "month": "2025-06",
+          "n": 50,
+          "hit_rate": 0.72,
+          "auc": 0.496,
+          "brier": 0.2436
+        },
+        {
+          "month": "2025-07",
+          "n": 45,
+          "hit_rate": 0.7111,
+          "auc": 0.506,
+          "brier": 0.2294
+        },
+        {
+          "month": "2025-08",
+          "n": 54,
+          "hit_rate": 0.6111,
+          "auc": 0.5859,
+          "brier": 0.2328
+        },
+        {
+          "month": "2025-09",
+          "n": 49,
+          "hit_rate": 0.6939,
+          "auc": 0.6971,
+          "brier": 0.2165
+        }
+      ],
+      "thirds_split": [
+        {
+          "third": 1,
+          "n": 89,
+          "hit_rate": 0.6517,
+          "brier": 0.232
+        },
+        {
+          "third": 2,
+          "n": 89,
+          "hit_rate": 0.7303,
+          "brier": 0.2275
+        },
+        {
+          "third": 3,
+          "n": 90,
+          "hit_rate": 0.6333,
+          "brier": 0.228
+        }
+      ],
+      "delta_band_breakdown": [
+        {
+          "band_id": "band_050_075",
+          "lo": 0.5,
+          "hi": 0.75,
+          "n": 77,
+          "hit_rate": 0.7143,
+          "auc": 0.5463,
+          "brier": 0.2247,
+          "hr_ci_95": [
+            0.6104,
+            0.8182
+          ]
+        },
+        {
+          "band_id": "band_075_100",
+          "lo": 0.75,
+          "hi": 1.0,
+          "n": 67,
+          "hit_rate": 0.6269,
+          "auc": 0.4686,
+          "brier": 0.2489,
+          "hr_ci_95": [
+            0.5075,
+            0.7463
+          ]
+        },
+        {
+          "band_id": "band_100_125",
+          "lo": 1.0,
+          "hi": 1.25,
+          "n": 74,
+          "hit_rate": 0.6351,
+          "auc": 0.6005,
+          "brier": 0.228,
+          "hr_ci_95": [
+            0.527,
+            0.7432
+          ]
+        },
+        {
+          "band_id": "band_125_150",
+          "lo": 1.25,
+          "hi": 1.5,
+          "n": 38,
+          "hit_rate": 0.7105,
+          "auc": 0.6633,
+          "brier": 0.2147,
+          "hr_ci_95": [
+            0.5526,
+            0.8421
+          ]
+        },
+        {
+          "band_id": "band_150_plus",
+          "lo": 1.5,
+          "hi": "∞",
+          "n": 12,
+          "hit_rate": 0.75,
+          "auc": 0.7778,
+          "brier": 0.2008,
+          "hr_ci_95": [
+            0.5,
+            1.0
+          ]
+        }
+      ],
+      "concentration_risk": {
+        "monthly_hr_range": 0.1089,
+        "best_band": "band_150_plus",
+        "best_band_hit_rate": 0.75,
+        "worst_band": "band_075_100",
+        "worst_band_hit_rate": 0.6269,
+        "single_band_dominance": false
+      }
+    },
+    "away": {
+      "label": "TIER_C_AWAY",
+      "n": 267,
+      "hit_rate": 0.5393,
+      "hit_rate_ci_95": [
+        0.4794,
+        0.5993
+      ],
+      "auc": 0.545,
+      "auc_ci_95": [
+        0.4764,
+        0.6105
+      ],
+      "brier": 0.2478,
+      "monthly_stability": "MODERATE",
+      "monthly_breakdown": [
+        {
+          "month": "2025-04",
+          "n": 8,
+          "hit_rate": 0.625,
+          "auc": null,
+          "brier": 0.2709
+        },
+        {
+          "month": "2025-05",
+          "n": 58,
+          "hit_rate": 0.5,
+          "auc": 0.5743,
+          "brier": 0.2438
+        },
+        {
+          "month": "2025-06",
+          "n": 51,
+          "hit_rate": 0.6078,
+          "auc": 0.5895,
+          "brier": 0.2373
+        },
+        {
+          "month": "2025-07",
+          "n": 47,
+          "hit_rate": 0.5319,
+          "auc": 0.4818,
+          "brier": 0.2524
+        },
+        {
+          "month": "2025-08",
+          "n": 54,
+          "hit_rate": 0.5185,
+          "auc": 0.4918,
+          "brier": 0.2569
+        },
+        {
+          "month": "2025-09",
+          "n": 49,
+          "hit_rate": 0.5306,
+          "auc": 0.5753,
+          "brier": 0.2453
+        }
+      ],
+      "thirds_split": [
+        {
+          "third": 1,
+          "n": 89,
+          "hit_rate": 0.5281,
+          "brier": 0.2466
+        },
+        {
+          "third": 2,
+          "n": 89,
+          "hit_rate": 0.5506,
+          "brier": 0.244
+        },
+        {
+          "third": 3,
+          "n": 89,
+          "hit_rate": 0.5393,
+          "brier": 0.2529
+        }
+      ],
+      "delta_band_breakdown": [
+        {
+          "band_id": "band_050_075",
+          "lo": 0.5,
+          "hi": 0.75,
+          "n": 91,
+          "hit_rate": 0.5714,
+          "auc": 0.6238,
+          "brier": 0.2368,
+          "hr_ci_95": [
+            0.4725,
+            0.6813
+          ]
+        },
+        {
+          "band_id": "band_075_100",
+          "lo": 0.75,
+          "hi": 1.0,
+          "n": 71,
+          "hit_rate": 0.507,
+          "auc": 0.523,
+          "brier": 0.2511,
+          "hr_ci_95": [
+            0.3944,
+            0.6197
+          ]
+        },
+        {
+          "band_id": "band_100_125",
+          "lo": 1.0,
+          "hi": 1.25,
+          "n": 57,
+          "hit_rate": 0.5965,
+          "auc": 0.4182,
+          "brier": 0.259,
+          "hr_ci_95": [
+            0.4737,
+            0.7193
+          ]
+        },
+        {
+          "band_id": "band_125_150",
+          "lo": 1.25,
+          "hi": 1.5,
+          "n": 36,
+          "hit_rate": 0.3889,
+          "auc": 0.5325,
+          "brier": 0.2462,
+          "hr_ci_95": [
+            0.25,
+            0.5556
+          ]
+        },
+        {
+          "band_id": "band_150_plus",
+          "lo": 1.5,
+          "hi": "∞",
+          "n": 12,
+          "hit_rate": 0.6667,
+          "auc": 0.3438,
+          "brier": 0.2636,
+          "hr_ci_95": [
+            0.4167,
+            0.9167
+          ]
+        }
+      ],
+      "concentration_risk": {
+        "monthly_hr_range": 0.125,
+        "best_band": "band_150_plus",
+        "best_band_hit_rate": 0.6667,
+        "worst_band": "band_125_150",
+        "worst_band_hit_rate": 0.3889,
+        "single_band_dominance": true
+      }
+    },
+    "hit_gap_home_minus_away": 0.1323,
+    "auc_gap_home_minus_away": 0.0141,
+    "sample_balance": {
+      "home_n": 268,
+      "away_n": 267,
+      "home_fraction": 0.5009
+    },
+    "away_weakness_diagnosis": {
+      "is_general": false,
+      "is_band_specific": true,
+      "months_above_50pct": 5,
+      "total_months": 6
+    }
+  },
+  "step3_away_rescue_filters": {
+    "filters": [
+      {
+        "filter_id": "AWAY_BASELINE",
+        "description": "Away Tier C baseline (|delta|>=0.50)",
+        "n": 267,
+        "hit_rate": 0.5393,
+        "hit_rate_ci_95": [
+          0.4794,
+          0.5993
+        ],
+        "auc": 0.545,
+        "auc_ci_95": [
+          0.4764,
+          0.6105
+        ],
+        "brier": 0.2478,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 8,
+            "hit_rate": 0.625,
+            "auc": null,
+            "brier": 0.2709
+          },
+          {
+            "month": "2025-05",
+            "n": 58,
+            "hit_rate": 0.5,
+            "auc": 0.5743,
+            "brier": 0.2438
+          },
+          {
+            "month": "2025-06",
+            "n": 51,
+            "hit_rate": 0.6078,
+            "auc": 0.5895,
+            "brier": 0.2373
+          },
+          {
+            "month": "2025-07",
+            "n": 47,
+            "hit_rate": 0.5319,
+            "auc": 0.4818,
+            "brier": 0.2524
+          },
+          {
+            "month": "2025-08",
+            "n": 54,
+            "hit_rate": 0.5185,
+            "auc": 0.4918,
+            "brier": 0.2569
+          },
+          {
+            "month": "2025-09",
+            "n": 49,
+            "hit_rate": 0.5306,
+            "auc": 0.5753,
+            "brier": 0.2453
+          }
+        ],
+        "operational_status": "WEAK_SIGNAL"
+      },
+      {
+        "filter_id": "AWAY_DELTA_GE_075",
+        "description": "Away only with |sp_fip_delta| >= 0.75",
+        "n": 176,
+        "hit_rate": 0.5227,
+        "hit_rate_ci_95": [
+          0.4489,
+          0.5966
+        ],
+        "auc": 0.5052,
+        "auc_ci_95": [
+          0.4226,
+          0.5867
+        ],
+        "brier": 0.2535,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 7,
+            "hit_rate": 0.7143,
+            "auc": null,
+            "brier": 0.2812
+          },
+          {
+            "month": "2025-05",
+            "n": 34,
+            "hit_rate": 0.4706,
+            "auc": 0.6215,
+            "brier": 0.2445
+          },
+          {
+            "month": "2025-06",
+            "n": 33,
+            "hit_rate": 0.6061,
+            "auc": 0.5385,
+            "brier": 0.2482
+          },
+          {
+            "month": "2025-07",
+            "n": 31,
+            "hit_rate": 0.5484,
+            "auc": 0.4328,
+            "brier": 0.2591
+          },
+          {
+            "month": "2025-08",
+            "n": 35,
+            "hit_rate": 0.4857,
+            "auc": 0.4118,
+            "brier": 0.2626
+          },
+          {
+            "month": "2025-09",
+            "n": 36,
+            "hit_rate": 0.4722,
+            "auc": 0.5294,
+            "brier": 0.2479
+          }
+        ],
+        "operational_status": "RESTRICTED_UNSTABLE"
+      },
+      {
+        "filter_id": "AWAY_DELTA_GE_100",
+        "description": "Away only with |sp_fip_delta| >= 1.0",
+        "n": 105,
+        "hit_rate": 0.5333,
+        "hit_rate_ci_95": [
+          0.4381,
+          0.6286
+        ],
+        "auc": 0.473,
+        "auc_ci_95": [
+          0.3643,
+          0.5916
+        ],
+        "brier": 0.2551,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 3,
+            "hit_rate": 0.6667,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 25,
+            "hit_rate": 0.48,
+            "auc": 0.5321,
+            "brier": 0.2534
+          },
+          {
+            "month": "2025-06",
+            "n": 17,
+            "hit_rate": 0.5294,
+            "auc": 0.5417,
+            "brier": 0.243
+          },
+          {
+            "month": "2025-07",
+            "n": 17,
+            "hit_rate": 0.7059,
+            "auc": 0.2,
+            "brier": 0.2715
+          },
+          {
+            "month": "2025-08",
+            "n": 20,
+            "hit_rate": 0.4,
+            "auc": 0.5312,
+            "brier": 0.2513
+          },
+          {
+            "month": "2025-09",
+            "n": 23,
+            "hit_rate": 0.5652,
+            "auc": 0.4846,
+            "brier": 0.2485
+          }
+        ],
+        "operational_status": "RESTRICTED_UNSTABLE"
+      },
+      {
+        "filter_id": "AWAY_DELTA_GE_125",
+        "description": "Away only with |sp_fip_delta| >= 1.25",
+        "n": 48,
+        "hit_rate": 0.4583,
+        "hit_rate_ci_95": [
+          0.3125,
+          0.6042
+        ],
+        "auc": 0.5262,
+        "auc_ci_95": [
+          0.3482,
+          0.6949
+        ],
+        "brier": 0.2506,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 1,
+            "hit_rate": 0.0,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 13,
+            "hit_rate": 0.5385,
+            "auc": 0.6905,
+            "brier": 0.2351
+          },
+          {
+            "month": "2025-06",
+            "n": 9,
+            "hit_rate": 0.6667,
+            "auc": null,
+            "brier": 0.2457
+          },
+          {
+            "month": "2025-07",
+            "n": 7,
+            "hit_rate": 0.4286,
+            "auc": null,
+            "brier": 0.266
+          },
+          {
+            "month": "2025-08",
+            "n": 11,
+            "hit_rate": 0.2727,
+            "auc": 0.4583,
+            "brier": 0.2464
+          },
+          {
+            "month": "2025-09",
+            "n": 7,
+            "hit_rate": 0.4286,
+            "auc": null,
+            "brier": 0.2553
+          }
+        ],
+        "operational_status": "WATCHLIST_ONLY_N_BELOW_75"
+      },
+      {
+        "filter_id": "AWAY_EXCL_WEAK_BAND_075_100",
+        "description": "Away excluding weakest band (0.75-1.00)",
+        "n": 196,
+        "hit_rate": 0.551,
+        "hit_rate_ci_95": [
+          0.4847,
+          0.6173
+        ],
+        "auc": 0.5432,
+        "auc_ci_95": [
+          0.4589,
+          0.6212
+        ],
+        "brier": 0.2466,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 4,
+            "hit_rate": 0.5,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 49,
+            "hit_rate": 0.5102,
+            "auc": 0.5217,
+            "brier": 0.2482
+          },
+          {
+            "month": "2025-06",
+            "n": 35,
+            "hit_rate": 0.5714,
+            "auc": 0.5967,
+            "brier": 0.2298
+          },
+          {
+            "month": "2025-07",
+            "n": 33,
+            "hit_rate": 0.6061,
+            "auc": 0.4346,
+            "brier": 0.256
+          },
+          {
+            "month": "2025-08",
+            "n": 39,
+            "hit_rate": 0.4872,
+            "auc": 0.5526,
+            "brier": 0.2489
+          },
+          {
+            "month": "2025-09",
+            "n": 36,
+            "hit_rate": 0.6111,
+            "auc": 0.5519,
+            "brier": 0.2448
+          }
+        ],
+        "operational_status": "CANDIDATE"
+      },
+      {
+        "filter_id": "AWAY_STRONG_MONTHS_ONLY",
+        "description": "Away only in months with hit_rate>=0.55 (months: ['2025-04', '2025-06'])",
+        "n": 59,
+        "hit_rate": 0.6102,
+        "hit_rate_ci_95": [
+          0.4915,
+          0.7288
+        ],
+        "auc": 0.5682,
+        "auc_ci_95": [
+          0.4179,
+          0.7105
+        ],
+        "brier": 0.2419,
+        "monthly_stability": "INSUFFICIENT_MONTHS",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 8,
+            "hit_rate": 0.625,
+            "auc": null,
+            "brier": 0.2709
+          },
+          {
+            "month": "2025-06",
+            "n": 51,
+            "hit_rate": 0.6078,
+            "auc": 0.5895,
+            "brier": 0.2373
+          }
+        ],
+        "operational_status": "WATCHLIST_ONLY_N_BELOW_75"
+      },
+      {
+        "filter_id": "AWAY_HIGH_PROB_CONF_055",
+        "description": "Away with directional_prob >= 0.55",
+        "n": 54,
+        "hit_rate": 0.6111,
+        "hit_rate_ci_95": [
+          0.4815,
+          0.7407
+        ],
+        "auc": 0.6587,
+        "auc_ci_95": [
+          0.5128,
+          0.8079
+        ],
+        "brier": 0.2265,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 2,
+            "hit_rate": 0.5,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 11,
+            "hit_rate": 0.6364,
+            "auc": 0.5357,
+            "brier": 0.2291
+          },
+          {
+            "month": "2025-06",
+            "n": 17,
+            "hit_rate": 0.7059,
+            "auc": 0.75,
+            "brier": 0.1953
+          },
+          {
+            "month": "2025-07",
+            "n": 13,
+            "hit_rate": 0.5385,
+            "auc": 0.6667,
+            "brier": 0.2391
+          },
+          {
+            "month": "2025-08",
+            "n": 4,
+            "hit_rate": 0.5,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-09",
+            "n": 7,
+            "hit_rate": 0.5714,
+            "auc": null,
+            "brier": 0.245
+          }
+        ],
+        "operational_status": "WATCHLIST_ONLY_N_BELOW_75"
+      },
+      {
+        "filter_id": "AWAY_HIGH_CONF_DELTA_075",
+        "description": "Away with directional_prob >= 0.55 AND |delta| >= 0.75",
+        "n": 37,
+        "hit_rate": 0.5135,
+        "hit_rate_ci_95": [
+          0.3514,
+          0.6757
+        ],
+        "auc": 0.6126,
+        "auc_ci_95": [
+          0.4196,
+          0.7981
+        ],
+        "brier": 0.251,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 2,
+            "hit_rate": 0.5,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 7,
+            "hit_rate": 0.4286,
+            "auc": null,
+            "brier": 0.2881
+          },
+          {
+            "month": "2025-06",
+            "n": 12,
+            "hit_rate": 0.6667,
+            "auc": 0.6562,
+            "brier": 0.2146
+          },
+          {
+            "month": "2025-07",
+            "n": 9,
+            "hit_rate": 0.4444,
+            "auc": null,
+            "brier": 0.253
+          },
+          {
+            "month": "2025-08",
+            "n": 2,
+            "hit_rate": 0.0,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-09",
+            "n": 5,
+            "hit_rate": 0.6,
+            "auc": null,
+            "brier": 0.2355
+          }
+        ],
+        "operational_status": "WATCHLIST_ONLY_N_BELOW_75"
+      },
+      {
+        "filter_id": "AWAY_TOP_HALF_DELTA",
+        "description": "Away top 50% by abs_delta strength",
+        "n": 133,
+        "hit_rate": 0.5414,
+        "hit_rate_ci_95": [
+          0.4586,
+          0.6241
+        ],
+        "auc": 0.5383,
+        "auc_ci_95": [
+          0.4351,
+          0.6364
+        ],
+        "brier": 0.2489,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 6,
+            "hit_rate": 0.6667,
+            "auc": null,
+            "brier": 0.3008
+          },
+          {
+            "month": "2025-05",
+            "n": 31,
+            "hit_rate": 0.4839,
+            "auc": 0.5917,
+            "brier": 0.2477
+          },
+          {
+            "month": "2025-06",
+            "n": 29,
+            "hit_rate": 0.6207,
+            "auc": 0.6313,
+            "brier": 0.2326
+          },
+          {
+            "month": "2025-07",
+            "n": 18,
+            "hit_rate": 0.6667,
+            "auc": 0.3056,
+            "brier": 0.2674
+          },
+          {
+            "month": "2025-08",
+            "n": 22,
+            "hit_rate": 0.4091,
+            "auc": 0.5299,
+            "brier": 0.2506
+          },
+          {
+            "month": "2025-09",
+            "n": 27,
+            "hit_rate": 0.5185,
+            "auc": 0.5934,
+            "brier": 0.2424
+          }
+        ],
+        "operational_status": "RESTRICTED_UNSTABLE"
+      }
+    ],
+    "best_rescue_filter": {
+      "filter_id": "AWAY_EXCL_WEAK_BAND_075_100",
+      "description": "Away excluding weakest band (0.75-1.00)",
+      "n": 196,
+      "hit_rate": 0.551,
+      "hit_rate_ci_95": [
+        0.4847,
+        0.6173
+      ],
+      "auc": 0.5432,
+      "auc_ci_95": [
+        0.4589,
+        0.6212
+      ],
+      "brier": 0.2466,
+      "monthly_stability": "MODERATE",
+      "monthly_breakdown": [
+        {
+          "month": "2025-04",
+          "n": 4,
+          "hit_rate": 0.5,
+          "auc": null,
+          "brier": null
+        },
+        {
+          "month": "2025-05",
+          "n": 49,
+          "hit_rate": 0.5102,
+          "auc": 0.5217,
+          "brier": 0.2482
+        },
+        {
+          "month": "2025-06",
+          "n": 35,
+          "hit_rate": 0.5714,
+          "auc": 0.5967,
+          "brier": 0.2298
+        },
+        {
+          "month": "2025-07",
+          "n": 33,
+          "hit_rate": 0.6061,
+          "auc": 0.4346,
+          "brier": 0.256
+        },
+        {
+          "month": "2025-08",
+          "n": 39,
+          "hit_rate": 0.4872,
+          "auc": 0.5526,
+          "brier": 0.2489
+        },
+        {
+          "month": "2025-09",
+          "n": 36,
+          "hit_rate": 0.6111,
+          "auc": 0.5519,
+          "brier": 0.2448
+        }
+      ],
+      "operational_status": "CANDIDATE"
+    },
+    "away_rescue_found": false,
+    "away_baseline_hit_rate": 0.5393,
+    "away_baseline_n": 267
+  },
+  "step4_home_robustness": {
+    "variants": [
+      {
+        "threshold": 0.5,
+        "n": 268,
+        "hit_rate": 0.6716,
+        "hit_rate_ci_95": [
+          0.6157,
+          0.7276
+        ],
+        "auc": 0.5591,
+        "auc_ci_95": [
+          0.4921,
+          0.6281
+        ],
+        "brier": 0.2292,
+        "monthly_stability": "MODERATE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 8,
+            "hit_rate": 0.625,
+            "auc": null,
+            "brier": 0.2229
+          },
+          {
+            "month": "2025-05",
+            "n": 62,
+            "hit_rate": 0.6452,
+            "auc": 0.6136,
+            "brier": 0.225
+          },
+          {
+            "month": "2025-06",
+            "n": 50,
+            "hit_rate": 0.72,
+            "auc": 0.496,
+            "brier": 0.2436
+          },
+          {
+            "month": "2025-07",
+            "n": 45,
+            "hit_rate": 0.7111,
+            "auc": 0.506,
+            "brier": 0.2294
+          },
+          {
+            "month": "2025-08",
+            "n": 54,
+            "hit_rate": 0.6111,
+            "auc": 0.5859,
+            "brier": 0.2328
+          },
+          {
+            "month": "2025-09",
+            "n": 49,
+            "hit_rate": 0.6939,
+            "auc": 0.6971,
+            "brier": 0.2165
+          }
+        ],
+        "thirds_split": [
+          {
+            "third": 1,
+            "n": 89,
+            "hit_rate": 0.6517,
+            "brier": 0.232
+          },
+          {
+            "third": 2,
+            "n": 89,
+            "hit_rate": 0.7303,
+            "brier": 0.2275
+          },
+          {
+            "third": 3,
+            "n": 90,
+            "hit_rate": 0.6333,
+            "brier": 0.228
+          }
+        ],
+        "delta_band_breakdown": [
+          {
+            "band_id": "band_050_075",
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 77,
+            "hit_rate": 0.7143,
+            "auc": 0.5463,
+            "brier": 0.2247,
+            "hr_ci_95": [
+              0.6104,
+              0.8182
+            ]
+          },
+          {
+            "band_id": "band_075_100",
+            "lo": 0.75,
+            "hi": 1.0,
+            "n": 67,
+            "hit_rate": 0.6269,
+            "auc": 0.4686,
+            "brier": 0.2489,
+            "hr_ci_95": [
+              0.5075,
+              0.7463
+            ]
+          },
+          {
+            "band_id": "band_100_125",
+            "lo": 1.0,
+            "hi": 1.25,
+            "n": 74,
+            "hit_rate": 0.6351,
+            "auc": 0.6005,
+            "brier": 0.228,
+            "hr_ci_95": [
+              0.527,
+              0.7432
+            ]
+          },
+          {
+            "band_id": "band_125_150",
+            "lo": 1.25,
+            "hi": 1.5,
+            "n": 38,
+            "hit_rate": 0.7105,
+            "auc": 0.6633,
+            "brier": 0.2147,
+            "hr_ci_95": [
+              0.5526,
+              0.8421
+            ]
+          },
+          {
+            "band_id": "band_150_plus",
+            "lo": 1.5,
+            "hi": "∞",
+            "n": 12,
+            "hit_rate": 0.75,
+            "auc": 0.7778,
+            "brier": 0.2008,
+            "hr_ci_95": [
+              0.5,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "threshold": 0.75,
+        "n": 191,
+        "hit_rate": 0.6545,
+        "hit_rate_ci_95": [
+          0.5864,
+          0.7173
+        ],
+        "auc": 0.5675,
+        "auc_ci_95": [
+          0.4877,
+          0.65
+        ],
+        "brier": 0.231,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 5,
+            "hit_rate": 1.0,
+            "auc": null,
+            "brier": 0.155
+          },
+          {
+            "month": "2025-05",
+            "n": 43,
+            "hit_rate": 0.6512,
+            "auc": 0.6024,
+            "brier": 0.2244
+          },
+          {
+            "month": "2025-06",
+            "n": 35,
+            "hit_rate": 0.6857,
+            "auc": 0.4508,
+            "brier": 0.2528
+          },
+          {
+            "month": "2025-07",
+            "n": 32,
+            "hit_rate": 0.6562,
+            "auc": 0.4459,
+            "brier": 0.241
+          },
+          {
+            "month": "2025-08",
+            "n": 39,
+            "hit_rate": 0.5641,
+            "auc": 0.6765,
+            "brier": 0.2353
+          },
+          {
+            "month": "2025-09",
+            "n": 37,
+            "hit_rate": 0.6757,
+            "auc": 0.77,
+            "brier": 0.2151
+          }
+        ],
+        "thirds_split": [
+          {
+            "third": 1,
+            "n": 63,
+            "hit_rate": 0.6667,
+            "brier": 0.2233
+          },
+          {
+            "third": 2,
+            "n": 64,
+            "hit_rate": 0.7031,
+            "brier": 0.2405
+          },
+          {
+            "third": 3,
+            "n": 64,
+            "hit_rate": 0.5938,
+            "brier": 0.229
+          }
+        ],
+        "delta_band_breakdown": [
+          {
+            "band_id": "band_050_075",
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 0,
+            "hit_rate": null,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "band_id": "band_075_100",
+            "lo": 0.75,
+            "hi": 1.0,
+            "n": 67,
+            "hit_rate": 0.6269,
+            "auc": 0.4686,
+            "brier": 0.2489,
+            "hr_ci_95": [
+              0.5075,
+              0.7463
+            ]
+          },
+          {
+            "band_id": "band_100_125",
+            "lo": 1.0,
+            "hi": 1.25,
+            "n": 74,
+            "hit_rate": 0.6351,
+            "auc": 0.6005,
+            "brier": 0.228,
+            "hr_ci_95": [
+              0.527,
+              0.7432
+            ]
+          },
+          {
+            "band_id": "band_125_150",
+            "lo": 1.25,
+            "hi": 1.5,
+            "n": 38,
+            "hit_rate": 0.7105,
+            "auc": 0.6633,
+            "brier": 0.2147,
+            "hr_ci_95": [
+              0.5526,
+              0.8421
+            ]
+          },
+          {
+            "band_id": "band_150_plus",
+            "lo": 1.5,
+            "hi": "∞",
+            "n": 12,
+            "hit_rate": 0.75,
+            "auc": 0.7778,
+            "brier": 0.2008,
+            "hr_ci_95": [
+              0.5,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "threshold": 1.0,
+        "n": 124,
+        "hit_rate": 0.6694,
+        "hit_rate_ci_95": [
+          0.5887,
+          0.7581
+        ],
+        "auc": 0.6292,
+        "auc_ci_95": [
+          0.5239,
+          0.7271
+        ],
+        "brier": 0.2213,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 5,
+            "hit_rate": 1.0,
+            "auc": null,
+            "brier": 0.155
+          },
+          {
+            "month": "2025-05",
+            "n": 27,
+            "hit_rate": 0.6296,
+            "auc": 0.6824,
+            "brier": 0.2182
+          },
+          {
+            "month": "2025-06",
+            "n": 26,
+            "hit_rate": 0.6538,
+            "auc": 0.5556,
+            "brier": 0.2407
+          },
+          {
+            "month": "2025-07",
+            "n": 18,
+            "hit_rate": 0.7222,
+            "auc": 0.3231,
+            "brier": 0.2379
+          },
+          {
+            "month": "2025-08",
+            "n": 26,
+            "hit_rate": 0.6154,
+            "auc": 0.7125,
+            "brier": 0.2236
+          },
+          {
+            "month": "2025-09",
+            "n": 22,
+            "hit_rate": 0.6818,
+            "auc": 0.9143,
+            "brier": 0.2008
+          }
+        ],
+        "thirds_split": [
+          {
+            "third": 1,
+            "n": 41,
+            "hit_rate": 0.6829,
+            "brier": 0.2194
+          },
+          {
+            "third": 2,
+            "n": 41,
+            "hit_rate": 0.7073,
+            "brier": 0.2272
+          },
+          {
+            "third": 3,
+            "n": 42,
+            "hit_rate": 0.619,
+            "brier": 0.2174
+          }
+        ],
+        "delta_band_breakdown": [
+          {
+            "band_id": "band_050_075",
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 0,
+            "hit_rate": null,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "band_id": "band_075_100",
+            "lo": 0.75,
+            "hi": 1.0,
+            "n": 0,
+            "hit_rate": null,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "band_id": "band_100_125",
+            "lo": 1.0,
+            "hi": 1.25,
+            "n": 74,
+            "hit_rate": 0.6351,
+            "auc": 0.6005,
+            "brier": 0.228,
+            "hr_ci_95": [
+              0.527,
+              0.7432
+            ]
+          },
+          {
+            "band_id": "band_125_150",
+            "lo": 1.25,
+            "hi": 1.5,
+            "n": 38,
+            "hit_rate": 0.7105,
+            "auc": 0.6633,
+            "brier": 0.2147,
+            "hr_ci_95": [
+              0.5526,
+              0.8421
+            ]
+          },
+          {
+            "band_id": "band_150_plus",
+            "lo": 1.5,
+            "hi": "∞",
+            "n": 12,
+            "hit_rate": 0.75,
+            "auc": 0.7778,
+            "brier": 0.2008,
+            "hr_ci_95": [
+              0.5,
+              1.0
+            ]
+          }
+        ]
+      },
+      {
+        "threshold": 1.25,
+        "n": 50,
+        "hit_rate": 0.72,
+        "hit_rate_ci_95": [
+          0.6,
+          0.84
+        ],
+        "auc": 0.6786,
+        "auc_ci_95": [
+          0.5095,
+          0.84
+        ],
+        "brier": 0.2114,
+        "monthly_stability": "UNSTABLE",
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 1,
+            "hit_rate": 1.0,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 10,
+            "hit_rate": 0.6,
+            "auc": 0.7917,
+            "brier": 0.2159
+          },
+          {
+            "month": "2025-06",
+            "n": 12,
+            "hit_rate": 0.6667,
+            "auc": 0.6562,
+            "brier": 0.2249
+          },
+          {
+            "month": "2025-07",
+            "n": 7,
+            "hit_rate": 1.0,
+            "auc": null,
+            "brier": 0.2146
+          },
+          {
+            "month": "2025-08",
+            "n": 9,
+            "hit_rate": 0.8889,
+            "auc": null,
+            "brier": 0.1606
+          },
+          {
+            "month": "2025-09",
+            "n": 11,
+            "hit_rate": 0.5455,
+            "auc": 0.7667,
+            "brier": 0.2338
+          }
+        ],
+        "thirds_split": [
+          {
+            "third": 1,
+            "n": 16,
+            "hit_rate": 0.5625,
+            "brier": 0.2289
+          },
+          {
+            "third": 2,
+            "n": 17,
+            "hit_rate": 0.8824,
+            "brier": 0.2075
+          },
+          {
+            "third": 3,
+            "n": 17,
+            "hit_rate": 0.7059,
+            "brier": 0.1988
+          }
+        ],
+        "delta_band_breakdown": [
+          {
+            "band_id": "band_050_075",
+            "lo": 0.5,
+            "hi": 0.75,
+            "n": 0,
+            "hit_rate": null,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "band_id": "band_075_100",
+            "lo": 0.75,
+            "hi": 1.0,
+            "n": 0,
+            "hit_rate": null,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "band_id": "band_100_125",
+            "lo": 1.0,
+            "hi": 1.25,
+            "n": 0,
+            "hit_rate": null,
+            "auc": null,
+            "brier": null
+          },
+          {
+            "band_id": "band_125_150",
+            "lo": 1.25,
+            "hi": 1.5,
+            "n": 38,
+            "hit_rate": 0.7105,
+            "auc": 0.6633,
+            "brier": 0.2147,
+            "hr_ci_95": [
+              0.5526,
+              0.8421
+            ]
+          },
+          {
+            "band_id": "band_150_plus",
+            "lo": 1.5,
+            "hi": "∞",
+            "n": 12,
+            "hit_rate": 0.75,
+            "auc": 0.7778,
+            "brier": 0.2008,
+            "hr_ci_95": [
+              0.5,
+              1.0
+            ]
+          }
+        ]
+      }
+    ],
+    "home_stable_at_full_threshold": true,
+    "narrowing_improves_meaningfully": true,
+    "best_home_variant": {
+      "threshold": 1.25,
+      "n": 50,
+      "hit_rate": 0.72,
+      "hit_rate_ci_95": [
+        0.6,
+        0.84
+      ],
+      "auc": 0.6786,
+      "auc_ci_95": [
+        0.5095,
+        0.84
+      ],
+      "brier": 0.2114,
+      "monthly_stability": "UNSTABLE",
+      "monthly_breakdown": [
+        {
+          "month": "2025-04",
+          "n": 1,
+          "hit_rate": 1.0,
+          "auc": null,
+          "brier": null
+        },
+        {
+          "month": "2025-05",
+          "n": 10,
+          "hit_rate": 0.6,
+          "auc": 0.7917,
+          "brier": 0.2159
+        },
+        {
+          "month": "2025-06",
+          "n": 12,
+          "hit_rate": 0.6667,
+          "auc": 0.6562,
+          "brier": 0.2249
+        },
+        {
+          "month": "2025-07",
+          "n": 7,
+          "hit_rate": 1.0,
+          "auc": null,
+          "brier": 0.2146
+        },
+        {
+          "month": "2025-08",
+          "n": 9,
+          "hit_rate": 0.8889,
+          "auc": null,
+          "brier": 0.1606
+        },
+        {
+          "month": "2025-09",
+          "n": 11,
+          "hit_rate": 0.5455,
+          "auc": 0.7667,
+          "brier": 0.2338
+        }
+      ],
+      "thirds_split": [
+        {
+          "third": 1,
+          "n": 16,
+          "hit_rate": 0.5625,
+          "brier": 0.2289
+        },
+        {
+          "third": 2,
+          "n": 17,
+          "hit_rate": 0.8824,
+          "brier": 0.2075
+        },
+        {
+          "third": 3,
+          "n": 17,
+          "hit_rate": 0.7059,
+          "brier": 0.1988
+        }
+      ],
+      "delta_band_breakdown": [
+        {
+          "band_id": "band_050_075",
+          "lo": 0.5,
+          "hi": 0.75,
+          "n": 0,
+          "hit_rate": null,
+          "auc": null,
+          "brier": null
+        },
+        {
+          "band_id": "band_075_100",
+          "lo": 0.75,
+          "hi": 1.0,
+          "n": 0,
+          "hit_rate": null,
+          "auc": null,
+          "brier": null
+        },
+        {
+          "band_id": "band_100_125",
+          "lo": 1.0,
+          "hi": 1.25,
+          "n": 0,
+          "hit_rate": null,
+          "auc": null,
+          "brier": null
+        },
+        {
+          "band_id": "band_125_150",
+          "lo": 1.25,
+          "hi": 1.5,
+          "n": 38,
+          "hit_rate": 0.7105,
+          "auc": 0.6633,
+          "brier": 0.2147,
+          "hr_ci_95": [
+            0.5526,
+            0.8421
+          ]
+        },
+        {
+          "band_id": "band_150_plus",
+          "lo": 1.5,
+          "hi": "∞",
+          "n": 12,
+          "hit_rate": 0.75,
+          "auc": 0.7778,
+          "brier": 0.2008,
+          "hr_ci_95": [
+            0.5,
+            1.0
+          ]
+        }
+      ]
+    },
+    "recommendation": "NARROW_TO_STRONGER_DELTA"
+  },
+  "step5_candidate_rules": {
+    "rules": [
+      {
+        "rule_id": "TIER_C_ALL_BASELINE",
+        "description": "All Tier C (|delta|>=0.50) — original P73A baseline",
+        "n": 535,
+        "coverage": 1.0,
+        "hit_rate": 0.6056,
+        "hit_rate_ci_95": [
+          0.5607,
+          0.6467
+        ],
+        "auc": 0.5834,
+        "brier": 0.2385,
+        "monthly_stability": "STABLE",
+        "home_fraction": 0.5009,
+        "concentration_risk": {
+          "monthly_hr_range": 0.0986,
+          "best_band": "band_150_plus",
+          "best_band_hit_rate": 0.7083,
+          "worst_band": "band_125_150",
+          "worst_band_hit_rate": 0.5541,
+          "single_band_dominance": true
+        },
+        "classification": "CANDIDATE"
+      },
+      {
+        "rule_id": "TIER_C_HOME_ONLY",
+        "description": "Tier C home picks only",
+        "n": 268,
+        "coverage": 0.5009,
+        "hit_rate": 0.6716,
+        "hit_rate_ci_95": [
+          0.6157,
+          0.7276
+        ],
+        "auc": 0.5591,
+        "brier": 0.2292,
+        "monthly_stability": "MODERATE",
+        "home_fraction": 1.0,
+        "concentration_risk": {
+          "monthly_hr_range": 0.1089,
+          "best_band": "band_150_plus",
+          "best_band_hit_rate": 0.75,
+          "worst_band": "band_075_100",
+          "worst_band_hit_rate": 0.6269,
+          "single_band_dominance": false
+        },
+        "classification": "STRONG_CANDIDATE"
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_075",
+        "description": "Tier C home + away with |delta|>=0.75",
+        "n": 444,
+        "coverage": 0.8299,
+        "hit_rate": 0.6126,
+        "hit_rate_ci_95": [
+          0.5698,
+          0.6554
+        ],
+        "auc": 0.5708,
+        "brier": 0.2388,
+        "monthly_stability": "MODERATE",
+        "home_fraction": 0.6036,
+        "concentration_risk": {
+          "monthly_hr_range": 0.1129,
+          "best_band": "band_050_075",
+          "best_band_hit_rate": 0.7143,
+          "worst_band": "band_125_150",
+          "worst_band_hit_rate": 0.5541,
+          "single_band_dominance": true
+        },
+        "classification": "CANDIDATE"
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_100",
+        "description": "Tier C home + away with |delta|>=1.00",
+        "n": 373,
+        "coverage": 0.6972,
+        "hit_rate": 0.6327,
+        "hit_rate_ci_95": [
+          0.5818,
+          0.6836
+        ],
+        "auc": 0.5603,
+        "brier": 0.2365,
+        "monthly_stability": "MODERATE",
+        "home_fraction": 0.7185,
+        "concentration_risk": {
+          "monthly_hr_range": 0.1556,
+          "best_band": "band_050_075",
+          "best_band_hit_rate": 0.7143,
+          "worst_band": "band_125_150",
+          "worst_band_hit_rate": 0.5541,
+          "single_band_dominance": true
+        },
+        "classification": "STRONG_CANDIDATE"
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_125",
+        "description": "Tier C home + away with |delta|>=1.25",
+        "n": 316,
+        "coverage": 0.5907,
+        "hit_rate": 0.6392,
+        "hit_rate_ci_95": [
+          0.5886,
+          0.6899
+        ],
+        "auc": 0.5787,
+        "brier": 0.2324,
+        "monthly_stability": "MODERATE",
+        "home_fraction": 0.8481,
+        "concentration_risk": {
+          "monthly_hr_range": 0.1581,
+          "best_band": "band_050_075",
+          "best_band_hit_rate": 0.7143,
+          "worst_band": "band_125_150",
+          "worst_band_hit_rate": 0.5541,
+          "single_band_dominance": true
+        },
+        "classification": "STRONG_CANDIDATE"
+      },
+      {
+        "rule_id": "TIER_C_HOME_WEIGHTED_AWAY_WATCHLIST",
+        "description": "Home Tier C operational + away placed on watchlist only",
+        "n": 268,
+        "coverage": 0.5009,
+        "hit_rate": 0.6716,
+        "hit_rate_ci_95": [
+          0.6157,
+          0.7276
+        ],
+        "auc": 0.5591,
+        "brier": 0.2292,
+        "monthly_stability": "MODERATE",
+        "home_fraction": 1.0,
+        "concentration_risk": {
+          "monthly_hr_range": 0.1089,
+          "best_band": "band_150_plus",
+          "best_band_hit_rate": 0.75,
+          "worst_band": "band_075_100",
+          "worst_band_hit_rate": 0.6269,
+          "single_band_dominance": false
+        },
+        "classification": "STRONG_CANDIDATE"
+      },
+      {
+        "rule_id": "TIER_C_BAND_FILTERED",
+        "description": "Tier C strongest signal band only (band_050_075)",
+        "n": 168,
+        "coverage": 0.314,
+        "hit_rate": 0.6369,
+        "hit_rate_ci_95": [
+          0.5655,
+          0.7024
+        ],
+        "auc": 0.6303,
+        "brier": 0.2312,
+        "monthly_stability": "MODERATE",
+        "home_fraction": 0.4583,
+        "concentration_risk": {
+          "monthly_hr_range": 0.1386,
+          "best_band": "band_050_075",
+          "best_band_hit_rate": 0.6369,
+          "worst_band": "band_050_075",
+          "worst_band_hit_rate": 0.6369,
+          "single_band_dominance": false
+        },
+        "classification": "WATCHLIST_SAMPLE_LIMITED"
+      }
+    ],
+    "baseline_n": 535
+  },
+  "prediction_boundary": "P74 results are odds-free outcome-prediction accuracy only. No market edge, EV, CLV, or Kelly calculations have been performed. paper_only=True, diagnostic_only=True."
+}

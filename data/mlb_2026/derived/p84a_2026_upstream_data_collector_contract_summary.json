@@ -1,0 +1,295 @@
+{
+  "phase": "P84A",
+  "date": "2026-05-26",
+  "generated_at": "2026-05-27T03:10:44.289812+00:00",
+  "p84a_classification": "P84A_UPSTREAM_COLLECTOR_CONTRACT_READY",
+  "allowed_classifications": [
+    "P84A_UPSTREAM_COLLECTOR_CONTRACT_READY",
+    "P84A_AWAITING_PUBLIC_STATS_DATA",
+    "P84A_BLOCKED_BY_MISSING_P83E_ARTIFACT",
+    "P84A_FAILED_VALIDATION"
+  ],
+  "prediction_boundary": "P84A defines the upstream data collector contract for 2026 MLB schedule, pitcher FIP features, and model outputs. No external API calls are made. No market edge is computed. No canonical prediction rows are written. paper_only=True, diagnostic_only=True.",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "odds_used": false
+  },
+  "step1_p83e_state": {
+    "loaded": true,
+    "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83e_2026_canonical_prediction_row_producer_summary.json",
+    "p83e_classification": "P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA",
+    "classification_ok": true,
+    "rows_written": false,
+    "rows_written_ok": true,
+    "missing_upstream_files": [
+      "schedule",
+      "pitchers",
+      "model_outputs"
+    ],
+    "missing_ok": true,
+    "live_api_calls": 0,
+    "live_api_ok": true,
+    "odds_used": false,
+    "odds_ok": true,
+    "production_ready": false,
+    "production_ready_ok": true
+  },
+  "step2_artifact_check": {
+    "artifact_checks": {
+      "p83e_json": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83e_2026_canonical_prediction_row_producer_summary.json",
+        "exists": true
+      },
+      "p83e_report": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/p83e_2026_canonical_prediction_row_producer_20260526.md",
+        "exists": true
+      },
+      "p83e_script": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/scripts/_p83e_2026_canonical_prediction_row_producer.py",
+        "exists": true
+      },
+      "p83d_json": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83d_2026_upstream_data_availability_probe_summary.json",
+        "exists": true
+      },
+      "p83c_json": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json",
+        "exists": true
+      },
+      "p83b_json": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+        "exists": true
+      },
+      "p83a_json": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json",
+        "exists": true
+      }
+    },
+    "all_ok": true
+  },
+  "step3_upstream_target_check": {
+    "file_checks": {
+      "schedule": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+        "exists": false,
+        "size_bytes": 0,
+        "line_count": 0
+      },
+      "pitchers": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+        "exists": false,
+        "size_bytes": 0,
+        "line_count": 0
+      },
+      "model_outputs": {
+        "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
+        "exists": false,
+        "size_bytes": 0,
+        "line_count": 0
+      }
+    },
+    "all_present": false
+  },
+  "step4_allowed_source_classes": [
+    "MLB_STATS_API_PUBLIC_SCHEDULE",
+    "MLB_STATS_API_PUBLIC_PLAYER_STATS",
+    "LOCAL_PUBLIC_STATS_EXPORT",
+    "MANUAL_PUBLIC_STATS_FIXTURE",
+    "MOCK_SCHEMA_ONLY_FIXTURE"
+  ],
+  "step4_forbidden_source_classes": [
+    "ODDS_API",
+    "PAID_ODDS_DATA",
+    "SPORTSBOOK_SOURCE",
+    "RUNTIME_PAPER_OUTPUT",
+    "FABRICATED_NON_MOCK"
+  ],
+  "step5_schedule_collector_contract": {
+    "contract_id": "P84A_SCHEDULE_COLLECTOR_CONTRACT_V1",
+    "version": "1.0.0",
+    "output_path": "data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+    "required_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "source_trace",
+      "collected_at_utc"
+    ],
+    "field_types": {
+      "game_id": "str",
+      "game_date": "str (YYYY-MM-DD)",
+      "season": "int (must be 2026)",
+      "home_team": "str",
+      "away_team": "str",
+      "source_trace": "str (allowed source class identifier)",
+      "collected_at_utc": "str (ISO 8601)"
+    },
+    "constraints": {
+      "season_must_be_2026": true,
+      "game_id_unique": true,
+      "no_odds_fields": true,
+      "allowed_source_classes": [
+        "MLB_STATS_API_PUBLIC_SCHEDULE",
+        "MLB_STATS_API_PUBLIC_PLAYER_STATS",
+        "LOCAL_PUBLIC_STATS_EXPORT",
+        "MANUAL_PUBLIC_STATS_FIXTURE",
+        "MOCK_SCHEMA_ONLY_FIXTURE"
+      ]
+    },
+    "recommended_source": "MLB_STATS_API_PUBLIC_SCHEDULE",
+    "recommended_endpoint": "statsapi.mlb.com/api/v1/schedule?sportId=1&season=2026",
+    "activation_gate": "SCHEDULE_GATE in P83D/P83E",
+    "blocking_behavior": "Missing or schema-invalid schedule file blocks SCHEDULE_GATE \u2192 blocks PRODUCER_ACTIVATION_GATE \u2192 blocks canonical row write"
+  },
+  "step6_pitcher_fip_contract": {
+    "contract_id": "P84A_PITCHER_FIP_CONTRACT_V1",
+    "version": "1.0.0",
+    "output_path": "data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+    "required_fields": [
+      "game_id",
+      "home_sp_fip",
+      "away_sp_fip",
+      "source_trace",
+      "feature_version"
+    ],
+    "optional_fields": [
+      "home_pitcher_id",
+      "away_pitcher_id",
+      "home_pitcher_name",
+      "away_pitcher_name",
+      "home_sp_fip_sample_n",
+      "away_sp_fip_sample_n",
+      "fip_season"
+    ],
+    "field_types": {
+      "game_id": "str (must match schedule game_id)",
+      "home_sp_fip": "float | None",
+      "away_sp_fip": "float | None",
+      "source_trace": "str",
+      "feature_version": "str"
+    },
+    "constraints": {
+      "game_id_must_match_schedule": true,
+      "fip_missing_marks_row_FEATURE_PENDING": true,
+      "FEATURE_PENDING_blocks_activation": true,
+      "no_odds_fields": true,
+      "allowed_source_classes": [
+        "MLB_STATS_API_PUBLIC_SCHEDULE",
+        "MLB_STATS_API_PUBLIC_PLAYER_STATS",
+        "LOCAL_PUBLIC_STATS_EXPORT",
+        "MANUAL_PUBLIC_STATS_FIXTURE",
+        "MOCK_SCHEMA_ONLY_FIXTURE"
+      ]
+    },
+    "row_status_values": [
+      "FEATURE_READY",
+      "FEATURE_PENDING"
+    ],
+    "fip_formula_note": "FIP = ((13*HR + 3*(BB+HBP) - 2*K) / IP) + FIP_constant. If season-to-date IP < 5 or pitcher unannounced, mark FEATURE_PENDING.",
+    "recommended_source": "MLB_STATS_API_PUBLIC_PLAYER_STATS",
+    "recommended_endpoint": "statsapi.mlb.com/api/v1/people/{pitcher_id}/stats?stats=season&season=2026",
+    "activation_gate": "PITCHER_FEATURE_GATE in P83D/P83E",
+    "blocking_behavior": "Any FEATURE_PENDING row blocks PITCHER_FEATURE_GATE \u2192 blocks PRODUCER_ACTIVATION_GATE"
+  },
+  "step7_model_output_contract": {
+    "contract_id": "P84A_MODEL_OUTPUT_CONTRACT_V1",
+    "version": "1.0.0",
+    "output_path": "data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
+    "required_fields": [
+      "game_id",
+      "model_probability",
+      "source_prediction_version",
+      "model_input_trace",
+      "predicted_side_derivation_status"
+    ],
+    "field_types": {
+      "game_id": "str (must match schedule game_id)",
+      "model_probability": "float [0.0, 1.0]",
+      "source_prediction_version": "str",
+      "model_input_trace": "str",
+      "predicted_side_derivation_status": "str"
+    },
+    "constraints": {
+      "game_id_must_match_schedule": true,
+      "model_probability_range": [
+        0.0,
+        1.0
+      ],
+      "runtime_paper_output_is_not_canonical": true,
+      "allowed_source_classes": [
+        "MLB_STATS_API_PUBLIC_SCHEDULE",
+        "MLB_STATS_API_PUBLIC_PLAYER_STATS",
+        "LOCAL_PUBLIC_STATS_EXPORT",
+        "MANUAL_PUBLIC_STATS_FIXTURE",
+        "MOCK_SCHEMA_ONLY_FIXTURE"
+      ],
+      "no_odds_fields": true,
+      "no_edge_calculated": true,
+      "no_clv_calculated": true,
+      "no_ev_calculated": true,
+      "no_kelly_calculated": true
+    },
+    "predicted_side_derivation_status_values": [
+      "DERIVABLE",
+      "MODEL_PENDING"
+    ],
+    "model_source_note": "Model must be the 2025-trained ensemble (P7A / PredictionOrchestrator) applied to 2026 feature rows. Runtime PAPER output is noncanonical. source_prediction_version must trace to a specific model artifact.",
+    "activation_gate": "MODEL_OUTPUT_GATE in P83D/P83E",
+    "blocking_behavior": "Any MODEL_PENDING row blocks MODEL_OUTPUT_GATE \u2192 blocks PRODUCER_ACTIVATION_GATE"
+  },
+  "step8_mock_fixture_validation": {
+    "n_games": 3,
+    "source_class": "MOCK_SCHEMA_ONLY_FIXTURE",
+    "canonical": false,
+    "schema_valid": true,
+    "schedule_valid": true,
+    "pitcher_valid": true,
+    "model_valid": true,
+    "errors": []
+  },
+  "step9_next_prompt": "[P84B \u2014 2026 Public Stats Collector Implementation]\n\nP84A has defined the upstream data collector contract. Re-run P83E once all three files exist locally.\n\nTo unblock P83E, implement P84B or manually provide:\n\n1. data/mlb_2026/schedule/mlb_2026_schedule.jsonl\n   Contract: P84A_SCHEDULE_COLLECTOR_CONTRACT_V1\n   Source:   MLB_STATS_API_PUBLIC_SCHEDULE\n   Endpoint: statsapi.mlb.com/api/v1/schedule?sportId=1&season=2026\n   Fields:   game_id, game_date, season=2026, home_team, away_team, source_trace, collected_at_utc\n\n2. data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl\n   Contract: P84A_PITCHER_FIP_CONTRACT_V1\n   Source:   MLB_STATS_API_PUBLIC_PLAYER_STATS\n   Endpoint: statsapi.mlb.com/api/v1/people/{pitcher_id}/stats?stats=season&season=2026\n   Fields:   game_id, home_sp_fip, away_sp_fip, source_trace, feature_version\n   Note:     row_status=FEATURE_PENDING if FIP unavailable \u2192 blocks PITCHER_FEATURE_GATE\n\n3. data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl\n   Contract: P84A_MODEL_OUTPUT_CONTRACT_V1\n   Source:   LOCAL (2025-trained ensemble applied to 2026 feature rows)\n   Fields:   game_id, model_probability, source_prediction_version, model_input_trace, predicted_side_derivation_status\n   Note:     Runtime PAPER output is noncanonical and cannot be used here\n\nRules: paper_only=True | no odds API | no EV/CLV/Kelly | no canonical rows in P84B until activation gates pass\n",
+  "forbidden_scan": {
+    "live_api_calls": 0,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "odds_used": false,
+    "canonical_rows_written": false,
+    "forbidden_scan_pass": true
+  },
+  "source_artifacts": {
+    "p83e_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83e_2026_canonical_prediction_row_producer_summary.json",
+    "p83e_report": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/p83e_2026_canonical_prediction_row_producer_20260526.md",
+    "p83e_script": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/scripts/_p83e_2026_canonical_prediction_row_producer.py",
+    "p83d_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83d_2026_upstream_data_availability_probe_summary.json",
+    "p83c_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json",
+    "p83b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+    "p83a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json"
+  },
+  "upstream_target_files": {
+    "schedule": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+    "pitchers": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+    "model_outputs": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl"
+  }
+}

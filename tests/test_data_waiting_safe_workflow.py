@@ -229,6 +229,7 @@ class TestScenario5PlannerDataWaitingSafeTask:
         with (
             patch.object(planner_tick, "db", mock_db),
             patch.object(planner_tick, "_common", mock_common),
+            patch.object(planner_tick, "_choose_closing_refresh_action", return_value="closing_monitor"),
         ):
             result = planner_tick._attempt_data_waiting_safe_task(
                 request_id="test-req-001",

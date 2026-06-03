@@ -1,0 +1,16 @@
+{
+  "registry_path": "00-BettingPlan/20260510/strategy_replay_metadata_registry.production_candidate.draft.json",
+  "registry_owner": "wbc_backend.reporting.strategy_registry",
+  "reviewer": "",
+  "approval_timestamp": "",
+  "production_candidate": true,
+  "non_production_example": false,
+  "audit_evidence_refs": ["P28C fixture validation report"],
+  "lifecycle_source_refs": ["explicit_registry"],
+  "runtime_injection_test_passed": true,
+  "e2e_fixture_validation_passed": true,
+  "explicit_human_approval": false,
+  "rollback_plan_ref": "",
+  "allowed_for_future_writes_only": true,
+  "allowed_for_historical_backfill": false
+}

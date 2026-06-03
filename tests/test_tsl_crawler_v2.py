@@ -72,7 +72,7 @@ def test_fetch_baseball_games_falls_back_and_records_diagnostics(monkeypatch):
     )
     monkeypatch.setattr(
         "data.tsl_crawler_v2.save_tsl_snapshot",
-        lambda *, games, source: snapshots.append((source, games)),
+        lambda *, games, source, force_closing=False: snapshots.append((source, games)),
     )
     monkeypatch.setattr(
         "data.tsl_crawler_v2.write_tsl_fetch_status",

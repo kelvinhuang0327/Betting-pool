@@ -1,0 +1,915 @@
+{
+  "phase": "P75B",
+  "date": "2026-05-26",
+  "p75b_classification": "P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE",
+  "allowed_classifications": [
+    "P75B_HOME_PLUS_AWAY_125_PREFERRED_AFTER_CALIBRATION",
+    "P75B_HOME_PLUS_AWAY_100_PREFERRED_AFTER_CALIBRATION",
+    "P75B_HOME_ONLY_PREFERRED_WITH_CAVEATS",
+    "P75B_BASELINE_TIER_C_REMAINS_PREFERRED",
+    "P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE",
+    "P75B_CALIBRATION_INCONCLUSIVE",
+    "P75B_BLOCKED_BY_MISSING_SOURCE_ARTIFACT",
+    "P75B_FAILED_VALIDATION"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false
+  },
+  "forbidden_scan": {
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_deployed": false,
+    "production_proposed": false,
+    "profitability_asserted": false,
+    "live_api_calls": 0,
+    "result": "CLEAN"
+  },
+  "calibration_module_status": "AVAILABLE",
+  "source_artifacts": {
+    "predictions_jsonl": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+    "p72a_json": "data/mlb_2025/derived/p72a_odds_free_strategy_accuracy_backtest_summary.json",
+    "p72b_json": "data/mlb_2025/derived/p72b_objective_metric_contract_summary.json",
+    "p73_json": "data/mlb_2025/derived/p73_tier_stability_and_sample_expansion_summary.json",
+    "p74_json": "data/mlb_2025/derived/p74_tier_c_home_away_bias_correction_summary.json",
+    "p75a_json": "data/mlb_2025/derived/p75a_tier_c_corrected_rule_validator_summary.json"
+  },
+  "step1_reconstruction": {
+    "reconstructions": {
+      "TIER_C_ALL_BASELINE": {
+        "n": 535,
+        "hit_rate": 0.6056,
+        "auc": 0.5834,
+        "expected_n": 535,
+        "expected_hit_rate": 0.6056,
+        "expected_auc": 0.5834,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_HOME_ONLY": {
+        "n": 268,
+        "hit_rate": 0.6716,
+        "auc": 0.5591,
+        "expected_n": 268,
+        "expected_hit_rate": 0.6716,
+        "expected_auc": 0.5591,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_HOME_PLUS_AWAY_100": {
+        "n": 373,
+        "hit_rate": 0.6327,
+        "auc": 0.5603,
+        "expected_n": 373,
+        "expected_hit_rate": 0.6327,
+        "expected_auc": 0.5603,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_HOME_PLUS_AWAY_125": {
+        "n": 316,
+        "hit_rate": 0.6392,
+        "auc": 0.5787,
+        "expected_n": 316,
+        "expected_hit_rate": 0.6392,
+        "expected_auc": 0.5787,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      },
+      "TIER_C_BAND_FILTERED": {
+        "n": 168,
+        "hit_rate": 0.6369,
+        "auc": 0.6303,
+        "expected_n": 168,
+        "expected_hit_rate": 0.6369,
+        "expected_auc": 0.6303,
+        "n_ok": true,
+        "hit_rate_ok": true,
+        "auc_ok": true,
+        "valid": true
+      }
+    },
+    "all_valid": true
+  },
+  "step2_uncalibrated": {
+    "TIER_C_ALL_BASELINE": {
+      "n": 535,
+      "hit_rate": 0.6056,
+      "hit_rate_ci_95": [
+        0.5607,
+        0.6467
+      ],
+      "auc": 0.5834,
+      "brier": 0.2385,
+      "log_loss": 0.6693,
+      "ece": 0.0685,
+      "mce": 0.1877,
+      "reliability_buckets": [
+        {
+          "bin_lo": 0.3,
+          "bin_hi": 0.4,
+          "n": 23,
+          "avg_predicted_prob": 0.3776,
+          "avg_actual_rate": 0.5652,
+          "calibration_gap": -0.1877
+        },
+        {
+          "bin_lo": 0.4,
+          "bin_hi": 0.5,
+          "n": 164,
+          "avg_predicted_prob": 0.4619,
+          "avg_actual_rate": 0.5427,
+          "calibration_gap": -0.0808
+        },
+        {
+          "bin_lo": 0.5,
+          "bin_hi": 0.6,
+          "n": 227,
+          "avg_predicted_prob": 0.5479,
+          "avg_actual_rate": 0.5771,
+          "calibration_gap": -0.0292
+        },
+        {
+          "bin_lo": 0.6,
+          "bin_hi": 0.7,
+          "n": 109,
+          "avg_predicted_prob": 0.6397,
+          "avg_actual_rate": 0.7523,
+          "calibration_gap": -0.1126
+        },
+        {
+          "bin_lo": 0.7,
+          "bin_hi": 0.8,
+          "n": 12,
+          "avg_predicted_prob": 0.7356,
+          "avg_actual_rate": 0.75,
+          "calibration_gap": -0.0144
+        }
+      ]
+    },
+    "TIER_C_HOME_ONLY": {
+      "n": 268,
+      "hit_rate": 0.6716,
+      "hit_rate_ci_95": [
+        0.6157,
+        0.7276
+      ],
+      "auc": 0.5591,
+      "brier": 0.2292,
+      "log_loss": 0.6504,
+      "ece": 0.0983,
+      "mce": 0.2315,
+      "reliability_buckets": [
+        {
+          "bin_lo": 0.3,
+          "bin_hi": 0.4,
+          "n": 5,
+          "avg_predicted_prob": 0.3822,
+          "avg_actual_rate": 0.6,
+          "calibration_gap": -0.2178
+        },
+        {
+          "bin_lo": 0.4,
+          "bin_hi": 0.5,
+          "n": 33,
+          "avg_predicted_prob": 0.4654,
+          "avg_actual_rate": 0.697,
+          "calibration_gap": -0.2315
+        },
+        {
+          "bin_lo": 0.5,
+          "bin_hi": 0.6,
+          "n": 134,
+          "avg_predicted_prob": 0.554,
+          "avg_actual_rate": 0.6045,
+          "calibration_gap": -0.0505
+        },
+        {
+          "bin_lo": 0.6,
+          "bin_hi": 0.7,
+          "n": 88,
+          "avg_predicted_prob": 0.64,
+          "avg_actual_rate": 0.7614,
+          "calibration_gap": -0.1214
+        },
+        {
+          "bin_lo": 0.7,
+          "bin_hi": 0.8,
+          "n": 8,
+          "avg_predicted_prob": 0.7301,
+          "avg_actual_rate": 0.75,
+          "calibration_gap": -0.0199
+        }
+      ]
+    },
+    "TIER_C_HOME_PLUS_AWAY_100": {
+      "n": 373,
+      "hit_rate": 0.6327,
+      "hit_rate_ci_95": [
+        0.5845,
+        0.6836
+      ],
+      "auc": 0.5603,
+      "brier": 0.2365,
+      "log_loss": 0.6652,
+      "ece": 0.0782,
+      "mce": 0.2042,
+      "reliability_buckets": [
+        {
+          "bin_lo": 0.3,
+          "bin_hi": 0.4,
+          "n": 12,
+          "avg_predicted_prob": 0.3791,
+          "avg_actual_rate": 0.5833,
+          "calibration_gap": -0.2042
+        },
+        {
+          "bin_lo": 0.4,
+          "bin_hi": 0.5,
+          "n": 77,
+          "avg_predicted_prob": 0.4646,
+          "avg_actual_rate": 0.6364,
+          "calibration_gap": -0.1718
+        },
+        {
+          "bin_lo": 0.5,
+          "bin_hi": 0.6,
+          "n": 177,
+          "avg_predicted_prob": 0.5494,
+          "avg_actual_rate": 0.5706,
+          "calibration_gap": -0.0212
+        },
+        {
+          "bin_lo": 0.6,
+          "bin_hi": 0.7,
+          "n": 98,
+          "avg_predicted_prob": 0.6392,
+          "avg_actual_rate": 0.7347,
+          "calibration_gap": -0.0954
+        },
+        {
+          "bin_lo": 0.7,
+          "bin_hi": 0.8,
+          "n": 9,
+          "avg_predicted_prob": 0.7343,
+          "avg_actual_rate": 0.7778,
+          "calibration_gap": -0.0435
+        }
+      ]
+    },
+    "TIER_C_HOME_PLUS_AWAY_125": {
+      "n": 316,
+      "hit_rate": 0.6392,
+      "hit_rate_ci_95": [
+        0.5854,
+        0.693
+      ],
+      "auc": 0.5787,
+      "brier": 0.2324,
+      "log_loss": 0.657,
+      "ece": 0.0763,
+      "mce": 0.1562,
+      "reliability_buckets": [
+        {
+          "bin_lo": 0.3,
+          "bin_hi": 0.4,
+          "n": 10,
+          "avg_predicted_prob": 0.3775,
+          "avg_actual_rate": 0.5,
+          "calibration_gap": -0.1225
+        },
+        {
+          "bin_lo": 0.4,
+          "bin_hi": 0.5,
+          "n": 53,
+          "avg_predicted_prob": 0.4664,
+          "avg_actual_rate": 0.6226,
+          "calibration_gap": -0.1562
+        },
+        {
+          "bin_lo": 0.5,
+          "bin_hi": 0.6,
+          "n": 151,
+          "avg_predicted_prob": 0.5522,
+          "avg_actual_rate": 0.5762,
+          "calibration_gap": -0.024
+        },
+        {
+          "bin_lo": 0.6,
+          "bin_hi": 0.7,
+          "n": 94,
+          "avg_predicted_prob": 0.6402,
+          "avg_actual_rate": 0.7553,
+          "calibration_gap": -0.1151
+        },
+        {
+          "bin_lo": 0.7,
+          "bin_hi": 0.8,
+          "n": 8,
+          "avg_predicted_prob": 0.7301,
+          "avg_actual_rate": 0.75,
+          "calibration_gap": -0.0199
+        }
+      ]
+    },
+    "TIER_C_BAND_FILTERED": {
+      "n": 168,
+      "hit_rate": 0.6369,
+      "hit_rate_ci_95": [
+        0.5655,
+        0.7024
+      ],
+      "auc": 0.6303,
+      "brier": 0.2312,
+      "log_loss": 0.6541,
+      "ece": 0.1048,
+      "mce": 0.2494,
+      "reliability_buckets": [
+        {
+          "bin_lo": 0.3,
+          "bin_hi": 0.4,
+          "n": 7,
+          "avg_predicted_prob": 0.3744,
+          "avg_actual_rate": 0.4286,
+          "calibration_gap": -0.0542
+        },
+        {
+          "bin_lo": 0.4,
+          "bin_hi": 0.5,
+          "n": 61,
+          "avg_predicted_prob": 0.4631,
+          "avg_actual_rate": 0.5574,
+          "calibration_gap": -0.0943
+        },
+        {
+          "bin_lo": 0.5,
+          "bin_hi": 0.6,
+          "n": 66,
+          "avg_predicted_prob": 0.5483,
+          "avg_actual_rate": 0.6212,
+          "calibration_gap": -0.0729
+        },
+        {
+          "bin_lo": 0.6,
+          "bin_hi": 0.7,
+          "n": 29,
+          "avg_predicted_prob": 0.6405,
+          "avg_actual_rate": 0.8276,
+          "calibration_gap": -0.1871
+        },
+        {
+          "bin_lo": 0.7,
+          "bin_hi": 0.8,
+          "n": 5,
+          "avg_predicted_prob": 0.7506,
+          "avg_actual_rate": 1.0,
+          "calibration_gap": -0.2494
+        }
+      ]
+    }
+  },
+  "step3_calibration": {
+    "TIER_C_ALL_BASELINE": {
+      "n": 535,
+      "split_train_n": 374,
+      "split_test_n": 161,
+      "methods": [
+        {
+          "method": "no_calibration",
+          "calibrated": true,
+          "test_n": 161,
+          "cal_brier": 0.24,
+          "cal_ece": 0.0637,
+          "cal_log_loss": 0.6725,
+          "cal_mce": 0.7044,
+          "overfit_risk": "NONE",
+          "allowed": true,
+          "note": "Uncalibrated baseline on test split",
+          "raw_brier": 0.24,
+          "raw_ece": 0.0637,
+          "brier_improvement": 0.0,
+          "ece_improvement": 0.0
+        },
+        {
+          "method": "platt",
+          "calibrated": true,
+          "train_n": 374,
+          "test_n": 161,
+          "raw_brier": 0.24,
+          "cal_brier": 0.2377,
+          "raw_log_loss": 0.6725,
+          "cal_log_loss": 0.6675,
+          "raw_ece": 0.0637,
+          "cal_ece": 0.0604,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.1936,
+          "brier_improvement": 0.0023,
+          "ece_improvement": 0.0033,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=374, test=161"
+        },
+        {
+          "method": "temperature",
+          "calibrated": true,
+          "train_n": 374,
+          "test_n": 161,
+          "raw_brier": 0.24,
+          "cal_brier": 0.2395,
+          "raw_log_loss": 0.6725,
+          "cal_log_loss": 0.6713,
+          "raw_ece": 0.0637,
+          "cal_ece": 0.0608,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.2252,
+          "brier_improvement": 0.0005,
+          "ece_improvement": 0.0028,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=374, test=161"
+        },
+        {
+          "method": "isotonic",
+          "calibrated": true,
+          "train_n": 374,
+          "test_n": 161,
+          "raw_brier": 0.24,
+          "cal_brier": 0.2318,
+          "raw_log_loss": 0.6725,
+          "cal_log_loss": 0.6535,
+          "raw_ece": 0.0637,
+          "cal_ece": 0.0567,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.3333,
+          "brier_improvement": 0.0082,
+          "ece_improvement": 0.007,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=374, test=161"
+        }
+      ]
+    },
+    "TIER_C_HOME_ONLY": {
+      "n": 268,
+      "split_train_n": 187,
+      "split_test_n": 81,
+      "methods": [
+        {
+          "method": "no_calibration",
+          "calibrated": true,
+          "test_n": 81,
+          "cal_brier": 0.225,
+          "cal_ece": 0.1269,
+          "cal_log_loss": 0.642,
+          "cal_mce": 0.7044,
+          "overfit_risk": "NONE",
+          "allowed": true,
+          "note": "Uncalibrated baseline on test split",
+          "raw_brier": 0.225,
+          "raw_ece": 0.1269,
+          "brier_improvement": 0.0,
+          "ece_improvement": 0.0
+        },
+        {
+          "method": "platt",
+          "calibrated": true,
+          "train_n": 187,
+          "test_n": 81,
+          "raw_brier": 0.225,
+          "cal_brier": 0.2239,
+          "raw_log_loss": 0.642,
+          "cal_log_loss": 0.6383,
+          "raw_ece": 0.1269,
+          "cal_ece": 0.1152,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.127,
+          "brier_improvement": 0.0011,
+          "ece_improvement": 0.0117,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=187, test=81"
+        },
+        {
+          "method": "temperature",
+          "calibrated": true,
+          "train_n": 187,
+          "test_n": 81,
+          "raw_brier": 0.225,
+          "cal_brier": 0.2207,
+          "raw_log_loss": 0.642,
+          "cal_log_loss": 0.6322,
+          "raw_ece": 0.1269,
+          "cal_ece": 0.1135,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.2429,
+          "brier_improvement": 0.0043,
+          "ece_improvement": 0.0134,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=187, test=81"
+        },
+        {
+          "method": "isotonic",
+          "calibrated": true,
+          "train_n": 187,
+          "test_n": 81,
+          "raw_brier": 0.225,
+          "cal_brier": 0.2203,
+          "raw_log_loss": 0.642,
+          "cal_log_loss": 0.6277,
+          "raw_ece": 0.1269,
+          "cal_ece": 0.0594,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.0648,
+          "brier_improvement": 0.0048,
+          "ece_improvement": 0.0676,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=187, test=81"
+        }
+      ]
+    },
+    "TIER_C_HOME_PLUS_AWAY_100": {
+      "n": 373,
+      "split_train_n": 261,
+      "split_test_n": 112,
+      "methods": [
+        {
+          "method": "no_calibration",
+          "calibrated": true,
+          "test_n": 112,
+          "cal_brier": 0.2306,
+          "cal_ece": 0.0988,
+          "cal_log_loss": 0.6533,
+          "cal_mce": 0.7044,
+          "overfit_risk": "NONE",
+          "allowed": true,
+          "note": "Uncalibrated baseline on test split",
+          "raw_brier": 0.2306,
+          "raw_ece": 0.0988,
+          "brier_improvement": 0.0,
+          "ece_improvement": 0.0
+        },
+        {
+          "method": "platt",
+          "calibrated": true,
+          "train_n": 261,
+          "test_n": 112,
+          "raw_brier": 0.2306,
+          "cal_brier": 0.2286,
+          "raw_log_loss": 0.6533,
+          "cal_log_loss": 0.6483,
+          "raw_ece": 0.0988,
+          "cal_ece": 0.0808,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.5024,
+          "brier_improvement": 0.0019,
+          "ece_improvement": 0.018,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=261, test=112"
+        },
+        {
+          "method": "temperature",
+          "calibrated": true,
+          "train_n": 261,
+          "test_n": 112,
+          "raw_brier": 0.2306,
+          "cal_brier": 0.2302,
+          "raw_log_loss": 0.6533,
+          "cal_log_loss": 0.6525,
+          "raw_ece": 0.0988,
+          "cal_ece": 0.1079,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.6111,
+          "brier_improvement": 0.0004,
+          "ece_improvement": -0.009,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=261, test=112"
+        },
+        {
+          "method": "isotonic",
+          "calibrated": true,
+          "train_n": 261,
+          "test_n": 112,
+          "raw_brier": 0.2306,
+          "cal_brier": 0.2254,
+          "raw_log_loss": 0.6533,
+          "cal_log_loss": 0.6408,
+          "raw_ece": 0.0988,
+          "cal_ece": 0.0712,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.2366,
+          "brier_improvement": 0.0052,
+          "ece_improvement": 0.0277,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=261, test=112"
+        }
+      ]
+    },
+    "TIER_C_HOME_PLUS_AWAY_125": {
+      "n": 316,
+      "split_train_n": 221,
+      "split_test_n": 95,
+      "methods": [
+        {
+          "method": "no_calibration",
+          "calibrated": true,
+          "test_n": 95,
+          "cal_brier": 0.2299,
+          "cal_ece": 0.1053,
+          "cal_log_loss": 0.652,
+          "cal_mce": 0.7044,
+          "overfit_risk": "NONE",
+          "allowed": true,
+          "note": "Uncalibrated baseline on test split",
+          "raw_brier": 0.2299,
+          "raw_ece": 0.1053,
+          "brier_improvement": 0.0,
+          "ece_improvement": 0.0
+        },
+        {
+          "method": "platt",
+          "calibrated": true,
+          "train_n": 221,
+          "test_n": 95,
+          "raw_brier": 0.2299,
+          "cal_brier": 0.2327,
+          "raw_log_loss": 0.652,
+          "cal_log_loss": 0.6564,
+          "raw_ece": 0.1053,
+          "cal_ece": 0.1181,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.5046,
+          "brier_improvement": -0.0027,
+          "ece_improvement": -0.0128,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=221, test=95"
+        },
+        {
+          "method": "temperature",
+          "calibrated": true,
+          "train_n": 221,
+          "test_n": 95,
+          "raw_brier": 0.2299,
+          "cal_brier": 0.2274,
+          "raw_log_loss": 0.652,
+          "cal_log_loss": 0.6463,
+          "raw_ece": 0.1053,
+          "cal_ece": 0.0877,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.6378,
+          "brier_improvement": 0.0025,
+          "ece_improvement": 0.0176,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=221, test=95"
+        },
+        {
+          "method": "isotonic",
+          "calibrated": true,
+          "train_n": 221,
+          "test_n": 95,
+          "raw_brier": 0.2299,
+          "cal_brier": 0.2316,
+          "raw_log_loss": 0.652,
+          "cal_log_loss": 0.6528,
+          "raw_ece": 0.1053,
+          "cal_ece": 0.0807,
+          "raw_mce": 0.7044,
+          "cal_mce": 0.1901,
+          "brier_improvement": -0.0016,
+          "ece_improvement": 0.0246,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=221, test=95"
+        }
+      ]
+    },
+    "TIER_C_BAND_FILTERED": {
+      "n": 168,
+      "split_train_n": 117,
+      "split_test_n": 51,
+      "methods": [
+        {
+          "method": "no_calibration",
+          "calibrated": true,
+          "test_n": 51,
+          "cal_brier": 0.2341,
+          "cal_ece": 0.1997,
+          "cal_log_loss": 0.6608,
+          "cal_mce": 0.2402,
+          "overfit_risk": "NONE",
+          "allowed": true,
+          "note": "Uncalibrated baseline on test split",
+          "raw_brier": 0.2341,
+          "raw_ece": 0.1997,
+          "brier_improvement": 0.0,
+          "ece_improvement": 0.0
+        },
+        {
+          "method": "platt",
+          "calibrated": true,
+          "train_n": 117,
+          "test_n": 51,
+          "raw_brier": 0.2341,
+          "cal_brier": 0.2129,
+          "raw_log_loss": 0.6608,
+          "cal_log_loss": 0.6169,
+          "raw_ece": 0.1997,
+          "cal_ece": 0.1368,
+          "raw_mce": 0.2402,
+          "cal_mce": 0.1998,
+          "brier_improvement": 0.0212,
+          "ece_improvement": 0.0629,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=117, test=51"
+        },
+        {
+          "method": "temperature",
+          "calibrated": true,
+          "train_n": 117,
+          "test_n": 51,
+          "raw_brier": 0.2341,
+          "cal_brier": 0.2301,
+          "raw_log_loss": 0.6608,
+          "cal_log_loss": 0.6518,
+          "raw_ece": 0.1997,
+          "cal_ece": 0.1853,
+          "raw_mce": 0.2402,
+          "cal_mce": 0.2546,
+          "brier_improvement": 0.004,
+          "ece_improvement": 0.0144,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "Chronological 70/30 split, train=117, test=51"
+        },
+        {
+          "method": "isotonic_kfold5",
+          "calibrated": true,
+          "train_n": 135,
+          "test_n": 33,
+          "k_folds": 5,
+          "raw_brier": 0.2312,
+          "cal_brier": 0.2453,
+          "cal_log_loss": 0.7097,
+          "raw_ece": 0.1831,
+          "cal_ece": 0.1734,
+          "brier_improvement": -0.0141,
+          "ece_improvement": 0.0097,
+          "overfit_risk": "LOW",
+          "allowed": true,
+          "note": "5-fold cross-validation, n=168"
+        }
+      ]
+    }
+  },
+  "step4_scorecard": {
+    "scores": [
+      {
+        "rule_id": "TIER_C_ALL_BASELINE",
+        "n": 535,
+        "hit_rate": 0.6056,
+        "hit_delta_vs_baseline": 0.0,
+        "auc": 0.5834,
+        "uncal_brier": 0.2385,
+        "uncal_ece": 0.0685,
+        "best_cal_method": "isotonic",
+        "best_cal_brier": 0.2318,
+        "best_cal_ece": 0.0567,
+        "brier_improvement": 0.0082,
+        "ece_improvement": 0.007,
+        "cal_brier_ok": true,
+        "cal_ece_ok": true,
+        "n_ok": true,
+        "hit_delta_ok": false,
+        "caveats": [],
+        "cal_status": "CANDIDATE_WEAK_HIT"
+      },
+      {
+        "rule_id": "TIER_C_HOME_ONLY",
+        "n": 268,
+        "hit_rate": 0.6716,
+        "hit_delta_vs_baseline": 0.066,
+        "auc": 0.5591,
+        "uncal_brier": 0.2292,
+        "uncal_ece": 0.0983,
+        "best_cal_method": "isotonic",
+        "best_cal_brier": 0.2203,
+        "best_cal_ece": 0.0594,
+        "brier_improvement": 0.0048,
+        "ece_improvement": 0.0676,
+        "cal_brier_ok": true,
+        "cal_ece_ok": true,
+        "n_ok": true,
+        "hit_delta_ok": true,
+        "caveats": [
+          "SEVERE_HOME_ONLY_DEPENDENCY"
+        ],
+        "cal_status": "OPERATIONAL_WITH_CAVEATS"
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_100",
+        "n": 373,
+        "hit_rate": 0.6327,
+        "hit_delta_vs_baseline": 0.0271,
+        "auc": 0.5603,
+        "uncal_brier": 0.2365,
+        "uncal_ece": 0.0782,
+        "best_cal_method": "isotonic",
+        "best_cal_brier": 0.2254,
+        "best_cal_ece": 0.0712,
+        "brier_improvement": 0.0052,
+        "ece_improvement": 0.0277,
+        "cal_brier_ok": true,
+        "cal_ece_ok": true,
+        "n_ok": true,
+        "hit_delta_ok": true,
+        "caveats": [],
+        "cal_status": "OPERATIONAL_CALIBRATED"
+      },
+      {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_125",
+        "n": 316,
+        "hit_rate": 0.6392,
+        "hit_delta_vs_baseline": 0.0336,
+        "auc": 0.5787,
+        "uncal_brier": 0.2324,
+        "uncal_ece": 0.0763,
+        "best_cal_method": "temperature",
+        "best_cal_brier": 0.2274,
+        "best_cal_ece": 0.0877,
+        "brier_improvement": 0.0025,
+        "ece_improvement": 0.0176,
+        "cal_brier_ok": true,
+        "cal_ece_ok": true,
+        "n_ok": true,
+        "hit_delta_ok": true,
+        "caveats": [],
+        "cal_status": "OPERATIONAL_CALIBRATED"
+      },
+      {
+        "rule_id": "TIER_C_BAND_FILTERED",
+        "n": 168,
+        "hit_rate": 0.6369,
+        "hit_delta_vs_baseline": 0.0313,
+        "auc": 0.6303,
+        "uncal_brier": 0.2312,
+        "uncal_ece": 0.1048,
+        "best_cal_method": "platt",
+        "best_cal_brier": 0.2129,
+        "best_cal_ece": 0.1368,
+        "brier_improvement": 0.0212,
+        "ece_improvement": 0.0629,
+        "cal_brier_ok": true,
+        "cal_ece_ok": true,
+        "n_ok": false,
+        "hit_delta_ok": true,
+        "caveats": [
+          "RESEARCH_ONLY_N_BELOW_200"
+        ],
+        "cal_status": "RESEARCH_ONLY"
+      }
+    ],
+    "baseline_brier": 0.2385,
+    "baseline_ece": 0.0685,
+    "baseline_hit_rate": 0.6056
+  },
+  "step5_selection": {
+    "preferred_rule": "TIER_C_HOME_PLUS_AWAY_125",
+    "preferred_n": 316,
+    "preferred_hit_rate": 0.6392,
+    "preferred_auc": 0.5787,
+    "preferred_cal_method": "temperature",
+    "preferred_cal_brier": 0.2274,
+    "preferred_cal_ece": 0.0877,
+    "caveats": [],
+    "p75b_status": "P75B_MULTI_CANDIDATE_KEEP_FOR_NEXT_PHASE",
+    "reason": "Rule TIER_C_HOME_PLUS_AWAY_125: n=316, hit=0.6392, AUC=0.5787, cal_brier=0.2274, cal_ece=0.0877 via temperature. Close rivals within 0.015 hit: ['TIER_C_HOME_PLUS_AWAY_100']. Recommend P76 for final tie-break.",
+    "correction_robust": true
+  },
+  "prediction_boundary": "P75B calibration diagnostics are probability-quality analysis only. 'Preferred after calibration' means the rule has the best probability profile for future odds-lane evaluation — NOT production deployment, NOT betting recommendation, NOT market-edge claim. paper_only=True, diagnostic_only=True."
+}

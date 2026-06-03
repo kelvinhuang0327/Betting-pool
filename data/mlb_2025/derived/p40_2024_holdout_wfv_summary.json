@@ -1,0 +1,120 @@
+{
+  "governance": {
+    "phase": "P40",
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "t_locked": 0.5,
+    "live_api_calls": 0,
+    "no_champion_modification": true
+  },
+  "p37_baseline": {
+    "season": "2025",
+    "auc": 0.5665,
+    "brier_skill": 0.0123,
+    "favored_win_rate": 0.608,
+    "monthly_stability": 1.0,
+    "strong_edge_count": 531
+  },
+  "data_inventory": {
+    "total_records": 2429,
+    "quality_records": 2158,
+    "quality_rate": 0.8884,
+    "strong_edge_count": 955,
+    "strong_edge_rate": 0.4425
+  },
+  "overall_metrics": {
+    "n": 955,
+    "base_rate": 0.5215,
+    "auc": 0.5788,
+    "brier_score": 0.2542,
+    "brier_skill": -0.0188,
+    "log_loss": 0.7035,
+    "ece": 0.0923,
+    "favored_win_rate": 0.5644,
+    "correct": 539
+  },
+  "temporal_stability": {
+    "monthly": {
+      "2024-03": {
+        "n": 18,
+        "auc": null,
+        "favored_wr": null,
+        "note": "insufficient_data"
+      },
+      "2024-04": {
+        "n": 162,
+        "auc": 0.6049,
+        "favored_wr": 0.5802,
+        "note": null
+      },
+      "2024-05": {
+        "n": 170,
+        "auc": 0.6308,
+        "favored_wr": 0.6,
+        "note": null
+      },
+      "2024-06": {
+        "n": 151,
+        "auc": 0.5741,
+        "favored_wr": 0.5828,
+        "note": null
+      },
+      "2024-07": {
+        "n": 141,
+        "auc": 0.5561,
+        "favored_wr": 0.5319,
+        "note": null
+      },
+      "2024-08": {
+        "n": 168,
+        "auc": 0.587,
+        "favored_wr": 0.5595,
+        "note": null
+      },
+      "2024-09": {
+        "n": 145,
+        "auc": 0.5405,
+        "favored_wr": 0.531,
+        "note": null
+      }
+    },
+    "period": {
+      "early": {
+        "n": 350,
+        "auc": 0.6076,
+        "favored_wr": 0.5857,
+        "note": null
+      },
+      "mid": {
+        "n": 460,
+        "auc": 0.5689,
+        "favored_wr": 0.5587,
+        "note": null
+      },
+      "late": {
+        "n": 145,
+        "auc": 0.5405,
+        "favored_wr": 0.531,
+        "note": null
+      }
+    },
+    "monthly_auc_min": 0.5405,
+    "monthly_auc_max": 0.6308,
+    "monthly_auc_mean": 0.5822,
+    "months_above_random": 6,
+    "total_months_with_data": 6,
+    "monthly_stability_rate": 1.0
+  },
+  "comparison_vs_p37": {
+    "auc_delta": 0.0123,
+    "brier_skill_delta": -0.0311,
+    "favored_wr_delta": -0.0436,
+    "stability_delta": 0.0
+  },
+  "classification": {
+    "classification": "HOLDOUT_CONFIRMED",
+    "threshold_confirmed": 0.54,
+    "threshold_failed": 0.5,
+    "min_viable": 50
+  }
+}

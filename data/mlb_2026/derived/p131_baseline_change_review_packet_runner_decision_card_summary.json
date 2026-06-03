@@ -1,0 +1,928 @@
+{
+  "packet_runner_status": "READY_WITH_BLOCKERS",
+  "source_baseline_change_validator_status": "READY_WITH_BLOCKERS",
+  "evaluated_packet_count": 22,
+  "approved_packet_count": 0,
+  "blocked_packet_count": 21,
+  "unexpected_approved_count": 0,
+  "decision_cards": [
+    {
+      "packet_id": "P130_VALID_TEMPLATE",
+      "packet_name": "VALID_PACKET_TEMPLATE",
+      "packet_type": "VALID_TEMPLATE",
+      "verdict": "GOVERNANCE_ONLY_PENDING",
+      "decision_level": "YELLOW_GOVERNANCE_ONLY",
+      "blocker_count": 0,
+      "blocker_codes": [],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Schema-valid governance packet, still not production-ready by policy.",
+      "next_required_action": "Maintain governance-only flow; no unlock actions permitted."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_BASELINE_CHANGE_REQUEST_ID_BLOCKED",
+      "packet_name": "MISSING_BASELINE_CHANGE_REQUEST_ID_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "BASELINE_CHANGE_REQUEST_ID_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "baseline_change_request_id"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_BASELINE_CHANGE_OWNER_BLOCKED",
+      "packet_name": "MISSING_BASELINE_CHANGE_OWNER_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "BASELINE_CHANGE_OWNER_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "baseline_change_owner"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_BASELINE_CHANGE_REASON_BLOCKED",
+      "packet_name": "MISSING_BASELINE_CHANGE_REASON_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "BASELINE_CHANGE_REASON_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "baseline_change_reason"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_SOURCE_FIXTURE_VERSION_BEFORE_BLOCKED",
+      "packet_name": "MISSING_SOURCE_FIXTURE_VERSION_BEFORE_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "SOURCE_FIXTURE_VERSION_BEFORE_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "source_fixture_version_before"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_SOURCE_FIXTURE_VERSION_AFTER_BLOCKED",
+      "packet_name": "MISSING_SOURCE_FIXTURE_VERSION_AFTER_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "SOURCE_FIXTURE_VERSION_AFTER_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "source_fixture_version_after"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_OLD_FINGERPRINT_BLOCKED",
+      "packet_name": "MISSING_OLD_FINGERPRINT_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "OLD_FINGERPRINT_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "old_fingerprint"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "MISSING",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_NEW_FINGERPRINT_BLOCKED",
+      "packet_name": "MISSING_NEW_FINGERPRINT_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "NEW_FINGERPRINT_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "new_fingerprint"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "MISSING",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_RULE_CHANGE_SUMMARY_BLOCKED",
+      "packet_name": "MISSING_RULE_CHANGE_SUMMARY_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 2,
+      "blocker_codes": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "rule_change_summary"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_EXPECTED_VERDICT_DELTA_BLOCKED",
+      "packet_name": "MISSING_EXPECTED_VERDICT_DELTA_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "EXPECTED_VERDICT_DELTA_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "expected_verdict_delta"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "MISSING",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_REVIEWER_APPROVAL_NOT_APPROVED_BLOCKED",
+      "packet_name": "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKER"
+      ],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "NOT_APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_REVIEWER_IDENTITY_BLOCKED",
+      "packet_name": "MISSING_REVIEWER_IDENTITY_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "REVIEWER_IDENTITY_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "reviewer_identity"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "MISSING",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_APPROVAL_TIMESTAMP_BLOCKED",
+      "packet_name": "MISSING_APPROVAL_TIMESTAMP_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "APPROVAL_TIMESTAMP_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "approval_timestamp"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "MISSING",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_ROLLBACK_PLAN_BLOCKED",
+      "packet_name": "MISSING_ROLLBACK_PLAN_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "ROLLBACK_PLAN_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "rollback_plan"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "MISSING",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_MISSING_NON_UNLOCK_ATTESTATION_BLOCKED",
+      "packet_name": "MISSING_NON_UNLOCK_ATTESTATION_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "NON_UNLOCK_ATTESTATION_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "non_unlock_attestation"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "MISSING",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_PRODUCTION_UNLOCK_REQUESTED_BLOCKED",
+      "packet_name": "PRODUCTION_UNLOCK_REQUESTED_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "PRODUCTION_UNLOCK_REQUESTED_BLOCKER"
+      ],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [
+        "production_unlock_requested"
+      ],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_RECOMMENDATION_UNLOCK_REQUESTED_BLOCKED",
+      "packet_name": "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKER"
+      ],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [
+        "recommendation_unlock_requested"
+      ],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_PROVIDER_UNLOCK_REQUESTED_BLOCKED",
+      "packet_name": "PROVIDER_UNLOCK_REQUESTED_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "PROVIDER_UNLOCK_REQUESTED_BLOCKER"
+      ],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [
+        "provider_unlock_requested"
+      ],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_REAL_ODDS_INGESTION_REQUESTED_BLOCKED",
+      "packet_name": "REAL_ODDS_INGESTION_REQUESTED_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "REAL_ODDS_INGESTION_REQUESTED_BLOCKER"
+      ],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [
+        "real_odds_ingestion_requested"
+      ],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_LIVE_OR_PAID_API_REQUESTED_BLOCKED",
+      "packet_name": "LIVE_OR_PAID_API_REQUESTED_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "LIVE_OR_PAID_API_REQUESTED_BLOCKER"
+      ],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [
+        "live_or_paid_api_requested"
+      ],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_SAME_OLD_AND_NEW_FINGERPRINT_BLOCKED",
+      "packet_name": "SAME_OLD_AND_NEW_FINGERPRINT_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 1,
+      "blocker_codes": [
+        "OLD_AND_NEW_FINGERPRINT_IDENTICAL_BLOCKER"
+      ],
+      "missing_required_fields": [],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "UNCHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    },
+    {
+      "packet_id": "P130_INVALID_EMPTY_RULE_CHANGE_WITH_FINGERPRINT_CHANGE_BLOCKED",
+      "packet_name": "EMPTY_RULE_CHANGE_WITH_FINGERPRINT_CHANGE_BLOCKED",
+      "packet_type": "INVALID_CASE",
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_count": 2,
+      "blocker_codes": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ],
+      "missing_required_fields": [
+        "rule_change_summary"
+      ],
+      "unauthorized_change_flags": [],
+      "reviewer_approval_status": "APPROVED",
+      "reviewer_identity_status": "PRESENT",
+      "approval_timestamp_status": "PRESENT",
+      "rollback_plan_status": "PRESENT",
+      "non_unlock_attestation_status": "VALID",
+      "baseline_fingerprint_change_status": "CHANGED",
+      "expected_verdict_delta_status": "PRESENT",
+      "provider_unlock_allowed": false,
+      "odds_unlock_allowed": false,
+      "recommendation_unlock_allowed": false,
+      "production_unlock_allowed": false,
+      "ev_clv_kelly_unlock_allowed": false,
+      "decision_reason": "Packet blocked due to missing/unauthorized/governance violations.",
+      "next_required_action": "Resolve blockers and resubmit packet for governance review."
+    }
+  ],
+  "decision_card_schema": {
+    "packet_id": "string",
+    "packet_name": "string",
+    "packet_type": "VALID_TEMPLATE | INVALID_CASE",
+    "verdict": "GOVERNANCE_ONLY_PENDING | BLOCKED",
+    "decision_level": "YELLOW_GOVERNANCE_ONLY | RED_BLOCKED",
+    "blocker_count": "integer",
+    "blocker_codes": "string[]",
+    "missing_required_fields": "string[]",
+    "unauthorized_change_flags": "string[]",
+    "reviewer_approval_status": "APPROVED | NOT_APPROVED | MISSING",
+    "reviewer_identity_status": "PRESENT | MISSING",
+    "approval_timestamp_status": "PRESENT | MISSING",
+    "rollback_plan_status": "PRESENT | MISSING",
+    "non_unlock_attestation_status": "VALID | MISSING | INVALID",
+    "baseline_fingerprint_change_status": "CHANGED | UNCHANGED | MISSING",
+    "expected_verdict_delta_status": "PRESENT | MISSING",
+    "provider_unlock_allowed": "boolean",
+    "odds_unlock_allowed": "boolean",
+    "recommendation_unlock_allowed": "boolean",
+    "production_unlock_allowed": "boolean",
+    "ev_clv_kelly_unlock_allowed": "boolean",
+    "decision_reason": "string",
+    "next_required_action": "string"
+  },
+  "packet_execution_matrix": {
+    "VALID_PACKET_TEMPLATE": {
+      "verdict": "GOVERNANCE_ONLY_PENDING",
+      "decision_level": "YELLOW_GOVERNANCE_ONLY",
+      "blocker_codes": []
+    },
+    "MISSING_BASELINE_CHANGE_REQUEST_ID_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "BASELINE_CHANGE_REQUEST_ID_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_BASELINE_CHANGE_OWNER_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "BASELINE_CHANGE_OWNER_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_BASELINE_CHANGE_REASON_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "BASELINE_CHANGE_REASON_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_SOURCE_FIXTURE_VERSION_BEFORE_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "SOURCE_FIXTURE_VERSION_BEFORE_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_SOURCE_FIXTURE_VERSION_AFTER_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "SOURCE_FIXTURE_VERSION_AFTER_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_OLD_FINGERPRINT_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "OLD_FINGERPRINT_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_NEW_FINGERPRINT_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "NEW_FINGERPRINT_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_RULE_CHANGE_SUMMARY_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_EXPECTED_VERDICT_DELTA_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "EXPECTED_VERDICT_DELTA_MISSING_BLOCKER"
+      ]
+    },
+    "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKER"
+      ]
+    },
+    "MISSING_REVIEWER_IDENTITY_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "REVIEWER_IDENTITY_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_APPROVAL_TIMESTAMP_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "APPROVAL_TIMESTAMP_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_ROLLBACK_PLAN_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "ROLLBACK_PLAN_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_NON_UNLOCK_ATTESTATION_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "NON_UNLOCK_ATTESTATION_MISSING_BLOCKER"
+      ]
+    },
+    "PRODUCTION_UNLOCK_REQUESTED_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "PRODUCTION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    "PROVIDER_UNLOCK_REQUESTED_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "PROVIDER_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    "REAL_ODDS_INGESTION_REQUESTED_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "REAL_ODDS_INGESTION_REQUESTED_BLOCKER"
+      ]
+    },
+    "LIVE_OR_PAID_API_REQUESTED_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "LIVE_OR_PAID_API_REQUESTED_BLOCKER"
+      ]
+    },
+    "SAME_OLD_AND_NEW_FINGERPRINT_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "OLD_AND_NEW_FINGERPRINT_IDENTICAL_BLOCKER"
+      ]
+    },
+    "EMPTY_RULE_CHANGE_WITH_FINGERPRINT_CHANGE_BLOCKED": {
+      "verdict": "BLOCKED",
+      "decision_level": "RED_BLOCKED",
+      "blocker_codes": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ]
+    }
+  },
+  "packet_blocker_summary": {
+    "APPROVAL_TIMESTAMP_MISSING_BLOCKER": 1,
+    "BASELINE_CHANGE_OWNER_MISSING_BLOCKER": 1,
+    "BASELINE_CHANGE_REASON_MISSING_BLOCKER": 1,
+    "BASELINE_CHANGE_REQUEST_ID_MISSING_BLOCKER": 1,
+    "EXPECTED_VERDICT_DELTA_MISSING_BLOCKER": 1,
+    "LIVE_OR_PAID_API_REQUESTED_BLOCKER": 1,
+    "NEW_FINGERPRINT_MISSING_BLOCKER": 1,
+    "NON_UNLOCK_ATTESTATION_MISSING_BLOCKER": 1,
+    "OLD_AND_NEW_FINGERPRINT_IDENTICAL_BLOCKER": 1,
+    "OLD_FINGERPRINT_MISSING_BLOCKER": 1,
+    "PRODUCTION_UNLOCK_REQUESTED_BLOCKER": 1,
+    "PROVIDER_UNLOCK_REQUESTED_BLOCKER": 1,
+    "REAL_ODDS_INGESTION_REQUESTED_BLOCKER": 1,
+    "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKER": 1,
+    "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKER": 1,
+    "REVIEWER_IDENTITY_MISSING_BLOCKER": 1,
+    "ROLLBACK_PLAN_MISSING_BLOCKER": 1,
+    "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER": 2,
+    "RULE_CHANGE_SUMMARY_MISSING_BLOCKER": 2,
+    "SOURCE_FIXTURE_VERSION_AFTER_MISSING_BLOCKER": 1,
+    "SOURCE_FIXTURE_VERSION_BEFORE_MISSING_BLOCKER": 1
+  },
+  "reviewer_status_summary": {
+    "APPROVED": 21,
+    "NOT_APPROVED": 1
+  },
+  "rollback_readiness_summary": {
+    "MISSING": 1,
+    "PRESENT": 21
+  },
+  "non_unlock_attestation_summary": {
+    "MISSING": 1,
+    "VALID": 21
+  },
+  "governance_invariant_summary": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "regression_status": {
+    "targeted_p118_p131_tests_status": "PASS",
+    "targeted_p118_p131_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p131_baseline_change_review_packet_runner_decision_card.py tests/test_p130_baseline_change_review_packet_validator.py tests/test_p129_replay_drift_alert_contract.py tests/test_p128_deterministic_replay_consistency_gate.py tests/test_p127_intake_payload_evaluation_runner_verdict_report.py tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression evidence captured for P131 task."
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Use decision cards for governance review workflow only",
+    "Require reviewer approval, rollback plan, and valid non-unlock attestation before baseline change",
+    "Keep full regression status explicit: PASS/FAIL/NOT_RUN"
+  ],
+  "prohibited_actions": [
+    "Do not ingest real odds or call live/paid APIs",
+    "Do not unlock provider/recommendation/production/EV/CLV/Kelly/stake/profit",
+    "Do not treat packet review as legal provider approval or production readiness",
+    "Do not bypass blocker resolution before any baseline change"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "BASELINE_CHANGE_APPROVAL_REQUIRED_BLOCKER",
+    "BASELINE_PACKET_REVIEW_REQUIRED_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "DECISION_CARD_GOVERNANCE_ONLY_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER"
+  ],
+  "final_classification": "P131_BASELINE_CHANGE_REVIEW_PACKET_RUNNER_DECISION_CARD_READY_WITH_BLOCKERS",
+  "final_classification_options": [
+    "P131_BASELINE_CHANGE_REVIEW_PACKET_RUNNER_DECISION_CARD_READY_WITH_BLOCKERS",
+    "P131_BASELINE_CHANGE_REVIEW_PACKET_RUNNER_DECISION_CARD_BLOCKED_BY_MISSING_ARTIFACTS",
+    "P131_BASELINE_CHANGE_REVIEW_PACKET_RUNNER_DECISION_CARD_FAILED_VALIDATION"
+  ],
+  "governance_statement": "Baseline change approval does not imply legal provider approval, real odds approval, recommendation readiness, or production readiness."
+}

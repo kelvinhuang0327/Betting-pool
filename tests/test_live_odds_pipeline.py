@@ -352,6 +352,7 @@ class TestCaptureWindows:
 
         tl_path = timeline_dir / "odds_timeline.jsonl"
         monkeypatch.setattr(sched, "TIMELINE_PATH", tl_path)
+        monkeypatch.setattr(sched, "WBC_NPB_HISTORY_PATH", tl_path)
         # Empty file
         tl_path.write_text("", encoding="utf-8")
 
@@ -367,10 +368,11 @@ class TestCaptureWindows:
 
         tl_path = timeline_dir / "odds_timeline.jsonl"
         monkeypatch.setattr(sched, "TIMELINE_PATH", tl_path)
+        monkeypatch.setattr(sched, "WBC_NPB_HISTORY_PATH", tl_path)
 
-        # Game in 2.5 hours
+        # Game in 1.5 hours (within 60-120 min decision window)
         now = datetime(2025, 7, 15, 20, 0, tzinfo=timezone.utc)
-        game_time = now + timedelta(hours=2, minutes=30)
+        game_time = now + timedelta(hours=1, minutes=30)
         tl_data = {
             "game_id": "test-game",
             "commence_time": game_time.isoformat().replace("+00:00", "Z"),

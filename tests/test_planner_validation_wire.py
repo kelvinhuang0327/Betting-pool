@@ -89,8 +89,14 @@ def _list_tasks_stub(limit: int = 20, **kwargs) -> list:
 @pytest.fixture(autouse=True)
 def isolate_db():
     _reset_db()
+    orig_sched = db.get_setting("scheduler_enabled", "1")
+    orig_llm_mode = db.get_setting("llm_execution_mode", "safe-run")
+    db.set_setting("scheduler_enabled", "1")
+    db.set_setting("llm_execution_mode", "safe-run")
     yield
     _reset_db()
+    db.set_setting("scheduler_enabled", orig_sched)
+    db.set_setting("llm_execution_mode", orig_llm_mode)
 
 
 # ── Test 1: PATCH_QUEUED insight + COMPLETED patch → validator is called ────

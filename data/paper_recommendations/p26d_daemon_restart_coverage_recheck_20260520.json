@@ -1,0 +1,97 @@
+{
+  "artifact_id": "p26d_daemon_restart_coverage_recheck_20260520",
+  "phase": "P26D",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26D_DAEMON_RESTART_AWAITING_AUTHORIZATION",
+
+  "authorization_status": {
+    "authorized": false,
+    "required_sentence": "YES: 授權重啟 odds_capture_daemon",
+    "action_taken": "readiness-only analysis, daemon NOT restarted"
+  },
+
+  "p26b_commit": "107535d",
+  "p26c_baseline": {
+    "complete_pair": 220,
+    "pregame_only": 577
+  },
+
+  "readiness_check": {
+    "manage_daemon_sh_exists": true,
+    "restart_command": "scripts/manage_daemon.sh restart",
+    "restart_mechanism": "launchctl stop + launchctl start (via launchd PList)",
+    "effect": "New Python process spawned → imports P26B odds_capture_scheduler.py → _load_wbc_npb_game_times() active",
+    "estimated_first_tick_after_restart_min": 15
+  },
+
+  "daemon_current_state": {
+    "pid": 1381,
+    "process_running": true,
+    "daemon_start_approx_utc": "2026-05-20T12:12:00Z",
+    "latest_heartbeat_utc": "2026-05-20T13:44:13Z",
+    "ran_after_p26b_commit": true,
+    "new_code_in_memory": false,
+    "evidence": "Capture record at 13:44 shows windows keys without _wbc_npb_audit → OLD determine_capture_windows() in memory",
+    "windows_at_latest_tick": {
+      "continuous": true,
+      "decision": false,
+      "pregame": false,
+      "closing": false,
+      "_wbc_npb_audit_present": false
+    }
+  },
+
+  "snapshot_monitoring_since_p26b": {
+    "new_snapshot_count": 3,
+    "new_closing_snapshots": 0,
+    "new_rows_detail": [
+      {"match_id": "3469709.1", "game_time": "2026-05-21T01:40:00+08:00", "gap_h": 3.93, "is_closing": false},
+      {"match_id": "3469809.1", "game_time": "2026-05-21T06:40:00+08:00", "gap_h": 8.93, "is_closing": false},
+      {"match_id": "3469785.1", "game_time": "2026-05-21T08:40:00+08:00", "gap_h": 10.93, "is_closing": false}
+    ],
+    "note": "All 3 new snapshots are pregame (4-11h before game). Even with P26B active, these would not be closing snapshots."
+  },
+
+  "coverage_before": {
+    "complete_pair": 220,
+    "pregame_only": 577,
+    "closing_only": 74,
+    "no_valid_snapshots": 16,
+    "total_matches": 887
+  },
+
+  "coverage_after": {
+    "complete_pair": 220,
+    "pregame_only": 577,
+    "closing_only": 74,
+    "no_valid_snapshots": 16,
+    "total_matches": 887
+  },
+
+  "delta_complete_pairs": 0,
+  "p25c_bootstrap_threshold": 300,
+  "whether_bootstrap_ran": false,
+  "bootstrap_reason": "delta_complete_pairs=0, current=220 < threshold=300. Daemon has old code, no closing captures triggered.",
+
+  "upcoming_games_for_closing_after_restart": [
+    {"match_id": "3469709.1", "game_time_utc": "2026-05-20T17:40:00Z", "hours_from_now": "~4h"},
+    {"match_id": "3469809.1", "game_time_utc": "2026-05-20T22:40:00Z", "hours_from_now": "~9h"},
+    {"match_id": "3469785.1", "game_time_utc": "2026-05-21T00:40:00Z", "hours_from_now": "~11h"}
+  ],
+
+  "restart_expected_outcome": {
+    "new_pid": "new PID > 1381",
+    "p26b_code_active": true,
+    "_wbc_npb_audit_will_appear": "Yes, when any WBC/NPB game is within ±2h of game_time",
+    "first_closing_candidate": "3469709.1 (game_time 17:40 UTC) — daemon should trigger closing at ~15:40-17:45 UTC",
+    "coverage_lift_rate": "Depends on how many future WBC/NPB games have game_time ±2h ticked by daemon"
+  },
+
+  "final_classification": "P26D_DAEMON_RESTART_AWAITING_AUTHORIZATION"
+}

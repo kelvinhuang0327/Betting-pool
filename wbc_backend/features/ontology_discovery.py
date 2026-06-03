@@ -373,7 +373,7 @@ def discover_ontology(
         interaction_candidates=interaction_candidates,
         prune_candidates=prune_candidates,
         top_k_features=top_k_features,
-        timestamp=datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        timestamp=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     )
 
 

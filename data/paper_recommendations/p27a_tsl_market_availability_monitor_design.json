@@ -1,0 +1,173 @@
+{
+  "task_id": "P27A",
+  "artifact_type": "paper_design",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "read_only": true,
+  "production_proposal": false,
+  "created_at": "2026-05-23T06:00:00Z",
+  "parent_task": "P26K",
+  "title": "TSL Market Availability Monitor — Paper Design",
+  "motivation": {
+    "p26k_finding": "TSL removed NPB games 3469930.1 and 3469931.1 from the pre-game betting list at 03:24Z and 04:55Z respectively, approximately 4.1–5.6 hours before game_time=09:00Z. The daemon was executing correctly (TSL polled every 15 minutes with force_closing=True), but the source contained no target game data during the closing window (07:00–09:00Z). This failure was invisible — no alert was generated.",
+    "gap_identified": "No mechanism exists to detect when a game disappears from TSL before the closing window opens. Once disappeared, the system silently skips closing capture with no record of the disappearance event.",
+    "design_goal": "Define a per-match tracking schema and alert classification logic that would detect early market withdrawals, enabling post-hoc forensics and future alerting."
+  },
+  "detection_schema": {
+    "description": "Per-match tracking record written each time the TSL pre-game list is polled. One record per match_id per poll cycle.",
+    "schema_version": "1.0",
+    "fields": {
+      "match_id": {
+        "type": "string",
+        "description": "TSL game identifier (e.g. '3469930.1')",
+        "example": "3469930.1"
+      },
+      "league": {
+        "type": "string",
+        "description": "League code",
+        "example": "NPB"
+      },
+      "game_time_utc": {
+        "type": "string (ISO 8601)",
+        "description": "Scheduled game start time in UTC",
+        "example": "2026-05-21T09:00:00Z"
+      },
+      "first_seen_timestamp": {
+        "type": "string (ISO 8601)",
+        "description": "UTC timestamp when match was first observed in TSL response",
+        "example": "2026-05-20T10:00:00Z"
+      },
+      "last_seen_timestamp": {
+        "type": "string (ISO 8601)",
+        "description": "UTC timestamp of the most recent poll cycle where match appeared in TSL response",
+        "example": "2026-05-21T04:55:00Z"
+      },
+      "latest_seen_in_source": {
+        "type": "boolean",
+        "description": "True if match was present in the most recent TSL poll response; False if absent",
+        "example": false
+      },
+      "disappeared_at": {
+        "type": "string (ISO 8601) or null",
+        "description": "UTC timestamp of the first poll cycle where match was absent after having been seen. Null if match is still present.",
+        "example": "2026-05-21T05:10:00Z"
+      },
+      "hours_before_game": {
+        "type": "float or null",
+        "description": "Number of hours between disappeared_at and game_time_utc. Null if disappeared_at is null.",
+        "example": 3.83
+      },
+      "consecutive_absent_cycles": {
+        "type": "integer",
+        "description": "Number of consecutive poll cycles where match has been absent. Resets to 0 if match reappears.",
+        "example": 5
+      },
+      "source_name": {
+        "type": "string",
+        "description": "Name of the data source polled",
+        "example": "TSL_PREGAME_LIST"
+      },
+      "source_response_context": {
+        "type": "string",
+        "description": "Brief summary of the TSL response context when disappearance was first detected (e.g. total games returned, league counts)",
+        "example": "total_games=12, leagues=['MLB','KBO'], NPB=0"
+      },
+      "classification": {
+        "type": "string or null",
+        "description": "Alert classification assigned once disappearance is confirmed. Null while match is still present.",
+        "enum": [
+          "TSL_MARKET_WITHDRAWAL_EARLY",
+          "TSL_MARKET_NORMAL_REMOVAL",
+          "TSL_MARKET_NEVER_SEEN",
+          null
+        ]
+      },
+      "classification_rationale": {
+        "type": "string or null",
+        "description": "Human-readable explanation for the classification",
+        "example": "Disappeared 3.83h before game_time; threshold=2.0h → EARLY"
+      }
+    }
+  },
+  "alert_conditions": {
+    "TSL_MARKET_WITHDRAWAL_EARLY": {
+      "trigger": "match previously seen (first_seen_timestamp != null) AND latest_seen_in_source == false AND disappeared_at != null AND hours_before_game > 2.0",
+      "severity": "HIGH",
+      "description": "TSL removed the game from the pre-game betting list more than 2 hours before kickoff. Closing odds will NOT be captured via TSL for this game.",
+      "recommended_action": "Log to monitor_state file. Flag in closing summary report. No automatic recovery (paper_only).",
+      "p26k_instances": [
+        {
+          "match_id": "3469930.1",
+          "game": "讀賣巨人 vs 養樂多燕子",
+          "game_time_utc": "2026-05-21T09:00:00Z",
+          "last_seen_timestamp": "2026-05-21T03:24:52Z",
+          "hours_before_game": 5.59,
+          "classification": "TSL_MARKET_WITHDRAWAL_EARLY"
+        },
+        {
+          "match_id": "3469931.1",
+          "game": "廣島東洋鯉魚 vs 橫濱海灣之星",
+          "game_time_utc": "2026-05-21T09:00:00Z",
+          "last_seen_timestamp": "2026-05-21T04:55:09Z",
+          "hours_before_game": 4.08,
+          "classification": "TSL_MARKET_WITHDRAWAL_EARLY"
+        }
+      ]
+    },
+    "TSL_MARKET_NORMAL_REMOVAL": {
+      "trigger": "match previously seen AND latest_seen_in_source == false AND disappeared_at != null AND hours_before_game <= 2.0",
+      "severity": "INFO",
+      "description": "TSL removed the game within 2 hours of kickoff. This is consistent with normal pre-game market closure timing for most leagues.",
+      "recommended_action": "Log to monitor_state file. No alert escalation needed."
+    },
+    "TSL_MARKET_NEVER_SEEN": {
+      "trigger": "match_id expected (from schedule) but first_seen_timestamp == null AND game_time_utc < now",
+      "severity": "MEDIUM",
+      "description": "A scheduled game was never observed in TSL responses during its expected availability window.",
+      "recommended_action": "Log. Investigate whether match was available on TSL at all."
+    }
+  },
+  "monitor_state_file_design": {
+    "proposed_path": "data/derived/tsl_market_availability_state.json",
+    "schema": "dict keyed by match_id, each value = latest MarketAvailabilityRecord",
+    "update_trigger": "after each TSL poll cycle in tsl_snapshot.py (not modifying daemon; this is paper design only)",
+    "retention": "current run only; not persisted across daemon restarts in paper design",
+    "note": "Actual write location and persistence policy TBD at implementation phase."
+  },
+  "integration_point_analysis": {
+    "read_only_note": "This design does NOT modify any existing code. The following describes where integration would occur IF implemented.",
+    "tsl_snapshot_py": {
+      "function": "fetch_tsl_snapshot (approximate)",
+      "proposed_hook": "After parsing TSL response, compare returned match_ids against known expected match_ids. Write availability record for each expected match.",
+      "lines_to_read": "tsl_snapshot.py:255-285 (approximate region where games are filtered)"
+    },
+    "daemon_heartbeat": {
+      "note": "Availability state would be separate from daemon heartbeat. No heartbeat schema changes required."
+    }
+  },
+  "p26k_reconstruction": {
+    "description": "Retroactive application of this schema to P26K data to validate design",
+    "match_3469930_1": {
+      "match_id": "3469930.1",
+      "first_seen_timestamp": "UNKNOWN (not tracked prior to P26K)",
+      "last_seen_timestamp": "2026-05-21T03:24:52Z",
+      "disappeared_at": "2026-05-21T03:39:00Z (estimated: next poll cycle after 03:24Z)",
+      "hours_before_game": 5.35,
+      "classification": "TSL_MARKET_WITHDRAWAL_EARLY",
+      "closing_window_snapshots": 0
+    },
+    "match_3469931_1": {
+      "match_id": "3469931.1",
+      "first_seen_timestamp": "UNKNOWN (not tracked prior to P26K)",
+      "last_seen_timestamp": "2026-05-21T04:55:09Z",
+      "disappeared_at": "2026-05-21T05:10:00Z (estimated: next poll cycle after 04:55Z)",
+      "hours_before_game": 3.83,
+      "classification": "TSL_MARKET_WITHDRAWAL_EARLY",
+      "closing_window_snapshots": 0
+    }
+  },
+  "design_status": "PAPER_COMPLETE",
+  "implementation_status": "NOT_IMPLEMENTED — paper design only",
+  "p27b_required": false,
+  "note": "This is a paper-only design artifact produced under P27A. No daemon, crawler, or ingestion code has been modified."
+}

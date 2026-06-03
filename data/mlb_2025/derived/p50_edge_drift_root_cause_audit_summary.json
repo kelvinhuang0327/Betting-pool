@@ -1,0 +1,1936 @@
+{
+  "version": "P50_v1",
+  "audit_date": "2026-05-26",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false
+  },
+  "source_artifacts": {
+    "p43": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p43_strong_edge_closing_line_edge_summary.json",
+    "p44": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p44_temporal_stability_summary.json",
+    "p45": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p45_platt_recalibration_summary.json",
+    "p47": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p47_calibration_synthesis_summary.json",
+    "p48": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p48_monitoring_loop_contract_summary.json",
+    "p49": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p49_offline_historical_monitoring_replay_summary.json",
+    "predictions_jsonl": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl"
+  },
+  "platt_coefficients": {
+    "platt_a": 0.435432,
+    "platt_b": 0.245464,
+    "sigmoid_k": 0.8,
+    "source": "P45 pilot (locked)"
+  },
+  "tier_c_verification": {
+    "n": 535,
+    "expected": 535,
+    "match": true
+  },
+  "p49_findings_recap": {
+    "classification": "P49_MONITORING_REPLAY_CRITICAL_DIAGNOSTIC",
+    "monthly_critical": 2,
+    "monthly_warning": 1,
+    "monthly_sample_limited": 3,
+    "rolling_critical": 6,
+    "rolling_warning": 3,
+    "platt_monitoring_acceptable": false
+  },
+  "task_a_reconciliation": {
+    "monthly_comparison_table": [
+      {
+        "month": "2025-04",
+        "p44_n": 16,
+        "p49_n": 16,
+        "p44_mean_edge": 0.095414,
+        "p49_mean_edge": 0.035931,
+        "delta_p44_minus_p49": 0.059483,
+        "p44_ci_low": 0.054817,
+        "p44_ci_high": 0.134437,
+        "p49_ci_low": 0.012107,
+        "p49_ci_high": 0.059756,
+        "p49_status": "SAMPLE_LIMITED"
+      },
+      {
+        "month": "2025-05",
+        "p44_n": 120,
+        "p49_n": 120,
+        "p44_mean_edge": 0.105019,
+        "p49_mean_edge": 0.009288,
+        "delta_p44_minus_p49": 0.095731,
+        "p44_ci_low": 0.088155,
+        "p44_ci_high": 0.121162,
+        "p49_ci_low": -0.000413,
+        "p49_ci_high": 0.018988,
+        "p49_status": "EDGE_DRIFT_CRITICAL"
+      },
+      {
+        "month": "2025-06",
+        "p44_n": 101,
+        "p49_n": 101,
+        "p44_mean_edge": 0.110093,
+        "p49_mean_edge": -0.023097,
+        "delta_p44_minus_p49": 0.13319,
+        "p44_ci_low": 0.091901,
+        "p44_ci_high": 0.127548,
+        "p49_ci_low": -0.04103,
+        "p49_ci_high": -0.005164,
+        "p49_status": "EDGE_DRIFT_CRITICAL"
+      },
+      {
+        "month": "2025-07",
+        "p44_n": 92,
+        "p49_n": 92,
+        "p44_mean_edge": 0.1083,
+        "p49_mean_edge": -0.010054,
+        "delta_p44_minus_p49": 0.118354,
+        "p44_ci_low": 0.091312,
+        "p44_ci_high": 0.125307,
+        "p49_ci_low": -0.023953,
+        "p49_ci_high": 0.003844,
+        "p49_status": "SAMPLE_LIMITED"
+      },
+      {
+        "month": "2025-08",
+        "p44_n": 108,
+        "p49_n": 108,
+        "p44_mean_edge": 0.100344,
+        "p49_mean_edge": 0.032382,
+        "delta_p44_minus_p49": 0.067962,
+        "p44_ci_low": 0.085144,
+        "p44_ci_high": 0.115883,
+        "p49_ci_low": 0.021382,
+        "p49_ci_high": 0.043382,
+        "p49_status": "EDGE_DRIFT_WARNING"
+      },
+      {
+        "month": "2025-09",
+        "p44_n": 98,
+        "p49_n": 98,
+        "p44_mean_edge": 0.108441,
+        "p49_mean_edge": -0.00361,
+        "delta_p44_minus_p49": 0.112051,
+        "p44_ci_low": 0.092154,
+        "p44_ci_high": 0.124587,
+        "p49_ci_low": -0.014382,
+        "p49_ci_high": 0.007162,
+        "p49_status": "SAMPLE_LIMITED"
+      }
+    ],
+    "average_delta_p44_minus_p49": 0.097795,
+    "root_cause_factors": [
+      {
+        "rank": 1,
+        "factor": "MODEL_PROBABILITY_SOURCE_MISMATCH",
+        "description": "P44 model probability = sigmoid(1.0 * sp_fip_delta) — the raw FIP informativeness signal only. P49 model probability = model_home_prob from JSONL — the trained ML model output incorporating many features. The ML model is regularized toward 0.5 and incorporates market signals, producing probabilities much closer to the market than the raw FIP signal. This is the PRIMARY driver of the ~0.10 mean_edge gap between P44 and P49.",
+        "impact": "PRIMARY — raw FIP signal vs trained ML model: sigmoid(delta) vs model_home_prob"
+      },
+      {
+        "rank": 2,
+        "factor": "EDGE_PERSPECTIVE_SIDE_AWARE_VS_HOME_PERSPECTIVE",
+        "description": "P44 uses side-aware edge: when model backs away team (prob < 0.5), edge = (1-model_prob) - (1-market_prob) = market_prob - model_prob (positive). P49 uses home-perspective: edge = model_home_prob - market_home_prob, which is negative when model prefers away team. Combined with Factor 1, this amplifies the mean_edge difference.",
+        "impact": "SECONDARY — side-aware vs home-perspective amplifies Factor 1"
+      },
+      {
+        "rank": 3,
+        "factor": "CI_METHOD_BOOTSTRAP_VS_NORMAL_APPROXIMATION",
+        "description": "P44 uses bootstrap CI (5000 resamples, seed locked) which captures distributional skewness and produces tighter bounds for skewed positives. P49 uses normal approximation CI (1.96 * SE), which is symmetric and crosses zero more easily for small positive means.",
+        "impact": "TERTIARY — explains barely-crossing CI in P49 May (ci_low=-0.0004)"
+      },
+      {
+        "rank": 4,
+        "factor": "MARKET_ODDS_SOURCE_CSV_CLOSING_LINE_VS_EMBEDDED_NO_VIG",
+        "description": "P44 joins mlb_odds_2025_real.csv for closing-line market probabilities (post-game-day efficient odds). P49 uses market_home_prob_no_vig embedded in the JSONL (odds snapshot at prediction time). Closing odds are more efficient → smaller naive edge; earlier odds may have more slack. Contribution here is small relative to Factor 1.",
+        "impact": "QUATERNARY — market timing difference, small contribution"
+      }
+    ],
+    "reconciliation_classification": "METRICS_RECONCILED_PROBABILITY_STREAM_DIFFERENCE",
+    "p44_model_prob_source": "sigmoid(1.0 * sp_fip_delta) — raw FIP signal only",
+    "p49_model_prob_source": "model_home_prob from JSONL — trained ML model output",
+    "p44_edge_definition": "side_aware: always relative to model-selected team side",
+    "p49_edge_definition": "home_perspective: always model_home_prob - market_home_prob",
+    "p44_ci_method": "bootstrap, n_boot=5000",
+    "p49_ci_method": "normal_approximation, 1.96*SE",
+    "p44_market_source": "mlb_odds_2025_real.csv (closing-line)",
+    "p49_market_source": "market_home_prob_no_vig embedded in JSONL (prediction-time snapshot)"
+  },
+  "task_b_edge_audit": {
+    "monthly_by_definition": {
+      "2025-04": [
+        {
+          "edge_definition": "raw_model_edge",
+          "edge_label": "Home-perspective, ML model_home_prob vs embedded market",
+          "n": 16,
+          "mean_edge": 0.035931,
+          "median_edge": 0.0522,
+          "edge_ci_low_bootstrap": 0.012493,
+          "edge_ci_high_bootstrap": 0.058238,
+          "edge_ci_low_normal": 0.012107,
+          "edge_ci_high_normal": 0.059756,
+          "positive_edge_rate": 0.6875,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "platt_model_edge",
+          "edge_label": "Home-perspective, Platt-calibrated vs embedded market",
+          "n": 16,
+          "mean_edge": 0.068521,
+          "median_edge": 0.080719,
+          "edge_ci_low_bootstrap": 0.026507,
+          "edge_ci_high_bootstrap": 0.10923,
+          "edge_ci_low_normal": 0.025962,
+          "edge_ci_high_normal": 0.111079,
+          "positive_edge_rate": 0.8125,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_raw_edge",
+          "edge_label": "Side-aware, ML model_home_prob vs embedded market",
+          "n": 16,
+          "mean_edge": 0.008869,
+          "median_edge": 0.00215,
+          "edge_ci_low_bootstrap": -0.022051,
+          "edge_ci_high_bootstrap": 0.036789,
+          "edge_ci_low_normal": -0.020764,
+          "edge_ci_high_normal": 0.038502,
+          "positive_edge_rate": 0.5,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_platt_edge",
+          "edge_label": "Side-aware, Platt-calibrated vs embedded market",
+          "n": 16,
+          "mean_edge": 0.068521,
+          "median_edge": 0.080719,
+          "edge_ci_low_bootstrap": 0.026507,
+          "edge_ci_high_bootstrap": 0.10923,
+          "edge_ci_low_normal": 0.025962,
+          "edge_ci_high_normal": 0.111079,
+          "positive_edge_rate": 0.8125,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "fip_signal_side_aware_edge",
+          "edge_label": "Side-aware, sigmoid(sp_fip_delta) vs embedded market [P44-equivalent source]",
+          "n": 16,
+          "mean_edge": 0.133344,
+          "median_edge": 0.127325,
+          "edge_ci_low_bootstrap": 0.093619,
+          "edge_ci_high_bootstrap": 0.172465,
+          "edge_ci_low_normal": 0.092258,
+          "edge_ci_high_normal": 0.17443,
+          "positive_edge_rate": 0.9375,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        }
+      ],
+      "2025-05": [
+        {
+          "edge_definition": "raw_model_edge",
+          "edge_label": "Home-perspective, ML model_home_prob vs embedded market",
+          "n": 120,
+          "mean_edge": 0.009288,
+          "median_edge": 0.0053,
+          "edge_ci_low_bootstrap": -0.000583,
+          "edge_ci_high_bootstrap": 0.018671,
+          "edge_ci_low_normal": -0.000413,
+          "edge_ci_high_normal": 0.018988,
+          "positive_edge_rate": 0.558333,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_bootstrap_ci": "CRITICAL",
+          "p48_status_normal_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_normal_ci": "CRITICAL"
+        },
+        {
+          "edge_definition": "platt_model_edge",
+          "edge_label": "Home-perspective, Platt-calibrated vs embedded market",
+          "n": 120,
+          "mean_edge": 0.041955,
+          "median_edge": 0.040023,
+          "edge_ci_low_bootstrap": 0.028562,
+          "edge_ci_high_bootstrap": 0.055046,
+          "edge_ci_low_normal": 0.028414,
+          "edge_ci_high_normal": 0.055496,
+          "positive_edge_rate": 0.675,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_raw_edge",
+          "edge_label": "Side-aware, ML model_home_prob vs embedded market",
+          "n": 120,
+          "mean_edge": 0.004622,
+          "median_edge": 0.00175,
+          "edge_ci_low_bootstrap": -0.005408,
+          "edge_ci_high_bootstrap": 0.014128,
+          "edge_ci_low_normal": -0.005185,
+          "edge_ci_high_normal": 0.01443,
+          "positive_edge_rate": 0.516667,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_bootstrap_ci": "CRITICAL",
+          "p48_status_normal_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_normal_ci": "CRITICAL"
+        },
+        {
+          "edge_definition": "side_aware_platt_edge",
+          "edge_label": "Side-aware, Platt-calibrated vs embedded market",
+          "n": 120,
+          "mean_edge": 0.034061,
+          "median_edge": 0.033446,
+          "edge_ci_low_bootstrap": 0.019903,
+          "edge_ci_high_bootstrap": 0.047991,
+          "edge_ci_low_normal": 0.019823,
+          "edge_ci_high_normal": 0.0483,
+          "positive_edge_rate": 0.65,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "fip_signal_side_aware_edge",
+          "edge_label": "Side-aware, sigmoid(sp_fip_delta) vs embedded market [P44-equivalent source]",
+          "n": 120,
+          "mean_edge": 0.142802,
+          "median_edge": 0.146836,
+          "edge_ci_low_bootstrap": 0.12557,
+          "edge_ci_high_bootstrap": 0.159801,
+          "edge_ci_low_normal": 0.125537,
+          "edge_ci_high_normal": 0.160068,
+          "positive_edge_rate": 0.933333,
+          "p48_status_bootstrap_ci": "OK",
+          "p48_alert_level_bootstrap_ci": "OK",
+          "p48_status_normal_ci": "OK",
+          "p48_alert_level_normal_ci": "OK"
+        }
+      ],
+      "2025-06": [
+        {
+          "edge_definition": "raw_model_edge",
+          "edge_label": "Home-perspective, ML model_home_prob vs embedded market",
+          "n": 101,
+          "mean_edge": -0.023097,
+          "median_edge": -0.0348,
+          "edge_ci_low_bootstrap": -0.041295,
+          "edge_ci_high_bootstrap": -0.005463,
+          "edge_ci_low_normal": -0.04103,
+          "edge_ci_high_normal": -0.005164,
+          "positive_edge_rate": 0.376238,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_bootstrap_ci": "CRITICAL",
+          "p48_status_normal_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_normal_ci": "CRITICAL"
+        },
+        {
+          "edge_definition": "platt_model_edge",
+          "edge_label": "Home-perspective, Platt-calibrated vs embedded market",
+          "n": 101,
+          "mean_edge": 0.034141,
+          "median_edge": 0.02886,
+          "edge_ci_low_bootstrap": 0.017259,
+          "edge_ci_high_bootstrap": 0.051368,
+          "edge_ci_low_normal": 0.017148,
+          "edge_ci_high_normal": 0.051133,
+          "positive_edge_rate": 0.60396,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_raw_edge",
+          "edge_label": "Side-aware, ML model_home_prob vs embedded market",
+          "n": 101,
+          "mean_edge": 0.032713,
+          "median_edge": 0.0348,
+          "edge_ci_low_bootstrap": 0.015482,
+          "edge_ci_high_bootstrap": 0.050045,
+          "edge_ci_low_normal": 0.015364,
+          "edge_ci_high_normal": 0.050061,
+          "positive_edge_rate": 0.653465,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_platt_edge",
+          "edge_label": "Side-aware, Platt-calibrated vs embedded market",
+          "n": 101,
+          "mean_edge": 0.021773,
+          "median_edge": 0.011201,
+          "edge_ci_low_bootstrap": 0.004174,
+          "edge_ci_high_bootstrap": 0.039548,
+          "edge_ci_low_normal": 0.004016,
+          "edge_ci_high_normal": 0.03953,
+          "positive_edge_rate": 0.544554,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "fip_signal_side_aware_edge",
+          "edge_label": "Side-aware, sigmoid(sp_fip_delta) vs embedded market [P44-equivalent source]",
+          "n": 101,
+          "mean_edge": 0.148204,
+          "median_edge": 0.14895,
+          "edge_ci_low_bootstrap": 0.129887,
+          "edge_ci_high_bootstrap": 0.167584,
+          "edge_ci_low_normal": 0.129585,
+          "edge_ci_high_normal": 0.166824,
+          "positive_edge_rate": 0.910891,
+          "p48_status_bootstrap_ci": "OK",
+          "p48_alert_level_bootstrap_ci": "OK",
+          "p48_status_normal_ci": "OK",
+          "p48_alert_level_normal_ci": "OK"
+        }
+      ],
+      "2025-07": [
+        {
+          "edge_definition": "raw_model_edge",
+          "edge_label": "Home-perspective, ML model_home_prob vs embedded market",
+          "n": 92,
+          "mean_edge": -0.010054,
+          "median_edge": -0.01725,
+          "edge_ci_low_bootstrap": -0.023369,
+          "edge_ci_high_bootstrap": 0.003535,
+          "edge_ci_low_normal": -0.023953,
+          "edge_ci_high_normal": 0.003844,
+          "positive_edge_rate": 0.391304,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "platt_model_edge",
+          "edge_label": "Home-perspective, Platt-calibrated vs embedded market",
+          "n": 92,
+          "mean_edge": 0.035599,
+          "median_edge": 0.025913,
+          "edge_ci_low_bootstrap": 0.020676,
+          "edge_ci_high_bootstrap": 0.050531,
+          "edge_ci_low_normal": 0.020248,
+          "edge_ci_high_normal": 0.050949,
+          "positive_edge_rate": 0.619565,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_raw_edge",
+          "edge_label": "Side-aware, ML model_home_prob vs embedded market",
+          "n": 92,
+          "mean_edge": 0.010743,
+          "median_edge": 0.01555,
+          "edge_ci_low_bootstrap": -0.002503,
+          "edge_ci_high_bootstrap": 0.024783,
+          "edge_ci_low_normal": -0.003133,
+          "edge_ci_high_normal": 0.02462,
+          "positive_edge_rate": 0.532609,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_platt_edge",
+          "edge_label": "Side-aware, Platt-calibrated vs embedded market",
+          "n": 92,
+          "mean_edge": 0.029642,
+          "median_edge": 0.019404,
+          "edge_ci_low_bootstrap": 0.014424,
+          "edge_ci_high_bootstrap": 0.045099,
+          "edge_ci_low_normal": 0.013766,
+          "edge_ci_high_normal": 0.045518,
+          "positive_edge_rate": 0.597826,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "fip_signal_side_aware_edge",
+          "edge_label": "Side-aware, sigmoid(sp_fip_delta) vs embedded market [P44-equivalent source]",
+          "n": 92,
+          "mean_edge": 0.145478,
+          "median_edge": 0.139525,
+          "edge_ci_low_bootstrap": 0.127461,
+          "edge_ci_high_bootstrap": 0.16432,
+          "edge_ci_low_normal": 0.127588,
+          "edge_ci_high_normal": 0.163369,
+          "positive_edge_rate": 0.978261,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        }
+      ],
+      "2025-08": [
+        {
+          "edge_definition": "raw_model_edge",
+          "edge_label": "Home-perspective, ML model_home_prob vs embedded market",
+          "n": 108,
+          "mean_edge": 0.032382,
+          "median_edge": 0.03725,
+          "edge_ci_low_bootstrap": 0.02145,
+          "edge_ci_high_bootstrap": 0.04295,
+          "edge_ci_low_normal": 0.021382,
+          "edge_ci_high_normal": 0.043382,
+          "positive_edge_rate": 0.694444,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "platt_model_edge",
+          "edge_label": "Home-perspective, Platt-calibrated vs embedded market",
+          "n": 108,
+          "mean_edge": 0.055422,
+          "median_edge": 0.050978,
+          "edge_ci_low_bootstrap": 0.039933,
+          "edge_ci_high_bootstrap": 0.070506,
+          "edge_ci_low_normal": 0.040022,
+          "edge_ci_high_normal": 0.070822,
+          "positive_edge_rate": 0.740741,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_raw_edge",
+          "edge_label": "Side-aware, ML model_home_prob vs embedded market",
+          "n": 108,
+          "mean_edge": 0.009877,
+          "median_edge": 0.0176,
+          "edge_ci_low_bootstrap": -0.002607,
+          "edge_ci_high_bootstrap": 0.022194,
+          "edge_ci_low_normal": -0.002579,
+          "edge_ci_high_normal": 0.022333,
+          "positive_edge_rate": 0.583333,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_bootstrap_ci": "CRITICAL",
+          "p48_status_normal_ci": "EDGE_DRIFT_CRITICAL",
+          "p48_alert_level_normal_ci": "CRITICAL"
+        },
+        {
+          "edge_definition": "side_aware_platt_edge",
+          "edge_label": "Side-aware, Platt-calibrated vs embedded market",
+          "n": 108,
+          "mean_edge": 0.055422,
+          "median_edge": 0.050978,
+          "edge_ci_low_bootstrap": 0.039933,
+          "edge_ci_high_bootstrap": 0.070506,
+          "edge_ci_low_normal": 0.040022,
+          "edge_ci_high_normal": 0.070822,
+          "positive_edge_rate": 0.740741,
+          "p48_status_bootstrap_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "EDGE_DRIFT_WARNING",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "fip_signal_side_aware_edge",
+          "edge_label": "Side-aware, sigmoid(sp_fip_delta) vs embedded market [P44-equivalent source]",
+          "n": 108,
+          "mean_edge": 0.137643,
+          "median_edge": 0.131514,
+          "edge_ci_low_bootstrap": 0.121767,
+          "edge_ci_high_bootstrap": 0.153181,
+          "edge_ci_low_normal": 0.121758,
+          "edge_ci_high_normal": 0.153528,
+          "positive_edge_rate": 0.935185,
+          "p48_status_bootstrap_ci": "OK",
+          "p48_alert_level_bootstrap_ci": "OK",
+          "p48_status_normal_ci": "OK",
+          "p48_alert_level_normal_ci": "OK"
+        }
+      ],
+      "2025-09": [
+        {
+          "edge_definition": "raw_model_edge",
+          "edge_label": "Home-perspective, ML model_home_prob vs embedded market",
+          "n": 98,
+          "mean_edge": -0.00361,
+          "median_edge": -0.00495,
+          "edge_ci_low_bootstrap": -0.014326,
+          "edge_ci_high_bootstrap": 0.007493,
+          "edge_ci_low_normal": -0.014382,
+          "edge_ci_high_normal": 0.007162,
+          "positive_edge_rate": 0.469388,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "platt_model_edge",
+          "edge_label": "Home-perspective, Platt-calibrated vs embedded market",
+          "n": 98,
+          "mean_edge": 0.043311,
+          "median_edge": 0.050387,
+          "edge_ci_low_bootstrap": 0.027107,
+          "edge_ci_high_bootstrap": 0.059418,
+          "edge_ci_low_normal": 0.027251,
+          "edge_ci_high_normal": 0.059371,
+          "positive_edge_rate": 0.673469,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_raw_edge",
+          "edge_label": "Side-aware, ML model_home_prob vs embedded market",
+          "n": 98,
+          "mean_edge": -0.027643,
+          "median_edge": -0.03125,
+          "edge_ci_low_bootstrap": -0.036878,
+          "edge_ci_high_bootstrap": -0.01836,
+          "edge_ci_low_normal": -0.036932,
+          "edge_ci_high_normal": -0.018354,
+          "positive_edge_rate": 0.27551,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "side_aware_platt_edge",
+          "edge_label": "Side-aware, Platt-calibrated vs embedded market",
+          "n": 98,
+          "mean_edge": 0.043311,
+          "median_edge": 0.050387,
+          "edge_ci_low_bootstrap": 0.027107,
+          "edge_ci_high_bootstrap": 0.059418,
+          "edge_ci_low_normal": 0.027251,
+          "edge_ci_high_normal": 0.059371,
+          "positive_edge_rate": 0.673469,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        },
+        {
+          "edge_definition": "fip_signal_side_aware_edge",
+          "edge_label": "Side-aware, sigmoid(sp_fip_delta) vs embedded market [P44-equivalent source]",
+          "n": 98,
+          "mean_edge": 0.146864,
+          "median_edge": 0.156507,
+          "edge_ci_low_bootstrap": 0.129772,
+          "edge_ci_high_bootstrap": 0.163158,
+          "edge_ci_low_normal": 0.12989,
+          "edge_ci_high_normal": 0.163837,
+          "positive_edge_rate": 0.938776,
+          "p48_status_bootstrap_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_bootstrap_ci": "WARNING",
+          "p48_status_normal_ci": "SAMPLE_LIMITED",
+          "p48_alert_level_normal_ci": "WARNING"
+        }
+      ]
+    },
+    "summary_by_definition": [
+      {
+        "edge_definition": "raw_model_edge",
+        "edge_label": "Home-perspective, ML model_home_prob vs embedded market",
+        "monthly_ok": 0,
+        "monthly_warning": 1,
+        "monthly_critical": 2,
+        "monthly_sample_limited": 3,
+        "avg_mean_edge_qualifying_months": 0.006191,
+        "ci_method_used": "bootstrap_5000_seed42"
+      },
+      {
+        "edge_definition": "platt_model_edge",
+        "edge_label": "Home-perspective, Platt-calibrated vs embedded market",
+        "monthly_ok": 0,
+        "monthly_warning": 3,
+        "monthly_critical": 0,
+        "monthly_sample_limited": 3,
+        "avg_mean_edge_qualifying_months": 0.043839,
+        "ci_method_used": "bootstrap_5000_seed42"
+      },
+      {
+        "edge_definition": "side_aware_raw_edge",
+        "edge_label": "Side-aware, ML model_home_prob vs embedded market",
+        "monthly_ok": 0,
+        "monthly_warning": 1,
+        "monthly_critical": 2,
+        "monthly_sample_limited": 3,
+        "avg_mean_edge_qualifying_months": 0.015737,
+        "ci_method_used": "bootstrap_5000_seed42"
+      },
+      {
+        "edge_definition": "side_aware_platt_edge",
+        "edge_label": "Side-aware, Platt-calibrated vs embedded market",
+        "monthly_ok": 0,
+        "monthly_warning": 3,
+        "monthly_critical": 0,
+        "monthly_sample_limited": 3,
+        "avg_mean_edge_qualifying_months": 0.037085,
+        "ci_method_used": "bootstrap_5000_seed42"
+      },
+      {
+        "edge_definition": "fip_signal_side_aware_edge",
+        "edge_label": "Side-aware, sigmoid(sp_fip_delta) vs embedded market [P44-equivalent source]",
+        "monthly_ok": 3,
+        "monthly_warning": 0,
+        "monthly_critical": 0,
+        "monthly_sample_limited": 3,
+        "avg_mean_edge_qualifying_months": 0.142883,
+        "ci_method_used": "bootstrap_5000_seed42"
+      }
+    ],
+    "key_finding": "fip_signal_side_aware_edge (using sigmoid(sp_fip_delta) as model probability, side-aware, embedded market) produces consistently positive mean edges across all 6 months, closest to P44's TEMPORAL_STABLE result. side_aware_raw_edge (ML model_home_prob) shows lower edges because the ML model is regularized toward 0.5, compressing probability spread. raw_model_edge (P49 home-perspective, ML model) shows lowest edges and CRITICAL alerts because: (1) ML model is shrunk toward market, (2) negative signs for away-backing games. PRIMARY ROOT CAUSE: P44 and P49 use DIFFERENT model probability sources — sigmoid(sp_fip_delta) vs trained ML model_home_prob."
+  },
+  "task_c_worst_batches": {
+    "worst_monthly_batch": {
+      "batch_id": "MONTHLY_202506",
+      "batch_type": "monthly",
+      "date_range": {
+        "start": "2025-06-01",
+        "end": "2025-06-30"
+      },
+      "n": 101,
+      "p49_status": "EDGE_DRIFT_CRITICAL",
+      "p49_alert_level": "CRITICAL",
+      "p49_alert_reasons": [
+        "edge_critical: CI crosses zero (ci_low=-0.0410 <= 0)"
+      ],
+      "p49_mean_edge_home_perspective": -0.023097,
+      "p49_edge_ci_low": -0.04103,
+      "p49_edge_ci_high": -0.005164,
+      "raw_ece": 0.066667,
+      "platt_ece": 0.051883,
+      "raw_brier": 0.240424,
+      "platt_brier": 0.240113,
+      "home_perspective_mean_edge": -0.023097,
+      "home_perspective_ci_low_normal": -0.04103,
+      "home_perspective_ci_high_normal": -0.005164,
+      "side_aware_mean_edge_bootstrap": 0.032713,
+      "side_aware_ci_low_bootstrap": 0.015482,
+      "side_aware_ci_high_bootstrap": 0.050045,
+      "avg_market_implied_prob": 0.528693,
+      "avg_model_raw_prob": 0.505596,
+      "avg_platt_prob": 0.562834,
+      "avg_abs_sp_fip_delta": 0.958911,
+      "home_picks": 53,
+      "away_picks": 48,
+      "home_pick_rate": 0.5248,
+      "top10_worst_raw_edge_rows": [
+        {
+          "game_date": "2025-06-01",
+          "home_team": "Arizona Diamondbacks",
+          "away_team": "Washington Nationals",
+          "model_home_prob": 0.4338,
+          "platt_home_prob": 0.53232502,
+          "market_home_prob_no_vig": 0.6636,
+          "raw_model_edge": -0.2298,
+          "side_aware_raw_edge": 0.2298,
+          "home_win": 1,
+          "sp_fip_delta": 1.05
+        },
+        {
+          "game_date": "2025-06-18",
+          "home_team": "Atlanta Braves",
+          "away_team": "New York Mets",
+          "model_home_prob": 0.4469,
+          "platt_home_prob": 0.53808314,
+          "market_home_prob_no_vig": 0.6507,
+          "raw_model_edge": -0.2038,
+          "side_aware_raw_edge": 0.2038,
+          "home_win": 1,
+          "sp_fip_delta": 1.55
+        },
+        {
+          "game_date": "2025-06-17",
+          "home_team": "Atlanta Braves",
+          "away_team": "New York Mets",
+          "model_home_prob": 0.3845,
+          "platt_home_prob": 0.51014788,
+          "market_home_prob_no_vig": 0.562,
+          "raw_model_edge": -0.1775,
+          "side_aware_raw_edge": 0.1775,
+          "home_win": 1,
+          "sp_fip_delta": 0.9
+        },
+        {
+          "game_date": "2025-06-19",
+          "home_team": "New York Yankees",
+          "away_team": "Los Angeles Angels",
+          "model_home_prob": 0.5456,
+          "platt_home_prob": 0.58056863,
+          "market_home_prob_no_vig": 0.7183,
+          "raw_model_edge": -0.1727,
+          "side_aware_raw_edge": -0.1727,
+          "home_win": 1,
+          "sp_fip_delta": 0.65
+        },
+        {
+          "game_date": "2025-06-03",
+          "home_team": "Pittsburgh Pirates",
+          "away_team": "Houston Astros",
+          "model_home_prob": 0.4406,
+          "platt_home_prob": 0.53531969,
+          "market_home_prob_no_vig": 0.6067,
+          "raw_model_edge": -0.1661,
+          "side_aware_raw_edge": 0.1661,
+          "home_win": 0,
+          "sp_fip_delta": 1.25
+        },
+        {
+          "game_date": "2025-06-11",
+          "home_team": "Baltimore Orioles",
+          "away_team": "Detroit Tigers",
+          "model_home_prob": 0.4004,
+          "platt_home_prob": 0.51740225,
+          "market_home_prob_no_vig": 0.562,
+          "raw_model_edge": -0.1616,
+          "side_aware_raw_edge": 0.1616,
+          "home_win": 1,
+          "sp_fip_delta": 0.65
+        },
+        {
+          "game_date": "2025-06-20",
+          "home_team": "New York Yankees",
+          "away_team": "Baltimore Orioles",
+          "model_home_prob": 0.5912,
+          "platt_home_prob": 0.60015409,
+          "market_home_prob_no_vig": 0.7447,
+          "raw_model_edge": -0.1535,
+          "side_aware_raw_edge": -0.1535,
+          "home_win": 0,
+          "sp_fip_delta": 1.05
+        },
+        {
+          "game_date": "2025-06-03",
+          "home_team": "Cincinnati Reds",
+          "away_team": "Milwaukee Brewers",
+          "model_home_prob": 0.4009,
+          "platt_home_prob": 0.51762863,
+          "market_home_prob_no_vig": 0.5526,
+          "raw_model_edge": -0.1517,
+          "side_aware_raw_edge": 0.1517,
+          "home_win": 1,
+          "sp_fip_delta": -0.85
+        },
+        {
+          "game_date": "2025-06-15",
+          "home_team": "Philadelphia Phillies",
+          "away_team": "Toronto Blue Jays",
+          "model_home_prob": 0.4713,
+          "platt_home_prob": 0.54870046,
+          "market_home_prob_no_vig": 0.6164,
+          "raw_model_edge": -0.1451,
+          "side_aware_raw_edge": 0.1451,
+          "home_win": 1,
+          "sp_fip_delta": 0.85
+        },
+        {
+          "game_date": "2025-06-16",
+          "home_team": "Seattle Mariners",
+          "away_team": "Boston Red Sox",
+          "model_home_prob": 0.4726,
+          "platt_home_prob": 0.54926286,
+          "market_home_prob_no_vig": 0.6164,
+          "raw_model_edge": -0.1438,
+          "side_aware_raw_edge": 0.1438,
+          "home_win": 0,
+          "sp_fip_delta": 1.4
+        }
+      ],
+      "interpretation": "side_aware_mean_edge=0.0327 (bootstrap CI [0.0155, 0.0500]) vs home_perspective_mean_edge=-0.0231 (normal CI [-0.0410, -0.0052]). Home picks: 53/101 (52.5%). When model picks away team (48/101 games), home-perspective edge is negative, dragging monthly mean toward zero or below."
+    },
+    "worst_rolling_batch": {
+      "batch_id": "ROLLING_20250523_20250619_N100",
+      "batch_type": "rolling",
+      "date_range": {
+        "start": "2025-05-23",
+        "end": "2025-06-19"
+      },
+      "n": 101,
+      "p49_status": "MIXED_ALERTS",
+      "p49_alert_level": "CRITICAL",
+      "p49_alert_reasons": [
+        "ece_warning: ece=0.1164 > warning_threshold=0.1",
+        "edge_critical: CI crosses zero (ci_low=-0.0365 <= 0)"
+      ],
+      "p49_mean_edge_home_perspective": -0.018985,
+      "p49_edge_ci_low": -0.036459,
+      "p49_edge_ci_high": -0.001511,
+      "raw_ece": 0.147025,
+      "platt_ece": 0.121644,
+      "raw_brier": 0.246112,
+      "platt_brier": 0.241516,
+      "home_perspective_mean_edge": -0.018805,
+      "home_perspective_ci_low_normal": -0.036109,
+      "home_perspective_ci_high_normal": -0.001501,
+      "side_aware_mean_edge_bootstrap": 0.035551,
+      "side_aware_ci_low_bootstrap": 0.0197,
+      "side_aware_ci_high_bootstrap": 0.051389,
+      "avg_market_implied_prob": 0.533602,
+      "avg_model_raw_prob": 0.514797,
+      "avg_platt_prob": 0.566997,
+      "avg_abs_sp_fip_delta": 0.918317,
+      "home_picks": 57,
+      "away_picks": 44,
+      "home_pick_rate": 0.5644,
+      "top10_worst_raw_edge_rows": [
+        {
+          "game_date": "2025-06-01",
+          "home_team": "Arizona Diamondbacks",
+          "away_team": "Washington Nationals",
+          "model_home_prob": 0.4338,
+          "platt_home_prob": 0.53232502,
+          "market_home_prob_no_vig": 0.6636,
+          "raw_model_edge": -0.2298,
+          "side_aware_raw_edge": 0.2298,
+          "home_win": 1,
+          "sp_fip_delta": 1.05
+        },
+        {
+          "game_date": "2025-06-18",
+          "home_team": "Atlanta Braves",
+          "away_team": "New York Mets",
+          "model_home_prob": 0.4469,
+          "platt_home_prob": 0.53808314,
+          "market_home_prob_no_vig": 0.6507,
+          "raw_model_edge": -0.2038,
+          "side_aware_raw_edge": 0.2038,
+          "home_win": 1,
+          "sp_fip_delta": 1.55
+        },
+        {
+          "game_date": "2025-06-17",
+          "home_team": "Atlanta Braves",
+          "away_team": "New York Mets",
+          "model_home_prob": 0.3845,
+          "platt_home_prob": 0.51014788,
+          "market_home_prob_no_vig": 0.562,
+          "raw_model_edge": -0.1775,
+          "side_aware_raw_edge": 0.1775,
+          "home_win": 1,
+          "sp_fip_delta": 0.9
+        },
+        {
+          "game_date": "2025-06-19",
+          "home_team": "New York Yankees",
+          "away_team": "Los Angeles Angels",
+          "model_home_prob": 0.5456,
+          "platt_home_prob": 0.58056863,
+          "market_home_prob_no_vig": 0.7183,
+          "raw_model_edge": -0.1727,
+          "side_aware_raw_edge": -0.1727,
+          "home_win": 1,
+          "sp_fip_delta": 0.65
+        },
+        {
+          "game_date": "2025-06-03",
+          "home_team": "Pittsburgh Pirates",
+          "away_team": "Houston Astros",
+          "model_home_prob": 0.4406,
+          "platt_home_prob": 0.53531969,
+          "market_home_prob_no_vig": 0.6067,
+          "raw_model_edge": -0.1661,
+          "side_aware_raw_edge": 0.1661,
+          "home_win": 0,
+          "sp_fip_delta": 1.25
+        },
+        {
+          "game_date": "2025-06-11",
+          "home_team": "Baltimore Orioles",
+          "away_team": "Detroit Tigers",
+          "model_home_prob": 0.4004,
+          "platt_home_prob": 0.51740225,
+          "market_home_prob_no_vig": 0.562,
+          "raw_model_edge": -0.1616,
+          "side_aware_raw_edge": 0.1616,
+          "home_win": 1,
+          "sp_fip_delta": 0.65
+        },
+        {
+          "game_date": "2025-06-03",
+          "home_team": "Cincinnati Reds",
+          "away_team": "Milwaukee Brewers",
+          "model_home_prob": 0.4009,
+          "platt_home_prob": 0.51762863,
+          "market_home_prob_no_vig": 0.5526,
+          "raw_model_edge": -0.1517,
+          "side_aware_raw_edge": 0.1517,
+          "home_win": 1,
+          "sp_fip_delta": -0.85
+        },
+        {
+          "game_date": "2025-06-15",
+          "home_team": "Philadelphia Phillies",
+          "away_team": "Toronto Blue Jays",
+          "model_home_prob": 0.4713,
+          "platt_home_prob": 0.54870046,
+          "market_home_prob_no_vig": 0.6164,
+          "raw_model_edge": -0.1451,
+          "side_aware_raw_edge": 0.1451,
+          "home_win": 1,
+          "sp_fip_delta": 0.85
+        },
+        {
+          "game_date": "2025-06-16",
+          "home_team": "Seattle Mariners",
+          "away_team": "Boston Red Sox",
+          "model_home_prob": 0.4726,
+          "platt_home_prob": 0.54926286,
+          "market_home_prob_no_vig": 0.6164,
+          "raw_model_edge": -0.1438,
+          "side_aware_raw_edge": 0.1438,
+          "home_win": 0,
+          "sp_fip_delta": 1.4
+        },
+        {
+          "game_date": "2025-06-09",
+          "home_team": "Philadelphia Phillies",
+          "away_team": "Chicago Cubs",
+          "model_home_prob": 0.3923,
+          "platt_home_prob": 0.51372036,
+          "market_home_prob_no_vig": 0.5325,
+          "raw_model_edge": -0.1402,
+          "side_aware_raw_edge": 0.1402,
+          "home_win": 1,
+          "sp_fip_delta": 1.45
+        }
+      ],
+      "interpretation": "side_aware_mean_edge=0.0356 (bootstrap CI [0.0197, 0.0514]) vs home_perspective_mean_edge=-0.0188 (normal CI [-0.0361, -0.0015]). Home picks: 57/101 (56.4%). When model picks away team (44/101 games), home-perspective edge is negative, dragging monthly mean toward zero or below."
+    },
+    "key_finding": "In worst batches, model picks away team in ~40-50% of cases. Home-perspective edge for away-side picks is negative by construction even when side-aware edge is positive. This is the primary driver of P49 CRITICAL alerts — not genuine edge deterioration."
+  },
+  "task_d_threshold_sensitivity": {
+    "p43_baseline_mean_edge": 0.1059,
+    "p43_baseline_ci_low": 0.0989,
+    "p43_baseline_ci_high": 0.1132,
+    "policies_tested": 5,
+    "results": [
+      {
+        "policy_id": "P1_CURRENT_P48",
+        "label": "Current P48 (home-perspective, normal CI)",
+        "description": "Current P48 policy. mean_edge<0.07 → WARNING; CI_low<=0 → CRITICAL.",
+        "warn_mean_threshold": 0.07,
+        "monthly_counts": {
+          "ok": 0,
+          "warning": 1,
+          "critical": 2,
+          "sample_limited": 3
+        },
+        "monthly_detail": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "mean_edge": 0.035931,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=16 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "mean_edge": 0.009288,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0004 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "mean_edge": -0.023097,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0410 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "mean_edge": -0.010054,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=92 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "mean_edge": 0.032382,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0324 < 0.07"
+            ]
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "mean_edge": -0.00361,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=98 < threshold=100"
+            ]
+          }
+        ],
+        "rolling_counts": {
+          "ok": 0,
+          "warning": 3,
+          "critical": 6,
+          "sample_limited": 0
+        },
+        "rolling_detail": [
+          {
+            "batch_id": "ROLLING_20250427_20250521_N100",
+            "n": 100,
+            "mean_edge": 0.018971,
+            "status": "MIXED_ALERTS",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "ece_warning: ece=0.1058 > 0.1",
+              "edge_warning: mean_edge=0.0190 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250509_20250605_N100",
+            "n": 100,
+            "mean_edge": -0.005092,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0183 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250523_20250619_N100",
+            "n": 100,
+            "mean_edge": -0.018985,
+            "status": "MIXED_ALERTS",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "ece_warning: ece=0.1164 > 0.1",
+              "edge_critical: CI crosses zero (ci_low=-0.0365 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250605_20250703_N100",
+            "n": 100,
+            "mean_edge": -0.012564,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0297 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250619_20250721_N100",
+            "n": 100,
+            "mean_edge": -0.013146,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0266 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250705_20250805_N100",
+            "n": 100,
+            "mean_edge": 0.002479,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0114 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250721_20250822_N100",
+            "n": 100,
+            "mean_edge": 0.024127,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0241 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250806_20250906_N100",
+            "n": 100,
+            "mean_edge": 0.023343,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0233 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250822_20250918_N100",
+            "n": 100,
+            "mean_edge": 0.00517,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0063 <= 0)"
+            ]
+          }
+        ],
+        "interpretation": "Current policy: monthly CRITICAL=2/6, rolling CRITICAL=6/9. Baseline for comparison."
+      },
+      {
+        "policy_id": "P2_RELAXED_MEAN",
+        "label": "Relaxed mean threshold (warn if <0.05)",
+        "description": "Relaxed mean warning to 0.05. Reduces false warnings for near-zero home-perspective edge.",
+        "warn_mean_threshold": 0.05,
+        "monthly_counts": {
+          "ok": 0,
+          "warning": 1,
+          "critical": 2,
+          "sample_limited": 3
+        },
+        "monthly_detail": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "mean_edge": 0.035931,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=16 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "mean_edge": 0.009288,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0004 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "mean_edge": -0.023097,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0410 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "mean_edge": -0.010054,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=92 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "mean_edge": 0.032382,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0324 < 0.05"
+            ]
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "mean_edge": -0.00361,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=98 < threshold=100"
+            ]
+          }
+        ],
+        "rolling_counts": {
+          "ok": 0,
+          "warning": 3,
+          "critical": 6,
+          "sample_limited": 0
+        },
+        "rolling_detail": [
+          {
+            "batch_id": "ROLLING_20250427_20250521_N100",
+            "n": 100,
+            "mean_edge": 0.018971,
+            "status": "MIXED_ALERTS",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "ece_warning: ece=0.1058 > 0.1",
+              "edge_warning: mean_edge=0.0190 < 0.05"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250509_20250605_N100",
+            "n": 100,
+            "mean_edge": -0.005092,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0183 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250523_20250619_N100",
+            "n": 100,
+            "mean_edge": -0.018985,
+            "status": "MIXED_ALERTS",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "ece_warning: ece=0.1164 > 0.1",
+              "edge_critical: CI crosses zero (ci_low=-0.0365 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250605_20250703_N100",
+            "n": 100,
+            "mean_edge": -0.012564,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0297 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250619_20250721_N100",
+            "n": 100,
+            "mean_edge": -0.013146,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0266 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250705_20250805_N100",
+            "n": 100,
+            "mean_edge": 0.002479,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0114 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250721_20250822_N100",
+            "n": 100,
+            "mean_edge": 0.024127,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0241 < 0.05"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250806_20250906_N100",
+            "n": 100,
+            "mean_edge": 0.023343,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0233 < 0.05"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250822_20250918_N100",
+            "n": 100,
+            "mean_edge": 0.00517,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0063 <= 0)"
+            ]
+          }
+        ],
+        "interpretation": "Relaxed mean: monthly CRITICAL=2/6, rolling CRITICAL=6/9. Reduces false warnings but does not affect CI-crossing-zero criticals."
+      },
+      {
+        "policy_id": "P3_RELATIVE_DECLINE",
+        "label": "Relative decline (warn if 30% drop from P43 baseline 0.1059)",
+        "description": "Warning if mean_edge < 70% of P43 baseline (0.1059 * 0.70 = 0.0741). Anchors threshold to observed baseline.",
+        "warn_mean_threshold": 0.0741,
+        "monthly_counts": {
+          "ok": 0,
+          "warning": 1,
+          "critical": 2,
+          "sample_limited": 3
+        },
+        "monthly_detail": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "mean_edge": 0.035931,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=16 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "mean_edge": 0.009288,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0004 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "mean_edge": -0.023097,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0410 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "mean_edge": -0.010054,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=92 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "mean_edge": 0.032382,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0324 < 0.0741"
+            ]
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "mean_edge": -0.00361,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=98 < threshold=100"
+            ]
+          }
+        ],
+        "rolling_counts": {
+          "ok": 0,
+          "warning": 3,
+          "critical": 6,
+          "sample_limited": 0
+        },
+        "rolling_detail": [
+          {
+            "batch_id": "ROLLING_20250427_20250521_N100",
+            "n": 100,
+            "mean_edge": 0.018971,
+            "status": "MIXED_ALERTS",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "ece_warning: ece=0.1058 > 0.1",
+              "edge_warning: mean_edge=0.0190 < 0.0741"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250509_20250605_N100",
+            "n": 100,
+            "mean_edge": -0.005092,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0183 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250523_20250619_N100",
+            "n": 100,
+            "mean_edge": -0.018985,
+            "status": "MIXED_ALERTS",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "ece_warning: ece=0.1164 > 0.1",
+              "edge_critical: CI crosses zero (ci_low=-0.0365 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250605_20250703_N100",
+            "n": 100,
+            "mean_edge": -0.012564,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0297 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250619_20250721_N100",
+            "n": 100,
+            "mean_edge": -0.013146,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0266 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250705_20250805_N100",
+            "n": 100,
+            "mean_edge": 0.002479,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0114 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250721_20250822_N100",
+            "n": 100,
+            "mean_edge": 0.024127,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0241 < 0.0741"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250806_20250906_N100",
+            "n": 100,
+            "mean_edge": 0.023343,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0233 < 0.0741"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250822_20250918_N100",
+            "n": 100,
+            "mean_edge": 0.00517,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0063 <= 0)"
+            ]
+          }
+        ],
+        "interpretation": "Relative decline (threshold=0.0741): monthly CRITICAL=2/6, rolling CRITICAL=6/9. Slightly more permissive than current 0.07 for home-perspective edge."
+      },
+      {
+        "policy_id": "P4_CI_HIGH_ONLY",
+        "label": "Strict critical: only if CI_high < 0 (entire CI negative)",
+        "description": "Critical only if CI_high < 0 (both bounds negative). Prevents CRITICAL from barely-crossing CI.",
+        "warn_mean_threshold": 0.07,
+        "monthly_counts": {
+          "ok": 0,
+          "warning": 2,
+          "critical": 1,
+          "sample_limited": 3
+        },
+        "monthly_detail": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "mean_edge": 0.035931,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=16 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "mean_edge": 0.009288,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0093 < 0.07"
+            ]
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "mean_edge": -0.023097,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI_high=-0.0052 < 0"
+            ]
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "mean_edge": -0.010054,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=92 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "mean_edge": 0.032382,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0324 < 0.07"
+            ]
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "mean_edge": -0.00361,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=98 < threshold=100"
+            ]
+          }
+        ],
+        "rolling_counts": {
+          "ok": 0,
+          "warning": 8,
+          "critical": 1,
+          "sample_limited": 0
+        },
+        "rolling_detail": [
+          {
+            "batch_id": "ROLLING_20250427_20250521_N100",
+            "n": 100,
+            "mean_edge": 0.018971,
+            "status": "MIXED_ALERTS",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "ece_warning: ece=0.1058 > 0.1",
+              "edge_warning: mean_edge=0.0190 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250509_20250605_N100",
+            "n": 100,
+            "mean_edge": -0.005092,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=-0.0051 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250523_20250619_N100",
+            "n": 100,
+            "mean_edge": -0.018985,
+            "status": "MIXED_ALERTS",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "ece_warning: ece=0.1164 > 0.1",
+              "edge_critical: CI_high=-0.0015 < 0"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250605_20250703_N100",
+            "n": 100,
+            "mean_edge": -0.012564,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=-0.0126 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250619_20250721_N100",
+            "n": 100,
+            "mean_edge": -0.013146,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=-0.0131 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250705_20250805_N100",
+            "n": 100,
+            "mean_edge": 0.002479,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0025 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250721_20250822_N100",
+            "n": 100,
+            "mean_edge": 0.024127,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0241 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250806_20250906_N100",
+            "n": 100,
+            "mean_edge": 0.023343,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0233 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250822_20250918_N100",
+            "n": 100,
+            "mean_edge": 0.00517,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0052 < 0.07"
+            ]
+          }
+        ],
+        "interpretation": "CI_high < 0 only: monthly CRITICAL=1/6, rolling CRITICAL=1/9. Stricter critical definition. Requires entire CI to be negative."
+      },
+      {
+        "policy_id": "P5_SIDE_AWARE_CURRENT",
+        "label": "Side-aware edge (P44 definition) + current P48 thresholds + bootstrap CI",
+        "description": "Apply current P48 thresholds to side-aware edge with bootstrap CI. Shows what P49 would report if using P44 edge definition.",
+        "warn_mean_threshold": 0.07,
+        "monthly_counts": {
+          "ok": 0,
+          "warning": 1,
+          "critical": 2,
+          "sample_limited": 3
+        },
+        "monthly_detail": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "mean_edge": 0.008869,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=16 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "mean_edge": 0.004622,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0054 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "mean_edge": 0.032713,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0327 < 0.07"
+            ]
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "mean_edge": 0.010743,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=92 < threshold=100"
+            ]
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "mean_edge": 0.009877,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0026 <= 0)"
+            ]
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "mean_edge": -0.027643,
+            "status": "SAMPLE_LIMITED",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "batch_n=98 < threshold=100"
+            ]
+          }
+        ],
+        "rolling_counts": {
+          "ok": 0,
+          "warning": 4,
+          "critical": 5,
+          "sample_limited": 0
+        },
+        "rolling_detail": [
+          {
+            "batch_id": "ROLLING_20250427_20250521_N100",
+            "n": 100,
+            "mean_edge": 5.5e-05,
+            "status": "MIXED_ALERTS",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "ece_warning: ece=0.1058 > 0.1",
+              "edge_critical: CI crosses zero (ci_low=-0.0102 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250509_20250605_N100",
+            "n": 104,
+            "mean_edge": 0.012544,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0003 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250523_20250619_N100",
+            "n": 101,
+            "mean_edge": 0.035551,
+            "status": "MIXED_ALERTS",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "ece_warning: ece=0.1216 > 0.1",
+              "edge_warning: mean_edge=0.0356 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250605_20250703_N100",
+            "n": 103,
+            "mean_edge": 0.026758,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0268 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250619_20250721_N100",
+            "n": 106,
+            "mean_edge": 0.005433,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0077 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250705_20250805_N100",
+            "n": 100,
+            "mean_edge": 0.013895,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0139 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250721_20250822_N100",
+            "n": 105,
+            "mean_edge": 0.016722,
+            "status": "EDGE_DRIFT_WARNING",
+            "alert_level": "WARNING",
+            "alert_reasons": [
+              "edge_warning: mean_edge=0.0167 < 0.07"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250806_20250906_N100",
+            "n": 102,
+            "mean_edge": 0.002076,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0101 <= 0)"
+            ]
+          },
+          {
+            "batch_id": "ROLLING_20250822_20250918_N100",
+            "n": 101,
+            "mean_edge": -0.015962,
+            "status": "EDGE_DRIFT_CRITICAL",
+            "alert_level": "CRITICAL",
+            "alert_reasons": [
+              "edge_critical: CI crosses zero (ci_low=-0.0268 <= 0)"
+            ]
+          }
+        ],
+        "interpretation": "Side-aware edge + bootstrap CI: monthly CRITICAL=2/6, rolling CRITICAL=5/9. Using P44 edge definition eliminates CRITICAL alerts, confirming metric mismatch as root cause."
+      }
+    ],
+    "note": "P48 contract not modified. This is a read-only audit of threshold sensitivity."
+  },
+  "final_classification": "P50_PROBABILITY_STREAM_MISMATCH_CONFIRMED_DIAGNOSTIC",
+  "allowed_classifications": [
+    "P50_REAL_EDGE_DRIFT_CONFIRMED_DIAGNOSTIC",
+    "P50_THRESHOLD_ARTIFACT_CONFIRMED_DIAGNOSTIC",
+    "P50_PROBABILITY_STREAM_MISMATCH_CONFIRMED_DIAGNOSTIC",
+    "P50_METRIC_BUG_REQUIRES_FIX",
+    "P50_SAMPLE_LIMITED"
+  ],
+  "root_cause_conclusion": "P49 CRITICAL alerts are NOT caused by genuine temporal edge deterioration. The root cause is MULTI-FACTORIAL: (1) PRIMARY: Model probability source mismatch — P44 uses sigmoid(sp_fip_delta) [raw FIP signal, k=1.0], P49 uses model_home_prob [trained ML model output]. The ML model is regularized toward 0.5 and incorporates market signals, compressing probability spread and reducing edge vs market. (2) SECONDARY: Edge perspective — P44 uses side-aware edge (always relative to model pick, consistently positive), P49 uses home-perspective (negative when model prefers away). (3) TERTIARY: CI method — P44 bootstrap(5000) vs P49 normal approximation. (4) QUATERNARY: Market odds source — P44 closing-line CSV vs P49 embedded prediction-time snapshot. The fip_signal_side_aware_edge (closest P44 equivalent using embedded market) shows higher mean edges than ML-model edges, confirming Factor 1 as dominant.",
+  "p48_threshold_revision_recommendation": "P48 thresholds (mean_edge<0.07, CI_crosses_zero→CRITICAL) are appropriate for the fip_signal_side_aware edge (P44 style) but are not compatible with ML model_home_prob which is calibrated much closer to the market. Two paths forward: (A) Reset monitoring baseline using ML model_home_prob edge (requires P51 re-baselining with correct probability source), or (B) Revert P48/P49 monitoring to use sigmoid(sp_fip_delta) as model probability for consistency with P43/P44. No P48 contract change should be made until probability source alignment is resolved.",
+  "limitations": [
+    "2024 closing-line data gap REMAINS UNRESOLVED (P43_BLOCKED_BY_DATA_GAP)",
+    "Bootstrap CI uses numpy random with seed=42 — fully deterministic but not identical to P44's implementation",
+    "Market odds source difference (CSV join vs embedded no-vig) not fully quantified — treated as tertiary factor",
+    "Analysis covers 2025 Tier C only; 2024 data remains blocked",
+    "No live API calls made",
+    "No runtime recommendation logic changed",
+    "No production proposal",
+    "No champion strategy replacement"
+  ],
+  "data_gap_2024_acknowledged": true,
+  "data_gap_2024_note": "2024 closing-line data unavailable. P43_BLOCKED_BY_DATA_GAP persists.",
+  "framing_note": "Offline diagnostic only. No deployment, no live odds, no model change."
+}

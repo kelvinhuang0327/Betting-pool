@@ -245,12 +245,22 @@ def append_tsl_history(
     games: list[dict[str, Any]],
     source: str,
     fetched_at: str,
+    force_closing: bool = False,
 ) -> None:
     """Append games to the JSONL history, skipping entries with unchanged MNL odds.
 
     Cross-fetch dedup: if the same match_id was already appended with identical MNL
     odds in a previous fetch, we skip the new entry to avoid inflating the JSONL with
     zero-information duplicate rows.  When odds change, we always append.
+
+    P26F — force_closing bypass:
+    When force_closing=True (set when the capture window is in closing mode,
+    i.e., game_time ±2h), the MNL dedup filter is bypassed and the snapshot is
+    always written.  This guarantees a closing snapshot exists for CLV pair
+    construction even when odds are stable.  The record carries audit fields:
+      - force_closing_snapshot=True
+      - capture_reason="closing_window"
+      - dedup_bypassed=True
 
     Note: games without MNL markets are always appended (no odds to compare).
     """
@@ -263,10 +273,16 @@ def append_tsl_history(
         for game in games:
             match_id = str(game.get("gameId", ""))
             odds_key = _extract_mnl_odds_key(game)
-            if odds_key is not None and dedup_state.get(match_id) == odds_key:
-                # Same MNL odds as last persisted snapshot — skip to avoid inflation
+            if odds_key is not None and not force_closing and dedup_state.get(match_id) == odds_key:
+                # Same MNL odds as last persisted snapshot — skip to avoid inflation.
+                # Bypass is disabled when force_closing=True (closing window capture).
                 continue
             record = _history_record_from_game(game, source=source, fetched_at=fetched_at)
+            if force_closing:
+                # Audit fields so analysts can distinguish closing-forced rows
+                record["force_closing_snapshot"] = True
+                record["capture_reason"] = "closing_window"
+                record["dedup_bypassed"] = odds_key is not None and dedup_state.get(match_id) == odds_key
             handle.write(json.dumps(record, ensure_ascii=False) + "\n")
             if odds_key is not None:
                 dedup_state[match_id] = odds_key
@@ -275,7 +291,12 @@ def append_tsl_history(
         _save_dedup_state(dedup_state)
 
 
-def save_tsl_snapshot(*, games: list[dict[str, Any]], source: str) -> None:
+def save_tsl_snapshot(
+    *,
+    games: list[dict[str, Any]],
+    source: str,
+    force_closing: bool = False,
+) -> None:
     fetched_at = _utc_now()
     payload = {
         "source": source,
@@ -287,7 +308,7 @@ def save_tsl_snapshot(*, games: list[dict[str, Any]], source: str) -> None:
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    append_tsl_history(games=games, source=source, fetched_at=fetched_at)
+    append_tsl_history(games=games, source=source, fetched_at=fetched_at, force_closing=force_closing)
 
 
 def load_tsl_snapshot() -> dict[str, Any]:

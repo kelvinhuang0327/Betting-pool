@@ -1,0 +1,148 @@
+{
+  "phase": "P66",
+  "generated_at": "2026-05-26T04:23:09+00:00",
+  "p66_classification": "P66_ODDS_MAPPING_INTEGRITY_CONFIRMED",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "runtime_recommendation_logic_changed": false,
+    "real_bet_allowed": false,
+    "production_ready": false,
+    "data_year_2024_gap_remains_unresolved": true
+  },
+  "artifacts_loaded": {
+    "p64_rows": 535,
+    "p64_classification": "P64_PAPER_SIMULATION_FIRST_RUN_READY",
+    "p65_classification": "P65_EDGE_STABLE_NEGATIVE",
+    "odds_csv_rows": 2430,
+    "predictions_rows": 2025
+  },
+  "join_audit": {
+    "total_predictions": 2025,
+    "matched": 1979,
+    "unmatched": 0,
+    "ambiguous": 46,
+    "hit_rate": 0.977284,
+    "duplicate_odds_key_count": 28,
+    "duplicate_pred_key_count": 23,
+    "p64_emitted_rows": 535,
+    "unmatched_examples": [],
+    "ambiguous_examples": [
+      {
+        "key": "('2025-04-27', 'new york yankees')",
+        "hit_count": 2,
+        "csv_row_indices": [
+          405,
+          406
+        ]
+      },
+      {
+        "key": "('2025-04-27', 'new york yankees')",
+        "hit_count": 2,
+        "csv_row_indices": [
+          405,
+          406
+        ]
+      },
+      {
+        "key": "('2025-04-30', 'cincinnati reds')",
+        "hit_count": 2,
+        "csv_row_indices": [
+          442,
+          450
+        ]
+      }
+    ],
+    "doubleheader_note": "28 duplicate (date, home_team) keys in odds CSV likely reflect doubleheaders. P64 used last-row-wins dedup (implicit). Not treated as a mapping error.",
+    "join_integrity_status": "JOIN_INTEGRITY_PASS"
+  },
+  "side_mapping_audit": {
+    "total_rows": 535,
+    "pass_count": 535,
+    "fail_count": 0,
+    "side_inversion_count": 0,
+    "failure_examples": [],
+    "side_mapping_status": "SIDE_MAPPING_PASS"
+  },
+  "odds_conversion_audit": {
+    "total_rows": 535,
+    "pass_count": 535,
+    "mismatch_count": 0,
+    "invalid_count": 0,
+    "mismatch_examples": [],
+    "invalid_examples": [],
+    "positive_odds_examples": [
+      {
+        "ml": "+125",
+        "ml_val": 125.0,
+        "stored_decimal": 2.25,
+        "expected": 2.25
+      },
+      {
+        "ml": "+105",
+        "ml_val": 105.0,
+        "stored_decimal": 2.05,
+        "expected": 2.05
+      },
+      {
+        "ml": "+105",
+        "ml_val": 105.0,
+        "stored_decimal": 2.05,
+        "expected": 2.05
+      }
+    ],
+    "negative_odds_examples": [
+      {
+        "ml": "-260",
+        "ml_val": -260.0,
+        "stored_decimal": 1.384615,
+        "expected": 1.384615
+      },
+      {
+        "ml": "-350",
+        "ml_val": -350.0,
+        "stored_decimal": 1.285714,
+        "expected": 1.285714
+      },
+      {
+        "ml": "-130",
+        "ml_val": -130.0,
+        "stored_decimal": 1.769231,
+        "expected": 1.769231
+      }
+    ],
+    "odds_conversion_status": "ODDS_CONVERSION_PASS"
+  },
+  "edge_recalculation_audit": {
+    "audited_rows": 535,
+    "pass_count": 535,
+    "sign_mismatch_count": 0,
+    "value_mismatch_count": 0,
+    "max_absolute_delta": 0.0,
+    "mean_absolute_delta": 0.0,
+    "original_positive_count": 200,
+    "recomputed_positive_count": 200,
+    "mean_edge_original": -0.032473,
+    "mean_edge_recomputed": -0.032473,
+    "sign_mismatch_examples": [],
+    "value_mismatch_examples": [],
+    "edge_recalculation_status": "EDGE_RECALCULATION_PASS"
+  },
+  "forbidden_scan": {
+    "violations": 0,
+    "result": "CLEAN",
+    "details": [],
+    "terms_scanned": 11
+  },
+  "diagnosis": {
+    "join_status": "JOIN_INTEGRITY_PASS",
+    "side_status": "SIDE_MAPPING_PASS",
+    "odds_status": "ODDS_CONVERSION_PASS",
+    "edge_status": "EDGE_RECALCULATION_PASS",
+    "negative_edge_confirmed_after_mapping_validation": true
+  }
+}

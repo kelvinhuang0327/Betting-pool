@@ -1,0 +1,274 @@
+{
+  "p93_classification": "P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP",
+  "final_classification": "P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP",
+  "allowed_classifications": [
+    "P93_SIGNAL_BROADLY_DISTRIBUTED",
+    "P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP",
+    "P93_SIGNAL_CONCENTRATED_IN_LOW_FIP",
+    "P93_COVERAGE_GAP_DISTORTION",
+    "P93_INSUFFICIENT_QUARTILE_EVIDENCE",
+    "P93_COVERAGE_AUDIT_BLOCKED_BY_PREFLIGHT",
+    "P93_COVERAGE_AUDIT_BLOCKED_BY_SCOPE_DRIFT"
+  ],
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T14:48:47.472275+00:00",
+  "git_head": "fdd341e feat(P92): Prediction-Only Side Bias Baseline Gate",
+  "phase": "paper-only, diagnostic-only",
+  "step1_preflight": {
+    "step": "step1_preflight",
+    "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "branch": "main",
+    "git_dir": ".git",
+    "repo_ok": true,
+    "branch_ok": true,
+    "worktree_ok": true,
+    "status": "PASSED"
+  },
+  "step2_classification_locks": {
+    "step": "step2_classification_locks",
+    "p92_classification": "P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+    "p91_classification": "P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+    "p90_classification": "P90_POST_RECOVERY_CLOSURE_READY",
+    "p86_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p92_ok": true,
+    "p91_ok": true,
+    "p90_ok": true,
+    "p86_ok": true,
+    "all_ok": true,
+    "status": "PASSED"
+  },
+  "step3_row_inventory": {
+    "step": "step3_row_inventory",
+    "n_total_rows": 828,
+    "n_outcome_rows": 808,
+    "rows_with_sp_fip_delta": 808,
+    "rows_missing_sp_fip_delta": 0,
+    "rows_missing_predicted_side": 0,
+    "coverage_rate_sp_fip_delta": 1.0,
+    "coverage_gap_ratio": 0.0,
+    "seasons": [
+      2026
+    ],
+    "date_range_start": "2026-03-25",
+    "date_range_end": "2026-05-31",
+    "status": "PASSED"
+  },
+  "step4_feature_distribution": {
+    "step": "step4_feature_distribution",
+    "n_with_fip": 808,
+    "sp_fip_delta_min": -5.9298,
+    "sp_fip_delta_max": 7.1667,
+    "sp_fip_delta_mean": -0.055961,
+    "sp_fip_delta_median": -0.02595,
+    "sp_fip_delta_p10": -2.2003,
+    "sp_fip_delta_p25": -1.1396,
+    "sp_fip_delta_p50": -0.0278,
+    "sp_fip_delta_p75": 1.064,
+    "sp_fip_delta_p90": 1.8841,
+    "abs_sp_fip_delta_min": 0.0077,
+    "abs_sp_fip_delta_max": 7.1667,
+    "abs_sp_fip_delta_mean": 1.339034,
+    "abs_sp_fip_delta_median": 1.0919,
+    "abs_sp_fip_delta_p25": 0.5874,
+    "abs_sp_fip_delta_p75": 1.8398,
+    "status": "PASSED"
+  },
+  "step5_quartile_decomposition": {
+    "step": "step5_quartile_decomposition",
+    "quartile_size": 202,
+    "quartiles": [
+      {
+        "quartile": "Q1",
+        "n": 202,
+        "abs_fip_min": 0.0077,
+        "abs_fip_max": 0.5874,
+        "model_hit_rate": 0.524752,
+        "home_baseline_hit_rate": 0.50495,
+        "away_baseline_hit_rate": 0.49505,
+        "sufficient": true
+      },
+      {
+        "quartile": "Q2",
+        "n": 202,
+        "abs_fip_min": 0.5883,
+        "abs_fip_max": 1.0919,
+        "model_hit_rate": 0.559406,
+        "home_baseline_hit_rate": 0.534653,
+        "away_baseline_hit_rate": 0.465347,
+        "sufficient": true
+      },
+      {
+        "quartile": "Q3",
+        "n": 202,
+        "abs_fip_min": 1.0919,
+        "abs_fip_max": 1.8398,
+        "model_hit_rate": 0.534653,
+        "home_baseline_hit_rate": 0.509901,
+        "away_baseline_hit_rate": 0.490099,
+        "sufficient": true
+      },
+      {
+        "quartile": "Q4",
+        "n": 202,
+        "abs_fip_min": 1.8492,
+        "abs_fip_max": 7.1667,
+        "model_hit_rate": 0.658416,
+        "home_baseline_hit_rate": 0.549505,
+        "away_baseline_hit_rate": 0.450495,
+        "sufficient": true
+      }
+    ],
+    "all_quartiles_sufficient": true,
+    "min_quartile_rows_threshold": 30,
+    "status": "PASSED"
+  },
+  "step6_bucket_analysis": {
+    "step": "step6_bucket_analysis",
+    "low_fip_threshold": 0.5,
+    "high_fip_threshold": 1.5,
+    "low_bucket": {
+      "n": 178,
+      "model_hit_rate": 0.52809,
+      "home_baseline_hit_rate": 0.494382,
+      "model_vs_home_delta": 0.033708
+    },
+    "mid_bucket": {
+      "n": 343,
+      "model_hit_rate": 0.530612,
+      "home_baseline_hit_rate": 0.539359,
+      "model_vs_home_delta": -0.008746
+    },
+    "high_bucket": {
+      "n": 287,
+      "model_hit_rate": 0.641115,
+      "home_baseline_hit_rate": 0.526132,
+      "model_vs_home_delta": 0.114983
+    },
+    "low_fip_delta_hit_rate": 0.52809,
+    "mid_fip_delta_hit_rate": 0.530612,
+    "high_fip_delta_hit_rate": 0.641115,
+    "status": "PASSED"
+  },
+  "step7_monthly_bucket": {
+    "step": "step7_monthly_bucket",
+    "n_months": 3,
+    "monthly_results": [
+      {
+        "month": "2026-03",
+        "n": 73,
+        "model_hit_rate": 0.6164,
+        "low_hit_rate": 0.5385,
+        "high_hit_rate": 0.7353,
+        "low_n": 13,
+        "high_n": 34
+      },
+      {
+        "month": "2026-04",
+        "n": 389,
+        "model_hit_rate": 0.5424,
+        "low_hit_rate": 0.4868,
+        "high_hit_rate": 0.6014,
+        "low_n": 76,
+        "high_n": 143
+      },
+      {
+        "month": "2026-05",
+        "n": 346,
+        "model_hit_rate": 0.5896,
+        "low_hit_rate": 0.5618,
+        "high_hit_rate": 0.6636,
+        "low_n": 89,
+        "high_n": 110
+      }
+    ],
+    "status": "PASSED"
+  },
+  "step8_concentration_assessment": {
+    "step": "step8_concentration_assessment",
+    "feature_concentration_assessment": "SIGNAL_CONCENTRATED_IN_HIGH_FIP",
+    "rationale": "High-FIP bucket hit_rate=0.6411 exceeds low-FIP=0.5281 by 0.1130 (threshold 0.08). Low-FIP monthly collapse detected in: ['2026-04']. Q4 dominates signal (hit_rate=0.6584).",
+    "coverage_gap_ratio": 0.0,
+    "coverage_gap_threshold": 0.1,
+    "high_concentration_delta_threshold": 0.08,
+    "low_concentration_delta_threshold": 0.08,
+    "low_bucket_collapse_threshold": 0.5,
+    "min_quartile_rows": 30,
+    "quartile_hit_rates": [
+      0.524752,
+      0.559406,
+      0.534653,
+      0.658416
+    ],
+    "low_fip_hit_rate": 0.52809,
+    "high_fip_hit_rate": 0.641115,
+    "any_monthly_low_collapse": true,
+    "monthly_low_hrs_checked": [
+      0.5385,
+      0.4868,
+      0.5618
+    ],
+    "status": "PASSED"
+  },
+  "step9_governance_scan": {
+    "step": "step9_governance_scan",
+    "p93_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_real_bet": true,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_production_betting_recommendation": true,
+      "no_taiwan_lottery_betting_recommendation": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_modification": true,
+      "no_raw_data_modification": true,
+      "no_historical_artifact_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_real_bet": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_production_betting": true,
+      "no_taiwan_lottery": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_mod": true,
+      "no_raw_data_mod": true,
+      "no_historical_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "n_flags": 20,
+    "n_checks": 20,
+    "governance_all_pass": true,
+    "status": "PASSED"
+  },
+  "step10_final_classification": {
+    "step": "step10_final_classification",
+    "final_classification": "P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP",
+    "feature_concentration_assessment": "SIGNAL_CONCENTRATED_IN_HIGH_FIP",
+    "rationale": "High-FIP bucket hit_rate=0.6411 exceeds low-FIP=0.5281 by 0.1130 (threshold 0.08). Low-FIP monthly collapse detected in: ['2026-04']. Q4 dominates signal (hit_rate=0.6584).",
+    "preflight_ok": true,
+    "lock_ok": true,
+    "governance_ok": true
+  },
+  "governance_all_pass": true,
+  "production_ready": false
+}

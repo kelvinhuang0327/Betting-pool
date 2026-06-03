@@ -1,0 +1,54 @@
+{
+  "date": "2026-05-31",
+  "final_classification": "P104_SCORE_SIMULATION_DESIGN_READY_DIAGNOSTIC_ONLY",
+  "supported_simulations": [
+    "win_loss_simulation_by_strategy",
+    "side_accuracy_by_strategy",
+    "monthly_win_loss_simulation",
+    "score_margin_descriptive_analysis"
+  ],
+  "blocked_simulations": [
+    "profit_simulation_blocked",
+    "ev_simulation_blocked",
+    "clv_simulation_blocked",
+    "kelly_or_stake_simulation_blocked",
+    "taiwan_lottery_recommendation_blocked"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false
+  },
+  "next_implementation_target": "P105 Outcome-Only Win/Loss and Score Simulation Runner",
+  "schema": [
+    "strategy_id",
+    "eligible_rows",
+    "predicted_side",
+    "actual_winner",
+    "win_loss_result",
+    "home_score",
+    "away_score",
+    "score_margin",
+    "score_margin_bucket",
+    "accuracy_metrics",
+    "sample_limitations"
+  ],
+  "note": "This is a diagnostic-only contract/schema design. No betting, EV, CLV, Kelly, or production logic included."
+}

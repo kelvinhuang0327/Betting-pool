@@ -1,0 +1,111 @@
+{
+  "artifact_id": "p26b_scheduler_extension_20260520",
+  "phase": "P26B",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26B_SCHEDULER_EXTENSION_READY_AWAITING_AUTHORIZATION",
+
+  "authorization_status": {
+    "authorized": false,
+    "required_sentence": "YES: 授權擴充 determine_capture_windows() 讀取 WBC/NPB game_times",
+    "action_taken": "readiness-only analysis, no scheduler code modified"
+  },
+
+  "scheduler_extension_enabled": false,
+
+  "current_state": {
+    "file": "wbc_backend/mlb_data/odds_capture_scheduler.py",
+    "function": "determine_capture_windows()",
+    "reads_from": "data/mlb_context/odds_timeline.jsonl (MLB only)",
+    "wbc_npb_coverage": false,
+    "closing_trigger_for_wbc": false,
+    "pregame_trigger_for_wbc": false
+  },
+
+  "readiness_analysis": {
+    "source_available": true,
+    "source_file": "data/tsl_odds_history.jsonl",
+    "source_has_game_time": true,
+    "source_has_match_id": true,
+    "future_games_available": 15,
+    "p26_diagnostic_schedule_available": true,
+    "p26_diagnostic_schedule_file": "data/paper_recommendations/p26_tsl_closing_snapshot_schedule_20260520.json",
+    "backward_compatibility_risk": "LOW",
+    "implementation_complexity": "LOW",
+    "test_cases_designed": 10
+  },
+
+  "implementation_design": {
+    "new_function": "_load_wbc_npb_game_times",
+    "new_function_signature": "_load_wbc_npb_game_times(source_path, lookahead_hours=48.0, now=None) -> list[datetime]",
+    "new_function_behavior": [
+      "Read data/tsl_odds_history.jsonl",
+      "Deduplicate by match_id",
+      "Filter to games within next lookahead_hours",
+      "Return list of UTC datetime objects",
+      "Return [] if source_path missing (graceful degradation)",
+      "Return [] on any OSError or parse failure"
+    ],
+    "extension_to_determine_capture_windows": [
+      "After existing MLB logic, call _load_wbc_npb_game_times(now=now)",
+      "For each WBC/NPB game_time gt:",
+      "  delta_minutes = (gt - now).total_seconds() / 60",
+      "  if delta_minutes < -120: skip (game started >2h ago)",
+      "  if DECISION_LEAD_MINUTES <= delta_minutes <= DECISION_LEAD_MINUTES+60: decision=True",
+      "  if 0 <= delta_minutes <= 30: pregame=True",
+      "  if -120 <= delta_minutes <= PREGAME_LEAD_MINUTES: closing=True",
+      "  append audit entry to _audit_details list"
+    ],
+    "audit_output_key": "_audit_details",
+    "audit_entry_fields": [
+      "matched_game_id", "league", "source", "game_time",
+      "minutes_to_game", "trigger_reason", "trigger_type"
+    ],
+    "backward_compatibility": "MLB timeline logic unchanged — new WBC logic is additive only",
+    "fallback_behavior": "If tsl_odds_history.jsonl missing: wbc_game_times=[], MLB logic runs normally"
+  },
+
+  "trigger_window_rules": {
+    "decision": "DECISION_LEAD_MINUTES(60) <= delta_min <= DECISION_LEAD_MINUTES+60(120)",
+    "pregame": "0 <= delta_min <= 30",
+    "closing": "-120 <= delta_min <= PREGAME_LEAD_MINUTES(5)",
+    "note": "Closing window is wider than pregame (-120 to +5) to catch game_time ±2h matches"
+  },
+
+  "supported_leagues": ["WBC", "NPB", "CPBL", "MLB", "KBO"],
+  "source_discriminator": "All non-MLB games present in tsl_odds_history.jsonl but not in odds_timeline.jsonl",
+
+  "test_cases_designed": [
+    "MLB existing behavior preserved",
+    "WBC game at T-90min triggers decision window",
+    "WBC game at T-30min triggers pregame window",
+    "WBC game at T-5min triggers closing window",
+    "WBC game at T+30min still triggers closing window (within -120min)",
+    "WBC game at T+3h does NOT trigger (>-120min)",
+    "Missing tsl_odds_history.jsonl → no crash, no WBC windows",
+    "NPB game uses identical logic to WBC",
+    "MLB window unaffected when WBC game is in window",
+    "Audit entry exists for each WBC trigger"
+  ],
+
+  "expected_impact": {
+    "clv_pairs_current": 220,
+    "clv_pairs_after_fix": 797,
+    "lift_pairs": 577,
+    "lift_pct": 65.1,
+    "bootstrap_sample_increase": "2115 → ~9000+ comparable outcomes",
+    "time_to_collect_data": "2-3 weeks of WBC/NPB season"
+  },
+
+  "risks": [
+    "If tsl_odds_history.jsonl grows very large, loading on every 15-min daemon tick adds I/O. Mitigation: only read last N records or use a separate manifest file.",
+    "Game timezone parsing: game_time may be in Asia/Taipei (+08:00). Must ensure UTC normalization.",
+    "Match dedup: same match_id appears multiple times. Must deduplicate before building game_times list.",
+    "Closing window expansion (-120min): may cause extra crawl ticks post-game. TSL API typically stops showing odds ~30min after game start, so this is low-risk."
+  ]
+}

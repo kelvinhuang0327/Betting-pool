@@ -1,0 +1,170 @@
+{
+  "p69_version": "p69_v1",
+  "p69_classification": "P69_CEO_DECISION_MEMO_READY",
+  "memo_date": "2026-05-26",
+  "p61_classification_verified": "P61_DATA_GAP_RESOLVABLE_MEDIUM_EFFORT",
+  "p67_classification_verified": "P67_PATH_B_PARTIAL_SOURCE_FOUND_NEEDS_REVIEW",
+  "p68_classification_verified": "P68_ODDSPORTAL_BLOCKED_BY_TOS",
+  "data_year_2024_gap_status": "UNRESOLVED_PENDING_CEO_DECISION_ON_PATH_A",
+  "free_source_paths_exhausted": true,
+  "free_sources_evaluated": [
+    {
+      "source": "Kaggle datasets (2024 MLB search)",
+      "result": "27 datasets found — all game stats, no moneyline odds",
+      "classification": "SOURCE_NO_MONEYLINE"
+    },
+    {
+      "source": "GitHub repositories (3 queries)",
+      "result": "0 public repos with 2024 MLB odds data",
+      "classification": "SOURCE_UNUSABLE"
+    },
+    {
+      "source": "Kaggle synthetic dataset",
+      "result": "Generated via Faker — fake data, unusable",
+      "classification": "SOURCE_UNUSABLE"
+    },
+    {
+      "source": "SBRO (SportsBookReviewsOnline)",
+      "result": "Archive frozen at 2021 — no 2024 data",
+      "classification": "SOURCE_NO_2024"
+    },
+    {
+      "source": "aussportsbetting.com",
+      "result": "HTTP 403 — access blocked",
+      "classification": "SOURCE_LICENSE_UNCLEAR"
+    },
+    {
+      "source": "OddsPortal.com",
+      "result": "ToS Section 2.11 prohibits scraping; robots.txt Disallow: *-2024*",
+      "classification": "SOURCE_TOS_BLOCKED"
+    }
+  ],
+  "oddsportal_block": {
+    "source": "OddsPortal.com — MLB 2024",
+    "p68_classification": "P68_ODDSPORTAL_BLOCKED_BY_TOS",
+    "tos_section_2_11": "Prohibits scraping and automated requests — 'you are not permitted to use our content … by embedding, aggregating, scraping or recreating it without our express consent'",
+    "tos_section_2_10": "Prohibits database extraction — 'no extraction (copying) or exploitation of the Database Content … is permitted without our express consent'",
+    "robots_txt_disallow": "Disallow: *-2024* for User-agent: * covers /baseball/usa/mlb-2024/results/",
+    "scraping_prohibited": true,
+    "data_visible_in_ui": true,
+    "legally_accessible": false
+  },
+  "path_a_spec": {
+    "path_id": "PATH_A",
+    "name": "The Odds API — one-time historical pull for 2024 MLB closing-line moneyline",
+    "source_url": "https://the-odds-api.com",
+    "cost_estimate": "$30–50 one-time",
+    "cost_low_usd": 30,
+    "cost_high_usd": 50,
+    "effort": "MEDIUM",
+    "data_quality": "HIGH",
+    "schema_match": "HIGH — requires conversion script (~50 lines)",
+    "timeline_after_authorization": "1–2 days",
+    "governance_requirement": "Explicit CEO authorization required for one-time paid API call",
+    "recommended": true,
+    "the_odds_api_called_in_p69": false
+  },
+  "required_fields": [
+    {
+      "field": "game_date",
+      "description": "Date of game (ISO 8601)",
+      "source": "The Odds API event timestamp"
+    },
+    {
+      "field": "home_team",
+      "description": "Home team name (standardised)",
+      "source": "The Odds API home_team field"
+    },
+    {
+      "field": "away_team",
+      "description": "Away team name (standardised)",
+      "source": "The Odds API away_team field"
+    },
+    {
+      "field": "home_ml",
+      "description": "Home moneyline (American format)",
+      "source": "Convert from decimal/fractional"
+    },
+    {
+      "field": "away_ml",
+      "description": "Away moneyline (American format)",
+      "source": "Convert from decimal/fractional"
+    },
+    {
+      "field": "bookmaker",
+      "description": "Bookmaker / market source label",
+      "source": "The Odds API bookmaker key"
+    },
+    {
+      "field": "odds_timestamp",
+      "description": "Timestamp of odds snapshot",
+      "source": "The Odds API last_update or commence_time"
+    },
+    {
+      "field": "closing_indicator",
+      "description": "Closing or near-closing flag",
+      "source": "Inferred from final snapshot before game_start"
+    },
+    {
+      "field": "source_trace",
+      "description": "Provenance chain: source, pull date, script version",
+      "source": "Injected at pull time"
+    }
+  ],
+  "allowed_use": [
+    "paper-only simulation using 2024 closing-line data as model input",
+    "diagnostic-only validation of P43 cross-year edge stability",
+    "research-internal use only — no commercial distribution",
+    "joining 2024 closing-line odds to 2024 model predictions for edge calculation",
+    "P43 cross-year bootstrap CI on 2024+2025 combined rows (~3856 quality rows if 2024 resolved)"
+  ],
+  "prohibited_use": [
+    "live betting or real money wagering",
+    "production recommendation output",
+    "Kelly criterion staking deployment",
+    "champion strategy replacement",
+    "commercial redistribution of The Odds API data",
+    "aggregation or re-publication of odds data",
+    "any claim of profitability or production readiness"
+  ],
+  "ceo_decision_options": [
+    {
+      "option": "APPROVE",
+      "description": "Authorize P61 PATH_A — The Odds API one-time historical pull for 2024 MLB moneyline closing-line data",
+      "next_task": "P70 — The Odds API Historical Pull: authorized one-time paid API call for 2024 MLB data",
+      "exact_phrase": "YES authorize P61 PATH_A The Odds API historical 2024 MLB moneyline pull for paper-only validation"
+    },
+    {
+      "option": "REJECT",
+      "description": "Decline PATH_A — freeze 2024 closing-line scope; accept P43 blocked status as final",
+      "next_task": "P70 — 2024 scope freeze: document final gap, accept P43_BLOCKED_BY_DATA_GAP as permanent",
+      "exact_phrase": "NO reject P61 PATH_A and freeze 2024 closing-line scope"
+    },
+    {
+      "option": "DEFER",
+      "description": "Defer decision — request more information before committing",
+      "next_task": "P70 — CEO information request: define open questions and request answers before re-presenting PATH_A",
+      "exact_phrase": "DEFER P61 PATH_A pending more information"
+    }
+  ],
+  "ceo_approval_phrase": "YES authorize P61 PATH_A The Odds API historical 2024 MLB moneyline pull for paper-only validation",
+  "ceo_rejection_phrase": "NO reject P61 PATH_A and freeze 2024 closing-line scope",
+  "ceo_defer_phrase": "DEFER P61 PATH_A pending more information",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "the_odds_api_called_in_p69": false,
+    "tsl_crawler_called": false,
+    "bulk_scraping_performed": false,
+    "anti_bot_bypass_attempted": false,
+    "runtime_recommendation_logic_changed": false,
+    "real_bet_allowed": false,
+    "production_ready": false,
+    "platt_a": 0.435432,
+    "platt_b": 0.245464
+  }
+}

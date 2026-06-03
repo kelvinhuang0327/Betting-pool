@@ -1,0 +1,90 @@
+# P109 Outcome-Only Tracking Drift Snapshot
+
+- 日期: 2026-05-31
+- 最終分類: P109_TRACKING_DRIFT_SNAPSHOT_READY_DIAGNOSTIC_ONLY
+- 治理: paper_only, diagnostic_only, production_ready=false
+- 下一步: P110 Outcome-Only Tracking Dashboard Contract
+
+## 各策略追蹤訊號 Drift Snapshot
+
+### HIGH_FIP
+- eligible_rows: 45
+- overall_hit_rate: 0.511
+- monthly_hit_rate: {'2026-05': 0.682, '2026-04': 0.368, '2026-03': 0.25}
+- monthly_n: {'2026-05': 22, '2026-04': 19, '2026-03': 4}
+- latest_month_hit_rate: 0.682
+- prior_month_hit_rate: 0.368
+- delta_latest_vs_prior: 0.313
+- delta_latest_vs_overall: 0.171
+- sample_status: SAMPLE_LIMITED
+- drift_status: DRIFT_BLOCKED_BY_SAMPLE
+- next_check_trigger: 等待樣本累積
+
+### MID_FIP
+- eligible_rows: 94
+- overall_hit_rate: 0.5
+- monthly_hit_rate: {'2026-05': 0.5, '2026-04': 0.481, '2026-03': 0.75}
+- monthly_n: {'2026-05': 38, '2026-04': 52, '2026-03': 4}
+- latest_month_hit_rate: 0.5
+- prior_month_hit_rate: 0.481
+- delta_latest_vs_prior: 0.019
+- delta_latest_vs_overall: 0.0
+- sample_status: SAMPLE_LIMITED
+- drift_status: DRIFT_BLOCKED_BY_SAMPLE
+- next_check_trigger: 等待樣本累積
+
+### LOW_FIP
+- eligible_rows: 88
+- overall_hit_rate: 0.534
+- monthly_hit_rate: {'2026-04': 0.459, '2026-05': 0.614, '2026-03': 0.429}
+- monthly_n: {'2026-04': 37, '2026-05': 44, '2026-03': 7}
+- latest_month_hit_rate: 0.614
+- prior_month_hit_rate: 0.459
+- delta_latest_vs_prior: 0.154
+- delta_latest_vs_overall: 0.08
+- sample_status: SAMPLE_LIMITED
+- drift_status: DRIFT_BLOCKED_BY_SAMPLE
+- next_check_trigger: 等待樣本累積
+
+### ALL_ROWS
+- eligible_rows: 808
+- overall_hit_rate: 0.569
+- monthly_hit_rate: {'2026-05': 0.59, '2026-04': 0.542, '2026-03': 0.616}
+- monthly_n: {'2026-05': 346, '2026-04': 389, '2026-03': 73}
+- latest_month_hit_rate: 0.59
+- prior_month_hit_rate: 0.542
+- delta_latest_vs_prior: 0.047
+- delta_latest_vs_overall: 0.02
+- sample_status: OK
+- drift_status: STABLE_DIAGNOSTIC
+- next_check_trigger: 下月檢查
+
+
+## 治理確認
+
+{
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_ready": false,
+  "real_bet_allowed": false,
+  "recommendation_allowed": false,
+  "product_surface_allowed": false,
+  "odds_used": false,
+  "ev_computed": false,
+  "clv_computed": false,
+  "kelly_computed": false,
+  "stake_sizing": false,
+  "taiwan_lottery_recommendation": false,
+  "champion_replacement": false,
+  "production_mutation": false,
+  "calibration_refit": false,
+  "live_api_calls": 0,
+  "paid_api_calls": 0,
+  "canonical_rows_modified": false,
+  "outcome_rows_modified": false,
+  "p83e_mapping_modified": false
+}
+
+## 產出檔案
+- data/mlb_2026/derived/p109_outcome_only_tracking_drift_snapshot_summary.json
+- report/p109_outcome_only_tracking_drift_snapshot_20260531.md

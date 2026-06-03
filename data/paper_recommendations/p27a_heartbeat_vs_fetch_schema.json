@@ -1,0 +1,147 @@
+{
+  "task_id": "P27A",
+  "artifact_type": "paper_schema_design",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "read_only": true,
+  "production_proposal": false,
+  "created_at": "2026-05-23T06:00:00Z",
+  "parent_task": "P26K",
+  "title": "Heartbeat-vs-Fetch Disambiguation Schema — Paper Design",
+  "problem_statement": {
+    "current_ambiguity": "The daemon heartbeat record uses status='captured' to indicate that a heartbeat record was written to disk. This is semantically different from 'closing odds were actually fetched and saved'. The field name causes confusion in post-hoc analysis.",
+    "p26k_examples": [
+      {
+        "field": "status",
+        "current_value": "captured",
+        "actual_meaning": "heartbeat record written to disk",
+        "confused_with": "closing odds data was captured"
+      },
+      {
+        "field": "fetched",
+        "current_value": false,
+        "actual_meaning": "OddsAPI external closing call did not succeed (quota blocked)",
+        "confused_with": "TSL fetch was not attempted"
+      },
+      {
+        "field": "api_calls_today",
+        "current_value": 2,
+        "actual_scope": "OddsAPI MLB external closing only",
+        "confused_with": "total calls across all sources (TSL + OddsAPI)"
+      }
+    ],
+    "investigation_cost": "P26K required multiple diagnostic phases to distinguish TSL source absence from OddsAPI quota blockage. A clear schema would have reduced this to one lookup."
+  },
+  "current_heartbeat_schema": {
+    "note": "Reconstructed from P26K forensics of daemon_heartbeat.jsonl. Field names approximate.",
+    "fields": {
+      "timestamp": "ISO 8601 UTC",
+      "cycle_id": "integer",
+      "status": "'captured' — actually means heartbeat written, NOT odds fetched",
+      "fetched": "boolean — scope: OddsAPI external closing only",
+      "api_calls_today": "integer — scope: OddsAPI external closing only",
+      "trigger_reason": "string — free-form, describes why OddsAPI was/wasn't called",
+      "next_trigger_minutes": "float or null — parsed from trigger_reason via regex"
+    }
+  },
+  "proposed_schema": {
+    "description": "Extended heartbeat schema with unambiguous field semantics. Backward-compatible additions only — no existing field renames.",
+    "fields": {
+      "heartbeat_written": {
+        "type": "boolean",
+        "replaces_semantics_of": "status='captured'",
+        "description": "True if this heartbeat record was successfully written to disk. Always true when the record exists.",
+        "example": true
+      },
+      "tsl_fetch_attempted": {
+        "type": "boolean",
+        "description": "True if TSL pre-game list was polled this cycle.",
+        "example": true
+      },
+      "tsl_response_received": {
+        "type": "boolean",
+        "description": "True if TSL returned a non-empty HTTP response.",
+        "example": true
+      },
+      "tsl_target_games_found": {
+        "type": "integer",
+        "description": "Number of target match_ids found in TSL response this cycle. 0 = source empty for targets.",
+        "example": 0
+      },
+      "tsl_source_empty_for_targets": {
+        "type": "boolean",
+        "description": "True if TSL responded successfully but none of the expected target match_ids were in the response.",
+        "example": true,
+        "p26k_note": "Would have been true for all cycles from 03:39Z onward on 2026-05-21"
+      },
+      "external_fetch_attempted": {
+        "type": "boolean",
+        "description": "True if OddsAPI external closing was attempted this cycle.",
+        "example": false
+      },
+      "external_fetch_blocked_by_quota": {
+        "type": "boolean",
+        "description": "True if OddsAPI call was skipped due to daily quota cap being reached.",
+        "example": true
+      },
+      "external_fetch_success": {
+        "type": "boolean",
+        "description": "True if OddsAPI returned valid closing data.",
+        "example": false
+      },
+      "external_api_calls_today": {
+        "type": "integer",
+        "description": "OddsAPI calls consumed today (scope: OddsAPI only, not TSL).",
+        "note": "Rename of api_calls_today with explicit scope in field name",
+        "example": 2
+      },
+      "closing_odds_captured": {
+        "type": "boolean",
+        "description": "True only if closing odds data was actually saved for at least one target game. This is the true semantic intent of the old status='captured'.",
+        "example": false
+      },
+      "source_availability_flags": {
+        "type": "dict",
+        "description": "Per-source availability summary for this cycle",
+        "example": {
+          "TSL": "AVAILABLE_BUT_EMPTY",
+          "ODDSAPI": "BLOCKED_BY_QUOTA"
+        }
+      }
+    }
+  },
+  "p26k_retroactive_schema": {
+    "description": "How a closing-window cycle heartbeat would look under the proposed schema",
+    "example_cycle_07_10_utc": {
+      "timestamp": "2026-05-21T07:10:00Z",
+      "heartbeat_written": true,
+      "tsl_fetch_attempted": true,
+      "tsl_response_received": true,
+      "tsl_target_games_found": 0,
+      "tsl_source_empty_for_targets": true,
+      "external_fetch_attempted": false,
+      "external_fetch_blocked_by_quota": true,
+      "external_fetch_success": false,
+      "external_api_calls_today": 2,
+      "closing_odds_captured": false,
+      "source_availability_flags": {
+        "TSL": "AVAILABLE_BUT_EMPTY",
+        "ODDSAPI_MLB": "BLOCKED_BY_QUOTA"
+      }
+    },
+    "diagnostic_value": "With this schema, P26K root cause would be immediately readable from a single heartbeat record. No multi-phase investigation needed."
+  },
+  "implementation_note": {
+    "strategy": "Additive only — new fields added to heartbeat record. No existing field removed or renamed. Old consumers reading status/fetched/api_calls_today continue to work.",
+    "migration": "None required. New fields default to null/false for historical records.",
+    "code_change_required_in": [
+      "daemon heartbeat writer (approximate location: orchestrator/daemon_loop or equivalent)",
+      "tsl_snapshot.py (to return tsl_target_games_found count)",
+      "daily_closing_capture.py (to return external_fetch_blocked_by_quota)"
+    ],
+    "paper_only": true,
+    "status": "NOT_IMPLEMENTED — paper design only. No code has been modified."
+  },
+  "design_status": "PAPER_COMPLETE",
+  "implementation_status": "NOT_IMPLEMENTED — paper design only"
+}

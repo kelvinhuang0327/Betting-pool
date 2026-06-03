@@ -2,7 +2,7 @@
   "history": [
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-06T06:01:07.983185+00:00",
+      "run_at_utc": "2026-05-23T09:08:37.981351+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -10,13 +10,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 30,
+      "consecutive_no_improvement": 50,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=30 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=50 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-06T06:01:07.984092+00:00",
+      "run_at_utc": "2026-05-23T09:08:37.984779+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -24,13 +24,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 30,
+      "consecutive_no_improvement": 50,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=30 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=50 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-06T07:22:33.769714+00:00",
+      "run_at_utc": "2026-05-23T09:13:33.708814+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -38,13 +38,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 31,
+      "consecutive_no_improvement": 51,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=31 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=51 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-06T07:22:33.771531+00:00",
+      "run_at_utc": "2026-05-23T09:13:33.715332+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -52,13 +52,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 31,
+      "consecutive_no_improvement": 51,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=31 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=51 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-06T07:22:33.773346+00:00",
+      "run_at_utc": "2026-05-23T09:13:33.721323+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -66,13 +66,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 31,
+      "consecutive_no_improvement": 51,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=31 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=51 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-06T07:22:33.774773+00:00",
+      "run_at_utc": "2026-05-23T09:13:33.726654+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -80,13 +80,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 32,
+      "consecutive_no_improvement": 52,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=32 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=52 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-06T07:22:33.775426+00:00",
+      "run_at_utc": "2026-05-23T09:13:33.731128+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -94,13 +94,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 32,
+      "consecutive_no_improvement": 52,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=32 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=52 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-06T07:22:33.776177+00:00",
+      "run_at_utc": "2026-05-23T09:13:33.734374+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -108,13 +108,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 32,
+      "consecutive_no_improvement": 52,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=32 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=52 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-06T09:51:15.176923+00:00",
+      "run_at_utc": "2026-05-23T09:31:24.023610+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -122,13 +122,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 33,
+      "consecutive_no_improvement": 53,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=33 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=53 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-06T09:51:15.178771+00:00",
+      "run_at_utc": "2026-05-23T09:31:24.031136+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -136,13 +136,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 33,
+      "consecutive_no_improvement": 53,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=33 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=53 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-06T09:51:15.180285+00:00",
+      "run_at_utc": "2026-05-23T09:31:24.044575+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -150,13 +150,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 33,
+      "consecutive_no_improvement": 53,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=33 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=53 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-06T09:51:15.181557+00:00",
+      "run_at_utc": "2026-05-23T09:31:24.049960+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -164,13 +164,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 34,
+      "consecutive_no_improvement": 54,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=34 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=54 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-06T09:51:15.183248+00:00",
+      "run_at_utc": "2026-05-23T09:31:24.053513+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -178,13 +178,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 34,
+      "consecutive_no_improvement": 54,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=34 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=54 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-06T09:51:15.184077+00:00",
+      "run_at_utc": "2026-05-23T09:31:24.056727+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -192,13 +192,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 34,
+      "consecutive_no_improvement": 54,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=34 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=54 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-11T04:24:12.349770+00:00",
+      "run_at_utc": "2026-05-23T09:35:55.317991+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -206,13 +206,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 35,
+      "consecutive_no_improvement": 55,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=35 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=55 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-11T04:24:12.351341+00:00",
+      "run_at_utc": "2026-05-23T09:35:55.337248+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -220,13 +220,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 35,
+      "consecutive_no_improvement": 55,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=35 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=55 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-11T04:24:12.352565+00:00",
+      "run_at_utc": "2026-05-23T09:35:55.345875+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -234,13 +234,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 35,
+      "consecutive_no_improvement": 55,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=35 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=55 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-11T04:24:12.354850+00:00",
+      "run_at_utc": "2026-05-23T09:35:55.352087+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -248,13 +248,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 36,
+      "consecutive_no_improvement": 56,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=36 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=56 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-11T04:24:12.355451+00:00",
+      "run_at_utc": "2026-05-23T09:35:55.357775+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -262,13 +262,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 36,
+      "consecutive_no_improvement": 56,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=36 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=56 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-11T04:24:12.356144+00:00",
+      "run_at_utc": "2026-05-23T09:35:55.360984+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -276,13 +276,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 36,
+      "consecutive_no_improvement": 56,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=36 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=56 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-11T05:37:32.173584+00:00",
+      "run_at_utc": "2026-05-23T09:40:47.449791+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -290,13 +290,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 37,
+      "consecutive_no_improvement": 57,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=37 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=57 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-11T05:37:32.177300+00:00",
+      "run_at_utc": "2026-05-23T09:40:47.459795+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -304,13 +304,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 37,
+      "consecutive_no_improvement": 57,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=37 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=57 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-11T05:37:32.178706+00:00",
+      "run_at_utc": "2026-05-23T09:40:47.467960+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -318,13 +318,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 37,
+      "consecutive_no_improvement": 57,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=37 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=57 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-11T05:37:32.180149+00:00",
+      "run_at_utc": "2026-05-23T09:40:47.474847+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -332,13 +332,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 38,
+      "consecutive_no_improvement": 58,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=38 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=58 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-11T05:37:32.180792+00:00",
+      "run_at_utc": "2026-05-23T09:40:47.481173+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -346,13 +346,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 38,
+      "consecutive_no_improvement": 58,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=38 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=58 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-11T05:37:32.181343+00:00",
+      "run_at_utc": "2026-05-23T09:40:47.486320+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -360,13 +360,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 38,
+      "consecutive_no_improvement": 58,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=38 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=58 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-11T05:40:54.090744+00:00",
+      "run_at_utc": "2026-05-23T09:44:06.036497+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -374,13 +374,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 39,
+      "consecutive_no_improvement": 59,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=39 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=59 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-11T05:40:54.092147+00:00",
+      "run_at_utc": "2026-05-23T09:44:06.044295+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -388,13 +388,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 39,
+      "consecutive_no_improvement": 59,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=39 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=59 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-11T05:40:54.093562+00:00",
+      "run_at_utc": "2026-05-23T09:44:06.056396+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -402,13 +402,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 39,
+      "consecutive_no_improvement": 59,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=39 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=59 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-11T05:40:54.095322+00:00",
+      "run_at_utc": "2026-05-23T09:44:06.061485+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -416,13 +416,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 40,
+      "consecutive_no_improvement": 60,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=40 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=60 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-11T05:40:54.095947+00:00",
+      "run_at_utc": "2026-05-23T09:44:06.065904+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -430,13 +430,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 40,
+      "consecutive_no_improvement": 60,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=40 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=60 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-11T05:40:54.097337+00:00",
+      "run_at_utc": "2026-05-23T09:44:06.068823+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -444,13 +444,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 40,
+      "consecutive_no_improvement": 60,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=40 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=60 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-19T15:45:04.590497+00:00",
+      "run_at_utc": "2026-05-23T09:54:18.112264+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -458,13 +458,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 41,
+      "consecutive_no_improvement": 61,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=41 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=61 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-19T15:45:04.596004+00:00",
+      "run_at_utc": "2026-05-23T09:54:18.118413+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -472,13 +472,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 41,
+      "consecutive_no_improvement": 61,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=41 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=61 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-19T15:45:04.602235+00:00",
+      "run_at_utc": "2026-05-23T09:54:18.123966+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -486,13 +486,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 41,
+      "consecutive_no_improvement": 61,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=41 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=61 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-19T15:45:04.608822+00:00",
+      "run_at_utc": "2026-05-23T09:54:18.129579+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -500,13 +500,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 42,
+      "consecutive_no_improvement": 62,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=42 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=62 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-19T15:45:04.613576+00:00",
+      "run_at_utc": "2026-05-23T09:54:18.134016+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -514,13 +514,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 42,
+      "consecutive_no_improvement": 62,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=42 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=62 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-19T15:45:04.617172+00:00",
+      "run_at_utc": "2026-05-23T09:54:18.137120+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -528,13 +528,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 42,
+      "consecutive_no_improvement": 62,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=42 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=62 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-20T03:33:37.671274+00:00",
+      "run_at_utc": "2026-05-23T13:15:47.076929+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -542,13 +542,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 43,
+      "consecutive_no_improvement": 63,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=43 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=63 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-20T03:33:37.676898+00:00",
+      "run_at_utc": "2026-05-23T13:15:47.084158+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -556,13 +556,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 43,
+      "consecutive_no_improvement": 63,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=43 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=63 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-20T03:33:37.681443+00:00",
+      "run_at_utc": "2026-05-23T13:15:47.092583+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -570,13 +570,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 43,
+      "consecutive_no_improvement": 63,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=43 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=63 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-20T03:33:37.689601+00:00",
+      "run_at_utc": "2026-05-23T13:15:47.100105+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -584,13 +584,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 44,
+      "consecutive_no_improvement": 64,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=44 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=64 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-20T03:33:37.693140+00:00",
+      "run_at_utc": "2026-05-23T13:15:47.104729+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -598,13 +598,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 44,
+      "consecutive_no_improvement": 64,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=44 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=64 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-20T03:33:37.699558+00:00",
+      "run_at_utc": "2026-05-23T13:15:47.109560+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -612,13 +612,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 44,
+      "consecutive_no_improvement": 64,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=44 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=64 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-20T09:51:17.512612+00:00",
+      "run_at_utc": "2026-05-23T13:17:30.177405+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -626,13 +626,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 45,
+      "consecutive_no_improvement": 65,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=45 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=65 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-20T09:51:17.520196+00:00",
+      "run_at_utc": "2026-05-23T13:17:30.191638+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -640,13 +640,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 45,
+      "consecutive_no_improvement": 65,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=45 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=65 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-20T09:51:17.528530+00:00",
+      "run_at_utc": "2026-05-23T13:17:30.202355+00:00",
       "pending_before": 0,
       "pending_after": 0,
       "computed_before": 5,
@@ -654,13 +654,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 45,
+      "consecutive_no_improvement": 65,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=45 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=65 >= threshold=2"
     },
     {
       "action_type": "closing_availability_audit",
-      "run_at_utc": "2026-05-20T09:51:17.536297+00:00",
+      "run_at_utc": "2026-05-23T13:17:30.210278+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -668,13 +668,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 46,
+      "consecutive_no_improvement": 66,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=46 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=66 >= threshold=3"
     },
     {
       "action_type": "refresh_tsl_closing",
-      "run_at_utc": "2026-05-20T09:51:17.541096+00:00",
+      "run_at_utc": "2026-05-23T13:17:30.217702+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -682,13 +682,13 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 46,
+      "consecutive_no_improvement": 66,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=46 >= threshold=3"
+      "failure_reason": "consecutive_no_improvement=66 >= threshold=3"
     },
     {
       "action_type": "refresh_external_closing",
-      "run_at_utc": "2026-05-20T09:51:17.547482+00:00",
+      "run_at_utc": "2026-05-23T13:17:30.226769+00:00",
       "pending_before": 3,
       "pending_after": 3,
       "computed_before": 5,
@@ -696,30 +696,30 @@
       "missing_before": 0,
       "missing_after": 0,
       "improved": false,
-      "consecutive_no_improvement": 46,
+      "consecutive_no_improvement": 66,
       "escalation_recommended": true,
-      "failure_reason": "consecutive_no_improvement=46 >= threshold=2"
+      "failure_reason": "consecutive_no_improvement=66 >= threshold=2"
     }
   ],
   "per_action": {
     "closing_availability_audit": {
-      "consecutive_no_improvement": 46,
+      "consecutive_no_improvement": 66,
       "escalation_recommended": true,
-      "last_run_at_utc": "2026-05-20T09:51:17.536297+00:00",
+      "last_run_at_utc": "2026-05-23T13:17:30.210278+00:00",
       "last_improved": false,
       "first_no_improvement_at": "2026-04-30T15:41:18.561698+00:00"
     },
     "refresh_tsl_closing": {
-      "consecutive_no_improvement": 46,
+      "consecutive_no_improvement": 66,
       "escalation_recommended": true,
-      "last_run_at_utc": "2026-05-20T09:51:17.541096+00:00",
+      "last_run_at_utc": "2026-05-23T13:17:30.217702+00:00",
       "last_improved": false,
       "first_no_improvement_at": "2026-04-30T15:41:18.565272+00:00"
     },
     "refresh_external_closing": {
-      "consecutive_no_improvement": 46,
+      "consecutive_no_improvement": 66,
       "escalation_recommended": true,
-      "last_run_at_utc": "2026-05-20T09:51:17.547482+00:00",
+      "last_run_at_utc": "2026-05-23T13:17:30.226769+00:00",
       "last_improved": false,
       "first_no_improvement_at": "2026-04-30T15:41:18.566713+00:00"
     }

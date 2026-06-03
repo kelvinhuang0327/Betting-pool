@@ -1,0 +1,99 @@
+{
+  "artifact_id": "p26e_coverage_recheck_20260521",
+  "phase": "P26E",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26E_COVERAGE_STILL_BELOW_BOOTSTRAP_THRESHOLD",
+
+  "source_trace": {
+    "history_file": "data/tsl_odds_history.jsonl",
+    "capture_schedule": "data/mlb_context/odds_capture_schedule.json",
+    "dedup_state": "data/.live_cache/tsl_dedup_state.json"
+  },
+
+  "p26b_commit": "107535d",
+  "p26d_restart_record": {
+    "old_pid": 1381, "new_pid": 67442,
+    "restart_utc": "2026-05-20T13:51:00Z"
+  },
+
+  "daemon_pid": 1715,
+  "daemon_status": "RUNNING",
+  "daemon_latest_heartbeat": "2026-05-21T01:06:52Z",
+
+  "audit_entries": {
+    "total_post_restart_captures": 8,
+    "captures_with_nonempty_audit": 3,
+    "audit_confirmed": true,
+    "example_entries": [
+      {"capture_ts": "2026-05-20T15:10:50Z", "closing": true, "audit_count": 2,
+       "games": ["3469710.1 (17:05 UTC, delta=114.2min)", "3469714.1 (17:10 UTC, delta=119.2min)"]},
+      {"capture_ts": "2026-05-21T01:06:45Z", "closing": true, "audit_count": 5,
+       "games": ["3469775.1 (-86.8min)", "3469776.1 (-86.8min)", "3469777.1 (-81.8min)"]},
+      {"capture_ts": "2026-05-21T01:21:52Z", "closing": true, "pregame": true, "audit_count": 5}
+    ]
+  },
+
+  "coverage_before": {
+    "complete_pair": 220, "pregame_only": 577,
+    "closing_only": 74, "no_valid_snapshots": 16, "total_matches": 887
+  },
+
+  "coverage_after": {
+    "complete_pair": 220, "pregame_only": 577,
+    "closing_only": 74, "no_valid_snapshots": 16, "total_matches": 887,
+    "new_rows_since_p26d_restart": 23, "new_closing_snapshots": 0
+  },
+
+  "delta_complete_pairs": 0,
+  "p25c_bootstrap_threshold": 300,
+  "whether_bootstrap_ran": false,
+
+  "root_cause_analysis": {
+    "blocker_1": {
+      "name": "DAEMON_INTERVAL_TOO_COARSE",
+      "description": "15-min interval achieves closest gap of 2.15h, just outside the ±2h threshold. A 5-min interval would reliably catch games within 2h.",
+      "evidence": "3469710.1 closest gap=2.15h (at 14:55 UTC), threshold=2.00h",
+      "near_miss_count": 69
+    },
+    "blocker_2": {
+      "name": "TSL_DEDUP_FILTER_BLOCKS_CLOSING_SNAPSHOTS",
+      "description": "data/tsl_snapshot.py append_tsl_history() skips rows when MNL odds are unchanged (dedup by MNL odds key). When odds are stable in the ±2h closing window, NO snapshot is written — even though the closing=True trigger fired.",
+      "evidence": "3469710.1 had trigger at 15:10 UTC (gap=1.92h=inside 2h) but NO snapshot saved (odds unchanged from 14:55 UTC)",
+      "dedup_state_entries": 829,
+      "fix": "Force-write snapshots when determine_capture_windows() returns closing=True, bypassing dedup OR storing a closing-flag timestamp separately"
+    }
+  },
+
+  "near_miss_analysis": {
+    "pregame_only_with_min_gap_le_3h": 69,
+    "description": "69 games had closest snapshots within 3h of game_time — would become COMPLETE_PAIR if dedup was bypassed for closing captures",
+    "immediate_fix_potential": "If dedup bypassed: ~69 additional COMPLETE_PAIR (220 + 69 = 289, still below 300)"
+  },
+
+  "proposed_fixes": [
+    {
+      "priority": 1,
+      "name": "FORCE_SAVE_CLOSING_SNAPSHOT",
+      "file": "data/tsl_snapshot.py or wbc_backend/mlb_data/live_odds_collector.py",
+      "description": "When determine_capture_windows() returns closing=True, bypass MNL dedup and force-write a closing snapshot to tsl_odds_history.jsonl with a 'closing_forced=true' flag",
+      "expected_lift": "~69 additional COMPLETE_PAIR immediately (historical backfill impossible, but future games fixed)",
+      "authorization_required": false,
+      "note": "Code change — implementation in next task"
+    },
+    {
+      "priority": 2,
+      "name": "REDUCE_DAEMON_INTERVAL",
+      "file": "scripts/manage_daemon.sh or launchd plist",
+      "description": "Reduce daemon interval from 15min to 5min to ensure at least one snapshot is captured within ±2h of each game_time",
+      "expected_lift": "Combined with fix 1: near-certain coverage for all future games",
+      "authorization_required": true,
+      "authorization_sentence": "YES: 授權將 daemon interval 從 15min 改為 5min"
+    }
+  ]
+}

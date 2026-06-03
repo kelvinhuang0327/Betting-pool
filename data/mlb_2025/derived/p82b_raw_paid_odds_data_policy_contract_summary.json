@@ -1,0 +1,1176 @@
+{
+  "p82b_classification": "P82B_RAW_PAID_DATA_POLICY_READY",
+  "schema_version": "p82b-v1",
+  "snapshot_id": "raw_paid_odds_data_policy_contract_20260526",
+  "generated_at_utc": "2026-05-26T10:24:39.630345+00:00",
+  "governance_snapshot": {
+    "paper_only": true,
+    "live_api_calls": 0,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "promotion_freeze": true,
+    "tsl_crawler_modified": false,
+    "runtime_recommendation_modified": false,
+    "the_odds_api_key_required": false,
+    "the_odds_api_key_accessed": false,
+    "uses_historical_odds": false,
+    "odds_used": false,
+    "diagnostic_only": true,
+    "real_odds_dataset_present": false,
+    "p82_unlocked": false,
+    "p82b_storage_policy_defined": true
+  },
+  "step1_p82a_verification": {
+    "status": "PASS",
+    "p82a_classification": "P82A_REAL_LEGAL_ODDS_INTAKE_GATE_READY",
+    "p82_unlock_status": "BLOCKED_NO_REAL_DATASET",
+    "p82_unlocked": false,
+    "live_api_calls": 0,
+    "raw_data_policy_field_present": true,
+    "contains_api_key_must_be_false": true,
+    "manifest_field_count": 23,
+    "allowed_raw_data_policies_in_p82a": [
+      "COMMIT_ALLOWED",
+      "LOCAL_ONLY_HASH_COMMITTED",
+      "DERIVED_ONLY_COMMIT"
+    ],
+    "total_blockers": 12,
+    "only_real_legal_dataset_unlocks": true,
+    "p82a_script_exists": true,
+    "checks": {
+      "classification_correct": true,
+      "p82_unlock_status_blocked": true,
+      "p82_unlocked_false": true,
+      "live_api_calls_zero": true,
+      "raw_data_policy_field_present": true,
+      "contains_api_key_must_be_false": true,
+      "forbidden_scan_passed": true,
+      "production_ready_false": true,
+      "intake_gate_defined": true
+    }
+  },
+  "step2_artifact_classes": {
+    "class_count": 9,
+    "class_ids": [
+      "RAW_PAID_ODDS_DATA",
+      "RAW_FREE_LEGAL_ODDS_DATA",
+      "VALIDATION_MANIFEST",
+      "CHECKSUM_ONLY_RECORD",
+      "DERIVED_VALIDATION_SUMMARY",
+      "DERIVED_MARKET_EDGE_SUMMARY",
+      "LOCAL_REPRODUCIBILITY_NOTE",
+      "SECRET_OR_API_KEY",
+      "MOCK_FIXTURE"
+    ],
+    "classes": [
+      {
+        "class_id": "RAW_PAID_ODDS_DATA",
+        "description": "Original paid CSV/JSON/API export from a licensed data provider",
+        "examples": [
+          "odds_2025_raw.csv",
+          "paid_feed_export.json"
+        ],
+        "default_policy": "LOCAL_ONLY_DO_NOT_COMMIT",
+        "can_commit": false,
+        "can_stage": false,
+        "storage_location": "local_external_only \u2014 not inside repo directory",
+        "allowed_file_patterns": [
+          "*_raw_*.csv",
+          "*_raw_*.json"
+        ],
+        "forbidden_file_patterns": [
+          "data/**/*_raw_*.csv",
+          "data/**/*_raw_*.json"
+        ],
+        "required_metadata": [
+          "checksum_hash",
+          "row_count",
+          "source_name",
+          "acquisition_date"
+        ],
+        "required_redactions": [
+          "api_key_value",
+          "personal_data",
+          "proprietary_row_values"
+        ],
+        "review_gate": "COMMIT_ONLY_CHECKSUM_AND_DERIVED_SUMMARY",
+        "stop_condition": "STOP if raw paid odds rows appear in any staged file",
+        "allowed_downstream_use": [
+          "P81 validator local only",
+          "P82 dry-run local only"
+        ]
+      },
+      {
+        "class_id": "RAW_FREE_LEGAL_ODDS_DATA",
+        "description": "Legally redistributable raw odds data (open license or explicit permission)",
+        "examples": [
+          "free_odds_feed_2025.csv",
+          "open_odds_export.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED_ONLY_IF_LICENSE_ALLOWS",
+        "can_commit": null,
+        "can_stage": null,
+        "storage_location": "data/mlb_2025/derived/ (if license confirmed) or local",
+        "allowed_file_patterns": [
+          "*_free_odds_*.csv",
+          "*_open_odds_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "license_type",
+          "license_url",
+          "source_name",
+          "checksum_hash"
+        ],
+        "required_redactions": [],
+        "review_gate": "LICENSE_EVIDENCE_MUST_BE_DOCUMENTED_BEFORE_COMMIT",
+        "stop_condition": "STOP if license evidence is missing or unverified before staging",
+        "allowed_downstream_use": [
+          "P81 validator",
+          "P82 dry-run",
+          "backtest"
+        ]
+      },
+      {
+        "class_id": "VALIDATION_MANIFEST",
+        "description": "Metadata manifest only; no raw data rows; no proprietary values",
+        "examples": [
+          "intake_manifest_2025.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_manifest_*.json",
+          "*_intake_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "manifest_id",
+          "checksum_hash",
+          "row_count",
+          "schema_version"
+        ],
+        "required_redactions": [
+          "api_key_value",
+          "raw_data_rows"
+        ],
+        "review_gate": "REVIEW_NO_API_KEY_NO_RAW_ROWS_BEFORE_COMMIT",
+        "stop_condition": "STOP if contains_api_key flag is True or raw data rows are present",
+        "allowed_downstream_use": [
+          "P82A gate",
+          "P81 validator",
+          "P82 dry-run"
+        ]
+      },
+      {
+        "class_id": "CHECKSUM_ONLY_RECORD",
+        "description": "Hash, row count, and schema version only; no data rows",
+        "examples": [
+          "p82_odds_checksum_2025.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_checksum_*.json",
+          "*_hash_record_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "checksum_hash",
+          "row_count",
+          "schema_version",
+          "dataset_alias"
+        ],
+        "required_redactions": [],
+        "review_gate": "CONFIRM_NO_ROW_LEVEL_ODDS_VALUES_BEFORE_COMMIT",
+        "stop_condition": "STOP if any raw odds row value appears in the committed file",
+        "allowed_downstream_use": [
+          "integrity check",
+          "lineage audit"
+        ]
+      },
+      {
+        "class_id": "DERIVED_VALIDATION_SUMMARY",
+        "description": "Pass/fail validation summary with counts and schema stats; no raw proprietary rows",
+        "examples": [
+          "p81_legal_odds_validator_summary.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_summary.json",
+          "*_validation_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "validation_status",
+          "row_count",
+          "schema_version",
+          "gates_passed"
+        ],
+        "required_redactions": [
+          "raw_odds_rows",
+          "proprietary_values"
+        ],
+        "review_gate": "CONFIRM_AGGREGATE_COUNTS_ONLY_NO_ROW_LEVEL",
+        "stop_condition": "STOP if row-level paid odds values appear in the summary file",
+        "allowed_downstream_use": [
+          "P82 gate check",
+          "pipeline audit"
+        ]
+      },
+      {
+        "class_id": "DERIVED_MARKET_EDGE_SUMMARY",
+        "description": "Future P82 aggregate edge diagnostics only; no row-level paid odds leakage",
+        "examples": [
+          "p82_market_edge_dry_run_summary.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED_AGGREGATE_ONLY",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_edge_dry_run_*.json",
+          "*_market_edge_summary_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "model_version",
+          "dataset_alias",
+          "aggregate_edge_stats"
+        ],
+        "required_redactions": [
+          "raw_odds_rows",
+          "row_level_moneylines"
+        ],
+        "review_gate": "CONFIRM_AGGREGATE_STATS_ONLY_NO_ROW_LEVEL_PAID_ODDS",
+        "stop_condition": "STOP if row-level paid odds appear in any committed file",
+        "allowed_downstream_use": [
+          "P82 diagnostic audit",
+          "model comparison"
+        ]
+      },
+      {
+        "class_id": "LOCAL_REPRODUCIBILITY_NOTE",
+        "description": "Path placeholders and run commands; no secrets; reproducibility instructions only",
+        "examples": [
+          "p82_local_run_notes.md",
+          "p82_reproducibility_guide.md"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "docs/ or report/",
+        "allowed_file_patterns": [
+          "*_local_run_*.md",
+          "*_reproducibility_*.md"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [],
+        "required_redactions": [
+          "api_key_value",
+          "secret_value",
+          "paid_data_local_path"
+        ],
+        "review_gate": "CONFIRM_NO_SECRETS_NO_RAW_DATA_PATH_BEFORE_COMMIT",
+        "stop_condition": "STOP if API key value or secret appears in any committed file",
+        "allowed_downstream_use": [
+          "onboarding",
+          "audit trail"
+        ]
+      },
+      {
+        "class_id": "SECRET_OR_API_KEY",
+        "description": "API key, database password, or any secret value \u2014 never committed",
+        "examples": [
+          ".env",
+          "secrets.json",
+          "credentials.json"
+        ],
+        "default_policy": "HARD_FORBIDDEN",
+        "can_commit": false,
+        "can_stage": false,
+        "storage_location": "NEVER \u2014 must not exist anywhere in git history",
+        "allowed_file_patterns": [],
+        "forbidden_file_patterns": [
+          ".env",
+          ".env.*",
+          "*secret*",
+          "*credential*",
+          "*.pem",
+          "*.key"
+        ],
+        "required_metadata": [],
+        "required_redactions": [
+          "ALL_CONTENT"
+        ],
+        "review_gate": "HARD_BLOCK_NO_OVERRIDE_ALLOWED",
+        "stop_condition": "STOP immediately \u2014 rotate key, purge file, do not commit under any circumstance",
+        "allowed_downstream_use": []
+      },
+      {
+        "class_id": "MOCK_FIXTURE",
+        "description": "Mock or fixture odds data; explicitly labeled as mock; not valid market evidence",
+        "examples": [
+          "fixture_odds_2025.json",
+          "mock_odds_test.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED_IF_EXPLICITLY_LABELED_MOCK",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/fixtures/ or tests/fixtures/",
+        "allowed_file_patterns": [
+          "*fixture*",
+          "*mock*"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "mock_flag",
+          "dataset_type"
+        ],
+        "required_redactions": [],
+        "review_gate": "CONFIRM_LABELED_MOCK_NOT_TREATED_AS_REAL_MARKET_EVIDENCE",
+        "stop_condition": "STOP if mock data is treated as real market evidence in any pipeline step",
+        "allowed_downstream_use": [
+          "unit tests",
+          "contract validation dry-run only"
+        ]
+      }
+    ],
+    "classes_by_id": {
+      "RAW_PAID_ODDS_DATA": {
+        "class_id": "RAW_PAID_ODDS_DATA",
+        "description": "Original paid CSV/JSON/API export from a licensed data provider",
+        "examples": [
+          "odds_2025_raw.csv",
+          "paid_feed_export.json"
+        ],
+        "default_policy": "LOCAL_ONLY_DO_NOT_COMMIT",
+        "can_commit": false,
+        "can_stage": false,
+        "storage_location": "local_external_only \u2014 not inside repo directory",
+        "allowed_file_patterns": [
+          "*_raw_*.csv",
+          "*_raw_*.json"
+        ],
+        "forbidden_file_patterns": [
+          "data/**/*_raw_*.csv",
+          "data/**/*_raw_*.json"
+        ],
+        "required_metadata": [
+          "checksum_hash",
+          "row_count",
+          "source_name",
+          "acquisition_date"
+        ],
+        "required_redactions": [
+          "api_key_value",
+          "personal_data",
+          "proprietary_row_values"
+        ],
+        "review_gate": "COMMIT_ONLY_CHECKSUM_AND_DERIVED_SUMMARY",
+        "stop_condition": "STOP if raw paid odds rows appear in any staged file",
+        "allowed_downstream_use": [
+          "P81 validator local only",
+          "P82 dry-run local only"
+        ]
+      },
+      "RAW_FREE_LEGAL_ODDS_DATA": {
+        "class_id": "RAW_FREE_LEGAL_ODDS_DATA",
+        "description": "Legally redistributable raw odds data (open license or explicit permission)",
+        "examples": [
+          "free_odds_feed_2025.csv",
+          "open_odds_export.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED_ONLY_IF_LICENSE_ALLOWS",
+        "can_commit": null,
+        "can_stage": null,
+        "storage_location": "data/mlb_2025/derived/ (if license confirmed) or local",
+        "allowed_file_patterns": [
+          "*_free_odds_*.csv",
+          "*_open_odds_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "license_type",
+          "license_url",
+          "source_name",
+          "checksum_hash"
+        ],
+        "required_redactions": [],
+        "review_gate": "LICENSE_EVIDENCE_MUST_BE_DOCUMENTED_BEFORE_COMMIT",
+        "stop_condition": "STOP if license evidence is missing or unverified before staging",
+        "allowed_downstream_use": [
+          "P81 validator",
+          "P82 dry-run",
+          "backtest"
+        ]
+      },
+      "VALIDATION_MANIFEST": {
+        "class_id": "VALIDATION_MANIFEST",
+        "description": "Metadata manifest only; no raw data rows; no proprietary values",
+        "examples": [
+          "intake_manifest_2025.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_manifest_*.json",
+          "*_intake_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "manifest_id",
+          "checksum_hash",
+          "row_count",
+          "schema_version"
+        ],
+        "required_redactions": [
+          "api_key_value",
+          "raw_data_rows"
+        ],
+        "review_gate": "REVIEW_NO_API_KEY_NO_RAW_ROWS_BEFORE_COMMIT",
+        "stop_condition": "STOP if contains_api_key flag is True or raw data rows are present",
+        "allowed_downstream_use": [
+          "P82A gate",
+          "P81 validator",
+          "P82 dry-run"
+        ]
+      },
+      "CHECKSUM_ONLY_RECORD": {
+        "class_id": "CHECKSUM_ONLY_RECORD",
+        "description": "Hash, row count, and schema version only; no data rows",
+        "examples": [
+          "p82_odds_checksum_2025.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_checksum_*.json",
+          "*_hash_record_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "checksum_hash",
+          "row_count",
+          "schema_version",
+          "dataset_alias"
+        ],
+        "required_redactions": [],
+        "review_gate": "CONFIRM_NO_ROW_LEVEL_ODDS_VALUES_BEFORE_COMMIT",
+        "stop_condition": "STOP if any raw odds row value appears in the committed file",
+        "allowed_downstream_use": [
+          "integrity check",
+          "lineage audit"
+        ]
+      },
+      "DERIVED_VALIDATION_SUMMARY": {
+        "class_id": "DERIVED_VALIDATION_SUMMARY",
+        "description": "Pass/fail validation summary with counts and schema stats; no raw proprietary rows",
+        "examples": [
+          "p81_legal_odds_validator_summary.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_summary.json",
+          "*_validation_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "validation_status",
+          "row_count",
+          "schema_version",
+          "gates_passed"
+        ],
+        "required_redactions": [
+          "raw_odds_rows",
+          "proprietary_values"
+        ],
+        "review_gate": "CONFIRM_AGGREGATE_COUNTS_ONLY_NO_ROW_LEVEL",
+        "stop_condition": "STOP if row-level paid odds values appear in the summary file",
+        "allowed_downstream_use": [
+          "P82 gate check",
+          "pipeline audit"
+        ]
+      },
+      "DERIVED_MARKET_EDGE_SUMMARY": {
+        "class_id": "DERIVED_MARKET_EDGE_SUMMARY",
+        "description": "Future P82 aggregate edge diagnostics only; no row-level paid odds leakage",
+        "examples": [
+          "p82_market_edge_dry_run_summary.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED_AGGREGATE_ONLY",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/mlb_2025/derived/",
+        "allowed_file_patterns": [
+          "*_edge_dry_run_*.json",
+          "*_market_edge_summary_*.json"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "model_version",
+          "dataset_alias",
+          "aggregate_edge_stats"
+        ],
+        "required_redactions": [
+          "raw_odds_rows",
+          "row_level_moneylines"
+        ],
+        "review_gate": "CONFIRM_AGGREGATE_STATS_ONLY_NO_ROW_LEVEL_PAID_ODDS",
+        "stop_condition": "STOP if row-level paid odds appear in any committed file",
+        "allowed_downstream_use": [
+          "P82 diagnostic audit",
+          "model comparison"
+        ]
+      },
+      "LOCAL_REPRODUCIBILITY_NOTE": {
+        "class_id": "LOCAL_REPRODUCIBILITY_NOTE",
+        "description": "Path placeholders and run commands; no secrets; reproducibility instructions only",
+        "examples": [
+          "p82_local_run_notes.md",
+          "p82_reproducibility_guide.md"
+        ],
+        "default_policy": "COMMIT_ALLOWED",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "docs/ or report/",
+        "allowed_file_patterns": [
+          "*_local_run_*.md",
+          "*_reproducibility_*.md"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [],
+        "required_redactions": [
+          "api_key_value",
+          "secret_value",
+          "paid_data_local_path"
+        ],
+        "review_gate": "CONFIRM_NO_SECRETS_NO_RAW_DATA_PATH_BEFORE_COMMIT",
+        "stop_condition": "STOP if API key value or secret appears in any committed file",
+        "allowed_downstream_use": [
+          "onboarding",
+          "audit trail"
+        ]
+      },
+      "SECRET_OR_API_KEY": {
+        "class_id": "SECRET_OR_API_KEY",
+        "description": "API key, database password, or any secret value \u2014 never committed",
+        "examples": [
+          ".env",
+          "secrets.json",
+          "credentials.json"
+        ],
+        "default_policy": "HARD_FORBIDDEN",
+        "can_commit": false,
+        "can_stage": false,
+        "storage_location": "NEVER \u2014 must not exist anywhere in git history",
+        "allowed_file_patterns": [],
+        "forbidden_file_patterns": [
+          ".env",
+          ".env.*",
+          "*secret*",
+          "*credential*",
+          "*.pem",
+          "*.key"
+        ],
+        "required_metadata": [],
+        "required_redactions": [
+          "ALL_CONTENT"
+        ],
+        "review_gate": "HARD_BLOCK_NO_OVERRIDE_ALLOWED",
+        "stop_condition": "STOP immediately \u2014 rotate key, purge file, do not commit under any circumstance",
+        "allowed_downstream_use": []
+      },
+      "MOCK_FIXTURE": {
+        "class_id": "MOCK_FIXTURE",
+        "description": "Mock or fixture odds data; explicitly labeled as mock; not valid market evidence",
+        "examples": [
+          "fixture_odds_2025.json",
+          "mock_odds_test.json"
+        ],
+        "default_policy": "COMMIT_ALLOWED_IF_EXPLICITLY_LABELED_MOCK",
+        "can_commit": true,
+        "can_stage": true,
+        "storage_location": "data/fixtures/ or tests/fixtures/",
+        "allowed_file_patterns": [
+          "*fixture*",
+          "*mock*"
+        ],
+        "forbidden_file_patterns": [],
+        "required_metadata": [
+          "mock_flag",
+          "dataset_type"
+        ],
+        "required_redactions": [],
+        "review_gate": "CONFIRM_LABELED_MOCK_NOT_TREATED_AS_REAL_MARKET_EVIDENCE",
+        "stop_condition": "STOP if mock data is treated as real market evidence in any pipeline step",
+        "allowed_downstream_use": [
+          "unit tests",
+          "contract validation dry-run only"
+        ]
+      }
+    },
+    "can_commit_true": [
+      "VALIDATION_MANIFEST",
+      "CHECKSUM_ONLY_RECORD",
+      "DERIVED_VALIDATION_SUMMARY",
+      "DERIVED_MARKET_EDGE_SUMMARY",
+      "LOCAL_REPRODUCIBILITY_NOTE",
+      "MOCK_FIXTURE"
+    ],
+    "can_commit_false": [
+      "RAW_PAID_ODDS_DATA",
+      "SECRET_OR_API_KEY"
+    ],
+    "can_commit_conditional": [
+      "RAW_FREE_LEGAL_ODDS_DATA"
+    ],
+    "hard_forbidden_classes": [
+      "SECRET_OR_API_KEY"
+    ],
+    "local_only_classes": [
+      "RAW_PAID_ODDS_DATA"
+    ]
+  },
+  "step3_commit_policy_matrix": {
+    "RAW_PAID_ODDS_DATA": {
+      "can_commit": false,
+      "can_stage": false,
+      "storage_location": "local_external_only \u2014 not inside repo directory",
+      "allowed_file_patterns": [
+        "*_raw_*.csv",
+        "*_raw_*.json"
+      ],
+      "forbidden_file_patterns": [
+        "data/**/*_raw_*.csv",
+        "data/**/*_raw_*.json"
+      ],
+      "required_metadata": [
+        "checksum_hash",
+        "row_count",
+        "source_name",
+        "acquisition_date"
+      ],
+      "required_redactions": [
+        "api_key_value",
+        "personal_data",
+        "proprietary_row_values"
+      ],
+      "review_gate": "COMMIT_ONLY_CHECKSUM_AND_DERIVED_SUMMARY",
+      "stop_condition": "STOP if raw paid odds rows appear in any staged file",
+      "allowed_downstream_use": [
+        "P81 validator local only",
+        "P82 dry-run local only"
+      ]
+    },
+    "RAW_FREE_LEGAL_ODDS_DATA": {
+      "can_commit": null,
+      "can_stage": null,
+      "storage_location": "data/mlb_2025/derived/ (if license confirmed) or local",
+      "allowed_file_patterns": [
+        "*_free_odds_*.csv",
+        "*_open_odds_*.json"
+      ],
+      "forbidden_file_patterns": [],
+      "required_metadata": [
+        "license_type",
+        "license_url",
+        "source_name",
+        "checksum_hash"
+      ],
+      "required_redactions": [],
+      "review_gate": "LICENSE_EVIDENCE_MUST_BE_DOCUMENTED_BEFORE_COMMIT",
+      "stop_condition": "STOP if license evidence is missing or unverified before staging",
+      "allowed_downstream_use": [
+        "P81 validator",
+        "P82 dry-run",
+        "backtest"
+      ]
+    },
+    "VALIDATION_MANIFEST": {
+      "can_commit": true,
+      "can_stage": true,
+      "storage_location": "data/mlb_2025/derived/",
+      "allowed_file_patterns": [
+        "*_manifest_*.json",
+        "*_intake_*.json"
+      ],
+      "forbidden_file_patterns": [],
+      "required_metadata": [
+        "manifest_id",
+        "checksum_hash",
+        "row_count",
+        "schema_version"
+      ],
+      "required_redactions": [
+        "api_key_value",
+        "raw_data_rows"
+      ],
+      "review_gate": "REVIEW_NO_API_KEY_NO_RAW_ROWS_BEFORE_COMMIT",
+      "stop_condition": "STOP if contains_api_key flag is True or raw data rows are present",
+      "allowed_downstream_use": [
+        "P82A gate",
+        "P81 validator",
+        "P82 dry-run"
+      ]
+    },
+    "CHECKSUM_ONLY_RECORD": {
+      "can_commit": true,
+      "can_stage": true,
+      "storage_location": "data/mlb_2025/derived/",
+      "allowed_file_patterns": [
+        "*_checksum_*.json",
+        "*_hash_record_*.json"
+      ],
+      "forbidden_file_patterns": [],
+      "required_metadata": [
+        "checksum_hash",
+        "row_count",
+        "schema_version",
+        "dataset_alias"
+      ],
+      "required_redactions": [],
+      "review_gate": "CONFIRM_NO_ROW_LEVEL_ODDS_VALUES_BEFORE_COMMIT",
+      "stop_condition": "STOP if any raw odds row value appears in the committed file",
+      "allowed_downstream_use": [
+        "integrity check",
+        "lineage audit"
+      ]
+    },
+    "DERIVED_VALIDATION_SUMMARY": {
+      "can_commit": true,
+      "can_stage": true,
+      "storage_location": "data/mlb_2025/derived/",
+      "allowed_file_patterns": [
+        "*_summary.json",
+        "*_validation_*.json"
+      ],
+      "forbidden_file_patterns": [],
+      "required_metadata": [
+        "validation_status",
+        "row_count",
+        "schema_version",
+        "gates_passed"
+      ],
+      "required_redactions": [
+        "raw_odds_rows",
+        "proprietary_values"
+      ],
+      "review_gate": "CONFIRM_AGGREGATE_COUNTS_ONLY_NO_ROW_LEVEL",
+      "stop_condition": "STOP if row-level paid odds values appear in the summary file",
+      "allowed_downstream_use": [
+        "P82 gate check",
+        "pipeline audit"
+      ]
+    },
+    "DERIVED_MARKET_EDGE_SUMMARY": {
+      "can_commit": true,
+      "can_stage": true,
+      "storage_location": "data/mlb_2025/derived/",
+      "allowed_file_patterns": [
+        "*_edge_dry_run_*.json",
+        "*_market_edge_summary_*.json"
+      ],
+      "forbidden_file_patterns": [],
+      "required_metadata": [
+        "model_version",
+        "dataset_alias",
+        "aggregate_edge_stats"
+      ],
+      "required_redactions": [
+        "raw_odds_rows",
+        "row_level_moneylines"
+      ],
+      "review_gate": "CONFIRM_AGGREGATE_STATS_ONLY_NO_ROW_LEVEL_PAID_ODDS",
+      "stop_condition": "STOP if row-level paid odds appear in any committed file",
+      "allowed_downstream_use": [
+        "P82 diagnostic audit",
+        "model comparison"
+      ]
+    },
+    "LOCAL_REPRODUCIBILITY_NOTE": {
+      "can_commit": true,
+      "can_stage": true,
+      "storage_location": "docs/ or report/",
+      "allowed_file_patterns": [
+        "*_local_run_*.md",
+        "*_reproducibility_*.md"
+      ],
+      "forbidden_file_patterns": [],
+      "required_metadata": [],
+      "required_redactions": [
+        "api_key_value",
+        "secret_value",
+        "paid_data_local_path"
+      ],
+      "review_gate": "CONFIRM_NO_SECRETS_NO_RAW_DATA_PATH_BEFORE_COMMIT",
+      "stop_condition": "STOP if API key value or secret appears in any committed file",
+      "allowed_downstream_use": [
+        "onboarding",
+        "audit trail"
+      ]
+    },
+    "SECRET_OR_API_KEY": {
+      "can_commit": false,
+      "can_stage": false,
+      "storage_location": "NEVER \u2014 must not exist anywhere in git history",
+      "allowed_file_patterns": [],
+      "forbidden_file_patterns": [
+        ".env",
+        ".env.*",
+        "*secret*",
+        "*credential*",
+        "*.pem",
+        "*.key"
+      ],
+      "required_metadata": [],
+      "required_redactions": [
+        "ALL_CONTENT"
+      ],
+      "review_gate": "HARD_BLOCK_NO_OVERRIDE_ALLOWED",
+      "stop_condition": "STOP immediately \u2014 rotate key, purge file, do not commit under any circumstance",
+      "allowed_downstream_use": []
+    },
+    "MOCK_FIXTURE": {
+      "can_commit": true,
+      "can_stage": true,
+      "storage_location": "data/fixtures/ or tests/fixtures/",
+      "allowed_file_patterns": [
+        "*fixture*",
+        "*mock*"
+      ],
+      "forbidden_file_patterns": [],
+      "required_metadata": [
+        "mock_flag",
+        "dataset_type"
+      ],
+      "required_redactions": [],
+      "review_gate": "CONFIRM_LABELED_MOCK_NOT_TREATED_AS_REAL_MARKET_EVIDENCE",
+      "stop_condition": "STOP if mock data is treated as real market evidence in any pipeline step",
+      "allowed_downstream_use": [
+        "unit tests",
+        "contract validation dry-run only"
+      ]
+    },
+    "_meta": {
+      "class_count": 9,
+      "validation_errors": [],
+      "matrix_valid": true
+    }
+  },
+  "step4_staging_guard": {
+    "guard_id": "p82b_staging_guard_v1",
+    "description": "Prevents raw paid data, secrets, and unpolicied odds from reaching git",
+    "blocks": [
+      {
+        "rule_id": "BLOCK_ENV_FILE",
+        "description": "Block .env files and environment config files from being staged",
+        "file_patterns": [
+          ".env",
+          ".env.*",
+          ".env.local",
+          ".env.production"
+        ],
+        "reason": "Environment files may contain secret values and provider credentials",
+        "guard_state": "BLOCK_SECRET"
+      },
+      {
+        "rule_id": "BLOCK_API_KEY_PATTERN",
+        "description": "Block files whose content contains API key-like string patterns",
+        "detect_patterns": [
+          "[A-Za-z0-9]{32,}",
+          "[A-Za-z0-9_-]{40,}"
+        ],
+        "note": "Covers paid data provider key formats; human review required before override",
+        "guard_state": "BLOCK_SECRET"
+      },
+      {
+        "rule_id": "BLOCK_RAW_PAID_CSV",
+        "description": "Block raw paid odds CSV/JSON files under data/ from being staged",
+        "file_patterns": [
+          "data/**/*paid*odds*.csv",
+          "data/**/*raw*odds*.json",
+          "data/**/*paid*odds*.json"
+        ],
+        "guard_state": "BLOCK_RAW_PAID_DATA"
+      },
+      {
+        "rule_id": "BLOCK_REAL_ODDS_FILENAME",
+        "description": "Block specific filename patterns associated with raw real odds exports",
+        "file_patterns": [
+          "*odds_2024_real.csv",
+          "*paid*odds*.csv",
+          "*raw*odds*.json",
+          "*the_odds_api*raw*"
+        ],
+        "guard_state": "BLOCK_UNPOLICIED_ODDS"
+      },
+      {
+        "rule_id": "BLOCK_CONTAINS_API_KEY_FLAG",
+        "description": "Block any manifest/JSON where the contains_api_key field is not False",
+        "detect_json_key": "contains_api_key",
+        "detect_forbidden_json_value": true,
+        "note": "contains_api_key must be False in all committed manifests",
+        "guard_state": "BLOCK_SECRET"
+      },
+      {
+        "rule_id": "BLOCK_ROW_LEVEL_ODDS",
+        "description": "Block committed markdown/JSON containing row-level odds values unless explicitly aggregate/derived",
+        "detect_patterns": [
+          "moneyline_home.*[0-9]+",
+          "raw_odds_row",
+          "row_level_odds"
+        ],
+        "exemptions": [
+          "files in data/fixtures/",
+          "files with mock_flag explicitly set True"
+        ],
+        "guard_state": "BLOCK_ROW_LEVEL_LEAKAGE"
+      }
+    ],
+    "guard_states": [
+      "STAGE_CLEAN",
+      "BLOCK_RAW_PAID_DATA",
+      "BLOCK_SECRET",
+      "BLOCK_UNPOLICIED_ODDS",
+      "BLOCK_ROW_LEVEL_LEAKAGE",
+      "REVIEW_REQUIRED"
+    ],
+    "default_state": "STAGE_CLEAN",
+    "hard_block_classes": [
+      "SECRET_OR_API_KEY",
+      "RAW_PAID_ODDS_DATA"
+    ],
+    "review_required_classes": [
+      "RAW_FREE_LEGAL_ODDS_DATA"
+    ],
+    "auto_pass_classes": [
+      "VALIDATION_MANIFEST",
+      "CHECKSUM_ONLY_RECORD",
+      "DERIVED_VALIDATION_SUMMARY",
+      "DERIVED_MARKET_EDGE_SUMMARY",
+      "LOCAL_REPRODUCIBILITY_NOTE",
+      "MOCK_FIXTURE"
+    ],
+    "_validation": {
+      "rule_count": 6,
+      "rule_ids": [
+        "BLOCK_ENV_FILE",
+        "BLOCK_API_KEY_PATTERN",
+        "BLOCK_RAW_PAID_CSV",
+        "BLOCK_REAL_ODDS_FILENAME",
+        "BLOCK_CONTAINS_API_KEY_FLAG",
+        "BLOCK_ROW_LEVEL_ODDS"
+      ],
+      "guard_state_count": 6,
+      "missing_required_states": [],
+      "guard_valid": true
+    }
+  },
+  "step5_manifest_integration": {
+    "source": "P82A INTAKE_MANIFEST_FIELDS (23 fields)",
+    "raw_data_policy": {
+      "field": "raw_data_policy",
+      "allowed_values": [
+        "LOCAL_ONLY_HASH_COMMITTED",
+        "DERIVED_ONLY_COMMIT",
+        "COMMIT_ALLOWED_LICENSE_VERIFIED",
+        "MOCK_ONLY"
+      ],
+      "forbidden_values": [
+        "UNKNOWN",
+        "COMMIT_RAW_PAID_DATA",
+        "EMBED_SECRET",
+        "UNLICENSED_SOURCE"
+      ],
+      "default": "LOCAL_ONLY_HASH_COMMITTED",
+      "note": "Must be explicitly decided before manifest is committed"
+    },
+    "storage_policy": {
+      "field": "storage_policy",
+      "allowed_values": [
+        "LOCAL_ONLY",
+        "LOCAL_EXTERNAL_PATH",
+        "CLOUD_PRIVATE",
+        "DERIVED_ONLY_IN_REPO"
+      ],
+      "forbidden_values": [
+        "PUBLIC_REPO",
+        "COMMIT_RAW"
+      ],
+      "note": "Raw paid data must never be in PUBLIC_REPO storage"
+    },
+    "commit_policy": {
+      "field": "commit_policy",
+      "allowed_values": [
+        "HASH_ONLY_NO_RAW_DATA",
+        "MANIFEST_AND_DERIVED_ONLY",
+        "COMMIT_ALLOWED_LICENSE_VERIFIED",
+        "NO_COMMIT"
+      ],
+      "forbidden_values": [
+        "COMMIT_RAW_DATA",
+        "COMMIT_WITH_SECRET"
+      ],
+      "note": "Raw paid rows must never be committed even if license allows redistribution"
+    },
+    "dataset_path_policy": "manifest.dataset_path must be a local placeholder only; must not reveal the real raw data path in any committed file",
+    "checksum_requirement": "SHA-256 checksum must be computed from the raw file before staging the manifest; checksum_hash is a mandatory non-nullable field",
+    "license_evidence_requirement": "source_license_evidence_ref must point to a stored license document; cannot be empty or a placeholder like TBD",
+    "secret_in_manifest_policy": "HARD_FORBIDDEN \u2014 manifest.contains_api_key must be False; any manifest with contains_api_key not False is blocked by the staging guard",
+    "local_path_policy": "manifest may reference a local external path for the raw file, but that path must not appear in any committed manifest or summary file",
+    "p81_output_storage": "P81 validator output (DERIVED_VALIDATION_SUMMARY) is committed to data/mlb_2025/derived/ without any raw odds rows \u2014 aggregate counts only",
+    "future_p82_storage": "P82 edge dry-run summary (DERIVED_MARKET_EDGE_SUMMARY) is committed as aggregate statistics only \u2014 no row-level paid odds in committed file",
+    "allowed_raw_data_policies": [
+      "LOCAL_ONLY_HASH_COMMITTED",
+      "DERIVED_ONLY_COMMIT",
+      "COMMIT_ALLOWED_LICENSE_VERIFIED",
+      "MOCK_ONLY"
+    ],
+    "forbidden_raw_data_policies": [
+      "UNKNOWN",
+      "COMMIT_RAW_PAID_DATA",
+      "EMBED_SECRET",
+      "UNLICENSED_SOURCE"
+    ],
+    "policy_count": 8,
+    "validation_summary": {
+      "raw_data_policy_allowed_count": 4,
+      "raw_data_policy_forbidden_count": 4,
+      "storage_policy_allowed_count": 4,
+      "commit_policy_allowed_count": 4
+    }
+  },
+  "step6_future_workflow": {
+    "workflow_steps": [
+      {
+        "step": 1,
+        "action": "Acquire legal odds data outside git",
+        "detail": "Obtain dataset from a licensed provider via paid subscription or licensed feed; verify source_license_status will be LEGAL_OR_LICENSED before download",
+        "where": "External acquisition \u2014 never inside repo directory",
+        "gate": "Source must have a verifiable legal license; LEGAL_OR_LICENSED required"
+      },
+      {
+        "step": 2,
+        "action": "Store raw paid data in local external path",
+        "detail": "Keep raw file in a local filesystem path not tracked by git; never run git add on the raw file; record path in local-only config that is also git-ignored",
+        "where": "Local filesystem path outside repo (e.g. ~/odds-data/2025/raw/)",
+        "gate": "Raw data path must not appear in any committed file"
+      },
+      {
+        "step": 3,
+        "action": "Generate manifest with checksum, row count, and schema version",
+        "detail": "Compute SHA-256 on raw file; fill all 23 P82A manifest fields; set contains_api_key=False; set raw_data_policy to one of the allowed values; pass manifest through _validate_manifest() before staging",
+        "where": "data/mlb_2025/derived/intake_manifest_<season>.json",
+        "gate": "_validate_manifest() from P82A script must return valid=True with zero errors"
+      },
+      {
+        "step": 4,
+        "action": "Run P81 validator locally against raw file",
+        "detail": "Execute P81 validator script against the raw file locally; do not commit the raw file; commit only the DERIVED_VALIDATION_SUMMARY output",
+        "where": "Local execution; validation summary written to data/mlb_2025/derived/",
+        "gate": "Validator must return LEGAL_ODDS_DATASET_VALIDATED_FOR_P82 before advancing"
+      },
+      {
+        "step": 5,
+        "action": "Commit only manifest, checksum record, and derived validation summary",
+        "detail": "Stage and commit: intake manifest JSON, checksum-only record, P81 validation summary; do not stage raw paid odds rows; staging guard must return STAGE_CLEAN",
+        "where": "data/mlb_2025/derived/ \u2014 no raw data rows in diff",
+        "gate": "Staging guard STAGE_CLEAN required; diff must contain zero raw paid odds values"
+      },
+      {
+        "step": 6,
+        "action": "Run P82 dry-run edge diagnostics only after P82A unlock criteria pass",
+        "detail": "Load validated dataset locally; compute paper-only edge diagnostics; commit only DERIVED_MARKET_EDGE_SUMMARY with aggregate statistics; no row-level paid odds in committed file",
+        "where": "Local execution; aggregate summary to data/mlb_2025/derived/",
+        "gate": "_run_unlock_decision(manifest) must return can_unlock_p82=True"
+      },
+      {
+        "step": 7,
+        "action": "Never commit API key values, raw paid odds rows, or proprietary row-level values",
+        "detail": "Permanent rule for all future phases. Even if license permits redistribution, row-level paid odds must receive explicit project governance authorization before any commit is attempted",
+        "where": "Entire repo lifetime \u2014 no time limit, no exception path without authorization",
+        "gate": "HARD_FORBIDDEN \u2014 no override without explicit governance authorization record"
+      }
+    ],
+    "step_count": 7,
+    "step_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "missing_steps": [],
+    "workflow_complete": true,
+    "p81_required_before_p82": true,
+    "raw_stored_outside_git": true,
+    "commits_only_derived": true,
+    "p82_remains_blocked": true,
+    "p82_block_reason": "BLOCKED_NO_REAL_DATASET \u2014 workflow steps 1-4 must complete before P82 unlock"
+  },
+  "step7_source_artifacts": {
+    "all_present": true,
+    "artifact_count": 14,
+    "artifacts": {
+      "p82a_real_legal_odds_intake_gate_summary.json": true,
+      "p81_legal_odds_dataset_validator_contract_summary.json": true,
+      "p80_market_edge_reentry_readiness_contract_summary.json": true,
+      "p79b_tier_b_vs_tier_c_comparison_harness_summary.json": true,
+      "p79a_tier_b_trigger_readiness_contract_summary.json": true,
+      "p78_monthly_shadow_tracker_report_template_summary.json": true,
+      "p77_prediction_only_shadow_tracker_contract_summary.json": true,
+      "p76_corrected_tier_c_final_rule_selection_summary.json": true,
+      "p75b_calibration_diagnostics_corrected_tier_c_summary.json": true,
+      "p75a_tier_c_corrected_rule_validator_summary.json": true,
+      "p74_tier_c_home_away_bias_correction_summary.json": true,
+      "p73_tier_stability_and_sample_expansion_summary.json": true,
+      "p72b_objective_metric_contract_summary.json": true,
+      "p72a_odds_free_strategy_accuracy_backtest_summary.json": true
+    },
+    "missing": [],
+    "status": "PASS"
+  },
+  "step8_forbidden_scan": {
+    "scan_passed": true,
+    "violations_count": 0,
+    "violations": [],
+    "patterns_checked": 10,
+    "lines_scanned": 1037,
+    "self_exclusion_range": [
+      703,
+      780
+    ],
+    "governance_exclusion_range": [
+      18,
+      42
+    ]
+  },
+  "live_api_calls": 0,
+  "ev_clv_kelly_computed": false,
+  "p82_unlock_status": "BLOCKED_NO_REAL_DATASET",
+  "p82b_current_status": "RAW_PAID_DATA_POLICY_DEFINED \u2014 awaiting real legal odds dataset"
+}

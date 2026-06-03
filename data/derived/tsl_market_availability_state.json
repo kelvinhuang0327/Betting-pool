@@ -1,0 +1,19 @@
+{
+  "2030-01-01T20:00:00Z|New York Yankees|Boston Red Sox": {
+    "match_id": "2030-01-01T20:00:00Z|New York Yankees|Boston Red Sox",
+    "league": "MLB",
+    "game_time_utc": "2030-01-01T20:00:00Z",
+    "home_team": "New York Yankees",
+    "away_team": "Boston Red Sox",
+    "first_seen_timestamp": "2026-05-23T08:22:44.903278Z",
+    "last_seen_timestamp": "2026-05-23T08:22:44.903278Z",
+    "latest_seen_in_source": false,
+    "disappeared_at": "2026-05-23T08:22:44.952362Z",
+    "hours_before_game": 31667.6208,
+    "consecutive_absent_cycles": 1,
+    "source_name": "TSL_PREGAME_LIST",
+    "source_response_context": "capture_live_odds force_closing=False",
+    "classification": "TSL_MARKET_WITHDRAWAL_EARLY",
+    "classification_rationale": "Market disappeared 31667.62h before game_time 2030-01-01T20:00:00Z — exceeds 2.0h early-withdrawal threshold (HIGH severity)"
+  }
+}

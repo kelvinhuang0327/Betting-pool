@@ -1,0 +1,75 @@
+{
+  "artifact_id": "p26c_closing_coverage_monitor_20260520",
+  "phase": "P26C",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26C_MONITORING_CONTINUES_INSUFFICIENT_NEW_PAIRS",
+
+  "p26b_commit": "107535d",
+  "p26b_commit_utc": "2026-05-20T13:34:58Z",
+
+  "monitoring_window": {
+    "monitored_since_commit": "2026-05-20T13:34:58Z",
+    "monitoring_as_of": "2026-05-20T13:40:00Z",
+    "elapsed_minutes": 5
+  },
+
+  "daemon_status": {
+    "process_running": true,
+    "pid": 1381,
+    "daemon_start_utc": "2026-05-20T12:12:00Z",
+    "daemon_start_note": "Started 1h22m BEFORE P26B commit — loaded OLD code at import time",
+    "latest_heartbeat_utc": "2026-05-20T13:29:10Z",
+    "heartbeat_interval_minutes": 15,
+    "ran_after_p26b_commit": false,
+    "new_code_active": false,
+    "root_cause": "Long-running daemon imports Python modules at startup. P26B code changes in odds_capture_scheduler.py are NOT in memory until daemon is restarted.",
+    "action_required": "Restart odds_capture_daemon.py to pick up P26B scheduler extension",
+    "restart_command": "scripts/manage_daemon.sh restart (or kill PID 1381 + launchd restart)",
+    "likely_status": "P26B_ACTIVE_BUT_OLD_CODE_LOADED"
+  },
+
+  "snapshot_monitoring": {
+    "total_rows_in_history": 2826,
+    "latest_snapshot_timestamp": "2026-05-20T13:14:06Z",
+    "new_snapshot_count_since_p26b": 0,
+    "new_closing_snapshots": 0,
+    "wbc_npb_audit_entries_found": 0,
+    "closing_window_hits_in_capture_schedule": 0
+  },
+
+  "coverage_before": {
+    "source": "P25B baseline",
+    "total_matches": 887,
+    "complete_pair": 220,
+    "pregame_only": 577,
+    "closing_only": 74,
+    "no_valid_snapshots": 16
+  },
+
+  "coverage_after": {
+    "source": "P26C current (same as P25B — no new data)",
+    "total_matches": 887,
+    "complete_pair": 220,
+    "pregame_only": 577,
+    "closing_only": 74,
+    "no_valid_snapshots": 16
+  },
+
+  "delta_complete_pairs": 0,
+  "p25c_bootstrap_threshold": 300,
+  "p25c_bootstrap_triggered": false,
+  "p25c_bootstrap_reason": "delta_complete_pairs=0, current=220 < threshold=300",
+
+  "next_steps": [
+    "IMMEDIATE: Restart odds_capture_daemon.py to load P26B scheduler extension code",
+    "VERIFY: After restart, confirm _wbc_npb_audit entries appear in odds_capture_schedule.json",
+    "WAIT: 2-3 weeks for WBC/NPB closing snapshots to accumulate",
+    "RECHECK: When complete_pair >= 300, run P25C bootstrap rerun"
+  ]
+}

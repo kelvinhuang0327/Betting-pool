@@ -1,0 +1,180 @@
+{
+  "p84e_classification": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T05:40:53.011285+00:00",
+  "allowed_classifications": [
+    "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+    "P84E_OUTCOME_ATTACHMENT_READY_SAMPLE_LIMITED",
+    "P84E_OUTCOMES_PENDING_NO_FINAL_RESULTS",
+    "P84E_BLOCKED_PUBLIC_RESULTS_UNAVAILABLE",
+    "P84E_BLOCKED_BY_MISSING_P84D_ARTIFACT",
+    "P84E_FAILED_VALIDATION"
+  ],
+  "prediction_boundary": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "odds_used": false
+  },
+  "step1_verify": {
+    "ok": true,
+    "p84d_classification": "P84D_PITCHER_COVERAGE_AUDIT_READY_NO_BACKFILL",
+    "p84c_classification": "P84C_PARTIAL_SNAPSHOT_READY_OUTCOMES_PENDING",
+    "canonical_rows": 828,
+    "p84d_governance_ok": true
+  },
+  "step2_outcome_collector": {
+    "api_success": true,
+    "date_chunks_queried": [
+      [
+        "2026-03-25",
+        "2026-03-31"
+      ],
+      [
+        "2026-04-01",
+        "2026-04-30"
+      ],
+      [
+        "2026-05-01",
+        "2026-05-31"
+      ]
+    ],
+    "games_in_outcome_map": 891,
+    "outcome_source": "MLB_STATS_API_PUBLIC_RESULT",
+    "outcome_schema_validated": true,
+    "final_states": [
+      "Completed Early",
+      "Completed Early: Darkness",
+      "Completed Early: Lightning",
+      "Completed Early: Rain",
+      "Final",
+      "Final: Game Over",
+      "Game Over"
+    ],
+    "fabricated_outcomes": false
+  },
+  "step3_attachment_stats": {
+    "total_canonical_rows": 828,
+    "game_ids_in_outcome_map": 891,
+    "n_outcome_available": 808,
+    "n_outcome_pending": 20,
+    "n_not_in_map": 0,
+    "n_correct": 460,
+    "n_incorrect": 348
+  },
+  "step4_metrics": {
+    "all": {
+      "label": "all_canonical_rows",
+      "n_rows": 828,
+      "n_outcome_available": 808,
+      "sample_limited": false,
+      "hit_rate": 0.569307,
+      "hit_rate_n_correct": 460,
+      "hit_rate_ci_95_low": 0.534915,
+      "hit_rate_ci_95_high": 0.603043,
+      "auc": 0.594315,
+      "auc_direction": "home_positive",
+      "brier": 0.249408,
+      "ece": 0.069682
+    },
+    "primary_125": {
+      "label": "primary_125_flagged",
+      "n_rows": 503,
+      "n_outcome_available": 491,
+      "sample_limited": false,
+      "hit_rate": 0.602851,
+      "hit_rate_n_correct": 296,
+      "hit_rate_ci_95_low": 0.558933,
+      "hit_rate_ci_95_high": 0.645173,
+      "auc": 0.611055,
+      "auc_direction": "home_positive",
+      "brier": 0.245795,
+      "ece": 0.075904
+    },
+    "shadow_100": {
+      "label": "shadow_100_flagged",
+      "n_rows": 549,
+      "n_outcome_available": 536,
+      "sample_limited": false,
+      "hit_rate": 0.595149,
+      "hit_rate_n_correct": 319,
+      "hit_rate_ci_95_low": 0.553059,
+      "hit_rate_ci_95_high": 0.635886,
+      "auc": 0.609431,
+      "auc_direction": "home_positive",
+      "brier": 0.248071,
+      "ece": 0.082219
+    },
+    "tier_b": {
+      "label": "tier_b_candidate_flagged",
+      "n_rows": 97,
+      "n_outcome_available": 94,
+      "sample_limited": false,
+      "hit_rate": 0.56383,
+      "hit_rate_n_correct": 53,
+      "hit_rate_ci_95_low": 0.463027,
+      "hit_rate_ci_95_high": 0.65962,
+      "auc": 0.566576,
+      "auc_direction": "home_positive",
+      "brier": 0.246039,
+      "ece": 0.011976
+    },
+    "monthly_outcome_distribution": {
+      "2026-03": {
+        "n_outcome": 73,
+        "n_correct": 45,
+        "hit_rate": 0.616438
+      },
+      "2026-04": {
+        "n_outcome": 389,
+        "n_correct": 211,
+        "hit_rate": 0.542416
+      },
+      "2026-05": {
+        "n_outcome": 346,
+        "n_correct": 204,
+        "hit_rate": 0.589595
+      }
+    }
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "live_api_calls": 0,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_calculated": false,
+    "odds_used": false,
+    "uses_historical_odds": false,
+    "real_bet_allowed": false,
+    "fabricated_outcomes": false,
+    "odds_api_called": false,
+    "market_edge_calculated": false,
+    "champion_replacement_allowed": false,
+    "the_odds_api_key_required": false,
+    "outcome_source": "MLB_STATS_API_PUBLIC_RESULT",
+    "mlb_stats_api_calls": 3
+  },
+  "remaining_blockers": {
+    "n_outcome_pending": 20,
+    "pending_reason": "Games scheduled in future or not yet completed",
+    "odds_dataset_blocked": "P82_BLOCKED_NO_REAL_DATASET",
+    "ev_clv_kelly_blocked": true,
+    "production_ready": false
+  },
+  "forbidden_scan": {
+    "odds_api_called": false,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_calculated": false,
+    "edge_calculated": false,
+    "fabricated_outcomes": false,
+    "production_recommendation": false,
+    "champion_replacement": false,
+    "forbidden_scan_pass": true
+  }
+}

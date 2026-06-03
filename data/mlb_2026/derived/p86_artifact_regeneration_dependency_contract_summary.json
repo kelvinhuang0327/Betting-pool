@@ -1,0 +1,407 @@
+{
+  "p86_classification": "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T07:45:00.940279+00:00",
+  "phase": "diagnostic-only",
+  "allowed_classifications": [
+    "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "P86_ARTIFACT_CONTRACT_FAILED_MISSING_ARTIFACT",
+    "P86_ARTIFACT_CONTRACT_FAILED_CLASSIFICATION_MISMATCH",
+    "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK",
+    "P86_ARTIFACT_CONTRACT_BLOCKED_BY_PREFLIGHT",
+    "P86_ARTIFACT_CONTRACT_BLOCKED_BY_SCOPE_DRIFT"
+  ],
+  "step1_artifact_existence": {
+    "step": "step1_artifact_existence",
+    "checks": {
+      "p83e_summary": {
+        "path": "data/mlb_2026/derived/p83e_2026_canonical_prediction_row_producer_summary.json",
+        "exists": true,
+        "sha256_prefix": "2226cba94005ee98",
+        "mtime": "2026-05-27T05:40:23.644097+00:00"
+      },
+      "p84e_summary": {
+        "path": "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+        "exists": true,
+        "sha256_prefix": "77158c9ce5e441ca",
+        "mtime": "2026-05-27T05:40:58.610761+00:00"
+      },
+      "p84e_rows": {
+        "path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+        "exists": true,
+        "sha256_prefix": "dde0ecda797f9b68",
+        "mtime": "2026-05-27T05:40:58.608737+00:00"
+      },
+      "canonical_rows": {
+        "path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+        "exists": true,
+        "sha256_prefix": "74c4a5498f80b2e7",
+        "mtime": "2026-05-27T07:23:12.236617+00:00"
+      },
+      "p84f_summary": {
+        "path": "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+        "exists": true,
+        "sha256_prefix": "31e4450a95299915",
+        "mtime": "2026-05-27T05:41:03.751495+00:00"
+      },
+      "p84g_summary": {
+        "path": "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+        "exists": true,
+        "sha256_prefix": "335441b526055dd5",
+        "mtime": "2026-05-27T05:44:56.048516+00:00"
+      },
+      "p84h_summary": {
+        "path": "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+        "exists": true,
+        "sha256_prefix": "9d3ec118c1c2f03d",
+        "mtime": "2026-05-27T07:06:12.185369+00:00"
+      },
+      "p85_summary": {
+        "path": "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+        "exists": true,
+        "sha256_prefix": "d76139f801a3578c",
+        "mtime": "2026-05-27T07:20:33.507057+00:00"
+      }
+    },
+    "missing": [],
+    "status": "PASSED"
+  },
+  "step2_dependency_graph": {
+    "step": "step2_dependency_graph",
+    "graph": {
+      "p83e_canonical_rows": {
+        "depends_on": [],
+        "required_by": [
+          "p84e_outcome_attachment",
+          "p84f_calibration_diagnostic",
+          "p84g_mapping_fix"
+        ]
+      },
+      "p84e_outcome_attachment": {
+        "depends_on": [
+          "p83e_canonical_rows"
+        ],
+        "required_by": [
+          "p84f_calibration_diagnostic",
+          "p84g_mapping_fix",
+          "p84h_corrected_validation",
+          "p85_invariant_gate"
+        ]
+      },
+      "p84f_calibration_diag": {
+        "depends_on": [
+          "p83e_canonical_rows",
+          "p84e_outcome_attachment"
+        ],
+        "required_by": [
+          "p84g_mapping_fix"
+        ]
+      },
+      "p84g_mapping_fix": {
+        "depends_on": [
+          "p83e_canonical_rows",
+          "p84e_outcome_attachment",
+          "p84f_calibration_diag"
+        ],
+        "required_by": [
+          "p84h_corrected_validation",
+          "p85_invariant_gate"
+        ]
+      },
+      "p84h_corrected_validation": {
+        "depends_on": [
+          "p84g_mapping_fix",
+          "p84e_outcome_attachment"
+        ],
+        "required_by": [
+          "p85_invariant_gate"
+        ]
+      },
+      "p85_invariant_gate": {
+        "depends_on": [
+          "p84g_mapping_fix",
+          "p84h_corrected_validation"
+        ],
+        "required_by": []
+      }
+    },
+    "n_nodes": 6,
+    "n_edges": 10,
+    "status": "PASSED"
+  },
+  "step3_classification_lock": {
+    "step": "step3_classification_lock",
+    "results": {
+      "p83e": {
+        "expected": "P83E_CANONICAL_ROWS_READY",
+        "actual": "P83E_CANONICAL_ROWS_READY",
+        "locked": true
+      },
+      "p84e": {
+        "expected": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+        "actual": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+        "locked": true
+      },
+      "p84f": {
+        "expected": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+        "actual": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+        "locked": true
+      },
+      "p84g": {
+        "expected": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+        "actual": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+        "locked": true
+      },
+      "p84h": {
+        "expected": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+        "actual": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+        "locked": true
+      },
+      "p85": {
+        "expected": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+        "actual": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+        "locked": true
+      }
+    },
+    "failures": [],
+    "status": "PASSED"
+  },
+  "step4_row_count_check": {
+    "step": "step4_row_count_check",
+    "checks": {
+      "p83e_row_count": {
+        "expected": 828,
+        "actual": 828,
+        "ok": true
+      },
+      "p84e_outcome_available": {
+        "expected": 808,
+        "actual": 808,
+        "ok": true
+      },
+      "p84e_total_canonical_rows": {
+        "expected": 828,
+        "actual": 828,
+        "ok": true
+      },
+      "p84e_jsonl_total": {
+        "expected": 828,
+        "actual": 828,
+        "ok": true
+      },
+      "p84e_jsonl_outcome_avail": {
+        "expected": 808,
+        "actual": 808,
+        "ok": true
+      }
+    },
+    "failures": [],
+    "status": "PASSED"
+  },
+  "step5_metric_consistency": {
+    "step": "step5_metric_consistency",
+    "results": {
+      "hit_rate": {
+        "expected": 0.569307,
+        "actual": 0.569307,
+        "delta": 0.0,
+        "ok": true
+      },
+      "auc": {
+        "expected": 0.594315,
+        "actual": 0.594315,
+        "delta": 0.0,
+        "ok": true
+      },
+      "brier": {
+        "expected": 0.249408,
+        "actual": 0.249408,
+        "delta": 0.0,
+        "ok": true
+      },
+      "ece": {
+        "expected": 0.069682,
+        "actual": 0.069682,
+        "delta": 0.0,
+        "ok": true
+      },
+      "p84h_vs_p84e_ref_hit_rate": {
+        "p84e_ref": 0.569307,
+        "p84h_recomp": 0.569307,
+        "delta": 0.0,
+        "ok": true
+      },
+      "p84h_vs_p84e_ref_auc": {
+        "p84e_ref": 0.594315,
+        "p84h_recomp": 0.594315,
+        "delta": 0.0,
+        "ok": true
+      },
+      "p84h_vs_p84e_ref_brier": {
+        "p84e_ref": 0.249408,
+        "p84h_recomp": 0.249408,
+        "delta": 0.0,
+        "ok": true
+      },
+      "p84h_vs_p84e_ref_ece": {
+        "p84e_ref": 0.069682,
+        "p84h_recomp": 0.069682,
+        "delta": 0.0,
+        "ok": true
+      },
+      "p85_positive_violations": {
+        "expected": 0,
+        "actual": 0,
+        "ok": true
+      },
+      "p85_negative_violations": {
+        "expected": 0,
+        "actual": 0,
+        "ok": true
+      }
+    },
+    "failures": [],
+    "status": "PASSED"
+  },
+  "step6_report_vs_json": {
+    "step": "step6_report_vs_json",
+    "results": {
+      "p83e_summary": {
+        "json_classification": "P83E_CANONICAL_ROWS_READY",
+        "report_path": "report/p83e_2026_canonical_prediction_row_producer_20260526.md",
+        "report_contains_classification": true,
+        "consistent": true
+      },
+      "p84e_summary": {
+        "json_classification": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+        "report_path": "report/p84e_2026_outcome_attachment_20260526.md",
+        "report_contains_classification": true,
+        "consistent": true
+      },
+      "p84f_summary": {
+        "json_classification": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+        "report_path": "report/p84f_predicted_side_calibration_diagnostic_20260526.md",
+        "report_contains_classification": true,
+        "consistent": true
+      },
+      "p84g_summary": {
+        "json_classification": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+        "report_path": "report/p84g_predicted_side_mapping_fix_20260526.md",
+        "report_contains_classification": true,
+        "consistent": true
+      },
+      "p84h_summary": {
+        "json_classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+        "report_path": "report/p84h_corrected_signal_validation_coverage_guard_20260527.md",
+        "report_contains_classification": true,
+        "consistent": true
+      },
+      "p85_summary": {
+        "json_classification": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+        "report_path": "report/p85_prediction_convention_invariant_gate_20260527.md",
+        "report_contains_classification": true,
+        "consistent": true
+      }
+    },
+    "failures": [],
+    "status": "PASSED"
+  },
+  "step7_mtime_ordering": {
+    "step": "step7_mtime_ordering",
+    "order": [
+      {
+        "id": "p83e_summary",
+        "mtime": "2026-05-27T05:40:23.644097+00:00",
+        "stale_downstream_risk": false,
+        "status": "OK"
+      },
+      {
+        "id": "canonical_rows",
+        "mtime": "2026-05-27T07:23:12.236617+00:00",
+        "stale_downstream_risk": false,
+        "status": "OK"
+      },
+      {
+        "id": "p84e_rows",
+        "mtime": "2026-05-27T05:40:58.608737+00:00",
+        "stale_downstream_risk": true,
+        "upstream_id": "canonical_rows",
+        "delta_seconds": 6134,
+        "status": "STALE_DOWNSTREAM_RISK"
+      },
+      {
+        "id": "p84e_summary",
+        "mtime": "2026-05-27T05:40:58.610761+00:00",
+        "stale_downstream_risk": false,
+        "status": "OK"
+      },
+      {
+        "id": "p84f_summary",
+        "mtime": "2026-05-27T05:41:03.751495+00:00",
+        "stale_downstream_risk": false,
+        "status": "OK"
+      },
+      {
+        "id": "p84g_summary",
+        "mtime": "2026-05-27T05:44:56.048516+00:00",
+        "stale_downstream_risk": false,
+        "status": "OK"
+      },
+      {
+        "id": "p84h_summary",
+        "mtime": "2026-05-27T07:06:12.185369+00:00",
+        "stale_downstream_risk": false,
+        "status": "OK"
+      },
+      {
+        "id": "p85_summary",
+        "mtime": "2026-05-27T07:20:33.507057+00:00",
+        "stale_downstream_risk": false,
+        "status": "OK"
+      }
+    ],
+    "stale_risks": [
+      {
+        "upstream": "canonical_rows",
+        "downstream": "p84e_rows",
+        "upstream_mtime": "2026-05-27T07:23:12.236617+00:00",
+        "downstream_mtime": "2026-05-27T05:40:58.608737+00:00",
+        "delta_seconds": 6134
+      }
+    ],
+    "n_stale_risks": 1,
+    "status": "FAILED"
+  },
+  "step8_governance_scan": {
+    "step": "step8_governance_scan",
+    "p86_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "canonical_rows_modified": false,
+      "outcome_rows_modified": false,
+      "p83e_through_p85_artifacts_modified": false,
+      "calibration_refit": false,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_production_betting_recommendation": true
+    },
+    "status": "PASSED"
+  },
+  "step9_final_classification": {
+    "classification": "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK",
+    "rationale": "Contract failed: ['step7']",
+    "n_steps_checked": 8,
+    "n_steps_passed": 7,
+    "n_steps_failed": 1,
+    "failed_steps": [
+      "step7"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "dataset": "mlb-2024-asplayed.csv",
+  "ingest_source_file": "gl2024.txt",
+  "ingest_source_type": "retrosheet_gamelog",
+  "source_url": "https://www.retrosheet.org/gamelogs/gl2024.zip",
+  "source_license": "Retrosheet — free for educational/research use",
+  "gl2024_sha256": "48bae769201e0b5b232f34540dc3511974fac3a2c2a76e9622ffef9651ddca8e",
+  "row_count": 2429,
+  "generated_at_utc": "2026-05-24T13:55:54.865476Z",
+  "season": "2024",
+  "season_start": "2024-03-20",
+  "season_end": "2024-11-02",
+  "p39_governance": {
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "t_locked": 0.5,
+    "live_api_calls": 0,
+    "no_champion_modification": true
+  }
+}

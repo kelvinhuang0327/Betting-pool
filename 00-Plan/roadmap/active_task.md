@@ -1,137 +1,660 @@
-# Active Task — P2 Pregame Odds Timeline Feasibility Audit
+# Active Task: P140 Drift Alert Replay Drift Signoff Evidence Packet Gate
 
-> **[COMPLETE 2026-05-20]** P2_PREGAME_ODDS_TIMELINE_FEASIBILITY_AUDIT
-> Status: 完成 → Final Classification: `P2_LIMITED_TIMELINE_SMOKE_ONLY`
-> MLB pregame-safe games: 0 / TSL WBC pregame-safe games: 797
-> P1 w_market sweep: BLOCKED (MLB pregame odds unavailable)
+- 任務編號：P140
+- 狀態：已完成 drift alert replay drift signoff evidence packet gate、測試、報告、治理驗證
+- 產出：
+  - _p140_drift_alert_replay_drift_signoff_evidence_packet_gate.py
+  - tests/test_p140_drift_alert_replay_drift_signoff_evidence_packet_gate.py
+  - data/mlb_2026/derived/p140_drift_alert_replay_drift_signoff_evidence_packet_gate_summary.json
+  - report/p140_drift_alert_replay_drift_signoff_evidence_packet_gate_20260601.md
+- 測試：
+  - tests/test_p140_drift_alert_replay_drift_signoff_evidence_packet_gate.py
+  - tests/test_p139_drift_alert_replay_drift_execution_gate.py
+  - tests/test_p138_drift_alert_replay_drift_contract.py
+  - tests/test_p137_drift_alert_replay_consistency_gate.py
+  - tests/test_p136_signoff_drift_alert_runner_escalation_decision_packet.py
+  - tests/test_p135_signoff_evidence_drift_alert_contract.py
+  - tests/test_p134_signoff_evidence_replay_consistency_gate.py
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立 governance-only signoff evidence packet gate，保留 paper_only/diagnostic_only/production_ready=false 等治理鎖
+  - 確保 signoff packet schema 與 invalid packet blocks 覆蓋
+  - 包含 P140 專用測試，以及 P118-P140 目標鏈測試 PASS
+  - full regression 狀態維持 NOT_RUN
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
----
+# Active Task: P139 Drift Alert Replay Drift Execution Gate
 
-## Previous Task (Completed) — P0 Market Probability Timestamp Leakage Audit
+- 任務編號：P138
+- 狀態：已完成 drift alert replay drift contract、測試、報告、治理驗證
+- 產出：
+  - scripts/_p138_drift_alert_replay_drift_contract.py
+  - tests/test_p138_drift_alert_replay_drift_contract.py
+  - data/mlb_2026/derived/p138_drift_alert_replay_drift_contract_summary.json
+  - report/p138_drift_alert_replay_drift_contract_20260601.md
+- 測試：
+  - tests/test_p138_drift_alert_replay_drift_contract.py
+  - tests/test_p137_drift_alert_replay_consistency_gate.py
+  - tests/test_p136_signoff_drift_alert_runner_escalation_decision_packet.py
+  - tests/test_p135_signoff_evidence_drift_alert_contract.py
+  - tests/test_p134_signoff_evidence_replay_consistency_gate.py
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立 drift alert replay drift contract，將 P137 replay consistency 輸出固定化為 alert level、drift type、escalation path、SLA、required owner 與 blocking contract
+  - 定義 replay drift blocking 條件，覆蓋 previously BLOCKED→ALLOWED、critical-stop 降級、no-drift verdict 變更、event/run count 漂移、matrix/packet/final classification 變更與 baseline fingerprint 變更
+  - 建立 baseline change review rules，強制 baseline change request 欄位、審查與 rollback/non-unlock 聲明
+  - 定義 drift_details_required_fields，要求 drift_detected=true 時必須提供完整 drift details schema
+  - 維持治理鎖：paper_only=true、diagnostic_only=true、provider_approved=false、authorization_evidence_present=false、recommendation_allowed=false、production_ready=false
+  - 明確聲明 replay drift contract 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - targeted P118-P138 測試通過，full regression 狀態維持 NOT_RUN（無過度宣稱）
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-> **[COMPLETE 2026-05-20]** P0_MARKET_PROBABILITY_TIMESTAMP_LEAKAGE_AUDIT
-> Status: 完成 → Final Classification: `P0_MARKET_BASELINE_LEAKAGE_CONFIRMED`
-> Leakage type: post_game_proxy (100%), pregame_safe=0%
-> P1 w_market sweep: BLOCKED → P2 launched to assess pregame odds availability
+# Active Task: P137 Drift Alert Replay Consistency Gate
 
----
+- 任務編號：P137
+- 狀態：已完成 drift alert replay consistency gate、測試、報告、治理驗證
+- 產出：
+  - scripts/_p137_drift_alert_replay_consistency_gate.py
+  - tests/test_p137_drift_alert_replay_consistency_gate.py
+  - data/mlb_2026/derived/p137_drift_alert_replay_consistency_gate_summary.json
+  - report/p137_drift_alert_replay_consistency_gate_20260601.md
+- 測試：
+  - tests/test_p137_drift_alert_replay_consistency_gate.py
+  - tests/test_p136_signoff_drift_alert_runner_escalation_decision_packet.py
+  - tests/test_p135_signoff_evidence_drift_alert_contract.py
+  - tests/test_p134_signoff_evidence_replay_consistency_gate.py
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立 deterministic replay consistency gate，對同一組 P136 drift runner artifacts 進行 3 次 replay
+  - 驗證 alert_verdicts、escalation_decision_packets、各 execution matrices、blocked_action_matrix、unlock_prevention_matrix、no_drift_record_packet、simulated_blocking_drift_cases 與 final classification 在每輪 replay 全部一致
+  - baseline_fingerprint 與 replay_fingerprints 全部一致，drift_detected=false，drift_details=[]
+  - 驗證 evaluated_drift_event_count 在每輪 replay 穩定，no-drift case 維持 record-only，dangerous drift cases 維持 BLOCKED/CRITICAL_STOP
+  - 維持治理鎖：paper_only=true、diagnostic_only=true、provider_approved=false、authorization_evidence_present=false、recommendation_allowed=false、production_ready=false
+  - 明確聲明 replay consistency 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - targeted P118-P137 測試通過，full regression 狀態維持 NOT_RUN（無過度宣稱）
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-# Previous Task (Completed) — P23 Gate & Reproducibility Reconciliation (含 Regression Rerun)
+# Active Task: P136 Sign-off Drift Alert Runner + Escalation Decision Packet
 
-## 任務名稱
+- 任務編號：P136
+- 狀態：已完成 sign-off drift alert runner、escalation decision packet、測試、報告、治理驗證
+- 產出：
+  - scripts/_p136_signoff_drift_alert_runner_escalation_decision_packet.py
+  - tests/test_p136_signoff_drift_alert_runner_escalation_decision_packet.py
+  - data/mlb_2026/derived/p136_signoff_drift_alert_runner_escalation_decision_packet_summary.json
+  - report/p136_signoff_drift_alert_runner_escalation_decision_packet_20260601.md
+- 測試：
+  - tests/test_p136_signoff_drift_alert_runner_escalation_decision_packet.py
+  - tests/test_p135_signoff_evidence_drift_alert_contract.py
+  - tests/test_p134_signoff_evidence_replay_consistency_gate.py
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立 deterministic sign-off drift alert runner，將 P135 alert contract 轉為可執行 alert verdicts 與 escalation decision packets
+  - 覆蓋必要 drift runner cases（含 no-drift record-only、blocking drift、critical-stop unlock drift）
+  - 每個 drift case 產出 1 筆 escalation decision packet，包含 drift_type/alert_level/verdict/escalation_path/sla/required_signoff_owners 與 unlock 禁止欄位
+  - 產出 alert_level/drift_type/escalation_path/sla/required_owner execution matrices
+  - 產出 blocked_action_matrix、unlock_prevention_matrix、no_drift_record_packet、simulated_blocking_drift_cases
+  - 維持治理鎖：paper_only=true、diagnostic_only=true、provider_approved=false、authorization_evidence_present=false、recommendation_allowed=false、production_ready=false
+  - 明確聲明 drift alert routing 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - targeted P118-P136 測試通過，full regression 狀態維持 NOT_RUN（無過度宣稱）
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-`P23_GATE_AND_REPRODUCIBILITY_RECONCILIATION_20260520`
+# Active Task: P135 Sign-off Evidence Drift Alert Contract
 
-## 背景
+- 任務編號：P135
+- 狀態：已完成 sign-off evidence drift alert contract、測試、報告、治理驗證
+- 產出：
+  - scripts/_p135_signoff_evidence_drift_alert_contract.py
+  - tests/test_p135_signoff_evidence_drift_alert_contract.py
+  - data/mlb_2026/derived/p135_signoff_evidence_drift_alert_contract_summary.json
+  - report/p135_signoff_evidence_drift_alert_contract_20260601.md
+- 測試：
+  - tests/test_p135_signoff_evidence_drift_alert_contract.py
+  - tests/test_p134_signoff_evidence_replay_consistency_gate.py
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立 sign-off drift alert contract，定義 alert levels、drift types、escalation paths、SLA classes 與 required sign-off owners
+  - 建立 blocking_conditions（verdict drift、blocker drift、evidence drift、escalation coverage drift、governance drift、unlock drift、fingerprint drift）
+  - 建立 drift rule sets（verdict/blocker/evidence/escalation/governance/unlock/fingerprint）與 drift_details_required_fields
+  - 從 P134 對齊 source_replay_run_count=3、source_signoff_packet_count=22、source_invalid_packet_count=21、source_drift_detected=false
+  - 維持治理鎖：paper_only=true、diagnostic_only=true、provider_approved=false、authorization_evidence_present=false
+  - 明確聲明 drift alert review 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - targeted P118-P135 測試通過，full regression 狀態維持 NOT_RUN（無過度宣稱）
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-1. P22 已完成 `CLV_VALIDATION_ONLY`，但留下兩個 P0 級阻塞：
-   - **Gate 矛盾**：`p22_ceo_decision_branch_20260523.json` 顯示 `p23_allowed=true` (REPORT_REVIEW_ONLY)，而 `p22_hold_ready_gate_refresh_20260523.json` 與 `report/p22_final_validation_20260523.md` 顯示 P23 blocked / next owner CEO。
-   - **可重現性風險**：P19 canonical `valid_clv_pairs=233`，P22 derived `valid_pairs_used=236`，差 +3。`data/tsl_odds_history.jsonl` 從 P19 報告的 2,747 records → P22 報告 2,772 → 現行檔案 2,785 行，source 仍在成長。
-2. P22 報告聲稱 `347/347 PASS`，但本次 CTO/CEO 審查皆未實測。CEO 要求 P0 必須親自 rerun。
-3. CEO 已裁決今日唯一方向為本 P0 任務，主軸一 (paper recommendation) 與主軸二 (optimizer diagnostic) 在 P0 完成前皆不啟動。
+P119: Recommendation Row Gate Violation Fixture
+final_classification: P119_GATE_VIOLATION_FIXTURE_READY_WITH_BLOCKERS
+status: COMPLETED
 
-## 目標
+狀態：已完成 violation fixture 產生、測試、報告，所有違規推薦行為皆被 gate 正確阻擋，治理鎖與禁止行為皆通過。
 
-1. 產出單一 canonical P23 gate state artifact，明確 `p23_allowed`、scope、owner、forbidden actions、promotion freeze。
-2. 解釋並文件化 236 vs 233 pair delta 的 root cause（window rule / pair derivation / duplicate handling / invalid-to-valid reclassification）。
-3. 對 `data/tsl_odds_history.jsonl` 與相關 P19/P22 source artifacts 計算並 pin：line-count、sha256、時間範圍、derivation rule reference。
-4. 親自 rerun 測試（**不可沿用 P22 報告數字**）：
-   - P17 standalone
-   - P12-P17 regression governance suite
-5. 產出 final validation report 與 BettingPlan 交接。
-6. 所有產出維持 `paper_only=true`。
+下一步：依專案規劃進行後續治理/整合或進入下一個 phase。
 
-## 允許修改範圍
+# Active Task: P120 Legal Provider Authorization Checklist
 
-- 新增以下 artifact：
-  - `data/paper_recommendations/p23_gate_reconciliation_20260520.json`
-  - `data/paper_recommendations/p23_pair_delta_root_cause_20260520.json`
-  - `data/paper_recommendations/p23_source_snapshot_pin_20260520.json`
-  - `data/paper_recommendations/p23_regression_rerun_20260520.json`
-- 新增以下報告：
-  - `report/p23_gate_reconciliation_20260520.md`
-  - `report/p23_pair_delta_root_cause_20260520.md`
-  - `report/p23_source_snapshot_pin_20260520.md`
-  - `report/p23_regression_rerun_20260520.md`
-  - `report/p23_final_validation_20260520.md`
-  - `00-BettingPlan/20260520/p23_gate_and_reproducibility_reconciliation_20260520.md`
-- 允許讀取 P19 / P22 既有 artifacts、`data/tsl_odds_history.jsonl`、`scripts/p22_pipeline.py`。
+- 任務編號：P120
+- 狀態：已完成 checklist 產出、測試、報告、治理驗證
+- 產出：
+  - scripts/_p120_legal_provider_authorization_checklist.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - data/mlb_2026/derived/p120_legal_provider_authorization_checklist_summary.json
+  - report/p120_legal_provider_authorization_checklist_20260531.md
+- 測試：
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - Checklist 結構、治理、blocker、禁止行為皆驗證通過
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、合約驗證、治理審查
+- 下一步：待指示
 
-## 禁止修改範圍
+# Active Task: P134 Sign-off Evidence Replay Consistency Gate
 
-- ❌ 不得修改 `data/tsl_odds_history.jsonl` 或任何 raw source data
-- ❌ 不得修改 TSL crawler / odds ingestion 程式碼
-- ❌ 不得呼叫 live odds API
-- ❌ 不得新增 repo / worktree
-- ❌ 不得 merge PR #2
-- ❌ 不得執行 optimizer promotion、champion replacement、production proposal
-- ❌ 不得宣稱可獲利 / profitability claim
-- ❌ 不得發布 betting recommendation
-- ❌ 不得啟動 P23-C/D/E (distribution / market / sanity check) — 屬於 P1 範圍
-- ❌ 不得修改 `00-Plan/roadmap/CTO-Analysis.md`
-- ❌ 不得修改 production registry / champion 設定
+- 任務編號：P134
+- 狀態：已完成 sign-off evidence replay consistency gate、測試、報告、治理驗證
+- 產出：
+  - scripts/_p134_signoff_evidence_replay_consistency_gate.py
+  - tests/test_p134_signoff_evidence_replay_consistency_gate.py
+  - data/mlb_2026/derived/p134_signoff_evidence_replay_consistency_gate_summary.json
+  - report/p134_signoff_evidence_replay_consistency_gate_20260601.md
+- 測試：
+  - tests/test_p134_signoff_evidence_replay_consistency_gate.py
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 對同一組 P133 sign-off evidence artifacts 進行 3 次 deterministic replay
+  - 驗證 signoff_verdict_matrix、blocker classifications、required_evidence_matrix、escalation coverage、governance invariants 與 unlock prevention 全部一致
+  - baseline_fingerprint 與 replay_fingerprints 全部一致，drift_detected=false，drift_details=[]
+  - valid template 維持 governance-only pending review，invalid sign-off cases 在每輪 replay 皆維持 BLOCKED
+  - 全部 unlock prevention 與禁止行為維持生效（無 provider/odds/recommendation/production/EV/CLV/Kelly unlock）
+  - 明確聲明 sign-off replay approval 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-## 驗收標準
+# Active Task: P133 Escalation Sign-off Evidence Packet Validator
 
-1. `p23_gate_reconciliation_20260520.json` 必含：
-   - `p23_allowed: true|false`
-   - `p23_scope: "GATE_AND_REPRODUCIBILITY_RECONCILIATION_ONLY"`
-   - `owner`、`forbidden_actions[]`、`promotion_frozen: true`、`champion_preserved: "fixed_edge_5pct"`、`paper_only: true`
-   - 明確指出採用 P22-B 還是 P22-E 為 canonical，並說明理由
-2. `p23_pair_delta_root_cause_20260520.json` 必含：
-   - `p19_valid_pairs: 233`、`p22_valid_pairs: 236`、`delta: 3`
-   - `root_cause_category`、`evidence`、`reproducible: true|false`
-   - 若無法解釋 → `classification: "PAIR_COUNT_DELTA_REQUIRES_REVIEW"`，並標記 P1 不得啟動
-3. `p23_source_snapshot_pin_20260520.json` 必含：
-   - `data/tsl_odds_history.jsonl` 的 `line_count`、`sha256`、`first_record_ts`、`last_record_ts`
-   - P19 source baseline 與 P22 source baseline 的 hash/line-count（若可重建）
-4. `p23_regression_rerun_20260520.json` 必含：
-   - 親自執行的 pytest 結果（總數 / PASS / FAIL / 執行時間 / 環境）
-   - 與 P22 報告 `347/347` 的比對結果
-5. Final validation report 必含 grep scan 7/7 CLEAN：
-   - `production proposal` / `promotion` / `champion replacement` / `profitability` / `live API` / `crawler modification` / `paper_only`
-6. 全部 5 個 JSON artifact schema 含 `paper_only=true`、`network_call=false`、`crawler_modified=false`、`profitability_claim=false`
+- 任務編號：P133
+- 狀態：已完成 escalation sign-off evidence packet validator、測試、報告、治理驗證
+- 產出：
+  - scripts/_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - data/mlb_2026/derived/p133_escalation_signoff_evidence_packet_validator_summary.json
+  - report/p133_escalation_signoff_evidence_packet_validator_20260601.md
+- 測試：
+  - tests/test_p133_escalation_signoff_evidence_packet_validator.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 依 P132 escalation cards + required_signoff_roles 建立 sign-off packet schema 與 evidence 規則
+  - valid template 維持 governance-only pending review；21 個 invalid sign-off packet cases 全部 BLOCKED
+  - 產出 signoff_verdict_matrix、missing/unauthorized/role mismatch/timestamp/non-unlock blocker 規則
+  - 建立 escalation_level_coverage_matrix 與 required_evidence_matrix，要求所有 required roles 與證據欄位完整
+  - 明確聲明 sign-off packet approval 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - 全部 unlock request 維持 false，provider_approved 與 authorization_evidence_present 維持 false
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-## 測試指令
+# Active Task: P132 Decision Card Escalation Router
 
-```bash
-cd /Users/kelvin/Kelvin-WorkSpace/Betting-pool
+- 任務編號：P132
+- 狀態：已完成 decision card escalation router、測試、報告、治理驗證
+- 產出：
+  - scripts/_p132_decision_card_escalation_router.py
+  - tests/test_p132_decision_card_escalation_router.py
+  - data/mlb_2026/derived/p132_decision_card_escalation_router_summary.json
+  - report/p132_decision_card_escalation_router_20260601.md
+- 測試：
+  - tests/test_p132_decision_card_escalation_router.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 讀取 P131 decision cards 並逐卡產生 deterministic escalation cards
+  - 將 decision_level 與 blocker_codes 對應為 escalation_level、SLA class、required sign-off roles
+  - 建立 escalation_execution_matrix、blocker_escalation_summary、sla_summary、signoff_requirement_summary、blocked_action_summary
+  - valid template 維持 governance-only，invalid/blocked cards 維持 blocked 或 critical stop
+  - 全部 unlock flags 維持 false，provider_approved/authorization_evidence_present 皆維持 false
+  - 明確聲明 escalation routing 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-# 1. P17 standalone
-pytest tests/ -k "p17" -v --tb=short
+# Active Task: P131 Baseline Change Review Packet Runner + Decision Card
 
-# 2. P12-P17 regression governance suite
-pytest tests/ -k "p12 or p13 or p14 or p15 or p16 or p17" -v --tb=short
+- 任務編號：P131
+- 狀態：已完成 baseline change review packet runner、decision card、測試、治理驗證
+- 產出：
+  - scripts/_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - data/mlb_2026/derived/p131_baseline_change_review_packet_runner_decision_card_summary.json
+  - report/p131_baseline_change_review_packet_runner_decision_card_20260601.md
+- 測試：
+  - tests/test_p131_baseline_change_review_packet_runner_decision_card.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 以 P130 valid template + invalid cases 產生 standardized decision cards
+  - 每張 decision card 含 blocker summary、reviewer/rollback/attestation 狀態與 unlock flags（全部 false）
+  - invalid cases 全數 BLOCKED，valid template 為 governance-only pending（非 production ready）
+  - unexpected_approved_count 維持 0
+  - 明確聲明 baseline change approval 不等於 legal provider approval/real odds approval/recommendation readiness/production readiness
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-# 3. 全套 baseline（記錄總數）
-pytest tests/ --tb=short -q
+# Active Task: P130 Baseline Change Review Packet Validator
 
-# 4. grep scan（在新產出檔內容上）
-grep -RniE "promotion|champion replacement|profitab|live odds api|crawler modif" \
-  data/paper_recommendations/p23_*_20260520.json report/p23_*_20260520.md || echo "GREP_CLEAN_CANDIDATE"
+- 任務編號：P130
+- 狀態：已完成 baseline change review packet validator、測試、報告、治理驗證
+- 產出：
+  - scripts/_p130_baseline_change_review_packet_validator.py
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - data/mlb_2026/derived/p130_baseline_change_review_packet_validator_summary.json
+  - report/p130_baseline_change_review_packet_validator_20260601.md
+- 測試：
+  - tests/test_p130_baseline_change_review_packet_validator.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立 baseline change review packet required fields、valid template 與 21 個 invalid blocked cases
+  - 所有 invalid packet case 均機械化標記 BLOCKED，valid template 為 SCHEMA_VALID_PENDING_REVIEW
+  - baseline/fixture/rule summary/verdict delta/reviewer approval/rollback/non-unlock attestation 規則已落地
+  - provider/recommendation/production/EV/CLV/Kelly/stake/profit/provider/real odds/live-paid API unlock 皆維持 false
+  - 明確聲明 baseline change approval 不等於 legal provider approval 或 production readiness
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-# 5. source snapshot
-wc -l data/tsl_odds_history.jsonl
-shasum -a 256 data/tsl_odds_history.jsonl
-```
+# Active Task: P129 Replay Drift Alert Contract
 
-## 輸出報告位置
+- 任務編號：P129
+- 狀態：已完成 replay drift alert contract、測試、報告、治理驗證
+- 產出：
+  - scripts/_p129_replay_drift_alert_contract.py
+  - tests/test_p129_replay_drift_alert_contract.py
+  - data/mlb_2026/derived/p129_replay_drift_alert_contract_summary.json
+  - report/p129_replay_drift_alert_contract_20260601.md
+- 測試：
+  - tests/test_p129_replay_drift_alert_contract.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立固定 alert levels（GREEN/YELLOW/ORANGE/RED/CRITICAL）、escalation 規則與 blocking conditions
+  - 定義 baseline hash change review 必填欄位與 non-unlock attestation
+  - 定義 verdict/blocked reason/rule matrix/unlock prevention/fingerprint/reproducibility drift handling 規則
+  - provider/recommendation/production/EV/CLV/Kelly/stake/profit unlock 皆維持 false
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-- JSON artifacts: `data/paper_recommendations/p23_*_20260520.json` (4 個)
-- MD reports: `report/p23_*_20260520.md` (5 個)
-- BettingPlan 交接: `00-BettingPlan/20260520/p23_gate_and_reproducibility_reconciliation_20260520.md`
+# Active Task: P128 Deterministic Replay Consistency Gate
 
-## Final Classification（任務結束時擇一）
+- 任務編號：P128
+- 狀態：已完成 deterministic replay consistency gate、測試、報告、治理驗證
+- 產出：
+  - scripts/_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - data/mlb_2026/derived/p128_deterministic_replay_consistency_gate_summary.json
+  - report/p128_deterministic_replay_consistency_gate_20260601.md
+- 測試：
+  - tests/test_p128_deterministic_replay_consistency_gate.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 對同一組 P127 輸入執行 3 次 replay，fingerprint/verdict/blocked_reason/rule_matrix/unlock_prevention 全部一致
+  - 每次 replay 均維持 evaluated=19、expected_blocked=19、actual_blocked=19、unexpected_allowed=0
+  - drift_detected=false，drift_details=[]
+  - provider/recommendation/production/EV/CLV/Kelly/stake/profit unlock 皆維持 false
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-- `P23_GATE_AND_REPRODUCIBILITY_RECONCILED` — 三項全部完成且 regression PASS
-- `P23_PAIR_COUNT_DELTA_REQUIRES_REVIEW` — gate 解決但 pair delta 無法解釋
-- `P23_BLOCKED_BY_TEST_REGRESSION` — regression rerun 出現 FAIL
-- `P23_BLOCKED_BY_SCOPE_VIOLATION` — 任務過程逾越禁止範圍
+# Active Task: P127 Intake Payload Evaluation Runner + Deterministic Gate Verdict Report
 
-## CEO Invariants（強制）
+- 任務編號：P127
+- 狀態：已完成 intake payload deterministic evaluation runner、verdict report、測試、治理驗證
+- 產出：
+  - scripts/_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - data/mlb_2026/derived/p127_intake_payload_evaluation_runner_verdict_report_summary.json
+  - report/p127_intake_payload_evaluation_runner_verdict_report_20260601.md
+- 測試：
+  - tests/test_p127_intake_payload_evaluation_runner_verdict_report.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 讀取 P126 negative intake fixtures，逐案輸出 deterministic verdict（全部 BLOCKED）
+  - 每案輸出 rule_ids、blocked_reasons、rule_evaluation_matrix、unlock_prevention_matrix
+  - unexpected_allowed_count 維持 0，並保留 reproducibility metadata（固定排序 + hash）
+  - provider/recommendation/production/EV/CLV/Kelly/stake/profit unlock 皆維持 false
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、治理驗證、合約審查
+- 下一步：待指示
 
-- `paper_only=true` 全程維持
-- promotion / champion replacement / production proposal / live API / crawler modification 全部禁止
-- PR #2 不得 merge
-- `fixed_edge_5pct` champion 保留
-- 主軸一 (paper recommendation) 與主軸二 (optimizer diagnostic) **今日不啟動**
+# Active Task: P121 Provider Authorization Evidence Placeholder
+
+- 任務編號：P121
+- 狀態：已完成 evidence placeholder 產出、測試、報告、治理驗證
+- 產出：
+  - scripts/_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - data/mlb_2026/derived/p121_provider_authorization_evidence_placeholder_summary.json
+  - report/p121_provider_authorization_evidence_placeholder_20260531.md
+- 測試：
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+- 狀態說明：
+  - Placeholder 結構、evidence schema、blocker、禁止行為皆驗證通過
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、合約驗證、治理審查
+- 下一步：待指示
+
+# Active Task: P122 Paper-Only Recommendation Readiness Review
+
+- 任務編號：P122
+- 狀態：已完成 readiness review 產出、測試、報告、治理驗證
+- 產出：
+  - scripts/_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - data/mlb_2026/derived/p122_paper_only_recommendation_readiness_review_summary.json
+  - report/p122_paper_only_recommendation_readiness_review_20260601.md
+- 測試：
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - P112-P121 readiness matrix、blockers、allowed/prohibited actions 已產出
+  - provider authorization 仍為 blocked，P121 placeholder 未被視為 legal approval
+  - full regression 狀態明確標記為 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、合約驗證、治理審查
+- 下一步：待指示
+
+# Active Task: P123 Provider Evidence Validation Gate
+
+- 任務編號：P123
+- 狀態：已完成 validation gate 產出、測試、報告、治理驗證
+- 產出：
+  - scripts/_p123_provider_evidence_validation_gate.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - data/mlb_2026/derived/p123_provider_evidence_validation_gate_summary.json
+  - report/p123_provider_evidence_validation_gate_20260601.md
+- 測試：
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - Gate 明確拒絕將 P121 placeholder 視為 legal provider approval
+  - provider_approved=false、authorization_evidence_present=false、placeholder_allowed_as_authorization=false
+  - recommendation/prod unlock 皆維持 false，paper-only / diagnostic-only 治理鎖保持有效
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、合約驗證、治理審查
+- 下一步：待指示
+
+# Active Task: P124 Legal Evidence Completeness Contract
+
+- 任務編號：P124
+- 狀態：已完成 legal evidence completeness contract 產出、測試、報告、治理驗證
+- 產出：
+  - scripts/_p124_legal_evidence_completeness_contract.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - data/mlb_2026/derived/p124_legal_evidence_completeness_contract_summary.json
+  - report/p124_legal_evidence_completeness_contract_20260601.md
+- 測試：
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 合約定義 legal evidence completeness 最小欄位群與 blocked state 規則
+  - placeholder 仍被視為 blocked，且不可作為 authorization
+  - provider/recommendation/production unlock 皆維持 false
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、合約驗證、治理審查
+- 下一步：待指示
+
+# Active Task: P125 Legal Evidence Intake Schema + Review Owner Gate
+
+- 任務編號：P125
+- 狀態：已完成 intake schema + review owner gate 產出、測試、報告、治理驗證
+- 產出：
+  - scripts/_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - data/mlb_2026/derived/p125_legal_evidence_intake_schema_review_owner_gate_summary.json
+  - report/p125_legal_evidence_intake_schema_review_owner_gate_20260601.md
+- 測試：
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立 paper-only intake schema 與 review owner gate
+  - review_owner/approval_owner/review_status/legal reference/scope/date/source trace/audit 缺失皆視為 blocked
+  - placeholder 與 unlock without approval 均維持 blocked
+  - provider/recommendation/production unlock 皆維持 false
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、合約驗證、治理審查
+- 下一步：待指示
+
+# Active Task: P126 Legal Evidence Intake Payload Fixture + Negative Gate Cases
+
+- 任務編號：P126
+- 狀態：已完成 intake payload fixture + negative gate cases 產出、測試、報告、治理驗證
+- 產出：
+  - scripts/_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - data/mlb_2026/derived/p126_legal_evidence_intake_payload_fixture_negative_cases_summary.json
+  - report/p126_legal_evidence_intake_payload_fixture_negative_cases_20260601.md
+- 測試：
+  - tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py
+  - tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py
+  - tests/test_p124_legal_evidence_completeness_contract.py
+  - tests/test_p123_provider_evidence_validation_gate.py
+  - tests/test_p122_paper_only_recommendation_readiness_review.py
+  - tests/test_p121_provider_authorization_evidence_placeholder.py
+  - tests/test_p120_legal_provider_authorization_checklist.py
+  - tests/test_p119_recommendation_row_gate_violation_fixture.py
+  - tests/test_p118_recommendation_row_validation_gate.py
+- 狀態說明：
+  - 建立合法證據 intake payload fixture 與負向案例集，所有負向案例預期皆為 BLOCKED
+  - placeholder/review owner/approval owner/legal reference/scope/date/source trace/audit/secret/unlock request 等風險路徑均被機械化覆蓋
+  - provider/recommendation/production unlock 皆維持 false
+  - full regression 狀態維持 NOT_RUN，未過度宣稱
+  - 無任何生產、推薦、賠率、投注、EV、CLV、Kelly 倉位等邏輯
+  - 僅允許 paper-only、diagnostic-only、合約驗證、治理審查
+- 下一步：待指示
+

@@ -1,0 +1,432 @@
+{
+  "phase": "P72B",
+  "task": "Prediction-vs-Market Objective Contract + P72A Strategy Decision Gate",
+  "date": "2026-05-26",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "p72a_results_used_as_ev_evidence": false,
+    "p72a_results_used_as_clv_evidence": false,
+    "p72a_results_used_as_kelly_evidence": false
+  },
+  "source_artifacts": {
+    "p72a_json": "data/mlb_2025/derived/p72a_odds_free_strategy_accuracy_backtest_summary.json",
+    "p72a_loaded": true,
+    "p72a_classification": "P72A_ODDS_FREE_PREDICTIVE_SIGNAL_CONFIRMED"
+  },
+  "objective_lanes": {
+    "n_lanes": 5,
+    "lanes": [
+      {
+        "lane_id": "PREDICTION_ONLY",
+        "name": "Outcome Prediction Accuracy",
+        "odds_required": false,
+        "api_key_required": false,
+        "allowed_metrics": [
+          "AUC",
+          "Brier score",
+          "log-loss",
+          "hit rate",
+          "ECE (calibration)",
+          "monthly stability",
+          "sample size",
+          "bootstrap CI",
+          "chronological stability"
+        ],
+        "allowed_conclusions": [
+          "predictive signal confirmed/weak/inconclusive/negative",
+          "accuracy ranking across strategies",
+          "sample-limited vs robust",
+          "model has directional skill",
+          "monthly consistency of accuracy"
+        ],
+        "forbidden_conclusions": [
+          "model generates profit (accuracy alone does not establish this)",
+          "model probability beats implied market probability (requires odds comparison)",
+          "closing-line advantage",
+          "betting recommendation",
+          "production deployment",
+          "Kelly fraction for real bets"
+        ],
+        "current_status": "ACTIVE",
+        "p72a_lane": true,
+        "note": "P72A operated entirely in this lane. Results are valid for ranking model accuracy. They do NOT establish market edge."
+      },
+      {
+        "lane_id": "MARKET_EDGE",
+        "name": "Market Edge Diagnostic",
+        "odds_required": true,
+        "api_key_required": true,
+        "required_inputs": [
+          "model probability (calibrated)",
+          "market implied probability (no-vig)",
+          "side mapping (home/away consistency)",
+          "odds source trace",
+          "pregame timestamp",
+          "edge = model_prob - market_implied_prob"
+        ],
+        "allowed_conclusions": [
+          "paper-only market edge diagnostic",
+          "edge positive/negative/near-zero",
+          "edge stability across months"
+        ],
+        "forbidden_conclusions": [
+          "unconditional profit assertion",
+          "production recommendation (without cross-year validation)",
+          "betting strategy ready for deployment"
+        ],
+        "current_status": "BLOCKED_AWAITING_ODDS",
+        "blocker": "THE_ODDS_API_KEY not configured; 2024 CSV unavailable",
+        "p72a_lane": false,
+        "note": "P64\u2013P66 attempted this lane with 2025 CSV odds. Mean edge = -0.032 (negative). Lane blocked for cross-year work. Unblocked only when historical odds API key is available."
+      },
+      {
+        "lane_id": "CLV",
+        "name": "Closing Line Value Diagnostic",
+        "odds_required": true,
+        "api_key_required": true,
+        "required_inputs": [
+          "pregame opening odds (timestamped)",
+          "closing odds (timestamped)",
+          "line movement audit trail",
+          "side comparability check",
+          "minimum 1000 games for robust CLV estimate"
+        ],
+        "allowed_conclusions": [
+          "closing-line movement diagnostic",
+          "beat-the-close frequency"
+        ],
+        "forbidden_conclusions": [
+          "bettable edge (unless sample >= 1000 and cross-year validated)"
+        ],
+        "current_status": "BLOCKED_AWAITING_PREGAME_ODDS",
+        "blocker": "No pregame timestamp-separated odds available; single-snapshot CSV only",
+        "p72a_lane": false,
+        "note": "CLV requires time-series odds (opening \u2192 closing). 2025 CSV was a single post-game snapshot. Unblocked only with multi-snapshot historical feed."
+      },
+      {
+        "lane_id": "EV_KELLY_BANKROLL",
+        "name": "Expected Value / Kelly / Bankroll Sizing",
+        "odds_required": true,
+        "api_key_required": true,
+        "required_inputs": [
+          "calibrated model probability",
+          "market decimal odds",
+          "payout assumptions",
+          "bankroll policy",
+          "position sizing rules",
+          "risk control approval"
+        ],
+        "allowed_conclusions": [
+          "theoretical Kelly fraction (paper, diagnostic only)",
+          "paper bankroll simulation (no real deployment)"
+        ],
+        "forbidden_conclusions": [
+          "deploy Kelly fractions to real bets (ever, without CEO approval)",
+          "claim profitability from theoretical Kelly alone"
+        ],
+        "current_status": "BLOCKED_ODDS_AND_APPROVAL_REQUIRED",
+        "blocker": "Requires odds + calibrated edge confirmation + CEO deployment approval",
+        "p72a_lane": false,
+        "note": "P62\u2013P64 computed theoretical Kelly fractions for paper purposes only. kelly_deploy_allowed=False always. P72A AUC/hit-rate results are NOT inputs to this lane."
+      },
+      {
+        "lane_id": "PRODUCTION_RECOMMENDATION",
+        "name": "Production Betting Recommendation",
+        "odds_required": true,
+        "api_key_required": true,
+        "required_gates": [
+          "GATE_01: prediction accuracy confirmed (AUC >= threshold, n >= threshold)",
+          "GATE_02: calibration confirmed (ECE <= 0.12)",
+          "GATE_03: market edge confirmed (positive mean edge, CI low > 0)",
+          "GATE_04: odds source trace verified",
+          "GATE_05: pregame timestamp integrity verified",
+          "GATE_06: risk controls and bankroll policy approved",
+          "GATE_07: monitoring contract active (P52 V2 or successor)",
+          "GATE_08: CEO explicit authorization"
+        ],
+        "current_status": "BLOCKED",
+        "gates_passed": 1,
+        "gates_pending": 7,
+        "allowed_conclusions": [],
+        "forbidden_conclusions": [
+          "any production recommendation while BLOCKED"
+        ],
+        "p72a_lane": false,
+        "note": "All 8 gates must pass before any production recommendation. P72A passes GATE_01 partially (accuracy confirmed, single 2025 season). GATE_03\u2013GATE_08 remain blocked. No production recommendation is authorized."
+      }
+    ]
+  },
+  "p72a_strategy_classifications": [
+    {
+      "strategy_id": "S00_BASELINE_ALL",
+      "n": 2025,
+      "auc": 0.5716,
+      "hit_rate": 0.5299,
+      "monthly_stability": "STABLE",
+      "sample_tier": "HIGH",
+      "predictive_signal": "CONFIRMED",
+      "market_edge_status": "NOT_EVALUATED_ODDS_REQUIRED",
+      "production_status": "BLOCKED",
+      "operational_role": "BASELINE_REFERENCE",
+      "recommended_next": "Use as accuracy baseline for all future comparisons",
+      "diagnostic_note": "Establishes random baseline for hit rate (53.0%) and AUC (0.572).",
+      "lane": "PREDICTION_ONLY",
+      "p72a_results_as_ev": false,
+      "p72a_results_as_clv": false,
+      "p72a_results_as_kelly": false
+    },
+    {
+      "strategy_id": "S01_TIER_C_DIRECTIONAL",
+      "n": 535,
+      "auc": 0.5834,
+      "hit_rate": 0.6056,
+      "monthly_stability": "STABLE",
+      "sample_tier": "HIGH",
+      "predictive_signal": "CONFIRMED",
+      "market_edge_status": "NOT_EVALUATED_ODDS_REQUIRED",
+      "production_status": "BLOCKED",
+      "operational_role": "PRIMARY_OPERATIONAL_CANDIDATE",
+      "recommended_next": "P73A: Tier C deep-dive \u2014 sub-tier stability, home/away decomposition, bootstrap CI expansion",
+      "diagnostic_note": "n=535 with 6/6 monthly stability. Best balance of sample size and confirmed signal. Recommended for operational evaluation if odds ever available.",
+      "lane": "PREDICTION_ONLY",
+      "p72a_results_as_ev": false,
+      "p72a_results_as_clv": false,
+      "p72a_results_as_kelly": false
+    },
+    {
+      "strategy_id": "S02_TIER_B_DIRECTIONAL",
+      "n": 98,
+      "auc": 0.6461,
+      "hit_rate": 0.5918,
+      "monthly_stability": "UNSTABLE",
+      "sample_tier": "LOW",
+      "predictive_signal": "CONFIRMED",
+      "market_edge_status": "NOT_EVALUATED_ODDS_REQUIRED",
+      "production_status": "BLOCKED",
+      "operational_role": "BEST_AUC_DIAGNOSTIC_CANDIDATE",
+      "recommended_next": "P73B: Tier B sample expansion \u2014 expand to multi-year data if available; cross-validation",
+      "diagnostic_note": "Highest AUC (0.646) but n=98 and monthly stability=UNSTABLE. NOT production-ready. Research candidate only until n >= 200 and stability improves.",
+      "lane": "PREDICTION_ONLY",
+      "p72a_results_as_ev": false,
+      "p72a_results_as_clv": false,
+      "p72a_results_as_kelly": false
+    },
+    {
+      "strategy_id": "S03_TIER_A_DIRECTIONAL",
+      "n": 24,
+      "auc": 0.5546,
+      "hit_rate": 0.7083,
+      "monthly_stability": "UNSTABLE",
+      "sample_tier": "SAMPLE_LIMITED",
+      "predictive_signal": "SAMPLE_LIMITED",
+      "market_edge_status": "NOT_EVALUATED_ODDS_REQUIRED",
+      "production_status": "BLOCKED",
+      "operational_role": "WATCHLIST_ONLY",
+      "recommended_next": "Hold watchlist \u2014 do not evaluate until n >= 50",
+      "diagnostic_note": "n=24, SAMPLE_LIMITED. Hit rate 70.8% is statistically unreliable at this sample size. Wide CI [0.500, 0.875] confirms. Do not draw conclusions.",
+      "lane": "PREDICTION_ONLY",
+      "p72a_results_as_ev": false,
+      "p72a_results_as_clv": false,
+      "p72a_results_as_kelly": false
+    },
+    {
+      "strategy_id": "S04_TIER_C_PLATT_CALIBRATED",
+      "n": 535,
+      "auc": 0.5932,
+      "hit_rate": 0.5664,
+      "monthly_stability": "STABLE",
+      "sample_tier": "HIGH",
+      "predictive_signal": "CONFIRMED",
+      "market_edge_status": "NOT_EVALUATED_ODDS_REQUIRED",
+      "production_status": "BLOCKED",
+      "operational_role": "CALIBRATION_REFERENCE",
+      "recommended_next": "P73C: Compare raw vs Platt probability quality; evaluate if calibration helps future odds-lane work",
+      "diagnostic_note": "Platt calibration improves AUC (0.593 vs 0.583 raw) but reduces hit rate (0.566 vs 0.606). Better for probability accuracy; directional picks prefer raw.",
+      "lane": "PREDICTION_ONLY",
+      "p72a_results_as_ev": false,
+      "p72a_results_as_clv": false,
+      "p72a_results_as_kelly": false
+    },
+    {
+      "strategy_id": "S05_HOME_FAVOR_STRONG",
+      "n": 268,
+      "auc": 0.5591,
+      "hit_rate": 0.6716,
+      "monthly_stability": "MODERATE",
+      "sample_tier": "MEDIUM",
+      "predictive_signal": "WEAK",
+      "market_edge_status": "NOT_EVALUATED_ODDS_REQUIRED",
+      "production_status": "BLOCKED",
+      "operational_role": "HOME_ADVANTAGE_SIGNAL",
+      "recommended_next": "P73A: Include in Tier C deep-dive as home-side sub-analysis",
+      "diagnostic_note": "Hit rate 67.2% \u2014 strongest raw hit rate in the set. Home advantage may partially explain; needs home-bias adjustment for fair comparison.",
+      "lane": "PREDICTION_ONLY",
+      "p72a_results_as_ev": false,
+      "p72a_results_as_clv": false,
+      "p72a_results_as_kelly": false
+    },
+    {
+      "strategy_id": "S06_AWAY_FAVOR_STRONG",
+      "n": 267,
+      "auc": 0.545,
+      "hit_rate": 0.5393,
+      "monthly_stability": "MODERATE",
+      "sample_tier": "MEDIUM",
+      "predictive_signal": "WEAK",
+      "market_edge_status": "NOT_EVALUATED_ODDS_REQUIRED",
+      "production_status": "BLOCKED",
+      "operational_role": "AWAY_UNDERPERFORMER",
+      "recommended_next": "Deprioritize; investigate why away picks underperform vs home picks",
+      "diagnostic_note": "Hit rate 53.9% barely above baseline. Away FIP delta advantage is not translating into outcomes at the same rate as home-favored games.",
+      "lane": "PREDICTION_ONLY",
+      "p72a_results_as_ev": false,
+      "p72a_results_as_clv": false,
+      "p72a_results_as_kelly": false
+    }
+  ],
+  "decision_thresholds": {
+    "tier_c_operational_candidate": {
+      "minimum_n": 500,
+      "minimum_auc": 0.56,
+      "minimum_hit_rate": 0.58,
+      "monthly_stability": "STABLE",
+      "brier_maximum": 0.25,
+      "bootstrap_ci_required": true,
+      "ci_low_above_baseline": true,
+      "baseline_hit_rate": 0.53,
+      "status": "MEETS_THRESHOLD",
+      "evidence": "S01 n=535, AUC=0.583, hit_rate=0.606, stability=STABLE, CI_low=0.565 > 0.530"
+    },
+    "tier_b_research_candidate": {
+      "minimum_n": 75,
+      "minimum_auc": 0.62,
+      "ci_low_above_random": true,
+      "random_auc_threshold": 0.5,
+      "stability_required": "any",
+      "status": "MEETS_THRESHOLD_WITH_CAVEATS",
+      "evidence": "S02 n=98 >= 75, AUC=0.646 >= 0.62, CI_low=0.535 > 0.50; BUT stability=UNSTABLE",
+      "caveat": "Monthly stability UNSTABLE \u2014 research candidate only, not operational"
+    },
+    "tier_a_watchlist": {
+      "threshold": "n < 50",
+      "status": "WATCHLIST_ONLY",
+      "evidence": "S03 n=24 \u2014 SAMPLE_LIMITED, CI too wide for conclusions"
+    },
+    "production_gate": {
+      "status": "BLOCKED",
+      "requires_all_of": [
+        "prediction accuracy confirmed (multi-year)",
+        "market edge confirmed (positive mean edge with CI_low > 0)",
+        "calibration ECE <= 0.12",
+        "odds source trace verified",
+        "pregame timestamp integrity",
+        "risk controls approved",
+        "monitoring contract active",
+        "CEO explicit authorization"
+      ],
+      "gates_passed": 1,
+      "gates_total": 8
+    }
+  },
+  "p73_recommended_paths": [
+    {
+      "path_id": "P73A",
+      "name": "Tier C Operational Stability Deep-Dive",
+      "priority": "PRIMARY",
+      "rationale": "S01_TIER_C_DIRECTIONAL is the primary operational candidate: n=535, hit_rate=0.606, AUC=0.583, 6/6 monthly stability. Deep-dive should: (1) sub-tier stability by sp_fip_delta band within Tier C, (2) home vs away decomposition, (3) pitcher identity stability, (4) bootstrap CI expansion, (5) year-over-year comparison if 2024 data becomes available.",
+      "odds_required": false,
+      "prerequisite": "P72A completed \u2705",
+      "blocker": null,
+      "recommended_order": 1
+    },
+    {
+      "path_id": "P73B",
+      "name": "Tier B Sample Expansion / Cross-Validation",
+      "priority": "PRIMARY",
+      "rationale": "S02_TIER_B_DIRECTIONAL has best AUC (0.646) but n=98 and unstable monthly pattern. P73B should: (1) examine individual month volatility causes, (2) attempt multi-year comparison if 2024 data resolves, (3) expand to rolling windows, (4) confirm whether AUC improvement is real or sampling.",
+      "odds_required": false,
+      "prerequisite": "P72A completed \u2705",
+      "blocker": "Low n \u2014 may need 2024 data for cross-year validation",
+      "recommended_order": 2
+    },
+    {
+      "path_id": "P73C",
+      "name": "Calibration Improvement for Odds-Free Probability",
+      "priority": "SECONDARY",
+      "rationale": "S04_TIER_C_PLATT shows AUC=0.593 > raw 0.583, confirming Platt calibration improves probability accuracy. P73C should investigate whether further calibration (isotonic, temperature scaling) improves the prediction-only metrics without requiring odds.",
+      "odds_required": false,
+      "prerequisite": "P45 Platt calibration completed \u2705",
+      "blocker": null,
+      "recommended_order": 3
+    },
+    {
+      "path_id": "P73D",
+      "name": "Market-Edge Lane Resume (API Key Required)",
+      "priority": "DEFERRED",
+      "rationale": "Market-edge diagnostics (P64\u2013P66 showed -0.032 mean edge) require historical odds. The_Odds_API_KEY must be configured before this path can proceed. 2024 historical odds acquisition is the pre-requisite.",
+      "odds_required": true,
+      "prerequisite": "THE_ODDS_API_KEY in .env + historical data pull",
+      "blocker": "THE_ODDS_API_KEY not configured",
+      "recommended_order": 4
+    },
+    {
+      "path_id": "P73E",
+      "name": "Doubleheader Join Disambiguation",
+      "priority": "SECONDARY",
+      "rationale": "Some game_id deduplication issues may affect sample counts. P73E should audit game_id uniqueness, doubleheader handling, and confirm 2025 n=2025 is clean before expansion work.",
+      "odds_required": false,
+      "prerequisite": "Access to prediction JSONL",
+      "blocker": null,
+      "recommended_order": 5
+    }
+  ],
+  "primary_recommended_p73": [
+    "P73A",
+    "P73B"
+  ],
+  "deferred_p73": [
+    "P73D"
+  ],
+  "key_findings": {
+    "prediction_accuracy_confirmed": true,
+    "market_edge_evaluated": false,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "p72a_results_as_ev_or_clv": false,
+    "production_blocked": true,
+    "best_prediction_candidate": "S01_TIER_C_DIRECTIONAL (operational) + S02_TIER_B_DIRECTIONAL (research)",
+    "sample_limited_strategies": [
+      "S03_TIER_A_DIRECTIONAL"
+    ]
+  },
+  "interpretation_boundary": "P72A confirmed the model has directional predictive skill (AUC > 0.50 across tiers). This means the model predicts game outcomes better than chance. It does NOT mean bets on this model produce positive expected value against market odds. Market edge requires: (1) odds data, (2) calibrated probability comparison to implied odds, (3) pregame timing integrity, (4) cross-year validation. None of these have been established for 2025 (P64\u2013P66 showed negative edge -0.032).",
+  "p72b_classification": "P72B_OBJECTIVE_CONTRACT_READY",
+  "allowed_classifications": [
+    "P72B_OBJECTIVE_CONTRACT_READY",
+    "P72B_OBJECTIVE_CONTRACT_READY_WITH_LIMITATIONS",
+    "P72B_BLOCKED_BY_MISSING_P72A_ARTIFACT",
+    "P72B_BLOCKED_BY_GOVERNANCE_DRIFT",
+    "P72B_FAILED_VALIDATION"
+  ],
+  "forbidden_claims_verified": {
+    "profitability_claimed": false,
+    "ev_claimed": false,
+    "clv_claimed": false,
+    "kelly_deployed": false,
+    "production_proposed": false,
+    "result": "CLEAN"
+  }
+}

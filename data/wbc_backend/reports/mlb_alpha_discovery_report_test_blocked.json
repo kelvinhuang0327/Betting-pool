@@ -16,7 +16,7 @@
     "scope": "historical 2025 MLB",
     "source": "wbc_backend/research/mlb_alpha_lab.py",
     "status": "RESEARCH_VALID",
-    "generated_at": "2026-05-20T09:47:41.569496Z"
+    "generated_at": "2026-05-23T13:19:45.427425Z"
   },
   "research_scope": {
     "framing": "single_snapshot_benchmark",

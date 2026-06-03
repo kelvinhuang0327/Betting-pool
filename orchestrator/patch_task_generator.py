@@ -52,7 +52,7 @@ def _calibration_patch(ins: dict) -> dict:
         "title": "MLB Calibration Patch: Regime-Stratified Platt vs Isotonic Recalibration",
         "focus_keys": "mlb_calibration,platt,isotonic,regime,brier,patch,paper_only",
         "signal_state_type": "model_patch_calibration",
-        "expected_duration_hours": 8,
+        "expected_duration_hours": 2,
         "insight_id": ins["id"],
         "safety_level": "paper_only",
         "objective": (
@@ -99,7 +99,7 @@ def _feature_patch(ins: dict) -> dict:
         "title": "MLB Feature Patch: Remove Leakage Features and Add Bullpen Fatigue Proxy",
         "focus_keys": "mlb_features,leakage_removal,bullpen_fatigue,starter_quality,patch,paper_only",
         "signal_state_type": "model_patch_feature",
-        "expected_duration_hours": 8,
+        "expected_duration_hours": 2,
         "insight_id": ins["id"],
         "safety_level": "paper_only",
         "objective": (
@@ -145,7 +145,7 @@ def _regime_patch(ins: dict) -> dict:
         "title": "MLB Regime Patch: Refine small_edge / weak_starter Boundary and Add Volatility Regime",
         "focus_keys": "mlb_regime,small_edge,weak_starter,boundary,volatility,patch,paper_only",
         "signal_state_type": "model_patch_regime",
-        "expected_duration_hours": 8,
+        "expected_duration_hours": 2,
         "insight_id": ins["id"],
         "safety_level": "paper_only",
         "objective": (
@@ -190,7 +190,7 @@ def _clv_patch(ins: dict) -> dict:
         "title": "MLB CLV Patch: Closing Odds Proxy for Missing External Data and Staleness Filter",
         "focus_keys": "mlb_clv,closing_proxy,staleness_filter,odds_timeline,patch,paper_only",
         "signal_state_type": "model_patch_clv",
-        "expected_duration_hours": 8,
+        "expected_duration_hours": 2,
         "insight_id": ins["id"],
         "safety_level": "paper_only",
         "objective": (
@@ -235,7 +235,7 @@ def _feedback_patch(ins: dict) -> dict:
         "title": "MLB Feedback Patch: Settlement Completeness Tracker and ROI Attribution by Regime",
         "focus_keys": "mlb_settlement,roi_by_regime,bad_bet_filter,feedback_loop,patch,paper_only",
         "signal_state_type": "model_patch_feedback",
-        "expected_duration_hours": 8,
+        "expected_duration_hours": 2,
         "insight_id": ins["id"],
         "safety_level": "paper_only",
         "objective": (
@@ -280,7 +280,7 @@ def _backtest_validity_patch(ins: dict) -> dict:
         "title": "MLB Backtest Patch: Fix Walk-Forward Split Leakage and Add Pregame Timestamp Guard",
         "focus_keys": "mlb_backtest,split_leakage,timestamp_guard,walkforward,patch,paper_only",
         "signal_state_type": "model_patch_backtest",
-        "expected_duration_hours": 8,
+        "expected_duration_hours": 2,
         "insight_id": ins["id"],
         "safety_level": "paper_only",
         "objective": (
@@ -329,7 +329,7 @@ def _build_validation_blueprint(ins: dict) -> dict:
         "title": f"MLB Validation: Backtest Verification of {category_label} Patch Results",
         "focus_keys": f"mlb_validation,{ins.get('category', 'unknown')},brier,logloss,roi,paper_only",
         "signal_state_type": "model_validation_backtest",
-        "expected_duration_hours": 8,
+        "expected_duration_hours": 2,
         "insight_id": ins["id"],
         "safety_level": "paper_only",
         "objective": (

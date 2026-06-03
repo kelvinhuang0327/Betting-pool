@@ -1,0 +1,740 @@
+{
+  "version": "P51_v1",
+  "audit_date": "2026-05-26",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false,
+    "p48_contract_overwritten": false,
+    "p49_artifact_overwritten": false
+  },
+  "source_artifacts": [
+    "p43_strong_edge_closing_line_edge_summary.json",
+    "p44_temporal_stability_summary.json",
+    "p45_platt_recalibration_summary.json",
+    "p47_calibration_synthesis_summary.json",
+    "p48_monitoring_loop_contract_summary.json",
+    "p49_offline_historical_monitoring_replay_summary.json",
+    "p50_edge_drift_root_cause_audit_summary.json",
+    "mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl"
+  ],
+  "platt_coefficients": {
+    "platt_a": 0.435432,
+    "platt_b": 0.245464,
+    "sigmoid_k": 0.8,
+    "clip_eps": 1e-07,
+    "source": "P45 locked"
+  },
+  "tier_c_verification": {
+    "n": 535,
+    "expected_n": 535,
+    "note": "Tier C = 2025 games with sp_fip_delta and market_home_prob_no_vig and home_win available"
+  },
+  "p50_root_cause_recap": {
+    "final_classification": "P50_PROBABILITY_STREAM_MISMATCH_CONFIRMED_DIAGNOSTIC",
+    "root_cause_primary": "Model probability stream mismatch: P49 used model_home_prob (ML, regularized toward 0.5); P44 used sigmoid(sp_fip_delta) (FIP signal, k=1.0).",
+    "root_cause_secondary": "Edge perspective: P49 home-perspective (negative for away picks); P44 side-aware (always positive for model-backed side).",
+    "root_cause_tertiary": "CI method: P49 normal approximation; P44 bootstrap(5000, seed=42).",
+    "fip_signal_result": "fip_signal_side_aware_edge monthly_critical=0, rolling_critical=0 (per P50 Task B)."
+  },
+  "revised_metric_ownership_matrix": [
+    {
+      "metric_name": "side_aware_raw_edge",
+      "metric_family": "EDGE_SIGNAL",
+      "selected_probability_stream": "RAW_SIGMOID",
+      "probability_source": "sigmoid(1.0 * sp_fip_delta) \u2014 FIP signal",
+      "rationale": "P43/P44 edge framework uses sigmoid(sp_fip_delta) as model probability. This is the canonical edge signal. P49 replaced this with trained ML model_home_prob (regularized toward 0.5), causing P50-confirmed stream mismatch. Revised contract restores FIP-signal edge for edge monitoring.",
+      "source_phase_reference": "P43, P44, P50 (fip_signal_side_aware_edge)",
+      "allowed_alert_types": [
+        "EDGE_SIGNAL_ALERT",
+        "SAMPLE_ALERT"
+      ],
+      "should_drive_monitoring_status": true,
+      "edge_perspective": "SIDE_AWARE",
+      "market_source": "embedded_no_vig",
+      "ci_method": "bootstrap_5000_seed42",
+      "warning_threshold": "mean_edge < 0.07",
+      "critical_threshold": "CI_low <= 0"
+    },
+    {
+      "metric_name": "platt_ece",
+      "metric_family": "CALIBRATION",
+      "selected_probability_stream": "PLATT_CALIBRATED",
+      "probability_source": "Platt scaling: A=0.435432, B=0.245464 (locked from P45)",
+      "rationale": "ECE measures calibration accuracy; Platt-calibrated probabilities are more reliable than raw sigmoid for calibration metrics (P45/P47 conclusion). Do NOT use raw sigmoid for ECE \u2014 conflates edge signal with calibration quality.",
+      "source_phase_reference": "P45, P46, P47, P48",
+      "allowed_alert_types": [
+        "CALIBRATION_ALERT",
+        "SAMPLE_ALERT"
+      ],
+      "should_drive_monitoring_status": true,
+      "warning_threshold": "rolling ECE > 0.10",
+      "critical_threshold": "rolling ECE > 0.12"
+    },
+    {
+      "metric_name": "platt_brier",
+      "metric_family": "CALIBRATION",
+      "selected_probability_stream": "PLATT_CALIBRATED",
+      "probability_source": "Platt scaling: A=0.435432, B=0.245464 (locked from P45)",
+      "rationale": "Brier score decomposes into calibration + resolution components. Use Platt-calibrated probabilities consistent with ECE to avoid comparing incompatible probability scales.",
+      "source_phase_reference": "P45, P46, P47, P48",
+      "allowed_alert_types": [
+        "CALIBRATION_ALERT",
+        "SAMPLE_ALERT"
+      ],
+      "should_drive_monitoring_status": true,
+      "warning_threshold": "rolling Brier > 0.25",
+      "critical_threshold": "rolling Brier > 0.27"
+    },
+    {
+      "metric_name": "isotonic_calibration",
+      "metric_family": "CALIBRATION_COMPARISON",
+      "selected_probability_stream": "ISOTONIC_CALIBRATED",
+      "probability_source": "Isotonic regression (P46)",
+      "rationale": "P46 found Platt superior for this dataset. Isotonic retained for comparison only, not selected as monitoring baseline. P46 non-selection stands until future data contradicts it.",
+      "source_phase_reference": "P46",
+      "allowed_alert_types": [],
+      "should_drive_monitoring_status": false,
+      "note": "COMPARISON_ONLY \u2014 not selected per P46"
+    },
+    {
+      "metric_name": "batch_sample_size",
+      "metric_family": "SAMPLE",
+      "selected_probability_stream": "N/A",
+      "probability_source": "N/A \u2014 count of games in batch",
+      "rationale": "Batch with n < 100 cannot reliably estimate edge CI or ECE. Sample limited status dominates WARNING. Does not dominate CRITICAL.",
+      "source_phase_reference": "P48",
+      "allowed_alert_types": [
+        "SAMPLE_ALERT"
+      ],
+      "should_drive_monitoring_status": true,
+      "sample_limited_threshold": "batch_n < 100"
+    },
+    {
+      "metric_name": "closing_line_data_availability",
+      "metric_family": "DATA_GAP",
+      "selected_probability_stream": "N/A",
+      "probability_source": "N/A \u2014 data completeness check",
+      "rationale": "2024 closing-line data gap (P43_BLOCKED_BY_DATA_GAP) limits cross-year validation. For 2025-only replay this is not a blocker. DATA_GAP_BLOCKED dominates all other alert levels.",
+      "source_phase_reference": "P43, P48, P49, P50",
+      "allowed_alert_types": [
+        "DATA_GAP_ALERT"
+      ],
+      "should_drive_monitoring_status": true,
+      "blocked_condition": "closing_line_source_missing for target year",
+      "note_2024_gap": "2024 gap is cross-year limitation \u2014 not blocker for 2025-only replay"
+    }
+  ],
+  "revised_alert_rules": {
+    "edge": {
+      "probability_stream": "RAW_SIGMOID (sigmoid(sp_fip_delta), side-aware)",
+      "edge_perspective": "SIDE_AWARE",
+      "market_source": "embedded_no_vig (prediction-time)",
+      "ci_method": "bootstrap_5000_seed42",
+      "warning_condition": "rolling mean_edge < 0.07",
+      "critical_condition": "edge CI_low <= 0",
+      "note": "Threshold semantics validated against P44 monthly stability: all 6 months 2025-04 to 2025-09 have CI_low > 0 under fip_signal_side_aware_edge. P48 thresholds (0.07 warn, CI_crosses_zero crit) are appropriate for this stream."
+    },
+    "calibration": {
+      "probability_stream": "PLATT_CALIBRATED",
+      "ece_warning": 0.1,
+      "ece_critical": 0.12,
+      "brier_warning": 0.25,
+      "brier_critical": 0.27,
+      "note": "Thresholds unchanged from P48. Only stream assignment enforced."
+    },
+    "sample": {
+      "sample_limited_condition": "batch_n < 100",
+      "dominance": "SAMPLE_LIMITED dominates WARNING; does NOT dominate CRITICAL"
+    },
+    "data_gap": {
+      "blocked_condition": "closing_line_source_missing for required year",
+      "dominance": "DATA_GAP_BLOCKED dominates all alert levels",
+      "note_2024": "2024 closing-line data gap remains unresolved (P43_BLOCKED_BY_DATA_GAP). 2025-only replay not blocked."
+    },
+    "dominance_order": [
+      "DATA_GAP_BLOCKED overrides all",
+      "SAMPLE_LIMITED dominates WARNING (not CRITICAL)",
+      "CRITICAL dominates WARNING in multi-category alerts",
+      "MIXED_ALERTS when multiple metric families fire at same level",
+      "MONITORING_OK when no alert fires"
+    ],
+    "key_change_from_p48": "P49 used PLATT_CALIBRATED probability (model_home_prob after Platt) for EDGE monitoring. Revised contract assigns edge monitoring to RAW_SIGMOID (fip_signal_side_aware) and calibration monitoring to PLATT_CALIBRATED. These must NOT be swapped."
+  },
+  "old_vs_new_status_comparison": {
+    "monthly_old": {
+      "ok": 0,
+      "warning": 1,
+      "critical": 2,
+      "sample_limited": 3
+    },
+    "monthly_new": {
+      "ok": 3,
+      "warning": 0,
+      "critical": 1,
+      "sample_limited": 2
+    },
+    "rolling_old": {
+      "ok": 2,
+      "warning": 4,
+      "critical": 5,
+      "sample_limited": 0
+    },
+    "rolling_new": {
+      "ok": 6,
+      "warning": 3,
+      "critical": 2,
+      "sample_limited": 0
+    },
+    "monthly_false_critical_eliminated": 1,
+    "rolling_false_critical_eliminated": 3,
+    "monthly_status_changed_count": 4,
+    "rolling_status_changed_count": 11
+  },
+  "monthly_replay_under_revised_contract": {
+    "rows": [
+      {
+        "month": "2025-04",
+        "n": 16,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.133344,
+        "fip_edge_ci_low": 0.093619,
+        "fip_edge_ci_high": 0.172465,
+        "fip_positive_edge_rate": 0.9375,
+        "platt_ece": 0.082364,
+        "platt_brier": 0.252671,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "CALIBRATION_WARNING",
+        "sample_status": "SAMPLE_LIMITED",
+        "final_status": "SAMPLE_LIMITED",
+        "alert_reasons": [
+          "sample_limited: batch_n=16 < 100",
+          "brier_warning: brier=0.2527 > 0.25"
+        ],
+        "old_p49_status": "SAMPLE_LIMITED",
+        "old_p49_alert_level": "WARNING",
+        "old_p49_mean_edge": 0.035931,
+        "old_p49_edge_ci_low": 0.012107,
+        "old_p49_edge_ci_high": 0.059756,
+        "status_changed": false,
+        "reason_for_change": []
+      },
+      {
+        "month": "2025-05",
+        "n": 120,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.142802,
+        "fip_edge_ci_low": 0.12557,
+        "fip_edge_ci_high": 0.159801,
+        "fip_positive_edge_rate": 0.9333,
+        "platt_ece": 0.059515,
+        "platt_brier": 0.237783,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_CRITICAL",
+        "old_p49_alert_level": "CRITICAL",
+        "old_p49_mean_edge": 0.009288,
+        "old_p49_edge_ci_low": -0.000413,
+        "old_p49_edge_ci_high": 0.018988,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 CRITICAL was edge_ci_crosses_zero under PLATT_CALIBRATED home-perspective; revised contract uses fip_signal_side_aware_edge (sigmoid(sp_fip_delta)) where CI_low > 0"
+        ]
+      },
+      {
+        "month": "2025-06",
+        "n": 101,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.148204,
+        "fip_edge_ci_low": 0.129887,
+        "fip_edge_ci_high": 0.167584,
+        "fip_positive_edge_rate": 0.9109,
+        "platt_ece": 0.051883,
+        "platt_brier": 0.240113,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_CRITICAL",
+        "old_p49_alert_level": "CRITICAL",
+        "old_p49_mean_edge": -0.023097,
+        "old_p49_edge_ci_low": -0.04103,
+        "old_p49_edge_ci_high": -0.005164,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 CRITICAL was edge_ci_crosses_zero under PLATT_CALIBRATED home-perspective; revised contract uses fip_signal_side_aware_edge (sigmoid(sp_fip_delta)) where CI_low > 0"
+        ]
+      },
+      {
+        "month": "2025-07",
+        "n": 92,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.145478,
+        "fip_edge_ci_low": 0.127461,
+        "fip_edge_ci_high": 0.16432,
+        "fip_positive_edge_rate": 0.9783,
+        "platt_ece": 0.050764,
+        "platt_brier": 0.239114,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "SAMPLE_LIMITED",
+        "final_status": "SAMPLE_LIMITED",
+        "alert_reasons": [
+          "sample_limited: batch_n=92 < 100"
+        ],
+        "old_p49_status": "SAMPLE_LIMITED",
+        "old_p49_alert_level": "WARNING",
+        "old_p49_mean_edge": -0.010054,
+        "old_p49_edge_ci_low": -0.023953,
+        "old_p49_edge_ci_high": 0.003844,
+        "status_changed": false,
+        "reason_for_change": []
+      },
+      {
+        "month": "2025-08",
+        "n": 108,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.137643,
+        "fip_edge_ci_low": 0.121767,
+        "fip_edge_ci_high": 0.153181,
+        "fip_positive_edge_rate": 0.9352,
+        "platt_ece": 0.043473,
+        "platt_brier": 0.247366,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_WARNING",
+        "old_p49_alert_level": "WARNING",
+        "old_p49_mean_edge": 0.032382,
+        "old_p49_edge_ci_low": 0.021382,
+        "old_p49_edge_ci_high": 0.043382,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 WARNING resolved under revised edge stream"
+        ]
+      },
+      {
+        "month": "2025-09",
+        "n": 98,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.146864,
+        "fip_edge_ci_low": 0.129772,
+        "fip_edge_ci_high": 0.163158,
+        "fip_positive_edge_rate": 0.9388,
+        "platt_ece": 0.122929,
+        "platt_brier": 0.235731,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "CALIBRATION_CRITICAL",
+        "sample_status": "SAMPLE_LIMITED",
+        "final_status": "CALIBRATION_CRITICAL",
+        "alert_reasons": [
+          "sample_limited: batch_n=98 < 100",
+          "ece_critical: ece=0.1229 > 0.12"
+        ],
+        "old_p49_status": "SAMPLE_LIMITED",
+        "old_p49_alert_level": "WARNING",
+        "old_p49_mean_edge": -0.00361,
+        "old_p49_edge_ci_low": -0.014382,
+        "old_p49_edge_ci_high": 0.007162,
+        "status_changed": true,
+        "reason_for_change": [
+          "Status changed from SAMPLE_LIMITED to CALIBRATION_CRITICAL under revised edge stream"
+        ]
+      }
+    ],
+    "summary": {
+      "total_months": 6,
+      "qualifying_months_n_ge_100": 3,
+      "sample_limited_months": 3,
+      "ok_count": 3,
+      "warning_count": 0,
+      "critical_count": 1,
+      "sample_limited_count": 2
+    }
+  },
+  "rolling_replay_under_revised_contract": {
+    "rows": [
+      {
+        "batch_id": "ROLLING_20250427_20250521_0100_REVISED",
+        "seq": 1,
+        "start_date": "2025-04-27",
+        "end_date": "2025-05-21",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.151658,
+        "fip_edge_ci_low": 0.13349,
+        "fip_edge_ci_high": 0.169795,
+        "fip_positive_edge_rate": 0.97,
+        "platt_ece": 0.1058,
+        "platt_brier": 0.242433,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "CALIBRATION_WARNING",
+        "sample_status": "MONITORING_OK",
+        "final_status": "CALIBRATION_WARNING",
+        "alert_reasons": [
+          "ece_warning: ece=0.1058 > 0.1"
+        ],
+        "old_p49_status": "MIXED_ALERTS",
+        "old_p49_batch_id": "ROLLING_20250427_20250521_N100",
+        "old_p49_mean_edge": 0.018971,
+        "old_p49_edge_ci_low": 0.009563,
+        "old_p49_edge_ci_high": 0.028379,
+        "status_changed": true,
+        "reason_for_change": [
+          "Status changed from MIXED_ALERTS to CALIBRATION_WARNING under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250509_20250605_0100_REVISED",
+        "seq": 2,
+        "start_date": "2025-05-09",
+        "end_date": "2025-06-05",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.139197,
+        "fip_edge_ci_low": 0.1192,
+        "fip_edge_ci_high": 0.159524,
+        "fip_positive_edge_rate": 0.9,
+        "platt_ece": 0.028467,
+        "platt_brier": 0.241364,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_CRITICAL",
+        "old_p49_batch_id": "ROLLING_20250509_20250605_N100",
+        "old_p49_mean_edge": -0.005092,
+        "old_p49_edge_ci_low": -0.018335,
+        "old_p49_edge_ci_high": 0.008151,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 CRITICAL alert was CI_crosses_zero under PLATT home-perspective; fip_signal_side_aware CI_low > 0 under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250523_20250619_0100_REVISED",
+        "seq": 3,
+        "start_date": "2025-05-23",
+        "end_date": "2025-06-19",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.138066,
+        "fip_edge_ci_low": 0.118781,
+        "fip_edge_ci_high": 0.157772,
+        "fip_positive_edge_rate": 0.89,
+        "platt_ece": 0.116374,
+        "platt_brier": 0.239724,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "CALIBRATION_WARNING",
+        "sample_status": "MONITORING_OK",
+        "final_status": "CALIBRATION_WARNING",
+        "alert_reasons": [
+          "ece_warning: ece=0.1164 > 0.1"
+        ],
+        "old_p49_status": "MIXED_ALERTS",
+        "old_p49_batch_id": "ROLLING_20250523_20250619_N100",
+        "old_p49_mean_edge": -0.018985,
+        "old_p49_edge_ci_low": -0.036459,
+        "old_p49_edge_ci_high": -0.001511,
+        "status_changed": true,
+        "reason_for_change": [
+          "Status changed from MIXED_ALERTS to CALIBRATION_WARNING under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250605_20250703_0100_REVISED",
+        "seq": 4,
+        "start_date": "2025-06-05",
+        "end_date": "2025-07-03",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.147886,
+        "fip_edge_ci_low": 0.129702,
+        "fip_edge_ci_high": 0.166374,
+        "fip_positive_edge_rate": 0.93,
+        "platt_ece": 0.077781,
+        "platt_brier": 0.234349,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_CRITICAL",
+        "old_p49_batch_id": "ROLLING_20250605_20250703_N100",
+        "old_p49_mean_edge": -0.012564,
+        "old_p49_edge_ci_low": -0.029675,
+        "old_p49_edge_ci_high": 0.004547,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 CRITICAL alert was CI_crosses_zero under PLATT home-perspective; fip_signal_side_aware CI_low > 0 under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250619_20250721_0100_REVISED",
+        "seq": 5,
+        "start_date": "2025-06-19",
+        "end_date": "2025-07-21",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.14554,
+        "fip_edge_ci_low": 0.127738,
+        "fip_edge_ci_high": 0.163705,
+        "fip_positive_edge_rate": 0.94,
+        "platt_ece": 0.066904,
+        "platt_brier": 0.230962,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_CRITICAL",
+        "old_p49_batch_id": "ROLLING_20250619_20250721_N100",
+        "old_p49_mean_edge": -0.013146,
+        "old_p49_edge_ci_low": -0.026598,
+        "old_p49_edge_ci_high": 0.000306,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 CRITICAL alert was CI_crosses_zero under PLATT home-perspective; fip_signal_side_aware CI_low > 0 under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250705_20250805_0100_REVISED",
+        "seq": 6,
+        "start_date": "2025-07-05",
+        "end_date": "2025-08-05",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.144209,
+        "fip_edge_ci_low": 0.127505,
+        "fip_edge_ci_high": 0.161103,
+        "fip_positive_edge_rate": 0.97,
+        "platt_ece": 0.070525,
+        "platt_brier": 0.243405,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_CRITICAL",
+        "old_p49_batch_id": "ROLLING_20250705_20250805_N100",
+        "old_p49_mean_edge": 0.002479,
+        "old_p49_edge_ci_low": -0.011389,
+        "old_p49_edge_ci_high": 0.016347,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 CRITICAL alert was CI_crosses_zero under PLATT home-perspective; fip_signal_side_aware CI_low > 0 under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250721_20250822_0100_REVISED",
+        "seq": 7,
+        "start_date": "2025-07-21",
+        "end_date": "2025-08-22",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.139242,
+        "fip_edge_ci_low": 0.124338,
+        "fip_edge_ci_high": 0.154,
+        "fip_positive_edge_rate": 0.96,
+        "platt_ece": 0.063695,
+        "platt_brier": 0.25151,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "CALIBRATION_WARNING",
+        "sample_status": "MONITORING_OK",
+        "final_status": "CALIBRATION_WARNING",
+        "alert_reasons": [
+          "brier_warning: brier=0.2515 > 0.25"
+        ],
+        "old_p49_status": "MIXED_ALERTS",
+        "old_p49_batch_id": "ROLLING_20250721_20250822_N100",
+        "old_p49_mean_edge": 0.024127,
+        "old_p49_edge_ci_low": 0.011259,
+        "old_p49_edge_ci_high": 0.036995,
+        "status_changed": true,
+        "reason_for_change": [
+          "Status changed from MIXED_ALERTS to CALIBRATION_WARNING under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250806_20250906_0100_REVISED",
+        "seq": 8,
+        "start_date": "2025-08-06",
+        "end_date": "2025-09-06",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.139606,
+        "fip_edge_ci_low": 0.124155,
+        "fip_edge_ci_high": 0.155219,
+        "fip_positive_edge_rate": 0.94,
+        "platt_ece": 0.056413,
+        "platt_brier": 0.24817,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_WARNING",
+        "old_p49_batch_id": "ROLLING_20250806_20250906_N100",
+        "old_p49_mean_edge": 0.023343,
+        "old_p49_edge_ci_low": 0.011556,
+        "old_p49_edge_ci_high": 0.03513,
+        "status_changed": true,
+        "reason_for_change": [
+          "Status changed from EDGE_DRIFT_WARNING to MONITORING_OK under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250822_20250918_0100_REVISED",
+        "seq": 9,
+        "start_date": "2025-08-22",
+        "end_date": "2025-09-18",
+        "n": 100,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.142966,
+        "fip_edge_ci_low": 0.12616,
+        "fip_edge_ci_high": 0.159454,
+        "fip_positive_edge_rate": 0.94,
+        "platt_ece": 0.05968,
+        "platt_brier": 0.238786,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "MONITORING_OK",
+        "sample_status": "MONITORING_OK",
+        "final_status": "MONITORING_OK",
+        "alert_reasons": [],
+        "old_p49_status": "EDGE_DRIFT_CRITICAL",
+        "old_p49_batch_id": "ROLLING_20250822_20250918_N100",
+        "old_p49_mean_edge": 0.00517,
+        "old_p49_edge_ci_low": -0.006288,
+        "old_p49_edge_ci_high": 0.016628,
+        "status_changed": true,
+        "reason_for_change": [
+          "P49 CRITICAL alert was CI_crosses_zero under PLATT home-perspective; fip_signal_side_aware CI_low > 0 under revised contract"
+        ]
+      },
+      {
+        "batch_id": "ROLLING_20250906_20250928_0085_REVISED",
+        "seq": 10,
+        "start_date": "2025-09-06",
+        "end_date": "2025-09-28",
+        "n": 85,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.145853,
+        "fip_edge_ci_low": 0.126844,
+        "fip_edge_ci_high": 0.164926,
+        "fip_positive_edge_rate": 0.9294,
+        "platt_ece": 0.13957,
+        "platt_brier": 0.235729,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "CALIBRATION_CRITICAL",
+        "sample_status": "SAMPLE_LIMITED",
+        "final_status": "CALIBRATION_CRITICAL",
+        "alert_reasons": [
+          "sample_limited: batch_n=85 < 100",
+          "ece_critical: ece=0.1396 > 0.12"
+        ],
+        "old_p49_status": "UNKNOWN",
+        "old_p49_batch_id": "N/A",
+        "old_p49_mean_edge": null,
+        "old_p49_edge_ci_low": null,
+        "old_p49_edge_ci_high": null,
+        "status_changed": true,
+        "reason_for_change": []
+      },
+      {
+        "batch_id": "ROLLING_20250919_20250928_0035_REVISED",
+        "seq": 11,
+        "start_date": "2025-09-19",
+        "end_date": "2025-09-28",
+        "n": 35,
+        "probability_stream_edge": "RAW_SIGMOID (fip_signal_side_aware)",
+        "probability_stream_calibration": "PLATT_CALIBRATED",
+        "fip_edge_mean": 0.146668,
+        "fip_edge_ci_low": 0.113143,
+        "fip_edge_ci_high": 0.179309,
+        "fip_positive_edge_rate": 0.9143,
+        "platt_ece": 0.228457,
+        "platt_brier": 0.237208,
+        "edge_status": "MONITORING_OK",
+        "calibration_status": "CALIBRATION_CRITICAL",
+        "sample_status": "SAMPLE_LIMITED",
+        "final_status": "CALIBRATION_CRITICAL",
+        "alert_reasons": [
+          "sample_limited: batch_n=35 < 100",
+          "ece_critical: ece=0.2285 > 0.12"
+        ],
+        "old_p49_status": "UNKNOWN",
+        "old_p49_batch_id": "N/A",
+        "old_p49_mean_edge": null,
+        "old_p49_edge_ci_low": null,
+        "old_p49_edge_ci_high": null,
+        "status_changed": true,
+        "reason_for_change": []
+      }
+    ],
+    "summary": {
+      "total_batches": 11,
+      "batch_size": 100,
+      "step_size": 50,
+      "ok_count": 6,
+      "warning_count": 3,
+      "critical_count": 2,
+      "sample_limited_count": 0,
+      "avg_fip_edge_mean": 0.143717
+    },
+    "batch_params": {
+      "batch_size": 100,
+      "step_size": 50
+    }
+  },
+  "allowed_classifications": [
+    "P51_REVISED_CONTRACT_REDUCES_FALSE_ALERTS_DIAGNOSTIC",
+    "P51_REVISED_CONTRACT_STILL_CRITICAL_DIAGNOSTIC",
+    "P51_CONTRACT_REVISION_INCONCLUSIVE",
+    "P51_SAMPLE_LIMITED",
+    "P51_BLOCKED_BY_MISSING_SOURCE"
+  ],
+  "final_classification": "P51_REVISED_CONTRACT_REDUCES_FALSE_ALERTS_DIAGNOSTIC",
+  "future_p52_recommendation": "P52 should formally supersede P48/P49 contract artifacts if revised contract is validated. Do not overwrite P48/P49 until P52 authorization.",
+  "data_gap_2024_acknowledged": true,
+  "data_gap_2024_note": "2024 closing-line data gap (P43_BLOCKED_BY_DATA_GAP) remains unresolved. P51 replay covers 2025-only Tier C. Cross-year validation blocked pending 2024 data resolution.",
+  "limitations": [
+    "2024 closing-line data gap REMAINS UNRESOLVED (P43_BLOCKED_BY_DATA_GAP)",
+    "Bootstrap CI uses numpy random with seed=42 \u2014 deterministic but not identical to P44 impl",
+    "Market odds source: embedded prediction-time no-vig (not closing-line CSV used in P43/P44)",
+    "Rolling batches generated from continuous sort by game_date \u2014 same as P49",
+    "No live API calls made",
+    "No runtime recommendation logic changed",
+    "No production proposal",
+    "P48 and P49 artifacts NOT overwritten"
+  ],
+  "framing_note": "This is offline diagnostic audit only. No production usage proposed. No deployment recommendation. No profit or deployment readiness implied."
+}

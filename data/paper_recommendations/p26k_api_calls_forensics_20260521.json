@@ -1,0 +1,54 @@
+{
+  "artifact_id": "p26k_api_calls_forensics_20260521",
+  "phase": "P26K",
+  "date": "2026-05-21",
+  "generated_at": "2026-05-23T00:00:00Z",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "read_only": true,
+  "classification": "QUOTA_HARD_CAP",
+  "hard_cap_value": 2,
+  "hard_cap_location": "wbc_backend/mlb_data/daily_closing_capture.py:164",
+  "hard_cap_code": "if api_calls >= 2: return skipped_daily_cap_reached",
+  "timeline": {
+    "pre_restart_01h00z_01h51z": {
+      "api_calls_today": 2,
+      "fetched": false,
+      "status": "CAP_ALREADY_HIT"
+    },
+    "daemon_restart": {
+      "timestamp": "2026-05-21T02:09:35Z",
+      "event": "P26G daemon restart",
+      "state_reset": true
+    },
+    "post_restart_02h07z": {
+      "api_calls_today": 1,
+      "note": "1st OddsAPI call after restart"
+    },
+    "cap_hit_02h24z": {
+      "api_calls_today": 2,
+      "note": "2nd OddsAPI call consumed, cap hit",
+      "cap_hit_confirmed_at": "2026-05-21T02:24:00Z"
+    },
+    "closing_window_07h10z_08h56z": {
+      "heartbeats": 8,
+      "api_calls_today_all": 2,
+      "fetched_all": false,
+      "trigger_reason_all": "cap=2 reached, calls=2",
+      "next_trigger_minutes_all": null,
+      "status": "ALL_BLOCKED"
+    }
+  },
+  "next_trigger_minutes_null_explanation": {
+    "regex_pattern": "(\\d+(?:\\.\\d+)?)\\s*min",
+    "trigger_reason_when_blocked": "cap=2 reached, calls=2",
+    "regex_match_result": null,
+    "is_null_a_bug": false,
+    "explanation": "Expected behavior when daily cap is reached; reason string has no minutes pattern"
+  },
+  "state_file": "data/mlb_context/external_closing_state.json",
+  "state_file_scope": "OddsAPI MLB external closing ONLY — does not reflect TSL",
+  "root_cause": "QUOTA_HARD_CAP",
+  "recommended_action": "QUOTA_POLICY_REVIEW_REQUIRED",
+  "recommendation_detail": "Review daily cap of 2 for OddsAPI. Consider: (a) reserving 1 call for closing window (T-15min before first game), (b) preventing state reset on daemon restart from consuming full daily budget, (c) increasing quota limit"
+}

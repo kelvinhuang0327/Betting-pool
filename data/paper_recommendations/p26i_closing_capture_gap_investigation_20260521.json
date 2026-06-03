@@ -1,0 +1,162 @@
+{
+  "artifact_id": "p26i_closing_capture_gap_investigation_20260521",
+  "phase": "P26I",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+  "complete_pair_before": 220,
+  "complete_pair_after": 220,
+  "delta_complete_pairs": 0,
+  "bootstrap_ran": false,
+  "bootstrap_note": "COMPLETE_PAIR=220 < 300; bootstrap NOT RUN and must NOT run",
+
+  "preflight": {
+    "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "branch": "main",
+    "head": "d644f3f",
+    "p26h_commit_verified": true,
+    "stop_conditions_met": false
+  },
+
+  "phase1_p26h_verification": {
+    "commit_hash": "d644f3f",
+    "final_classification_p26h": "P26H_EXPECTED_PAIRS_PREDICTION_BROKEN",
+    "expected_new_pairs_ground_truth_p26h": "UNMATCHED",
+    "complete_pair_p26h": 220,
+    "all_confirmed": true
+  },
+
+  "phase2_focus_match_analysis": {
+    "history_rows_at_analysis": 2912,
+    "daemon_latest_cycle_observed": "2026-05-21T03:09:50Z",
+    "daemon_is_running": true,
+    "daemon_cycle_interval_approx_min": 15,
+
+    "3469930.1": {
+      "total_rows": 6,
+      "game_time_local": "2026-05-21T17:00:00+08:00",
+      "game_time_utc": "2026-05-21T09:00:00Z",
+      "closing_window_start_utc": "2026-05-21T07:00:00Z",
+      "closing_window_end_utc": "2026-05-21T09:00:00Z",
+      "analysis_time_approx_utc": "2026-05-21T03:09Z",
+      "time_until_window_at_analysis": "~3.85h",
+      "snapshot_history": [
+        {"fetched_at": "2026-05-21T02:07:00Z", "gap_h": 6.883, "zone": "PREGAME", "fc": null,  "ded": null,  "reason": null},
+        {"fetched_at": "2026-05-21T02:09:35Z", "gap_h": 6.840, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T02:24:39Z", "gap_h": 6.589, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T02:39:43Z", "gap_h": 6.338, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T02:54:45Z", "gap_h": 6.087, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T03:09:49Z", "gap_h": 5.836, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"}
+      ],
+      "has_pregame": true,
+      "has_closing": false,
+      "min_gap_observed": 5.836,
+      "closing_window_opened_at_analysis": false,
+      "finding": "Closing window opens at 07:00Z; all 6 snapshots are in PREGAME zone (gap 5.8-6.9h). Daemon IS running and capturing every ~15min cycle. No closing snapshot exists because the window has not yet opened at analysis time (~03:09Z)."
+    },
+
+    "3469931.1": {
+      "total_rows": 6,
+      "game_time_local": "2026-05-21T17:00:00+08:00",
+      "game_time_utc": "2026-05-21T09:00:00Z",
+      "closing_window_start_utc": "2026-05-21T07:00:00Z",
+      "closing_window_end_utc": "2026-05-21T09:00:00Z",
+      "analysis_time_approx_utc": "2026-05-21T03:09Z",
+      "time_until_window_at_analysis": "~3.85h",
+      "snapshot_history": [
+        {"fetched_at": "2026-05-21T02:07:00Z", "gap_h": 6.883, "zone": "PREGAME", "fc": null,  "ded": null,  "reason": null},
+        {"fetched_at": "2026-05-21T02:09:35Z", "gap_h": 6.840, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T02:24:39Z", "gap_h": 6.589, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T02:39:43Z", "gap_h": 6.338, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T02:54:45Z", "gap_h": 6.087, "zone": "PREGAME", "fc": true,  "ded": false, "reason": "closing_window"},
+        {"fetched_at": "2026-05-21T03:09:49Z", "gap_h": 5.836, "zone": "PREGAME", "fc": true,  "ded": true,  "reason": "closing_window"}
+      ],
+      "has_pregame": true,
+      "has_closing": false,
+      "min_gap_observed": 5.836,
+      "closing_window_opened_at_analysis": false,
+      "finding": "Identical timing profile to 3469930.1. Same game_time (17:00+08:00), same closing window (07:00Z-09:00Z). No closing snapshot because window not yet open at analysis time."
+    },
+
+    "3469566.1_comparison": {
+      "total_rows": 6,
+      "game_time_local": "2026-05-21T09:38:00+08:00",
+      "game_time_utc": "2026-05-21T01:38:00Z",
+      "gap_range": [-0.484, -1.530],
+      "zone": "POST-GAME (negative gap = game already started)",
+      "label": "missing_pregame",
+      "finding": "Game started at 01:38Z. All captures are post-game (gap -0.48h to -1.53h). Never had a pregame snapshot. Structural missing_pregame case unrelated to scheduler alignment."
+    }
+  },
+
+  "phase3_daemon_schedule_alignment": {
+    "last_capture_schedule_entry": "2026-05-21T02:54:47Z",
+    "last_heartbeat_confirmed": "2026-05-21T03:09:50Z",
+    "daemon_gap_2026_05_20": "15:10Z -> 01:06Z+1 = ~9.9h outage on 2026-05-20",
+    "daemon_status_at_analysis": "RUNNING",
+    "closing_window_for_targets": "07:00Z - 09:00Z",
+    "time_from_analysis_to_window": "~3.85h",
+    "cycles_expected_before_window": "~15 (at 15min intervals)",
+    "capture_cadence_cycles_seen_today": [
+      "2026-05-21T01:06Z", "01:21Z", "01:36Z", "01:51Z",
+      "02:06Z", "02:09Z", "02:24Z", "02:39Z", "02:54Z", "03:09Z"
+    ],
+    "last_4_capture_results": {
+      "02:39Z": "closing=True, snaps_rx=7, added=7",
+      "02:54Z": "closing=True, snaps_rx=7, added=7",
+      "03:09Z": "heartbeat_only_not_in_schedule_cap_yet"
+    },
+    "gap_at_closing_window_entry": "At 07:00Z: gap for 3469930.1/3469931.1 will be exactly 2.0h (entry threshold)",
+    "diagnosis": "Daemon is actively running. P26H's UNMATCHED classification was based on a point-in-time read at 02:54Z — 4.1h before the closing window opened. This was a premature evaluation. Risk factor: past 9.9h gap on 2026-05-20 shows daemon can stop; if daemon stops before 07:00Z, prediction fails."
+  },
+
+  "phase4_prediction_logic_audit": {
+    "p26g_prediction_basis": {
+      "next_closing_candidates": ["3469930.1", "3469931.1"],
+      "game_time_utc": "2026-05-21T09:00:00Z",
+      "window_entry_utc": "07:00Z",
+      "has_pregame": true,
+      "expected_new_pairs_today": 2
+    },
+    "prediction_assumption": "Daemon will continue running through 07:00Z-09:00Z window",
+    "prediction_assumption_valid_at_p26g_time": true,
+    "prediction_assumption_valid_at_p26h_time": "CANNOT_CONFIRM (analysis before window)",
+    "prediction_assumption_valid_at_p26i_time": "LIKELY_YES (daemon running at 03:09Z, 3.85h before window)",
+    "p26h_evaluation_timing": "02:54Z (4.1h before closing window started)",
+    "p26h_premature": true,
+    "p26g_prediction_failure_classification": "P26I_P26G_PREDICTION_LOGIC_TOO_OPTIMISTIC",
+    "explanation": "P26G correctly identified that 3469930.1 and 3469931.1 have pregame snapshots and game_time=09:00Z, so closing window=07:00Z-09:00Z. The prediction of expected_new_pairs_today=2 is conditionally correct IF daemon runs through 07:00Z. P26G's logic is too optimistic because it does not account for: (1) the possibility of daemon outage (seen: 9.9h gap on 2026-05-20), (2) the timing gap between prediction and window opening (02:09Z prediction → 07:00Z window = 4.85h). P26H evaluated at 02:54Z, classified UNMATCHED prematurely. The BROKEN label is premature — correctness TBD after 09:00Z."
+  },
+
+  "phase5_coverage_recheck": {
+    "history_rows": 2912,
+    "force_closing_rows": 50,
+    "dedup_bypassed_rows": 41,
+    "unique_match_ids": 897,
+    "complete_pair_before": 220,
+    "complete_pair_after": 220,
+    "delta_complete_pairs": 0,
+    "missing_pregame": 75,
+    "missing_closing": 586,
+    "ambiguous": 16,
+    "bootstrap_eligible": false,
+    "bootstrap_threshold": 300,
+    "note": "Daemon is running; history growing. 10 new rows since P26H (2902→2912). COMPLETE_PAIR unchanged at 220. Bootstrap remains blocked."
+  },
+
+  "final_classification": "P26I_CLOSING_CAPTURE_GAP_INCONCLUSIVE",
+  "final_classification_rationale": "Analysis performed at 03:09Z, 3.85h BEFORE the 07:00Z closing window for 3469930.1/3469931.1. Cannot confirm or deny P26G prediction at this time. Daemon IS running. P26H's UNMATCHED was premature. Secondary risk: daemon showed 9.9h gap on 2026-05-20. Recommend: re-evaluate after 09:00Z to confirm if CLV pairs formed.",
+
+  "p26j_recommendation": {
+    "action": "Post-game validation after 09:00Z UTC (17:00 Taiwan time)",
+    "check": "Verify whether <=2h closing snapshots exist for 3469930.1 and 3469931.1",
+    "expected_if_daemon_runs": "COMPLETE_PAIR=222 (delta=+2), P26G prediction fulfilled",
+    "expected_if_daemon_stops": "COMPLETE_PAIR=220 (delta=0), P26G prediction confirmed broken",
+    "action_scope": "diagnostic only — no code changes, no daemon intervention"
+  }
+}

@@ -1,0 +1,352 @@
+{
+  "fixture_metadata": {
+    "fixture_version": "P111.20260531",
+    "generated_at": "2026-05-31",
+    "source_contract_version": "P110.20260531",
+    "final_classification": "P111_TRACKING_DASHBOARD_FIXTURE_READY_DIAGNOSTIC_ONLY"
+  },
+  "source_contract_reference": {
+    "contract_path": "data/mlb_2026/derived/p110_outcome_only_tracking_dashboard_contract_summary.json",
+    "contract_version": "P110.20260531",
+    "final_classification": "P110_TRACKING_DASHBOARD_CONTRACT_READY_DIAGNOSTIC_ONLY"
+  },
+  "dashboard_payload": {
+    "strategy_cards": [
+      {
+        "strategy_id": "HIGH_FIP",
+        "display_name": "高 FIP 策略",
+        "tracking_status": "diagnostic_only",
+        "latest_hit_rate": 0.682,
+        "eligible_rows": 45,
+        "monthly_hit_rates": {
+          "2026-05": 0.682,
+          "2026-04": 0.368,
+          "2026-03": 0.25
+        },
+        "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+        "sample_status": "sample_limited",
+        "next_check_trigger": "等待樣本累積",
+        "allowed_next_action": "diagnostic_tracking_only",
+        "prohibited_actions": [
+          "recommendation",
+          "production",
+          "betting",
+          "odds",
+          "ev",
+          "kelly"
+        ],
+        "display_badges": [
+          "診斷追蹤",
+          "樣本數不足",
+          "樣本受限"
+        ]
+      },
+      {
+        "strategy_id": "MID_FIP",
+        "display_name": "中 FIP 策略",
+        "tracking_status": "watch_only",
+        "latest_hit_rate": 0.5,
+        "eligible_rows": 94,
+        "monthly_hit_rates": {
+          "2026-05": 0.5,
+          "2026-04": 0.481,
+          "2026-03": 0.75
+        },
+        "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+        "sample_status": "sample_limited",
+        "next_check_trigger": "等待樣本累積",
+        "allowed_next_action": "watch_only",
+        "prohibited_actions": [
+          "recommendation",
+          "production",
+          "betting",
+          "odds",
+          "ev",
+          "kelly"
+        ],
+        "display_badges": [
+          "觀察中",
+          "樣本數不足",
+          "樣本受限"
+        ]
+      },
+      {
+        "strategy_id": "LOW_FIP",
+        "display_name": "低 FIP 策略",
+        "tracking_status": "watch_only",
+        "latest_hit_rate": 0.614,
+        "eligible_rows": 88,
+        "monthly_hit_rates": {
+          "2026-04": 0.459,
+          "2026-05": 0.614,
+          "2026-03": 0.429
+        },
+        "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+        "sample_status": "sample_limited",
+        "next_check_trigger": "等待樣本累積",
+        "allowed_next_action": "watch_only",
+        "prohibited_actions": [
+          "recommendation",
+          "production",
+          "betting",
+          "odds",
+          "ev",
+          "kelly"
+        ],
+        "display_badges": [
+          "觀察中",
+          "樣本數不足",
+          "樣本受限"
+        ]
+      },
+      {
+        "strategy_id": "ALL_ROWS",
+        "display_name": "全樣本基線",
+        "tracking_status": "baseline_diagnostic",
+        "latest_hit_rate": 0.59,
+        "eligible_rows": 808,
+        "monthly_hit_rates": {
+          "2026-05": 0.59,
+          "2026-04": 0.542,
+          "2026-03": 0.616
+        },
+        "drift_status": "STABLE_DIAGNOSTIC",
+        "sample_status": "stable_diagnostic",
+        "next_check_trigger": "下月檢查",
+        "allowed_next_action": "diagnostic_tracking_only",
+        "prohibited_actions": [
+          "recommendation",
+          "production",
+          "betting",
+          "odds",
+          "ev",
+          "kelly"
+        ],
+        "display_badges": [
+          "基線"
+        ]
+      }
+    ],
+    "summary_panels": {
+      "sample_limit": [
+        "HIGH_FIP",
+        "MID_FIP",
+        "LOW_FIP"
+      ],
+      "watch_only": [
+        "MID_FIP",
+        "LOW_FIP"
+      ],
+      "blocked_production": [
+        "HIGH_FIP",
+        "MID_FIP",
+        "LOW_FIP",
+        "ALL_ROWS"
+      ]
+    }
+  },
+  "strategy_cards": [
+    {
+      "strategy_id": "HIGH_FIP",
+      "display_name": "高 FIP 策略",
+      "tracking_status": "diagnostic_only",
+      "latest_hit_rate": 0.682,
+      "eligible_rows": 45,
+      "monthly_hit_rates": {
+        "2026-05": 0.682,
+        "2026-04": 0.368,
+        "2026-03": 0.25
+      },
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "next_check_trigger": "等待樣本累積",
+      "allowed_next_action": "diagnostic_tracking_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ],
+      "display_badges": [
+        "診斷追蹤",
+        "樣本數不足",
+        "樣本受限"
+      ]
+    },
+    {
+      "strategy_id": "MID_FIP",
+      "display_name": "中 FIP 策略",
+      "tracking_status": "watch_only",
+      "latest_hit_rate": 0.5,
+      "eligible_rows": 94,
+      "monthly_hit_rates": {
+        "2026-05": 0.5,
+        "2026-04": 0.481,
+        "2026-03": 0.75
+      },
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "next_check_trigger": "等待樣本累積",
+      "allowed_next_action": "watch_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ],
+      "display_badges": [
+        "觀察中",
+        "樣本數不足",
+        "樣本受限"
+      ]
+    },
+    {
+      "strategy_id": "LOW_FIP",
+      "display_name": "低 FIP 策略",
+      "tracking_status": "watch_only",
+      "latest_hit_rate": 0.614,
+      "eligible_rows": 88,
+      "monthly_hit_rates": {
+        "2026-04": 0.459,
+        "2026-05": 0.614,
+        "2026-03": 0.429
+      },
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "next_check_trigger": "等待樣本累積",
+      "allowed_next_action": "watch_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ],
+      "display_badges": [
+        "觀察中",
+        "樣本數不足",
+        "樣本受限"
+      ]
+    },
+    {
+      "strategy_id": "ALL_ROWS",
+      "display_name": "全樣本基線",
+      "tracking_status": "baseline_diagnostic",
+      "latest_hit_rate": 0.59,
+      "eligible_rows": 808,
+      "monthly_hit_rates": {
+        "2026-05": 0.59,
+        "2026-04": 0.542,
+        "2026-03": 0.616
+      },
+      "drift_status": "STABLE_DIAGNOSTIC",
+      "sample_status": "stable_diagnostic",
+      "next_check_trigger": "下月檢查",
+      "allowed_next_action": "diagnostic_tracking_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ],
+      "display_badges": [
+        "基線"
+      ]
+    }
+  ],
+  "summary_panels": {
+    "sample_limit": [
+      "HIGH_FIP",
+      "MID_FIP",
+      "LOW_FIP"
+    ],
+    "watch_only": [
+      "MID_FIP",
+      "LOW_FIP"
+    ],
+    "blocked_production": [
+      "HIGH_FIP",
+      "MID_FIP",
+      "LOW_FIP",
+      "ALL_ROWS"
+    ]
+  },
+  "drift_table_rows": [
+    {
+      "strategy_id": "HIGH_FIP",
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "eligible_rows": 45
+    },
+    {
+      "strategy_id": "MID_FIP",
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "eligible_rows": 94
+    },
+    {
+      "strategy_id": "LOW_FIP",
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "eligible_rows": 88
+    },
+    {
+      "strategy_id": "ALL_ROWS",
+      "drift_status": "STABLE_DIAGNOSTIC",
+      "sample_status": "stable_diagnostic",
+      "eligible_rows": 808
+    }
+  ],
+  "filter_options": [
+    "strategy_id",
+    "drift_status",
+    "sample_status"
+  ],
+  "governance_banner": "本 fixture 僅供診斷追蹤與 paper-only 報告用途，嚴禁用於 production、推薦、賠率、EV、CLV、Kelly、真實下注。",
+  "blocked_actions": [
+    "recommendation",
+    "production",
+    "betting",
+    "odds",
+    "ev",
+    "clv",
+    "kelly"
+  ],
+  "empty_state_messages": {
+    "no_data": "目前無可用資料，僅供診斷追蹤用途。",
+    "sample_limited": "樣本數不足，請等待更多資料累積。"
+  },
+  "validation_contract": {
+    "governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "real_bet_allowed": false,
+      "recommendation_allowed": false,
+      "product_surface_allowed": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "stake_sizing": false,
+      "taiwan_lottery_recommendation": false,
+      "champion_replacement": false,
+      "production_mutation": false,
+      "calibration_refit": false,
+      "live_api_calls": 0,
+      "paid_api_calls": 0,
+      "canonical_rows_modified": false,
+      "outcome_rows_modified": false,
+      "p83e_mapping_modified": false,
+      "ui_modified": false
+    },
+    "final_classification": "P111_TRACKING_DASHBOARD_FIXTURE_READY_DIAGNOSTIC_ONLY"
+  }
+}

@@ -1,0 +1,400 @@
+{
+  "p88_classification": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T08:10:01.219175+00:00",
+  "phase": "diagnostic-only",
+  "authorization_status": "NOT GRANTED",
+  "explicit_yes_required": "YES regenerate stale downstream artifacts for P87 recovery",
+  "p87_classification_confirmed": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+  "p86_classification_confirmed": "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK",
+  "all_preconditions_met": true,
+  "governance_all_pass": true,
+  "p88_modified_frozen_artifacts": false,
+  "allowed_classifications": [
+    "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+    "P88_REGENERATION_AUTHORIZED_READY_TO_EXECUTE",
+    "P88_AUTHORIZATION_GATE_FAILED_P87_STATE_MISMATCH",
+    "P88_AUTHORIZATION_GATE_FAILED_P86_STATE_MISMATCH",
+    "P88_AUTHORIZATION_GATE_BLOCKED_BY_PREFLIGHT",
+    "P88_AUTHORIZATION_GATE_BLOCKED_BY_SCOPE_DRIFT"
+  ],
+  "frozen_artifacts_count": 10,
+  "step1_check_p87_state": {
+    "step": "step1_check_p87_state",
+    "p87_summary_exists": true,
+    "p87_classification": "P87_REGENERATION_REQUIRED_AWAITING_EXPLICIT_YES",
+    "p87_classification_matches": true,
+    "count_match": true,
+    "game_id_full_coverage": true,
+    "content_drift_likely": false,
+    "stale_by_mtime_only": true,
+    "safe_without_explicit_yes": false,
+    "explicit_yes_required": "YES regenerate stale downstream artifacts for P87 recovery",
+    "delta_seconds": 6134,
+    "p87_state_ok": true,
+    "issue": null
+  },
+  "step2_check_p86_state": {
+    "step": "step2_check_p86_state",
+    "p86_summary_exists": true,
+    "p86_classification": "P86_ARTIFACT_CONTRACT_FAILED_STALE_DOWNSTREAM_RISK",
+    "p86_classification_matches": true,
+    "n_stale_risks_in_p86": 1,
+    "p86_state_ok": true,
+    "issue": null
+  },
+  "step3_authorization_phrase_check": {
+    "step": "step3_authorization_phrase_check",
+    "required_phrase": "YES regenerate stale downstream artifacts for P87 recovery",
+    "authorization_input_provided": false,
+    "authorization_granted": false,
+    "authorization_status": "NOT GRANTED",
+    "note": "Authorization phrase not present in this invocation. P88 remains in gate-only mode. No frozen artifacts will be touched."
+  },
+  "step4_recovery_preconditions": {
+    "step": "step4_recovery_preconditions",
+    "preconditions": [
+      {
+        "name": "p87_summary_exists",
+        "status": true,
+        "required": true
+      },
+      {
+        "name": "p87_classification_correct",
+        "status": true,
+        "required": true
+      },
+      {
+        "name": "p87_count_match",
+        "status": true,
+        "required": true
+      },
+      {
+        "name": "p87_game_id_full_coverage",
+        "status": true,
+        "required": true
+      },
+      {
+        "name": "p87_content_drift_likely_false",
+        "status": true,
+        "required": true
+      },
+      {
+        "name": "p86_summary_exists",
+        "status": true,
+        "required": true
+      },
+      {
+        "name": "p86_classification_correct",
+        "status": true,
+        "required": true
+      },
+      {
+        "name": "canonical_rows_exists",
+        "status": true,
+        "required": true
+      }
+    ],
+    "all_preconditions_met": true,
+    "note": "All preconditions met — recovery CAN proceed once authorized."
+  },
+  "step5_forbidden_actions": {
+    "step": "step5_forbidden_actions_when_not_authorized",
+    "forbidden": [
+      "Overwrite p84e_2026_outcome_attached_prediction_rows.jsonl",
+      "Overwrite p84e_2026_outcome_attachment_summary.json",
+      "Overwrite p84f_predicted_side_calibration_diagnostic_summary.json",
+      "Overwrite p84g_predicted_side_mapping_fix_summary.json",
+      "Overwrite p84h_corrected_signal_validation_coverage_guard_summary.json",
+      "Overwrite p85_prediction_convention_invariant_gate_summary.json",
+      "Overwrite p86_artifact_regeneration_dependency_contract_summary.json",
+      "Overwrite mlb_2026_prediction_rows.jsonl (canonical_rows)",
+      "Run _p84e_2026_outcome_attachment_pipeline.py in write mode",
+      "Run _p84f_predicted_side_calibration_diagnostic.py in write mode",
+      "Run _p84g_predicted_side_mapping_fix.py in write mode",
+      "Run _p84h_corrected_signal_validation_coverage_guard.py in write mode",
+      "Run _p85_prediction_convention_invariant_gate.py in write mode",
+      "Run _p86_artifact_regeneration_dependency_contract.py in write mode",
+      "Compute EV / CLV / Kelly / stake",
+      "Call live paid API",
+      "Retrain or re-calibrate any model",
+      "Mutate runtime recommendation logic",
+      "Issue production betting recommendation"
+    ],
+    "enforcement": "P88 is diagnostic-only. All forbidden actions produce classification P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION."
+  },
+  "step6_authorized_recovery_sequence_plan": {
+    "step": "step6_authorized_recovery_sequence_plan",
+    "note": "These steps are ONLY to be executed after receiving the exact authorization phrase.",
+    "authorization_required": "YES regenerate stale downstream artifacts for P87 recovery",
+    "execution_order": [
+      "P84E",
+      "P84F",
+      "P84G",
+      "P84H",
+      "P85",
+      "P86"
+    ],
+    "recovery_steps": [
+      {
+        "step_num": 1,
+        "phase": "P84E",
+        "action": "Rerun outcome attachment against current canonical_rows (828 rows)",
+        "script": "scripts/_p84e_2026_outcome_attachment_pipeline.py",
+        "expected_classification": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+        "expected_n_outcome_available": "808 ± 5",
+        "tolerance": 0.0001,
+        "files_written": [
+          "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+          "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json"
+        ]
+      },
+      {
+        "step_num": 2,
+        "phase": "P84F",
+        "action": "Rerun predicted-side calibration diagnostic",
+        "script": "scripts/_p84f_predicted_side_calibration_diagnostic.py",
+        "expected_classification": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+        "tolerance": 0.0001,
+        "files_written": [
+          "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json"
+        ]
+      },
+      {
+        "step_num": 3,
+        "phase": "P84G",
+        "action": "Rerun side mapping fix and metrics regeneration",
+        "script": "scripts/_p84g_predicted_side_mapping_fix.py",
+        "expected_classification": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+        "tolerance": 0.0001,
+        "files_written": [
+          "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json"
+        ]
+      },
+      {
+        "step_num": 4,
+        "phase": "P84H",
+        "action": "Rerun corrected signal validation and coverage guard",
+        "script": "scripts/_p84h_corrected_signal_validation_coverage_guard.py",
+        "expected_classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+        "expected_metrics": {
+          "hit_rate": 0.569307,
+          "auc": 0.594315,
+          "brier": 0.249408,
+          "ece": 0.069682
+        },
+        "tolerance": 0.0001,
+        "files_written": [
+          "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json"
+        ]
+      },
+      {
+        "step_num": 5,
+        "phase": "P85",
+        "action": "Rerun prediction convention invariant gate",
+        "script": "scripts/_p85_prediction_convention_invariant_gate.py",
+        "expected_classification": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+        "expected_n_violations": 0,
+        "tolerance": 0.0001,
+        "files_written": [
+          "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json"
+        ]
+      },
+      {
+        "step_num": 6,
+        "phase": "P86",
+        "action": "Rerun artifact regeneration dependency contract",
+        "script": "scripts/_p86_artifact_regeneration_dependency_contract.py",
+        "expected_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+        "note": "P86 classification MUST upgrade from FAILED to READY after recovery",
+        "files_written": [
+          "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json"
+        ]
+      },
+      {
+        "step_num": 7,
+        "phase": "VERIFY",
+        "action": "Verify P86 classification upgraded to READY",
+        "check": "p86_classification == P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+        "stop_condition": "If P86 still shows FAILED, STOP and report"
+      },
+      {
+        "step_num": 8,
+        "phase": "TEST",
+        "action": "Run P83A–P88 targeted regression",
+        "test_command": ".venv/bin/pytest tests/test_p83a_*.py tests/test_p83b_*.py tests/test_p83c_*.py tests/test_p83d_*.py tests/test_p83e_*.py tests/test_p84a_*.py tests/test_p84b_*.py tests/test_p84c_*.py tests/test_p84d_*.py tests/test_p84e_*.py tests/test_p84f_*.py tests/test_p84g_*.py tests/test_p84h_*.py tests/test_p85_*.py tests/test_p86_*.py tests/test_p87_*.py tests/test_p88_*.py -q",
+        "expected_pass_count": "≥ 1071 + P88 tests (≥ 1200 total)",
+        "expected_skip_count": 4
+      },
+      {
+        "step_num": 9,
+        "phase": "COMMIT",
+        "action": "Commit whitelist-only regenerated artifacts",
+        "whitelist": [
+          "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+          "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+          "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+          "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+          "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+          "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+          "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json",
+          "00-Plan/roadmap/active_task.md"
+        ],
+        "commit_message_prefix": "feat(P89): Authorized stale downstream recovery — P86 upgrades to READY"
+      }
+    ],
+    "files_to_touch_after_authorization": [
+      "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+      "data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+      "data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+      "data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+      "data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+      "data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+      "data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json"
+    ],
+    "files_never_to_touch": [
+      "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+      "data/mlb_2026/derived/p87_stale_downstream_recovery_dry_run_summary.json",
+      "data/mlb_2026/derived/p88_regeneration_authorization_gate_summary.json",
+      "data/mlb_2026/derived/p83e_2026_canonical_prediction_row_producer_summary.json"
+    ]
+  },
+  "step7_governance_scan": {
+    "step": "step7_governance_scan",
+    "p88_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_canonical_row_rewrite": true,
+      "no_outcome_row_rewrite": true,
+      "no_historical_artifact_overwrite": true,
+      "no_calibration_refit": true,
+      "no_production_betting_recommendation": true,
+      "no_real_bet": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_canonical_row_rewrite": true,
+      "no_outcome_row_rewrite": true,
+      "no_historical_artifact_overwrite": true,
+      "no_calibration_refit": true,
+      "no_production_betting": true,
+      "no_real_bet": true
+    },
+    "governance_all_pass": true
+  },
+  "step8_frozen_artifact_snapshot": {
+    "step": "step8_frozen_artifact_snapshot",
+    "snapshot": {
+      "mlb_2026_prediction_rows.jsonl": {
+        "exists": true,
+        "sha256_prefix": "74c4a5498f80b2e7",
+        "mtime": "2026-05-27T08:09:36.382198+00:00",
+        "size_bytes": 579216,
+        "modified_by_p88": false
+      },
+      "p84e_2026_outcome_attached_prediction_rows.jsonl": {
+        "exists": true,
+        "sha256_prefix": "dde0ecda797f9b68",
+        "mtime": "2026-05-27T05:40:58.608737+00:00",
+        "size_bytes": 687967,
+        "modified_by_p88": false
+      },
+      "p84e_2026_outcome_attachment_summary.json": {
+        "exists": true,
+        "sha256_prefix": "77158c9ce5e441ca",
+        "mtime": "2026-05-27T05:40:58.610761+00:00",
+        "size_bytes": 4944,
+        "modified_by_p88": false
+      },
+      "p84f_predicted_side_calibration_diagnostic_summary.json": {
+        "exists": true,
+        "sha256_prefix": "31e4450a95299915",
+        "mtime": "2026-05-27T05:41:03.751495+00:00",
+        "size_bytes": 5140,
+        "modified_by_p88": false
+      },
+      "p84g_predicted_side_mapping_fix_summary.json": {
+        "exists": true,
+        "sha256_prefix": "335441b526055dd5",
+        "mtime": "2026-05-27T05:44:56.048516+00:00",
+        "size_bytes": 5095,
+        "modified_by_p88": false
+      },
+      "p84h_corrected_signal_validation_coverage_guard_summary.json": {
+        "exists": true,
+        "sha256_prefix": "9d3ec118c1c2f03d",
+        "mtime": "2026-05-27T07:06:12.185369+00:00",
+        "size_bytes": 11223,
+        "modified_by_p88": false
+      },
+      "p85_prediction_convention_invariant_gate_summary.json": {
+        "exists": true,
+        "sha256_prefix": "d76139f801a3578c",
+        "mtime": "2026-05-27T07:20:33.507057+00:00",
+        "size_bytes": 5119,
+        "modified_by_p88": false
+      },
+      "p86_artifact_regeneration_dependency_contract_summary.json": {
+        "exists": true,
+        "sha256_prefix": "6503f92fd4a24950",
+        "mtime": "2026-05-27T07:45:00.945936+00:00",
+        "size_bytes": 12025,
+        "modified_by_p88": false
+      },
+      "p87_stale_downstream_recovery_dry_run_summary.json": {
+        "exists": true,
+        "sha256_prefix": "b5b240589a181935",
+        "mtime": "2026-05-27T07:57:40.790926+00:00",
+        "size_bytes": 20669,
+        "modified_by_p88": false
+      },
+      "p83e_2026_canonical_prediction_row_producer_summary.json": {
+        "exists": true,
+        "sha256_prefix": "2226cba94005ee98",
+        "mtime": "2026-05-27T05:40:23.644097+00:00",
+        "size_bytes": 5302,
+        "modified_by_p88": false
+      }
+    },
+    "p88_modified_frozen_artifacts": false,
+    "note": "P88 is gate-only. No frozen artifacts were read in write mode or overwritten."
+  },
+  "step9_final_classification": {
+    "step": "step9_final_classification",
+    "classification": "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+    "allowed_classifications": [
+      "P88_AWAITING_EXPLICIT_REGENERATION_AUTHORIZATION",
+      "P88_REGENERATION_AUTHORIZED_READY_TO_EXECUTE",
+      "P88_AUTHORIZATION_GATE_FAILED_P87_STATE_MISMATCH",
+      "P88_AUTHORIZATION_GATE_FAILED_P86_STATE_MISMATCH",
+      "P88_AUTHORIZATION_GATE_BLOCKED_BY_PREFLIGHT",
+      "P88_AUTHORIZATION_GATE_BLOCKED_BY_SCOPE_DRIFT"
+    ],
+    "authorization_granted": false,
+    "all_preconditions_met": true,
+    "governance_all_pass": true,
+    "steps_checked": 9,
+    "steps_passed": 9,
+    "rationale": "All preconditions met. P87 and P86 state confirmed. Authorization phrase not present. P88 remains in gate-only mode. Awaiting: 'YES regenerate stale downstream artifacts for P87 recovery'",
+    "explicit_yes_required": "YES regenerate stale downstream artifacts for P87 recovery"
+  }
+}

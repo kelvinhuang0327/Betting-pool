@@ -1,0 +1,409 @@
+{
+  "p84h_classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+  "phase": "P84H",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T07:06:12.162666+00:00",
+  "allowed_classifications": [
+    "P84H_CORRECTED_SIGNAL_VALIDATED_DIAGNOSTIC_ONLY",
+    "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+    "P84H_CALIBRATION_WEAK_REQUIRES_REVIEW",
+    "P84H_COVERAGE_TOO_LOW_FOR_SIGNAL_CLAIM",
+    "P84H_FAILED_VALIDATION"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false,
+    "champion_replaced": false
+  },
+  "predecessor": "P84G@021a8a8 — P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+  "step1_artifact_consistency": {
+    "status": "PASSED",
+    "artifact_classifications": {
+      "p83e_classification": "P83E_CANONICAL_ROWS_READY",
+      "p84e_classification": "P84E_OUTCOME_ATTACHMENT_READY_WITH_METRICS",
+      "p84f_classification": "P84F_MODEL_SIGNAL_PRESENT_CALIBRATION_WEAK",
+      "p84g_classification": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED"
+    },
+    "classification_mismatches": {},
+    "canonical_row_count": 828,
+    "outcome_available_count": 808,
+    "row_count_ok": true
+  },
+  "step2_recomputed_metrics": {
+    "status": "PASSED",
+    "tolerance": 0.0001,
+    "recomputed": {
+      "label": "recomputed_all",
+      "n": 808,
+      "n_correct": 460,
+      "hit_rate": 0.569307,
+      "hit_rate_ci_95_lo": 0.535163,
+      "hit_rate_ci_95_hi": 0.60345,
+      "auc": 0.594315,
+      "brier": 0.249408,
+      "ece": 0.069682
+    },
+    "p84e_reference": {
+      "hit_rate": 0.569307,
+      "auc": 0.594315,
+      "brier": 0.249408,
+      "ece": 0.069682
+    },
+    "deltas": {
+      "hit_rate": 0.0,
+      "auc": 0.0,
+      "brier": 0.0,
+      "ece": 0.0
+    },
+    "tolerance_ok": true
+  },
+  "step3_split_metrics": {
+    "monthly": {
+      "2026-03": {
+        "label": "monthly_2026-03",
+        "n": 73,
+        "n_correct": 45,
+        "hit_rate": 0.616438,
+        "hit_rate_ci_95_lo": 0.504892,
+        "hit_rate_ci_95_hi": 0.727985,
+        "auc": 0.682946,
+        "brier": 0.23147,
+        "ece": 0.087881
+      },
+      "2026-04": {
+        "label": "monthly_2026-04",
+        "n": 389,
+        "n_correct": 211,
+        "hit_rate": 0.542416,
+        "hit_rate_ci_95_lo": 0.492908,
+        "hit_rate_ci_95_hi": 0.591925,
+        "auc": 0.5625,
+        "brier": 0.25749,
+        "ece": 0.100108
+      },
+      "2026-05": {
+        "label": "monthly_2026-05",
+        "n": 346,
+        "n_correct": 204,
+        "hit_rate": 0.589595,
+        "hit_rate_ci_95_lo": 0.537763,
+        "hit_rate_ci_95_hi": 0.641428,
+        "auc": 0.61245,
+        "brier": 0.244105,
+        "ece": 0.04246
+      }
+    },
+    "chronological_thirds": {
+      "first_third": {
+        "label": "first_third",
+        "n": 269,
+        "n_correct": 143,
+        "hit_rate": 0.531599,
+        "hit_rate_ci_95_lo": 0.471966,
+        "hit_rate_ci_95_hi": 0.591231,
+        "auc": 0.578769,
+        "brier": 0.254956,
+        "ece": 0.113355,
+        "date_start": "2026-03-25",
+        "date_end": "2026-04-16"
+      },
+      "second_third": {
+        "label": "second_third",
+        "n": 269,
+        "n_correct": 166,
+        "hit_rate": 0.6171,
+        "hit_rate_ci_95_lo": 0.559011,
+        "hit_rate_ci_95_hi": 0.67519,
+        "auc": 0.62688,
+        "brier": 0.239578,
+        "ece": 0.04456,
+        "date_start": "2026-04-16",
+        "date_end": "2026-05-06"
+      },
+      "third_third": {
+        "label": "third_third",
+        "n": 270,
+        "n_correct": 151,
+        "hit_rate": 0.559259,
+        "hit_rate_ci_95_lo": 0.500039,
+        "hit_rate_ci_95_hi": 0.61848,
+        "auc": 0.574353,
+        "brier": 0.253673,
+        "ece": 0.073121,
+        "date_start": "2026-05-06",
+        "date_end": "2026-05-26"
+      }
+    },
+    "side": {
+      "home": {
+        "label": "predicted_side_home",
+        "n": 412,
+        "n_correct": 244,
+        "hit_rate": 0.592233,
+        "hit_rate_ci_95_lo": 0.54478,
+        "hit_rate_ci_95_hi": 0.639686,
+        "auc": 0.551913,
+        "brier": 0.242853,
+        "ece": 0.047374
+      },
+      "away": {
+        "label": "predicted_side_away",
+        "n": 396,
+        "n_correct": 216,
+        "hit_rate": 0.545455,
+        "hit_rate_ci_95_lo": 0.496412,
+        "hit_rate_ci_95_hi": 0.594497,
+        "auc": 0.551337,
+        "brier": 0.256228,
+        "ece": 0.092891
+      }
+    },
+    "rule_subset": {
+      "primary_125": {
+        "label": "primary_125",
+        "n": 491,
+        "n_correct": 296,
+        "hit_rate": 0.602851,
+        "hit_rate_ci_95_lo": 0.55957,
+        "hit_rate_ci_95_hi": 0.646132,
+        "auc": 0.611055,
+        "brier": 0.245795,
+        "ece": 0.075904
+      },
+      "shadow_100": {
+        "label": "shadow_100",
+        "n": 536,
+        "n_correct": 319,
+        "hit_rate": 0.595149,
+        "hit_rate_ci_95_lo": 0.553593,
+        "hit_rate_ci_95_hi": 0.636705,
+        "auc": 0.609431,
+        "brier": 0.248071,
+        "ece": 0.082219
+      },
+      "tier_b": {
+        "label": "tier_b",
+        "n": 94,
+        "n_correct": 53,
+        "hit_rate": 0.56383,
+        "hit_rate_ci_95_lo": 0.463578,
+        "hit_rate_ci_95_hi": 0.664082,
+        "auc": 0.566576,
+        "brier": 0.246039,
+        "ece": 0.011976
+      },
+      "tier_a": {
+        "label": "tier_a",
+        "n": 84,
+        "n_correct": 41,
+        "hit_rate": 0.488095,
+        "hit_rate_ci_95_lo": 0.381199,
+        "hit_rate_ci_95_hi": 0.594992,
+        "auc": 0.49263,
+        "brier": 0.25059,
+        "ece": 0.028535
+      }
+    }
+  },
+  "step4_calibration": {
+    "ece": 0.069682,
+    "calibration_level": "WEAK",
+    "n_bins": 10,
+    "reliability_curve": [
+      {
+        "bin_lo": 0.0,
+        "bin_hi": 0.1,
+        "n": 0,
+        "mean_prob": null,
+        "empirical_hr": null,
+        "calibration_gap": null
+      },
+      {
+        "bin_lo": 0.1,
+        "bin_hi": 0.2,
+        "n": 0,
+        "mean_prob": null,
+        "empirical_hr": null,
+        "calibration_gap": null
+      },
+      {
+        "bin_lo": 0.2,
+        "bin_hi": 0.3,
+        "n": 144,
+        "mean_prob": 0.3,
+        "empirical_hr": 0.375,
+        "calibration_gap": -0.075
+      },
+      {
+        "bin_lo": 0.3,
+        "bin_hi": 0.4,
+        "n": 132,
+        "mean_prob": 0.350841,
+        "empirical_hr": 0.507576,
+        "calibration_gap": -0.156735
+      },
+      {
+        "bin_lo": 0.4,
+        "bin_hi": 0.5,
+        "n": 120,
+        "mean_prob": 0.447535,
+        "empirical_hr": 0.491667,
+        "calibration_gap": -0.044132
+      },
+      {
+        "bin_lo": 0.5,
+        "bin_hi": 0.6,
+        "n": 121,
+        "mean_prob": 0.550483,
+        "empirical_hr": 0.528926,
+        "calibration_gap": 0.021558
+      },
+      {
+        "bin_lo": 0.6,
+        "bin_hi": 0.7,
+        "n": 291,
+        "mean_prob": 0.676665,
+        "empirical_hr": 0.618557,
+        "calibration_gap": 0.058108
+      },
+      {
+        "bin_lo": 0.7,
+        "bin_hi": 0.8,
+        "n": 0,
+        "mean_prob": null,
+        "empirical_hr": null,
+        "calibration_gap": null
+      },
+      {
+        "bin_lo": 0.8,
+        "bin_hi": 0.9,
+        "n": 0,
+        "mean_prob": null,
+        "empirical_hr": null,
+        "calibration_gap": null
+      },
+      {
+        "bin_lo": 0.9,
+        "bin_hi": 1.0,
+        "n": 0,
+        "mean_prob": null,
+        "empirical_hr": null,
+        "calibration_gap": null
+      }
+    ],
+    "max_calibration_gap_bin": {
+      "bin_lo": 0.3,
+      "bin_hi": 0.4,
+      "n": 132,
+      "mean_prob": 0.350841,
+      "empirical_hr": 0.507576,
+      "calibration_gap": -0.156735
+    },
+    "side_balance": {
+      "n_home_predicted": 412,
+      "n_away_predicted": 396,
+      "imbalance_ratio": 0.019802
+    },
+    "calibration_notes": {
+      "platt_isotonic_refit": "FORBIDDEN_BY_GOVERNANCE",
+      "likely_sources": [
+        "Partial season coverage (2026-03 through 2026-05 only) — small n inflates ECE",
+        "model_probability is FIP-delta derived proxy; not calibrated for 2026 outcomes",
+        "No score transformation applied — systematic over/under confidence possible"
+      ]
+    }
+  },
+  "step5_coverage": {
+    "schedule_rows": 2430,
+    "canonical_rows": 828,
+    "outcome_available_rows": 808,
+    "canonical_coverage_ratio": 0.340741,
+    "outcome_coverage_ratio": 0.975845,
+    "coverage_classification": "COVERAGE_LIMITED",
+    "date_range_covered": "2026-03 through 2026-05",
+    "full_season_claim_valid": false,
+    "production_claim_valid": false,
+    "coverage_gap_reasons": [
+      "Probable pitcher data required for FIP delta — not available for all scheduled games",
+      "2026 season is partial (June+ games not yet played at time of analysis)",
+      "Some early-season games lacked starter pitcher assignments"
+    ]
+  },
+  "step6_subset_comparison": {
+    "method": "binomial_test_one_sided_greater_vs_H0_0.5",
+    "subsets": {
+      "all": {
+        "n_correct": 460,
+        "n": 808,
+        "hit_rate": 0.569307,
+        "binomial_p_value": 4.6e-05,
+        "significant_at_05": true,
+        "wilson_ci_95_lo": 0.534915,
+        "wilson_ci_95_hi": 0.603043
+      },
+      "primary_125": {
+        "n_correct": 296,
+        "n": 491,
+        "hit_rate": 0.602851,
+        "binomial_p_value": 3e-06,
+        "significant_at_05": true,
+        "wilson_ci_95_lo": 0.558933,
+        "wilson_ci_95_hi": 0.645173
+      },
+      "shadow_100": {
+        "n_correct": 319,
+        "n": 536,
+        "hit_rate": 0.595149,
+        "binomial_p_value": 6e-06,
+        "significant_at_05": true,
+        "wilson_ci_95_lo": 0.553059,
+        "wilson_ci_95_hi": 0.635886
+      },
+      "tier_b": {
+        "n_correct": 53,
+        "n": 94,
+        "hit_rate": 0.56383,
+        "binomial_p_value": 0.128221,
+        "significant_at_05": false,
+        "wilson_ci_95_lo": 0.463027,
+        "wilson_ci_95_hi": 0.65962
+      }
+    },
+    "primary_125_vs_all": {
+      "primary_125_hit_rate": 0.602851,
+      "all_hit_rate": 0.569307,
+      "delta": 0.033544,
+      "primary_125_significant": true
+    }
+  },
+  "step7_final_classification": {
+    "classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+    "rationale": [
+      "hit_rate = 0.569307 > 0.55 ✓",
+      "AUC(prob, home_win) = 0.594315 > 0.56 ✓",
+      "Coverage 34.07% (828/2430) — COVERAGE_LIMITED (March–May 2026 only)",
+      "ECE = 0.069682 — calibration weak but acceptable for diagnostic tracking",
+      "primary_125 hit_rate = 0.602851, significantly above random (p<0.05)",
+      "No full-season claim | No production claim | Diagnostic-only use"
+    ],
+    "key_metrics": {
+      "hit_rate": 0.569307,
+      "auc": 0.594315,
+      "ece": 0.069682,
+      "canonical_coverage_ratio": 0.340741,
+      "coverage_classification": "COVERAGE_LIMITED",
+      "primary_125_hit_rate": 0.602851,
+      "primary_125_significant": true
+    }
+  }
+}

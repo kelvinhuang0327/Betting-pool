@@ -1,0 +1,56 @@
+{
+  "p70_version": "p70_v1",
+  "p70_classification": "P70_PATH_A_AUTHORIZED_AWAITING_API_KEY",
+  "pull_date": "2026-05-26",
+  "mode": "DRY_RUN",
+  "ceo_authorization_confirmed": true,
+  "ceo_authorization_phrase": "YES authorize P61 PATH_A The Odds API historical 2024 MLB moneyline pull for paper-only validation",
+  "api_key_configured": false,
+  "paid_api_called": false,
+  "dry_run": true,
+  "pull_config": {
+    "sport": "baseball_mlb",
+    "season_start": "2024-03-20",
+    "season_end": "2024-09-29",
+    "market": "h2h",
+    "regions": "us",
+    "bookmakers": [
+      "pinnacle",
+      "draftkings",
+      "fanduel",
+      "betmgm"
+    ],
+    "preferred_bookmaker": "pinnacle",
+    "odds_format": "american",
+    "target_rows_estimate": 2430,
+    "api_endpoint_base": "https://api.the-odds-api.com/v4",
+    "rate_limit_seconds": 1.0,
+    "max_retries": 3,
+    "retry_backoff_seconds": 5.0
+  },
+  "output_csv_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/mlb_odds_2024_real.csv",
+  "rows_written": 0,
+  "api_key_acquisition_instructions": {
+    "step_1": "Register at https://the-odds-api.com",
+    "step_2": "Subscribe to a plan with historical data access (~$30-50 one-time or monthly)",
+    "step_3": "Locate your API key in the account dashboard",
+    "step_4": "Add to .env: THE_ODDS_API_KEY=<your_key>",
+    "step_5": "Re-run: .venv/bin/python scripts/_p70_path_a_the_odds_api_historical_pull.py",
+    "step_6": "Script will automatically detect key and switch to LIVE mode"
+  },
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "real_bet_allowed": false,
+    "production_ready": false,
+    "runtime_recommendation_logic_changed": false,
+    "tsl_crawler_called": false,
+    "bulk_scraping_performed": false,
+    "anti_bot_bypass_attempted": false,
+    "paid_api_called": false,
+    "platt_a": 0.435432,
+    "platt_b": 0.245464
+  }
+}

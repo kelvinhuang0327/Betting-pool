@@ -1,0 +1,375 @@
+{
+  "p81_classification": "P81_VALIDATOR_CONTRACT_READY_MOCK_ONLY",
+  "schema_version": "p81-v1",
+  "snapshot_id": "legal_odds_validator_contract_20260526",
+  "generated_at": "2026-05-26T09:54:40.024491+00:00",
+  "governance_snapshot": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "the_odds_api_key_accessed": false,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "promotion_freeze": true,
+    "tsl_crawler_modified": false,
+    "runtime_recommendation_modified": false
+  },
+  "step1_p80_readiness": {
+    "status": "PASS",
+    "p80_classification": "P80_MARKET_EDGE_REENTRY_CONTRACT_READY",
+    "required_field_count": 21,
+    "gates_defined": [
+      "gate_a_data_legality",
+      "gate_b_schema",
+      "gate_c_mapping",
+      "gate_d_metric_readiness",
+      "gate_e_cross_year_validation",
+      "gate_f_governance"
+    ],
+    "gates_open": [
+      "gate_f_governance"
+    ],
+    "gates_blocked": [
+      "gate_a_data_legality",
+      "gate_b_schema",
+      "gate_c_mapping",
+      "gate_d_metric_readiness",
+      "gate_e_cross_year_validation"
+    ],
+    "live_api_calls": 0,
+    "api_key_accessed": false,
+    "issues": [],
+    "stop": false
+  },
+  "step2_input_contract": {
+    "input_types_defined": [
+      "REAL_LEGAL_ODDS_DATASET",
+      "MOCK_ODDS_FIXTURE",
+      "UNKNOWN_SOURCE_DATASET",
+      "SCRAPING_PROHIBITED_SOURCE",
+      "RAW_PAID_DATA_UNPOLICIED"
+    ],
+    "input_type_details": {
+      "REAL_LEGAL_ODDS_DATASET": {
+        "description": "Licensed or legally obtained odds dataset",
+        "source_license_required": "LEGAL_OR_LICENSED",
+        "can_unlock_p82": true,
+        "validator_notes": "Must pass all 5 validator gates before P82 unlock"
+      },
+      "MOCK_ODDS_FIXTURE": {
+        "description": "Internal fixture for validator testing only",
+        "source_license_required": "MOCK_VALIDATOR_ONLY",
+        "can_unlock_p82": false,
+        "validator_notes": "Passes schema gate; fails real-market readiness permanently"
+      },
+      "UNKNOWN_SOURCE_DATASET": {
+        "description": "Dataset with unresolved source or license",
+        "source_license_required": null,
+        "can_unlock_p82": false,
+        "validator_notes": "Blocked until source/license resolved"
+      },
+      "SCRAPING_PROHIBITED_SOURCE": {
+        "description": "Dataset from ToS/robots-prohibited automated scraping",
+        "source_license_required": null,
+        "can_unlock_p82": false,
+        "validator_notes": "Hard blocked \u2014 OddsPortal TOS / robots.txt violation"
+      },
+      "RAW_PAID_DATA_UNPOLICIED": {
+        "description": "Paid data without declared raw_data_policy",
+        "source_license_required": null,
+        "can_unlock_p82": false,
+        "validator_notes": "Blocked until COMMIT_ALLOWED / LOCAL_ONLY_HASH_COMMITTED / DERIVED_ONLY_COMMIT declared"
+      }
+    },
+    "p82_unlock_eligibility": {
+      "REAL_LEGAL_ODDS_DATASET": true,
+      "MOCK_ODDS_FIXTURE": false,
+      "UNKNOWN_SOURCE_DATASET": false,
+      "SCRAPING_PROHIBITED_SOURCE": false,
+      "RAW_PAID_DATA_UNPOLICIED": false
+    },
+    "currently_available_type": "MOCK_ODDS_FIXTURE",
+    "real_legal_dataset_available": false,
+    "p82_currently_unlockable": false
+  },
+  "step3_schema_validator": {
+    "required_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "sportsbook_or_source",
+      "market_type",
+      "odds_timestamp_utc",
+      "game_start_utc",
+      "home_moneyline",
+      "away_moneyline",
+      "implied_home_prob",
+      "implied_away_prob",
+      "line_type",
+      "is_pregame",
+      "is_closing",
+      "source_license_status",
+      "source_trace",
+      "raw_data_policy",
+      "checksum_hash",
+      "created_at_utc"
+    ],
+    "required_field_count": 21,
+    "field_type_rules": {
+      "game_id": "non-empty string",
+      "game_date": "ISO-8601 UTC datetime string",
+      "season": "numeric >= 2000",
+      "home_team": "non-empty string",
+      "away_team": "non-empty string",
+      "sportsbook_or_source": "non-empty string",
+      "market_type": "non-empty string",
+      "odds_timestamp_utc": "ISO-8601 UTC datetime string",
+      "game_start_utc": "ISO-8601 UTC datetime string",
+      "home_moneyline": "numeric (American odds)",
+      "away_moneyline": "numeric (American odds)",
+      "implied_home_prob": "float in (0, 1)",
+      "implied_away_prob": "float in (0, 1)",
+      "line_type": "one of ['moneyline', 'spread', 'total', 'runline']",
+      "is_pregame": "boolean",
+      "is_closing": "boolean",
+      "source_license_status": "one of ['LEGAL_OR_LICENSED', 'MOCK_VALIDATOR_ONLY']",
+      "source_trace": "non-empty string",
+      "raw_data_policy": "one of ['COMMIT_ALLOWED', 'LOCAL_ONLY_HASH_COMMITTED', 'DERIVED_ONLY_COMMIT']",
+      "checksum_hash": "non-empty string",
+      "created_at_utc": "ISO-8601 UTC datetime string"
+    },
+    "no_ev_clv_kelly_computed": true,
+    "validator_is_schema_only": true
+  },
+  "step4_validator_gates": {
+    "gates_defined": [
+      {
+        "gate": "LEGALITY_GATE",
+        "description": "source_license_status must be in allowed values; OddsPortal scrape = hard block",
+        "allowed_values": [
+          "LEGAL_OR_LICENSED",
+          "MOCK_VALIDATOR_ONLY"
+        ],
+        "blocked_values": [
+          "SCRAPING_TOS_VIOLATION",
+          "ROBOTS_PROHIBITED",
+          "ODDSPORTAL_AUTOMATED",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "gate": "RAW_DATA_POLICY_GATE",
+        "description": "raw_data_policy must declare storage/commit policy",
+        "allowed_values": [
+          "COMMIT_ALLOWED",
+          "LOCAL_ONLY_HASH_COMMITTED",
+          "DERIVED_ONLY_COMMIT"
+        ],
+        "blocked_if": "UNKNOWN or undeclared"
+      },
+      {
+        "gate": "TIMESTAMP_GATE",
+        "description": "pregame odds_timestamp_utc < game_start_utc; closing flag required for CLV",
+        "clv_readiness": "BLOCKED until both pregame + closing pairs confirmed in dataset"
+      },
+      {
+        "gate": "MONEYLINE_GATE",
+        "description": "moneylines numeric and convertible to implied probabilities; edge NOT computed",
+        "edge_computed": false
+      },
+      {
+        "gate": "IDENTITY_GATE",
+        "description": "game/team identity fields present and internally consistent",
+        "conflict_check": "home_team != away_team"
+      }
+    ],
+    "p82_requires_all_gates_pass": true,
+    "mock_fixture_cannot_unlock_p82": true
+  },
+  "step5_mock_fixture_validation": {
+    "mock_valid_fixture": {
+      "fixture_type": "MOCK_ODDS_FIXTURE",
+      "schema_result": {
+        "valid": true,
+        "errors": [],
+        "missing_fields": [],
+        "null_fields": []
+      },
+      "gate_results": {
+        "gates": {
+          "LEGALITY_GATE": {
+            "gate": "LEGALITY_GATE",
+            "status": "PASS",
+            "reason": null
+          },
+          "RAW_DATA_POLICY_GATE": {
+            "gate": "RAW_DATA_POLICY_GATE",
+            "status": "PASS",
+            "reason": null
+          },
+          "TIMESTAMP_GATE": {
+            "gate": "TIMESTAMP_GATE",
+            "status": "PASS",
+            "reason": null,
+            "clv_ready_row": false
+          },
+          "MONEYLINE_GATE": {
+            "gate": "MONEYLINE_GATE",
+            "status": "PASS",
+            "reason": null,
+            "convertible": true,
+            "edge_not_computed": true
+          },
+          "IDENTITY_GATE": {
+            "gate": "IDENTITY_GATE",
+            "status": "PASS",
+            "reason": null
+          }
+        },
+        "all_gates_pass": true,
+        "ev_computed": false,
+        "clv_computed": false,
+        "kelly_computed": false
+      },
+      "market_readiness": false,
+      "can_unlock_p82": false,
+      "outcome": "MOCK_FIXTURE_VALIDATOR_PASS_NOT_MARKET_READY",
+      "note": "MOCK_VALIDATOR_ONLY \u2014 not evidence of real legal odds"
+    },
+    "mock_invalid_fixture": {
+      "fixture_type": "SCRAPING_PROHIBITED_SOURCE",
+      "schema_result": {
+        "valid": false,
+        "errors": [
+          "missing_fields: ['source_trace']"
+        ],
+        "missing_fields": [
+          "source_trace"
+        ],
+        "null_fields": []
+      },
+      "gate_results": {
+        "gates": {
+          "LEGALITY_GATE": {
+            "gate": "LEGALITY_GATE",
+            "status": "FAIL",
+            "reason": "prohibited source_license_status: SCRAPING_TOS_VIOLATION"
+          },
+          "RAW_DATA_POLICY_GATE": {
+            "gate": "RAW_DATA_POLICY_GATE",
+            "status": "FAIL",
+            "reason": "raw_data_policy not allowed: UNKNOWN"
+          },
+          "TIMESTAMP_GATE": {
+            "gate": "TIMESTAMP_GATE",
+            "status": "PASS",
+            "reason": null,
+            "clv_ready_row": false
+          },
+          "MONEYLINE_GATE": {
+            "gate": "MONEYLINE_GATE",
+            "status": "PASS",
+            "reason": null,
+            "convertible": true,
+            "edge_not_computed": true
+          },
+          "IDENTITY_GATE": {
+            "gate": "IDENTITY_GATE",
+            "status": "PASS",
+            "reason": null
+          }
+        },
+        "all_gates_pass": false,
+        "ev_computed": false,
+        "clv_computed": false,
+        "kelly_computed": false
+      },
+      "market_readiness": false,
+      "can_unlock_p82": false,
+      "outcome": "BLOCKED_SOURCE_LEGALITY",
+      "note": "Expected to fail LEGALITY_GATE and RAW_DATA_POLICY_GATE"
+    },
+    "mock_is_not_market_evidence": true,
+    "mock_cannot_unlock_p82": true
+  },
+  "step6_output_decision_states": {
+    "states_defined": [
+      "LEGAL_ODDS_DATASET_VALIDATED_FOR_P82",
+      "MOCK_FIXTURE_VALIDATOR_PASS_NOT_MARKET_READY",
+      "BLOCKED_SOURCE_LEGALITY",
+      "BLOCKED_SCHEMA_INVALID",
+      "BLOCKED_RAW_DATA_POLICY",
+      "BLOCKED_TIMESTAMP_LINEAGE",
+      "BLOCKED_MONEYLINE_INVALID",
+      "BLOCKED_IDENTITY_MAPPING",
+      "BLOCKED_NO_REAL_DATASET"
+    ],
+    "state_descriptions": {
+      "LEGAL_ODDS_DATASET_VALIDATED_FOR_P82": "Only possible for REAL_LEGAL_ODDS_DATASET passing all 5 gates",
+      "MOCK_FIXTURE_VALIDATOR_PASS_NOT_MARKET_READY": "Mock fixture passes schema; cannot unlock P82",
+      "BLOCKED_SOURCE_LEGALITY": "source_license_status prohibited or missing",
+      "BLOCKED_SCHEMA_INVALID": "One or more required fields missing or invalid type",
+      "BLOCKED_RAW_DATA_POLICY": "raw_data_policy not declared or UNKNOWN",
+      "BLOCKED_TIMESTAMP_LINEAGE": "Timestamp ordering violation or unparseable",
+      "BLOCKED_MONEYLINE_INVALID": "Moneyline values non-numeric or not convertible",
+      "BLOCKED_IDENTITY_MAPPING": "Game/team identity fields missing or conflicting",
+      "BLOCKED_NO_REAL_DATASET": "No real legal dataset provided; mock-only mode active"
+    },
+    "current_state": "BLOCKED_NO_REAL_DATASET",
+    "p82_unlock_status": "BLOCKED \u2014 no real legal dataset present",
+    "p81_classification": "P81_VALIDATOR_CONTRACT_READY_MOCK_ONLY"
+  },
+  "step7_source_artifacts": {
+    "artifacts_checked": {
+      "p80_market_edge_reentry_readiness_contract_summary.json": true,
+      "p79b_tier_b_vs_tier_c_comparison_harness_summary.json": true,
+      "p79a_tier_b_trigger_readiness_contract_summary.json": true,
+      "p78_monthly_shadow_tracker_report_template_summary.json": true,
+      "p77_prediction_only_shadow_tracker_contract_summary.json": true,
+      "p76_corrected_tier_c_final_rule_selection_summary.json": true,
+      "p75b_calibration_diagnostics_corrected_tier_c_summary.json": true,
+      "p75a_tier_c_corrected_rule_validator_summary.json": true,
+      "p74_tier_c_home_away_bias_correction_summary.json": true,
+      "p73_tier_stability_and_sample_expansion_summary.json": true,
+      "p72b_objective_metric_contract_summary.json": true,
+      "p72a_odds_free_strategy_accuracy_backtest_summary.json": true
+    },
+    "p80_report_present": true,
+    "p80_script_present": true,
+    "all_required_present": true,
+    "missing": []
+  },
+  "step8_forbidden_scan": {
+    "scan_passed": true,
+    "violations_count": 0,
+    "violations": [],
+    "patterns_checked": 10,
+    "lines_scanned": 1012,
+    "self_exclusion_range": [
+      648,
+      723
+    ],
+    "governance_exclusion_range": [
+      25,
+      46
+    ]
+  },
+  "market_edge_lane": "blocked",
+  "prediction_lane_status": "active",
+  "live_api_calls": 0,
+  "ev_clv_kelly_computed": false,
+  "p82_unlock_status": "BLOCKED_NO_REAL_DATASET",
+  "contract_is_production_claim": false
+}

@@ -1,0 +1,671 @@
+{
+  "p54_phase": "P54",
+  "run_date": "2026-05-25",
+  "p53_recap": {
+    "classification": "SEP_CALIBRATION_SAMPLE_SENSITIVE_DIAGNOSTIC",
+    "sep_n": 98,
+    "sep_platt_ece": 0.122929,
+    "bootstrap_95_ci": [
+      0.062,
+      0.215
+    ],
+    "ci_low_below_critical": true,
+    "p45_platt_a": 0.435432,
+    "p45_platt_b": 0.245464
+  },
+  "tier_c_verification": {
+    "n": 535,
+    "filter": "|sp_fip_delta|>=0.5, market_home_prob_no_vig in (0,1), home_win defined",
+    "source": "mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl"
+  },
+  "full_season_metrics": {
+    "n": 535,
+    "raw_ece": 0.031909,
+    "platt_ece": 0.02924,
+    "raw_brier": 0.238479,
+    "platt_brier": 0.240456,
+    "actual_win_rate": 0.566355,
+    "mean_raw_prob": 0.536347,
+    "mean_platt_prob": 0.576551,
+    "calibration_gap": 0.010196
+  },
+  "sep_2025_metrics": {
+    "n": 98,
+    "raw_ece": 0.06302,
+    "platt_ece": 0.122929,
+    "raw_brier": 0.230901,
+    "platt_brier": 0.235731,
+    "actual_win_rate": 0.581633,
+    "mean_raw_prob": 0.524761,
+    "mean_platt_prob": 0.571682,
+    "calibration_gap": 0.00995
+  },
+  "monthly_fip_distribution": {
+    "Apr": {
+      "month_key": "04",
+      "n": 16,
+      "sp_fip_delta": {
+        "mean": -0.04875,
+        "median": -0.025,
+        "std": 1.022982,
+        "min": -1.55,
+        "max": 1.4
+      },
+      "abs_sp_fip_delta": {
+        "mean": 0.945,
+        "median": 0.95,
+        "std": 0.310591,
+        "p75": 1.1125,
+        "p90": 1.3
+      },
+      "extreme_rate_abs_ge_1_0": 0.5,
+      "extreme_rate_abs_ge_1_5": 0.0625,
+      "home_side_rate": 0.8125,
+      "away_side_rate": 0.1875
+    },
+    "May": {
+      "month_key": "05",
+      "n": 120,
+      "sp_fip_delta": {
+        "mean": 0.0465,
+        "median": 0.5,
+        "std": 1.013579,
+        "min": -1.8,
+        "max": 1.65
+      },
+      "abs_sp_fip_delta": {
+        "mean": 0.953833,
+        "median": 0.9,
+        "std": 0.334782,
+        "p75": 1.2,
+        "p90": 1.45
+      },
+      "extreme_rate_abs_ge_1_0": 0.433333,
+      "extreme_rate_abs_ge_1_5": 0.075,
+      "home_side_rate": 0.791667,
+      "away_side_rate": 0.208333
+    },
+    "Jun": {
+      "month_key": "06",
+      "n": 101,
+      "sp_fip_delta": {
+        "mean": 0.039109,
+        "median": -0.5,
+        "std": 1.014337,
+        "min": -1.65,
+        "max": 1.7
+      },
+      "abs_sp_fip_delta": {
+        "mean": 0.958911,
+        "median": 0.9,
+        "std": 0.318935,
+        "p75": 1.15,
+        "p90": 1.45
+      },
+      "extreme_rate_abs_ge_1_0": 0.425743,
+      "extreme_rate_abs_ge_1_5": 0.079208,
+      "home_side_rate": 0.524752,
+      "away_side_rate": 0.475248
+    },
+    "Jul": {
+      "month_key": "07",
+      "n": 92,
+      "sp_fip_delta": {
+        "mean": -0.019565,
+        "median": -0.5,
+        "std": 0.969931,
+        "min": -1.65,
+        "max": 1.45
+      },
+      "abs_sp_fip_delta": {
+        "mean": 0.917391,
+        "median": 0.9,
+        "std": 0.300497,
+        "p75": 1.1,
+        "p90": 1.35
+      },
+      "extreme_rate_abs_ge_1_0": 0.380435,
+      "extreme_rate_abs_ge_1_5": 0.021739,
+      "home_side_rate": 0.706522,
+      "away_side_rate": 0.293478
+    },
+    "Aug": {
+      "month_key": "08",
+      "n": 108,
+      "sp_fip_delta": {
+        "mean": 0.018981,
+        "median": 0.0,
+        "std": 0.966899,
+        "min": -1.65,
+        "max": 1.45
+      },
+      "abs_sp_fip_delta": {
+        "mean": 0.918056,
+        "median": 0.9,
+        "std": 0.290782,
+        "p75": 1.1,
+        "p90": 1.35
+      },
+      "extreme_rate_abs_ge_1_0": 0.425926,
+      "extreme_rate_abs_ge_1_5": 0.009259,
+      "home_side_rate": 0.87037,
+      "away_side_rate": 0.12963
+    },
+    "Sep": {
+      "month_key": "09",
+      "n": 98,
+      "sp_fip_delta": {
+        "mean": 0.002551,
+        "median": 0.0,
+        "std": 1.003175,
+        "min": -1.65,
+        "max": 1.65
+      },
+      "abs_sp_fip_delta": {
+        "mean": 0.956633,
+        "median": 0.95,
+        "std": 0.285982,
+        "p75": 1.1375,
+        "p90": 1.35
+      },
+      "extreme_rate_abs_ge_1_0": 0.459184,
+      "extreme_rate_abs_ge_1_5": 0.030612,
+      "home_side_rate": 0.602041,
+      "away_side_rate": 0.397959
+    }
+  },
+  "statistical_comparison": {
+    "sep_vs_may": {
+      "ks_statistic": 0.103231,
+      "mannwhitney": {
+        "u_statistic": 5760.5,
+        "z_score": -0.2579,
+        "p_value_approx": 0.796447,
+        "n1": 98,
+        "n2": 120,
+        "note": "normal approximation, not exact"
+      },
+      "n_sep": 98,
+      "n_may": 120
+    },
+    "sep_vs_jun": {
+      "ks_statistic": 0.0882,
+      "mannwhitney": {
+        "u_statistic": 4910.0,
+        "z_score": -0.096,
+        "p_value_approx": 0.923504,
+        "n1": 98,
+        "n2": 101,
+        "note": "normal approximation, not exact"
+      },
+      "n_sep": 98,
+      "n_jun": 101
+    },
+    "sep_vs_jul": {
+      "ks_statistic": 0.129991,
+      "mannwhitney": {
+        "u_statistic": 4103.5,
+        "z_score": -1.0678,
+        "p_value_approx": 0.285616,
+        "n1": 98,
+        "n2": 92,
+        "note": "normal approximation, not exact"
+      },
+      "n_sep": 98,
+      "n_jul": 92
+    },
+    "sep_vs_aug": {
+      "ks_statistic": 0.108655,
+      "mannwhitney": {
+        "u_statistic": 4888.5,
+        "z_score": -0.9443,
+        "p_value_approx": 0.345001,
+        "n1": 98,
+        "n2": 108,
+        "note": "normal approximation, not exact"
+      },
+      "n_sep": 98,
+      "n_aug": 108
+    },
+    "sep_vs_full_tier_c": {
+      "ks_statistic": 0.073469,
+      "mannwhitney": {
+        "u_statistic": 25224.0,
+        "z_score": -0.5954,
+        "p_value_approx": 0.551557,
+        "n1": 98,
+        "n2": 535,
+        "note": "normal approximation, not exact"
+      },
+      "n_sep": 98,
+      "n_full": 535
+    }
+  },
+  "calibration_by_fip_band": {
+    "full_tier_c": {
+      "0.50_0.75": {
+        "n": 168,
+        "raw_ece": 0.063031,
+        "platt_ece": 0.055475,
+        "raw_brier": 0.231246,
+        "platt_brier": 0.237771,
+        "actual_win_rate": 0.559524,
+        "mean_raw_prob": 0.532215,
+        "mean_platt_prob": 0.574733,
+        "calibration_gap": 0.015209,
+        "outcome_rate_delta_vs_baseline": -0.006831,
+        "band_rate_in_period": 0.314019
+      },
+      "0.75_1.00": {
+        "n": 138,
+        "raw_ece": 0.066599,
+        "platt_ece": 0.060184,
+        "raw_brier": 0.250066,
+        "platt_brier": 0.246777,
+        "actual_win_rate": 0.557971,
+        "mean_raw_prob": 0.533598,
+        "mean_platt_prob": 0.575375,
+        "calibration_gap": 0.017404,
+        "outcome_rate_delta_vs_baseline": -0.008384,
+        "band_rate_in_period": 0.257944
+      },
+      "1.00_1.25": {
+        "n": 131,
+        "raw_ece": 0.107499,
+        "platt_ece": 0.081938,
+        "raw_brier": 0.241457,
+        "platt_brier": 0.245799,
+        "actual_win_rate": 0.534351,
+        "mean_raw_prob": 0.543892,
+        "mean_platt_prob": 0.579832,
+        "calibration_gap": 0.045481,
+        "outcome_rate_delta_vs_baseline": -0.032004,
+        "band_rate_in_period": 0.24486
+      },
+      "1.25_1.50": {
+        "n": 74,
+        "raw_ece": 0.122578,
+        "platt_ece": 0.084187,
+        "raw_brier": 0.230055,
+        "platt_brier": 0.225417,
+        "actual_win_rate": 0.662162,
+        "mean_raw_prob": 0.539584,
+        "mean_platt_prob": 0.577975,
+        "calibration_gap": 0.084187,
+        "outcome_rate_delta_vs_baseline": 0.095807,
+        "band_rate_in_period": 0.138318
+      },
+      "1.50_plus": {
+        "n": 24,
+        "raw_ece": 0.158854,
+        "platt_ece": 0.152434,
+        "raw_brier": 0.232207,
+        "platt_brier": 0.240108,
+        "actual_win_rate": 0.541667,
+        "mean_raw_prob": 0.529904,
+        "mean_platt_prob": 0.573727,
+        "calibration_gap": 0.03206,
+        "outcome_rate_delta_vs_baseline": -0.024688,
+        "band_rate_in_period": 0.04486
+      }
+    },
+    "Sep": {
+      "0.50_0.75": {
+        "n": 25,
+        "raw_ece": 0.093612,
+        "platt_ece": 0.169051,
+        "raw_brier": 0.229833,
+        "platt_brier": 0.242244,
+        "actual_win_rate": 0.52,
+        "mean_raw_prob": 0.51342,
+        "mean_platt_prob": 0.566816,
+        "calibration_gap": 0.046816,
+        "outcome_rate_delta_vs_baseline": -0.061633,
+        "band_rate_in_period": 0.255102
+      },
+      "0.75_1.00": {
+        "n": 28,
+        "raw_ece": 0.155643,
+        "platt_ece": 0.107692,
+        "raw_brier": 0.24103,
+        "platt_brier": 0.228483,
+        "actual_win_rate": 0.678571,
+        "mean_raw_prob": 0.522929,
+        "mean_platt_prob": 0.57088,
+        "calibration_gap": 0.107692,
+        "outcome_rate_delta_vs_baseline": 0.096938,
+        "band_rate_in_period": 0.285714
+      },
+      "1.00_1.25": {
+        "n": 27,
+        "raw_ece": 0.165456,
+        "platt_ece": 0.245988,
+        "raw_brier": 0.213865,
+        "platt_brier": 0.231454,
+        "actual_win_rate": 0.555556,
+        "mean_raw_prob": 0.533433,
+        "mean_platt_prob": 0.575448,
+        "calibration_gap": 0.019893,
+        "outcome_rate_delta_vs_baseline": -0.026077,
+        "band_rate_in_period": 0.27551
+      },
+      "1.25_1.50": {
+        "n": 15,
+        "raw_ece": 0.06442,
+        "platt_ece": 0.091057,
+        "raw_brier": 0.246822,
+        "platt_brier": 0.248943,
+        "actual_win_rate": 0.533333,
+        "mean_raw_prob": 0.5259,
+        "mean_platt_prob": 0.572113,
+        "calibration_gap": 0.03878,
+        "outcome_rate_delta_vs_baseline": -0.0483,
+        "band_rate_in_period": 0.153061
+      },
+      "1.50_plus": {
+        "n": 3,
+        "raw_ece": 0.1391,
+        "platt_ece": 0.175133,
+        "raw_brier": 0.218984,
+        "platt_brier": 0.221535,
+        "actual_win_rate": 0.666667,
+        "mean_raw_prob": 0.552633,
+        "mean_platt_prob": 0.58368,
+        "calibration_gap": 0.082986,
+        "outcome_rate_delta_vs_baseline": 0.085034,
+        "band_rate_in_period": 0.030612
+      }
+    },
+    "May": {
+      "0.50_0.75": {
+        "n": 43,
+        "raw_ece": 0.178942,
+        "platt_ece": 0.068261,
+        "raw_brier": 0.23564,
+        "platt_brier": 0.242655,
+        "actual_win_rate": 0.534884,
+        "mean_raw_prob": 0.543198,
+        "mean_platt_prob": 0.579634,
+        "calibration_gap": 0.04475,
+        "outcome_rate_delta_vs_baseline": -0.040116,
+        "band_rate_in_period": 0.358333
+      },
+      "0.75_1.00": {
+        "n": 25,
+        "raw_ece": 0.252232,
+        "platt_ece": 0.054221,
+        "raw_brier": 0.229388,
+        "platt_brier": 0.22924,
+        "actual_win_rate": 0.64,
+        "mean_raw_prob": 0.557208,
+        "mean_platt_prob": 0.585779,
+        "calibration_gap": 0.054221,
+        "outcome_rate_delta_vs_baseline": 0.065,
+        "band_rate_in_period": 0.208333
+      },
+      "1.00_1.25": {
+        "n": 29,
+        "raw_ece": 0.114903,
+        "platt_ece": 0.037258,
+        "raw_brier": 0.24177,
+        "platt_brier": 0.235484,
+        "actual_win_rate": 0.62069,
+        "mean_raw_prob": 0.551793,
+        "mean_platt_prob": 0.583432,
+        "calibration_gap": 0.037258,
+        "outcome_rate_delta_vs_baseline": 0.04569,
+        "band_rate_in_period": 0.241667
+      },
+      "1.25_1.50": {
+        "n": 14,
+        "raw_ece": 0.12345,
+        "platt_ece": 0.207168,
+        "raw_brier": 0.222626,
+        "platt_brier": 0.232854,
+        "actual_win_rate": 0.571429,
+        "mean_raw_prob": 0.557636,
+        "mean_platt_prob": 0.585787,
+        "calibration_gap": 0.014359,
+        "outcome_rate_delta_vs_baseline": -0.003571,
+        "band_rate_in_period": 0.116667
+      },
+      "1.50_plus": {
+        "n": 9,
+        "raw_ece": 0.247589,
+        "platt_ece": 0.255503,
+        "raw_brier": 0.233111,
+        "platt_brier": 0.253309,
+        "actual_win_rate": 0.444444,
+        "mean_raw_prob": 0.543167,
+        "mean_platt_prob": 0.579549,
+        "calibration_gap": 0.135104,
+        "outcome_rate_delta_vs_baseline": -0.130556,
+        "band_rate_in_period": 0.075
+      }
+    },
+    "Jun": {
+      "0.50_0.75": {
+        "n": 33,
+        "raw_ece": 0.142336,
+        "platt_ece": 0.065045,
+        "raw_brier": 0.219473,
+        "platt_brier": 0.227598,
+        "actual_win_rate": 0.575758,
+        "mean_raw_prob": 0.507967,
+        "mean_platt_prob": 0.563792,
+        "calibration_gap": 0.011966,
+        "outcome_rate_delta_vs_baseline": 0.021303,
+        "band_rate_in_period": 0.326733
+      },
+      "0.75_1.00": {
+        "n": 25,
+        "raw_ece": 0.153724,
+        "platt_ece": 0.078634,
+        "raw_brier": 0.265997,
+        "platt_brier": 0.260743,
+        "actual_win_rate": 0.48,
+        "mean_raw_prob": 0.48734,
+        "mean_platt_prob": 0.55501,
+        "calibration_gap": 0.07501,
+        "outcome_rate_delta_vs_baseline": -0.074455,
+        "band_rate_in_period": 0.247525
+      },
+      "1.00_1.25": {
+        "n": 22,
+        "raw_ece": 0.173223,
+        "platt_ece": 0.178868,
+        "raw_brier": 0.249121,
+        "platt_brier": 0.233324,
+        "actual_win_rate": 0.636364,
+        "mean_raw_prob": 0.506768,
+        "mean_platt_prob": 0.563147,
+        "calibration_gap": 0.073217,
+        "outcome_rate_delta_vs_baseline": 0.081909,
+        "band_rate_in_period": 0.217822
+      },
+      "1.25_1.50": {
+        "n": 13,
+        "raw_ece": 0.170569,
+        "platt_ece": 0.129879,
+        "raw_brier": 0.242759,
+        "platt_brier": 0.253358,
+        "actual_win_rate": 0.461538,
+        "mean_raw_prob": 0.505523,
+        "mean_platt_prob": 0.562886,
+        "calibration_gap": 0.101347,
+        "outcome_rate_delta_vs_baseline": -0.092917,
+        "band_rate_in_period": 0.128713
+      },
+      "1.50_plus": {
+        "n": 8,
+        "raw_ece": 0.174212,
+        "platt_ece": 0.086264,
+        "raw_brier": 0.219215,
+        "platt_brier": 0.224419,
+        "actual_win_rate": 0.625,
+        "mean_raw_prob": 0.549762,
+        "mean_platt_prob": 0.582385,
+        "calibration_gap": 0.042615,
+        "outcome_rate_delta_vs_baseline": 0.070545,
+        "band_rate_in_period": 0.079208
+      }
+    },
+    "Aug": {
+      "0.50_0.75": {
+        "n": 34,
+        "raw_ece": 0.046097,
+        "platt_ece": 0.043203,
+        "raw_brier": 0.237615,
+        "platt_brier": 0.242587,
+        "actual_win_rate": 0.558824,
+        "mean_raw_prob": 0.558009,
+        "mean_platt_prob": 0.585924,
+        "calibration_gap": 0.027101,
+        "outcome_rate_delta_vs_baseline": 0.012528,
+        "band_rate_in_period": 0.314815
+      },
+      "0.75_1.00": {
+        "n": 28,
+        "raw_ece": 0.146775,
+        "platt_ece": 0.164955,
+        "raw_brier": 0.268895,
+        "platt_brier": 0.27229,
+        "actual_win_rate": 0.428571,
+        "mean_raw_prob": 0.575346,
+        "mean_platt_prob": 0.593527,
+        "calibration_gap": 0.164955,
+        "outcome_rate_delta_vs_baseline": -0.117725,
+        "band_rate_in_period": 0.259259
+      },
+      "1.00_1.25": {
+        "n": 26,
+        "raw_ece": 0.163069,
+        "platt_ece": 0.126131,
+        "raw_brier": 0.257037,
+        "platt_brier": 0.262988,
+        "actual_win_rate": 0.461538,
+        "mean_raw_prob": 0.561908,
+        "mean_platt_prob": 0.587669,
+        "calibration_gap": 0.126131,
+        "outcome_rate_delta_vs_baseline": -0.084758,
+        "band_rate_in_period": 0.240741
+      },
+      "1.25_1.50": {
+        "n": 19,
+        "raw_ece": 0.209937,
+        "platt_ece": 0.194068,
+        "raw_brier": 0.205791,
+        "platt_brier": 0.200768,
+        "actual_win_rate": 0.789474,
+        "mean_raw_prob": 0.579537,
+        "mean_platt_prob": 0.595405,
+        "calibration_gap": 0.194068,
+        "outcome_rate_delta_vs_baseline": 0.243178,
+        "band_rate_in_period": 0.175926
+      },
+      "1.50_plus": {
+        "n": 1,
+        "raw_ece": 0.496,
+        "platt_ece": 0.437225,
+        "raw_brier": 0.246016,
+        "platt_brier": 0.191166,
+        "actual_win_rate": 1.0,
+        "mean_raw_prob": 0.504,
+        "mean_platt_prob": 0.562775,
+        "calibration_gap": 0.437225,
+        "outcome_rate_delta_vs_baseline": 0.453704,
+        "band_rate_in_period": 0.009259
+      }
+    }
+  },
+  "side_outcome_composition": {
+    "full_tier_c": {
+      "n": 535,
+      "home_selected_rate": 0.708411,
+      "away_selected_rate": 0.291589,
+      "home_win_rate": 0.566355,
+      "away_win_rate": 0.433645,
+      "selected_side_win_rate": 0.573832,
+      "favorite_side_rate": 0.75514,
+      "underdog_side_rate": 0.24486
+    },
+    "Sep": {
+      "n": 98,
+      "home_selected_rate": 0.602041,
+      "away_selected_rate": 0.397959,
+      "home_win_rate": 0.581633,
+      "away_win_rate": 0.418367,
+      "selected_side_win_rate": 0.612245,
+      "favorite_side_rate": 0.846939,
+      "underdog_side_rate": 0.153061
+    },
+    "May": {
+      "n": 120,
+      "home_selected_rate": 0.791667,
+      "away_selected_rate": 0.208333,
+      "home_win_rate": 0.575,
+      "away_win_rate": 0.425,
+      "selected_side_win_rate": 0.566667,
+      "favorite_side_rate": 0.8,
+      "underdog_side_rate": 0.2
+    },
+    "Jun": {
+      "n": 101,
+      "home_selected_rate": 0.524752,
+      "away_selected_rate": 0.475248,
+      "home_win_rate": 0.554455,
+      "away_win_rate": 0.445545,
+      "selected_side_win_rate": 0.534653,
+      "favorite_side_rate": 0.633663,
+      "underdog_side_rate": 0.366337
+    },
+    "Jul": {
+      "n": 92,
+      "home_selected_rate": 0.706522,
+      "away_selected_rate": 0.293478,
+      "home_win_rate": 0.586957,
+      "away_win_rate": 0.413043,
+      "selected_side_win_rate": 0.597826,
+      "favorite_side_rate": 0.717391,
+      "underdog_side_rate": 0.282609
+    },
+    "Aug": {
+      "n": 108,
+      "home_selected_rate": 0.87037,
+      "away_selected_rate": 0.12963,
+      "home_win_rate": 0.546296,
+      "away_win_rate": 0.453704,
+      "selected_side_win_rate": 0.564815,
+      "favorite_side_rate": 0.768519,
+      "underdog_side_rate": 0.231481
+    },
+    "note": "selected_side derived from model_home_prob > 0.5; favorite_side derived from market_home_prob_no_vig > 0.5"
+  },
+  "platt_constants": {
+    "PLATT_A": 0.435432,
+    "PLATT_B": 0.245464,
+    "SIGMOID_K": 0.8,
+    "CLIP_EPS": 1e-07,
+    "source": "P45 locked",
+    "modified": false
+  },
+  "data_gap_status": {
+    "p43_2024_closing_line_gap": "P43_BLOCKED_BY_DATA_GAP — unresolved, does not affect 2025-only analysis",
+    "cross_year_validation": "blocked pending 2024 data"
+  },
+  "final_p54_classification": "P54_NO_FEATURE_DRIFT_FOUND_DIAGNOSTIC",
+  "governance_flags": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false,
+    "platt_constants_modified": false,
+    "p52_contract_overwritten": false,
+    "p53_artifact_overwritten": false
+  }
+}

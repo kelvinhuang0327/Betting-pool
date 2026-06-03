@@ -1,0 +1,522 @@
+{
+  "phase": "P77",
+  "date": "2026-05-26",
+  "p77_classification": "P77_SHADOW_TRACKER_CONTRACT_READY",
+  "allowed_classifications": [
+    "P77_SHADOW_TRACKER_CONTRACT_READY",
+    "P77_SHADOW_TRACKER_CONTRACT_READY_WITH_CAVEATS",
+    "P77_BLOCKED_BY_MISSING_SOURCE_ARTIFACT",
+    "P77_FAILED_VALIDATION"
+  ],
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "promotion_freeze": true
+  },
+  "prediction_boundary": "P77 is a contract-definition and validation exercise only. Shadow tracker rows are for research accumulation \u2014 NOT a production deployment, NOT a betting recommendation, NOT a market-edge claim. paper_only=True, diagnostic_only=True, production_ready=False.",
+  "source_artifacts": {
+    "p72a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p72a_odds_free_strategy_accuracy_backtest_summary.json",
+    "p72b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p72b_objective_metric_contract_summary.json",
+    "p73_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p73_tier_stability_and_sample_expansion_summary.json",
+    "p74_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p74_tier_c_home_away_bias_correction_summary.json",
+    "p75a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p75a_tier_c_corrected_rule_validator_summary.json",
+    "p75b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p75b_calibration_diagnostics_corrected_tier_c_summary.json",
+    "p76_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p76_corrected_tier_c_final_rule_selection_summary.json",
+    "p76_md": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/p76_corrected_tier_c_final_rule_selection_20260526.md",
+    "predictions_jsonl": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl"
+  },
+  "step1_p76_verification": {
+    "p76_classification": "P76_DUAL_FINALISTS_RETAINED_UNTIL_2026_DATA",
+    "score_125": 0.5543,
+    "score_100": 0.554,
+    "score_delta": 0.0003,
+    "tie_break_threshold": 0.02,
+    "dual_finalists": true,
+    "primary_tracking_rule": "TIER_C_HOME_PLUS_AWAY_125",
+    "shadow_tracking_rule": "TIER_C_HOME_PLUS_AWAY_100",
+    "has_accumulation_plan": true,
+    "verification_issues": [],
+    "verification_passed": true
+  },
+  "step2_row_schema": {
+    "schema_version": "p77-v1",
+    "fields": {
+      "game_id": {
+        "type": "str",
+        "required": true,
+        "description": "Unique game identifier, e.g. MLB2026_XXXX_YYYY-MM-DD_AWAY_HOME"
+      },
+      "game_date": {
+        "type": "str",
+        "required": true,
+        "description": "ISO-8601 date string YYYY-MM-DD"
+      },
+      "season": {
+        "type": "int",
+        "required": true,
+        "description": "Season year, must be 2026"
+      },
+      "home_team": {
+        "type": "str",
+        "required": true,
+        "description": "Home team name"
+      },
+      "away_team": {
+        "type": "str",
+        "required": true,
+        "description": "Away team name"
+      },
+      "predicted_side": {
+        "type": "str",
+        "required": true,
+        "description": "'home' or 'away' \u2014 determined by sp_fip_delta sign (>0 \u2192 home, <0 \u2192 away)"
+      },
+      "actual_winner": {
+        "type": "str",
+        "required": false,
+        "description": "'home' or 'away' \u2014 filled post-game; null until settled"
+      },
+      "is_correct": {
+        "type": "bool",
+        "required": false,
+        "description": "True if predicted_side == actual_winner; null until settled"
+      },
+      "model_probability": {
+        "type": "float",
+        "required": true,
+        "description": "Model probability for predicted side in [0, 1]"
+      },
+      "sp_fip_delta": {
+        "type": "float",
+        "required": true,
+        "description": "Signed SP FIP delta (away_FIP - home_FIP) for this game"
+      },
+      "abs_sp_fip_delta": {
+        "type": "float",
+        "required": true,
+        "description": "abs(sp_fip_delta)"
+      },
+      "selected_rule_home_plus_away_125_flag": {
+        "type": "bool",
+        "required": true,
+        "description": "True if row qualifies for TIER_C_HOME_PLUS_AWAY_125"
+      },
+      "shadow_rule_home_plus_away_100_flag": {
+        "type": "bool",
+        "required": true,
+        "description": "True if row qualifies for TIER_C_HOME_PLUS_AWAY_100"
+      },
+      "tier_b_candidate_flag": {
+        "type": "bool",
+        "required": true,
+        "description": "True if abs_sp_fip_delta in [0.25, 0.50) \u2014 mid-band accumulation"
+      },
+      "tier_a_watchlist_flag": {
+        "type": "bool",
+        "required": true,
+        "description": "True if abs_sp_fip_delta >= 1.50 \u2014 highest conviction watchlist"
+      },
+      "home_pick_flag": {
+        "type": "bool",
+        "required": true,
+        "description": "True if predicted_side == 'home'"
+      },
+      "away_pick_flag": {
+        "type": "bool",
+        "required": true,
+        "description": "True if predicted_side == 'away'"
+      },
+      "month": {
+        "type": "str",
+        "required": true,
+        "description": "YYYY-MM month string derived from game_date"
+      },
+      "source_prediction_version": {
+        "type": "str",
+        "required": true,
+        "description": "Prediction pipeline version tag"
+      },
+      "outcome_source": {
+        "type": "str",
+        "required": false,
+        "description": "Source of actual_winner (e.g. 'mlb_statsapi', 'manual')"
+      },
+      "paper_only": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": true
+      },
+      "diagnostic_only": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": true
+      },
+      "market_edge_evaluated": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": false
+      },
+      "odds_used": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": false
+      },
+      "ev_calculated": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": false
+      },
+      "clv_calculated": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": false
+      },
+      "kelly_calculated": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": false
+      },
+      "production_ready": {
+        "type": "bool",
+        "required": true,
+        "frozen": true,
+        "frozen_value": false
+      }
+    },
+    "governance_frozen": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "market_edge_evaluated": false,
+      "odds_used": false,
+      "ev_calculated": false,
+      "clv_calculated": false,
+      "kelly_calculated": false,
+      "production_ready": false
+    },
+    "required_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "predicted_side",
+      "model_probability",
+      "sp_fip_delta",
+      "abs_sp_fip_delta",
+      "selected_rule_home_plus_away_125_flag",
+      "shadow_rule_home_plus_away_100_flag",
+      "tier_b_candidate_flag",
+      "tier_a_watchlist_flag",
+      "home_pick_flag",
+      "away_pick_flag",
+      "month",
+      "source_prediction_version",
+      "paper_only",
+      "diagnostic_only",
+      "market_edge_evaluated",
+      "odds_used",
+      "ev_calculated",
+      "clv_calculated",
+      "kelly_calculated",
+      "production_ready"
+    ],
+    "governance_fields": [
+      "paper_only",
+      "diagnostic_only",
+      "market_edge_evaluated",
+      "odds_used",
+      "ev_calculated",
+      "clv_calculated",
+      "kelly_calculated",
+      "production_ready"
+    ],
+    "total_fields": 28
+  },
+  "step3_rule_contract": {
+    "rules": {
+      "TIER_C_HOME_PLUS_AWAY_125": {
+        "role": "primary_tracking_rule",
+        "description": "Tier C home picks (abs_sp_fip_delta >= 0.50, home advantage) + Tier C away picks (abs_sp_fip_delta >= 1.25, away advantage).",
+        "predicted_side_determination": "sign(sp_fip_delta) \u2014 positive \u2192 home, negative \u2192 away, zero \u2192 home",
+        "home_threshold": 0.5,
+        "away_threshold": 1.25,
+        "requires_sp_fip_delta_available": true,
+        "market_edge_fields_used": false,
+        "function": "compute_selected_rule_home_plus_away_125_flag",
+        "p76_score": 0.5543,
+        "p75b_n_2025": 316,
+        "p75b_hit_rate_2025": 0.6392
+      },
+      "TIER_C_HOME_PLUS_AWAY_100": {
+        "role": "shadow_tracking_rule",
+        "description": "Tier C home picks (abs_sp_fip_delta >= 0.50, home advantage) + Tier C away picks (abs_sp_fip_delta >= 1.00, away advantage).",
+        "predicted_side_determination": "sign(sp_fip_delta) \u2014 positive \u2192 home, negative \u2192 away, zero \u2192 home",
+        "home_threshold": 0.5,
+        "away_threshold": 1.0,
+        "requires_sp_fip_delta_available": true,
+        "market_edge_fields_used": false,
+        "function": "compute_shadow_rule_home_plus_away_100_flag",
+        "p76_score": 0.554,
+        "p75b_n_2025": 373,
+        "p75b_hit_rate_2025": 0.6327
+      },
+      "TIER_B_CANDIDATE": {
+        "role": "accumulation_tracking",
+        "description": "Mid-band games: abs_sp_fip_delta in [0.25, 0.50). Tracks below-Tier-C pitcher matchups. Requires n>=200 before P78 full analysis.",
+        "lo_threshold": 0.25,
+        "hi_threshold": 0.5,
+        "requires_sp_fip_delta_available": true,
+        "market_edge_fields_used": false,
+        "function": "compute_tier_b_candidate_flag",
+        "p78_trigger_n": 200
+      },
+      "TIER_A_WATCHLIST": {
+        "role": "watchlist_only",
+        "description": "Highest conviction: abs_sp_fip_delta >= 1.50. Track but do not operationalize while n < 50.",
+        "lo_threshold": 1.5,
+        "requires_sp_fip_delta_available": true,
+        "market_edge_fields_used": false,
+        "function": "compute_tier_a_watchlist_flag",
+        "p72a_n_2025": 24,
+        "operational_n_minimum": 50
+      }
+    },
+    "determinism_guarantee": "All rule flags are pure functions of sp_fip_delta, abs_sp_fip_delta, and sp_fip_delta_available. No stochastic or external-API inputs.",
+    "market_edge_separation": "All four rules are odds-free. EV, CLV, Kelly, market_home_prob are optional future fields \u2014 NOT required for P77."
+  },
+  "step3b_semantics_validation": {
+    "total_valid_records_2025": 2025,
+    "rule_count_checks": {
+      "TIER_C_HOME_ONLY": {
+        "computed": 268,
+        "expected": 268,
+        "match": true
+      },
+      "TIER_C_HOME_PLUS_AWAY_100": {
+        "computed": 373,
+        "expected": 373,
+        "match": true
+      },
+      "TIER_C_HOME_PLUS_AWAY_125": {
+        "computed": 316,
+        "expected": 316,
+        "match": true
+      }
+    },
+    "all_counts_match_p75b": true,
+    "validation_status": "PASS"
+  },
+  "step4_monthly_metrics": {
+    "metrics_per_rule_per_month": [
+      {
+        "name": "n",
+        "description": "Number of games in this rule for this month"
+      },
+      {
+        "name": "hit_rate",
+        "description": "Fraction of games where predicted_side == actual_winner"
+      },
+      {
+        "name": "hit_rate_ci_95",
+        "description": "Wilson 95% confidence interval for hit_rate"
+      },
+      {
+        "name": "auc",
+        "description": "ROC-AUC if probability distribution supports it (requires n >= 20)"
+      },
+      {
+        "name": "brier",
+        "description": "Brier score (lower = better calibration)"
+      },
+      {
+        "name": "log_loss",
+        "description": "Log-loss (lower = better)"
+      },
+      {
+        "name": "ece",
+        "description": "Expected Calibration Error"
+      },
+      {
+        "name": "home_n",
+        "description": "Count of home-side picks in this rule-month"
+      },
+      {
+        "name": "away_n",
+        "description": "Count of away-side picks in this rule-month"
+      },
+      {
+        "name": "home_hit_rate",
+        "description": "Hit rate for home-side picks only"
+      },
+      {
+        "name": "away_hit_rate",
+        "description": "Hit rate for away-side picks only"
+      },
+      {
+        "name": "tier_b_n",
+        "description": "Running total of Tier B candidate rows (abs_sp_fip_delta 0.25\u20130.50)"
+      },
+      {
+        "name": "tier_a_n",
+        "description": "Running total of Tier A watchlist rows (abs_sp_fip_delta >= 1.50)"
+      },
+      {
+        "name": "rolling_100_hit_rate",
+        "description": "Rolling 100-game hit rate (reported if cumulative n >= 100)"
+      }
+    ],
+    "aggregation_cadence": "monthly",
+    "no_odds_metrics": true,
+    "no_ev_clv_kelly": true,
+    "monthly_cadence_2026": [
+      {
+        "month": "2026-06",
+        "action": "First P77 check-in. Collect Tier C 2026 games. Compute June hit_rate. Report rule counts."
+      },
+      {
+        "month": "2026-07",
+        "action": "Tier B count check. Rolling accuracy monitor. Compute 3-month cumulative stats."
+      },
+      {
+        "month": "2026-08",
+        "action": "Mid-season stability review. Adjust shadow rule if downgrade criteria met."
+      },
+      {
+        "month": "2026-09",
+        "action": "P78 trigger: if Tier B n >= 200, launch sample expansion analysis."
+      },
+      {
+        "month": "2026-10",
+        "action": "End-season consolidation. Final 2026 accuracy report. Compute full-season AUC/Brier/ECE."
+      },
+      {
+        "month": "2026-11",
+        "action": "P80 trigger: if odds API key acquired, run market-edge analysis (deferred lane)."
+      }
+    ]
+  },
+  "step5_reeval_triggers": {
+    "tier_c_selected_shadow_reeval": {
+      "checkpoint_1": {
+        "n_threshold": 50,
+        "action": "First interim accuracy check \u2014 no downgrade unless hit_rate < 0.50 for all games so far"
+      },
+      "checkpoint_2": {
+        "n_threshold": 100,
+        "action": "Rolling 100-game hit rate becomes available. Downgrade if hit_rate < 0.55."
+      },
+      "operational_checkpoint": {
+        "n_threshold": 200,
+        "action": "Full re-evaluation: compare primary vs shadow, update preferred rule."
+      },
+      "seasonal_checkpoint": {
+        "trigger": "end_of_2026_regular_season",
+        "action": "Final 2026 accuracy report. Decision on 2027 tracking configuration."
+      },
+      "downgrade_criteria": [
+        {
+          "criterion_id": "rolling_100_floor",
+          "description": "Rolling 100-game hit_rate < 0.55",
+          "action": "Halt primary rule tracking. Escalate to P_REVIEW phase."
+        },
+        {
+          "criterion_id": "consecutive_monthly_floor",
+          "description": "Monthly hit_rate < 0.5 for 2 consecutive eligible months (n >= 10)",
+          "action": "Flag rule as degraded. Promote shadow rule to primary if shadow is stable."
+        },
+        {
+          "criterion_id": "ece_worsening",
+          "description": "ECE materially worsens vs P75B baseline (delta ECE > 0.03 sustained over 2+ months)",
+          "action": "Trigger calibration review. Do not downgrade on a single month."
+        }
+      ]
+    },
+    "tier_b_reeval": {
+      "rule": "TIER_B_ABS_DELTA_025_050",
+      "accumulation_start": "2026-04-01",
+      "expected_n200_month": "2026-09",
+      "trigger_n": 200,
+      "trigger_phase": "P78",
+      "pre_trigger_status": "research_only",
+      "comparison_target": "Compare Tier B hit_rate vs Tier C finalists at n=200",
+      "cannot_become_operational_before_monthly_stability": true
+    },
+    "tier_a_watchlist_reeval": {
+      "rule": "TIER_A_WATCHLIST_ABS_DELTA_150_PLUS",
+      "operational_n_minimum": 50,
+      "current_status": "watchlist_only",
+      "action": "Track monthly. Do not operationalize until n >= 50 in 2026 accumulation."
+    },
+    "market_edge_lane": {
+      "status": "DEFERRED",
+      "required_condition": "THE_ODDS_API_KEY acquired AND historical odds for 2025-2026 available",
+      "minimum_odds_snapshots": 4,
+      "minimum_pregame_hours_before_game": 3,
+      "trigger_phase": "P80",
+      "separation_guarantee": "Market-edge analysis (CLV/EV/Kelly) is kept in a separate, blocked lane. It CANNOT activate without explicit authorization and live odds data.",
+      "blocked_in_p77": true
+    }
+  },
+  "step6_forbidden_scan": {
+    "patterns_checked": 15,
+    "governance_invariants_checked": 15,
+    "violations": [],
+    "scan_passed": true
+  },
+  "step7_sample_row": {
+    "game_id": "MLB2026_0001_2026-04-01_ATL_NYM",
+    "game_date": "2026-04-01",
+    "season": 2026,
+    "home_team": "New York Mets",
+    "away_team": "Atlanta Braves",
+    "predicted_side": "home",
+    "actual_winner": null,
+    "is_correct": null,
+    "model_probability": 0.59,
+    "sp_fip_delta": 0.82,
+    "abs_sp_fip_delta": 0.82,
+    "selected_rule_home_plus_away_125_flag": true,
+    "shadow_rule_home_plus_away_100_flag": true,
+    "tier_b_candidate_flag": false,
+    "tier_a_watchlist_flag": false,
+    "home_pick_flag": true,
+    "away_pick_flag": false,
+    "month": "2026-04",
+    "source_prediction_version": "p77-shadow-v1",
+    "outcome_source": null,
+    "paper_only": true,
+    "diagnostic_only": true,
+    "market_edge_evaluated": false,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_calculated": false,
+    "production_ready": false
+  },
+  "p78_recommendation": {
+    "trigger_condition": "Tier B n >= 200 in 2026 accumulation (expected 2026-09)",
+    "expected_phase": "P78",
+    "content": "Full Tier B (abs_sp_fip_delta 0.25\u20130.50) sample expansion analysis. Compare Tier B vs Tier C finalists on 2026 live data.",
+    "market_edge_note": "Market-edge (CLV/EV) analysis remains DEFERRED in P80 until odds API key acquired."
+  }
+}

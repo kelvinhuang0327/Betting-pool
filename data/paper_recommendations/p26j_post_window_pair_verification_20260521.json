@@ -1,0 +1,72 @@
+{
+  "artifact_id": "p26j_post_window_pair_verification_20260521",
+  "phase": "P26J",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+  "target_match_ids": ["3469930.1", "3469931.1"],
+  "complete_pair_before": 220,
+  "complete_pair_after": 220,
+  "delta_complete_pairs": 0,
+  "target_pair_delta": 0,
+  "bootstrap_ran": false,
+  "p25c_bootstrap_eligible": false,
+  "final_classification": "P26J_BLOCKED_BY_WINDOW_NOT_CLOSED",
+
+  "timing_guard": {
+    "current_utc": "2026-05-21T03:20:40Z",
+    "threshold_utc": "2026-05-21T09:10:00Z",
+    "gate_result": "BLOCKED",
+    "time_until_threshold_h": 5.82,
+    "closing_window_start_utc": "2026-05-21T07:00:00Z",
+    "closing_window_end_utc": "2026-05-21T09:00:00Z",
+    "time_until_window_open_h": 3.65
+  },
+
+  "preflight": {
+    "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "branch": "main",
+    "head": "60a73a7",
+    "p26i_commit_verified": "60a73a7",
+    "stop_conditions_met": false,
+    "dirty_files_note": "daemon runtime files dirty (expected); not staged"
+  },
+
+  "phase1_p26i_handoff_verified": {
+    "p26i_final_classification": "P26I_CLOSING_CAPTURE_GAP_INCONCLUSIVE",
+    "complete_pair_p26i": 220,
+    "bootstrap_ran_p26i": false,
+    "game_time_utc": "2026-05-21T09:00:00Z",
+    "closing_window_start_utc": "2026-05-21T07:00:00Z",
+    "p26i_conclusion": "P26H was premature; analysis 4.1h before window; daemon running at 03:09Z"
+  },
+
+  "phase2_readiness_snapshot": {
+    "history_rows_at_readiness": 2912,
+    "latest_snapshot_for_targets": "2026-05-21T03:09:49.268888Z",
+    "3469930_1": {
+      "total_rows": 6,
+      "gap_range_h": [5.836, 6.883],
+      "pregame_rows": 6,
+      "closing_rows": 0,
+      "status_at_readiness": "PREGAME_ONLY — window not yet open"
+    },
+    "3469931_1": {
+      "total_rows": 6,
+      "gap_range_h": [5.836, 6.883],
+      "pregame_rows": 6,
+      "closing_rows": 0,
+      "status_at_readiness": "PREGAME_ONLY — window not yet open"
+    }
+  },
+
+  "verification_deferred_until": "2026-05-21T09:10:00Z",
+  "explanation": "P26J post-window pair verification cannot proceed until the closing window (07:00Z–09:00Z) has elapsed AND additional time (10 min buffer) has passed for daemon to complete final cycle. Current UTC is 03:20Z — 3.65h before the window opens. No analysis, no code changes, no daemon restarts performed. This artifact serves as a readiness checkpoint confirming P26J is correctly positioned with P26I handoff verified.",
+
+  "continuation_note": "Re-run P26J after 09:10Z UTC (Taiwan 17:10). At that time: full Phase 2–5 analysis of tsl_odds_history.jsonl, daemon heartbeat, coverage recheck. Expected: COMPLETE_PAIR=222 if daemon ran; COMPLETE_PAIR=220 if daemon stopped."
+}

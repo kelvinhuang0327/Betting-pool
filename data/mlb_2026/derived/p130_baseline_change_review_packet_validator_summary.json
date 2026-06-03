@@ -1,0 +1,936 @@
+{
+  "baseline_change_review_validator_status": "READY_WITH_BLOCKERS",
+  "source_replay_drift_alert_contract_status": "READY_WITH_BLOCKERS",
+  "required_packet_fields": [
+    "baseline_change_request_id",
+    "baseline_change_owner",
+    "baseline_change_reason",
+    "source_fixture_version_before",
+    "source_fixture_version_after",
+    "old_fingerprint",
+    "new_fingerprint",
+    "rule_change_summary",
+    "expected_verdict_delta",
+    "reviewer_approval_status",
+    "reviewer_identity",
+    "approval_timestamp",
+    "rollback_plan",
+    "non_unlock_attestation",
+    "production_unlock_requested",
+    "recommendation_unlock_requested",
+    "provider_unlock_requested",
+    "real_odds_ingestion_requested",
+    "live_or_paid_api_requested"
+  ],
+  "valid_packet_template": {
+    "baseline_change_request_id": "BCR-20260601-001",
+    "baseline_change_owner": "governance_owner_placeholder",
+    "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+    "source_fixture_version_before": "P128.20260601",
+    "source_fixture_version_after": "P128.20260601A",
+    "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+    "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+    "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+    "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+    "reviewer_approval_status": "APPROVED",
+    "reviewer_identity": "reviewer_placeholder",
+    "approval_timestamp": "2026-06-01T00:00:00Z",
+    "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+    "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+    "production_unlock_requested": false,
+    "recommendation_unlock_requested": false,
+    "provider_unlock_requested": false,
+    "real_odds_ingestion_requested": false,
+    "live_or_paid_api_requested": false
+  },
+  "invalid_packet_cases": [
+    {
+      "case_id": "MISSING_BASELINE_CHANGE_REQUEST_ID_BLOCKED",
+      "packet": {
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "BASELINE_CHANGE_REQUEST_ID_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_BASELINE_CHANGE_OWNER_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "BASELINE_CHANGE_OWNER_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_BASELINE_CHANGE_REASON_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "BASELINE_CHANGE_REASON_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SOURCE_FIXTURE_VERSION_BEFORE_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SOURCE_FIXTURE_VERSION_BEFORE_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_SOURCE_FIXTURE_VERSION_AFTER_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "SOURCE_FIXTURE_VERSION_AFTER_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_OLD_FINGERPRINT_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "OLD_FINGERPRINT_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_NEW_FINGERPRINT_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "NEW_FINGERPRINT_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_RULE_CHANGE_SUMMARY_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_EXPECTED_VERDICT_DELTA_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "EXPECTED_VERDICT_DELTA_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "PENDING",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_REVIEWER_IDENTITY_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "REVIEWER_IDENTITY_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_APPROVAL_TIMESTAMP_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "APPROVAL_TIMESTAMP_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_ROLLBACK_PLAN_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "ROLLBACK_PLAN_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "MISSING_NON_UNLOCK_ATTESTATION_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "NON_UNLOCK_ATTESTATION_MISSING_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "PRODUCTION_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": true,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "PRODUCTION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": true,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "PROVIDER_UNLOCK_REQUESTED_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": true,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "PROVIDER_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "REAL_ODDS_INGESTION_REQUESTED_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": true,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "REAL_ODDS_INGESTION_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "LIVE_OR_PAID_API_REQUESTED_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": true
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "LIVE_OR_PAID_API_REQUESTED_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "SAME_OLD_AND_NEW_FINGERPRINT_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "rule_change_summary": "No unlock logic changes; governance metadata alignment only.",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "OLD_AND_NEW_FINGERPRINT_IDENTICAL_BLOCKER"
+      ]
+    },
+    {
+      "case_id": "EMPTY_RULE_CHANGE_WITH_FINGERPRINT_CHANGE_BLOCKED",
+      "packet": {
+        "baseline_change_request_id": "BCR-20260601-001",
+        "baseline_change_owner": "governance_owner_placeholder",
+        "baseline_change_reason": "Replay baseline metadata alignment under paper-only governance.",
+        "source_fixture_version_before": "P128.20260601",
+        "source_fixture_version_after": "P128.20260601A",
+        "old_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "new_fingerprint": "2222222222222222222222222222222222222222222222222222222222222222",
+        "rule_change_summary": "",
+        "expected_verdict_delta": "No verdict delta expected; all tracked cases remain BLOCKED.",
+        "reviewer_approval_status": "APPROVED",
+        "reviewer_identity": "reviewer_placeholder",
+        "approval_timestamp": "2026-06-01T00:00:00Z",
+        "rollback_plan": "Restore previous baseline fingerprint and revert governance packet if drift appears.",
+        "non_unlock_attestation": "Baseline change approval does not imply legal provider approval or production readiness.",
+        "production_unlock_requested": false,
+        "recommendation_unlock_requested": false,
+        "provider_unlock_requested": false,
+        "real_odds_ingestion_requested": false,
+        "live_or_paid_api_requested": false
+      },
+      "status": "BLOCKED",
+      "blockers": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ]
+    }
+  ],
+  "packet_validation_rules": {
+    "R001_REQUIRED_FIELDS": "All required packet fields must be present and non-empty",
+    "R002_REVIEWER_APPROVAL": "reviewer_approval_status must equal APPROVED",
+    "R003_UNLOCK_FLAGS_FORBIDDEN": "All unlock request flags must be false",
+    "R004_FINGERPRINT_CHANGE_VALIDITY": "old_fingerprint and new_fingerprint cannot be identical",
+    "R005_RULE_CHANGE_SUMMARY_REQUIRED": "Fingerprint change must include non-empty rule_change_summary",
+    "R006_ROLLBACK_PLAN_REQUIRED": "rollback_plan must be present",
+    "R007_NON_UNLOCK_ATTESTATION_REQUIRED": "non_unlock_attestation must explicitly deny provider/odds/recommendation/production unlock",
+    "R008_GOVERNANCE_ONLY": "Baseline change approval does not imply legal provider approval or production readiness"
+  },
+  "packet_verdict_matrix": {
+    "VALID_PACKET_TEMPLATE": {
+      "status": "SCHEMA_VALID_PENDING_REVIEW",
+      "blockers": [],
+      "notes": "Schema-valid governance packet. Baseline change remains governance-only pending process controls."
+    },
+    "MISSING_BASELINE_CHANGE_REQUEST_ID_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "BASELINE_CHANGE_REQUEST_ID_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_BASELINE_CHANGE_OWNER_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "BASELINE_CHANGE_OWNER_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_BASELINE_CHANGE_REASON_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "BASELINE_CHANGE_REASON_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_SOURCE_FIXTURE_VERSION_BEFORE_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "SOURCE_FIXTURE_VERSION_BEFORE_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_SOURCE_FIXTURE_VERSION_AFTER_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "SOURCE_FIXTURE_VERSION_AFTER_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_OLD_FINGERPRINT_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "OLD_FINGERPRINT_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_NEW_FINGERPRINT_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "NEW_FINGERPRINT_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_RULE_CHANGE_SUMMARY_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_EXPECTED_VERDICT_DELTA_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "EXPECTED_VERDICT_DELTA_MISSING_BLOCKER"
+      ]
+    },
+    "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "REVIEWER_APPROVAL_NOT_APPROVED_BLOCKER"
+      ]
+    },
+    "MISSING_REVIEWER_IDENTITY_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "REVIEWER_IDENTITY_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_APPROVAL_TIMESTAMP_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "APPROVAL_TIMESTAMP_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_ROLLBACK_PLAN_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "ROLLBACK_PLAN_MISSING_BLOCKER"
+      ]
+    },
+    "MISSING_NON_UNLOCK_ATTESTATION_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "NON_UNLOCK_ATTESTATION_MISSING_BLOCKER"
+      ]
+    },
+    "PRODUCTION_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "PRODUCTION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    "PROVIDER_UNLOCK_REQUESTED_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "PROVIDER_UNLOCK_REQUESTED_BLOCKER"
+      ]
+    },
+    "REAL_ODDS_INGESTION_REQUESTED_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "REAL_ODDS_INGESTION_REQUESTED_BLOCKER"
+      ]
+    },
+    "LIVE_OR_PAID_API_REQUESTED_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "LIVE_OR_PAID_API_REQUESTED_BLOCKER"
+      ]
+    },
+    "SAME_OLD_AND_NEW_FINGERPRINT_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "OLD_AND_NEW_FINGERPRINT_IDENTICAL_BLOCKER"
+      ]
+    },
+    "EMPTY_RULE_CHANGE_WITH_FINGERPRINT_CHANGE_BLOCKED": {
+      "status": "BLOCKED",
+      "blockers": [
+        "RULE_CHANGE_SUMMARY_EMPTY_WITH_FINGERPRINT_CHANGE_BLOCKER",
+        "RULE_CHANGE_SUMMARY_MISSING_BLOCKER"
+      ]
+    }
+  },
+  "missing_field_blockers": {
+    "baseline_change_request_id": "BASELINE_CHANGE_REQUEST_ID_MISSING_BLOCKER",
+    "baseline_change_owner": "BASELINE_CHANGE_OWNER_MISSING_BLOCKER",
+    "baseline_change_reason": "BASELINE_CHANGE_REASON_MISSING_BLOCKER",
+    "source_fixture_version_before": "SOURCE_FIXTURE_VERSION_BEFORE_MISSING_BLOCKER",
+    "source_fixture_version_after": "SOURCE_FIXTURE_VERSION_AFTER_MISSING_BLOCKER",
+    "old_fingerprint": "OLD_FINGERPRINT_MISSING_BLOCKER",
+    "new_fingerprint": "NEW_FINGERPRINT_MISSING_BLOCKER",
+    "rule_change_summary": "RULE_CHANGE_SUMMARY_MISSING_BLOCKER",
+    "expected_verdict_delta": "EXPECTED_VERDICT_DELTA_MISSING_BLOCKER",
+    "reviewer_identity": "REVIEWER_IDENTITY_MISSING_BLOCKER",
+    "approval_timestamp": "APPROVAL_TIMESTAMP_MISSING_BLOCKER",
+    "rollback_plan": "ROLLBACK_PLAN_MISSING_BLOCKER",
+    "non_unlock_attestation": "NON_UNLOCK_ATTESTATION_MISSING_BLOCKER"
+  },
+  "unauthorized_change_blockers": {
+    "production_unlock_requested": "PRODUCTION_UNLOCK_REQUESTED_BLOCKER",
+    "recommendation_unlock_requested": "RECOMMENDATION_UNLOCK_REQUESTED_BLOCKER",
+    "provider_unlock_requested": "PROVIDER_UNLOCK_REQUESTED_BLOCKER",
+    "real_odds_ingestion_requested": "REAL_ODDS_INGESTION_REQUESTED_BLOCKER",
+    "live_or_paid_api_requested": "LIVE_OR_PAID_API_REQUESTED_BLOCKER"
+  },
+  "baseline_fingerprint_change_rules": {
+    "rule": "Fingerprint changes are governance-only and require approved review packet",
+    "required_fields": [
+      "old_fingerprint",
+      "new_fingerprint",
+      "rule_change_summary",
+      "expected_verdict_delta"
+    ],
+    "blocked_if": [
+      "old_fingerprint == new_fingerprint",
+      "rule_change_summary is empty",
+      "reviewer_approval_status != APPROVED"
+    ]
+  },
+  "fixture_version_change_rules": {
+    "rule": "Fixture version transitions must be explicitly declared before and after",
+    "required_fields": [
+      "source_fixture_version_before",
+      "source_fixture_version_after"
+    ],
+    "blocked_if": [
+      "source_fixture_version_before missing",
+      "source_fixture_version_after missing"
+    ]
+  },
+  "rule_change_summary_rules": {
+    "rule": "Rule change summary must explain baseline delta scope",
+    "required_fields": [
+      "rule_change_summary"
+    ],
+    "blocked_if": [
+      "rule_change_summary empty while fingerprint changed"
+    ]
+  },
+  "expected_verdict_delta_rules": {
+    "rule": "Expected verdict delta must be declared and remain governance-only",
+    "required_fields": [
+      "expected_verdict_delta"
+    ],
+    "blocked_if": [
+      "expected_verdict_delta missing"
+    ]
+  },
+  "reviewer_approval_rules": {
+    "rule": "Reviewer approval identity and timestamp are mandatory",
+    "required_fields": [
+      "reviewer_approval_status",
+      "reviewer_identity",
+      "approval_timestamp"
+    ],
+    "blocked_if": [
+      "reviewer_approval_status != APPROVED",
+      "reviewer_identity missing",
+      "approval_timestamp missing"
+    ]
+  },
+  "rollback_plan_rules": {
+    "rule": "Rollback plan is required before accepting any baseline change",
+    "required_fields": [
+      "rollback_plan"
+    ],
+    "blocked_if": [
+      "rollback_plan missing"
+    ]
+  },
+  "non_unlock_attestation_rules": {
+    "rule": "Packet must explicitly attest no provider/odds/recommendation/production unlock",
+    "required_fields": [
+      "non_unlock_attestation"
+    ],
+    "required_statement": "Baseline change approval does not imply legal provider approval or production readiness.",
+    "blocked_if": [
+      "non_unlock_attestation missing or contradicts governance-only policy"
+    ]
+  },
+  "governance_invariants": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "regression_status": {
+    "targeted_p118_p130_tests_status": "PASS",
+    "targeted_p118_p130_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p130_baseline_change_review_packet_validator.py tests/test_p129_replay_drift_alert_contract.py tests/test_p128_deterministic_replay_consistency_gate.py tests/test_p127_intake_payload_evaluation_runner_verdict_report.py tests/test_p126_legal_evidence_intake_payload_fixture_negative_cases.py tests/test_p125_legal_evidence_intake_schema_review_owner_gate.py tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression evidence captured for P130 task."
+  },
+  "allowed_next_actions": [
+    "Keep paper_only=true and diagnostic_only=true",
+    "Use packet validator outputs for governance review only",
+    "Require approved review packet before baseline updates",
+    "Keep full regression state explicit: PASS/FAIL/NOT_RUN"
+  ],
+  "prohibited_actions": [
+    "Do not ingest real odds or call live/paid APIs",
+    "Do not unlock provider/recommendation/production/EV/CLV/Kelly/stake/profit",
+    "Do not treat baseline packet approval as legal provider approval",
+    "Do not bypass rollback plan and non-unlock attestation requirements"
+  ],
+  "blockers": [
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_TRAIL_MISSING_BLOCKER",
+    "AUTHORIZATION_EVIDENCE_MISSING_BLOCKER",
+    "BASELINE_CHANGE_APPROVAL_REQUIRED_BLOCKER",
+    "BASELINE_PACKET_REVIEW_REQUIRED_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EV_CLV_KELLY_UNLOCK_REQUEST_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_MISSING_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER",
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "PRIVATE_CONTRACT_BODY_PRESENT_BLOCKER",
+    "PRODUCTION_UNLOCK_REQUEST_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "PROVIDER_NOT_APPROVED_BLOCKER",
+    "RECOMMENDATION_UNLOCK_REQUEST_BLOCKER",
+    "REVIEW_OWNER_MISSING_BLOCKER",
+    "REVIEW_STATUS_NOT_APPROVED_BLOCKER",
+    "ROW_LEVEL_PROPRIETARY_ODDS_PRESENT_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "SOURCE_TRACE_MISSING_BLOCKER"
+  ],
+  "final_classification": "P130_BASELINE_CHANGE_REVIEW_PACKET_VALIDATOR_READY_WITH_BLOCKERS",
+  "final_classification_options": [
+    "P130_BASELINE_CHANGE_REVIEW_PACKET_VALIDATOR_READY_WITH_BLOCKERS",
+    "P130_BASELINE_CHANGE_REVIEW_PACKET_VALIDATOR_BLOCKED_BY_MISSING_ARTIFACTS",
+    "P130_BASELINE_CHANGE_REVIEW_PACKET_VALIDATOR_FAILED_VALIDATION"
+  ],
+  "governance_statement": "Baseline change approval does not imply legal provider approval or production readiness."
+}

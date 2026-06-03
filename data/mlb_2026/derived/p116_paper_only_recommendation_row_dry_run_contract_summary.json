@@ -1,0 +1,640 @@
+{
+  "contract_metadata": {
+    "contract_version": "P116.20260531",
+    "generated_at": "2026-05-31",
+    "source_p115_ingestion_fixture_reference": "data/mlb_2026/derived/p115_paper_only_odds_ingestion_contract_fixture_summary.json",
+    "source_p114_requirements_reference": "data/mlb_2026/derived/p114_legal_odds_source_requirements_spec_summary.json",
+    "source_p113_schema_fixture_reference": "data/mlb_2026/derived/p113_paper_only_market_contract_schema_fixture_summary.json",
+    "final_classification": "P116_RECOMMENDATION_ROW_DRY_RUN_CONTRACT_READY_WITH_BLOCKERS"
+  },
+  "governance_locks": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "odds_used": false,
+    "odds_fetched": false,
+    "odds_stored": false,
+    "odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false,
+    "ui_modified": false
+  },
+  "prohibited_actions": [
+    "fetch_odds",
+    "store_odds",
+    "use_odds",
+    "ingest_odds",
+    "production",
+    "recommendation",
+    "ev",
+    "clv",
+    "kelly",
+    "stake_sizing",
+    "profit",
+    "taiwan_lottery_recommendation"
+  ],
+  "blocker_categories": [
+    "LEGAL_ODDS_SOURCE_BLOCKER",
+    "LEGAL_PROVIDER_AUTHORIZATION_BLOCKER",
+    "ODDS_INGESTION_NOT_IMPLEMENTED_BLOCKER",
+    "ODDS_SCHEMA_BLOCKER",
+    "MARKET_MAPPING_BLOCKER",
+    "SOURCE_TRACE_BLOCKER",
+    "TIMESTAMP_FRESHNESS_BLOCKER",
+    "DATA_QUALITY_BLOCKER",
+    "EV_CLV_NOT_ALLOWED_BLOCKER",
+    "KELLY_STAKE_NOT_ALLOWED_BLOCKER",
+    "GOVERNANCE_PRODUCTION_BLOCKER",
+    "RECOMMENDATION_NOT_ALLOWED_BLOCKER"
+  ],
+  "paper_only_recommendation_row_schema": {
+    "required_fields": [
+      "game_id",
+      "game_date",
+      "predicted_side",
+      "model_probability",
+      "source_prediction_version",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "production_ready",
+      "result_home_score",
+      "result_away_score",
+      "actual_winner",
+      "is_correct",
+      "outcome_available",
+      "outcome_source",
+      "outcome_finalized_at"
+    ],
+    "optional_fields": [
+      "season",
+      "home_team",
+      "away_team",
+      "home_sp_fip",
+      "away_sp_fip",
+      "sp_fip_delta",
+      "abs_sp_fip_delta",
+      "rule_primary_125_flag",
+      "rule_shadow_100_flag",
+      "tier_b_candidate_flag",
+      "tier_a_watchlist_flag",
+      "market_edge_evaluated"
+    ],
+    "prohibited_fields": [
+      "odds",
+      "ev",
+      "clv",
+      "kelly",
+      "stake",
+      "profit",
+      "recommendation",
+      "production_ready"
+    ]
+  },
+  "market_row_contracts": [
+    {
+      "market_id": "moneyline_winner",
+      "row_version": "P116.20260531",
+      "required_game_identity_fields": [
+        "game_id",
+        "game_date"
+      ],
+      "required_prediction_fields": [
+        "predicted_side",
+        "model_probability",
+        "source_prediction_version"
+      ],
+      "required_market_identity_fields": [
+        "market_id"
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_line_fields": [
+        null
+      ],
+      "required_odds_reference_fields": [],
+      "required_source_trace_fields": [
+        "source_prediction_version"
+      ],
+      "required_timestamp_fields": [
+        "game_date",
+        "outcome_finalized_at"
+      ],
+      "required_governance_fields": [
+        "paper_only",
+        "diagnostic_only",
+        "production_ready",
+        "real_bet_allowed",
+        "recommendation_allowed",
+        "product_surface_allowed",
+        "odds_used",
+        "odds_fetched",
+        "odds_stored",
+        "odds_ingested",
+        "live_api_calls",
+        "paid_api_calls",
+        "ev_computed",
+        "clv_computed",
+        "kelly_computed",
+        "stake_sizing",
+        "profit_computed",
+        "taiwan_lottery_recommendation",
+        "champion_replacement",
+        "production_mutation",
+        "calibration_refit",
+        "canonical_rows_modified",
+        "outcome_rows_modified",
+        "p83e_mapping_modified",
+        "ui_modified"
+      ],
+      "dry_run_status": "blocked",
+      "blocker_type": [
+        "LEGAL_ODDS_SOURCE_BLOCKER",
+        "LEGAL_PROVIDER_AUTHORIZATION_BLOCKER",
+        "ODDS_INGESTION_NOT_IMPLEMENTED_BLOCKER",
+        "ODDS_SCHEMA_BLOCKER",
+        "MARKET_MAPPING_BLOCKER",
+        "SOURCE_TRACE_BLOCKER",
+        "TIMESTAMP_FRESHNESS_BLOCKER",
+        "DATA_QUALITY_BLOCKER",
+        "EV_CLV_NOT_ALLOWED_BLOCKER",
+        "KELLY_STAKE_NOT_ALLOWED_BLOCKER",
+        "GOVERNANCE_PRODUCTION_BLOCKER",
+        "RECOMMENDATION_NOT_ALLOWED_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "ingest_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "profit",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "run_line_handicap",
+      "row_version": "P116.20260531",
+      "required_game_identity_fields": [
+        "game_id",
+        "game_date"
+      ],
+      "required_prediction_fields": [
+        "predicted_side",
+        "model_probability",
+        "source_prediction_version"
+      ],
+      "required_market_identity_fields": [
+        "market_id"
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_line_fields": [
+        "line"
+      ],
+      "required_odds_reference_fields": [],
+      "required_source_trace_fields": [
+        "source_prediction_version"
+      ],
+      "required_timestamp_fields": [
+        "game_date",
+        "outcome_finalized_at"
+      ],
+      "required_governance_fields": [
+        "paper_only",
+        "diagnostic_only",
+        "production_ready",
+        "real_bet_allowed",
+        "recommendation_allowed",
+        "product_surface_allowed",
+        "odds_used",
+        "odds_fetched",
+        "odds_stored",
+        "odds_ingested",
+        "live_api_calls",
+        "paid_api_calls",
+        "ev_computed",
+        "clv_computed",
+        "kelly_computed",
+        "stake_sizing",
+        "profit_computed",
+        "taiwan_lottery_recommendation",
+        "champion_replacement",
+        "production_mutation",
+        "calibration_refit",
+        "canonical_rows_modified",
+        "outcome_rows_modified",
+        "p83e_mapping_modified",
+        "ui_modified"
+      ],
+      "dry_run_status": "blocked",
+      "blocker_type": [
+        "LEGAL_ODDS_SOURCE_BLOCKER",
+        "LEGAL_PROVIDER_AUTHORIZATION_BLOCKER",
+        "ODDS_INGESTION_NOT_IMPLEMENTED_BLOCKER",
+        "ODDS_SCHEMA_BLOCKER",
+        "MARKET_MAPPING_BLOCKER",
+        "SOURCE_TRACE_BLOCKER",
+        "TIMESTAMP_FRESHNESS_BLOCKER",
+        "DATA_QUALITY_BLOCKER",
+        "EV_CLV_NOT_ALLOWED_BLOCKER",
+        "KELLY_STAKE_NOT_ALLOWED_BLOCKER",
+        "GOVERNANCE_PRODUCTION_BLOCKER",
+        "RECOMMENDATION_NOT_ALLOWED_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "ingest_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "profit",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "total_runs_over_under",
+      "row_version": "P116.20260531",
+      "required_game_identity_fields": [
+        "game_id",
+        "game_date"
+      ],
+      "required_prediction_fields": [
+        "predicted_side",
+        "model_probability",
+        "source_prediction_version"
+      ],
+      "required_market_identity_fields": [
+        "market_id"
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_line_fields": [
+        "line"
+      ],
+      "required_odds_reference_fields": [],
+      "required_source_trace_fields": [
+        "source_prediction_version"
+      ],
+      "required_timestamp_fields": [
+        "game_date",
+        "outcome_finalized_at"
+      ],
+      "required_governance_fields": [
+        "paper_only",
+        "diagnostic_only",
+        "production_ready",
+        "real_bet_allowed",
+        "recommendation_allowed",
+        "product_surface_allowed",
+        "odds_used",
+        "odds_fetched",
+        "odds_stored",
+        "odds_ingested",
+        "live_api_calls",
+        "paid_api_calls",
+        "ev_computed",
+        "clv_computed",
+        "kelly_computed",
+        "stake_sizing",
+        "profit_computed",
+        "taiwan_lottery_recommendation",
+        "champion_replacement",
+        "production_mutation",
+        "calibration_refit",
+        "canonical_rows_modified",
+        "outcome_rows_modified",
+        "p83e_mapping_modified",
+        "ui_modified"
+      ],
+      "dry_run_status": "blocked",
+      "blocker_type": [
+        "LEGAL_ODDS_SOURCE_BLOCKER",
+        "LEGAL_PROVIDER_AUTHORIZATION_BLOCKER",
+        "ODDS_INGESTION_NOT_IMPLEMENTED_BLOCKER",
+        "ODDS_SCHEMA_BLOCKER",
+        "MARKET_MAPPING_BLOCKER",
+        "SOURCE_TRACE_BLOCKER",
+        "TIMESTAMP_FRESHNESS_BLOCKER",
+        "DATA_QUALITY_BLOCKER",
+        "EV_CLV_NOT_ALLOWED_BLOCKER",
+        "KELLY_STAKE_NOT_ALLOWED_BLOCKER",
+        "GOVERNANCE_PRODUCTION_BLOCKER",
+        "RECOMMENDATION_NOT_ALLOWED_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "ingest_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "profit",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "first_five_innings_if_supported_later",
+      "row_version": "P116.20260531",
+      "required_game_identity_fields": [
+        "game_id",
+        "game_date"
+      ],
+      "required_prediction_fields": [
+        "predicted_side",
+        "model_probability",
+        "source_prediction_version"
+      ],
+      "required_market_identity_fields": [
+        "market_id"
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_line_fields": [
+        "line"
+      ],
+      "required_odds_reference_fields": [],
+      "required_source_trace_fields": [
+        "source_prediction_version"
+      ],
+      "required_timestamp_fields": [
+        "game_date",
+        "outcome_finalized_at"
+      ],
+      "required_governance_fields": [
+        "paper_only",
+        "diagnostic_only",
+        "production_ready",
+        "real_bet_allowed",
+        "recommendation_allowed",
+        "product_surface_allowed",
+        "odds_used",
+        "odds_fetched",
+        "odds_stored",
+        "odds_ingested",
+        "live_api_calls",
+        "paid_api_calls",
+        "ev_computed",
+        "clv_computed",
+        "kelly_computed",
+        "stake_sizing",
+        "profit_computed",
+        "taiwan_lottery_recommendation",
+        "champion_replacement",
+        "production_mutation",
+        "calibration_refit",
+        "canonical_rows_modified",
+        "outcome_rows_modified",
+        "p83e_mapping_modified",
+        "ui_modified"
+      ],
+      "dry_run_status": "blocked",
+      "blocker_type": [
+        "LEGAL_ODDS_SOURCE_BLOCKER",
+        "LEGAL_PROVIDER_AUTHORIZATION_BLOCKER",
+        "ODDS_INGESTION_NOT_IMPLEMENTED_BLOCKER",
+        "ODDS_SCHEMA_BLOCKER",
+        "MARKET_MAPPING_BLOCKER",
+        "SOURCE_TRACE_BLOCKER",
+        "TIMESTAMP_FRESHNESS_BLOCKER",
+        "DATA_QUALITY_BLOCKER",
+        "EV_CLV_NOT_ALLOWED_BLOCKER",
+        "KELLY_STAKE_NOT_ALLOWED_BLOCKER",
+        "GOVERNANCE_PRODUCTION_BLOCKER",
+        "RECOMMENDATION_NOT_ALLOWED_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "ingest_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "profit",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "unsupported_market_placeholder",
+      "row_version": "P116.20260531",
+      "required_game_identity_fields": [
+        "game_id",
+        "game_date"
+      ],
+      "required_prediction_fields": [
+        "predicted_side",
+        "model_probability",
+        "source_prediction_version"
+      ],
+      "required_market_identity_fields": [
+        "market_id"
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_line_fields": [
+        "line"
+      ],
+      "required_odds_reference_fields": [],
+      "required_source_trace_fields": [
+        "source_prediction_version"
+      ],
+      "required_timestamp_fields": [
+        "game_date",
+        "outcome_finalized_at"
+      ],
+      "required_governance_fields": [
+        "paper_only",
+        "diagnostic_only",
+        "production_ready",
+        "real_bet_allowed",
+        "recommendation_allowed",
+        "product_surface_allowed",
+        "odds_used",
+        "odds_fetched",
+        "odds_stored",
+        "odds_ingested",
+        "live_api_calls",
+        "paid_api_calls",
+        "ev_computed",
+        "clv_computed",
+        "kelly_computed",
+        "stake_sizing",
+        "profit_computed",
+        "taiwan_lottery_recommendation",
+        "champion_replacement",
+        "production_mutation",
+        "calibration_refit",
+        "canonical_rows_modified",
+        "outcome_rows_modified",
+        "p83e_mapping_modified",
+        "ui_modified"
+      ],
+      "dry_run_status": "blocked",
+      "blocker_type": [
+        "LEGAL_ODDS_SOURCE_BLOCKER",
+        "LEGAL_PROVIDER_AUTHORIZATION_BLOCKER",
+        "ODDS_INGESTION_NOT_IMPLEMENTED_BLOCKER",
+        "ODDS_SCHEMA_BLOCKER",
+        "MARKET_MAPPING_BLOCKER",
+        "SOURCE_TRACE_BLOCKER",
+        "TIMESTAMP_FRESHNESS_BLOCKER",
+        "DATA_QUALITY_BLOCKER",
+        "EV_CLV_NOT_ALLOWED_BLOCKER",
+        "KELLY_STAKE_NOT_ALLOWED_BLOCKER",
+        "GOVERNANCE_PRODUCTION_BLOCKER",
+        "RECOMMENDATION_NOT_ALLOWED_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "ingest_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "profit",
+        "taiwan_lottery_recommendation"
+      ]
+    }
+  ],
+  "prediction_field_contract": {
+    "fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "home_sp_fip",
+      "away_sp_fip",
+      "sp_fip_delta",
+      "abs_sp_fip_delta",
+      "model_probability",
+      "predicted_side",
+      "source_prediction_version",
+      "rule_primary_125_flag",
+      "rule_shadow_100_flag",
+      "tier_b_candidate_flag",
+      "tier_a_watchlist_flag",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "market_edge_evaluated",
+      "production_ready",
+      "result_home_score",
+      "result_away_score",
+      "actual_winner",
+      "is_correct",
+      "outcome_available",
+      "outcome_source",
+      "outcome_finalized_at"
+    ],
+    "prohibited_fields": [
+      "odds",
+      "ev",
+      "clv",
+      "kelly",
+      "stake",
+      "profit",
+      "recommendation"
+    ]
+  },
+  "market_field_contract": {
+    "fields": [
+      "market_id",
+      "side",
+      "line"
+    ],
+    "prohibited_fields": [
+      "odds",
+      "ev",
+      "clv",
+      "kelly",
+      "stake",
+      "profit",
+      "recommendation",
+      "production_ready"
+    ]
+  },
+  "odds_reference_contract": {
+    "fields": [],
+    "note": "odds 欄位禁止出現，僅允許未來 integration 時納入，現階段必須為空"
+  },
+  "source_trace_contract": {
+    "fields": [
+      "source_prediction_version"
+    ],
+    "policy": "所有 recommendation row 必須可追溯至 prediction pipeline 版本"
+  },
+  "blocked_decision_fields": [
+    "ev",
+    "clv",
+    "kelly",
+    "stake",
+    "profit",
+    "recommendation"
+  ],
+  "validation_rules": [
+    "不得產生任何 odds、EV、CLV、Kelly、stake、profit、recommendation 欄位",
+    "不得產生 production_ready=true 的 row",
+    "所有治理鎖必須為 true 或 false（如規範）",
+    "不得有任何 odds 欄位出現於 row 內"
+  ],
+  "future_integration_gates": [
+    "待合法 odds provider API 合約簽署",
+    "待 schema mapping 驗證通過",
+    "待 source trace/audit pipeline 完成",
+    "待 ingestion 實作完成"
+  ],
+  "final_classification": "P116_RECOMMENDATION_ROW_DRY_RUN_CONTRACT_READY_WITH_BLOCKERS"
+}

@@ -1,0 +1,118 @@
+{
+  "artifact_id": "p26h_force_closing_pair_formation_20260521",
+  "phase": "P26H",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+
+  "source_trace": {
+    "history_file": "data/tsl_odds_history.jsonl",
+    "history_total_rows": 2902,
+    "p26g_baseline_artifact": "data/paper_recommendations/p26g_coverage_recheck_post_p26f_20260521.json",
+    "p26g_baseline_commit": "HEAD (untracked at analysis time)"
+  },
+
+  "phase2_force_closing_inventory": {
+    "total_history_rows": 2902,
+    "force_closing_rows_total": 40,
+    "force_closing_note": "40 rows = 4 daemon cycles × 10 unique matches; P26G initial cycle reported 10 rows (1 cycle) — accumulation confirmed",
+    "dedup_bypassed_count": 32,
+    "dedup_bypassed_note": "32/40 force_closing rows have dedup_bypassed=True (4 cycles avg ~8/cycle vs initial 7/cycle; minor timing variance expected)",
+    "capture_reason_closing_window_count": 40,
+    "fc_unique_match_ids": 10,
+    "p26g_initial_dedup_bypassed": 7,
+    "p26g_initial_force_closing": 10,
+    "gap_distribution": {
+      "le2h": 1,
+      "2_6h": 0,
+      "6_15h": 2,
+      "gt15h": 7,
+      "note": "Distribution per unique match first-occurrence gap at force_closing capture time"
+    },
+    "fc_match_detail": {
+      "3469566.1": {"gap_hours_at_fetch": -0.53, "dedup_bypassed": false, "is_pregame_flag": false, "category": "closing_only_hit"},
+      "3469903.1": {"gap_hours_at_fetch": 15.01, "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_far"},
+      "3469904.1": {"gap_hours_at_fetch": 15.09, "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_far"},
+      "3469923.1": {"gap_hours_at_fetch": 17.92, "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_far"},
+      "3469930.1": {"gap_hours_at_fetch": 6.84,  "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_near"},
+      "3469931.1": {"gap_hours_at_fetch": 6.84,  "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_near"},
+      "3469941.1": {"gap_hours_at_fetch": 20.51, "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_far"},
+      "3469943.1": {"gap_hours_at_fetch": 20.92, "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_far"},
+      "3469963.1": {"gap_hours_at_fetch": 23.47, "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_far"},
+      "3469964.1": {"gap_hours_at_fetch": 23.51, "dedup_bypassed": true,  "is_pregame_flag": true,  "category": "pregame_far"}
+    }
+  },
+
+  "phase3_pair_formation_breakdown": {
+    "complete": 0,
+    "missing_pregame": 1,
+    "missing_closing": 9,
+    "ambiguous": 0,
+    "total": 10,
+    "detail": {
+      "3469566.1": {"missing_side": "missing_pregame", "has_pregame": false, "has_closing": true,  "closest_closing_gap_hours": 0.48, "reason": "pregame_never_captured_closing_only"},
+      "3469903.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 15.01, "reason": "closing_window_not_reached_yet"},
+      "3469904.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 15.09, "reason": "closing_window_not_reached_yet"},
+      "3469923.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 17.92, "reason": "closing_window_not_reached_yet"},
+      "3469930.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 6.84,  "reason": "closing_window_not_reached_yet"},
+      "3469931.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 6.84,  "reason": "closing_window_not_reached_yet"},
+      "3469941.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 20.51, "reason": "closing_window_not_reached_yet"},
+      "3469943.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 20.92, "reason": "closing_window_not_reached_yet"},
+      "3469963.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 23.47, "reason": "closing_window_not_reached_yet"},
+      "3469964.1": {"missing_side": "missing_closing", "has_pregame": true,  "has_closing": false, "earliest_pregame_gap_hours": 23.51, "reason": "closing_window_not_reached_yet"}
+    }
+  },
+
+  "phase4_expected_new_pairs_ground_truth": {
+    "next_closing_candidates": ["3469930.1", "3469931.1"],
+    "p26g_prediction": "expected_new_pairs_today=2",
+    "ground_truth_result": "UNMATCHED",
+    "matched_count": 0,
+    "detail": {
+      "3469930.1": {"has_pregame": true, "has_closing_today": false, "game_time_utc": "2026-05-21T09:00:00+08:00", "window_entry_utc": "07:00Z", "finding": "Pregame captured at 6.84h before game; no <=2h closing capture found in history as of analysis time"},
+      "3469931.1": {"has_pregame": true, "has_closing_today": false, "game_time_utc": "2026-05-21T09:00:00+08:00", "window_entry_utc": "07:00Z", "finding": "Pregame captured at 6.84h before game; no <=2h closing capture found in history as of analysis time"}
+    },
+    "diagnosis": "P26G self-prediction broken: closing captures for 3469930.1 and 3469931.1 were not found within <=2h of game_time. Possible causes: (1) daemon cycle timing missed the 07:00Z-09:00Z window, (2) games cancelled/postponed, (3) scheduler did not trigger closing capture for these specific matches despite entering the window. Requires P26I pregame capture gap investigation."
+  },
+
+  "phase5_coverage_recheck": {
+    "coverage_before": {
+      "complete_pair": 220,
+      "pregame_only": 586,
+      "closing_only": 75,
+      "no_valid_snapshots": 16,
+      "total_matches": 897,
+      "source": "p26g_coverage_recheck_post_p26f_20260521.json"
+    },
+    "coverage_after": {
+      "complete_pair": 220,
+      "pregame_only": 586,
+      "closing_only": 75,
+      "no_valid_snapshots": 16,
+      "total_matches": 897,
+      "note": "No new COMPLETE_PAIR formed since P26G baseline"
+    },
+    "delta_complete_pairs": 0,
+    "bootstrap_threshold": 300,
+    "whether_bootstrap_ran": false,
+    "bootstrap_reason": "220 < 300. COMPLETE_PAIR unchanged from P26G baseline. P25C bootstrap blocked."
+  },
+
+  "expected_new_pairs_today_ground_truth": "UNMATCHED",
+  "force_closing_rows_total": 40,
+  "dedup_bypassed_count": 32,
+  "coverage_before": {"complete_pair": 220},
+  "coverage_after": {"complete_pair": 220},
+  "delta_complete_pairs": 0,
+  "whether_bootstrap_ran": false,
+
+  "final_classification": "P26H_EXPECTED_PAIRS_PREDICTION_BROKEN",
+  "final_classification_rationale": "P26G predicted expected_new_pairs_today=2 for 3469930.1 and 3469931.1 (both had pregame snapshots and were expected to enter closing window at 07:00Z). Ground truth scan of full history shows NO closing snapshot (<=2h gap) was captured for either match. Delta COMPLETE_PAIR=0. P26G self-prediction is BROKEN. Root cause requires P26I investigation into closing window capture timing for matches with 6-7h pregame gap.",
+
+  "next_action": "P26I: Diagnose closing window capture gaps — why daemon cycles did not capture <=2h snapshots for 3469930.1 and 3469931.1 despite entering scheduler window. Focus: scheduler window boundary timing, daemon cycle interval vs game_time alignment."
+}

@@ -1,0 +1,688 @@
+{
+  "p78_classification": "P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY",
+  "schema_version": "p78-v1",
+  "generated_at": "2026-05-26T08:48:25.451180+00:00",
+  "governance_snapshot": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_calculated": false,
+    "production_ready": false,
+    "live_api_calls": 0,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "real_bet_allowed": false,
+    "no_real_bet": true
+  },
+  "step1_p77_verification": {
+    "verified": true,
+    "classification": "P77_SHADOW_TRACKER_CONTRACT_READY",
+    "primary_rule": "TIER_C_HOME_PLUS_AWAY_125",
+    "shadow_rule": "TIER_C_HOME_PLUS_AWAY_100",
+    "semantics_validation_status": "PASS",
+    "governance_paper_only": true,
+    "governance_production_ready": false,
+    "tier_b_trigger_n": 200,
+    "market_edge_status": "DEFERRED",
+    "errors": []
+  },
+  "step2_monthly_report_schema": {
+    "schema_version": "p78-v1",
+    "sections": {
+      "1_metadata": [
+        "report_month",
+        "generated_at",
+        "source_prediction_version",
+        "data_cutoff",
+        "mode"
+      ],
+      "2_governance": [
+        "paper_only",
+        "diagnostic_only",
+        "odds_used",
+        "ev_calculated",
+        "clv_calculated",
+        "kelly_calculated",
+        "production_ready",
+        "live_api_calls"
+      ],
+      "3_rule_summary": [
+        "primary_rule_name",
+        "shadow_rule_name",
+        "primary_n",
+        "shadow_n",
+        "primary_hit_rate",
+        "shadow_hit_rate",
+        "primary_auc",
+        "shadow_auc",
+        "primary_brier",
+        "shadow_brier",
+        "primary_ece",
+        "shadow_ece"
+      ],
+      "4_tier_b": [
+        "tier_b_n",
+        "tier_b_hit_rate",
+        "tier_b_auc",
+        "tier_b_status",
+        "n_to_200"
+      ],
+      "5_tier_a": [
+        "tier_a_n",
+        "tier_a_hit_rate",
+        "tier_a_auc",
+        "tier_a_status"
+      ],
+      "6_alerts": [
+        "rolling_100_hit_rate",
+        "two_consecutive_months_below_50",
+        "ece_worsened",
+        "sample_status",
+        "alert_level"
+      ],
+      "7_decision": [
+        "continue_primary_rule",
+        "keep_shadow_rule",
+        "tier_b_re_evaluation_triggered",
+        "market_edge_lane_status",
+        "next_action"
+      ]
+    }
+  },
+  "step3_fixture_monthly_reports": [
+    {
+      "report_month": "2025-04",
+      "generated_at": "2026-05-26T08:48:25.446577+00:00",
+      "source_prediction_version": "phase56_sp_bullpen_context_v1",
+      "data_cutoff": "2025-04-end",
+      "mode": "prediction_only",
+      "governance": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "odds_used": false,
+        "ev_calculated": false,
+        "clv_calculated": false,
+        "kelly_calculated": false,
+        "production_ready": false,
+        "live_api_calls": 0
+      },
+      "rule_summary": {
+        "primary": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_125",
+          "n": 14,
+          "hit_rate": 0.5,
+          "hit_rate_ci_95_lo": 0.268,
+          "hit_rate_ci_95_hi": 0.732,
+          "auc": 0.4583,
+          "brier": 0.2555,
+          "ece": 0.2339,
+          "home_n": 13,
+          "away_n": 1,
+          "home_hit_rate": 0.5385,
+          "away_hit_rate": 0.0
+        },
+        "shadow": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_100",
+          "n": 15,
+          "hit_rate": 0.5333,
+          "hit_rate_ci_95_lo": 0.3012,
+          "hit_rate_ci_95_hi": 0.7519,
+          "auc": 0.5179,
+          "brier": 0.2524,
+          "ece": 0.2488,
+          "home_n": 13,
+          "away_n": 2,
+          "home_hit_rate": 0.5385,
+          "away_hit_rate": 0.5
+        }
+      },
+      "tier_b": {
+        "tier_b_n": 9,
+        "tier_b_cumulative": 9,
+        "tier_b_hit_rate": 0.5556,
+        "tier_b_auc": 0.7,
+        "tier_b_status": "accumulating",
+        "n_to_200": 191,
+        "trigger_fired": false
+      },
+      "tier_a": {
+        "tier_a_n": 1,
+        "tier_a_cumulative": 1,
+        "tier_a_hit_rate": 0.0,
+        "tier_a_auc": null,
+        "tier_a_status": "watchlist_only"
+      },
+      "alerts": {
+        "rolling_100_hit_rate": null,
+        "rolling_100_floor": 0.55,
+        "two_consecutive_months_below_50": false,
+        "ece_worsened": true,
+        "current_ece": 0.2339,
+        "baseline_ece": 0.07925789473684207,
+        "sample_status": "limited",
+        "alert_level": "RED"
+      },
+      "decision": {
+        "continue_primary_rule": true,
+        "keep_shadow_rule": true,
+        "tier_b_re_evaluation_triggered": false,
+        "market_edge_lane_status": "blocked",
+        "next_action": "urgent_review_required|continue_monthly_accumulation"
+      }
+    },
+    {
+      "report_month": "2025-05",
+      "generated_at": "2026-05-26T08:48:25.447627+00:00",
+      "source_prediction_version": "phase56_sp_bullpen_context_v1",
+      "data_cutoff": "2025-05-end",
+      "mode": "prediction_only",
+      "governance": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "odds_used": false,
+        "ev_calculated": false,
+        "clv_calculated": false,
+        "kelly_calculated": false,
+        "production_ready": false,
+        "live_api_calls": 0
+      },
+      "rule_summary": {
+        "primary": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_125",
+          "n": 100,
+          "hit_rate": 0.59,
+          "hit_rate_ci_95_lo": 0.492,
+          "hit_rate_ci_95_hi": 0.6813,
+          "auc": 0.642,
+          "brier": 0.2338,
+          "ece": 0.0576,
+          "home_n": 95,
+          "away_n": 5,
+          "home_hit_rate": 0.5895,
+          "away_hit_rate": 0.6
+        },
+        "shadow": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_100",
+          "n": 107,
+          "hit_rate": 0.5701,
+          "hit_rate_ci_95_lo": 0.4755,
+          "hit_rate_ci_95_hi": 0.6599,
+          "auc": 0.6104,
+          "brier": 0.2363,
+          "ece": 0.0659,
+          "home_n": 95,
+          "away_n": 12,
+          "home_hit_rate": 0.5895,
+          "away_hit_rate": 0.4167
+        }
+      },
+      "tier_b": {
+        "tier_b_n": 76,
+        "tier_b_cumulative": 85,
+        "tier_b_hit_rate": 0.5658,
+        "tier_b_auc": 0.6587,
+        "tier_b_status": "accumulating",
+        "n_to_200": 115,
+        "trigger_fired": false
+      },
+      "tier_a": {
+        "tier_a_n": 9,
+        "tier_a_cumulative": 10,
+        "tier_a_hit_rate": 0.4444,
+        "tier_a_auc": 0.75,
+        "tier_a_status": "watchlist_only"
+      },
+      "alerts": {
+        "rolling_100_hit_rate": 0.59,
+        "rolling_100_floor": 0.55,
+        "two_consecutive_months_below_50": false,
+        "ece_worsened": false,
+        "current_ece": 0.0576,
+        "baseline_ece": 0.07925789473684207,
+        "sample_status": "sufficient",
+        "alert_level": "GREEN"
+      },
+      "decision": {
+        "continue_primary_rule": true,
+        "keep_shadow_rule": true,
+        "tier_b_re_evaluation_triggered": false,
+        "market_edge_lane_status": "blocked",
+        "next_action": "review_at_n200"
+      }
+    },
+    {
+      "report_month": "2025-06",
+      "generated_at": "2026-05-26T08:48:25.448085+00:00",
+      "source_prediction_version": "phase56_sp_bullpen_context_v1",
+      "data_cutoff": "2025-06-end",
+      "mode": "prediction_only",
+      "governance": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "odds_used": false,
+        "ev_calculated": false,
+        "clv_calculated": false,
+        "kelly_calculated": false,
+        "production_ready": false,
+        "live_api_calls": 0
+      },
+      "rule_summary": {
+        "primary": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_125",
+          "n": 61,
+          "hit_rate": 0.5738,
+          "hit_rate_ci_95_lo": 0.449,
+          "hit_rate_ci_95_hi": 0.6898,
+          "auc": 0.5808,
+          "brier": 0.2378,
+          "ece": 0.0333,
+          "home_n": 53,
+          "away_n": 8,
+          "home_hit_rate": 0.5849,
+          "away_hit_rate": 0.5
+        },
+        "shadow": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_100",
+          "n": 70,
+          "hit_rate": 0.5429,
+          "hit_rate_ci_95_lo": 0.427,
+          "hit_rate_ci_95_hi": 0.6543,
+          "auc": 0.5614,
+          "brier": 0.2396,
+          "ece": 0.0686,
+          "home_n": 53,
+          "away_n": 17,
+          "home_hit_rate": 0.5849,
+          "away_hit_rate": 0.4118
+        }
+      },
+      "tier_b": {
+        "tier_b_n": 69,
+        "tier_b_cumulative": 154,
+        "tier_b_hit_rate": 0.4928,
+        "tier_b_auc": 0.5088,
+        "tier_b_status": "accumulating_halfway",
+        "n_to_200": 46,
+        "trigger_fired": false
+      },
+      "tier_a": {
+        "tier_a_n": 8,
+        "tier_a_cumulative": 18,
+        "tier_a_hit_rate": 0.625,
+        "tier_a_auc": 0.6667,
+        "tier_a_status": "watchlist_only"
+      },
+      "alerts": {
+        "rolling_100_hit_rate": 0.6,
+        "rolling_100_floor": 0.55,
+        "two_consecutive_months_below_50": false,
+        "ece_worsened": false,
+        "current_ece": 0.0333,
+        "baseline_ece": 0.07925789473684207,
+        "sample_status": "sufficient",
+        "alert_level": "GREEN"
+      },
+      "decision": {
+        "continue_primary_rule": true,
+        "keep_shadow_rule": true,
+        "tier_b_re_evaluation_triggered": false,
+        "market_edge_lane_status": "blocked",
+        "next_action": "review_at_n100"
+      }
+    },
+    {
+      "report_month": "2025-07",
+      "generated_at": "2026-05-26T08:48:25.448578+00:00",
+      "source_prediction_version": "phase56_sp_bullpen_context_v1",
+      "data_cutoff": "2025-07-end",
+      "mode": "prediction_only",
+      "governance": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "odds_used": false,
+        "ev_calculated": false,
+        "clv_calculated": false,
+        "kelly_calculated": false,
+        "production_ready": false,
+        "live_api_calls": 0
+      },
+      "rule_summary": {
+        "primary": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_125",
+          "n": 72,
+          "hit_rate": 0.5972,
+          "hit_rate_ci_95_lo": 0.4818,
+          "hit_rate_ci_95_hi": 0.7028,
+          "auc": 0.4728,
+          "brier": 0.2426,
+          "ece": 0.1164,
+          "home_n": 65,
+          "away_n": 7,
+          "home_hit_rate": 0.6308,
+          "away_hit_rate": 0.2857
+        },
+        "shadow": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_100",
+          "n": 77,
+          "hit_rate": 0.5974,
+          "hit_rate_ci_95_lo": 0.4858,
+          "hit_rate_ci_95_hi": 0.6998,
+          "auc": 0.504,
+          "brier": 0.2423,
+          "ece": 0.1048,
+          "home_n": 65,
+          "away_n": 12,
+          "home_hit_rate": 0.6308,
+          "away_hit_rate": 0.4167
+        }
+      },
+      "tier_b": {
+        "tier_b_n": 65,
+        "tier_b_cumulative": 219,
+        "tier_b_hit_rate": 0.5385,
+        "tier_b_auc": 0.4895,
+        "tier_b_status": "TRIGGER_FIRED",
+        "n_to_200": 0,
+        "trigger_fired": true
+      },
+      "tier_a": {
+        "tier_a_n": 2,
+        "tier_a_cumulative": 20,
+        "tier_a_hit_rate": 0.5,
+        "tier_a_auc": null,
+        "tier_a_status": "watchlist_only"
+      },
+      "alerts": {
+        "rolling_100_hit_rate": 0.6,
+        "rolling_100_floor": 0.55,
+        "two_consecutive_months_below_50": false,
+        "ece_worsened": true,
+        "current_ece": 0.1164,
+        "baseline_ece": 0.07925789473684207,
+        "sample_status": "sufficient",
+        "alert_level": "RED"
+      },
+      "decision": {
+        "continue_primary_rule": true,
+        "keep_shadow_rule": true,
+        "tier_b_re_evaluation_triggered": true,
+        "market_edge_lane_status": "blocked",
+        "next_action": "urgent_review_required|initiate_p79_tier_b_review|review_at_n100"
+      }
+    },
+    {
+      "report_month": "2025-08",
+      "generated_at": "2026-05-26T08:48:25.449140+00:00",
+      "source_prediction_version": "phase56_sp_bullpen_context_v1",
+      "data_cutoff": "2025-08-end",
+      "mode": "prediction_only",
+      "governance": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "odds_used": false,
+        "ev_calculated": false,
+        "clv_calculated": false,
+        "kelly_calculated": false,
+        "production_ready": false,
+        "live_api_calls": 0
+      },
+      "rule_summary": {
+        "primary": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_125",
+          "n": 97,
+          "hit_rate": 0.5567,
+          "hit_rate_ci_95_lo": 0.4576,
+          "hit_rate_ci_95_hi": 0.6515,
+          "auc": 0.5366,
+          "brier": 0.2445,
+          "ece": 0.0242,
+          "home_n": 94,
+          "away_n": 3,
+          "home_hit_rate": 0.5638,
+          "away_hit_rate": 0.3333
+        },
+        "shadow": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_100",
+          "n": 100,
+          "hit_rate": 0.55,
+          "hit_rate_ci_95_lo": 0.4524,
+          "hit_rate_ci_95_hi": 0.6439,
+          "auc": 0.5282,
+          "brier": 0.2454,
+          "ece": 0.0295,
+          "home_n": 94,
+          "away_n": 6,
+          "home_hit_rate": 0.5638,
+          "away_hit_rate": 0.3333
+        }
+      },
+      "tier_b": {
+        "tier_b_n": 76,
+        "tier_b_cumulative": 295,
+        "tier_b_hit_rate": 0.5789,
+        "tier_b_auc": 0.4933,
+        "tier_b_status": "TRIGGER_FIRED",
+        "n_to_200": 0,
+        "trigger_fired": true
+      },
+      "tier_a": {
+        "tier_a_n": 1,
+        "tier_a_cumulative": 21,
+        "tier_a_hit_rate": 1.0,
+        "tier_a_auc": null,
+        "tier_a_status": "watchlist_only"
+      },
+      "alerts": {
+        "rolling_100_hit_rate": 0.55,
+        "rolling_100_floor": 0.55,
+        "two_consecutive_months_below_50": false,
+        "ece_worsened": false,
+        "current_ece": 0.0242,
+        "baseline_ece": 0.07925789473684207,
+        "sample_status": "sufficient",
+        "alert_level": "GREEN"
+      },
+      "decision": {
+        "continue_primary_rule": true,
+        "keep_shadow_rule": true,
+        "tier_b_re_evaluation_triggered": true,
+        "market_edge_lane_status": "blocked",
+        "next_action": "initiate_p79_tier_b_review|review_at_n100"
+      }
+    },
+    {
+      "report_month": "2025-09",
+      "generated_at": "2026-05-26T08:48:25.450970+00:00",
+      "source_prediction_version": "phase56_sp_bullpen_context_v1",
+      "data_cutoff": "2025-09-end",
+      "mode": "prediction_only",
+      "governance": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "odds_used": false,
+        "ev_calculated": false,
+        "clv_calculated": false,
+        "kelly_calculated": false,
+        "production_ready": false,
+        "live_api_calls": 0
+      },
+      "rule_summary": {
+        "primary": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_125",
+          "n": 63,
+          "hit_rate": 0.6508,
+          "hit_rate_ci_95_lo": 0.5275,
+          "hit_rate_ci_95_hi": 0.7567,
+          "auc": 0.6857,
+          "brier": 0.2219,
+          "ece": 0.0956,
+          "home_n": 59,
+          "away_n": 4,
+          "home_hit_rate": 0.661,
+          "away_hit_rate": 0.5
+        },
+        "shadow": {
+          "rule_name": "TIER_C_HOME_PLUS_AWAY_100",
+          "n": 76,
+          "hit_rate": 0.6447,
+          "hit_rate_ci_95_lo": 0.5326,
+          "hit_rate_ci_95_hi": 0.743,
+          "auc": 0.6967,
+          "brier": 0.2253,
+          "ece": 0.0902,
+          "home_n": 59,
+          "away_n": 17,
+          "home_hit_rate": 0.661,
+          "away_hit_rate": 0.5882
+        }
+      },
+      "tier_b": {
+        "tier_b_n": 68,
+        "tier_b_cumulative": 363,
+        "tier_b_hit_rate": 0.4706,
+        "tier_b_auc": 0.6079,
+        "tier_b_status": "TRIGGER_FIRED",
+        "n_to_200": 0,
+        "trigger_fired": true
+      },
+      "tier_a": {
+        "tier_a_n": 3,
+        "tier_a_cumulative": 24,
+        "tier_a_hit_rate": 0.6667,
+        "tier_a_auc": 0.5,
+        "tier_a_status": "watchlist_only"
+      },
+      "alerts": {
+        "rolling_100_hit_rate": 0.61,
+        "rolling_100_floor": 0.55,
+        "two_consecutive_months_below_50": false,
+        "ece_worsened": false,
+        "current_ece": 0.0956,
+        "baseline_ece": 0.07925789473684207,
+        "sample_status": "sufficient",
+        "alert_level": "GREEN"
+      },
+      "decision": {
+        "continue_primary_rule": true,
+        "keep_shadow_rule": true,
+        "tier_b_re_evaluation_triggered": true,
+        "market_edge_lane_status": "blocked",
+        "next_action": "initiate_p79_tier_b_review|review_at_n100"
+      }
+    }
+  ],
+  "step4_alert_level_definitions": {
+    "GREEN": {
+      "description": "Sample sufficient and no downgrade criteria triggered",
+      "criteria": [
+        "rolling_100_hit_rate >= 0.55 (or insufficient n for rolling)",
+        "not two_consecutive_months_below_50",
+        "not ece_worsened",
+        "governance clean",
+        "primary_n >= 50"
+      ]
+    },
+    "YELLOW": {
+      "description": "Sample limited or one warning criterion triggered",
+      "criteria": [
+        "primary_n < 50 (insufficient sample for alert)",
+        "rolling_100 not computable due to small n"
+      ],
+      "note": "Sample limitation alone does NOT imply model failure"
+    },
+    "RED": {
+      "description": "Downgrade criteria triggered; requires urgent review",
+      "criteria": [
+        "rolling_100_hit_rate < 0.55",
+        "2 consecutive eligible months hit_rate < 0.5",
+        "ECE materially worsened (delta >= 0.03 from baseline)",
+        "governance violation"
+      ]
+    }
+  },
+  "step5_pack_synthesis": {
+    "months_generated": [
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09"
+    ],
+    "months_count": 6,
+    "months_all_schema_valid": true,
+    "months_schema_valid_list": [
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09"
+    ],
+    "months_with_governance_clean": [
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09"
+    ],
+    "months_all_governance_clean": true,
+    "months_with_alerts": [
+      "2025-04",
+      "2025-07"
+    ],
+    "primary_vs_shadow": {
+      "primary_total_n": 407,
+      "shadow_total_n": 445,
+      "primary_avg_monthly_hit_rate": 0.5781,
+      "shadow_avg_monthly_hit_rate": 0.5731
+    },
+    "tier_b_accumulated_n_end_of_fixture": 363,
+    "tier_b_n200_trigger_fires_in_fixture": true,
+    "tier_b_trigger_n": 200,
+    "template_readiness_classification": "P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY"
+  },
+  "step6_forbidden_scan": {
+    "scan_passed": true,
+    "violations_count": 0,
+    "violations": [],
+    "must_be_true_checked": [
+      "paper_only",
+      "diagnostic_only",
+      "no_real_bet",
+      "promotion_freeze"
+    ],
+    "must_be_false_checked": [
+      "odds_used",
+      "ev_calculated",
+      "clv_calculated",
+      "kelly_calculated",
+      "production_ready",
+      "kelly_deploy_allowed",
+      "real_bet_allowed"
+    ],
+    "must_be_zero_checked": [
+      "live_api_calls"
+    ],
+    "method": "governance_dict_value_check"
+  },
+  "fixture_period": [
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09"
+  ],
+  "rules": {
+    "primary": "TIER_C_HOME_PLUS_AWAY_125",
+    "shadow": "TIER_C_HOME_PLUS_AWAY_100",
+    "tier_b": "abs_sp_fip_delta in [0.25, 0.50)",
+    "tier_a": "abs_sp_fip_delta >= 1.50"
+  },
+  "tier_b_trigger_n": 200,
+  "market_edge_lane": "blocked"
+}

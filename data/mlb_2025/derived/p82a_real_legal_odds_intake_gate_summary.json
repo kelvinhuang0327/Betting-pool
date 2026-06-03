@@ -1,0 +1,570 @@
+{
+  "p82a_classification": "P82A_REAL_LEGAL_ODDS_INTAKE_GATE_READY",
+  "schema_version": "p82a-v1",
+  "snapshot_id": "real_legal_odds_intake_gate_20260526",
+  "generated_at_utc": "2026-05-26T10:04:03.372403+00:00",
+  "governance_snapshot": {
+    "paper_only": true,
+    "live_api_calls": 0,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "promotion_freeze": true,
+    "tsl_crawler_modified": false,
+    "runtime_recommendation_modified": false,
+    "the_odds_api_key_required": false,
+    "the_odds_api_key_accessed": false,
+    "uses_historical_odds": false,
+    "odds_used": false,
+    "diagnostic_only": true,
+    "real_odds_dataset_present": false,
+    "p82_unlocked": false
+  },
+  "step1_p81_verification": {
+    "status": "PASS",
+    "p81_classification": "P81_VALIDATOR_CONTRACT_READY_MOCK_ONLY",
+    "p82_unlock_status": "BLOCKED_NO_REAL_DATASET",
+    "live_api_calls": 0,
+    "checks": {
+      "classification": true,
+      "p82_unlock_status": true,
+      "live_api_calls": true,
+      "ev_clv_kelly": true,
+      "forbidden_scan_passed": true,
+      "production_ready": true,
+      "real_legal_dataset_available": true,
+      "mock_cannot_unlock_p82": true
+    },
+    "input_types_defined": [
+      "REAL_LEGAL_ODDS_DATASET",
+      "MOCK_ODDS_FIXTURE",
+      "UNKNOWN_SOURCE_DATASET",
+      "SCRAPING_PROHIBITED_SOURCE",
+      "RAW_PAID_DATA_UNPOLICIED"
+    ],
+    "gates_defined": [
+      "LEGALITY_GATE",
+      "RAW_DATA_POLICY_GATE",
+      "TIMESTAMP_GATE",
+      "MONEYLINE_GATE",
+      "IDENTITY_GATE"
+    ],
+    "validator_script_exists": true
+  },
+  "step2_intake_manifest": {
+    "manifest_field_count": 23,
+    "manifest_fields": [
+      {
+        "field": "manifest_id",
+        "type": "str",
+        "nullable": false,
+        "description": "Unique ID for this intake manifest"
+      },
+      {
+        "field": "dataset_path",
+        "type": "str",
+        "nullable": false,
+        "description": "Relative path to the dataset file"
+      },
+      {
+        "field": "dataset_type",
+        "type": "str",
+        "nullable": false,
+        "required_value": "REAL_LEGAL_ODDS_DATASET",
+        "description": "Must be REAL_LEGAL_ODDS_DATASET"
+      },
+      {
+        "field": "season",
+        "type": "int",
+        "nullable": false,
+        "description": "Season year (e.g. 2025)"
+      },
+      {
+        "field": "source_name",
+        "type": "str",
+        "nullable": false,
+        "description": "Name of originating sportsbook or data provider"
+      },
+      {
+        "field": "source_license_status",
+        "type": "str",
+        "nullable": false,
+        "required_value": "LEGAL_OR_LICENSED",
+        "description": "Must be LEGAL_OR_LICENSED"
+      },
+      {
+        "field": "source_license_evidence_ref",
+        "type": "str",
+        "nullable": false,
+        "description": "Path or URL to license evidence document"
+      },
+      {
+        "field": "acquisition_method",
+        "type": "str",
+        "nullable": false,
+        "description": "How data was acquired (e.g. PAID_API, LICENSED_FEED)"
+      },
+      {
+        "field": "acquired_at_utc",
+        "type": "str",
+        "nullable": false,
+        "description": "ISO-8601 UTC timestamp of acquisition"
+      },
+      {
+        "field": "acquired_by",
+        "type": "str",
+        "nullable": false,
+        "description": "Person or system that acquired the data"
+      },
+      {
+        "field": "raw_data_policy",
+        "type": "str",
+        "nullable": false,
+        "forbidden_value": "UNKNOWN",
+        "allowed_values": [
+          "COMMIT_ALLOWED",
+          "LOCAL_ONLY_HASH_COMMITTED",
+          "DERIVED_ONLY_COMMIT"
+        ],
+        "description": "Storage/commit policy; must not be UNKNOWN"
+      },
+      {
+        "field": "checksum_hash",
+        "type": "str",
+        "nullable": false,
+        "description": "SHA-256 checksum of dataset file"
+      },
+      {
+        "field": "row_count",
+        "type": "int",
+        "nullable": false,
+        "min": 1,
+        "description": "Number of rows in the dataset"
+      },
+      {
+        "field": "expected_schema_version",
+        "type": "str",
+        "nullable": false,
+        "required_value": "p81-v1",
+        "description": "Must match P81 schema version"
+      },
+      {
+        "field": "validator_script",
+        "type": "str",
+        "nullable": false,
+        "description": "Path to P81 validator script"
+      },
+      {
+        "field": "validator_command",
+        "type": "str",
+        "nullable": false,
+        "description": "Command to invoke the validator"
+      },
+      {
+        "field": "p81_validator_version",
+        "type": "str",
+        "nullable": false,
+        "description": "Version string of the validator"
+      },
+      {
+        "field": "storage_policy",
+        "type": "str",
+        "nullable": false,
+        "description": "Where dataset is stored (LOCAL_ONLY, CLOUD_PRIVATE, etc.)"
+      },
+      {
+        "field": "commit_policy",
+        "type": "str",
+        "nullable": false,
+        "description": "Whether dataset is committed to git"
+      },
+      {
+        "field": "contains_api_key",
+        "type": "bool",
+        "nullable": false,
+        "required_value": false,
+        "description": "Must be False \u2014 API key must never be stored in dataset"
+      },
+      {
+        "field": "contains_personal_data",
+        "type": "bool",
+        "nullable": false,
+        "description": "Whether dataset contains PII"
+      },
+      {
+        "field": "allowed_next_phase",
+        "type": "str",
+        "nullable": true,
+        "description": "P82 only after validator passes; null if blocked"
+      },
+      {
+        "field": "blocked_next_phase_reason",
+        "type": "str",
+        "nullable": true,
+        "description": "Reason P82 is blocked if allowed_next_phase is null"
+      }
+    ],
+    "required_dataset_type": "REAL_LEGAL_ODDS_DATASET",
+    "required_license_status": "LEGAL_OR_LICENSED",
+    "allowed_raw_data_policies": [
+      "COMMIT_ALLOWED",
+      "LOCAL_ONLY_HASH_COMMITTED",
+      "DERIVED_ONLY_COMMIT"
+    ],
+    "contains_api_key_must_be": false,
+    "expected_schema_version": "p81-v1",
+    "validator_script": "scripts/_p81_legal_odds_dataset_validator_contract.py",
+    "notes": [
+      "manifest must be committed before dataset is loaded for P82",
+      "checksum_hash must be computed before validator is invoked",
+      "allowed_next_phase is P82 only after validator returns LEGAL_ODDS_DATASET_VALIDATED_FOR_P82"
+    ]
+  },
+  "step3_blocker_checklist": {
+    "total_blockers": 12,
+    "real_data_blockers_count": 10,
+    "governance_blockers_count": 2,
+    "all_real_data_blockers": [
+      "REAL_DATASET_PRESENT",
+      "SOURCE_LEGALITY_PROVEN",
+      "LICENSE_EVIDENCE_RECORDED",
+      "RAW_DATA_POLICY_DECIDED",
+      "CHECKSUM_RECORDED",
+      "SCHEMA_VALIDATED",
+      "TIMESTAMP_LINEAGE_VALIDATED",
+      "MONEYLINE_VALIDATED",
+      "IDENTITY_MAPPING_VALIDATED",
+      "MOCK_DATA_EXCLUDED"
+    ],
+    "all_governance_blockers": [
+      "API_KEY_NOT_STORED",
+      "PRODUCTION_REMAINS_BLOCKED"
+    ],
+    "all_real_data_currently_blocked": true,
+    "all_governance_currently_active": true,
+    "checklist": [
+      {
+        "blocker_id": "REAL_DATASET_PRESENT",
+        "description": "A real legal odds dataset file exists at the declared manifest path",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "File exists; checksum matches manifest.checksum_hash",
+        "validation_method": "os.path.exists(manifest.dataset_path) + sha256 check",
+        "owner": "Data Engineer",
+        "unlock_effect": "Permits validator invocation",
+        "stop_condition_if_failed": "STOP \u2014 do not invoke validator or unlock P82"
+      },
+      {
+        "blocker_id": "SOURCE_LEGALITY_PROVEN",
+        "description": "source_license_status == LEGAL_OR_LICENSED in manifest",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "manifest.source_license_status == LEGAL_OR_LICENSED",
+        "validation_method": "_run_unlock_decision(manifest) LEGALITY check",
+        "owner": "Legal / Compliance",
+        "unlock_effect": "Permits LEGALITY_GATE pass",
+        "stop_condition_if_failed": "STOP \u2014 SCRAPING_TOS_VIOLATION or UNKNOWN blocks pipeline permanently"
+      },
+      {
+        "blocker_id": "LICENSE_EVIDENCE_RECORDED",
+        "description": "A license evidence document is referenced in manifest.source_license_evidence_ref",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "Non-empty source_license_evidence_ref pointing to a document",
+        "validation_method": "Non-empty string check on manifest field",
+        "owner": "Legal / Compliance",
+        "unlock_effect": "Required for audit trail",
+        "stop_condition_if_failed": "STOP \u2014 undocumented license blocks P82"
+      },
+      {
+        "blocker_id": "RAW_DATA_POLICY_DECIDED",
+        "description": "manifest.raw_data_policy is in allowed values, not UNKNOWN",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "manifest.raw_data_policy in [COMMIT_ALLOWED, LOCAL_ONLY_HASH_COMMITTED, DERIVED_ONLY_COMMIT]",
+        "validation_method": "_run_unlock_decision(manifest) RAW_DATA_POLICY check",
+        "owner": "Data Engineer",
+        "unlock_effect": "Permits RAW_DATA_POLICY_GATE pass",
+        "stop_condition_if_failed": "STOP \u2014 UNKNOWN policy blocks P82"
+      },
+      {
+        "blocker_id": "CHECKSUM_RECORDED",
+        "description": "manifest.checksum_hash is a non-empty SHA-256 hash",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "Non-empty hex string in manifest.checksum_hash",
+        "validation_method": "Non-empty string check; length == 64 for SHA-256",
+        "owner": "Data Engineer",
+        "unlock_effect": "Enables integrity verification before validator run",
+        "stop_condition_if_failed": "STOP \u2014 missing checksum blocks P82"
+      },
+      {
+        "blocker_id": "SCHEMA_VALIDATED",
+        "description": "P81 validator _validate_schema returns valid=True for all rows",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "P81 validator run output: all rows valid=True, 0 missing/null/type errors",
+        "validation_method": "Invoke scripts/_p81_legal_odds_dataset_validator_contract.py on dataset",
+        "owner": "Data Engineer",
+        "unlock_effect": "Permits full 5-gate validation",
+        "stop_condition_if_failed": "STOP \u2014 any schema violation blocks P82"
+      },
+      {
+        "blocker_id": "TIMESTAMP_LINEAGE_VALIDATED",
+        "description": "All rows pass TIMESTAMP_GATE: pregame odds_ts < game_start_ts",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "P81 TIMESTAMP_GATE returns PASS for all rows",
+        "validation_method": "_run_timestamp_gate per-row validation",
+        "owner": "Data Engineer",
+        "unlock_effect": "Enables pregame edge diagnostics; closing pairs required for CLV",
+        "stop_condition_if_failed": "STOP \u2014 timestamp violation blocks P82; CLV remains blocked until P83"
+      },
+      {
+        "blocker_id": "MONEYLINE_VALIDATED",
+        "description": "All rows pass MONEYLINE_GATE: home + away moneylines are numeric",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "P81 MONEYLINE_GATE returns PASS for all rows",
+        "validation_method": "_run_moneyline_gate per-row validation",
+        "owner": "Data Engineer",
+        "unlock_effect": "Enables implied probability computation",
+        "stop_condition_if_failed": "STOP \u2014 non-numeric moneyline blocks P82"
+      },
+      {
+        "blocker_id": "IDENTITY_MAPPING_VALIDATED",
+        "description": "All rows pass IDENTITY_GATE: home_team != away_team, game_id non-empty",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "P81 IDENTITY_GATE returns PASS for all rows",
+        "validation_method": "_run_identity_gate per-row validation",
+        "owner": "Data Engineer",
+        "unlock_effect": "Enables join to prediction candidates",
+        "stop_condition_if_failed": "STOP \u2014 identity failure blocks P82"
+      },
+      {
+        "blocker_id": "MOCK_DATA_EXCLUDED",
+        "description": "No rows with source_license_status=MOCK_VALIDATOR_ONLY in real dataset",
+        "current_status": "BLOCKED_PENDING_REAL_DATASET",
+        "evidence_required": "Zero rows where source_license_status == MOCK_VALIDATOR_ONLY",
+        "validation_method": "Row-level filter scan after load",
+        "owner": "Data Engineer",
+        "unlock_effect": "Ensures real-data integrity; mock rows would invalidate edge diagnostics",
+        "stop_condition_if_failed": "STOP \u2014 any mock row in real dataset blocks P82"
+      },
+      {
+        "blocker_id": "API_KEY_NOT_STORED",
+        "description": "manifest.contains_api_key == False; no API key embedded in dataset",
+        "current_status": "ACTIVE_GUARDRAIL",
+        "evidence_required": "manifest.contains_api_key == False",
+        "validation_method": "_run_unlock_decision(manifest) API key check",
+        "owner": "Security",
+        "unlock_effect": "Permanent guardrail \u2014 must be False at all times",
+        "stop_condition_if_failed": "STOP \u2014 API key in data is a hard block; purge dataset"
+      },
+      {
+        "blocker_id": "PRODUCTION_REMAINS_BLOCKED",
+        "description": "production_ready=False and kelly_deploy_allowed=False throughout P82",
+        "current_status": "ACTIVE_GUARDRAIL",
+        "evidence_required": "GOVERNANCE['production_ready'] == False; GOVERNANCE['kelly_deploy_allowed'] == False",
+        "validation_method": "Governance constant check",
+        "owner": "CTO",
+        "unlock_effect": "Permanent guardrail \u2014 P82 is dry-run only",
+        "stop_condition_if_failed": "STOP \u2014 governance production_ready and kelly_deploy_allowed must remain False; see GOVERNANCE constant"
+      }
+    ],
+    "p82_can_open": false,
+    "p82_open_requires": "All 10 real-data blockers CLOSED + 2 governance guardrails ACTIVE"
+  },
+  "step4_unlock_decision": {
+    "decision_function": "_run_unlock_decision(manifest)",
+    "required_conditions": [
+      "manifest.dataset_type == REAL_LEGAL_ODDS_DATASET",
+      "manifest.source_license_status == LEGAL_OR_LICENSED",
+      "manifest.contains_api_key == False",
+      "manifest.raw_data_policy in allowed policies",
+      "manifest._validator_output_state == LEGAL_ODDS_DATASET_VALIDATED_FOR_P82",
+      "GOVERNANCE.production_ready == False",
+      "GOVERNANCE.kelly_deploy_allowed == False"
+    ],
+    "scenarios": {
+      "HYPOTHETICAL_REAL_LEGAL": {
+        "can_unlock_p82": true,
+        "blocks": [],
+        "passed_checks": [
+          "DATASET_TYPE_OK",
+          "LICENSE_STATUS_OK",
+          "NO_API_KEY_IN_DATA",
+          "RAW_DATA_POLICY_OK",
+          "VALIDATOR_OUTPUT_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      },
+      "MOCK_FIXTURE": {
+        "can_unlock_p82": false,
+        "blocks": [
+          "WRONG_DATASET_TYPE:MOCK_ODDS_FIXTURE",
+          "VALIDATOR_NOT_PASSED:MOCK_FIXTURE_VALIDATOR_PASS_NOT_MARKET_READY"
+        ],
+        "passed_checks": [
+          "LICENSE_STATUS_OK",
+          "NO_API_KEY_IN_DATA",
+          "RAW_DATA_POLICY_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      },
+      "UNKNOWN_SOURCE": {
+        "can_unlock_p82": false,
+        "blocks": [
+          "BAD_LICENSE_STATUS:UNKNOWN",
+          "VALIDATOR_NOT_PASSED:None"
+        ],
+        "passed_checks": [
+          "DATASET_TYPE_OK",
+          "NO_API_KEY_IN_DATA",
+          "RAW_DATA_POLICY_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      },
+      "SCRAPING_PROHIBITED": {
+        "can_unlock_p82": false,
+        "blocks": [
+          "BAD_LICENSE_STATUS:SCRAPING_TOS_VIOLATION"
+        ],
+        "passed_checks": [
+          "DATASET_TYPE_OK",
+          "NO_API_KEY_IN_DATA",
+          "RAW_DATA_POLICY_OK",
+          "VALIDATOR_OUTPUT_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      },
+      "MISSING_DATASET": {
+        "can_unlock_p82": false,
+        "blocks": [
+          "WRONG_DATASET_TYPE:None",
+          "VALIDATOR_NOT_PASSED:None"
+        ],
+        "passed_checks": [
+          "LICENSE_STATUS_OK",
+          "NO_API_KEY_IN_DATA",
+          "RAW_DATA_POLICY_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      },
+      "API_KEY_IN_DATA": {
+        "can_unlock_p82": false,
+        "blocks": [
+          "API_KEY_PRESENT_IN_DATA"
+        ],
+        "passed_checks": [
+          "DATASET_TYPE_OK",
+          "LICENSE_STATUS_OK",
+          "RAW_DATA_POLICY_OK",
+          "VALIDATOR_OUTPUT_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      },
+      "BAD_RAW_DATA_POLICY": {
+        "can_unlock_p82": false,
+        "blocks": [
+          "BAD_RAW_DATA_POLICY:UNKNOWN"
+        ],
+        "passed_checks": [
+          "DATASET_TYPE_OK",
+          "LICENSE_STATUS_OK",
+          "NO_API_KEY_IN_DATA",
+          "VALIDATOR_OUTPUT_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      },
+      "VALIDATOR_NOT_PASSED": {
+        "can_unlock_p82": false,
+        "blocks": [
+          "VALIDATOR_NOT_PASSED:BLOCKED_SOURCE_LEGALITY"
+        ],
+        "passed_checks": [
+          "DATASET_TYPE_OK",
+          "LICENSE_STATUS_OK",
+          "NO_API_KEY_IN_DATA",
+          "RAW_DATA_POLICY_OK",
+          "GOVERNANCE_PRODUCTION_BLOCKED",
+          "GOVERNANCE_KELLY_BLOCKED"
+        ]
+      }
+    },
+    "only_real_legal_dataset_unlocks": true,
+    "current_p82_status": "BLOCKED_NO_REAL_DATASET"
+  },
+  "step5_p82_scope": {
+    "phase": "P82",
+    "phase_name": "Legal Odds Market Edge Dry-Run",
+    "prerequisite": "P82A_REAL_LEGAL_ODDS_INTAKE_GATE_READY + real legal dataset validated",
+    "allowed": [
+      "load validated odds dataset",
+      "join prediction candidates to odds rows via game_id",
+      "compute market implied probabilities from home/away moneylines",
+      "compute paper-only edge diagnostics (model prob vs implied prob)",
+      "compare primary 125 vs shadow 100 vs baseline Tier C",
+      "generate dry-run diagnostic report"
+    ],
+    "prohibited": [
+      "calculate Kelly criterion or position sizing",
+      "recommend bets or wagering amounts",
+      "change champion strategy or Tier C thresholds",
+      "promote production readiness",
+      "claim profitability from historical edge",
+      "use unvalidated or partially-validated odds rows",
+      "use mock odds or fixture data as real market evidence",
+      "access the live odds api key env var",
+      "compute CLV (reserved for P83 pending closing data and timestamp lineage)"
+    ],
+    "clv_status": "BLOCKED_UNTIL_P83 \u2014 closing-line pairs not yet confirmed in dataset; timestamp lineage must pass before CLV scope activates",
+    "production_status": "BLOCKED \u2014 P82 is diagnostic dry-run only; paper_only=True remains",
+    "kelly_status": "PERMANENTLY_BLOCKED_IN_P82",
+    "ev_kelly_clv_computed_in_p82a": false
+  },
+  "step6_source_artifacts": {
+    "all_present": true,
+    "artifact_count": 13,
+    "artifacts": {
+      "p81_legal_odds_dataset_validator_contract_summary.json": true,
+      "p80_market_edge_reentry_readiness_contract_summary.json": true,
+      "p79b_tier_b_vs_tier_c_comparison_harness_summary.json": true,
+      "p79a_tier_b_trigger_readiness_contract_summary.json": true,
+      "p78_monthly_shadow_tracker_report_template_summary.json": true,
+      "p77_prediction_only_shadow_tracker_contract_summary.json": true,
+      "p76_corrected_tier_c_final_rule_selection_summary.json": true,
+      "p75b_calibration_diagnostics_corrected_tier_c_summary.json": true,
+      "p75a_tier_c_corrected_rule_validator_summary.json": true,
+      "p74_tier_c_home_away_bias_correction_summary.json": true,
+      "p73_tier_stability_and_sample_expansion_summary.json": true,
+      "p72b_objective_metric_contract_summary.json": true,
+      "p72a_odds_free_strategy_accuracy_backtest_summary.json": true
+    },
+    "status": "PASS"
+  },
+  "step7_forbidden_scan": {
+    "scan_passed": true,
+    "violations_count": 0,
+    "violations": [],
+    "patterns_checked": 10,
+    "lines_scanned": 919,
+    "self_exclusion_range": [
+      574,
+      651
+    ],
+    "governance_exclusion_range": [
+      19,
+      42
+    ]
+  },
+  "live_api_calls": 0,
+  "ev_clv_kelly_computed": false,
+  "p82_unlock_status": "BLOCKED_NO_REAL_DATASET",
+  "p82a_current_status": "INTAKE_GATE_DEFINED \u2014 awaiting real legal odds dataset"
+}

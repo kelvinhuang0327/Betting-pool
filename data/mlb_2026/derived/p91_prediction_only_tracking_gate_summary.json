@@ -1,0 +1,231 @@
+{
+  "p91_classification": "P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+  "allowed_classifications": [
+    "P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+    "P91_TRACKING_ACTIVE_SIGNAL_TRENDING",
+    "P91_TRACKING_ACTIVE_INSUFFICIENT_DATA",
+    "P91_TRACKING_BLOCKED_BY_PREFLIGHT",
+    "P91_TRACKING_BLOCKED_BY_SCOPE_DRIFT"
+  ],
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T10:23:12.232837+00:00",
+  "phase": "paper-only, diagnostic-only",
+  "git_head": "a0c6b21 feat(P90): Post-Recovery Closure Report — P90_POST_RECOVERY_CLOSURE_READY",
+  "upstream_state": {
+    "p90_classification": "P90_POST_RECOVERY_CLOSURE_READY",
+    "p86_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p84h_classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+    "p90_ok": true,
+    "p86_ok": true,
+    "p84h_ok": true
+  },
+  "tracking_metrics": {
+    "n_total_rows": 828,
+    "n_rows_tracked": 808,
+    "n_correct": 460,
+    "coverage_rate": 0.975845,
+    "hit_rate": 0.569307,
+    "auc_computable": true,
+    "auc": 0.594315,
+    "auc_error": null,
+    "n_auc_eligible": 808,
+    "signal_stability_assessment": "STABLE",
+    "production_ready": false
+  },
+  "temporal_trend": {
+    "n_months_tracked": 3,
+    "monthly_hit_rates": [
+      {
+        "month": "2026-03",
+        "n": 73,
+        "hit_rate": 0.6164
+      },
+      {
+        "month": "2026-04",
+        "n": 389,
+        "hit_rate": 0.5424
+      },
+      {
+        "month": "2026-05",
+        "n": 346,
+        "hit_rate": 0.5896
+      }
+    ]
+  },
+  "governance_status": {
+    "p91_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "no_real_bet": true,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_production_betting_recommendation": true,
+      "no_taiwan_lottery_betting_recommendation": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_modification": true,
+      "no_raw_data_modification": true,
+      "no_historical_artifact_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_real_bet": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_production_betting": true,
+      "no_taiwan_lottery": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_mod": true,
+      "no_raw_data_mod": true,
+      "no_historical_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "n_flags": 20,
+    "governance_all_pass": true
+  },
+  "governance_all_pass": true,
+  "final_classification": "P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+  "step1_preflight": {
+    "step": "step1_preflight",
+    "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "branch": "main",
+    "repo_ok": true,
+    "branch_ok": true,
+    "status": "PASSED"
+  },
+  "step2_upstream_state": {
+    "step": "step2_confirm_upstream_state",
+    "p90_classification": "P90_POST_RECOVERY_CLOSURE_READY",
+    "p86_classification": "P86_ARTIFACT_REGENERATION_DEPENDENCY_CONTRACT_READY",
+    "p84h_classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+    "p90_ok": true,
+    "p86_ok": true,
+    "p84h_ok": true,
+    "status": "PASSED"
+  },
+  "step3_load_rows": {
+    "step": "step3_load_rows",
+    "n_total_rows": 828,
+    "seasons": [
+      2026
+    ],
+    "date_range_start": "2026-03-25",
+    "date_range_end": "2026-05-31",
+    "status": "PASSED"
+  },
+  "step4_compute_metrics": {
+    "step": "step4_compute_metrics",
+    "n_total_rows": 828,
+    "n_rows_tracked": 808,
+    "n_correct": 460,
+    "coverage_rate": 0.975845,
+    "hit_rate": 0.569307,
+    "auc_computable": true,
+    "auc": 0.594315,
+    "auc_error": null,
+    "n_auc_eligible": 808,
+    "signal_stability_assessment": "STABLE",
+    "production_ready": false,
+    "status": "PASSED"
+  },
+  "step5_temporal_trend": {
+    "step": "step5_temporal_trend",
+    "n_months_tracked": 3,
+    "monthly_hit_rates": [
+      {
+        "month": "2026-03",
+        "n": 73,
+        "hit_rate": 0.6164
+      },
+      {
+        "month": "2026-04",
+        "n": 389,
+        "hit_rate": 0.5424
+      },
+      {
+        "month": "2026-05",
+        "n": 346,
+        "hit_rate": 0.5896
+      }
+    ],
+    "status": "PASSED"
+  },
+  "step6_governance_scan": {
+    "step": "step6_governance_scan",
+    "p91_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "no_real_bet": true,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "no_champion_replacement": true,
+      "no_runtime_recommendation_mutation": true,
+      "no_production_betting_recommendation": true,
+      "no_taiwan_lottery_betting_recommendation": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_modification": true,
+      "no_raw_data_modification": true,
+      "no_historical_artifact_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "governance_checks": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "not_production_ready": true,
+      "no_real_bet": true,
+      "no_odds": true,
+      "no_ev": true,
+      "no_clv": true,
+      "no_kelly": true,
+      "no_live_api": true,
+      "no_paid_api": true,
+      "no_champion_replacement": true,
+      "no_runtime_mutation": true,
+      "no_production_betting": true,
+      "no_taiwan_lottery": true,
+      "no_calibration_refit": true,
+      "no_model_retraining": true,
+      "no_canonical_rows_mod": true,
+      "no_raw_data_mod": true,
+      "no_historical_overwrite": true,
+      "scope_within_whitelist": true
+    },
+    "n_flags": 20,
+    "n_checks": 20,
+    "governance_all_pass": true,
+    "status": "PASSED"
+  },
+  "step7_final_classification": {
+    "step": "step7_final_classification",
+    "classification": "P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+    "rationale": "n_rows_tracked=808, hit_rate=0.5693, signal is consistent across time periods.",
+    "preflight_ok": true,
+    "upstream_ok": true,
+    "metrics_ok": true,
+    "governance_ok": true,
+    "signal_stability_assessment": "STABLE"
+  }
+}

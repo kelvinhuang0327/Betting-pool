@@ -26,11 +26,36 @@ def _reset_runtime_db() -> None:
 
 
 @pytest.fixture(autouse=True)
-def isolate_db():
+def isolate_db(monkeypatch):
     """Ensure each test starts and ends with a clean DB so test tasks don't pollute production."""
     _reset_runtime_db()
+    orig_sched = db.get_setting("scheduler_enabled", "1")
+    orig_llm_mode = db.get_setting("llm_execution_mode", "safe-run")
+    db.set_setting("scheduler_enabled", "1")
+    db.set_setting("llm_execution_mode", "safe-run")
+    # Neutralize usage budget guard so quality gate tests reach REJECTED/SUCCESS paths
+    monkeypatch.setattr(
+        "orchestrator.usage_budget_guard.evaluate_usage_budget",
+        lambda **_kw: {"budget_status": "OK", "scheduler_mode": "NORMAL"},
+        raising=False,
+    )
+    # Isolate candidate generators from production state (patch/hrq/clv candidates)
+    monkeypatch.setattr("orchestrator.patch_task_generator.generate_patch_tasks", lambda *_a, **_k: [], raising=False)
+    monkeypatch.setattr("orchestrator.human_review_queue.get_approved_reviews", lambda *_a, **_k: [], raising=False)
+    monkeypatch.setattr("orchestrator.human_review_queue.get_more_data_reviews", lambda *_a, **_k: [], raising=False)
+    monkeypatch.setattr("orchestrator.human_review_queue.get_pending_reviews", lambda *_a, **_k: [], raising=False)
+    monkeypatch.setattr("orchestrator.clv_accumulation_policy.get_clv_accumulation_summary", lambda *_a, **_k: {"evidence_state": "SUFFICIENT", "computed_count": 100, "threshold": 50}, raising=False)
+    monkeypatch.setattr("orchestrator.clv_batch_scheduler.get_batch_scheduler_summary", lambda *_a, **_k: {"scheduler_due": False, "needs_clv_generation": 0, "pending_total": 0}, raising=False)
+    monkeypatch.setattr("orchestrator.clv_threshold_tracker.get_pending_threshold_events", lambda *_a, **_k: [], raising=False)
+    monkeypatch.setattr("orchestrator.training_memory.get_latest_gate_decision", lambda *_a, **_k: None, raising=False)
+    # Block forced_exploration from pre-empting quality gate test candidates
+    monkeypatch.setattr("orchestrator.planner_tick._attempt_forced_exploration", lambda *_a, **_k: {"status": "SKIP_ALL_LANES_CAPPED", "capped_lanes": []}, raising=False)
+    monkeypatch.setattr("orchestrator.planner_tick._attempt_maintenance_task", lambda *_a, **_k: {"status": "SKIP_DAILY_CAP", "task_id": None}, raising=False)
+    monkeypatch.setattr("orchestrator.planner_tick.process_completed_exploration_tasks", lambda *_a, **_k: {"validation_created": 0, "validation_task_ids": []}, raising=False)
     yield
     _reset_runtime_db()
+    db.set_setting("scheduler_enabled", orig_sched)
+    db.set_setting("llm_execution_mode", orig_llm_mode)
 
 
 def _build_valid_task_draft() -> dict:

@@ -1703,7 +1703,7 @@ def _render_blueprint_prompt(blueprint: dict, generated_at: str, sys_state: Opti
 {strategy_snapshot_str}
 
 ## 單一目標
-{blueprint['objective']}
+{blueprint.get('objective', blueprint.get('title', ''))}
 
 ## 允許資料集（最多 2 個）
 {dataset_lines}
@@ -1805,6 +1805,8 @@ def _build_task_from_candidate(candidate: dict) -> dict:
     # If candidate already has a rendered prompt_text, use it; otherwise render from blueprint fields
     if candidate.get("prompt_text"):
         prompt_text = candidate["prompt_text"]
+    elif candidate.get("prompt"):
+        prompt_text = candidate["prompt"]
     else:
         prompt_text = _render_blueprint_prompt(candidate, now.isoformat(), sys_state)
     dedupe_key = build_task_dedupe_key({**candidate, "prompt_text": prompt_text})
@@ -3005,26 +3007,30 @@ def run_planner_tick() -> dict:
                     "duration_seconds": duration,
                 }
             # All lanes capped, maintenance capped, no new validation tasks → idle
-            end_time = datetime.now(timezone.utc)
-            duration = int((end_time - start_time).total_seconds())
-            idle_msg = "PLANNER_IDLE_NO_ELIGIBLE_TASK: 目前沒有合格任務，排程正常待命。"
-            logger.info("[PlannerTick] %s", idle_msg)
-            db.record_run(
-                runner="planner_tick",
-                outcome="SKIPPED",
-                request_id=request_id,
-                message=idle_msg,
-                tick_at=start_time.isoformat(),
-                duration_seconds=duration,
-            )
-            return {
-                "status": "SKIPPED",
-                "outcome": "PLANNER_IDLE_NO_ELIGIBLE_TASK",
-                "message": idle_msg,
-                "skip_daily_cap_task_id": _maint["task_id"],
-                "routing_summary": _routing,
-                "duration_seconds": duration,
-            }
+            # Only return IDLE if no candidates were quality-gate rejected (fall through to REJECTED otherwise)
+            # and no candidates were blocked by recent/duplicate gate (fall through to SKIP otherwise)
+            duplicate_blocked_so_far = blocked_by_recent_count + duplicate_rejection_count
+            if non_duplicate_rejection_count == 0 and (not all_candidates or duplicate_blocked_so_far < len(all_candidates)):
+                end_time = datetime.now(timezone.utc)
+                duration = int((end_time - start_time).total_seconds())
+                idle_msg = "PLANNER_IDLE_NO_ELIGIBLE_TASK: 目前沒有合格任務，排程正常待命。"
+                logger.info("[PlannerTick] %s", idle_msg)
+                db.record_run(
+                    runner="planner_tick",
+                    outcome="SKIPPED",
+                    request_id=request_id,
+                    message=idle_msg,
+                    tick_at=start_time.isoformat(),
+                    duration_seconds=duration,
+                )
+                return {
+                    "status": "SKIPPED",
+                    "outcome": "PLANNER_IDLE_NO_ELIGIBLE_TASK",
+                    "message": idle_msg,
+                    "skip_daily_cap_task_id": _maint["task_id"],
+                    "routing_summary": _routing,
+                    "duration_seconds": duration,
+                }
 
         end_time = datetime.now(timezone.utc)
         duration = int((end_time - start_time).total_seconds())

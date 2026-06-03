@@ -1,0 +1,321 @@
+{
+  "phase": "P94",
+  "final_classification": "P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY",
+  "classification_rationale": "Bootstrap ci_low=0.5819 > 0.55; all temporal thirds > 0.55; side_balanced=True; monthly_limited=False",
+  "allowed_classifications": [
+    "P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY",
+    "P94_HIGH_FIP_PROMISING_BUT_SAMPLE_LIMITED",
+    "P94_HIGH_FIP_UNSTABLE_REQUIRES_REVIEW",
+    "P94_HIGH_FIP_NOT_SEPARABLE_FROM_NOISE",
+    "P94_FAILED_VALIDATION"
+  ],
+  "date": "2026-05-28",
+  "generated_at": "2026-05-28T02:43:34.388687+00:00",
+  "git_head": "2221f0f",
+  "step1_preflight": {
+    "step": "step1_preflight",
+    "gate1_canonical_entry": {
+      "ok": true,
+      "cwd": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+      "toplevel": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+      "branch": "main",
+      "git_dir": ".git",
+      "head": "2221f0f"
+    },
+    "dirty_tree_inventory": [
+      "M 00-BettingPlan/20260510/fixture_runtime_metadata_injection_registry.jsonl",
+      " M 00-BettingPlan/20260526/p77_prediction_only_shadow_tracker_contract_20260526.md",
+      " M 00-BettingPlan/20260526/p82b_raw_paid_odds_data_policy_contract_20260526.md",
+      " M 00-BettingPlan/20260526/p83c_2026_prediction_schema_producer_contract_20260526.md",
+      " M 00-Plan/roadmap/CEO-Decision.md",
+      " M 00-Plan/roadmap/CTO-Analysis.md",
+      " M 00-Plan/roadmap/active_task.md",
+      " M 00-Plan/roadmap/roadmap.md",
+      " M data/.live_cache/tsl_dedup_state.json",
+      " M data/derived/tsl_market_availability_state.json",
+      " M data/learning_state.json",
+      " M data/mlb_2025/derived/p63_paper_recommendation_contract_review_readiness_summary.json",
+      " M data/mlb_2025/derived/p77_prediction_only_shadow_tracker_contract_summary.json",
+      " M data/mlb_2025/derived/p81_legal_odds_dataset_validator_contract_summary.json",
+      " M data/mlb_2025/derived/p82b_raw_paid_odds_data_policy_contract_summary.json",
+      " M data/mlb_2026/derived/p84c_2026_partial_snapshot_coverage_audit_summary.json",
+      " M data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+      " M data/mlb_2026/derived/p84e_2026_outcome_attachment_summary.json",
+      " M data/mlb_2026/derived/p84f_predicted_side_calibration_diagnostic_summary.json",
+      " M data/mlb_2026/derived/p84g_predicted_side_mapping_fix_summary.json",
+      " M data/mlb_2026/derived/p84h_corrected_signal_validation_coverage_guard_summary.json",
+      " M data/mlb_2026/derived/p85_prediction_convention_invariant_gate_summary.json",
+      " M data/mlb_2026/derived/p86_artifact_regeneration_dependency_contract_summary.json",
+      " M data/mlb_context/external_closing_state.json",
+      " M data/mlb_context/odds_capture_schedule.json",
+      " M data/mlb_context/odds_timeline.jsonl",
+      " M data/tsl_fetch_status.json",
+      " M data/tsl_odds_history.jsonl",
+      " M data/tsl_odds_snapshot.json",
+      " M data/wbc_backend/artifacts/continuous_learning_state.json",
+      " M data/wbc_backend/reports/mlb_alpha_discovery_report_test.json",
+      " M data/wbc_backend/reports/mlb_alpha_discovery_report_test_blocked.json",
+      " M data/wbc_backend/reports/mlb_decision_quality_report.json",
+      " M data/wbc_backend/reports/mlb_decision_quality_report_test.json",
+      " M data/wbc_backend/reports/mlb_paper_tracking_report_test.json",
+      " M data/wbc_backend/reports/performance_monitor.jsonl",
+      " M docs/orchestration/phase28_real_clv_activation_readiness_report_2026-05-23.md",
+      " M logs/daemon_heartbeat.jsonl",
+      " M outputs/predictions/PAPER/2026-05-11/model_deep_diagnostics_oof.json",
+      " M outputs/predictions/PAPER/2026-05-11/model_deep_diagnostics_raw.json",
+      " M outputs/predictions/PAPER/2026-05-11/model_deep_diagnostics_summary.md",
+      " M outputs/predictions/PAPER/2026-05-11/model_join_integrity_audit.json",
+      " M outputs/predictions/PAPER/2026-05-11/model_worst_segments.json",
+      " M outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_deep_diagnostics_oof.json",
+      " M outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_deep_diagnostics_raw.json",
+      " M outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_deep_diagnostics_summary.md",
+      " M outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_join_integrity_audit.json",
+      " M outputs/predictions/PAPER/__pytest_p8_deep_diag__/model_worst_segments.json",
+      " M outputs/predictions/PAPER/_test_p10_feature_candidate/feature_candidate_summary.md",
+      " M outputs/predictions/PAPER/_test_p10_feature_candidate/independent_feature_coverage.json",
+      " M outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_feature_candidate_probabilities.jsonl",
+      " M outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_independent_features.jsonl",
+      " M outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_odds_with_feature_candidate_probabilities.csv",
+      " M outputs/predictions/PAPER/_test_p10_feature_candidate/mlb_odds_with_independent_features.csv",
+      " M outputs/predictions/PAPER/_test_p10_feature_only/feature_candidate_summary.md",
+      " M outputs/predictions/PAPER/_test_p10_feature_only/independent_feature_coverage.json",
+      " M outputs/predictions/PAPER/_test_p10_feature_only/mlb_feature_candidate_probabilities.jsonl",
+      " M outputs/predictions/PAPER/_test_p10_feature_only/mlb_independent_features.jsonl",
+      " M outputs/predictions/PAPER/_test_p10_feature_only/mlb_odds_with_feature_candidate_probabilities.csv",
+      " M outputs/predictions/PAPER/_test_p10_feature_only/mlb_odds_with_independent_features.csv",
+      " M outputs/predictions/PAPER/_test_p10_stdout/feature_candidate_summary.md",
+      " M outputs/predictions/PAPER/_test_p10_stdout/independent_feature_coverage.json",
+      " M outputs/predictions/PAPER/_test_p10_stdout/mlb_feature_candidate_probabilities.jsonl",
+      " M outputs/predictions/PAPER/_test_p10_stdout/mlb_independent_features.jsonl",
+      " M outputs/predictions/PAPER/_test_p10_stdout/mlb_odds_with_feature_candidate_probabilities.csv",
+      " M outputs/predictions/PAPER/_test_p10_stdout/mlb_odds_with_independent_features.csv",
+      " M outputs/predictions/PAPER/_test_p9_exit/repaired_feature_metadata.json",
+      " M outputs/predictions/PAPER/_test_p9_exit/repaired_probability_summary.md",
+      " M outputs/predictions/PAPER/_test_p9_repaired_export/repaired_feature_metadata.json",
+      " M outputs/predictions/PAPER/_test_p9_repaired_export/repaired_probability_summary.md",
+      " M outputs/predictions/PAPER/_test_p9_stdout/repaired_feature_metadata.json",
+      " M outputs/predictions/PAPER/_test_p9_stdout/repaired_probability_summary.md",
+      " M report/p38_2024_holdout_validation_20260524.md",
+      " M report/p69_ceo_decision_memo_path_a_authorization_20260526.md",
+      " M report/p77_prediction_only_shadow_tracker_contract_20260526.md",
+      " M report/p82b_raw_paid_odds_data_policy_contract_20260526.md",
+      " M report/p83c_2026_prediction_schema_producer_contract_20260526.md",
+      " M report/p84c_2026_partial_snapshot_coverage_audit_20260526.md",
+      " M report/p84e_2026_outcome_attachment_20260526.md",
+      " M report/p84f_predicted_side_calibration_diagnostic_20260526.md",
+      " M report/p84h_corrected_signal_validation_coverage_guard_20260527.md",
+      " M report/p86_artifact_regeneration_dependency_contract_20260527.md",
+      " M runtime/agent_orchestrator/closing_monitor_state.json",
+      " M runtime/agent_orchestrator/closing_refresh_memory.json",
+      " M runtime/agent_orchestrator/llm_audit.jsonl",
+      " M runtime/agent_orchestrator/llm_usage.jsonl",
+      " M runtime/agent_orchestrator/training_memory.json",
+      "?? _p50_extract.py",
+      "?? _p50_extract3.py",
+      "?? _p51_probe3.py",
+      "?? data/mlb_2026/derived/p94_high_fip_subset_diagnostic_summary.json",
+      "?? docs/orchestration/phase28_real_clv_activation_readiness_report_2026-05-24.md",
+      "?? docs/orchestration/phase28_real_clv_activation_readiness_report_2026-05-25.md",
+      "?? docs/orchestration/phase28_real_clv_activation_readiness_report_2026-05-27.md",
+      "?? report/p30b_feature_candidate_summary_20260524.md",
+      "?? report/p94_high_fip_subset_diagnostic_20260528.md",
+      "?? scripts/_p30b_analysis.py",
+      "?? scripts/_p94_high_fip_subset_diagnostic.py",
+      "?? tests/test_p94_high_fip_subset_diagnostic.py"
+    ],
+    "gate3_upstream_consistency": {
+      "ok": true,
+      "checks": {
+        "p93_prediction_only_coverage_feature_bias_audit_summary.json": {
+          "ok": true,
+          "found": "P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP",
+          "expected": "P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP"
+        },
+        "p91_prediction_only_tracking_gate_summary.json": {
+          "ok": true,
+          "found": "P91_TRACKING_ACTIVE_SIGNAL_STABLE",
+          "expected": "P91_TRACKING_ACTIVE_SIGNAL_STABLE"
+        },
+        "p92_prediction_only_side_bias_baseline_gate_summary.json": {
+          "ok": true,
+          "found": "P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE",
+          "expected": "P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE"
+        },
+        "p84e_rows_exist": true,
+        "p84e_attach_summary_exist": true
+      }
+    },
+    "all_gates_ok": true
+  },
+  "step2_row_inventory": {
+    "step": "step2_row_inventory",
+    "n_total_rows": 828,
+    "n_outcome_rows": 808,
+    "n_with_sp_fip_delta": 808,
+    "n_missing_sp_fip_delta": 0,
+    "p93_expected_outcome": 808,
+    "p93_expected_fip": 808,
+    "tolerance_ok": true,
+    "status": "PASSED"
+  },
+  "step3_high_fip_metrics": {
+    "step": "step3_high_fip_metrics",
+    "abs_fip_threshold": 1.5,
+    "n": 287,
+    "hit_rate": 0.641115,
+    "auc": 0.639584,
+    "brier": 0.233554,
+    "ece": 0.058885,
+    "predicted_home_ratio": 0.536585,
+    "actual_home_ratio": 0.526132,
+    "p93_expected_hit_rate": 0.641115,
+    "p93_expected_n": 287,
+    "tolerance_ok": true,
+    "status": "PASSED"
+  },
+  "step4_bootstrap_ci": {
+    "step": "step4_bootstrap_ci",
+    "n": 287,
+    "bootstrap_resamples": 1000,
+    "seed": 42,
+    "observed_hit_rate": 0.641115,
+    "ci_low": 0.581882,
+    "ci_high": 0.69338,
+    "home_baseline": 0.524752,
+    "aggregate_model_hit_rate": 0.569307,
+    "stability": "STRONG",
+    "ci_low_above_055": true,
+    "ci_low_above_050": true,
+    "status": "PASSED"
+  },
+  "step5_temporal_split": {
+    "step": "step5_temporal_split",
+    "thirds": [
+      {
+        "third": 1,
+        "n": 95,
+        "hit_rate": 0.663158,
+        "date_start": "2026-03-26",
+        "date_end": "2026-04-14"
+      },
+      {
+        "third": 2,
+        "n": 96,
+        "hit_rate": 0.614583,
+        "date_start": "2026-04-14",
+        "date_end": "2026-05-03"
+      },
+      {
+        "third": 3,
+        "n": 96,
+        "hit_rate": 0.645833,
+        "date_start": "2026-05-03",
+        "date_end": "2026-05-26"
+      }
+    ],
+    "all_thirds_above_055": true,
+    "temporal_stable": true,
+    "status": "PASSED"
+  },
+  "step6_side_split": {
+    "step": "step6_side_split",
+    "home_predicted": {
+      "n": 154,
+      "hit_rate": 0.655844
+    },
+    "away_predicted": {
+      "n": 133,
+      "hit_rate": 0.62406
+    },
+    "abs_side_delta": 0.031784,
+    "threshold": 0.1,
+    "side_balanced": true,
+    "status": "PASSED"
+  },
+  "step7_segment_qualification": {
+    "step": "step7_segment_qualification",
+    "mid_bucket": {
+      "label": "mid_fip",
+      "n": 343,
+      "hit_rate": 0.530612,
+      "brier": 0.263307,
+      "ece": 0.109629,
+      "home_baseline": 0.524752,
+      "threshold_baseline_plus_003": 0.554752,
+      "above_threshold": false,
+      "binomial_p_vs_home_baseline": 0.43551
+    },
+    "low_bucket": {
+      "label": "low_fip",
+      "n": 178,
+      "hit_rate": 0.52809,
+      "brier": 0.248187,
+      "ece": 0.010113,
+      "home_baseline": 0.524752,
+      "threshold_baseline_plus_003": 0.554752,
+      "above_threshold": false,
+      "binomial_p_vs_home_baseline": 0.494861
+    },
+    "segment_qualification": "LOW_MID_FIP_NOT_TRACKABLE",
+    "status": "PASSED"
+  },
+  "step8_sample_sufficiency": {
+    "step": "step8_sample_sufficiency",
+    "monthly_stats": {
+      "2026-03": {
+        "n": 34,
+        "hit_rate": 0.735294
+      },
+      "2026-04": {
+        "n": 143,
+        "hit_rate": 0.601399
+      },
+      "2026-05": {
+        "n": 110,
+        "hit_rate": 0.663636
+      }
+    },
+    "any_month_below_30": false,
+    "monthly_sample_limited": false,
+    "canonical_rows": 828,
+    "schedule_rows": 2430,
+    "partial_coverage_ratio": 0.340741,
+    "season_scope": "March–May 2026 only",
+    "status": "PASSED"
+  },
+  "step9_classification": {
+    "final_classification": "P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY",
+    "rationale": "Bootstrap ci_low=0.5819 > 0.55; all temporal thirds > 0.55; side_balanced=True; monthly_limited=False",
+    "allowed_classifications": [
+      "P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY",
+      "P94_HIGH_FIP_PROMISING_BUT_SAMPLE_LIMITED",
+      "P94_HIGH_FIP_UNSTABLE_REQUIRES_REVIEW",
+      "P94_HIGH_FIP_NOT_SEPARABLE_FROM_NOISE",
+      "P94_FAILED_VALIDATION"
+    ]
+  },
+  "step10_governance": {
+    "step": "step10_governance",
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "production_ready": false,
+    "paper_only": true,
+    "diagnostic_only": true,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false,
+    "champion_replaced": false,
+    "p84_p86_derived_modified": false,
+    "dirty_tree_policy_violated": false,
+    "real_bet_allowed": false,
+    "status": "PASSED"
+  },
+  "governance_all_pass": true,
+  "production_ready": false,
+  "paper_only": true,
+  "diagnostic_only": true
+}

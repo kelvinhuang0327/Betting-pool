@@ -1,0 +1,159 @@
+{
+  "contract_metadata": {
+    "contract_version": "P124.20260601",
+    "generated_at": "2026-06-01",
+    "source_p121_reference": "data/mlb_2026/derived/p121_provider_authorization_evidence_placeholder_summary.json",
+    "source_p123_reference": "data/mlb_2026/derived/p123_provider_evidence_validation_gate_summary.json",
+    "final_classification": "P124_LEGAL_EVIDENCE_COMPLETENESS_CONTRACT_READY_WITH_BLOCKERS"
+  },
+  "legal_evidence_contract_status": "READY_WITH_BLOCKERS",
+  "required_legal_document_fields": [
+    "legal_document_reference_id",
+    "legal_document_external_reference",
+    "legal_document_type",
+    "legal_document_review_status"
+  ],
+  "required_license_scope_fields": [
+    "license_scope_id",
+    "license_status",
+    "authorized_data_types",
+    "authorized_usage_scope"
+  ],
+  "required_market_scope_fields": [
+    "authorized_sports",
+    "authorized_leagues_or_competitions",
+    "authorized_markets",
+    "market_scope_restrictions"
+  ],
+  "required_source_trace_fields": [
+    "provider_id",
+    "source_trace_id",
+    "source_reference_system",
+    "evidence_traceability_reference"
+  ],
+  "required_audit_fields": [
+    "audit_log_policy_reference",
+    "audit_owner",
+    "audit_review_frequency",
+    "audit_evidence_reference"
+  ],
+  "required_effective_date_fields": [
+    "effective_date"
+  ],
+  "required_expiration_or_renewal_fields": [
+    "expiration_date",
+    "renewal_review_required",
+    "renewal_review_date"
+  ],
+  "required_provider_identity_fields": [
+    "provider_legal_name",
+    "provider_registration_reference",
+    "provider_approval_status"
+  ],
+  "required_data_usage_scope_fields": [
+    "authorized_environment_scope",
+    "authorized_workload_scope",
+    "authorized_region_scope"
+  ],
+  "required_restriction_fields": [
+    "restriction_notes",
+    "prohibited_usage_notes",
+    "row_level_proprietary_odds_policy"
+  ],
+  "required_secret_exclusion_rules": [
+    "no_secrets_in_repo",
+    "no_api_keys_in_repo",
+    "no_auth_urls_in_repo",
+    "no_private_contract_body_in_repo",
+    "no_credentials_or_tokens_in_repo"
+  ],
+  "required_repository_safety_rules": [
+    "paper_only_mode_required",
+    "diagnostic_only_mode_required",
+    "production_unlock_forbidden_without_approval",
+    "recommendation_unlock_forbidden_without_approval",
+    "no_row_level_proprietary_odds_commit_without_separate_data_rights_decision"
+  ],
+  "completeness_validation_rules": {
+    "must_have_legal_document_reference": true,
+    "must_have_provider_identity": true,
+    "must_have_license_scope": true,
+    "must_have_market_scope": true,
+    "must_have_data_usage_scope": true,
+    "must_have_effective_date": true,
+    "must_have_expiration_or_renewal": true,
+    "must_have_approval_owner": true,
+    "must_have_audit_and_source_trace": true,
+    "must_reject_placeholder_as_authorization": true,
+    "must_reject_secret_or_auth_url_in_repo": true,
+    "must_block_unlock_without_explicit_approval": true
+  },
+  "placeholder_rejection_rules": {
+    "placeholder_detected_means_blocked": true,
+    "placeholder_allowed_as_authorization_must_be_false": true,
+    "placeholder_only_evidence_cannot_set_provider_approved": true,
+    "placeholder_only_evidence_cannot_set_authorization_evidence_present": true
+  },
+  "provider_approved": false,
+  "authorization_evidence_present": false,
+  "placeholder_detected": true,
+  "placeholder_allowed_as_authorization": false,
+  "real_legal_odds_ingested": false,
+  "governance_invariants": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "provider_approved": false,
+    "authorization_evidence_present": false,
+    "placeholder_allowed_as_authorization": false,
+    "real_legal_odds_ingested": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "profit_computed": false,
+    "recommendation_generated": false
+  },
+  "regression_status": {
+    "targeted_p118_p123_tests_status": "PASS",
+    "targeted_p118_p124_tests_command": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python -m pytest tests/test_p124_legal_evidence_completeness_contract.py tests/test_p123_provider_evidence_validation_gate.py tests/test_p122_paper_only_recommendation_readiness_review.py tests/test_p121_provider_authorization_evidence_placeholder.py tests/test_p120_legal_provider_authorization_checklist.py tests/test_p119_recommendation_row_gate_violation_fixture.py tests/test_p118_recommendation_row_validation_gate.py",
+    "full_regression_status": "NOT_RUN",
+    "full_regression_evidence": "No full regression artifact found in P121 packet."
+  },
+  "allowed_next_actions": [
+    "Maintain paper_only=true and diagnostic_only=true",
+    "Collect legal evidence metadata references (not private content) through compliance workflow",
+    "Validate completeness fields and reviewer ownership before any approval attempt",
+    "Keep full regression status explicitly PASS/FAIL/NOT_RUN in artifacts"
+  ],
+  "prohibited_actions": [
+    "Do not treat placeholder evidence as complete legal authorization evidence",
+    "Do not store private contract body, API keys, tokens, credentials, or auth URLs in repo",
+    "Do not commit row-level proprietary odds data without separate data-rights decision",
+    "Do not unlock recommendation, EV, CLV, Kelly, stake, profit, or production without explicit legal/provider approval"
+  ],
+  "blockers": [
+    "LEGAL_DOCUMENT_REFERENCE_MISSING_BLOCKER",
+    "PROVIDER_IDENTITY_MISSING_BLOCKER",
+    "LICENSE_SCOPE_MISSING_BLOCKER",
+    "MARKET_SCOPE_MISSING_BLOCKER",
+    "DATA_USAGE_SCOPE_MISSING_BLOCKER",
+    "EFFECTIVE_DATE_MISSING_BLOCKER",
+    "EXPIRATION_OR_RENEWAL_FIELD_MISSING_BLOCKER",
+    "APPROVAL_OWNER_MISSING_BLOCKER",
+    "AUDIT_OR_SOURCE_TRACE_MISSING_BLOCKER",
+    "PLACEHOLDER_DETECTED_BLOCKER",
+    "SECRET_OR_AUTH_URL_DETECTED_BLOCKER",
+    "PRODUCTION_OR_RECOMMENDATION_UNLOCK_WITHOUT_APPROVAL_BLOCKER",
+    "FULL_REGRESSION_NOT_RUN_BLOCKER"
+  ],
+  "final_classification_options": [
+    "P124_LEGAL_EVIDENCE_COMPLETENESS_CONTRACT_READY_WITH_BLOCKERS",
+    "P124_LEGAL_EVIDENCE_COMPLETENESS_CONTRACT_BLOCKED_BY_MISSING_P121_OR_P123",
+    "P124_LEGAL_EVIDENCE_COMPLETENESS_CONTRACT_FAILED_VALIDATION"
+  ]
+}

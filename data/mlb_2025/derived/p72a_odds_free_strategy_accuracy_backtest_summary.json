@@ -1,0 +1,705 @@
+{
+  "phase": "P72A",
+  "task": "Odds-Free Strategy Accuracy Backtest",
+  "date": "2026-05-26",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "the_odds_api_key_required": false,
+    "market_edge_calculated": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false
+  },
+  "source_artifact": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+  "total_games": 2025,
+  "date_range": {
+    "start": "2025-04-27",
+    "end": "2025-09-28"
+  },
+  "months_covered": [
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09"
+  ],
+  "home_win_rate_empirical": 0.5299,
+  "platt_constants_used": {
+    "platt_A": 0.435432,
+    "platt_B": 0.245464,
+    "source": "P45 locked constants \u2014 not refit in P72A"
+  },
+  "strategy_results": [
+    {
+      "strategy_id": "S00_BASELINE_ALL",
+      "description": "Baseline: all games, model_home_prob predicts home win",
+      "tier_label": "ALL",
+      "n": 2025,
+      "coverage": 1.0,
+      "hit_rate": 0.5299,
+      "hit_rate_ci_95": [
+        0.5086,
+        0.5521
+      ],
+      "auc": 0.5716,
+      "auc_ci_95": [
+        0.5467,
+        0.5966
+      ],
+      "brier_score": 0.2447,
+      "log_loss": 0.6822,
+      "ece": 0.031,
+      "monthly_stability": {
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 53,
+            "hit_rate": 0.566,
+            "brier": 0.2217
+          },
+          {
+            "month": "2025-05",
+            "n": 411,
+            "hit_rate": 0.5158,
+            "brier": 0.242
+          },
+          {
+            "month": "2025-06",
+            "n": 397,
+            "hit_rate": 0.5139,
+            "brier": 0.2513
+          },
+          {
+            "month": "2025-07",
+            "n": 369,
+            "hit_rate": 0.5583,
+            "brier": 0.2481
+          },
+          {
+            "month": "2025-08",
+            "n": 421,
+            "hit_rate": 0.5249,
+            "brier": 0.2448
+          },
+          {
+            "month": "2025-09",
+            "n": 374,
+            "hit_rate": 0.5348,
+            "brier": 0.2405
+          }
+        ],
+        "stability_classification": "STABLE"
+      },
+      "thirds_stability": [
+        {
+          "third": 1,
+          "n": 675,
+          "hit_rate": 0.5274
+        },
+        {
+          "third": 2,
+          "n": 675,
+          "hit_rate": 0.5259
+        },
+        {
+          "third": 3,
+          "n": 675,
+          "hit_rate": 0.5363
+        }
+      ],
+      "failure_segments": {
+        "worst_month": "2025-06",
+        "best_month": "2025-04",
+        "home_hit_rate": 0.5299,
+        "away_hit_rate": null,
+        "n_home_picks": 2025,
+        "n_away_picks": 0,
+        "tier_c_hit_rate": 0.5664,
+        "tier_b_hit_rate": 0.6327,
+        "tier_a_hit_rate": 0.5417
+      },
+      "signal_label": "PREDICTIVE_SIGNAL_CONFIRMED",
+      "note_no_odds_used": true,
+      "note_not_ev_or_clv": "This is accuracy-only. Positive hit rate does NOT imply positive EV against market."
+    },
+    {
+      "strategy_id": "S01_TIER_C_DIRECTIONAL",
+      "description": "Tier C directional: |sp_fip_delta|>=0.50, pick team model favors",
+      "tier_label": "Tier_C",
+      "n": 535,
+      "coverage": 0.2642,
+      "hit_rate": 0.6056,
+      "hit_rate_ci_95": [
+        0.5645,
+        0.6449
+      ],
+      "auc": 0.5834,
+      "auc_ci_95": [
+        0.538,
+        0.6335
+      ],
+      "brier_score": 0.2385,
+      "log_loss": 0.6693,
+      "ece": 0.0685,
+      "monthly_stability": {
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "hit_rate": 0.625,
+            "brier": 0.2469
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "hit_rate": 0.575,
+            "brier": 0.2341
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "hit_rate": 0.6634,
+            "brier": 0.2404
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "hit_rate": 0.6196,
+            "brier": 0.2411
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "hit_rate": 0.5648,
+            "brier": 0.2449
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "hit_rate": 0.6122,
+            "brier": 0.2309
+          }
+        ],
+        "stability_classification": "STABLE"
+      },
+      "thirds_stability": [
+        {
+          "third": 1,
+          "n": 178,
+          "hit_rate": 0.6011
+        },
+        {
+          "third": 2,
+          "n": 178,
+          "hit_rate": 0.6292
+        },
+        {
+          "third": 3,
+          "n": 179,
+          "hit_rate": 0.5866
+        }
+      ],
+      "failure_segments": {
+        "worst_month": "2025-08",
+        "best_month": "2025-06",
+        "home_hit_rate": 0.6716,
+        "away_hit_rate": 0.5393,
+        "n_home_picks": 268,
+        "n_away_picks": 267,
+        "tier_c_hit_rate": 0.6056,
+        "tier_b_hit_rate": 0.5918,
+        "tier_a_hit_rate": 0.7083
+      },
+      "signal_label": "PREDICTIVE_SIGNAL_CONFIRMED",
+      "note_no_odds_used": true,
+      "note_not_ev_or_clv": "This is accuracy-only. Positive hit rate does NOT imply positive EV against market."
+    },
+    {
+      "strategy_id": "S02_TIER_B_DIRECTIONAL",
+      "description": "Tier B directional: |sp_fip_delta|>=1.25, pick team model favors",
+      "tier_label": "Tier_B",
+      "n": 98,
+      "coverage": 0.0484,
+      "hit_rate": 0.5918,
+      "hit_rate_ci_95": [
+        0.4898,
+        0.6837
+      ],
+      "auc": 0.6461,
+      "auc_ci_95": [
+        0.5346,
+        0.7555
+      ],
+      "brier_score": 0.2306,
+      "log_loss": 0.6532,
+      "ece": 0.0662,
+      "monthly_stability": {
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 2,
+            "hit_rate": 0.5,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 23,
+            "hit_rate": 0.5652,
+            "brier": 0.2267
+          },
+          {
+            "month": "2025-06",
+            "n": 21,
+            "hit_rate": 0.6667,
+            "brier": 0.2338
+          },
+          {
+            "month": "2025-07",
+            "n": 14,
+            "hit_rate": 0.7143,
+            "brier": 0.2403
+          },
+          {
+            "month": "2025-08",
+            "n": 20,
+            "hit_rate": 0.55,
+            "brier": 0.2078
+          },
+          {
+            "month": "2025-09",
+            "n": 18,
+            "hit_rate": 0.5,
+            "brier": 0.2422
+          }
+        ],
+        "stability_classification": "UNSTABLE"
+      },
+      "thirds_stability": [
+        {
+          "third": 1,
+          "n": 32,
+          "hit_rate": 0.5625
+        },
+        {
+          "third": 2,
+          "n": 33,
+          "hit_rate": 0.6667
+        },
+        {
+          "third": 3,
+          "n": 33,
+          "hit_rate": 0.5455
+        }
+      ],
+      "failure_segments": {
+        "worst_month": "2025-04",
+        "best_month": "2025-07",
+        "home_hit_rate": 0.72,
+        "away_hit_rate": 0.4583,
+        "n_home_picks": 50,
+        "n_away_picks": 48,
+        "tier_c_hit_rate": 0.5918,
+        "tier_b_hit_rate": 0.5918,
+        "tier_a_hit_rate": 0.7083
+      },
+      "signal_label": "PREDICTIVE_SIGNAL_CONFIRMED",
+      "note_no_odds_used": true,
+      "note_not_ev_or_clv": "This is accuracy-only. Positive hit rate does NOT imply positive EV against market."
+    },
+    {
+      "strategy_id": "S03_TIER_A_DIRECTIONAL",
+      "description": "Tier A directional: |sp_fip_delta|>=1.50, pick team model favors",
+      "tier_label": "Tier_A",
+      "n": 24,
+      "coverage": 0.0119,
+      "hit_rate": 0.7083,
+      "hit_rate_ci_95": [
+        0.5,
+        0.875
+      ],
+      "auc": 0.5546,
+      "auc_ci_95": [
+        0.3182,
+        0.7899
+      ],
+      "brier_score": 0.2322,
+      "log_loss": 0.6563,
+      "ece": 0.1852,
+      "monthly_stability": {
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 1,
+            "hit_rate": 0.0,
+            "brier": null
+          },
+          {
+            "month": "2025-05",
+            "n": 9,
+            "hit_rate": 0.7778,
+            "brier": 0.2331
+          },
+          {
+            "month": "2025-06",
+            "n": 8,
+            "hit_rate": 0.875,
+            "brier": 0.2192
+          },
+          {
+            "month": "2025-07",
+            "n": 2,
+            "hit_rate": 1.0,
+            "brier": null
+          },
+          {
+            "month": "2025-08",
+            "n": 1,
+            "hit_rate": 0.0,
+            "brier": null
+          },
+          {
+            "month": "2025-09",
+            "n": 3,
+            "hit_rate": 0.3333,
+            "brier": null
+          }
+        ],
+        "stability_classification": "UNSTABLE"
+      },
+      "thirds_stability": [
+        {
+          "third": 1,
+          "n": 8,
+          "hit_rate": 0.75
+        },
+        {
+          "third": 2,
+          "n": 8,
+          "hit_rate": 0.75
+        },
+        {
+          "third": 3,
+          "n": 8,
+          "hit_rate": 0.625
+        }
+      ],
+      "failure_segments": {
+        "worst_month": "2025-04",
+        "best_month": "2025-07",
+        "home_hit_rate": 0.75,
+        "away_hit_rate": 0.6667,
+        "n_home_picks": 12,
+        "n_away_picks": 12,
+        "tier_c_hit_rate": 0.7083,
+        "tier_b_hit_rate": 0.7083,
+        "tier_a_hit_rate": 0.7083
+      },
+      "signal_label": "PREDICTIVE_SIGNAL_WEAK",
+      "note_no_odds_used": true,
+      "note_not_ev_or_clv": "This is accuracy-only. Positive hit rate does NOT imply positive EV against market."
+    },
+    {
+      "strategy_id": "S04_TIER_C_PLATT_CALIBRATED",
+      "description": "Tier C with Platt-calibrated prob (P45 locked constants)",
+      "tier_label": "Tier_C_Platt",
+      "n": 535,
+      "coverage": 0.2642,
+      "hit_rate": 0.5664,
+      "hit_rate_ci_95": [
+        0.5234,
+        0.6093
+      ],
+      "auc": 0.5932,
+      "auc_ci_95": [
+        0.5459,
+        0.6379
+      ],
+      "brier_score": 0.2405,
+      "log_loss": 0.6738,
+      "ece": 0.0292,
+      "monthly_stability": {
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 16,
+            "hit_rate": 0.5,
+            "brier": 0.2527
+          },
+          {
+            "month": "2025-05",
+            "n": 120,
+            "hit_rate": 0.575,
+            "brier": 0.2378
+          },
+          {
+            "month": "2025-06",
+            "n": 101,
+            "hit_rate": 0.5545,
+            "brier": 0.2401
+          },
+          {
+            "month": "2025-07",
+            "n": 92,
+            "hit_rate": 0.587,
+            "brier": 0.2391
+          },
+          {
+            "month": "2025-08",
+            "n": 108,
+            "hit_rate": 0.5463,
+            "brier": 0.2474
+          },
+          {
+            "month": "2025-09",
+            "n": 98,
+            "hit_rate": 0.5816,
+            "brier": 0.2357
+          }
+        ],
+        "stability_classification": "STABLE"
+      },
+      "thirds_stability": [
+        {
+          "third": 1,
+          "n": 178,
+          "hit_rate": 0.5618
+        },
+        {
+          "third": 2,
+          "n": 178,
+          "hit_rate": 0.5787
+        },
+        {
+          "third": 3,
+          "n": 179,
+          "hit_rate": 0.5587
+        }
+      ],
+      "failure_segments": {
+        "worst_month": "2025-04",
+        "best_month": "2025-07",
+        "home_hit_rate": 0.5664,
+        "away_hit_rate": null,
+        "n_home_picks": 535,
+        "n_away_picks": 0,
+        "tier_c_hit_rate": 0.5664,
+        "tier_b_hit_rate": 0.6327,
+        "tier_a_hit_rate": 0.5417
+      },
+      "signal_label": "PREDICTIVE_SIGNAL_CONFIRMED",
+      "note_no_odds_used": true,
+      "note_not_ev_or_clv": "This is accuracy-only. Positive hit rate does NOT imply positive EV against market."
+    },
+    {
+      "strategy_id": "S05_HOME_FAVOR_STRONG",
+      "description": "sp_fip_delta >= 0.50 (home team strongly favored by FIP delta)",
+      "tier_label": "Home_Strong",
+      "n": 268,
+      "coverage": 0.1323,
+      "hit_rate": 0.6716,
+      "hit_rate_ci_95": [
+        0.6157,
+        0.7276
+      ],
+      "auc": 0.5591,
+      "auc_ci_95": [
+        0.4845,
+        0.6281
+      ],
+      "brier_score": 0.2292,
+      "log_loss": 0.6504,
+      "ece": 0.0983,
+      "monthly_stability": {
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 8,
+            "hit_rate": 0.625,
+            "brier": 0.2229
+          },
+          {
+            "month": "2025-05",
+            "n": 62,
+            "hit_rate": 0.6452,
+            "brier": 0.225
+          },
+          {
+            "month": "2025-06",
+            "n": 50,
+            "hit_rate": 0.72,
+            "brier": 0.2436
+          },
+          {
+            "month": "2025-07",
+            "n": 45,
+            "hit_rate": 0.7111,
+            "brier": 0.2294
+          },
+          {
+            "month": "2025-08",
+            "n": 54,
+            "hit_rate": 0.6111,
+            "brier": 0.2328
+          },
+          {
+            "month": "2025-09",
+            "n": 49,
+            "hit_rate": 0.6939,
+            "brier": 0.2165
+          }
+        ],
+        "stability_classification": "MODERATE"
+      },
+      "thirds_stability": [
+        {
+          "third": 1,
+          "n": 89,
+          "hit_rate": 0.6517
+        },
+        {
+          "third": 2,
+          "n": 89,
+          "hit_rate": 0.7303
+        },
+        {
+          "third": 3,
+          "n": 90,
+          "hit_rate": 0.6333
+        }
+      ],
+      "failure_segments": {
+        "worst_month": "2025-08",
+        "best_month": "2025-06",
+        "home_hit_rate": 0.6716,
+        "away_hit_rate": null,
+        "n_home_picks": 268,
+        "n_away_picks": 0,
+        "tier_c_hit_rate": 0.6716,
+        "tier_b_hit_rate": 0.72,
+        "tier_a_hit_rate": 0.75
+      },
+      "signal_label": "PREDICTIVE_SIGNAL_WEAK",
+      "note_no_odds_used": true,
+      "note_not_ev_or_clv": "This is accuracy-only. Positive hit rate does NOT imply positive EV against market."
+    },
+    {
+      "strategy_id": "S06_AWAY_FAVOR_STRONG",
+      "description": "sp_fip_delta <= -0.50 (away team strongly favored by FIP delta)",
+      "tier_label": "Away_Strong",
+      "n": 267,
+      "coverage": 0.1319,
+      "hit_rate": 0.5393,
+      "hit_rate_ci_95": [
+        0.4831,
+        0.5993
+      ],
+      "auc": 0.545,
+      "auc_ci_95": [
+        0.475,
+        0.6107
+      ],
+      "brier_score": 0.2478,
+      "log_loss": 0.6884,
+      "ece": 0.0396,
+      "monthly_stability": {
+        "monthly_breakdown": [
+          {
+            "month": "2025-04",
+            "n": 8,
+            "hit_rate": 0.625,
+            "brier": 0.2709
+          },
+          {
+            "month": "2025-05",
+            "n": 58,
+            "hit_rate": 0.5,
+            "brier": 0.2438
+          },
+          {
+            "month": "2025-06",
+            "n": 51,
+            "hit_rate": 0.6078,
+            "brier": 0.2373
+          },
+          {
+            "month": "2025-07",
+            "n": 47,
+            "hit_rate": 0.5319,
+            "brier": 0.2524
+          },
+          {
+            "month": "2025-08",
+            "n": 54,
+            "hit_rate": 0.5185,
+            "brier": 0.2569
+          },
+          {
+            "month": "2025-09",
+            "n": 49,
+            "hit_rate": 0.5306,
+            "brier": 0.2453
+          }
+        ],
+        "stability_classification": "MODERATE"
+      },
+      "thirds_stability": [
+        {
+          "third": 1,
+          "n": 89,
+          "hit_rate": 0.5281
+        },
+        {
+          "third": 2,
+          "n": 89,
+          "hit_rate": 0.5506
+        },
+        {
+          "third": 3,
+          "n": 89,
+          "hit_rate": 0.5393
+        }
+      ],
+      "failure_segments": {
+        "worst_month": "2025-05",
+        "best_month": "2025-04",
+        "home_hit_rate": null,
+        "away_hit_rate": 0.5393,
+        "n_home_picks": 0,
+        "n_away_picks": 267,
+        "tier_c_hit_rate": 0.5393,
+        "tier_b_hit_rate": 0.4583,
+        "tier_a_hit_rate": 0.6667
+      },
+      "signal_label": "PREDICTIVE_SIGNAL_WEAK",
+      "note_no_odds_used": true,
+      "note_not_ev_or_clv": "This is accuracy-only. Positive hit rate does NOT imply positive EV against market."
+    }
+  ],
+  "best_strategy": "S02_TIER_B_DIRECTIONAL",
+  "worst_strategy": "S06_AWAY_FAVOR_STRONG",
+  "final_classification": "P72A_ODDS_FREE_PREDICTIVE_SIGNAL_CONFIRMED",
+  "allowed_classifications": [
+    "P72A_ODDS_FREE_PREDICTIVE_SIGNAL_CONFIRMED",
+    "P72A_ODDS_FREE_PREDICTIVE_SIGNAL_WEAK",
+    "P72A_ODDS_FREE_PREDICTIVE_SIGNAL_INCONCLUSIVE",
+    "P72A_ODDS_FREE_PREDICTIVE_SIGNAL_NEGATIVE",
+    "P72A_BLOCKED_BY_MISSING_OUTCOME_DATA",
+    "P72A_BLOCKED_BY_TEST_FAILURE",
+    "P72A_BLOCKED_BY_SCOPE_VIOLATION"
+  ],
+  "interpretation_note": "These metrics measure outcome-prediction accuracy only. A hit rate above random baseline or AUC > 0.50 means the model has directional predictive skill. This does NOT imply positive EV against market odds. Market edge requires comparing model probabilities to odds-implied probabilities, which is a separate analysis requiring historical odds data.",
+  "odds_used": false,
+  "api_key_required": false,
+  "ev_calculated": false,
+  "clv_calculated": false,
+  "market_edge_calculated": false
+}

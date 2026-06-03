@@ -1,0 +1,182 @@
+{
+  "p59_phase": "P59 — Monitoring Contract V2 First Monthly Report",
+  "run_date": "2026-05-25",
+  "report_version": "P59_MONITORING_CONTRACT_V2_FIRST_MONTHLY_REPORT_V1",
+  "template_source": "P58_MONITORING_CONTRACT_V2_MONTHLY_REPORT_TEMPLATE_V1",
+  "report_month": "2025-09",
+  "report_type": "HISTORICAL_DIAGNOSTIC_FIRST_REPORT",
+  "report_type_note": "No Oct 2025+ data available in JSONL. Sep 2025 is the earliest available post-training month with P53 drilldown. This is the first real diagnostic monthly report produced from the P58 template.",
+  "source_artifacts": {
+    "jsonl": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+    "p44t": "data/mlb_2025/derived/p44_temporal_stability_summary.json",
+    "p52": "data/mlb_2025/derived/p52_monitoring_contract_v2_summary.json",
+    "p53": "data/mlb_2025/derived/p53_sep_calibration_critical_audit_summary.json",
+    "p55": "data/mlb_2025/derived/p55_sep_mid_band_calibration_anomaly_audit_summary.json",
+    "p56": "data/mlb_2025/derived/p56_sample_sensitive_band_annotation_policy_summary.json",
+    "p57": "data/mlb_2025/derived/p57_monitoring_contract_v2_annotation_integration_summary.json",
+    "p58": "data/mlb_2025/derived/p58_monitoring_contract_v2_monthly_report_template_summary.json"
+  },
+  "global_status": {
+    "report_month": "2025-09",
+    "batch_n": 98,
+    "global_status": "MONITORING_ALERT_DIAGNOSTIC",
+    "global_alert_level": "RED",
+    "global_alert_reasons": [
+      "platt_ece=0.122929 exceeds ece_critical_threshold=0.12 (P52 V2)",
+      "SAMPLE_LIMITED: batch_n=98 < 100 (P52 V2 dominance_rule: SAMPLE_LIMITED does not suppress CALIBRATION_CRITICAL)"
+    ],
+    "edge_status": "EDGE_WITHIN_THRESHOLD",
+    "calibration_status": "CALIBRATION_ALERT",
+    "sample_status": "SAMPLE_INSUFFICIENT",
+    "data_gap_status": "2024 closing-line data gap (P43_BLOCKED_BY_DATA_GAP) remains unresolved. Cross-year analysis cannot be completed. This is a cross-year limitation, not a 2025-only blocker.",
+    "raw_edge_mean": 0.108441,
+    "raw_edge_ci_low": 0.092154,
+    "raw_edge_ci_high": 0.124587,
+    "platt_ece": 0.122929,
+    "platt_brier": 0.235731,
+    "p52_thresholds_used": {
+      "ece_warning_threshold": 0.1,
+      "ece_critical_threshold": 0.12,
+      "brier_warning_threshold": 0.25,
+      "brier_critical_threshold": 0.27,
+      "edge_warning_threshold": 0.07,
+      "edge_critical_condition": "edge_ci_low <= 0",
+      "sample_limited_threshold": 100,
+      "source": "data/mlb_2025/derived/p52_monitoring_contract_v2_summary.json",
+      "note": "Thresholds are locked from P52. Not changed by P57, P58, or P59 band annotations."
+    },
+    "source_trace": {
+      "p52_summary_ref": "data/mlb_2025/derived/p52_monitoring_contract_v2_summary.json",
+      "p44t_summary_ref": "data/mlb_2025/derived/p44_temporal_stability_summary.json",
+      "p53_summary_ref": "data/mlb_2025/derived/p53_sep_calibration_critical_audit_summary.json",
+      "data_source": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+      "platt_constants": "A=0.435432, B=0.245464 (P45, locked)"
+    }
+  },
+  "band_annotations": {
+    "section_header": "Band annotations do not change global P52 status.",
+    "active_track_only_count": 1,
+    "should_trigger_refit_any": false,
+    "records": [
+      {
+        "record_type": "BandAnnotationRecord",
+        "schema_version": "1.0",
+        "annotation_scope": "BAND_LEVEL",
+        "metric_family": "CALIBRATION",
+        "band_label": "1.00 <= |sp_fip_delta| < 1.25",
+        "band_n": 27,
+        "sample_tier": "BAND_SAMPLE_INSUFFICIENT",
+        "annotation": "SAMPLE_SENSITIVE_BAND_ANOMALY",
+        "action": "TRACK_ONLY_NO_REFIT",
+        "evidence_strength": "INSUFFICIENT",
+        "platt_ece": 0.245988,
+        "raw_ece": 0.165456,
+        "ece_delta": 0.080532,
+        "repeated_month_count": 2,
+        "cumulative_band_n": 27,
+        "future_evidence_required": true,
+        "should_change_global_status": false,
+        "should_trigger_refit": false,
+        "should_change_thresholds": false,
+        "carry_forward_status": "ACTIVE_TRACK_ONLY",
+        "carry_forward_note": "Carried forward from P57 (first observation Sep 2025). P59 is the second tracking entry (repeated_month_count=2). No new qualifying band data in this report period. FE01 not yet met (n=27 < 30). FE02 not yet met (single source month).",
+        "source_trace": {
+          "p55_reference": "data/mlb_2025/derived/p55_sep_mid_band_calibration_anomaly_audit_summary.json",
+          "p56_reference": "data/mlb_2025/derived/p56_sample_sensitive_band_annotation_policy_summary.json",
+          "p57_reference": "data/mlb_2025/derived/p57_monitoring_contract_v2_annotation_integration_summary.json"
+        }
+      }
+    ]
+  },
+  "validation_results": {
+    "rules_run": 10,
+    "passed": 10,
+    "failed_count": 0,
+    "results": [
+      {
+        "rule_id": "VAL01",
+        "passed": true,
+        "evidence": "global_status='MONITORING_ALERT_DIAGNOSTIC', alert_reasons_count=2",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL02",
+        "passed": true,
+        "evidence": "should_change_global_status=True violations: 0",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL03",
+        "passed": true,
+        "evidence": "should_trigger_refit=True violations for n<30: 0",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL04",
+        "passed": true,
+        "evidence": "should_change_thresholds=True violations: 0",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL05",
+        "passed": true,
+        "evidence": "ACTIVE_TRACK_ONLY records for Sep mid-band: 1",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL06",
+        "passed": true,
+        "evidence": "section_header='Band annotations do not change global P52 status.'",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL07",
+        "passed": true,
+        "evidence": "p52_thresholds source='data/mlb_2025/derived/p52_monitoring_contract_v2_summary.json'",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL08",
+        "passed": true,
+        "evidence": "data_gap_status='2024 closing-line data gap (P43_BLOCKED_BY_DATA_GAP) remains unresolved. Cross-year analysis cannot be completed. This i'",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL09",
+        "passed": true,
+        "evidence": "sample_status='SAMPLE_INSUFFICIENT', calibration_status='CALIBRATION_ALERT', edge_status='EDGE_WITHIN_THRESHOLD'",
+        "failure_reason": null
+      },
+      {
+        "rule_id": "VAL10",
+        "passed": true,
+        "evidence": "paper_only=True, live_api_calls=0, promotion_freeze=True, kelly_deploy_allowed=False",
+        "failure_reason": null
+      }
+    ]
+  },
+  "data_gap_status": {
+    "p43_2024_closing_line_gap": "UNRESOLVED",
+    "impact": "Cross-year band analysis is not possible until 2024 historical odds data is obtained. The Sep 2025 mid-band finding applies to 2025 data only."
+  },
+  "governance_summary": {
+    "paper_only": true,
+    "live_api_calls": 0,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "platt_constants": "A=0.435432, B=0.245464 (P45, locked)",
+    "p52_thresholds_changed": false,
+    "p53_artifact_overwritten": false,
+    "p57_artifact_overwritten": false,
+    "p58_artifact_overwritten": false
+  },
+  "report_limitations": [
+    "Tier C batch_n=98 < 100: all metrics are subject to elevated estimation variance.",
+    "Sep 2025 mid-band annotation (n=27) is BAND_SAMPLE_INSUFFICIENT. No refit or threshold change warranted.",
+    "2024 closing-line data gap prevents cross-year market-edge validation.",
+    "This is a single-month diagnostic report. Longitudinal trend analysis requires multiple future monthly reports.",
+    "platt_ece=0.122929 exceeds the P52 V2 ece_critical_threshold=0.12. This is a CALIBRATION_CRITICAL signal for the Sep 2025 Tier C batch. It is a monitoring observation only; no refit is authorized."
+  ],
+  "next_review_date": "2026-06 (when Oct 2025 or later data becomes available)",
+  "final_p59_classification": "P59_FIRST_MONTHLY_REPORT_SAMPLE_LIMITED"
+}

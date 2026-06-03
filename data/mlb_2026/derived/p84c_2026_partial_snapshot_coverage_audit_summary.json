@@ -1,0 +1,151 @@
+{
+  "phase": "P84C",
+  "date": "2026-05-26",
+  "generated_at": "2026-05-27T04:45:49.693529+00:00",
+  "p84c_classification": "P84C_PARTIAL_SNAPSHOT_READY_OUTCOMES_PENDING",
+  "allowed_classifications": [
+    "P84C_PARTIAL_SNAPSHOT_READY_OUTCOMES_PENDING",
+    "P84C_BLOCKED_BY_MISSING_P84B_ARTIFACT",
+    "P84C_BLOCKED_BY_SCHEMA_ERROR",
+    "P84C_FAILED_VALIDATION"
+  ],
+  "prediction_boundary": "P84C audits the 828 canonical prediction rows produced by P83E/P84B. No outcomes are available; no EV/CLV/Kelly computed; no odds used. paper_only=True, diagnostic_only=True, production_ready=False.",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "live_api_calls": 0,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_calculated": false,
+    "odds_used": false,
+    "uses_historical_odds": false,
+    "real_bet_allowed": false,
+    "outcomes_available": false,
+    "champion_replacement_allowed": false,
+    "kelly_deploy_allowed": false,
+    "market_edge_calculated": false,
+    "market_edge_evaluated": false,
+    "profitability_claim": false,
+    "the_odds_api_key_required": false
+  },
+  "step1_p84b_verification": {
+    "ok": true,
+    "loaded": true,
+    "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p84b_2026_public_stats_collector_summary.json",
+    "p84b_classification": "P84B_SCHEDULE_READY_PITCHER_MODEL_BLOCKED",
+    "classification_ok": true,
+    "schedule_rows": 2443,
+    "pitcher_feature_rows": 837,
+    "model_ready_count": 837,
+    "governance_ok": true,
+    "live_api_ok": true,
+    "odds_ok": true
+  },
+  "step2_canonical_validation": {
+    "ok": true,
+    "loaded": true,
+    "path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "total_rows": 828,
+    "unique_game_ids": 828,
+    "duplicate_count": 0,
+    "schema_errors": [],
+    "governance_errors": [],
+    "abs_fip_errors": [],
+    "prob_errors": [],
+    "season_errors": [],
+    "schema_ok": true,
+    "dedup_ok": true,
+    "governance_ok": true,
+    "abs_fip_ok": true,
+    "prob_ok": true,
+    "season_ok": true
+  },
+  "step3_snapshot_metrics": {
+    "total_canonical_rows": 828,
+    "rows_by_month": {
+      "2026-03": 73,
+      "2026-04": 389,
+      "2026-05": 366
+    },
+    "primary_125_count": 509,
+    "shadow_100_count": 552,
+    "tier_b_count": 97,
+    "tier_a_count": 85,
+    "predicted_side_home": 405,
+    "predicted_side_away": 423,
+    "model_probability_distribution": {
+      "min": 0.3,
+      "max": 0.7,
+      "mean": 0.504004,
+      "median": 0.504298,
+      "stdev": 0.153685
+    },
+    "sp_fip_delta_distribution": {
+      "min": -5.9298,
+      "max": 7.1667,
+      "mean": -0.06162,
+      "abs_mean": 1.337876
+    },
+    "outcomes_with_actual_winner": 0,
+    "outcomes_available": false,
+    "hit_rate": null,
+    "auc": null,
+    "brier_score": null,
+    "ece": null,
+    "accuracy_blocked_reason": "OUTCOMES_PENDING"
+  },
+  "step4_coverage_gap_audit": {
+    "schedule_total": 2430,
+    "fip_feature_ready": 828,
+    "fip_feature_pending": 1602,
+    "model_derivable": 828,
+    "model_pending": 1602,
+    "canonical_rows": 828,
+    "schedule_coverage_rate": 0.340741,
+    "schedule_coverage_pct": 34.07,
+    "missing_schedule_to_fip": 1602,
+    "missing_fip_to_model": 0,
+    "missing_model_to_prediction": 0,
+    "pending_reasons_top": {
+      "NO_PROBABLE_PITCHER": 3167,
+      "INSUFFICIENT_IP": 12
+    },
+    "coverage_below_50pct": true
+  },
+  "step5_remediation_path": {
+    "recommendations": [
+      {
+        "priority": 1,
+        "phase": "P84D",
+        "recommendation": "Pitcher coverage improvement + probable pitcher backfill",
+        "rationale": "Schedule coverage is 34.07% (<50%). 1602 games lack FIP features. Top reason: NO_PROBABLE_PITCHER.",
+        "top_pending_reasons": [
+          "NO_PROBABLE_PITCHER",
+          "INSUFFICIENT_IP"
+        ]
+      },
+      {
+        "priority": 2,
+        "phase": "P84E",
+        "recommendation": "Outcome attachment pipeline",
+        "rationale": "828 canonical rows have outcome fields (result_home_score, actual_winner) but all values are None. Outcomes required for hit_rate, AUC, Brier, ECE."
+      }
+    ],
+    "sufficient_for_diagnostic_snapshot": true,
+    "not_sufficient_for_performance_conclusion": true,
+    "performance_conclusion_blocked_by": "OUTCOMES_PENDING"
+  },
+  "forbidden_scan": {
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "kelly_calculated": false,
+    "live_api_calls": 0,
+    "api_key_accessed": false,
+    "odds_used": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "forbidden_scan_pass": true
+  }
+}

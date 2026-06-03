@@ -1,0 +1,219 @@
+{
+  "p56_phase": "P56 — Sample-Sensitive Band Annotation Policy for Monitoring Contract V2",
+  "run_date": "2026-05-25",
+  "source_artifacts": {
+    "p52": "data/mlb_2025/derived/p52_monitoring_contract_v2_summary.json",
+    "p53": "data/mlb_2025/derived/p53_sep_calibration_critical_audit_summary.json",
+    "p54": "data/mlb_2025/derived/p54_sep_sp_fip_delta_feature_drift_audit_summary.json",
+    "p55": "data/mlb_2025/derived/p55_sep_mid_band_calibration_anomaly_audit_summary.json",
+    "p45": "data/mlb_2025/derived/p45_platt_recalibration_summary.json"
+  },
+  "p55_recap": {
+    "final_p55_classification": "P55_INCONCLUSIVE_SAMPLE_LIMITED",
+    "tier_c_n": 535,
+    "sep_mid_band_n": 27,
+    "sep_mid_band_platt_ece": 0.245988,
+    "sep_mid_band_raw_ece": 0.165456,
+    "ece_delta_platt_minus_raw": 0.080532,
+    "anomaly_source": "INCONCLUSIVE_SAMPLE_LIMITED",
+    "concentration": "INCONCLUSIVE_SAMPLE_LIMITED",
+    "sep_uniquely_elevated": false
+  },
+  "band_annotation_policy": {
+    "policy_name": "Sample-Sensitive Band Annotation Policy v1",
+    "policy_version": "1.0",
+    "created_date": "2026-05-25",
+    "purpose": "Define how band-level calibration findings should be labelled in monitoring reports based on the sample size of each band, without changing P52 global monitoring thresholds or triggering unwarranted model refits.",
+    "scope": "Tier C sp_fip_delta bands (0.5-0.75, 0.75-1.00, 1.00-1.25, >=1.25) per month in MLBseason 2025."
+  },
+  "sample_size_tiers": {
+    "BAND_SAMPLE_INSUFFICIENT": {
+      "condition": "n < 30",
+      "label": "BAND_SAMPLE_INSUFFICIENT",
+      "description": "Band sample is too small for reliable ECE estimation. High variance expected. ECE may deviate substantially from true calibration due to binning noise.",
+      "allowed_annotations": [
+        "SAMPLE_SENSITIVE_BAND_ANOMALY"
+      ],
+      "disallowed_actions": [
+        "TRIGGER_REFIT",
+        "TRIGGER_THRESHOLD_CHANGE",
+        "PROMOTE_TO_DRIFT_CANDIDATE",
+        "REPORT_AS_CONFIRMED_DRIFT"
+      ],
+      "allowed_actions": [
+        "TRACK_ONLY_NO_REFIT"
+      ],
+      "note": "P55 Sep 1.00-1.25 band (n=27) falls in this tier."
+    },
+    "BAND_SAMPLE_WATCHLIST": {
+      "condition": "30 <= n < 100",
+      "label": "BAND_SAMPLE_WATCHLIST",
+      "description": "Band sample is sufficient for preliminary ECE estimation but below the stable inference threshold (n=100). Findings should be treated as watchlist candidates.",
+      "allowed_annotations": [
+        "BAND_WATCHLIST",
+        "SAMPLE_SENSITIVE_BAND_ANOMALY"
+      ],
+      "allowed_actions": [
+        "TRACK_ONLY_NO_REFIT",
+        "FLAG_FOR_FOLLOW_UP"
+      ],
+      "elevation_criteria": "Elevate to BAND_DRIFT_CANDIDATE only if elevated ECE persists across at least 2 separate months in the same band AND n >= 30 in both months."
+    },
+    "BAND_SAMPLE_MONITORABLE": {
+      "condition": "n >= 100",
+      "label": "BAND_SAMPLE_MONITORABLE",
+      "description": "Band sample meets the stable inference threshold. ECE estimates carry sufficient statistical reliability for drift candidate consideration.",
+      "allowed_annotations": [
+        "STABLE_BAND_EVIDENCE",
+        "BAND_DRIFT_CANDIDATE",
+        "BAND_WATCHLIST"
+      ],
+      "allowed_actions": [
+        "TRACK_ONLY_NO_REFIT",
+        "FLAG_FOR_FOLLOW_UP",
+        "PROMOTE_TO_DRIFT_CANDIDATE_IF_CI_ELEVATED"
+      ],
+      "drift_candidate_criteria": "Classify as BAND_DRIFT_CANDIDATE only if n >= 100 AND ECE confidence interval lower bound remains above 0.08 across cumulative data."
+    }
+  },
+  "interpretation_rules": [
+    {
+      "rule_id": "R01",
+      "condition": "n < 30 AND platt_ece is high",
+      "classification": "SAMPLE_SENSITIVE_BAND_ANOMALY",
+      "action": "TRACK_ONLY_NO_REFIT",
+      "reason": "ECE estimates below n=30 have high variance. Elevated ECE does not confirm systematic miscalibration."
+    },
+    {
+      "rule_id": "R02",
+      "condition": "30 <= n < 100 AND platt_ece elevated in >= 2 months",
+      "classification": "BAND_WATCHLIST",
+      "action": "FLAG_FOR_FOLLOW_UP",
+      "reason": "Preliminary signal across multiple months is noteworthy but below the refit evidence threshold."
+    },
+    {
+      "rule_id": "R03",
+      "condition": "n >= 100 AND ECE CI lower bound > 0.08",
+      "classification": "BAND_DRIFT_CANDIDATE",
+      "action": "PROMOTE_TO_DRIFT_CANDIDATE_IF_CI_ELEVATED",
+      "reason": "Large sample with elevated CI provides reliable evidence for drift candidate consideration."
+    },
+    {
+      "rule_id": "R04",
+      "condition": "Any tier, single month only",
+      "classification": "SAMPLE_SENSITIVE_BAND_ANOMALY or BAND_WATCHLIST",
+      "action": "TRACK_ONLY_NO_REFIT",
+      "reason": "Single-month anomaly, even in large sample, does not trigger refit without multi-month confirmation."
+    },
+    {
+      "rule_id": "R05",
+      "condition": "platt_ece > raw_ece (Platt worsened ECE in band)",
+      "classification": "PLATT_BAND_DEGRADATION_NOTE",
+      "action": "TRACK_ONLY_NO_REFIT",
+      "reason": "Platt may not universally improve calibration in all bands. This observation is recorded but does not trigger refit without n >= 30 and multi-month confirmation."
+    },
+    {
+      "rule_id": "R06",
+      "condition": "P52 global calibration stable",
+      "classification": "NOT_APPLICABLE",
+      "action": "MAINTAIN_P52_THRESHOLDS",
+      "reason": "P52 global monitoring thresholds must not change based on band-level findings alone."
+    }
+  ],
+  "p55_application": {
+    "band": "1.00_1.25",
+    "band_definition": "1.00 <= abs(sp_fip_delta) < 1.25",
+    "month": "Sep 2025",
+    "n": 27,
+    "raw_ece": 0.165456,
+    "platt_ece": 0.245988,
+    "ece_delta_platt_minus_raw": 0.080532,
+    "outlier_driven": false,
+    "sep_uniquely_elevated": false,
+    "sep_rank_by_platt_ece": 2,
+    "sample_tier": "BAND_SAMPLE_INSUFFICIENT",
+    "annotation": "SAMPLE_SENSITIVE_BAND_ANOMALY",
+    "action": "TRACK_ONLY_NO_REFIT",
+    "annotation_reasoning": "n=27 < 30, so ECE estimates are unreliable. platt_ece=0.2460 and raw_ece=0.1655 are recorded but do not confirm systematic miscalibration.",
+    "platt_degradation_note": {
+      "observation": "PLATT_BAND_DEGRADATION_NOTE",
+      "ece_delta": 0.080532,
+      "raw_ece": 0.165456,
+      "platt_ece": 0.245988,
+      "meaning": "Platt transform worsened ECE in this band vs raw model by 0.0805. This is noted but does not trigger refit without n >= 30 and multi-month confirmation.",
+      "action": "TRACK_ONLY_NO_REFIT"
+    },
+    "required_future_evidence": {
+      "description": "Evidence required to re-evaluate this band finding",
+      "criteria": [
+        {
+          "criterion_id": "FE01",
+          "description": "Same band n >= 30 in a future month (Sep 2026 or any month)",
+          "required": true
+        },
+        {
+          "criterion_id": "FE02",
+          "description": "Repeat elevated platt_ece in at least 2 separate months within the same band",
+          "required": true
+        },
+        {
+          "criterion_id": "FE03",
+          "description": "Cumulative band n >= 100 across all months with ECE CI lower bound > 0.08",
+          "required": false,
+          "note": "Alternative to FE01+FE02; stronger evidence path"
+        },
+        {
+          "criterion_id": "FE04",
+          "description": "Platt worsening ece_delta > 0.05 confirmed at n >= 30",
+          "required": false,
+          "note": "If met, warrants PLATT_BAND_DEGRADATION_CANDIDATE flag"
+        }
+      ],
+      "refit_trigger_conditions": "Model refit consideration requires: FE01 AND FE02 met, AND explicit senior review, AND paper_only constraints lifted by authorized user.",
+      "current_status": "Sep 2025 1.00-1.25 band: FE01 not yet met (n=27 < 30). FE02 not yet met (single month only). No refit warranted."
+    }
+  },
+  "p52_v2_compatibility": {
+    "statement": "P56 does not supersede P52.",
+    "details": [
+      "P56 adds an interpretive annotation layer for band-level ECE diagnostics.",
+      "P52 global monitoring thresholds (Tier C ECE, Brier score, edge rate) remain unchanged.",
+      "P52 edge and calibration stream ownership remains with the P52 monitoring contract.",
+      "P56 annotations are diagnostic metadata only; they do not trigger runtime changes.",
+      "P56 must not modify runtime recommendation logic.",
+      "P56 must not change P45 Platt constants (A=0.435432, B=0.245464).",
+      "P56 must not overwrite P52/P53/P54/P55 artifacts.",
+      "P56 must not modify P52 thresholds.",
+      "If P52 detects a global calibration critical event, P52 governs the response, not P56.",
+      "P56 findings feed into the interpretive layer; adoption requires explicit authorization."
+    ],
+    "p52_threshold_status": "UNCHANGED",
+    "p52_artifact_status": "PRESERVED",
+    "p53_artifact_status": "PRESERVED",
+    "p54_artifact_status": "PRESERVED",
+    "p55_artifact_status": "PRESERVED",
+    "platt_constants_status": "UNCHANGED — A=0.435432, B=0.245464 (P45 locked)"
+  },
+  "data_gap_status": {
+    "p43_2024_closing_line_gap": "UNRESOLVED",
+    "note": "2024 closing-line data gap (P43_BLOCKED_BY_DATA_GAP) remains unresolved. Cross-year band analysis cannot be completed until 2024 historical odds are obtained. P56 is based exclusively on 2025 Tier C data."
+  },
+  "final_p56_classification": "P56_BAND_ANNOTATION_POLICY_READY_DIAGNOSTIC",
+  "governance_flags": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "live_api_calls": 0,
+    "tsl_crawler_modified": false,
+    "champion_strategy_changed": false,
+    "production_usage_proposed": false,
+    "runtime_recommendation_logic_changed": false,
+    "platt_constants_modified": false,
+    "p52_contract_overwritten": false,
+    "p53_artifact_overwritten": false,
+    "p54_artifact_overwritten": false,
+    "p55_artifact_overwritten": false,
+    "p52_thresholds_changed": false
+  }
+}

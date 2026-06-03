@@ -1,0 +1,651 @@
+{
+  "p80_classification": "P80_MARKET_EDGE_REENTRY_CONTRACT_READY",
+  "schema_version": "p80-v1",
+  "generated_at": "2026-05-26T09:44:12.312887+00:00",
+  "governance_snapshot": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "the_odds_api_key_accessed": false,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "promotion_freeze": true,
+    "tsl_crawler_modified": false,
+    "runtime_recommendation_modified": false
+  },
+  "source_artifacts_verified": {
+    "p79b_summary": true,
+    "p79b_report": true,
+    "p79b_script": true,
+    "p79a_summary": true,
+    "p78_summary": true,
+    "p77_summary": true,
+    "p76_summary": true,
+    "p75b_summary": true,
+    "p75a_summary": true,
+    "p74_summary": true,
+    "p73_summary": true,
+    "p72b_summary": true,
+    "p72a_summary": true
+  },
+  "optional_artifacts_present": {
+    "p64_summary": true,
+    "p65_summary": true,
+    "p66_summary": true,
+    "p67_summary": true,
+    "p68_summary": true,
+    "p70_summary": true,
+    "p71_summary": true
+  },
+  "step1_prediction_lane_verified": {
+    "verified": true,
+    "errors": [],
+    "warnings": [],
+    "p79b_classification": "P79B_TIER_B_FIXTURE_RESEARCH_ONLY",
+    "fixture_dry_run_classification": "TIER_B_RESEARCH_ONLY_FIXTURE",
+    "fixture_is_2026_live_conclusion": false,
+    "market_edge_lane": "blocked",
+    "tier_b_research_only": true,
+    "tier_b_n": 219,
+    "tier_b_hit_rate": 0.5342,
+    "tier_b_auc": 0.5517,
+    "primary_rule_from_p76": "unknown",
+    "shadow_rule_from_p76": "unknown",
+    "future_p79_prompt_exists": true,
+    "governance_clean": true
+  },
+  "step2_market_edge_blockers": {
+    "blocker_count": 6,
+    "active_blockers": [
+      "BLOCKED_2025_EDGE_STABLE_NEGATIVE",
+      "BLOCKED_NO_LEGAL_2024_ODDS",
+      "BLOCKED_ODDSPORTAL_TOS_VIOLATION",
+      "BLOCKED_API_KEY_MISSING",
+      "BLOCKED_RAW_DATA_POLICY_MISSING",
+      "BLOCKED_PRODUCTION_GOVERNANCE"
+    ],
+    "edge_2025_result": "P65_EDGE_STABLE_NEGATIVE",
+    "gap_2024_state": "P67_PATH_B_PARTIAL_SOURCE_FOUND_NEEDS_REVIEW",
+    "api_key_state": "API_KEY_MISSING",
+    "scraping_blocked_by_tos": true,
+    "optional_context_loaded": [
+      "p65_classification",
+      "p65_walk_forward_stability",
+      "p64_classification",
+      "p66_classification",
+      "p66_join_audit",
+      "p67_classification",
+      "p68_classification",
+      "p71_classification",
+      "p71_api_key_status",
+      "p70_classification",
+      "p70_mode"
+    ],
+    "optional_context": {
+      "p65_classification": "P65_EDGE_STABLE_NEGATIVE",
+      "p65_walk_forward_stability": {
+        "classification": "P65_EDGE_STABLE_NEGATIVE",
+        "allowed_values": [
+          "P65_BLOCKED_BY_P64_SCHEMA_GAP",
+          "P65_BLOCKED_BY_TEST_FAILURE",
+          "P65_EDGE_INSUFFICIENT_WINDOW_SAMPLE",
+          "P65_EDGE_MIXED_TIME_DEPENDENT",
+          "P65_EDGE_STABLE_NEGATIVE",
+          "P65_EDGE_STABLE_POSITIVE"
+        ]
+      },
+      "p64_classification": "P64_PAPER_SIMULATION_FIRST_RUN_READY",
+      "p66_classification": "P66_ODDS_MAPPING_INTEGRITY_CONFIRMED",
+      "p66_join_audit": {
+        "total_predictions": 2025,
+        "matched": 1979,
+        "unmatched": 0,
+        "ambiguous": 46,
+        "hit_rate": 0.977284,
+        "duplicate_odds_key_count": 28,
+        "duplicate_pred_key_count": 23,
+        "p64_emitted_rows": 535,
+        "unmatched_examples": [],
+        "ambiguous_examples": [
+          {
+            "key": "('2025-04-27', 'new york yankees')",
+            "hit_count": 2,
+            "csv_row_indices": [
+              405,
+              406
+            ]
+          },
+          {
+            "key": "('2025-04-27', 'new york yankees')",
+            "hit_count": 2,
+            "csv_row_indices": [
+              405,
+              406
+            ]
+          },
+          {
+            "key": "('2025-04-30', 'cincinnati reds')",
+            "hit_count": 2,
+            "csv_row_indices": [
+              442,
+              450
+            ]
+          }
+        ],
+        "doubleheader_note": "28 duplicate (date, home_team) keys in odds CSV likely reflect doubleheaders. P64 used last-row-wins dedup (implicit). Not treated as a mapping error.",
+        "join_integrity_status": "JOIN_INTEGRITY_PASS"
+      },
+      "p67_classification": "P67_PATH_B_PARTIAL_SOURCE_FOUND_NEEDS_REVIEW",
+      "p68_classification": "P68_ODDSPORTAL_BLOCKED_BY_TOS",
+      "p71_classification": "P71_PATH_A_STILL_AWAITING_API_KEY",
+      "p71_api_key_status": "API_KEY_MISSING",
+      "p70_classification": "P70_PATH_A_AUTHORIZED_AWAITING_API_KEY",
+      "p70_mode": "DRY_RUN"
+    },
+    "market_edge_lane_state": "BLOCKED",
+    "market_edge_lane_reason": "2025 edge stable-negative + 2024 odds gap unresolved + API key missing + production governance frozen"
+  },
+  "step3_legal_odds_contract": {
+    "contract_name": "P80_LEGAL_ODDS_DATA_CONTRACT",
+    "schema_version": "p80-v1",
+    "required_field_count": 21,
+    "field_specifications": [
+      {
+        "field": "game_id",
+        "type": "str",
+        "required": true,
+        "description": "Unique game identifier (matchable to prediction JSONL)"
+      },
+      {
+        "field": "game_date",
+        "type": "str",
+        "format": "YYYY-MM-DD",
+        "required": true,
+        "description": "Local game date"
+      },
+      {
+        "field": "season",
+        "type": "int",
+        "required": true,
+        "description": "MLB season year (e.g. 2024, 2025)"
+      },
+      {
+        "field": "home_team",
+        "type": "str",
+        "required": true,
+        "description": "Canonical home team name/abbrev"
+      },
+      {
+        "field": "away_team",
+        "type": "str",
+        "required": true,
+        "description": "Canonical away team name/abbrev"
+      },
+      {
+        "field": "sportsbook_or_source",
+        "type": "str",
+        "required": true,
+        "description": "Named sportsbook or licensed data vendor"
+      },
+      {
+        "field": "market_type",
+        "type": "str",
+        "required": true,
+        "enum": [
+          "moneyline",
+          "run_line",
+          "total"
+        ],
+        "description": "Betting market type"
+      },
+      {
+        "field": "odds_timestamp_utc",
+        "type": "str",
+        "format": "ISO8601",
+        "required": true,
+        "description": "UTC timestamp when line was captured"
+      },
+      {
+        "field": "game_start_utc",
+        "type": "str",
+        "format": "ISO8601",
+        "required": true,
+        "description": "UTC scheduled game start time"
+      },
+      {
+        "field": "home_moneyline",
+        "type": "float",
+        "required": true,
+        "description": "American odds for home team (e.g. -120, +110)"
+      },
+      {
+        "field": "away_moneyline",
+        "type": "float",
+        "required": true,
+        "description": "American odds for away team"
+      },
+      {
+        "field": "implied_home_prob",
+        "type": "float",
+        "range": [
+          0.0,
+          1.0
+        ],
+        "required": true,
+        "description": "Vig-removed implied probability for home team"
+      },
+      {
+        "field": "implied_away_prob",
+        "type": "float",
+        "range": [
+          0.0,
+          1.0
+        ],
+        "required": true,
+        "description": "Vig-removed implied probability for away team"
+      },
+      {
+        "field": "line_type",
+        "type": "str",
+        "required": true,
+        "enum": [
+          "opening",
+          "midgame",
+          "closing"
+        ],
+        "description": "Where in game lifecycle line was taken"
+      },
+      {
+        "field": "is_pregame",
+        "type": "bool",
+        "required": true,
+        "description": "True if line was captured before game start"
+      },
+      {
+        "field": "is_closing",
+        "type": "bool",
+        "required": true,
+        "description": "True if this is the closing line"
+      },
+      {
+        "field": "source_license_status",
+        "type": "str",
+        "required": true,
+        "enum": [
+          "LICENSED",
+          "FREE_TIER",
+          "ACADEMIC",
+          "UNKNOWN"
+        ],
+        "description": "Legal license status of data source"
+      },
+      {
+        "field": "source_trace",
+        "type": "str",
+        "required": true,
+        "description": "URL or vendor identifier of original data source"
+      },
+      {
+        "field": "raw_data_policy",
+        "type": "str",
+        "required": true,
+        "enum": [
+          "COMMIT_ALLOWED",
+          "NO_COMMIT_VENDOR_RESTRICTED",
+          "PENDING_DECISION"
+        ],
+        "description": "Whether raw data may be committed to repo"
+      },
+      {
+        "field": "checksum_hash",
+        "type": "str",
+        "required": true,
+        "description": "SHA256 of raw line record for tamper detection"
+      },
+      {
+        "field": "created_at_utc",
+        "type": "str",
+        "format": "ISO8601",
+        "required": true,
+        "description": "UTC timestamp this record was created/ingested"
+      }
+    ],
+    "legality_requirements": {
+      "legal_source_required": true,
+      "scraping_prohibited_source_blocked": true,
+      "robots_txt_violation_blocked": true,
+      "tos_violation_blocked": true,
+      "api_key_value_must_not_be_printed": true,
+      "api_key_value_must_not_be_logged": true,
+      "raw_paid_data_commit_policy_decided_before_staging": true,
+      "timestamp_lineage_proven_before_clv": true,
+      "side_mapping_proven_before_edge": true,
+      "doubleheader_disambiguation_required": true,
+      "multi_season_validation_required_before_production": true,
+      "known_blocked_sources": [
+        "OddsPortal (P68: ToS violation)"
+      ],
+      "known_partial_sources": [
+        "P67 PATH_B partial — needs review before use"
+      ],
+      "authorized_path": "PATH_A: The Odds API (P70 CEO-authorized, P71 awaiting key)"
+    },
+    "implied_prob_vig_removal_required": true,
+    "closing_line_required_for_clv": true,
+    "pregame_line_required_for_edge": true,
+    "min_matched_rows_threshold": 0.9,
+    "max_unmatched_rows_threshold": 0.1,
+    "seasons_required_for_production": 2,
+    "notes": "This contract governs future P81+ odds ingestion. No odds dataset currently exists meeting all requirements. The Odds API (PATH A) is CEO-authorized but key not yet received (P71). This contract must be re-validated once legal data arrives."
+  },
+  "step4_candidate_eligibility": {
+    "matrix_version": "p80-v1",
+    "candidates": {
+      "primary_125": {
+        "candidate_name": "TIER_C_HOME_PLUS_AWAY_125",
+        "source_phase": "P76/P77",
+        "current_prediction_status": "ACTIVE_SHADOW_TRACKING",
+        "market_edge_eligibility": "ELIGIBLE_WHEN_LEGAL_ODDS_AVAILABLE",
+        "required_additional_data": [
+          "Legal odds dataset (Gate A-B passing)",
+          "Side mapping verified (Gate C)",
+          "2024+2025 historical odds"
+        ],
+        "prohibited_interpretation": "Do NOT claim market edge until P82 dry-run passes. Do NOT deploy Kelly. Do NOT produce betting recommendation.",
+        "notes": "Primary Tier C rule. Hit rate 0.583 on 2025 fixture."
+      },
+      "shadow_100": {
+        "candidate_name": "TIER_C_HOME_PLUS_AWAY_100",
+        "source_phase": "P76/P77",
+        "current_prediction_status": "SHADOW_ONLY",
+        "market_edge_eligibility": "ELIGIBLE_WHEN_LEGAL_ODDS_AVAILABLE",
+        "required_additional_data": [
+          "Legal odds dataset (Gate A-B passing)",
+          "Side mapping verified (Gate C)",
+          "2024+2025 historical odds"
+        ],
+        "prohibited_interpretation": "Shadow rule only. May not be promoted to primary without P76 re-evaluation. Do NOT deploy Kelly.",
+        "notes": "Shadow Tier C rule. Hit rate 0.569 on 2025 fixture."
+      },
+      "tier_b_conditional": {
+        "candidate_name": "TIER_B_ABS_FIP_0.25_TO_0.50",
+        "source_phase": "P79A/P79B",
+        "current_prediction_status": "RESEARCH_ONLY",
+        "market_edge_eligibility": "CONDITIONAL: eligible only if future live P79 passes operational research gate (2026 live Tier B n>=200 and performance_ok=True)",
+        "required_additional_data": [
+          "2026 live Tier B n >= 200 (expected ~2026-09)",
+          "Future P79 operational gate PASS",
+          "Legal odds dataset (Gate A-B passing)",
+          "Side mapping verified (Gate C)",
+          "2024+2025 historical odds"
+        ],
+        "prohibited_interpretation": "P79B fixture result (2025 data) is NOT a 2026 live conclusion. Tier B remains RESEARCH_ONLY until live P79 passes. Do NOT compute Tier B EV/CLV/Kelly. Do NOT deploy.",
+        "notes": "P79B: hit_rate=0.534, AUC=0.552. Gate fails on performance_ok. Harness built. Waiting for 2026 live accumulation."
+      },
+      "baseline_50": {
+        "candidate_name": "TIER_C_BASELINE_ABS_GTE_0.50",
+        "source_phase": "P72A/P76",
+        "current_prediction_status": "BENCHMARK_REFERENCE",
+        "market_edge_eligibility": "ELIGIBLE_AS_BENCHMARK_ONLY",
+        "required_additional_data": [
+          "Legal odds dataset (Gate A-B passing)",
+          "Side mapping verified (Gate C)"
+        ],
+        "prohibited_interpretation": "Baseline reference only. Not a standalone rule. Do NOT use as primary or shadow without re-evaluation.",
+        "notes": "Baseline. Hit rate 0.565 on 2025 fixture."
+      }
+    },
+    "eligible_count": 3,
+    "conditional_count": 1,
+    "research_only_count": 1
+  },
+  "step5_validation_gates": {
+    "gates_defined": 6,
+    "gates": {
+      "gate_a_data_legality": {
+        "gate_id": "A",
+        "name": "Data Legality",
+        "description": "Confirms the odds dataset originates from a legal, licensed source.",
+        "conditions": [
+          "source_license_status in [LICENSED, FREE_TIER, ACADEMIC]",
+          "no ToS violation (P68: OddsPortal blocked)",
+          "no robots.txt-blocked scraping",
+          "source_trace field non-empty",
+          "raw_data_policy decided before dataset staging",
+          "api_key_value not printed or logged"
+        ],
+        "gate_passes_when": "ALL conditions true",
+        "current_state": "BLOCKED — no legal dataset exists yet",
+        "unblocked_by": "Obtaining The Odds API key (PATH A, P70/P71) and receiving data"
+      },
+      "gate_b_schema": {
+        "gate_id": "B",
+        "name": "Schema Validation",
+        "description": "Confirms all 21 required fields are present and valid.",
+        "conditions": [
+          "all 21 required fields present",
+          "home_moneyline and away_moneyline are numeric",
+          "odds_timestamp_utc and game_start_utc are valid ISO8601",
+          "implied_home_prob and implied_away_prob in [0.0, 1.0]",
+          "implied_home_prob + implied_away_prob approx 1.0 (after vig removal)",
+          "is_pregame and is_closing are boolean",
+          "checksum_hash is a non-empty string"
+        ],
+        "gate_passes_when": "ALL conditions true for >= 95% of rows",
+        "current_state": "BLOCKED — no dataset to validate",
+        "unblocked_by": "Gate A passing + P81 schema validator built"
+      },
+      "gate_c_mapping": {
+        "gate_id": "C",
+        "name": "Side & Game Mapping",
+        "description": "Confirms odds rows can be matched to prediction JSONL rows.",
+        "conditions": [
+          "side mapping verified (home/away consistent with prediction JSONL)",
+          "home/away team names mapped to canonical identifiers",
+          "doubleheader disambiguation logic implemented",
+          "unmatched rows below 10% threshold",
+          "game_id linkable to prediction game_id or (game_date + home_team + away_team)"
+        ],
+        "gate_passes_when": "unmatched_rows < 10% AND side mapping verified",
+        "current_state": "BLOCKED — no dataset to map",
+        "unblocked_by": "Gates A+B passing + P81 mapping validator built"
+      },
+      "gate_d_metric_readiness": {
+        "gate_id": "D",
+        "name": "Metric Computation Readiness",
+        "description": "Governs when edge/CLV/EV/Kelly may be computed.",
+        "conditions": [
+          "edge may be computed only after implied_home_prob verified (Gate B)",
+          "CLV may be computed only after both is_pregame and is_closing rows exist",
+          "EV computation requires separate explicit authorization (not in P80)",
+          "Kelly deployment requires separate CEO authorization (not in P80)",
+          "EV/Kelly remain PROHIBITED until separate approval granted"
+        ],
+        "gate_passes_when": "implied prob verified AND (for CLV) closing data present",
+        "current_state": "BLOCKED — Gates A-C not satisfied",
+        "unblocked_by": "Gates A+B+C passing + closing line dataset available",
+        "prohibited_metrics": [
+          "EV",
+          "Kelly",
+          "CLV_without_closing_data"
+        ]
+      },
+      "gate_e_cross_year_validation": {
+        "gate_id": "E",
+        "name": "Cross-Year Validation",
+        "description": "Requires multi-season validation before any product claim.",
+        "conditions": [
+          "2024 + 2025 historical odds both available (or future multi-season equivalent)",
+          "2025-only validation is INSUFFICIENT for production",
+          "P65 showed 2025 edge stable-negative — must validate if 2026 changes this",
+          "market-edge analysis must span at least 2 MLB seasons",
+          "cross-year synthesis required before any production readiness claim"
+        ],
+        "gate_passes_when": ">=2 seasons of legal odds validated through Gates A-D",
+        "current_state": "BLOCKED — 2024 odds gap unresolved (P67: partial source only)",
+        "unblocked_by": "Legal 2024+2025 odds obtained and validated through Gates A-D"
+      },
+      "gate_f_governance": {
+        "gate_id": "F",
+        "name": "Governance Invariants",
+        "description": "Ensures governance constraints remain intact during market-edge work.",
+        "conditions": [
+          "paper_only=True during all P81-P84 phases",
+          "production_ready=False during all P81-P84 phases",
+          "no real betting recommendation at any point",
+          "no champion strategy replacement",
+          "no Kelly deployment",
+          "promotion_freeze=True",
+          "tsl_crawler_modified=False",
+          "runtime_recommendation_modified=False",
+          "forbidden phrase scan passes before each commit"
+        ],
+        "gate_passes_when": "ALL governance invariants verified",
+        "current_state": "ACTIVE — governance invariants enforced by P80 GOVERNANCE dict",
+        "unblocked_by": "Always-on; does not require external data"
+      }
+    },
+    "gates_currently_open": [
+      "gate_f_governance"
+    ],
+    "gates_currently_blocked": [
+      "gate_a_data_legality",
+      "gate_b_schema",
+      "gate_c_mapping",
+      "gate_d_metric_readiness",
+      "gate_e_cross_year_validation"
+    ],
+    "sequential_dependency": "A → B → C → D → E (all must pass in order before production claim)"
+  },
+  "step6_future_phase_path": {
+    "path_version": "p80-v1",
+    "phases": {
+      "P80": {
+        "name": "Market-Edge Lane Re-entry Readiness Contract",
+        "status": "THIS PHASE",
+        "trigger": "P79B fixture complete and market-edge lane blocked",
+        "deliverable": "Contract, gates, candidate eligibility matrix",
+        "production_gate": false
+      },
+      "P81": {
+        "name": "Legal Odds Dataset Validator",
+        "status": "PENDING — requires legal odds data",
+        "trigger": "The Odds API key received AND legal data downloaded",
+        "deliverable": "Odds schema validator, Gates A-C implementation",
+        "production_gate": false,
+        "prerequisite": "The Odds API key received + dataset downloaded",
+        "notes": "Do not create until odds data physically exists. No speculative build."
+      },
+      "P82": {
+        "name": "Market-Edge Recomputation Dry-Run (Paper Only)",
+        "status": "PENDING — requires P81 PASS",
+        "trigger": "P81 Gates A-C passing",
+        "deliverable": "Edge recomputation (no EV/Kelly), paper-mode only",
+        "production_gate": false,
+        "notes": "May reveal whether 2025 negative edge (P65) holds in extended dataset. If edge reverses: requires separate CEO authorization before P84."
+      },
+      "P83": {
+        "name": "CLV Timestamp Validation",
+        "status": "PENDING — requires closing data",
+        "trigger": "P82 passing AND closing line dataset exists",
+        "deliverable": "CLV timestamp lineage verified, pregame vs closing confirmed",
+        "production_gate": false,
+        "notes": "CLV may NOT be computed without verified closing lines. Opening-line only datasets do not qualify."
+      },
+      "P84": {
+        "name": "Cross-Year Market-Edge Synthesis",
+        "status": "PENDING — requires P83 + 2024 odds",
+        "trigger": "P83 passing AND 2024+2025 legal odds both validated",
+        "deliverable": "Multi-season edge analysis (paper-only)",
+        "production_gate": false,
+        "notes": "Gate E requires >=2 seasons. P84 is the earliest phase where a multi-season edge claim could be made (still paper-only). Production gate remains out of scope beyond P84."
+      },
+      "P85_PRODUCTION_GATE": {
+        "name": "Production Gate (Future, Out of Scope)",
+        "status": "OUT OF SCOPE — not defined in P80",
+        "trigger": "Requires explicit CEO authorization after P84",
+        "deliverable": "TBD",
+        "production_gate": true,
+        "notes": "P80 does not define P85+. Production remains out of scope."
+      }
+    },
+    "current_phase": "P80",
+    "next_phase": "P81",
+    "next_phase_trigger": "The Odds API key received AND legal odds dataset downloaded",
+    "production_gate_phase": "NOT YET DEFINED (out of scope for P80-P84)",
+    "prediction_only_lane": {
+      "status": "ACTIVE — continues independently of market-edge lane",
+      "active_rules": [
+        "TIER_C_HOME_PLUS_AWAY_125 (primary)",
+        "TIER_C_HOME_PLUS_AWAY_100 (shadow)"
+      ],
+      "next_event": "2026 live Tier B n>=200 accumulation → future P79 trigger (~2026-09)"
+    }
+  },
+  "step7_contract_schema": {
+    "schema_name": "P80_MARKET_EDGE_REENTRY_CONTRACT",
+    "schema_version": "p80-v1",
+    "top_level_sections": [
+      "metadata",
+      "governance",
+      "prediction_lane_status",
+      "market_edge_blocker_summary",
+      "legal_odds_data_contract",
+      "candidate_eligibility_matrix",
+      "validation_gates",
+      "future_phase_path",
+      "stop_conditions",
+      "decision_summary"
+    ],
+    "governance_enforcement": {
+      "paper_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "ev_calculated": false,
+      "clv_calculated": false,
+      "kelly_calculated": false,
+      "production_ready": false,
+      "live_api_calls": 0
+    },
+    "stop_conditions": [
+      "api_key_accessed_in_code",
+      "ev_calculated",
+      "clv_calculated",
+      "kelly_calculated",
+      "kelly_deployed",
+      "production_ready_set_true",
+      "champion_replaced",
+      "real_bet_placed",
+      "odds_scraped_from_blocked_source",
+      "raw_paid_data_committed_without_policy",
+      "timestamp_lineage_unverified",
+      "side_mapping_unverified",
+      "2025_fixture_treated_as_2026_conclusion",
+      "p79b_research_only_overridden",
+      "tsl_crawler_modified",
+      "runtime_recommendation_modified",
+      "profitability_claimed"
+    ]
+  },
+  "step8_forbidden_scan": {
+    "scan_passed": true,
+    "violations_count": 0,
+    "violations": [],
+    "patterns_checked": 10
+  },
+  "market_edge_lane": "blocked",
+  "prediction_lane_status": "active",
+  "contract_is_production_claim": false,
+  "live_api_calls": 0,
+  "ev_clv_kelly_computed": false
+}

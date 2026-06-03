@@ -1,0 +1,12 @@
+{
+  "artifact_kind": "DRY_RUN_NO_OP",
+  "production_enabled": false,
+  "preview_only": true,
+  "env_preview": {
+    "STRATEGY_REPLAY_METADATA_ENABLEMENT_MODE": "DRY_RUN",
+    "STRATEGY_REPLAY_HISTORICAL_BACKFILL_DISABLED": "true",
+    "STRATEGY_REPLAY_PRODUCTION_UI_LAUNCH_BLOCKED": "true",
+    "STRATEGY_REPLAY_PRODUCTION_MIGRATION_BLOCKED": "true"
+  },
+  "notes": "Dry-run config preview only. No production config was changed. No runtime injection occurred."
+}

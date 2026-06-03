@@ -16,7 +16,7 @@
     "scope": "historical 2025 MLB",
     "source": "wbc_backend/evaluation/mlb_decision_quality.py",
     "status": "UNAVAILABLE_SINGLE_SNAPSHOT",
-    "generated_at": "2026-05-20T09:48:03.757859Z"
+    "generated_at": "2026-05-23T13:19:56.148506Z"
   },
   "paper_mode": true,
   "execution_mode": "PAPER_ONLY",

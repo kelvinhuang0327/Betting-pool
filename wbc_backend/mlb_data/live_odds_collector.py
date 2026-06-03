@@ -167,12 +167,16 @@ def _now_iso() -> str:
 # TSL fetch adapter
 # ---------------------------------------------------------------------------
 
-def _fetch_tsl_odds() -> list[dict[str, Any]]:
-    """Fetch current MLB odds from TSL crawler. Returns normalized game dicts."""
+def _fetch_tsl_odds(force_closing: bool = False) -> list[dict[str, Any]]:
+    """Fetch current MLB odds from TSL crawler. Returns normalized game dicts.
+
+    P26F: force_closing=True bypasses MNL dedup in tsl_odds_history.jsonl so that
+    a closing snapshot is always written during the game_time ±2h window.
+    """
     try:
         from data.tsl_crawler_v2 import TSLCrawlerV2
         crawler = TSLCrawlerV2(use_mock=False)
-        raw_games = crawler.fetch_baseball_games()
+        raw_games = crawler.fetch_baseball_games(force_closing=force_closing)
     except Exception as exc:
         logger.error("TSL fetch failed: %s", exc)
         return []
@@ -550,16 +554,20 @@ def capture_live_odds(
     *,
     timeline_path: Path = TIMELINE_PATH,
     odds_api_key: str | None = None,
+    force_closing: bool = False,
 ) -> dict[str, Any]:
     """
     Main entry point: fetch from all sources with retry, update timeline.
+
+    P26F: force_closing=True is passed when the capture window is in closing mode
+    (game_time ±2h), bypassing the MNL dedup filter in tsl_odds_history.jsonl.
     """
     all_snapshots: list[dict[str, Any]] = []
 
     # Primary: TSL
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            tsl_snaps = _fetch_tsl_odds()
+            tsl_snaps = _fetch_tsl_odds(force_closing=force_closing)
             all_snapshots.extend(tsl_snaps)
             logger.info("TSL fetch OK: %d snapshots (attempt %d)", len(tsl_snaps), attempt)
             break
@@ -581,9 +589,27 @@ def capture_live_odds(
                 if attempt < MAX_RETRIES:
                     time.sleep(RETRY_DELAY_SECONDS)
 
+    # P28D: Run TSL market availability monitor after each poll cycle.
+    # Uses only normalized TSL snapshots (source="TSL") already in all_snapshots.
+    # Empty list is valid — means TSL returned nothing → potential early withdrawal.
+    _tsl_monitor_result: dict[str, Any] = {}
+    try:
+        from .tsl_poll_monitor_adapter import run_tsl_monitor_after_poll
+        _tsl_snaps_for_monitor = [s for s in all_snapshots if s.get("source") == "TSL"]
+        _tsl_monitor_result = run_tsl_monitor_after_poll(
+            tsl_snaps=_tsl_snaps_for_monitor,
+            poll_ts=_now_iso(),
+            context=f"capture_live_odds force_closing={force_closing}",
+        )
+    except Exception as _mon_exc:
+        logger.warning("TSL monitor skipped: %s", _mon_exc)
+
     if not all_snapshots:
         logger.warning("No odds snapshots fetched from any source")
-        return {"snapshots_received": 0, "games_updated": 0, "snapshots_added": 0}
+        base: dict[str, Any] = {"snapshots_received": 0, "games_updated": 0, "snapshots_added": 0}
+        if _tsl_monitor_result:
+            base["tsl_monitor"] = _tsl_monitor_result
+        return base
 
     summary = update_timeline_from_snapshots(all_snapshots, timeline_path)
 
@@ -628,6 +654,9 @@ def capture_live_odds(
                 )
         except Exception as exc:
             logger.warning("Daily closing capture failed: %s", exc)
+
+    if _tsl_monitor_result:
+        summary["tsl_monitor"] = _tsl_monitor_result
 
     logger.info(
         "Odds capture complete: %d snapshots → %d games updated, %d added, %d dupes skipped",

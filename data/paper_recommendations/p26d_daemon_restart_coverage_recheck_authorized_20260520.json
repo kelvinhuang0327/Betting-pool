@@ -1,0 +1,96 @@
+{
+  "artifact_id": "p26d_daemon_restart_coverage_recheck_authorized_20260520",
+  "phase": "P26D",
+  "date": "2026-05-20",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "classification": "P26D_DAEMON_RESTARTED_NO_GAMES_IN_WINDOW",
+
+  "authorization_status": {
+    "authorized": true,
+    "authorization_received": "YES: 授權重啟 odds_capture_daemon"
+  },
+
+  "p26b_commit": "107535d",
+  "p26c_baseline": {
+    "complete_pair": 220,
+    "pregame_only": 577
+  },
+
+  "source_trace": {
+    "history_file": "data/tsl_odds_history.jsonl",
+    "capture_schedule": "data/mlb_context/odds_capture_schedule.json",
+    "heartbeat_log": "logs/daemon_heartbeat.jsonl"
+  },
+
+  "old_daemon_pid": 1381,
+  "new_daemon_pid": 67442,
+
+  "restart_time": "2026-05-20T13:51:00Z",
+  "restart_result": "SUCCESS",
+  "restart_stdout": "Stop signal sent / Start signal sent / RUNNING (pid=67442)",
+
+  "tick_verification": {
+    "first_tick_after_restart_utc": "2026-05-20T13:51:06Z",
+    "first_tick_log": "Capture cycle #1 at 2026-05-20T13:51:06.065380Z",
+    "latest_heartbeat_utc": "2026-05-20T13:51:12Z"
+  },
+
+  "p26b_activation_confirmed": {
+    "evidence": "_wbc_npb_audit key present in first post-restart capture record (value: [])",
+    "windows_at_first_tick": {
+      "continuous": true,
+      "decision": false,
+      "pregame": false,
+      "closing": false,
+      "_wbc_npb_audit": [],
+      "_wbc_npb_audit_key_present": true
+    },
+    "new_code_in_memory": true,
+    "note": "Empty list [] confirms new determine_capture_windows() is running. No games were in ±2h window at tick time."
+  },
+
+  "audit_entries_found": 0,
+  "audit_reason": "No WBC/NPB games within ±2h of 13:51 UTC. Next game enters window at ~15:04 UTC.",
+
+  "next_games_entering_window": [
+    {"match_id": "3469710.1", "game_time_utc": "2026-05-20T17:05:00Z", "window_entry_utc": "2026-05-20T15:05:00Z"},
+    {"match_id": "3469714.1", "game_time_utc": "2026-05-20T17:10:00Z", "window_entry_utc": "2026-05-20T15:10:00Z"},
+    {"match_id": "3469709.1", "game_time_utc": "2026-05-20T17:40:00Z", "window_entry_utc": "2026-05-20T15:40:00Z"}
+  ],
+  "first_audit_expected_utc": "~2026-05-20T15:06Z (next daemon tick after 15:04)",
+
+  "coverage_before": {
+    "complete_pair": 220,
+    "pregame_only": 577,
+    "closing_only": 74,
+    "no_valid_snapshots": 16,
+    "total_matches": 887
+  },
+
+  "coverage_after": {
+    "complete_pair": 220,
+    "pregame_only": 577,
+    "closing_only": 74,
+    "no_valid_snapshots": 16,
+    "total_matches": 887,
+    "new_rows_since_restart": 4,
+    "new_closing_snapshots": 0
+  },
+
+  "delta_complete_pairs": 0,
+  "p25c_bootstrap_threshold": 300,
+  "whether_bootstrap_ran": false,
+  "bootstrap_reason": "220 < 300 threshold. No closing snapshots collected yet (daemon just restarted, first WBC window entry in ~1h).",
+
+  "next_expected_milestones": {
+    "first_wbc_audit_entry": "~15:06 UTC today (daemon tick after 3469710.1 enters window)",
+    "first_wbc_closing_snapshot": "~17:05-17:45 UTC today",
+    "coverage_recheck_recommended": "2026-05-21 or after several WBC game days",
+    "bootstrap_rerun_condition": "COMPLETE_PAIR >= 300"
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "n_games_total": 501,
-  "n_games_since_retrain": 1,
+  "n_games_total": 591,
+  "n_games_since_retrain": 41,
   "last_retrain_at": 0,
   "is_degraded": false,
   "degradation_first_detected": null,

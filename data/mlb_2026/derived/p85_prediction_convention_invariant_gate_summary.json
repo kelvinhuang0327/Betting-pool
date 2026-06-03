@@ -1,0 +1,145 @@
+{
+  "p85_classification": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+  "date": "2026-05-27",
+  "generated_at": "2026-05-27T07:20:29.172331+00:00",
+  "phase": "diagnostic-only",
+  "allowed_classifications": [
+    "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+    "P85_INVARIANT_GATE_FAILED_ARTIFACT_MISMATCH",
+    "P85_INVARIANT_GATE_FAILED_MAPPING_REGRESSION",
+    "P85_INVARIANT_GATE_BLOCKED_BY_PREFLIGHT",
+    "P85_INVARIANT_GATE_BLOCKED_BY_SCOPE_DRIFT"
+  ],
+  "step1_artifact_lock": {
+    "step": "step1_artifact_lock",
+    "checks": {
+      "p83e_summary_exists": true,
+      "p84e_summary_exists": true,
+      "p84e_rows_exists": true,
+      "p84g_summary_exists": true,
+      "p84h_summary_exists": true,
+      "p83e_classification": "P83E_CANONICAL_ROWS_READY",
+      "p84g_classification": "P84G_SIDE_MAPPING_FIXED_METRICS_REGENERATED",
+      "p84h_classification": "P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED",
+      "p83e_class_locked": true,
+      "p84g_class_locked": true,
+      "p84h_class_locked": true
+    },
+    "status": "PASSED"
+  },
+  "step2_fip_positive_invariant": {
+    "step": "step2_fip_positive_invariant",
+    "description": "sp_fip_delta > 0 (home pitcher FIP higher/worse) must predict 'away'",
+    "n_positive_delta_rows": 396,
+    "n_violations": 0,
+    "violations": [],
+    "status": "PASSED"
+  },
+  "step3_fip_negative_invariant": {
+    "step": "step3_fip_negative_invariant",
+    "description": "sp_fip_delta < 0 (away pitcher FIP higher/worse) must predict 'home'",
+    "n_negative_delta_rows": 412,
+    "n_violations": 0,
+    "violations": [],
+    "status": "PASSED"
+  },
+  "step4_zero_delta_policy": {
+    "step": "step4_zero_delta_policy",
+    "zero_delta_policy": {
+      "rule": "sp_fip_delta == 0 → predicted_side determined by model_probability only",
+      "prob_gt_half": "predicted_side = 'home'",
+      "prob_lt_half": "predicted_side = 'away'",
+      "prob_eq_half": "abstain — row must be excluded from hit_rate computation",
+      "note": "No zero-delta rows in current dataset (min abs delta = 0.0077). Policy documented for future gate enforcement."
+    },
+    "n_zero_delta_rows": 0,
+    "n_near_zero_rows": 2,
+    "near_zero_threshold": 0.01,
+    "zero_violations": [],
+    "min_abs_delta_in_dataset": 0.0077,
+    "status": "PASSED"
+  },
+  "step5_probability_semantics": {
+    "step": "step5_probability_semantics",
+    "description": "model_probability = P(home wins). Not P(predicted side wins).",
+    "n_rows": 808,
+    "mean_model_probability": 0.503383,
+    "n_prob_above_half": 412,
+    "n_prob_below_half": 396,
+    "trivially_high_flag": false,
+    "has_below_half_rows": true,
+    "n_prob_violations": 0,
+    "prob_violations": [],
+    "status": "PASSED"
+  },
+  "step6_actual_winner_consistency": {
+    "step": "step6_actual_winner_consistency",
+    "description": "actual_winner must match result_home_score vs result_away_score",
+    "n_outcome_rows": 808,
+    "n_violations": 0,
+    "n_tied_scores": 0,
+    "violations": [],
+    "status": "PASSED"
+  },
+  "step7_is_correct_consistency": {
+    "step": "step7_is_correct_consistency",
+    "description": "is_correct == (predicted_side == actual_winner)",
+    "n_outcome_rows": 808,
+    "n_correct": 460,
+    "computed_hit_rate": 0.569307,
+    "n_violations": 0,
+    "violations": [],
+    "status": "PASSED"
+  },
+  "step8_auc_hit_rate_guard": {
+    "step": "step8_auc_hit_rate_guard",
+    "description": "AUC = roc_auc_score(y_true=home_won, y_score=model_probability). Not P(predicted side wins).",
+    "recomputed_hit_rate": 0.569307,
+    "recomputed_auc": 0.594315,
+    "p84h_ref_hit_rate": 0.569307,
+    "p84h_ref_auc": 0.594315,
+    "hit_rate_delta": 7e-08,
+    "auc_delta": 6e-08,
+    "hit_rate_matches_p84h": true,
+    "auc_matches_p84h": true,
+    "semantically_consistent": true,
+    "auc_vacuous": false,
+    "platt_isotonic_refit": "FORBIDDEN_BY_GOVERNANCE",
+    "status": "PASSED"
+  },
+  "step9_governance_scan": {
+    "step": "step9_governance_scan",
+    "n_rows_scanned": 828,
+    "row_level_violation_counts": {
+      "paper_only_false": 0,
+      "diagnostic_only_false": 0,
+      "production_ready_true": 0,
+      "odds_used_true": 0,
+      "market_edge_true": 0
+    },
+    "total_row_violations": 0,
+    "p85_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "live_api_calls": 0,
+      "paid_api_called": false,
+      "canonical_rows_modified": false,
+      "outcome_rows_modified": false,
+      "p83e_mapping_modified": false,
+      "champion_replaced": false
+    },
+    "status": "PASSED"
+  },
+  "step10_final_classification": {
+    "classification": "P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY",
+    "rationale": "All 9 invariant checks passed. FIP convention correct, probability semantics correct, label consistency verified, AUC/hit_rate semantically consistent. P84G fix confirmed not regressed.",
+    "n_steps_checked": 9,
+    "n_steps_passed": 9,
+    "n_steps_failed": 0
+  }
+}

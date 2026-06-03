@@ -1,0 +1,54 @@
+{
+  "artifact_id": "p26j_daemon_continuity_verification_20260521",
+  "phase": "P26J",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+  "target_match_ids": ["3469930.1", "3469931.1"],
+  "complete_pair_before": 220,
+  "complete_pair_after": 220,
+  "delta_complete_pairs": 0,
+  "target_pair_delta": 0,
+  "bootstrap_ran": false,
+  "p25c_bootstrap_eligible": false,
+  "final_classification": "P26J_BLOCKED_BY_WINDOW_NOT_CLOSED",
+
+  "timing_guard": {
+    "current_utc": "2026-05-21T03:20:40Z",
+    "threshold_utc": "2026-05-21T09:10:00Z",
+    "gate_result": "BLOCKED"
+  },
+
+  "daemon_state_at_readiness": {
+    "last_heartbeat_utc": "2026-05-21T03:09:50Z",
+    "daemon_status": "RUNNING",
+    "last_capture_schedule_run": "2026-05-21T02:54:47Z",
+    "note": "Daemon confirmed running at 03:09Z. Cannot verify 07:00Z–09:00Z window continuity until that window elapses."
+  },
+
+  "daemon_window_analysis_deferred": true,
+  "window_to_monitor": {
+    "start_utc": "2026-05-21T07:00:00Z",
+    "end_utc": "2026-05-21T09:00:00Z",
+    "expected_cycles_in_window": 8,
+    "cycle_interval_min": 15,
+    "risk_factor": "Historical 9.9h daemon gap on 2026-05-20 (15:10Z to 01:06Z+1)"
+  },
+
+  "daemon_continuity_classification": "INCONCLUSIVE — analysis deferred to post-window",
+
+  "post_window_check_instructions": {
+    "read": ["logs/daemon_heartbeat.jsonl", "data/mlb_context/odds_capture_schedule.json"],
+    "check": "Were there daemon cycles during 07:00Z–09:00Z?",
+    "expected_heartbeat_entries": "At least 4–8 entries between 07:00Z and 09:15Z",
+    "pass_condition": "DAEMON_RAN_AND_CAPTURED_CLOSING",
+    "fail_condition": "DAEMON_STOPPED_BEFORE_CLOSING_WINDOW if gap in heartbeat >= 07:00Z"
+  },
+
+  "explanation": "Daemon continuity for the 07:00Z–09:00Z closing window cannot be assessed until that window elapses. Current UTC is 03:20Z. Daemon is running at readiness checkpoint. This artifact is deferred until post-window re-run after 09:10Z."
+}

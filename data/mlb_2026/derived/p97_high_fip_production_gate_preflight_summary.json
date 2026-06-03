@@ -1,0 +1,328 @@
+{
+  "phase": "P97",
+  "final_classification": "P97_HIGH_FIP_PREFLIGHT_SIGNAL_PASS_PRODUCTION_BLOCKED",
+  "classification_rationale": "Signal gate PASS (P94/P95/P96 all stable, HIGH_FIP hit_rate=0.641115). Segment gate PASS (HIGH_FIP diagnostic-only, MID/LOW watch-only). Production BLOCKED by 8 failing gates: calibration_gate, coverage_gate, market_edge_gate, odds_dataset_gate, production_governance_gate, recommendation_contract_gate, risk_control_gate, season_span_gate. readiness_ratio=0.2000 (2/10). No production promotion, no recommendation, no odds/EV/CLV/Kelly.",
+  "allowed_classifications": [
+    "P97_HIGH_FIP_PREFLIGHT_SIGNAL_PASS_PRODUCTION_BLOCKED",
+    "P97_HIGH_FIP_PREFLIGHT_PARTIAL_PASS_REQUIRES_MORE_COVERAGE",
+    "P97_HIGH_FIP_PREFLIGHT_FAILED_VALIDATION"
+  ],
+  "date": "2026-05-28",
+  "generated_at": "2026-05-28T11:14:52.342852Z",
+  "git_head": "73edb41",
+  "step1_upstream_verification": {
+    "step": "step1_upstream_verification",
+    "all_gates_ok": true,
+    "gates_passed": [
+      "P96_file_exists",
+      "P95_file_exists",
+      "P94_file_exists",
+      "P93_file_exists",
+      "P84E_file_exists",
+      "P96_classification_ok",
+      "P95_classification_ok",
+      "P94_classification_ok",
+      "P93_classification_ok",
+      "P96_monthly_all_stable",
+      "P96_rolling_stable",
+      "HIGH_FIP_n_287_ok",
+      "HIGH_FIP_hit_rate_ok",
+      "MID_FIP_watch_only_confirmed",
+      "LOW_FIP_watch_only_confirmed",
+      "P84E_total_rows_828_ok",
+      "P84E_outcome_rows_808_ok",
+      "governance_all_pass_verified"
+    ],
+    "failures": [],
+    "high_fip_n": 287,
+    "high_fip_hit_rate": 0.641115,
+    "total_rows": 828,
+    "outcome_rows": 808,
+    "schedule_total": 2430,
+    "schedule_coverage_pct": 34.0741,
+    "observed_months": [
+      "2026-03",
+      "2026-04",
+      "2026-05"
+    ]
+  },
+  "step2_readiness_checklist": {
+    "step": "step2_readiness_checklist",
+    "gates": [
+      {
+        "gate": "prediction_signal_gate",
+        "status": "PASS",
+        "rationale": "P94/P95/P96 all stable \u2014 HIGH_FIP hit_rate=0.641115, monthly MONTHLY_ALL_STABLE, rolling STABLE.",
+        "blocker_category": null
+      },
+      {
+        "gate": "segment_scope_gate",
+        "status": "PASS",
+        "rationale": "Only HIGH_FIP has diagnostic tracking. MID_FIP and LOW_FIP confirmed watch-only. No promotion.",
+        "blocker_category": null
+      },
+      {
+        "gate": "coverage_gate",
+        "status": "FAIL",
+        "rationale": "schedule_coverage_pct=34.0741% (threshold: PASS>=80, WARN>=60, FAIL<60). Current 34.07% \u2014 only March\u2013May 2026 observed. At minimum 60% required before product consideration.",
+        "blocker_category": "DATA_COVERAGE_BLOCKER"
+      },
+      {
+        "gate": "season_span_gate",
+        "status": "FAIL",
+        "rationale": "observed_months=3 (threshold: PASS>=6, WARN>=4, FAIL<4). Current: only 3 months (Mar/Apr/May 2026). Minimum 4 months needed before product consideration.",
+        "blocker_category": "DATA_COVERAGE_BLOCKER"
+      },
+      {
+        "gate": "calibration_gate",
+        "status": "FAIL",
+        "rationale": "No OOS calibration diagnostics exist for HIGH_FIP segment. Probability reliability is unknown. No calibration refit will be run in P97.",
+        "blocker_category": "CALIBRATION_BLOCKER"
+      },
+      {
+        "gate": "odds_dataset_gate",
+        "status": "FAIL",
+        "rationale": "No real legal odds dataset available and validated through P81/P82 policy gate. Any market edge claim requires legal odds data first.",
+        "blocker_category": "LEGAL_ODDS_BLOCKER"
+      },
+      {
+        "gate": "market_edge_gate",
+        "status": "FAIL",
+        "rationale": "No EV/CLV validation exists from legal odds data. Market edge cannot be claimed without verified legal odds. No EV/CLV computed in P97.",
+        "blocker_category": "MARKET_EDGE_BLOCKER"
+      },
+      {
+        "gate": "risk_control_gate",
+        "status": "FAIL",
+        "rationale": "No stake/risk caps or fail-safe policy defined and approved. Kelly criterion not computed. Risk controls must be approved before any production consideration.",
+        "blocker_category": "RISK_CONTROL_BLOCKER"
+      },
+      {
+        "gate": "recommendation_contract_gate",
+        "status": "FAIL",
+        "rationale": "No paper recommendation contract exists that can consume legal odds and provide source traceability. Prerequisite: legal odds dataset gate must PASS first.",
+        "blocker_category": "PRODUCT_GOVERNANCE_BLOCKER"
+      },
+      {
+        "gate": "production_governance_gate",
+        "status": "FAIL",
+        "rationale": "No CEO explicit production-review authorization exists. Current CEO decision is CEO_DECISION_PARTIALLY_APPROVED for diagnostic tracking only.",
+        "blocker_category": "PRODUCT_GOVERNANCE_BLOCKER"
+      }
+    ],
+    "status": "PASSED"
+  },
+  "step3_readiness_scoring": {
+    "step": "step3_readiness_scoring",
+    "total_gates": 10,
+    "pass_count": 2,
+    "warn_count": 0,
+    "fail_count": 8,
+    "readiness_ratio": 0.2,
+    "pass_gates": [
+      "prediction_signal_gate",
+      "segment_scope_gate"
+    ],
+    "warn_gates": [],
+    "fail_gates": [
+      "coverage_gate",
+      "season_span_gate",
+      "calibration_gate",
+      "odds_dataset_gate",
+      "market_edge_gate",
+      "risk_control_gate",
+      "recommendation_contract_gate",
+      "production_governance_gate"
+    ],
+    "production_ready": false,
+    "note": "readiness_ratio is a diagnostic metric only. It does not trigger any promotion. All product/market gates fail due to coverage/calibration/odds/risk/governance blockers.",
+    "status": "PASSED"
+  },
+  "step4_blocker_matrix": {
+    "step": "step4_blocker_matrix",
+    "blocker_count": 6,
+    "blockers": {
+      "DATA_COVERAGE_BLOCKER": {
+        "name": "DATA_COVERAGE_BLOCKER",
+        "description": "Schedule coverage at 34.07% (828/2430 games), only March\u2013May 2026. Minimum threshold: 60% (coverage_gate PASS), 4+ months (season_span_gate). Blocking: coverage_gate, season_span_gate.",
+        "blocking_gates": [
+          "coverage_gate",
+          "season_span_gate"
+        ],
+        "resolution": "Continue accumulating 2026 game results. Rerun P96 when coverage reaches >=60% and >=4 months are observed."
+      },
+      "CALIBRATION_BLOCKER": {
+        "name": "CALIBRATION_BLOCKER",
+        "description": "HIGH_FIP probability reliability not OOS-calibrated. No calibration diagnostic exists. No refit will be run until this is explicitly commissioned.",
+        "blocking_gates": [
+          "calibration_gate"
+        ],
+        "resolution": "Design and run an OOS calibration diagnostic for HIGH_FIP segment only. No refit, no production mutation."
+      },
+      "LEGAL_ODDS_BLOCKER": {
+        "name": "LEGAL_ODDS_BLOCKER",
+        "description": "No real legal odds dataset available and validated through P81/P82 policy. No market edge claim possible without legal odds.",
+        "blocking_gates": [
+          "odds_dataset_gate"
+        ],
+        "resolution": "Acquire legal odds dataset, validate through P81/P82 pipeline before any EV/CLV work."
+      },
+      "MARKET_EDGE_BLOCKER": {
+        "name": "MARKET_EDGE_BLOCKER",
+        "description": "No EV/CLV validation. Market edge cannot be claimed from hit_rate alone without odds context.",
+        "blocking_gates": [
+          "market_edge_gate"
+        ],
+        "resolution": "Complete LEGAL_ODDS_BLOCKER first. Then design EV/CLV validation pipeline (separate phase)."
+      },
+      "RISK_CONTROL_BLOCKER": {
+        "name": "RISK_CONTROL_BLOCKER",
+        "description": "No stake/risk caps or fail-safe policy defined. Kelly criterion not computed. No risk controls approved.",
+        "blocking_gates": [
+          "risk_control_gate"
+        ],
+        "resolution": "Design and approve a risk control framework before any product consideration."
+      },
+      "PRODUCT_GOVERNANCE_BLOCKER": {
+        "name": "PRODUCT_GOVERNANCE_BLOCKER",
+        "description": "No paper recommendation contract and no CEO production-review authorization. Current CEO approval covers diagnostic tracking only.",
+        "blocking_gates": [
+          "recommendation_contract_gate",
+          "production_governance_gate"
+        ],
+        "resolution": "Explicit CEO authorization required for production review. Cannot self-authorize."
+      }
+    },
+    "blocker_names": [
+      "DATA_COVERAGE_BLOCKER",
+      "CALIBRATION_BLOCKER",
+      "LEGAL_ODDS_BLOCKER",
+      "MARKET_EDGE_BLOCKER",
+      "RISK_CONTROL_BLOCKER",
+      "PRODUCT_GOVERNANCE_BLOCKER"
+    ],
+    "status": "PASSED"
+  },
+  "step5_next_actions": {
+    "step": "step5_next_actions",
+    "allowed_next_actions": [
+      {
+        "action": "continue_accumulating_2026_coverage",
+        "description": "Let the 2026 season proceed. Re-run P96 and P97 when schedule_coverage_pct reaches >=60% or >=4 months are observed.",
+        "safe": true
+      },
+      {
+        "action": "rerun_p96_at_60pct_coverage",
+        "description": "Rerun P96 drift monitor when coverage >=60%. Check if stability holds over a larger sample.",
+        "safe": true
+      },
+      {
+        "action": "design_calibration_diagnostic_only",
+        "description": "Design an OOS calibration diagnostic for HIGH_FIP. No refit, no production mutation. Diagnostic artifact only.",
+        "safe": true
+      },
+      {
+        "action": "keep_high_fip_shadow_tracker_diagnostic_only",
+        "description": "Continue HIGH_FIP diagnostic shadow tracking per P95 contract. Do not promote.",
+        "safe": true
+      },
+      {
+        "action": "keep_mid_low_watch_only",
+        "description": "MID_FIP and LOW_FIP remain watch-only. No promotion, no action.",
+        "safe": true
+      }
+    ],
+    "prohibited_next_actions": [
+      {
+        "action": "production_promotion",
+        "reason": "production_governance_gate=FAIL, CEO authorization not obtained."
+      },
+      {
+        "action": "recommendation_surface",
+        "reason": "recommendation_contract_gate=FAIL, no legal odds, no EV/CLV validation."
+      },
+      {
+        "action": "odds_integration",
+        "reason": "odds_dataset_gate=FAIL, no legal odds dataset validated."
+      },
+      {
+        "action": "ev_clv_kelly_computation",
+        "reason": "market_edge_gate=FAIL, risk_control_gate=FAIL, no legal odds."
+      },
+      {
+        "action": "calibration_refit",
+        "reason": "calibration_gate=FAIL, no OOS calibration diagnostic exists; refit not authorized."
+      },
+      {
+        "action": "champion_replacement",
+        "reason": "production_governance_gate=FAIL, production_ready=false."
+      },
+      {
+        "action": "taiwan_lottery_paper_recommendation",
+        "reason": "recommendation_contract_gate=FAIL, governance locks: taiwan_lottery_recommendation=false."
+      },
+      {
+        "action": "stake_sizing",
+        "reason": "risk_control_gate=FAIL, kelly_computed=false."
+      }
+    ],
+    "allowed_count": 5,
+    "prohibited_count": 8,
+    "status": "PASSED"
+  },
+  "step6_final_classification": {
+    "step": "step6_final_classification",
+    "final_classification": "P97_HIGH_FIP_PREFLIGHT_SIGNAL_PASS_PRODUCTION_BLOCKED",
+    "rationale": "Signal gate PASS (P94/P95/P96 all stable, HIGH_FIP hit_rate=0.641115). Segment gate PASS (HIGH_FIP diagnostic-only, MID/LOW watch-only). Production BLOCKED by 8 failing gates: calibration_gate, coverage_gate, market_edge_gate, odds_dataset_gate, production_governance_gate, recommendation_contract_gate, risk_control_gate, season_span_gate. readiness_ratio=0.2000 (2/10). No production promotion, no recommendation, no odds/EV/CLV/Kelly.",
+    "pass_gates": [
+      "prediction_signal_gate",
+      "segment_scope_gate"
+    ],
+    "warn_gates": [],
+    "fail_gates": [
+      "coverage_gate",
+      "season_span_gate",
+      "calibration_gate",
+      "odds_dataset_gate",
+      "market_edge_gate",
+      "risk_control_gate",
+      "recommendation_contract_gate",
+      "production_governance_gate"
+    ],
+    "readiness_ratio": 0.2
+  },
+  "governance_guards": {
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "platt_scaling": false,
+    "isotonic_scaling": false,
+    "score_transform_refit": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false,
+    "source_artifacts_modified": false,
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "status": "PASSED"
+  },
+  "governance_all_pass": true,
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_ready": false,
+  "real_bet_allowed": false,
+  "recommendation_allowed": false,
+  "product_surface_allowed": false
+}

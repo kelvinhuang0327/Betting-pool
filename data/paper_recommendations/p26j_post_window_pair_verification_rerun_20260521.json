@@ -1,0 +1,71 @@
+{
+  "artifact_id": "p26j_post_window_pair_verification_rerun_20260521",
+  "phase": "P26J",
+  "run_type": "post_window_rerun",
+  "generated_at": "2026-05-21T09:12:47Z",
+  "timing_guard": {
+    "utc_now": "2026-05-21T09:12:47Z",
+    "threshold": "2026-05-21T09:10:00Z",
+    "result": "PASS",
+    "note": "Window closed. Full verification authorized."
+  },
+  "phase1_commit_verification": {
+    "d644f3f": "P26H+P26G: pair formation monitor + closure",
+    "60a73a7": "P26I: closing capture gap investigation",
+    "34fc118": "P26J: post-window pair verification (readiness checkpoint)",
+    "all_confirmed": true
+  },
+  "baseline": {
+    "target_match_ids": ["3469930.1", "3469931.1"],
+    "COMPLETE_PAIR_baseline": 220,
+    "target_pair_delta_baseline": 0,
+    "bootstrap_ran": false
+  },
+  "targets": {
+    "3469930.1": {
+      "total_rows": 7,
+      "pregame_rows": 7,
+      "closing_rows_by_gap": 0,
+      "force_closing_labeled": 6,
+      "dedup_bypassed_labeled": 6,
+      "gap_hours_range": "5.59 – 6.88",
+      "closing_window_rows_gap_0_to_2h": 0,
+      "markets_nonempty_count": 0,
+      "all_markets_empty": true,
+      "last_fetched_at": "2026-05-21T03:24:52Z",
+      "game_time_utc": "2026-05-21T09:00:00Z",
+      "pair_status": "PREGAME_ONLY_NO_CLOSING",
+      "note": "fc_labeled rows have gap 5.59-6.84h — not within 0-2h closing window. No actual closing row captured. markets=[] on all rows."
+    },
+    "3469931.1": {
+      "total_rows": 8,
+      "pregame_rows": 8,
+      "closing_rows_by_gap": 0,
+      "force_closing_labeled": 6,
+      "dedup_bypassed_labeled": 5,
+      "gap_hours_range": "4.08 – 6.88",
+      "closing_window_rows_gap_0_to_2h": 0,
+      "markets_nonempty_count": 0,
+      "all_markets_empty": true,
+      "last_fetched_at": "2026-05-21T04:55:09Z",
+      "game_time_utc": "2026-05-21T09:00:00Z",
+      "pair_status": "PREGAME_ONLY_NO_CLOSING",
+      "note": "Last row fetched at 04:55Z (gap=4.08h). No row in 07:00-09:00Z closing window. markets=[] on all rows."
+    }
+  },
+  "target_pair_delta": 0,
+  "COMPLETE_PAIR_current": 219,
+  "COMPLETE_PAIR_baseline": 220,
+  "COMPLETE_PAIR_delta": -1,
+  "p25c_bootstrap_eligible": false,
+  "p25c_bootstrap_ran": false,
+  "final_classification": "P26J_TSL_SOURCE_UNAVAILABLE_AT_CLOSING_CONFIRMED",
+  "root_cause_summary": "TSL source returned no market data (markets=[]) for either target across all captures. The external closing fetch was not executed (fetched=false) during the 07:00-09:00Z closing window despite 8 daemon cycles running. api_calls_today remained at 2 throughout the window, indicating the external closing API was not triggered. No closing rows (gap 0-2h) were formed for either target.",
+  "actions_taken": [],
+  "actions_blocked": [
+    "crawler modification",
+    "bootstrap execution",
+    "production proposal",
+    "dedup/scheduler changes"
+  ]
+}

@@ -1,0 +1,414 @@
+{
+  "spec_metadata": {
+    "spec_version": "P114.20260531",
+    "generated_at": "2026-05-31",
+    "source_fixture_version": "P113.20260531",
+    "final_classification": "P114_LEGAL_ODDS_SOURCE_REQUIREMENTS_READY_WITH_BLOCKERS"
+  },
+  "source_p113_fixture_reference": {
+    "fixture_path": "data/mlb_2026/derived/p113_paper_only_market_contract_schema_fixture_summary.json",
+    "fixture_version": "P113.20260531",
+    "final_classification": "P113_MARKET_CONTRACT_SCHEMA_FIXTURE_READY_WITH_BLOCKERS"
+  },
+  "legal_odds_source_requirements": {
+    "provider_authorization": [
+      "Must be an authorized legal provider (e.g. Taiwan Sports Lottery)",
+      "No scraping, no unofficial APIs, no grey/illegal sources"
+    ],
+    "odds_schema": [
+      "Must provide odds for all supported MLB pregame markets: moneyline, run line, total runs, first five innings (if supported)",
+      "Odds must be decimal, positive, and match official market definitions"
+    ],
+    "source_trace": [
+      "Each odds record must include provider, fetch timestamp, and unique market id",
+      "Must include source trace fields for auditability"
+    ],
+    "timestamp": [
+      "Odds must include official publish time and fetch time",
+      "Must support freshness validation (max 5 min lag for pregame)"
+    ],
+    "market_mapping": [
+      "Market ids and side options must match contract schema fixture",
+      "Must provide mapping for all supported and unsupported markets"
+    ],
+    "data_quality": [
+      "No missing odds, no negative/zero odds, no duplicate records",
+      "Must pass deduplication and audit checks"
+    ],
+    "deduplication": [
+      "Odds must be deduped by (provider, game_id, market_id, side, fetch_time)"
+    ],
+    "auditability": [
+      "All odds records must be auditable and traceable to source provider"
+    ]
+  },
+  "market_odds_requirements": [
+    {
+      "market_id": "moneyline_winner",
+      "required_odds_fields": [
+        "odds"
+      ],
+      "required_line_fields": [
+        ""
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_source_trace_fields": [
+        "provider",
+        "fetch_timestamp",
+        "market_id",
+        "source_trace_id"
+      ],
+      "required_timestamp_fields": [
+        "publish_time",
+        "fetch_time"
+      ],
+      "required_market_status_fields": [
+        "market_status",
+        "blocked_reason"
+      ],
+      "required_provider_metadata": [
+        "provider_id",
+        "provider_name"
+      ],
+      "dedupe_key": [
+        "provider",
+        "game_id",
+        "market_id",
+        "side",
+        "fetch_time"
+      ],
+      "freshness_requirement": "pregame odds must be <5min old",
+      "audit_requirement": "must be auditable to legal provider",
+      "current_status": "blocked",
+      "blocker_type": [
+        "LEGAL_ODDS_SOURCE_BLOCKER",
+        "GOVERNANCE_PRODUCTION_BLOCKER",
+        "EV_CLV_NOT_ALLOWED_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "run_line_handicap",
+      "required_odds_fields": [
+        "odds"
+      ],
+      "required_line_fields": [
+        "line"
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_source_trace_fields": [
+        "provider",
+        "fetch_timestamp",
+        "market_id",
+        "source_trace_id"
+      ],
+      "required_timestamp_fields": [
+        "publish_time",
+        "fetch_time"
+      ],
+      "required_market_status_fields": [
+        "market_status",
+        "blocked_reason"
+      ],
+      "required_provider_metadata": [
+        "provider_id",
+        "provider_name"
+      ],
+      "dedupe_key": [
+        "provider",
+        "game_id",
+        "market_id",
+        "side",
+        "fetch_time"
+      ],
+      "freshness_requirement": "pregame odds must be <5min old",
+      "audit_requirement": "must be auditable to legal provider",
+      "current_status": "blocked",
+      "blocker_type": [
+        "MARKET_SCHEMA_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "total_runs_over_under",
+      "required_odds_fields": [
+        "odds"
+      ],
+      "required_line_fields": [
+        "line"
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_source_trace_fields": [
+        "provider",
+        "fetch_timestamp",
+        "market_id",
+        "source_trace_id"
+      ],
+      "required_timestamp_fields": [
+        "publish_time",
+        "fetch_time"
+      ],
+      "required_market_status_fields": [
+        "market_status",
+        "blocked_reason"
+      ],
+      "required_provider_metadata": [
+        "provider_id",
+        "provider_name"
+      ],
+      "dedupe_key": [
+        "provider",
+        "game_id",
+        "market_id",
+        "side",
+        "fetch_time"
+      ],
+      "freshness_requirement": "pregame odds must be <5min old",
+      "audit_requirement": "must be auditable to legal provider",
+      "current_status": "blocked",
+      "blocker_type": [
+        "MARKET_SCHEMA_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "first_five_innings_if_supported_later",
+      "required_odds_fields": [
+        "odds"
+      ],
+      "required_line_fields": [
+        ""
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_source_trace_fields": [
+        "provider",
+        "fetch_timestamp",
+        "market_id",
+        "source_trace_id"
+      ],
+      "required_timestamp_fields": [
+        "publish_time",
+        "fetch_time"
+      ],
+      "required_market_status_fields": [
+        "market_status",
+        "blocked_reason"
+      ],
+      "required_provider_metadata": [
+        "provider_id",
+        "provider_name"
+      ],
+      "dedupe_key": [
+        "provider",
+        "game_id",
+        "market_id",
+        "side",
+        "fetch_time"
+      ],
+      "freshness_requirement": "pregame odds must be <5min old",
+      "audit_requirement": "must be auditable to legal provider",
+      "current_status": "blocked",
+      "blocker_type": [
+        "MARKET_SCHEMA_BLOCKER"
+      ],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "taiwan_lottery_recommendation"
+      ]
+    },
+    {
+      "market_id": "unsupported_market_placeholder",
+      "required_odds_fields": [
+        "odds"
+      ],
+      "required_line_fields": [
+        ""
+      ],
+      "required_side_fields": [
+        "home",
+        "away"
+      ],
+      "required_source_trace_fields": [
+        "provider",
+        "fetch_timestamp",
+        "market_id",
+        "source_trace_id"
+      ],
+      "required_timestamp_fields": [
+        "publish_time",
+        "fetch_time"
+      ],
+      "required_market_status_fields": [
+        "market_status",
+        "blocked_reason"
+      ],
+      "required_provider_metadata": [
+        "provider_id",
+        "provider_name"
+      ],
+      "dedupe_key": [
+        "provider",
+        "game_id",
+        "market_id",
+        "side",
+        "fetch_time"
+      ],
+      "freshness_requirement": "pregame odds must be <5min old",
+      "audit_requirement": "must be auditable to legal provider",
+      "current_status": "blocked",
+      "blocker_type": [],
+      "allowed_future_action": "integration_after_contract",
+      "prohibited_action": [
+        "fetch_odds",
+        "store_odds",
+        "use_odds",
+        "production",
+        "recommendation",
+        "ev",
+        "clv",
+        "kelly",
+        "stake_sizing",
+        "taiwan_lottery_recommendation"
+      ]
+    }
+  ],
+  "source_trace_requirements": [
+    "provider",
+    "fetch_timestamp",
+    "market_id",
+    "source_trace_id"
+  ],
+  "timestamp_requirements": [
+    "publish_time",
+    "fetch_time"
+  ],
+  "market_mapping_requirements": [
+    "market_id",
+    "side",
+    "contract_market_id",
+    "contract_side"
+  ],
+  "data_quality_requirements": [
+    "no_missing_odds",
+    "no_negative_odds",
+    "no_duplicates",
+    "deduplication_passed",
+    "audit_passed"
+  ],
+  "deduplication_requirements": [
+    "provider",
+    "game_id",
+    "market_id",
+    "side",
+    "fetch_time"
+  ],
+  "auditability_requirements": [
+    "provider",
+    "source_trace_id",
+    "audit_log_id"
+  ],
+  "blocked_actions": [
+    "fetch_odds",
+    "store_odds",
+    "use_odds",
+    "production",
+    "recommendation",
+    "ev",
+    "clv",
+    "kelly",
+    "stake_sizing",
+    "taiwan_lottery_recommendation"
+  ],
+  "governance_locks": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "odds_used": false,
+    "odds_fetched": false,
+    "odds_stored": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false,
+    "ui_modified": false
+  },
+  "future_integration_gates": [
+    "Legal provider API contract signed",
+    "Schema mapping validated",
+    "Source trace and audit pipeline ready"
+  ],
+  "validation_rules": [
+    "No odds may be fetched, stored, used, or computed in this phase.",
+    "No market may output a recommendation, EV, CLV, Kelly, stake, or production readiness.",
+    "All governance locks must remain true."
+  ]
+}

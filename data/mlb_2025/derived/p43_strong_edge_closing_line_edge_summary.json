@@ -1,0 +1,256 @@
+{
+  "version": "p43_v1",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "kelly_deploy_allowed": false,
+    "T_LOCKED": 0.5,
+    "live_api_calls": 0,
+    "no_champion_modification": true
+  },
+  "framing_note": "This analysis uses CSV closing-line implied probability vs model probability. CSV does not include opening/pregame snapshot trajectory, so this is edge vs closing line, not strict CLV (which requires pregame to closing comparison). P26 line-aware CLV diagnostic is separate and unchanged.",
+  "data_inventory": {
+    "file_2025_closing_csv": "data/mlb_2025/mlb_odds_2025_real.csv",
+    "file_2025_phase56": "data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+    "file_2024_holdout": "data/mlb_2025/derived/mlb_2024_sp_fip_delta_features.jsonl",
+    "rows_2025": {
+      "phase56_rows": 2025,
+      "phase56_quality_rows": 1428,
+      "phase56_joined_rows": 1426,
+      "phase56_missing_market_rows": 2
+    },
+    "rows_2024": {
+      "holdout_rows": 2429,
+      "holdout_quality_rows": 2158,
+      "holdout_missing_market_rows": 2158
+    },
+    "rows_unified_total": 3584,
+    "rows_with_market_prob_total": 1426,
+    "rows_with_market_prob_2024": 0,
+    "rows_with_market_prob_2025": 1426,
+    "data_gap_2024_market_prob_missing": true
+  },
+  "tier_metrics": {
+    "A": {
+      "threshold_abs_delta": 1.5,
+      "n": 24,
+      "mean_edge": 0.1391015380922453,
+      "median_edge": 0.13403592290209926,
+      "std_edge": 0.0646910808627731,
+      "positive_rate": 1.0,
+      "neutral_rate": 0.0,
+      "bootstrap": {
+        "n_boot": 5000,
+        "mean_boot": 0.13892918790079178,
+        "ci_95_low": 0.11487595081838724,
+        "ci_95_high": 0.16568144363687295
+      },
+      "top_1pct_contribution": 0.0911171649111493,
+      "classification": "SAMPLE_LIMITED"
+    },
+    "B": {
+      "threshold_abs_delta": 1.0,
+      "n": 229,
+      "mean_edge": 0.1333660596203417,
+      "median_edge": 0.13214935058534139,
+      "std_edge": 0.08605812923896002,
+      "positive_rate": 0.9475982532751092,
+      "neutral_rate": 0.004366812227074236,
+      "bootstrap": {
+        "n_boot": 5000,
+        "mean_boot": 0.1332670006068511,
+        "ci_95_low": 0.1218207493196836,
+        "ci_95_high": 0.1445047502556503
+      },
+      "top_1pct_contribution": 0.03276204509066219,
+      "classification": "EDGE_CONFIRMED"
+    },
+    "C": {
+      "threshold_abs_delta": 0.5,
+      "n": 535,
+      "mean_edge": 0.1059370704287176,
+      "median_edge": 0.10772993667601849,
+      "std_edge": 0.08646604207682411,
+      "positive_rate": 0.8953271028037383,
+      "neutral_rate": 0.013084112149532711,
+      "bootstrap": {
+        "n_boot": 5000,
+        "mean_boot": 0.10600124227999486,
+        "ci_95_low": 0.09894192418511952,
+        "ci_95_high": 0.11323749170679107
+      },
+      "top_1pct_contribution": 0.03426931593352963,
+      "classification": "EDGE_CONFIRMED"
+    }
+  },
+  "year_metrics": {
+    "2024": {
+      "A": {
+        "threshold_abs_delta": 1.5,
+        "n": 0,
+        "mean_edge": null,
+        "median_edge": null,
+        "std_edge": null,
+        "positive_rate": null,
+        "neutral_rate": null,
+        "bootstrap": null,
+        "top_1pct_contribution": null,
+        "classification": "SAMPLE_LIMITED"
+      },
+      "B": {
+        "threshold_abs_delta": 1.0,
+        "n": 0,
+        "mean_edge": null,
+        "median_edge": null,
+        "std_edge": null,
+        "positive_rate": null,
+        "neutral_rate": null,
+        "bootstrap": null,
+        "top_1pct_contribution": null,
+        "classification": "SAMPLE_LIMITED"
+      },
+      "C": {
+        "threshold_abs_delta": 0.5,
+        "n": 0,
+        "mean_edge": null,
+        "median_edge": null,
+        "std_edge": null,
+        "positive_rate": null,
+        "neutral_rate": null,
+        "bootstrap": null,
+        "top_1pct_contribution": null,
+        "classification": "SAMPLE_LIMITED"
+      }
+    },
+    "2025": {
+      "A": {
+        "threshold_abs_delta": 1.5,
+        "n": 24,
+        "mean_edge": 0.1391015380922453,
+        "median_edge": 0.13403592290209926,
+        "std_edge": 0.0646910808627731,
+        "positive_rate": 1.0,
+        "neutral_rate": 0.0,
+        "bootstrap": {
+          "n_boot": 5000,
+          "mean_boot": 0.13892918790079178,
+          "ci_95_low": 0.11487595081838724,
+          "ci_95_high": 0.16568144363687295
+        },
+        "top_1pct_contribution": 0.0911171649111493,
+        "classification": "SAMPLE_LIMITED"
+      },
+      "B": {
+        "threshold_abs_delta": 1.0,
+        "n": 229,
+        "mean_edge": 0.1333660596203417,
+        "median_edge": 0.13214935058534139,
+        "std_edge": 0.08605812923896002,
+        "positive_rate": 0.9475982532751092,
+        "neutral_rate": 0.004366812227074236,
+        "bootstrap": {
+          "n_boot": 5000,
+          "mean_boot": 0.1332670006068511,
+          "ci_95_low": 0.1218207493196836,
+          "ci_95_high": 0.1445047502556503
+        },
+        "top_1pct_contribution": 0.03276204509066219,
+        "classification": "EDGE_CONFIRMED"
+      },
+      "C": {
+        "threshold_abs_delta": 0.5,
+        "n": 535,
+        "mean_edge": 0.1059370704287176,
+        "median_edge": 0.10772993667601849,
+        "std_edge": 0.08646604207682411,
+        "positive_rate": 0.8953271028037383,
+        "neutral_rate": 0.013084112149532711,
+        "bootstrap": {
+          "n_boot": 5000,
+          "mean_boot": 0.10600124227999486,
+          "ci_95_low": 0.09894192418511952,
+          "ci_95_high": 0.11323749170679107
+        },
+        "top_1pct_contribution": 0.03426931593352963,
+        "classification": "EDGE_CONFIRMED"
+      }
+    },
+    "combined": {
+      "A": {
+        "threshold_abs_delta": 1.5,
+        "n": 24,
+        "mean_edge": 0.1391015380922453,
+        "median_edge": 0.13403592290209926,
+        "std_edge": 0.0646910808627731,
+        "positive_rate": 1.0,
+        "neutral_rate": 0.0,
+        "bootstrap": {
+          "n_boot": 5000,
+          "mean_boot": 0.13892918790079178,
+          "ci_95_low": 0.11487595081838724,
+          "ci_95_high": 0.16568144363687295
+        },
+        "top_1pct_contribution": 0.0911171649111493,
+        "classification": "SAMPLE_LIMITED"
+      },
+      "B": {
+        "threshold_abs_delta": 1.0,
+        "n": 229,
+        "mean_edge": 0.1333660596203417,
+        "median_edge": 0.13214935058534139,
+        "std_edge": 0.08605812923896002,
+        "positive_rate": 0.9475982532751092,
+        "neutral_rate": 0.004366812227074236,
+        "bootstrap": {
+          "n_boot": 5000,
+          "mean_boot": 0.1332670006068511,
+          "ci_95_low": 0.1218207493196836,
+          "ci_95_high": 0.1445047502556503
+        },
+        "top_1pct_contribution": 0.03276204509066219,
+        "classification": "EDGE_CONFIRMED"
+      },
+      "C": {
+        "threshold_abs_delta": 0.5,
+        "n": 535,
+        "mean_edge": 0.1059370704287176,
+        "median_edge": 0.10772993667601849,
+        "std_edge": 0.08646604207682411,
+        "positive_rate": 0.8953271028037383,
+        "neutral_rate": 0.013084112149532711,
+        "bootstrap": {
+          "n_boot": 5000,
+          "mean_boot": 0.10600124227999486,
+          "ci_95_low": 0.09894192418511952,
+          "ci_95_high": 0.11323749170679107
+        },
+        "top_1pct_contribution": 0.03426931593352963,
+        "classification": "EDGE_CONFIRMED"
+      }
+    }
+  },
+  "combined_metrics": {
+    "tier": "C",
+    "threshold_abs_delta": 0.5,
+    "n": 535,
+    "mean_edge": 0.1059370704287176,
+    "median_edge": 0.10772993667601849,
+    "std_edge": 0.08646604207682411,
+    "positive_rate": 0.8953271028037383,
+    "neutral_rate": 0.013084112149532711,
+    "bootstrap": {
+      "n_boot": 5000,
+      "mean_boot": 0.10600124227999486,
+      "ci_95_low": 0.09894192418511952,
+      "ci_95_high": 0.11323749170679107
+    },
+    "top_1pct_contribution": 0.03426931593352963,
+    "classification": "EDGE_CONFIRMED"
+  },
+  "classification": {
+    "combined_tier": "C",
+    "combined_rule_classification": "EDGE_CONFIRMED",
+    "final_classification": "P43_BLOCKED_BY_DATA_GAP"
+  }
+}

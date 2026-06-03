@@ -1,0 +1,252 @@
+{
+  "phase": "P83A",
+  "date": "2026-05-26",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false
+  },
+  "prediction_boundary": "P83A is a 2026 live accumulation check only. Any snapshot computed is for research tracking \u2014 NOT a production deployment, NOT a betting recommendation, NOT a market-edge claim. paper_only=True, diagnostic_only=True.",
+  "allowed_classifications": [
+    "P83A_2026_FIRST_SNAPSHOT_READY",
+    "P83A_2026_FIRST_SNAPSHOT_READY_SAMPLE_LIMITED",
+    "P83A_2026_DATA_PRESENT_OUTCOMES_PENDING",
+    "P83A_2026_DATA_INVALID",
+    "P83A_AWAITING_2026_DATA",
+    "P83A_BLOCKED_BY_MISSING_P82C_ARTIFACT",
+    "P83A_FAILED_VALIDATION"
+  ],
+  "source_artifacts": {
+    "p82c_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82c_staging_guard_dryrun_scanner_summary.json",
+    "p82b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82b_raw_paid_odds_data_policy_contract_summary.json",
+    "p82a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p82a_real_legal_odds_intake_gate_summary.json",
+    "p81_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p81_legal_odds_dataset_validator_contract_summary.json",
+    "p80_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p80_market_edge_reentry_readiness_contract_summary.json",
+    "p79b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p79b_tier_b_vs_tier_c_comparison_harness_summary.json",
+    "p79a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p79a_tier_b_trigger_readiness_contract_summary.json",
+    "p78_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p78_monthly_shadow_tracker_report_template_summary.json",
+    "p77_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p77_prediction_only_shadow_tracker_contract_summary.json",
+    "p76_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p76_corrected_tier_c_final_rule_selection_summary.json",
+    "p75b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p75b_calibration_diagnostics_corrected_tier_c_summary.json",
+    "p75a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p75a_tier_c_corrected_rule_validator_summary.json",
+    "p74_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p74_tier_c_home_away_bias_correction_summary.json",
+    "p73_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p73_tier_stability_and_sample_expansion_summary.json",
+    "p72b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p72b_objective_metric_contract_summary.json",
+    "p72a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p72a_odds_free_strategy_accuracy_backtest_summary.json"
+  },
+  "step1_p82c_verification": {
+    "classification": "P82C_STAGING_GUARD_DRYRUN_READY",
+    "classification_ok": true,
+    "scan_modes_count": 4,
+    "scan_modes_ok": true,
+    "mock_all_passed": true,
+    "overall_guard_state": "STAGE_CLEAN",
+    "guard_state_ok": true,
+    "live_api_calls": 0,
+    "live_api_ok": true,
+    "p82_status": "BLOCKED_NO_REAL_DATASET",
+    "p82_blocked": true,
+    "verification_ok": true
+  },
+  "step2_discovery": {
+    "discovery_local_only": true,
+    "no_api_calls": true,
+    "candidate_paths_checked": [
+      "data/mlb_2026",
+      "data/mlb_2026/derived",
+      "data/mlb_2026/predictions",
+      "data/mlb_2026/live",
+      "outputs/online_validation"
+    ],
+    "candidate_paths_not_found": [
+      "data/mlb_2026",
+      "data/mlb_2026/derived",
+      "data/mlb_2026/predictions",
+      "data/mlb_2026/live",
+      "outputs/online_validation"
+    ],
+    "files_found": 2,
+    "schema_compatible_files": [],
+    "schema_incompatible_files_count": 2,
+    "schema_incompatible_files_sample": [
+      {
+        "path": "outputs/recommendations/PAPER/2026-05-11/2026-05-11-AWY-HOM-824441.jsonl",
+        "size_bytes": 1033,
+        "suffix": ".jsonl",
+        "note": "runtime_recommendation_pipeline_not_p83a_schema",
+        "rows_2026": 0,
+        "rows_with_schema": 0,
+        "rows_governance_clean": 0
+      },
+      {
+        "path": "outputs/recommendations/PAPER/2026-05-11/2026-05-11-LAA-CLE-824441.jsonl",
+        "size_bytes": 2135,
+        "suffix": ".jsonl",
+        "note": "runtime_recommendation_pipeline_not_p83a_schema",
+        "rows_2026": 0,
+        "rows_with_schema": 0,
+        "rows_governance_clean": 0
+      }
+    ],
+    "total_2026_rows_with_required_schema": 0,
+    "total_2026_rows_governance_clean": 0,
+    "data_found": false,
+    "note": "Discovery searched local paths only. outputs/recommendations/PAPER/2026-* contains runtime pipeline outputs but uses different schema (no sp_fip_delta / predicted_side). These do not qualify as P83A prediction rows."
+  },
+  "step3_expected_schema": {
+    "schema_id": "P83A_2026_PREDICTION_ROW_SCHEMA_V1",
+    "required_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "predicted_side",
+      "model_probability",
+      "sp_fip_delta",
+      "abs_sp_fip_delta",
+      "source_prediction_version",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "market_edge_evaluated",
+      "production_ready"
+    ],
+    "optional_outcome_fields": [
+      "actual_winner",
+      "is_correct",
+      "outcome_source",
+      "outcome_available"
+    ],
+    "governance_required_values": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "production_ready": false
+    },
+    "tier_classification_rules": {
+      "primary_rule": {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_125",
+        "description": "Home all (abs_sp_fip_delta >= 0.50) + Away (abs_sp_fip_delta >= 1.25)",
+        "home_threshold": 0.5,
+        "away_threshold": 1.25
+      },
+      "shadow_rule": {
+        "rule_id": "TIER_C_HOME_PLUS_AWAY_100",
+        "description": "Home all (abs_sp_fip_delta >= 0.50) + Away (abs_sp_fip_delta >= 1.00)",
+        "home_threshold": 0.5,
+        "away_threshold": 1.0
+      },
+      "tier_b_rule": {
+        "rule_id": "TIER_B_ABS_DELTA_025_050",
+        "description": "0.25 <= abs_sp_fip_delta < 0.50 (research only, requires n>=200)",
+        "delta_lo": 0.25,
+        "delta_hi": 0.5
+      },
+      "tier_a_watchlist": {
+        "rule_id": "TIER_A_ABS_DELTA_BELOW_025",
+        "description": "abs_sp_fip_delta < 0.25 (watchlist only)",
+        "delta_hi": 0.25
+      }
+    },
+    "schema_notes": [
+      "season must be 2026",
+      "sp_fip_delta = home_sp_fip - away_sp_fip (positive = home favored)",
+      "abs_sp_fip_delta = |sp_fip_delta|",
+      "predicted_side = 'home' if sp_fip_delta > 0 else 'away'",
+      "model_probability = P(predicted_side wins)",
+      "odds_used must be False (prediction-only lane)",
+      "market_edge_evaluated must be False (prediction-only lane)"
+    ],
+    "expected_canonical_path": "data/mlb_2026/predictions/mlb_2026_prediction_only_sp_fip_delta_v1.jsonl",
+    "expected_derived_path": "data/mlb_2026/derived/"
+  },
+  "step5_awaiting_contract": {
+    "contract_id": "P83A_AWAITING_2026_DATA_CONTRACT_V1",
+    "status": "AWAITING",
+    "reason": "No 2026 prediction rows with required P83A schema found in local repository. The runtime pipeline outputs (outputs/recommendations/PAPER/2026-05-11/) use a different schema (market/TSL pipeline, no sp_fip_delta field) and do not qualify as P83A prediction-only research rows.",
+    "expected_canonical_paths": [
+      "data/mlb_2026/predictions/mlb_2026_prediction_only_sp_fip_delta_v1.jsonl",
+      "data/mlb_2026/derived/"
+    ],
+    "required_schema_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "home_team",
+      "away_team",
+      "predicted_side",
+      "model_probability",
+      "sp_fip_delta",
+      "abs_sp_fip_delta",
+      "source_prediction_version",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "market_edge_evaluated",
+      "production_ready"
+    ],
+    "required_governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "production_ready": false
+    },
+    "snapshot_thresholds": {
+      "smoke": {
+        "min_n": 1,
+        "label": "smoke_snapshot"
+      },
+      "sample_limited": {
+        "min_n": 10,
+        "label": "first_sample_limited_report"
+      },
+      "checkpoint_1": {
+        "min_n": 50,
+        "label": "checkpoint_1"
+      },
+      "checkpoint_2": {
+        "min_n": 100,
+        "label": "checkpoint_2"
+      },
+      "operational": {
+        "min_n": 200,
+        "label": "operational_checkpoint"
+      }
+    },
+    "rerun_trigger": {
+      "condition": "Any new file matching P83A schema in data/mlb_2026/ or outputs/online_validation/",
+      "minimum_for_rerun": 1,
+      "recommended_for_first_report": 10
+    },
+    "primary_rule_tracked": "TIER_C_HOME_PLUS_AWAY_125",
+    "shadow_rule_tracked": "TIER_C_HOME_PLUS_AWAY_100",
+    "tier_b_rule": "TIER_B_ABS_DELTA_025_050",
+    "tier_a_watchlist": "TIER_A_ABS_DELTA_BELOW_025",
+    "p82_market_edge_status": "BLOCKED \u2014 requires external legal odds dataset",
+    "next_phase_when_data_arrives": "P83B \u2014 2026 Accumulation Snapshot with Outcomes",
+    "notes": [
+      "2026 MLB regular season started April 2026.",
+      "P83A data feed expected from prediction-only research pipeline (sp_fip_delta-based).",
+      "This awaiting contract formalises all trigger criteria for automatic P83A rerun.",
+      "No odds, no EV, no CLV, no Kelly required at any stage."
+    ]
+  },
+  "p83a_classification": "P83A_AWAITING_2026_DATA",
+  "forbidden_scan": {
+    "violations": [],
+    "result": "CLEAN"
+  }
+}

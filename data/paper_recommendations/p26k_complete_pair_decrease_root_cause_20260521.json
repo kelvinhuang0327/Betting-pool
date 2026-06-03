@@ -1,0 +1,43 @@
+{
+  "artifact_id": "p26k_complete_pair_decrease_root_cause_20260521",
+  "phase": "P26K",
+  "date": "2026-05-21",
+  "generated_at": "2026-05-23T00:00:00Z",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "read_only": true,
+  "observation": "COMPLETE_PAIR decreased from 220 (baseline) to 219 (P26J rerun @09:12Z 2026-05-21)",
+  "baseline_sources": [
+    "P26H commit d644f3f",
+    "P26I commit 60a73a7"
+  ],
+  "measurement_at_p26j": {
+    "timestamp": "2026-05-21T09:12:00Z",
+    "complete_pair_count": 219,
+    "baseline": 220,
+    "delta": -1
+  },
+  "current_measurement": {
+    "timestamp": "2026-05-23 (P26K diagnostic)",
+    "complete_pair_count": 223,
+    "delta_vs_baseline": "+3"
+  },
+  "classification": "DEDUP_RECOUNT",
+  "classification_detail": "The -1 delta at P26J time was transient. tsl_odds_history.jsonl is a live JSONL file appended to by the daemon every 15 min. At 09:12Z on 2026-05-21, the file was in a transitional state: one match was at a gap_h boundary (edge of the 0-2h closing threshold). The daemon subsequently added more closing snapshots, recovering count to 223.",
+  "specific_match_id_dropped": "INCONCLUSIVE",
+  "reason_inconclusive": "tsl_odds_history.jsonl was not staged/committed at P26J time (in FORBIDDEN stage list). No git snapshot for exact file state at 09:12Z. Current count 223 > baseline 220 confirms no permanent data loss.",
+  "complete_pair_definition": {
+    "pregame_condition": "gap_h = (game_time - fetched_at)/3600 >= 4.0",
+    "closing_condition": "gap_h = (game_time - fetched_at)/3600, range 0.0 to 2.0",
+    "complete_pair": "has_pregame AND has_closing",
+    "script": "scripts/p26j_phase4_coverage.py"
+  },
+  "target_games_status": {
+    "3469930_1": "pregame_only (gap_h ~5.6h, last snapshot 03:24Z, no closing row)",
+    "3469931_1": "pregame_only (gap_h ~4.1h, last snapshot 04:55Z, no closing row)",
+    "in_complete_pair_count": false
+  },
+  "clv_impact": "NONE — count recovered to 223 > baseline 220",
+  "bootstrap_eligibility_change": false,
+  "p25c_bootstrap_trigger": "NOT_ELIGIBLE (223 < 300 threshold)"
+}

@@ -1,141 +1,180 @@
-# CEO Decision — P22 後置二次審查與今日方向裁決
+# CEO Decision — Context Hygiene Clean + 回到 P26K 二次審查與今日方向裁決
 
-## P0 完成 & P2 啟動原因（2026-05-20 補記）
+## PROJECT_CONTEXT_LOCK
 
-- **P0 Final Classification**: `P0_MARKET_BASELINE_LEAKAGE_CONFIRMED`
-  - `mlb_odds_2025_real.csv` 無 `snapshot_timestamp`，`pregame_safe=0%`
-  - P29 pure market Brier=0.244354 不可作為 P1 sweep 基準
-  - P1 w_market ablation sweep **暫停**
-- **P2 啟動原因**: P0 blocking P1 → 需先盤點系統是否有 pregame-safe odds
-- **P2 Final Classification**: `P2_LIMITED_TIMELINE_SMOKE_ONLY`
-  - MLB pregame-safe=0，TSL WBC pregame-safe=797
-  - P1 持續暫停，需另行建立 MLB live odds pipeline
-
----
+```text
+Project          = Betting-pool
+Canonical Repo   = /Users/kelvin/Kelvin-WorkSpace/Betting-pool
+Canonical Branch = main
+Cross-Project Rule:
+  若任何任務、檔案、commit 或 roadmap 屬於其他專案 (Stock-Prediction-System / P48 / P49 /
+  golden fixture / paper simulation dry-run / Lottery)：
+    STOP immediately
+    Do NOT summarize as current project work
+    Do NOT create artifacts for it
+```
 
 ## 1. CEO Review Date
 
-2026-05-20 Asia/Taipei
+2026-05-23 Asia/Taipei
 
 備註：
-- [Confirmed] 環境日期為 2026-05-20。
-- [Inferred] 工件標籤 `20260523` 為交接 artifact label，非作業日期已推進的證據。
+- [Confirmed] CTO 採用 2026-05-23 作為本輪 review date；CEO 沿用以保持一致。
+- [Confirmed] 本輪 CEO 審查在 CTO 提交 Context Hygiene Clean roadmap 更新 (0D 章節) 後執行。
+- [Confirmed] 前一輪 CEO-Decision (P26J 後置 PM session, 2026-05-21) 因跨專案對話混線事件後**部分過期**；本輪覆寫並整合 context hygiene。
 
 ## 2. Reviewed Inputs
 
-- [Confirmed] `00-Plan/roadmap/roadmap.md`
-- [Confirmed] `00-Plan/roadmap/CTO-Analysis.md`
-- [Confirmed] `00-Plan/roadmap/current_state.md`（昨日工程交接報告）
-- [Confirmed] P22 系列 JSON / MD artifacts（透過 CTO 報告引用）
+- [Confirmed] `00-Plan/roadmap/roadmap.md` (CTO 更新版，含新 0D 章節，active marker = `CTO_CANONICAL_ROADMAP_CONTEXT_CLEAN_RETURN_TO_P26K_20260523`)
+- [Confirmed] `00-Plan/roadmap/CTO-Analysis.md` (CTO 更新版，2026-05-23)
+- [Confirmed] `data/paper_recommendations/p26j_*_rerun_20260521.json` (2 個)
+- [Confirmed] `report/p26j_*_rerun_20260521.md` (2 個)
+- [Confirmed] `00-BettingPlan/20260521/p26j_*.md`
+- [Confirmed] `git log --oneline -10`：HEAD 仍 `0ccd06d`，無 P48/P49/Stock-Prediction 字樣
+- [Confirmed] `git status --short`：64 dirty files (比 2026-05-21 PM 的 30+ 又多)；4 個 untracked `scripts/p26j_*.py`
+- [Confirmed] grep contamination scan：未在 source content 找到 Stock/P48/P49 污染（除 roadmap governance guard 自身文字，屬 non-positive hit）
+- [Confirmed] 用戶交接報告 + PROJECT_CONTEXT_LOCK 補充 + 兩大主軸補充
 
 未執行：
-- [Confirmed] CEO 本輪未直接重跑 pytest 或修改 CTO-Analysis.md。
+- [Confirmed] 本輪未 rerun pytest。
+- [Confirmed] 本輪未修改 CTO-Analysis.md 與 roadmap.md。
+- [Confirmed] 本輪未 commit 任何檔案。
+- [Confirmed] 本輪未對 untracked scripts 做任何 stage / remove 動作。
 
 ## 3. Yesterday Work Value Assessment
 
 | 項目 | 評估 | 標記 |
 |---|---|---|
-| P22 CLV validation-only 完成 | 治理成熟度推進，非產品成熟度推進 | [Confirmed] |
-| `APPROVE_CLV_VALIDATION_ONLY` CEO decision artifact 建立 | 解開 P19-P21 的 CEO 阻塞 | [Confirmed] |
-| `347/347 PASS`、grep 7/7 CLEAN | 來自 P22 報告，未在本輪 rerun | [Inferred][Risk] |
-| 236 valid pairs / mean CLV +0.2332% / std 8.7212% / positive rate 32.65% | 描述性數據，**不構成可獲利或可促升證據** | [Confirmed] |
-| HDC +1.2103% / MNL -0.2490% | 描述性差異，未經 outlier sensitivity / CI 驗證 | [Risk] |
-| `fixed_edge_5pct` champion preserved、promotion frozen | 治理狀態正確 | [Confirmed] |
-| 236 vs 233 pair delta 與 source 檔成長 (2747 → 2772 → 2785) | **可重現性風險，未解釋** | [Risk] |
-| P23 gate 在 P22-B vs P22-E 不一致 | **治理一致性風險，未解決** | [Risk] |
+| Context hygiene check 完成 (BETTING_CONTEXT_CLEAN) | **真實治理價值**：對話混線不等於 repo 污染，正式釐清避免錯誤救火 | [Confirmed] 治理推進 |
+| `git log` 最近 10 筆 + grep `00-Plan/00-BettingPlan/report/data/paper_recommendations` | 結構化檢查，未發現 Stock 字樣 | [Confirmed] 證據級檢查 |
+| CTO 新增 roadmap 0D 章節 + active marker 更新 | 把 context-lock 固化為 roadmap 一部分 | [Confirmed] 防複發機制建立 |
+| HEAD 仍 `0ccd06d`，P26K 未執行 | 前一輪 CEO active_task 已寫好，但無 worker 進場執行 | [Confirmed] 任務未推進 |
+| 4 個 untracked `scripts/p26j_*.py` 被列出 | 新風險面，**前輪未抓到** | [Risk][Confirmed] |
+| 64 個 dirty files | 比 2026-05-21 多 30+，commit scope 風險升級 | [Risk][Confirmed] |
+| CTO 將 Context-Lock 提到 P1、Untracked Scripts 提到 P2 | 方向正確但 CEO 需重新整合既有 P1 (COMPLETE_PAIR -1) | [Inferred] 需 CEO 整合 |
+| 本輪未跑 tests | 不能宣稱 P26K 或 regression PASS | [Confirmed] |
+| 對話層級混線真實發生 | 流程風險 [Confirmed]，repo 風險 [Refuted] | [Risk] |
 
-結論：昨日成果只達「驗證型完成」，未達「系統成熟度推進」，且引入兩個 P0 級阻塞 (gate contradiction + reproducibility)。
+結論：昨日成果為**治理成熟度真實推進**——把跨專案污染從「不確定的恐慌」變成「證據級的 clean classification」，並把 context-lock 固化進 roadmap。但**技術主線 (P26K) 仍未動**，且新增了 untracked scripts 風險與 dirty worktree 規模上升的次級風險。
 
 ## 4. CTO Judgment Review
 
-採納項：
-- [Confirmed] P0 = P23 gate + pair-count reconciliation
-- [Confirmed] P1 = CLV robustness diagnostic-only
-- [Confirmed] promotion / champion replacement / production proposal 全部 frozen
-- [Confirmed] P20/P21 retired
-- [Confirmed] PR #2 不得在無 `YES: merge PR #2` 下合併
+完全採納項：
+- [Confirmed] `BETTING_CONTEXT_CLEAN` classification 證據充分。
+- [Confirmed] P0 維持 P26K Closing Fetch Trigger Root Cause Diagnostic。
+- [Confirmed] 加入 PROJECT_CONTEXT_LOCK 機制（roadmap 0D + 每個 task prompt 必含）。
+- [Confirmed] Untracked scripts 不可在 P26K artifact-only commit 中被誤 stage。
+- [Confirmed] 不重啟 daemon、不改 scheduler/dedup/crawler、不 call live API、不手動補 snapshots。
+- [Confirmed] champion `fixed_edge_5pct` 保留、promotion/production/champion replacement 全部 frozen。
+- [Confirmed] 不直接修改 CEO-Decision.md / active_task.md (CTO scope 限制)。
 
-修正項：
-- [Inferred] CTO P2 為「TSL market taxonomy」，未顯式掛勾**主軸一 MLB 對台彩 paper recommendation**，CEO 改寫 P2。
-- [Risk] CTO 直接採信 `347/347 PASS`，CEO 要求 P0 任務必須 rerun。
-- [Inferred] PR #2 在 CTO 排 P9，CEO 上拉至 P6。
-- [Inferred] CTO P4 (strategy optimizer v2) 未設條件門檻，CEO 加入「必須在 P1 結論為 robust 或 weak-stable 才能啟動」。
+部分採納 / 修正項：
+- [Inferred] CTO 將 Context-Lock Preflight 排為**獨立 P1**，CEO 修正為**併入 P0 任務 Phase 0** (每個任務必跑 contamination grep)。理由：context-lock 是**橫向治理屬性**，每個任務都該帶，而不是一個獨立的優先項；獨立列會分散注意力。
+- [Inferred] CTO 將 Untracked P26J Scripts 排為**獨立 P2**，CEO 修正為**併入 P0 任務 Phase 1** (untracked scripts inventory + classification + 不 stage)。理由：scripts 是 P26K commit scope 一定會碰到的，必須在同一輪內處理。
+- [Risk] 我前一輪 PM session 將 COMPLETE_PAIR 220→219 下降 root cause 排為 P1；CTO 0D 沒明確處理。CEO **整合**：將 COMPLETE_PAIR -1 root cause 保留為 P26K 任務內 Phase 7 強制階段，不獨立列 P1。
+- [Inferred] CEO 第一假設 (startup-only fetch architecture) 仍維持為 P26K Phase 3 第一驗證目標，CTO 未提但前輪已寫入。
+- [Risk] CTO 將 paper recommendation 隱性壓在 P8，CEO 維持前輪上拉至 **P4** (主軸一契約設計併行，無釋出)。
+- [Risk] dirty worktree 從 30+ 增至 64，**CEO 加上強制 `git status --short | wc -l` 數字 check**，若 >100 則需另行 CEO 授權才能繼續 commit。
 
-最終判定：**CEO_DECISION_PARTIALLY_APPROVED**。
+不採納項：
+- 無。CTO 整體方向正確，僅優先序層級需 CEO 重新整合避免分散。
+
+最終判定：**CEO_DECISION_PARTIALLY_APPROVED**
 
 ## 5. Roadmap Gap Assessment
 
 | Gap | 處理方式 |
 |---|---|
-| P2 未對齊主軸一 | 改寫為「MLB → 台彩多市場 paper recommendation 證據契約」 |
-| P3 未對齊主軸二前置 | 改寫為「CLV-to-Strategy Readiness Gate」 |
-| P4 未設條件啟動 | 加入硬條件「依 P1 結論啟動」 |
-| PR #2 governance 太低 | 上拉到 P6 |
-| 缺乏 source snapshot pin 規範 | 併入 P0 acceptance |
-| 缺乏 regression rerun 規範 | 併入 P0 acceptance |
+| CTO 把 Context-Lock 排為獨立 P1 → 與技術主線分散 | CEO 改為「每個任務 Phase 0 必跑」橫向治理屬性 |
+| CTO 把 Untracked Scripts 排為獨立 P2 → 與 P26K commit scope 衝突 | CEO 改為 P26K Phase 1 內處理，不獨立列 |
+| CTO 未把前輪 CEO 補強的 COMPLETE_PAIR -1 root cause 顯式接入 | CEO 維持為 P26K Phase 7 強制階段 |
+| CTO 未提 startup-only fetch hypothesis | CEO 維持為 P26K Phase 3 第一驗證 |
+| CTO 0D 沒處理 dirty worktree 規模上升 (30+ → 64) | CEO 加入 `wc -l` 警戒線 (>100 需另行授權) |
+| 兩大主軸 (paper rec + 策略優化) 在 CTO 未顯式排序 | CEO 維持 P4/P6 並行軌道 |
+| 環境日期從 2026-05-21 跳到 2026-05-23 | CEO 接受 CTO 日期；artifact filename 仍用 20260521 (與 P26J chain 一致) 或新建 20260523 由 worker 判斷 |
 
 ## 6. CEO Priority Decision
 
-| Priority | Phase | Done condition |
-|---:|---|---|
-| **P0** | P23 Gate Reconciliation + Pair-Count / Source Snapshot Reproducibility + Regression Rerun | 單一 canonical gate state；236 vs 233 root cause 文件化；source line-count + sha256 pin；P17 standalone + P12-P17 rerun 親自執行非沿用報告 |
-| **P1** | CLV Robustness Diagnostic-Only | bootstrap CI / trimmed mean / outlier sensitivity / per-market CI；訊號分類 robust / weak-stable / inconclusive；無 promotion |
-| **P2** | MLB → 台彩多市場 Paper Recommendation 證據契約（主軸一） | moneyline / 讓分 / 大小分 / 單雙 / 局數 每筆需含 model_prob、odds、edge、source、timestamp、gate、`paper_only=true` |
-| **P3** | CLV-to-Strategy Readiness Gate（主軸二前置） | 由 P1 結論決定是否允許策略 diagnostic；champion 不替換 |
-| **P4** | Strategy Simulation / Optimizer Diagnostic（條件性） | 僅在 P1 = robust 或 weak-stable 啟動；輸出 report-only |
-| **P5** | MLB Prediction Quality Loop (Brier / ECE / calibration) | 模型可靠度持續監測 |
-| **P6** | PR #2 / main branch governance 收斂 | PR #2 僅在 `YES: merge PR #2` 後合併；分支策略文件化 |
-| **P7** | Data Versioning & Artifact SSOT | hash / line-count / 時間範圍 / derivation rule 全部 pin |
-| **P8** | Market-Level Coverage Expansion | 在 P2 taxonomy + P1 diagnostic 後 |
-| **P9** | Daily Paper Ops / Drift Monitor | CLV / Brier / no-bet / missing data |
-| **P10** | Production Proposal Gate | 永久 blocked，直到多季 evidence + live licensed data + CEO 批准 |
+| Priority | Phase | Track | Done condition | 對齊主軸 |
+|---:|---|---|---|---|
+| **P0** | P26K Closing Fetch Trigger Root Cause Diagnostic (read-only) + Context Hygiene + Untracked Scripts Inventory | Data QA + Observability + Governance | 一個明確 root cause classification (primary + secondary)；context-lock pre-flight PASS；4 個 untracked scripts 分類為 temporary/reusable/unknown 且**不 stage**；COMPLETE_PAIR -1 root cause 記錄；startup-only fetch hypothesis 驗證；P26J source-unavailable label retire；recommended_next_action enum 寫入 | 主軸二前置 |
+| **P1** | Heartbeat-vs-Fetch Watchdog Design (design-only) | Observability design | 告警條件：`closing_window_active=true AND heartbeat=true AND fetched=false AND api_calls_today 未增加`；設計檔，無實作 | 治理 |
+| **P2** | Scheduler/Quota/Next Trigger Decision Gate (post-P26K) | Ops governance | 依 P26K root cause + recommended_next_action 決定下一步；尚未啟動 | 主軸二 |
+| **P3** | Bootstrap Gate Discipline (COMPLETE_PAIR >=300) | Validation | P25C bootstrap 維持 NOT RUN (219<300) | 主軸二 |
+| **P4** | MLB → 台彩 Paper Recommendation 證據契約 (設計併行) | Product | moneyline / 讓分 / 大小分 / 單雙 / 局數市場契約設計；**僅契約，無釋出**；每筆 paper_only=true；不搶 P0 資源 | 主軸一 |
+| **P5** | P26 Artifact SSOT Compression + P26 終結硬規則 | Governance | P26K 為 P26 階段終點；P26K 後不開 P26L 除非 root cause 明確要求 | 治理 |
+| **P6** | P29/P30A Real Orchestrator Validation (並行非搶占) | Prediction | 在 P0 完成且不消耗 P0 資源情況下推進；diagnostic-only | 主軸二 |
+| **P7** | P26 Runtime Validation Hygiene | QA | targeted tests + forbidden scan (含 Stock 字樣) 結果均記錄為實測值 | 治理 |
+| **P8** | TSL CLV Data SSOT | Data governance | raw feed、daemon state、artifact 三者嚴格分離 | 治理 |
+| **P9** | Repo / PR Governance Gate + Cross-Project Context Lock | Engineering governance | canonical branch=main；context-lock 每任務 Phase 0 必跑；commit 白名單 | 治理 |
+| **P10** | Production Proposal Gate | Governance | 永久 blocked | 治理 |
 
 ## 7. Today Focus Direction
 
-唯一方向：**P0 — Gate & Reproducibility Reconciliation（含 regression rerun）**
+**唯一執行方向**：**P0 — P26K Closing Fetch Trigger Root Cause Diagnostic (read-only) + Context Hygiene + Untracked Scripts Inventory**（合一任務）
 
 - 對應 phase：P0
-- 重要性：P23 gate 矛盾 + 236 vs 233 pair delta + source 檔案 line-count 漂移，三者任一未解，下游 P1 / P2 / P3 全部會被污染。
-- 系統成熟度推進：交接歧義轉為可稽核 gate 狀態；建立 source snapshot pinning baseline；測試狀態回到當下實測值。
-- 預期收益：P1 / P2 可安全啟動；未來 CLV 報告可重現；governance audit trail 完整。
-- 風險：純治理動作，無模型/收益改變；不做才是更大風險。
-- 驗收標準：
-  1. 單一 canonical `p23_allowed` 值 + scope + owner + forbidden actions
-  2. 236 vs 233 root cause 文件化
-  3. `data/tsl_odds_history.jsonl` line-count + sha256 pinned
-  4. P17 standalone + P12-P17 regression rerun（**不沿用報告值**）
-  5. 所有產出 `paper_only=true`，無 promotion / champion replacement / production / live API / crawler modification 字樣
-- 是否採納 CTO：採納並加強。
+- 重要性：
+  1. P26J 證實 daemon 8 個 cycle 全 `fetched=false`，根因未知 → CLV 樣本永遠無法累積。
+  2. `api_calls_today=2` 整天不變 + last 2 calls 在 02:07Z/02:09Z (P26G daemon restart 後)，**暗示 fetch 只在 startup 觸發**。
+  3. COMPLETE_PAIR 220→**219** (-1) 必須在新 evidence 累積前釐清。
+  4. P26J `TSL_SOURCE_UNAVAILABLE` 命名誤導，必須正式 retire。
+  5. 跨專案污染風險真實發生於對話層，雖 repo clean，但每個 task 必須 context-lock pre-flight 防複發。
+  6. 4 個 untracked `scripts/p26j_*.py` 與 64 個 dirty files 是 commit scope 高風險。
+- 系統成熟度推進：
+  1. 將「source unavailable」vacuous claim 拆成具體 root cause。
+  2. 把 220→219 下降從 mystery 變成 documented。
+  3. 把 context-lock 從事後救火變成事前防護。
+  4. 把 untracked scripts boundary 明確化，避免被誤 stage 或誤刪。
+  5. P26 階段收斂為單一 root cause chain。
+- 預期收益：
+  1. primary root cause + `recommended_next_action` enum → 下一輪可直接 CEO 授權對應動作。
+  2. context-lock 機制成為跨任務不變式，降低多專案並行污染風險。
+  3. 4 個 scripts 與 64 個 dirty files 都有明確處置決定。
+- 風險：
+  1. read-only，無模型/收益改變。
+  2. dirty worktree 規模上升（30+→64），白名單 commit 風險升級 → CEO 加 `wc -l >100` 警戒線。
+  3. untracked scripts 若被誤 stage 會污染 P26K 純診斷 commit。
+- 驗收標準：見 active_task.md。
+- 是否採納 CTO：採納大方向 + CEO 修正 (Context-Lock 與 Untracked Scripts 併入 P0 任務內處理，不獨立列 P1/P2)。
 
 ## 8. Risks / Blind Spots
 
-- [Risk] `347/347 PASS` 為報告值，本輪未實測。
-- [Risk] `data/tsl_odds_history.jsonl` 仍在成長，未 pin snapshot 將導致 P1 diagnostic 不可重現。
-- [Risk] HDC +1.21% 可能 outlier-driven，跳過 sensitivity 直接做 market 結論會誤導。
-- [Unknown] P22-B (`p23_allowed=true`) vs P22-E (`p23_allowed=false`) 最終 authority。
-- [Risk] `codex/main-sync-20260516` 與 main 分歧愈久整合成本愈高。
-- [Risk] 主軸一 (paper recommendation) 易被治理議題遮蔽，CEO 顯式保留為 P2。
-- [Inferred] 主軸二 (策略優化) 若在 P1 未通過前啟動，將造成 champion drift 風險。
+- [Risk] 跨專案對話混線真實發生；雖 repo clean，但若下一輪 prompt 沒帶 PROJECT_CONTEXT_LOCK，agent 仍可能再混入 Stock 內容。
+- [Risk] 4 個 untracked `scripts/p26j_*.py` 用途未知；若是 worker 自製分析工具，不該被誤 stage；若是必要工具，不該被忽略；CEO 強制 P26K 任務內**分類但不處置**（除非顯式授權）。
+- [Risk] dirty worktree 從 30+ 升至 64；commit scope 越大越容易誤 stage；CEO 加 `wc -l >100` 警戒線。
+- [Risk] CEO 第一假設「fetch 只在 daemon startup 觸發」若 confirmed，整個 daemon scheduler 架構需重設計，非小修。
+- [Risk] COMPLETE_PAIR -1 若是新 evidence 反向 invalidate prior pair，CLV 樣本可信度需重評估。
+- [Unknown] `api_calls_today=2` 是 hard quota / dedup / startup-only side effect，三選一。
+- [Unknown] `next_trigger_minutes=null` 是 expected / bug / 配置缺失。
+- [Unknown] `markets=[]` 真因 (source 真沒給 vs fetch 沒執行 client 自填空)。
+- [Unknown] 環境日期跳到 2026-05-23 是 CTO review 日期還是真實環境日期；artifact filename 約定需 worker 自行決定。
+- [Risk] 主軸一/二易被治理工作遮蔽；CEO 顯式 P4/P6 並行軌道但禁止搶占 P0。
+- [Confirmed] `production_ready=false`，promotion/champion replacement/production proposal/live API/TSL crawler modification/profitability claim 全部 frozen。
+- [Confirmed] P25C bootstrap NOT RUN (219<300)。
+- [Inferred from report] 75 PASS / 0 FAIL 為 P26J 報告值未實測，P26K validation phase 必須 rerun。
 
 ## 9. CEO Final Decision
 
 **CEO_DECISION_PARTIALLY_APPROVED**
 
-- 採納 CTO 的 P0/P1 排序與全面 promotion freeze。
-- 修正 P2/P3/P4/P6 對齊**主軸一 (MLB paper recommendation)** 與**主軸二 (策略優化條件啟動)**。
-- 今日唯一執行方向為 P0 Reconciliation + Regression Rerun。
-- 明令禁止：optimizer promotion、champion replacement、production proposal、live odds API、TSL crawler modification、profitability claim、PR #2 merge（除非顯式批准）。
-- `paper_only=true` 為所有產出強制 invariant。
+- 採納 CTO Context Hygiene Clean 大方向 + P0 = P26K。
+- 修正 CTO 把 Context-Lock 排為獨立 P1 → CEO 改為「每任務 Phase 0 必跑」橫向治理屬性，併入 P26K Phase 0。
+- 修正 CTO 把 Untracked Scripts 排為獨立 P2 → CEO 改為 P26K Phase 1 內分類處理，不獨立列。
+- 維持前輪 CEO 補強：startup-only hypothesis 為 P26K Phase 3 第一驗證；COMPLETE_PAIR -1 root cause 為 P26K Phase 7 強制階段；P26 終結硬規則；即使發現 bug 只記錄不修。
+- 新增本輪：`PROJECT_CONTEXT_LOCK` 區塊強制；contamination grep 含 `P48|P49|Stock-Prediction|golden fixture|paper simulation dry-run`；dirty worktree `wc -l >100` 警戒線；untracked scripts 不 stage 不刪只分類；commit 白名單 forbidden pattern 加入 `scripts/p26j_`。
+- 明令禁止：optimizer promotion、champion replacement、production proposal、live odds API、TSL crawler modification、daemon restart、scheduler/dedup/crawler code change、profitability claim、PR merge (除非顯式批准)、手動補造 snapshots、新增 repo/worktree/branch、開新 P26L (除非 root cause 明確要求)、納入 Stock-Prediction/P48/P49 內容、stage `scripts/p26j_*.py`、stage raw feed/daemon state/runtime output。
+- `paper_only=true`、`diagnostic_only=true`、`read_only=true`、`context_hygiene=BETTING_CONTEXT_CLEAN` 為 P26K 所有產出強制 invariant。
 
 ## 10. 10 行內 CEO 摘要
 
-1. P22 完成屬治理成熟度，非產品成熟度。
-2. CLV mean +0.2332%、std 8.7212%，訊號弱於波動，不可解讀為可獲利。
-3. 採納 CTO P0/P1 排序，但部分修正。
-4. P2 改為主軸一「MLB → 台彩 paper recommendation 證據契約」。
-5. P3 改為主軸二前置「CLV-to-Strategy Readiness Gate」。
-6. P4 optimizer 必須在 P1 結論為 robust/weak-stable 才能啟動。
-7. PR #2 governance 上拉到 P6。
-8. 今日唯一方向 = P0 reconciliation，且必須 rerun regression 不沿用報告值。
-9. promotion / champion / production / live API / crawler 全部維持 frozen。
+1. Context Hygiene Check 完成：`BETTING_CONTEXT_CLEAN`，對話混線但 repo 無污染。
+2. HEAD 仍 `0ccd06d`，P26K 仍未執行；前輪 active_task.md 仍 canonical (本輪僅補強)。
+3. 4 個 untracked `scripts/p26j_*.py` + 64 個 dirty files (前輪 30+，已升級風險)。
+4. 採納 CTO 0D Context Hygiene 大方向 + P0 = P26K。
+5. 修正：Context-Lock 與 Untracked Scripts 併入 P0 任務內 (Phase 0/1)，不獨立列 P1/P2。
+6. CEO 補強：PROJECT_CONTEXT_LOCK 區塊、contamination grep、dirty `wc -l >100` 警戒線、scripts 不 stage 不刪只分類。
+7. 維持前輪：startup-only fetch hypothesis、COMPLETE_PAIR -1 必查、P26 終結硬規則、bug 只記錄不修。
+8. 主軸一 paper rec 維持 P4 (設計併行)；主軸二後置 (bootstrap/optimizer) 今日不啟動。
+9. 強制 read-only/白名單 commit/不准開 P26L/不准納入 Stock 內容/不准 stage scripts。
 10. Final classification = `CEO_DECISION_PARTIALLY_APPROVED`。

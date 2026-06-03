@@ -1,0 +1,471 @@
+{
+  "p79a_classification": "P79A_TIER_B_TRIGGER_READINESS_CONTRACT_READY",
+  "schema_version": "p79a-v1",
+  "generated_at": "2026-05-26T17:03:34.014601",
+  "governance_snapshot": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "odds_used": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "promotion_freeze": true
+  },
+  "source_artifacts_verified": [
+    "p78_monthly_shadow_tracker_report_template_summary.json",
+    "p78_monthly_shadow_tracker_report_template_20260526.md",
+    "_p78_monthly_shadow_tracker_report_template.py",
+    "p77_prediction_only_shadow_tracker_contract_summary.json",
+    "p76_corrected_tier_c_final_rule_selection_summary.json",
+    "p75b_calibration_diagnostics_corrected_tier_c_summary.json",
+    "p75a_tier_c_corrected_rule_validator_summary.json",
+    "p74_tier_c_home_away_bias_correction_summary.json",
+    "p73_tier_stability_and_sample_expansion_summary.json",
+    "p72b_objective_metric_contract_summary.json",
+    "p72a_odds_free_strategy_accuracy_backtest_summary.json",
+    "mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl"
+  ],
+  "step1_p78_verification": {
+    "verified": true,
+    "classification": "P78_MONTHLY_SHADOW_TRACKER_TEMPLATE_READY",
+    "schema_version": "p78-v1",
+    "fixture_months_count": 6,
+    "months_all_schema_valid": true,
+    "months_all_governance_clean": true,
+    "tier_b_trigger_fires_in_fixture": true,
+    "tier_b_accumulated_n_end_of_fixture": 363,
+    "market_edge_lane": "blocked",
+    "errors": []
+  },
+  "step2_intake_row_contract": {
+    "contract_version": "p79a-v1",
+    "contract_name": "2026_LIVE_TIER_B_INTAKE_ROW_CONTRACT",
+    "season": "2026",
+    "required_fields": [
+      "game_id",
+      "game_date",
+      "season",
+      "month",
+      "home_team",
+      "away_team",
+      "predicted_side",
+      "actual_winner",
+      "is_correct",
+      "model_probability",
+      "sp_fip_delta",
+      "abs_sp_fip_delta",
+      "home_pick_flag",
+      "away_pick_flag",
+      "primary_rule_home_plus_away_125_flag",
+      "shadow_rule_home_plus_away_100_flag",
+      "tier_b_candidate_flag",
+      "tier_a_watchlist_flag",
+      "source_prediction_version",
+      "outcome_source",
+      "row_status",
+      "row_validation_errors",
+      "paper_only",
+      "diagnostic_only",
+      "odds_used",
+      "market_edge_evaluated",
+      "ev_calculated",
+      "clv_calculated",
+      "kelly_calculated",
+      "production_ready"
+    ],
+    "required_fields_count": 30,
+    "governance_enforcement": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "ev_calculated": false,
+      "clv_calculated": false,
+      "kelly_calculated": false,
+      "production_ready": false
+    },
+    "field_descriptions": {
+      "game_id": "Unique game identifier (e.g. MLB game ID)",
+      "game_date": "YYYY-MM-DD",
+      "season": "4-digit season year (int), e.g. 2026",
+      "month": "YYYY-MM",
+      "home_team": "Home team abbreviation",
+      "away_team": "Away team abbreviation",
+      "predicted_side": "'home' or 'away'",
+      "actual_winner": "'home' or 'away' (filled after game completion)",
+      "is_correct": "bool — predicted_side == actual_winner",
+      "model_probability": "float [0,1] — model home win probability",
+      "sp_fip_delta": "float — starting pitcher FIP delta (home SP FIP - away SP FIP)",
+      "abs_sp_fip_delta": "float — abs(sp_fip_delta)",
+      "home_pick_flag": "bool — model_probability > 0.5",
+      "away_pick_flag": "bool — model_probability <= 0.5",
+      "primary_rule_home_plus_away_125_flag": "bool — home_pick and abs_sp_fip_delta >= 0.5, OR away_pick and abs_sp_fip_delta >= 1.25",
+      "shadow_rule_home_plus_away_100_flag": "bool — home_pick and abs_sp_fip_delta >= 0.5, OR away_pick and abs_sp_fip_delta >= 1.0",
+      "tier_b_candidate_flag": "bool — abs_sp_fip_delta >= 0.25 AND abs_sp_fip_delta < 0.5",
+      "tier_a_watchlist_flag": "bool — abs_sp_fip_delta >= 1.5",
+      "source_prediction_version": "str — e.g. 'phase56_sp_bullpen_context_v1'",
+      "outcome_source": "str — e.g. 'mlb_api', 'retrosheet', 'manual'",
+      "row_status": "'VALID' | 'INVALID' | 'PENDING_OUTCOME'",
+      "row_validation_errors": "list[str] — empty list if row is valid",
+      "paper_only": "bool — MUST be True",
+      "diagnostic_only": "bool — MUST be True",
+      "odds_used": "bool — MUST be False",
+      "market_edge_evaluated": "bool — MUST be False",
+      "ev_calculated": "bool — MUST be False",
+      "clv_calculated": "bool — MUST be False",
+      "kelly_calculated": "bool — MUST be False",
+      "production_ready": "bool — MUST be False"
+    },
+    "tier_b_candidate_definition": {
+      "condition": "abs_sp_fip_delta >= 0.25 AND abs_sp_fip_delta < 0.5",
+      "prediction_only": true,
+      "odds_not_required": true,
+      "market_edge_not_included": true
+    },
+    "market_edge_separation": "Market-edge fields (EV, CLV, odds, Kelly) are NOT present in intake rows. Separation is enforced at contract level. Market-edge analysis deferred to P80.",
+    "validation_rules": [
+      "abs_sp_fip_delta == abs(sp_fip_delta)",
+      "home_pick_flag == (model_probability > 0.5)",
+      "away_pick_flag == (model_probability <= 0.5)",
+      "tier_b_candidate_flag == (0.25 <= abs_sp_fip_delta < 0.50)",
+      "paper_only must be True",
+      "production_ready must be False",
+      "odds_used must be False"
+    ]
+  },
+  "step3_tier_b_trigger_states": {
+    "trigger_n": 200,
+    "tier_b_definition": {
+      "abs_sp_fip_delta_min_inclusive": 0.25,
+      "abs_sp_fip_delta_max_exclusive": 0.5,
+      "prediction_only": true,
+      "no_odds_required": true
+    },
+    "states": {
+      "TIER_B_NOT_READY": {
+        "condition": "n < 50",
+        "min_n": 0,
+        "max_n_exclusive": 50,
+        "description": "Too few samples for meaningful inference.",
+        "action": "Continue accumulation. Do not draw directional conclusions.",
+        "next_state": "TIER_B_EARLY_OBSERVATION"
+      },
+      "TIER_B_EARLY_OBSERVATION": {
+        "condition": "50 <= n < 100",
+        "min_n": 50,
+        "max_n_exclusive": 100,
+        "description": "Early observations available. Trends may not yet be stable.",
+        "action": "Continue accumulation. Note directional trends only.",
+        "next_state": "TIER_B_ACCUMULATING"
+      },
+      "TIER_B_ACCUMULATING": {
+        "condition": "100 <= n < 200",
+        "min_n": 100,
+        "max_n_exclusive": 200,
+        "description": "Sample building. Primary signal emerging. Monthly stability tracking begins.",
+        "action": "Continue accumulation. Begin monthly stability tracking.",
+        "next_state": "TIER_B_TRIGGER_READY"
+      },
+      "TIER_B_TRIGGER_READY": {
+        "condition": "n >= 200",
+        "min_n": 200,
+        "max_n_exclusive": null,
+        "description": "Trigger threshold reached. Ready for full P79 analysis.",
+        "action": "Freeze snapshot. Generate P79 execution prompt. DO NOT auto-run market-edge analysis.",
+        "next_state": "TIER_B_TRIGGER_FROZEN or TIER_B_REJECTED_FOR_STABILITY"
+      },
+      "TIER_B_TRIGGER_FROZEN": {
+        "condition": "n >= 200 AND snapshot created",
+        "min_n": 200,
+        "max_n_exclusive": null,
+        "description": "Snapshot frozen. P79 analysis pending.",
+        "action": "Run P79 Tier B vs Tier C comparison on frozen snapshot.",
+        "next_state": "P79_EXECUTION"
+      },
+      "TIER_B_REJECTED_FOR_STABILITY": {
+        "condition": "n >= 200 AND stability gate fails",
+        "min_n": 200,
+        "max_n_exclusive": null,
+        "description": "Trigger reached but rolling/monthly stability fails gate.",
+        "action": "Continue accumulation. Investigate stability. Re-evaluate at n+50.",
+        "next_state": "TIER_B_TRIGGER_READY (re-evaluation)"
+      }
+    },
+    "state_count": 6,
+    "trigger_freeze_requirements": {
+      "n_reached": true,
+      "snapshot_id_created": true,
+      "data_cutoff_frozen": true,
+      "row_count_frozen": true,
+      "checksum_computed": true,
+      "no_dirty_runtime_source_files": true,
+      "p79_prompt_generated": true,
+      "market_edge_not_auto_run": true
+    },
+    "market_edge_deferred_to": "P80",
+    "production_readiness_achievable_in_p79": false
+  },
+  "step4_comparison_contract": {
+    "contract_name": "TIER_B_VS_TIER_C_COMPARISON_CONTRACT",
+    "contract_version": "p79a-v1",
+    "tier_c_comparators": [
+      {
+        "rule_name": "TIER_C_HOME_PLUS_AWAY_125",
+        "role": "primary",
+        "home_abs_delta_threshold": 0.5,
+        "away_abs_delta_threshold": 1.25
+      },
+      {
+        "rule_name": "TIER_C_HOME_PLUS_AWAY_100",
+        "role": "shadow",
+        "home_abs_delta_threshold": 0.5,
+        "away_abs_delta_threshold": 1.0
+      }
+    ],
+    "metrics": [
+      "n",
+      "hit_rate",
+      "hit_rate_ci_lower",
+      "hit_rate_ci_upper",
+      "auc",
+      "auc_ci_lower",
+      "auc_ci_upper",
+      "brier",
+      "log_loss",
+      "ece",
+      "monthly_stability",
+      "rolling_100_hit_rate",
+      "home_n",
+      "home_hit_rate",
+      "away_n",
+      "away_hit_rate",
+      "calibration_quality",
+      "concentration_risk"
+    ],
+    "metrics_count": 18,
+    "operational_gate": {
+      "gate_name": "TIER_B_OPERATIONAL_RESEARCH_GATE",
+      "conditions": [
+        "n >= 200",
+        "AUC >= 0.6 OR hit_rate >= primary_rule_hit_rate + 0.02",
+        "monthly_stability >= MODERATE",
+        "ECE not materially worse than Tier C finalists (delta < 0.03)",
+        "no severe concentration risk (home or away not > 90% of picks)",
+        "still prediction-only — NOT production-ready"
+      ],
+      "gate_pass_outcome": "Tier B becomes operational research candidate in P79",
+      "gate_fail_outcome": "Tier B remains in observation mode. Re-evaluate at n+50."
+    },
+    "hard_constraints": {
+      "tier_b_cannot_become_production_ready_in_p79": true,
+      "market_edge_not_included_in_p79": true,
+      "kelly_not_computed_in_p79": true,
+      "ev_not_computed_in_p79": true,
+      "clv_not_computed_in_p79": true
+    },
+    "stability_levels": {
+      "STRONG": "All months >= 0.55, rolling_100 >= 0.58, no RED months",
+      "MODERATE": "Most months >= 0.52, rolling_100 >= 0.55, at most 1 RED month",
+      "WEAK": "Multiple months < 0.52 OR rolling_100 < 0.55",
+      "INSUFFICIENT": "n < 200 OR fewer than 3 eligible months"
+    },
+    "market_edge_lane": "blocked"
+  },
+  "step5_handoff_package_schema": {
+    "schema_name": "P79_TRIGGER_HANDOFF_PACKAGE",
+    "schema_version": "p79a-v1",
+    "required_fields": [
+      "trigger_status",
+      "trigger_date",
+      "season",
+      "data_cutoff",
+      "tier_b_n",
+      "tier_b_months_covered",
+      "snapshot_id",
+      "snapshot_hash",
+      "primary_rule_snapshot_n",
+      "shadow_rule_snapshot_n",
+      "governance_snapshot",
+      "recommended_p79_prompt",
+      "blocked_market_edge_reason"
+    ],
+    "required_fields_count": 13,
+    "field_definitions": {
+      "trigger_status": "str — TIER_B_TRIGGER_FROZEN | TIER_B_REJECTED_FOR_STABILITY",
+      "trigger_date": "str — YYYY-MM, month when trigger fired",
+      "season": "int — e.g. 2026",
+      "data_cutoff": "str — YYYY-MM-DD, last game date in snapshot",
+      "tier_b_n": "int — cumulative Tier B n at time of trigger",
+      "tier_b_months_covered": "list[str] — YYYY-MM list of months in snapshot",
+      "snapshot_id": "str — deterministic unique snapshot identifier",
+      "snapshot_hash": "str — sha256[:16] of deterministic snapshot descriptor",
+      "primary_rule_snapshot_n": "int — primary rule n in same time window",
+      "shadow_rule_snapshot_n": "int — shadow rule n in same time window",
+      "governance_snapshot": "dict — governance flags at time of trigger (all paper_only=True etc.)",
+      "recommended_p79_prompt": "str — auto-generated P79 execution prompt",
+      "blocked_market_edge_reason": "str — reason market-edge analysis is blocked"
+    },
+    "governance_snapshot_template": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "odds_used": false,
+      "market_edge_evaluated": false,
+      "ev_calculated": false,
+      "clv_calculated": false,
+      "kelly_calculated": false,
+      "production_ready": false,
+      "live_api_calls": 0
+    }
+  },
+  "step6_fixture_validation": {
+    "fixture_season": 2025,
+    "fixture_months": [
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09"
+    ],
+    "monthly_progression": [
+      {
+        "month": "2025-04",
+        "monthly_tier_b_n": 9,
+        "cumulative_tier_b_n": 9,
+        "cumulative_primary_n": 14,
+        "cumulative_shadow_n": 15,
+        "trigger_state": "TIER_B_NOT_READY"
+      },
+      {
+        "month": "2025-05",
+        "monthly_tier_b_n": 76,
+        "cumulative_tier_b_n": 85,
+        "cumulative_primary_n": 114,
+        "cumulative_shadow_n": 122,
+        "trigger_state": "TIER_B_EARLY_OBSERVATION"
+      },
+      {
+        "month": "2025-06",
+        "monthly_tier_b_n": 69,
+        "cumulative_tier_b_n": 154,
+        "cumulative_primary_n": 175,
+        "cumulative_shadow_n": 192,
+        "trigger_state": "TIER_B_ACCUMULATING"
+      },
+      {
+        "month": "2025-07",
+        "monthly_tier_b_n": 65,
+        "cumulative_tier_b_n": 219,
+        "cumulative_primary_n": 247,
+        "cumulative_shadow_n": 269,
+        "trigger_state": "TIER_B_TRIGGER_READY"
+      },
+      {
+        "month": "2025-08",
+        "monthly_tier_b_n": 76,
+        "cumulative_tier_b_n": 295,
+        "cumulative_primary_n": 344,
+        "cumulative_shadow_n": 369,
+        "trigger_state": "TIER_B_TRIGGER_READY"
+      },
+      {
+        "month": "2025-09",
+        "monthly_tier_b_n": 68,
+        "cumulative_tier_b_n": 363,
+        "cumulative_primary_n": 407,
+        "cumulative_shadow_n": 445,
+        "trigger_state": "TIER_B_TRIGGER_READY"
+      }
+    ],
+    "trigger_fires": true,
+    "trigger_month": "2025-07",
+    "trigger_n": 219,
+    "trigger_data_cutoff": "2025-07-31",
+    "state_transitions_correct": true,
+    "state_transitions_monotone": true,
+    "actual_states": [
+      "TIER_B_NOT_READY",
+      "TIER_B_EARLY_OBSERVATION",
+      "TIER_B_ACCUMULATING",
+      "TIER_B_TRIGGER_READY",
+      "TIER_B_TRIGGER_READY",
+      "TIER_B_TRIGGER_READY"
+    ],
+    "end_of_fixture_tier_b_n": 363,
+    "frozen_package": {
+      "trigger_status": "TIER_B_TRIGGER_FROZEN",
+      "trigger_date": "2025-07",
+      "season": 2025,
+      "data_cutoff": "2025-07-31",
+      "tier_b_n": 219,
+      "tier_b_months_covered": [
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07"
+      ],
+      "snapshot_id": "tier_b_snapshot_2025_202507",
+      "snapshot_hash": "99406999a98bf7da",
+      "primary_rule_snapshot_n": 247,
+      "shadow_rule_snapshot_n": 269,
+      "governance_snapshot": {
+        "paper_only": true,
+        "diagnostic_only": true,
+        "odds_used": false,
+        "market_edge_evaluated": false,
+        "ev_calculated": false,
+        "clv_calculated": false,
+        "kelly_calculated": false,
+        "production_ready": false,
+        "live_api_calls": 0
+      },
+      "recommended_p79_prompt": "[P79 — Tier B Sample Expansion Analysis vs Tier C Finalists on 2025 Live Data]\n\nTrigger: Tier B cumulative n >= 200 reached at 2025-07 (n=219)\nSnapshot ID: tier_b_snapshot_2025_202507\nCompare: Tier B (abs_sp_fip_delta [0.25, 0.5)) vs TIER_C_HOME_PLUS_AWAY_125 and TIER_C_HOME_PLUS_AWAY_100\nData source: 2025 live accumulation through 2025-07\nMode: paper_only=True | diagnostic_only=True | NO_REAL_BET=True\nMarket-edge: DEFERRED to P80 (pending odds API key)\nProduction readiness: NOT achievable in P79",
+      "blocked_market_edge_reason": "Market-edge analysis (EV/CLV/Kelly) requires live closing odds. Odds API key not yet acquired. Deferred to P80."
+    },
+    "total_rows_loaded": 2025,
+    "validation_note": "Fixture validation uses 2025 data to confirm trigger logic works. Does NOT imply 2026 readiness beyond contract validation."
+  },
+  "step7_forbidden_scan": {
+    "scan_passed": true,
+    "violations_count": 0,
+    "violations": []
+  },
+  "step8_pack_synthesis": {
+    "p79a_classification": "P79A_TIER_B_TRIGGER_READINESS_CONTRACT_READY",
+    "intake_contract_fields": 30,
+    "trigger_states_defined": 6,
+    "comparison_metrics_defined": 18,
+    "handoff_schema_fields": 13,
+    "fixture_trigger_fires": true,
+    "fixture_trigger_month": "2025-07",
+    "fixture_trigger_n": 219,
+    "state_transitions_correct": true,
+    "state_transitions_monotone": true,
+    "end_of_fixture_tier_b_n": 363,
+    "market_edge_lane": "blocked",
+    "governance_clean": true
+  },
+  "market_edge_lane": "blocked",
+  "tier_b_trigger_n": 200,
+  "rules": {
+    "primary": "TIER_C_HOME_PLUS_AWAY_125",
+    "shadow": "TIER_C_HOME_PLUS_AWAY_100",
+    "tier_b": "abs_sp_fip_delta in [0.25, 0.5)",
+    "tier_a": "abs_sp_fip_delta >= 1.5"
+  },
+  "p79_recommendation": {
+    "trigger_condition": "Tier B n >= 200 in 2026 live accumulation",
+    "expected_2026_trigger": "~2026-09 (inferred from 2025 fixture accumulation rate)",
+    "content": "Full Tier B vs Tier C finalist comparison on 2026 live data",
+    "market_edge_note": "Market-edge (EV/CLV/Kelly) deferred to P80"
+  }
+}

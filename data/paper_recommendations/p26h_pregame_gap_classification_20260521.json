@@ -1,0 +1,154 @@
+{
+  "artifact_id": "p26h_pregame_gap_classification_20260521",
+  "phase": "P26H",
+  "date": "2026-05-21",
+  "paper_only": true,
+  "diagnostic_only": true,
+  "production_proposal": false,
+  "promotion_allowed": false,
+  "profitability_claim": false,
+  "champion_replacement_allowed": false,
+  "axis_alignment": "axis_2_clv_validation_precondition",
+
+  "classification_schema": {
+    "missing_pregame": "Has closing snapshot (<=2h gap) but no pregame snapshot (>=4h gap) — cannot compute CLV line shift",
+    "missing_closing": "Has pregame snapshot (>=4h gap) but no closing snapshot (<=2h gap) yet — game not in closing window as of analysis",
+    "complete": "Has both pregame (>=4h) and closing (<=2h) — COMPLETE_PAIR, CLV-eligible",
+    "ambiguous": "Insufficient data to classify"
+  },
+
+  "per_match_classification": [
+    {
+      "match_id": "3469566.1",
+      "missing_side": "missing_pregame",
+      "has_pregame_snapshot": false,
+      "has_closing_snapshot": true,
+      "gap_at_first_force_closing_capture_hours": -0.53,
+      "is_pregame_flag_at_capture": false,
+      "preliminary_reason": "pregame_never_captured_closing_only",
+      "detailed_reason": "natural_late_listing_or_pregame_capture_missed",
+      "notes": "Match entered history only at closing time (gap=-0.53h). No earlier pregame capture in full history. Either: (a) match was listed too close to game time for pregame capture, or (b) scheduler wasn't active when match first appeared. CLV pair impossible without pregame line.",
+      "p26i_priority": "LOW — single game, structural limitation"
+    },
+    {
+      "match_id": "3469903.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 15.01,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "pregame_captured_far_advance_closing_pending",
+      "notes": "Pregame captured 15.01h before game. Force_closing mechanism correctly identified and captured. Closing window (<=2h) not yet reached as of P26H analysis.",
+      "p26i_priority": "MEDIUM — monitor next cycle"
+    },
+    {
+      "match_id": "3469904.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 15.09,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "pregame_captured_far_advance_closing_pending",
+      "notes": "Pregame captured 15.09h before game. Similar profile to 3469903.1.",
+      "p26i_priority": "MEDIUM — monitor next cycle"
+    },
+    {
+      "match_id": "3469923.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 17.92,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "pregame_captured_far_advance_closing_pending",
+      "notes": "Pregame captured 17.92h before game.",
+      "p26i_priority": "MEDIUM — monitor next cycle"
+    },
+    {
+      "match_id": "3469930.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 6.84,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "P26G_prediction_broken_near_pregame_no_closing",
+      "notes": "P26G predicted this match would form COMPLETE_PAIR today (window_entry_utc=07:00Z, game_time=09:00Z+08:00). Pregame captured at 6.84h gap. NO closing snapshot (<=2h) found in history. Daemon may have missed the 07:00-09:00Z window. HIGH PRIORITY for P26I.",
+      "p26i_priority": "HIGH — P26G prediction broken, closing capture missed"
+    },
+    {
+      "match_id": "3469931.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 6.84,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "P26G_prediction_broken_near_pregame_no_closing",
+      "notes": "Same profile as 3469930.1. P26G predicted COMPLETE_PAIR today. No closing snapshot found. Identical timing issue.",
+      "p26i_priority": "HIGH — P26G prediction broken, closing capture missed"
+    },
+    {
+      "match_id": "3469941.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 20.51,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "pregame_captured_far_advance_closing_pending",
+      "notes": "Pregame captured 20.51h before game. Far advance — closing window many hours away.",
+      "p26i_priority": "LOW — far advance, natural progression"
+    },
+    {
+      "match_id": "3469943.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 20.92,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "pregame_captured_far_advance_closing_pending",
+      "notes": "Pregame captured 20.92h before game.",
+      "p26i_priority": "LOW — far advance, natural progression"
+    },
+    {
+      "match_id": "3469963.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 23.47,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "pregame_captured_far_advance_closing_pending",
+      "notes": "Pregame captured 23.47h before game.",
+      "p26i_priority": "LOW — far advance, natural progression"
+    },
+    {
+      "match_id": "3469964.1",
+      "missing_side": "missing_closing",
+      "has_pregame_snapshot": true,
+      "has_closing_snapshot": false,
+      "gap_at_first_force_closing_capture_hours": 23.51,
+      "is_pregame_flag_at_capture": true,
+      "preliminary_reason": "closing_window_not_reached_yet",
+      "detailed_reason": "pregame_captured_far_advance_closing_pending",
+      "notes": "Pregame captured 23.51h before game.",
+      "p26i_priority": "LOW — far advance, natural progression"
+    }
+  ],
+
+  "summary_by_reason": {
+    "pregame_never_captured_closing_only": 1,
+    "P26G_prediction_broken_near_pregame_no_closing": 2,
+    "pregame_captured_far_advance_closing_pending": 7
+  },
+  "p26i_priority_counts": {
+    "HIGH": 2,
+    "MEDIUM": 3,
+    "LOW": 5
+  },
+  "p26i_recommendation": "Investigate scheduler closing-window capture timing for HIGH-priority matches (3469930.1, 3469931.1). These had game_time=09:00Z+08:00 with closing window entry at 07:00Z but no capture was recorded. Daemon cycle interval vs TSL API rate may explain the miss."
+}

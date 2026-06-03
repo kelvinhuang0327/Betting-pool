@@ -1,0 +1,212 @@
+{
+  "version": "p41_v1",
+  "governance": {
+    "diagnostic_only": true,
+    "promotion_freeze": true,
+    "T_LOCKED": 0.5,
+    "live_api_calls": 0,
+    "no_champion_modification": true,
+    "p39_commit": "6221234",
+    "p40_commit": "5870cef"
+  },
+  "data_inventory": {
+    "file_2025": "mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+    "file_2024": "mlb_2024_sp_fip_delta_features.jsonl",
+    "n_2025_quality": 1428,
+    "n_2024_quality": 2158,
+    "n_2025_strong_edge": 535,
+    "n_2024_strong_edge": 955,
+    "n_combined_strong_edge": 1490,
+    "T_LOCKED": 0.5
+  },
+  "per_year_metrics": {
+    "2024": {
+      "n": 955,
+      "auc": 0.5748,
+      "favored_wr": 0.5644
+    },
+    "2025": {
+      "n": 535,
+      "auc": 0.602,
+      "favored_wr": 0.6056
+    }
+  },
+  "combined_metrics": {
+    "n": 1490,
+    "auc": 0.5865,
+    "brier_score": 0.2517,
+    "brier_skill": -0.0123,
+    "log_loss": 0.6985,
+    "ece": 0.0877,
+    "favored_wr": 0.5792
+  },
+  "bootstrap_ci": {
+    "n_boot": 1000,
+    "seed": 42,
+    "auc_mean": 0.5861,
+    "ci_95_low": 0.5557,
+    "ci_95_high": 0.617,
+    "ci_excludes_0_50": true
+  },
+  "band_analysis": [
+    {
+      "band": "0.50\u20130.75",
+      "n": 671,
+      "auc": 0.5755,
+      "favored_wr": 0.5738
+    },
+    {
+      "band": "0.75\u20131.00",
+      "n": 364,
+      "auc": 0.5609,
+      "favored_wr": 0.5522
+    },
+    {
+      "band": "1.00\u20131.25",
+      "n": 275,
+      "auc": 0.59,
+      "favored_wr": 0.6073
+    },
+    {
+      "band": "1.25\u20131.50",
+      "n": 133,
+      "auc": 0.637,
+      "favored_wr": 0.594
+    },
+    {
+      "band": "1.50+",
+      "n": 47,
+      "auc": 0.7038,
+      "favored_wr": 0.6596
+    }
+  ],
+  "seasonal_breakdown": {
+    "2024": [
+      {
+        "period": "Early (Mar\u2013May)",
+        "n": 350,
+        "auc": 0.604,
+        "favored_wr": 0.5857
+      },
+      {
+        "period": "Mid  (Jun\u2013Aug)",
+        "n": 460,
+        "auc": 0.565,
+        "favored_wr": 0.5587
+      },
+      {
+        "period": "Late (Sep+)",
+        "n": 145,
+        "auc": 0.5357,
+        "favored_wr": 0.531
+      }
+    ],
+    "2025": [
+      {
+        "period": "Early (Apr\u2013May)",
+        "n": 136,
+        "auc": 0.6013,
+        "favored_wr": 0.5809
+      },
+      {
+        "period": "Mid  (Jun\u2013Aug)",
+        "n": 301,
+        "auc": 0.6067,
+        "favored_wr": 0.6146
+      },
+      {
+        "period": "Late (Sep+)",
+        "n": 98,
+        "auc": 0.5946,
+        "favored_wr": 0.6122
+      }
+    ]
+  },
+  "monthly_stability": {
+    "monthly_auc": {
+      "2024-03": {
+        "n": 18,
+        "auc": 0.3812
+      },
+      "2024-04": {
+        "n": 162,
+        "auc": 0.6004
+      },
+      "2024-05": {
+        "n": 170,
+        "auc": 0.6277
+      },
+      "2024-06": {
+        "n": 151,
+        "auc": 0.5694
+      },
+      "2024-07": {
+        "n": 141,
+        "auc": 0.5528
+      },
+      "2024-08": {
+        "n": 168,
+        "auc": 0.5834
+      },
+      "2024-09": {
+        "n": 145,
+        "auc": 0.5357
+      },
+      "2025-04": {
+        "n": 16,
+        "auc": 0.75
+      },
+      "2025-05": {
+        "n": 120,
+        "auc": 0.5774
+      },
+      "2025-06": {
+        "n": 101,
+        "auc": 0.6488
+      },
+      "2025-07": {
+        "n": 92,
+        "auc": 0.646
+      },
+      "2025-08": {
+        "n": 108,
+        "auc": 0.5346
+      },
+      "2025-09": {
+        "n": 98,
+        "auc": 0.5946
+      }
+    },
+    "stability_rate": 0.9231,
+    "stable_months": 12,
+    "eligible_months": 13
+  },
+  "p37_reference": {
+    "source": "P37 in-sample 2025 baseline (locked)",
+    "auc": 0.5665,
+    "brier_skill": 0.0123,
+    "favored_wr": 0.608,
+    "monthly_stability": 1.0,
+    "strong_edge_count": 531,
+    "T_LOCKED": 0.5
+  },
+  "comparison_vs_p37": {
+    "combined_vs_p37_auc_delta": 0.02,
+    "combined_vs_p37_wr_delta": -0.0288,
+    "per_year_2024_auc": 0.5748,
+    "per_year_2025_auc": 0.602,
+    "cross_year_auc_range": [
+      0.5748,
+      0.602
+    ]
+  },
+  "classification": {
+    "classification": "CROSS_YEAR_CONFIRMED",
+    "combined_auc": 0.5865,
+    "combined_n": 1490,
+    "threshold_used": 0.54,
+    "ci_95_low": 0.5557,
+    "ci_95_high": 0.617,
+    "ci_excludes_0_50": true
+  }
+}

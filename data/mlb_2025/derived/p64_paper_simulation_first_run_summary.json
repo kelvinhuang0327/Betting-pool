@@ -1,0 +1,90 @@
+{
+  "p64_classification": "P64_PAPER_SIMULATION_FIRST_RUN_READY",
+  "contract_version": "P62_v1_20260526",
+  "generated_at_utc": "2026-05-26T03:27:18Z",
+  "approval": {
+    "phrase": "YES approve P62 contract and proceed with P64 paper simulation first run",
+    "p63_classification_at_approval": "P63_READY_FOR_CEO_REVIEW",
+    "p62_classification_at_approval": "P62_CONTRACT_DRAFT_READY_FOR_CEO_REVIEW"
+  },
+  "simulation_scope": {
+    "data_year": 2025,
+    "signal": "sp_fip_delta",
+    "tier": "Tier_C",
+    "tier_threshold": 0.5,
+    "total_predictions_loaded": 2025,
+    "total_tier_c_games": 535,
+    "odds_matched": 535,
+    "odds_unmatched": 0,
+    "unmatched_game_ids": [],
+    "total_rows_emitted": 535
+  },
+  "governance": {
+    "paper_only": true,
+    "paper_only_all_rows_true": true,
+    "diagnostic_only": true,
+    "diagnostic_only_all_rows_true": true,
+    "production_ready": false,
+    "production_ready_all_rows_false": true,
+    "real_bet_allowed": false,
+    "real_bet_allowed_all_rows_false": true,
+    "kelly_deploy_allowed": false,
+    "kelly_deploy_allowed_all_rows_false": true,
+    "live_api_calls": 0,
+    "paid_api_called": false,
+    "runtime_recommendation_logic_changed": false,
+    "data_year_2024_gap_remains_unresolved": true,
+    "2024_gap_note": "2024 MLB closing-line odds remain missing. P64 covers 2025 games only. 2024 extension blocked until P61 PATH_A/B resolution."
+  },
+  "platt_constants": {
+    "platt_A": 0.435432,
+    "platt_B": 0.245464,
+    "platt_locked": true,
+    "source": "P45 — locked, never refit in P64",
+    "A_match": true,
+    "B_match": true
+  },
+  "gate_statistics": {
+    "gate_pass_count": 535,
+    "gate_block_count": 0,
+    "status_distribution": {
+      "PAPER_ELIGIBLE_CONTRACT_ONLY": 535
+    }
+  },
+  "edge_statistics": {
+    "mean": -0.032473,
+    "median": -0.031748,
+    "min": -0.28208,
+    "max": 0.225797,
+    "positive_edge_count": 200,
+    "negative_edge_count": 335,
+    "eligible_rows_with_edge": 535
+  },
+  "forbidden_scan": {
+    "violations": 0,
+    "result": "CLEAN",
+    "details": []
+  },
+  "schema": {
+    "n_required_fields": 33,
+    "all_33_fields_present_in_rows": true
+  },
+  "artifacts_read": {
+    "p62": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p62_paper_recommendation_contract_draft_summary.json",
+    "p63": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p63_paper_recommendation_contract_review_readiness_summary.json",
+    "p45": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p45_platt_recalibration_summary.json",
+    "p52": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p52_monitoring_contract_v2_summary.json",
+    "predictions": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/mlb_2025_per_game_predictions_phase56_sp_bullpen_context_v1.jsonl",
+    "odds_csv": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/mlb_odds_2025_real.csv"
+  },
+  "output_rows_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p64_paper_simulation_rows.jsonl",
+  "output_summary_path": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2025/derived/p64_paper_simulation_first_run_summary.json",
+  "framing_note": "P64 is a paper-only, diagnostic-only simulation. No rows may be used for live betting decisions. Edge calculations are theoretical and have not been validated in live deployment. 2025 data only — 2024 data gap is documented and unresolved.",
+  "limitations": [
+    "Timestamps are paper-constructed pregame proxies (source_backtest data lacks real timestamps).",
+    "model_home_prob from phase56_sp_bullpen_context_v1 backtest — not live predictions.",
+    "2024 closing-line data gap unresolved (P61 PATH_A/B pending).",
+    "Kelly fractions are theoretical only — kelly_deploy_allowed=False enforced in every row.",
+    "No odds API called — odds sourced from mlb_odds_2025_real.csv local artifact."
+  ]
+}

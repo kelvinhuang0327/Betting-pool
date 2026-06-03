@@ -1,0 +1,144 @@
+{
+  "phase": "P83E",
+  "date": "2026-05-26",
+  "generated_at": "2026-05-27T05:40:23.438157+00:00",
+  "p83e_classification": "P83E_CANONICAL_ROWS_READY",
+  "allowed_classifications": [
+    "P83E_CANONICAL_ROWS_READY",
+    "P83E_BLOCKED_BY_MISSING_UPSTREAM_DATA",
+    "P83E_BLOCKED_BY_SCHEMA_MISMATCH",
+    "P83E_FAILED_VALIDATION"
+  ],
+  "prediction_boundary": "P83E is the canonical 2026 prediction row producer. No external API calls are made. No market edge is computed. Canonical rows written only if all upstream gates pass. paper_only=True, diagnostic_only=True.",
+  "governance": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "uses_historical_odds": false,
+    "live_api_calls": 0,
+    "the_odds_api_key_required": false,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "market_edge_evaluated": false,
+    "kelly_calculated": false,
+    "kelly_deploy_allowed": false,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "champion_replacement_allowed": false,
+    "profitability_claim": false,
+    "odds_used": false
+  },
+  "step1_p83d_artifact": {
+    "loaded": true,
+    "path": "data/mlb_2026/derived/p83d_2026_upstream_data_availability_probe_summary.json",
+    "p83d_classification": "P83D_AWAITING_UPSTREAM_DATA",
+    "classification_ok": true,
+    "governance_ok": true
+  },
+  "step2_upstream_check": {
+    "file_checks": {
+      "schedule": {
+        "path": "data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+        "exists": true,
+        "size_bytes": 595998
+      },
+      "pitchers": {
+        "path": "data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+        "exists": true,
+        "size_bytes": 1119852
+      },
+      "model_outputs": {
+        "path": "data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
+        "exists": true,
+        "size_bytes": 887599
+      }
+    },
+    "all_present": true,
+    "missing_files": [],
+    "missing_count": 0
+  },
+  "step3_gate_recheck": {
+    "SCHEDULE_GATE": {
+      "gate_pass": true
+    },
+    "PITCHER_FEATURE_GATE": {
+      "gate_pass": true
+    },
+    "MODEL_OUTPUT_GATE": {
+      "gate_pass": true
+    },
+    "PREDICTED_SIDE_GATE": {
+      "gate_pass": true,
+      "note": "Logic defined, data present"
+    },
+    "GOVERNANCE_GATE": {
+      "gate_pass": true
+    },
+    "PRODUCER_ACTIVATION_GATE": {
+      "gate_pass": true
+    }
+  },
+  "step4_schema_validation": {
+    "schedule": {
+      "loaded": true,
+      "path": "data/mlb_2026/schedule/mlb_2026_schedule.jsonl",
+      "row_count": 2430,
+      "validation_errors": [],
+      "duplicate_game_ids": [],
+      "schema_valid": true
+    },
+    "pitchers": {
+      "loaded": true,
+      "path": "data/mlb_2026/pitchers/mlb_2026_sp_fip_features.jsonl",
+      "row_count": 2430,
+      "validation_errors": [],
+      "duplicate_game_ids": [],
+      "schema_valid": true
+    },
+    "model_outputs": {
+      "loaded": true,
+      "path": "data/mlb_2026/model_outputs/mlb_2026_model_outputs.jsonl",
+      "row_count": 2430,
+      "validation_errors": [],
+      "duplicate_game_ids": [],
+      "schema_valid": true
+    }
+  },
+  "step5_join_result": {
+    "total_unique_game_ids": 2430,
+    "joined_row_count": 2430,
+    "unmatched_schedule_ids": [],
+    "unmatched_pitcher_ids": [],
+    "unmatched_model_ids": [],
+    "join_ok": true
+  },
+  "step5_ties_excluded": 0,
+  "step6_canonical_rows": {
+    "rows_written": true,
+    "path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "row_count": 828,
+    "schema_errors": []
+  },
+  "step7_next_prompt": "[P83F / P84A \u2014 2026 Prediction Snapshot Execution]\n\nP83E wrote 828 canonical rows to data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl.\n\nNext step:\n1. Re-run P83A snapshot unlock gate with canonical row count = 828.\n2. Compute primary_125 / shadow_100 / tier_b / tier_a counts from canonical rows.\n3. If outcomes available (result_home_score / result_away_score): compute hit_rate metrics.\n4. Compare against 2025 baseline (HOME_PLUS_AWAY_125 hit=0.6392, AUC=0.5787, n=316).\n5. Maintain paper_only=True until real outcomes reach n\u226550 threshold.\n\nRules: no odds | no EV/CLV/Kelly | paper_only=True | diagnostic_only=True",
+  "forbidden_scan": {
+    "live_api_calls": 0,
+    "api_key_accessed": false,
+    "ev_calculated": false,
+    "clv_calculated": false,
+    "market_edge_calculated": false,
+    "kelly_calculated": false,
+    "odds_used": false,
+    "production_ready": false,
+    "kelly_deploy_allowed": false,
+    "canonical_rows_written": true,
+    "forbidden_scan_pass": true
+  },
+  "source_artifacts": {
+    "p83d_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83d_2026_upstream_data_availability_probe_summary.json",
+    "p83c_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83c_2026_prediction_schema_producer_contract_summary.json",
+    "p83b_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83b_2026_prediction_data_ingest_contract_summary.json",
+    "p83a_json": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/mlb_2026/derived/p83a_2026_live_accumulation_first_snapshot_summary.json"
+  },
+  "canonical_output_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl"
+}

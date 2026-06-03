@@ -1,0 +1,288 @@
+{
+  "dashboard_metadata": {
+    "contract_version": "P110.20260531",
+    "generated_at": "2026-05-31",
+    "source_phase": "P109",
+    "governance": {
+      "paper_only": true,
+      "diagnostic_only": true,
+      "production_ready": false,
+      "real_bet_allowed": false,
+      "recommendation_allowed": false,
+      "product_surface_allowed": false,
+      "odds_used": false,
+      "ev_computed": false,
+      "clv_computed": false,
+      "kelly_computed": false,
+      "stake_sizing": false,
+      "taiwan_lottery_recommendation": false,
+      "champion_replacement": false,
+      "production_mutation": false,
+      "calibration_refit": false,
+      "live_api_calls": 0,
+      "paid_api_calls": 0,
+      "canonical_rows_modified": false,
+      "outcome_rows_modified": false,
+      "p83e_mapping_modified": false,
+      "ui_modified": false
+    },
+    "final_classification": "P110_TRACKING_DASHBOARD_CONTRACT_READY_DIAGNOSTIC_ONLY"
+  },
+  "data_sources": [
+    "data/mlb_2026/derived/p109_outcome_only_tracking_drift_snapshot_summary.json",
+    "data/mlb_2026/derived/p108_outcome_only_diagnostic_tracking_report_summary.json",
+    "data/mlb_2026/derived/p107_outcome_only_strategy_adjustment_backlog_summary.json",
+    "data/mlb_2026/derived/p106_outcome_only_simulation_review_strategy_adjustment_summary.json",
+    "data/mlb_2026/derived/p105_outcome_only_score_simulation_runner_summary.json",
+    "data/mlb_2026/derived/p104_outcome_only_score_simulation_design_summary.json",
+    "data/mlb_2026/derived/p103_outcome_only_strategy_learning_matrix_summary.json",
+    "data/mlb_2026/derived/p102_outcome_only_strategy_backtest_scorecard_summary.json",
+    "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl"
+  ],
+  "strategy_tracking_cards": [
+    {
+      "strategy_id": "HIGH_FIP",
+      "display_name": "高 FIP 策略",
+      "tracking_status": "diagnostic_only",
+      "latest_hit_rate": 0.682,
+      "eligible_rows": 45,
+      "monthly_hit_rates": {
+        "2026-05": 0.682,
+        "2026-04": 0.368,
+        "2026-03": 0.25
+      },
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "next_check_trigger": "等待樣本累積",
+      "allowed_next_action": "diagnostic_tracking_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ]
+    },
+    {
+      "strategy_id": "MID_FIP",
+      "display_name": "中 FIP 策略",
+      "tracking_status": "watch_only",
+      "latest_hit_rate": 0.5,
+      "eligible_rows": 94,
+      "monthly_hit_rates": {
+        "2026-05": 0.5,
+        "2026-04": 0.481,
+        "2026-03": 0.75
+      },
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "next_check_trigger": "等待樣本累積",
+      "allowed_next_action": "watch_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ]
+    },
+    {
+      "strategy_id": "LOW_FIP",
+      "display_name": "低 FIP 策略",
+      "tracking_status": "watch_only",
+      "latest_hit_rate": 0.614,
+      "eligible_rows": 88,
+      "monthly_hit_rates": {
+        "2026-04": 0.459,
+        "2026-05": 0.614,
+        "2026-03": 0.429
+      },
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "sample_status": "sample_limited",
+      "next_check_trigger": "等待樣本累積",
+      "allowed_next_action": "watch_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ]
+    },
+    {
+      "strategy_id": "ALL_ROWS",
+      "display_name": "全樣本基線",
+      "tracking_status": "baseline_diagnostic",
+      "latest_hit_rate": 0.59,
+      "eligible_rows": 808,
+      "monthly_hit_rates": {
+        "2026-05": 0.59,
+        "2026-04": 0.542,
+        "2026-03": 0.616
+      },
+      "drift_status": "STABLE_DIAGNOSTIC",
+      "sample_status": "stable_diagnostic",
+      "next_check_trigger": "下月檢查",
+      "allowed_next_action": "diagnostic_tracking_only",
+      "prohibited_actions": [
+        "recommendation",
+        "production",
+        "betting",
+        "odds",
+        "ev",
+        "kelly"
+      ]
+    }
+  ],
+  "drift_snapshot_table": {
+    "HIGH_FIP": {
+      "eligible_rows": 45,
+      "overall_hit_rate": 0.511,
+      "monthly_hit_rate": {
+        "2026-05": 0.682,
+        "2026-04": 0.368,
+        "2026-03": 0.25
+      },
+      "monthly_n": {
+        "2026-05": 22,
+        "2026-04": 19,
+        "2026-03": 4
+      },
+      "latest_month_hit_rate": 0.682,
+      "prior_month_hit_rate": 0.368,
+      "delta_latest_vs_prior": 0.313,
+      "delta_latest_vs_overall": 0.171,
+      "sample_status": "SAMPLE_LIMITED",
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "next_check_trigger": "等待樣本累積"
+    },
+    "MID_FIP": {
+      "eligible_rows": 94,
+      "overall_hit_rate": 0.5,
+      "monthly_hit_rate": {
+        "2026-05": 0.5,
+        "2026-04": 0.481,
+        "2026-03": 0.75
+      },
+      "monthly_n": {
+        "2026-05": 38,
+        "2026-04": 52,
+        "2026-03": 4
+      },
+      "latest_month_hit_rate": 0.5,
+      "prior_month_hit_rate": 0.481,
+      "delta_latest_vs_prior": 0.019,
+      "delta_latest_vs_overall": 0.0,
+      "sample_status": "SAMPLE_LIMITED",
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "next_check_trigger": "等待樣本累積"
+    },
+    "LOW_FIP": {
+      "eligible_rows": 88,
+      "overall_hit_rate": 0.534,
+      "monthly_hit_rate": {
+        "2026-04": 0.459,
+        "2026-05": 0.614,
+        "2026-03": 0.429
+      },
+      "monthly_n": {
+        "2026-04": 37,
+        "2026-05": 44,
+        "2026-03": 7
+      },
+      "latest_month_hit_rate": 0.614,
+      "prior_month_hit_rate": 0.459,
+      "delta_latest_vs_prior": 0.154,
+      "delta_latest_vs_overall": 0.08,
+      "sample_status": "SAMPLE_LIMITED",
+      "drift_status": "DRIFT_BLOCKED_BY_SAMPLE",
+      "next_check_trigger": "等待樣本累積"
+    },
+    "ALL_ROWS": {
+      "eligible_rows": 808,
+      "overall_hit_rate": 0.569,
+      "monthly_hit_rate": {
+        "2026-05": 0.59,
+        "2026-04": 0.542,
+        "2026-03": 0.616
+      },
+      "monthly_n": {
+        "2026-05": 346,
+        "2026-04": 389,
+        "2026-03": 73
+      },
+      "latest_month_hit_rate": 0.59,
+      "prior_month_hit_rate": 0.542,
+      "delta_latest_vs_prior": 0.047,
+      "delta_latest_vs_overall": 0.02,
+      "sample_status": "OK",
+      "drift_status": "STABLE_DIAGNOSTIC",
+      "next_check_trigger": "下月檢查"
+    }
+  },
+  "sample_limit_panel": {
+    "strategies": [
+      "HIGH_FIP",
+      "MID_FIP",
+      "LOW_FIP"
+    ]
+  },
+  "watch_only_panel": {
+    "strategies": [
+      "MID_FIP",
+      "LOW_FIP"
+    ]
+  },
+  "blocked_production_panel": {
+    "strategies": [
+      "HIGH_FIP",
+      "MID_FIP",
+      "LOW_FIP",
+      "ALL_ROWS"
+    ]
+  },
+  "next_data_thresholds": {
+    "HIGH_FIP": 100,
+    "MID_FIP": 100,
+    "LOW_FIP": 100
+  },
+  "governance_locks": {
+    "paper_only": true,
+    "diagnostic_only": true,
+    "production_ready": false,
+    "real_bet_allowed": false,
+    "recommendation_allowed": false,
+    "product_surface_allowed": false,
+    "odds_used": false,
+    "ev_computed": false,
+    "clv_computed": false,
+    "kelly_computed": false,
+    "stake_sizing": false,
+    "taiwan_lottery_recommendation": false,
+    "champion_replacement": false,
+    "production_mutation": false,
+    "calibration_refit": false,
+    "live_api_calls": 0,
+    "paid_api_calls": 0,
+    "canonical_rows_modified": false,
+    "outcome_rows_modified": false,
+    "p83e_mapping_modified": false,
+    "ui_modified": false
+  },
+  "allowed_filters": [
+    "strategy_id",
+    "drift_status",
+    "sample_status"
+  ],
+  "prohibited_actions": [
+    "recommendation",
+    "production",
+    "betting",
+    "odds",
+    "ev",
+    "kelly"
+  ]
+}
