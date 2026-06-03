@@ -243,11 +243,7 @@ Live API calls: **ZERO**
 
 ## 12. Commit Hash
 
-```
-feat(p38): 2024 MLB holdout validation — sp_fip_delta T=0.50
-```
-
-> **見下方提交記錄（執行後更新）**
+**`f5a846f`** — `feat(p38): 2024 MLB holdout validation — sp_fip_delta strong-edge T=0.50`
 
 ---
 
