@@ -1,0 +1,125 @@
+{
+  "task": "P141_MLB_PAPER_RECOMMENDATION_DAILY_OUTPUT_CHAIN",
+  "date": "2026-06-03",
+  "final_classification": "P141_MLB_PAPER_RECOMMENDATION_DAILY_OUTPUT_CHAIN_READY_FOR_COMMIT",
+
+  "changed_files": [
+    "orchestrator/mlb_daily_scheduler.py",
+    "tests/test_run_mlb_tsl_paper_recommendation_smoke.py",
+    "tests/test_mlb_daily_scheduler.py",
+    "data/mlb_2026/derived/p141_mlb_paper_recommendation_daily_output_chain_summary.json",
+    "report/p141_mlb_paper_recommendation_daily_output_chain_20260603.md"
+  ],
+
+  "not_changed": [
+    "scripts/run_mlb_tsl_paper_recommendation.py",
+    "wbc_backend/pipeline/service.py",
+    "league_adapters/mlb_adapter.py",
+    "wbc_backend/config/settings.py"
+  ],
+
+  "tests_run": [
+    {
+      "suite": "tests/test_run_mlb_tsl_paper_recommendation_smoke.py",
+      "command": ".venv/bin/python -m pytest tests/test_run_mlb_tsl_paper_recommendation_smoke.py -v",
+      "result": "PASS",
+      "count": 13,
+      "new_tests_added": 7,
+      "new_class": "TestP141DailyOutputChain"
+    },
+    {
+      "suite": "tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py",
+      "command": ".venv/bin/python -m pytest tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py -v",
+      "result": "PASS",
+      "count": 21,
+      "new_tests_added": 0
+    },
+    {
+      "suite": "tests/test_mlb_advisory_api.py",
+      "command": ".venv/bin/python -m pytest tests/test_mlb_advisory_api.py -v",
+      "result": "PASS",
+      "count": 41,
+      "new_tests_added": 0
+    },
+    {
+      "suite": "tests/test_mlb_daily_scheduler.py",
+      "command": ".venv/bin/python -m pytest tests/test_mlb_daily_scheduler.py -v",
+      "result": "PASS",
+      "count": 27,
+      "new_tests_added": 4,
+      "new_tests": ["test_24", "test_25", "test_26", "test_27"]
+    }
+  ],
+
+  "total_tests_run": 102,
+  "total_tests_passed": 102,
+  "total_tests_failed": 0,
+
+  "paper_only_guardrails": {
+    "_MLB_PAPER_ONLY": true,
+    "MLBLeagueAdapter_deployment_mode": "paper",
+    "run_paper_recommendation_job_safety_flags": {
+      "paper_only": true,
+      "no_real_bet": true,
+      "production_modified": false,
+      "no_auto_execution": true,
+      "scheduler_dry_run_only": true,
+      "no_ev_clv_kelly_unlock": true
+    },
+    "stake_units_paper_when_tsl_blocked": 0.0,
+    "kelly_fraction_when_tsl_blocked": 0.0
+  },
+
+  "output_path_verified": {
+    "template": "outputs/recommendations/PAPER/<date>/<game_id>.jsonl",
+    "example_existing": "outputs/recommendations/PAPER/2026-05-11/2026-05-11-LAA-CLE-824441.jsonl",
+    "example_gate_status": "BLOCKED_SIMULATION_GATE",
+    "paper_only_in_row": true
+  },
+
+  "scheduler_integration": {
+    "function_added": "run_paper_recommendation_job",
+    "file": "orchestrator/mlb_daily_scheduler.py",
+    "dry_run_only": true,
+    "paper_only": true,
+    "no_live_api": true,
+    "supports_replay": true,
+    "supports_missing_simulation_gate_bypass": true
+  },
+
+  "no_live_api_calls": true,
+  "no_db_writes": true,
+  "no_provider_unlock": true,
+  "no_ev_clv_kelly_unlock": true,
+  "service_py_not_modified": true,
+  "service_py_not_required_by_paper_chain": true,
+
+  "remaining_blockers": [
+    {
+      "id": "B1",
+      "description": "TSL live feed returning 403 Forbidden",
+      "classification": "BLOCKS_ONLY_LIVE_ODDS",
+      "impact": "Paper rows written with stake=0, gate_status=BLOCKED_TSL_SOURCE. Expected behavior.",
+      "resolution": "Awaiting TSL API access restoration or alternative data source."
+    },
+    {
+      "id": "B2",
+      "description": "Simulation gate BLOCKED_NEGATIVE_BSS (BSS = -14.1%)",
+      "classification": "BLOCKS_PAPER_MLB_OUTPUT_WITH_STAKE",
+      "impact": "Simulation gate blocks stake allocation. Paper rows still written as audit trail.",
+      "resolution": "Requires model improvement to achieve positive BSS, or explicit bypass with --allow-missing-simulation-gate."
+    },
+    {
+      "id": "B3",
+      "description": "True P0: No legal authorized pregame odds for live execution",
+      "classification": "BLOCKS_ONLY_PRODUCTION_RECOMMENDATION",
+      "impact": "Paper-only tracking continues. EV/CLV/Kelly production unlock not possible.",
+      "resolution": "Requires formal provider authorization process."
+    }
+  ],
+
+  "commit_status": "NOT_COMMITTED",
+  "push_status": "NOT_PUSHED",
+  "staged_files": "NONE_P141_RELATED",
+  "next_round_allowed": true
+}

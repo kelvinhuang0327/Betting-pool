@@ -343,6 +343,178 @@ def run_pregame_advisory_job(
     )
 
 
+def run_paper_recommendation_job(
+    run_date: str,
+    *,
+    allow_replay: bool = False,
+    allow_missing_simulation_gate: bool = False,
+    output_base_dir: str | None = None,
+) -> DailyJobResult:
+    """Run the MLB→TSL paper recommendation job for a given date (dry-run/paper-only).
+
+    Wraps ``build_recommendation`` from ``scripts.run_mlb_tsl_paper_recommendation``
+    and writes one paper row to ``outputs/recommendations/PAPER/<date>/``.
+
+    Safety invariants (permanently enforced):
+    - paper_only = True
+    - no real stake / Kelly fraction produced (gate blocks when TSL unavailable)
+    - no production bets written
+    - no EV/CLV/Kelly unlock
+
+    Parameters
+    ----------
+    run_date : str
+        Date string in YYYY-MM-DD format for which to generate a recommendation.
+    allow_replay : bool
+        If True, use a synthetic replay fixture when no live games are available.
+        Equivalent to ``--allow-replay-paper`` on the CLI.
+    allow_missing_simulation_gate : bool
+        If True, skip simulation gate enforcement when no simulation result exists.
+        Equivalent to ``--allow-missing-simulation-gate`` on the CLI.
+    output_base_dir : str | None
+        Override the base output directory. Defaults to repo root / outputs / ....
+    """
+    import importlib
+    import sys
+    from pathlib import Path
+
+    started_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    t0 = time.monotonic()
+    output_paths: list[str] = []
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    _safety_flags = {
+        "paper_only": True,
+        "no_real_bet": True,
+        "no_profit_claim": True,
+        "production_modified": False,
+        "no_auto_execution": True,
+        "scheduler_dry_run_only": True,
+        "no_ev_clv_kelly_unlock": True,
+    }
+
+    try:
+        # Lazy import: keeps scheduler importable without requiring script deps
+        mod_name = "scripts.run_mlb_tsl_paper_recommendation"
+        script = sys.modules.get(mod_name) or importlib.import_module(mod_name)
+
+        # Simulation gate: load latest if available
+        from wbc_backend.recommendation.recommendation_gate_policy import (
+            build_recommendation_gate_from_simulation,
+        )
+        from wbc_backend.simulation.simulation_result_loader import (
+            load_latest_simulation_result,
+        )
+
+        root = Path(output_base_dir) if output_base_dir else script.ROOT
+        sim_dir = root / "outputs" / "simulation" / "PAPER"
+        simulation = load_latest_simulation_result(
+            simulation_dir=sim_dir,
+            strategy_name="moneyline_edge_threshold_v0",
+        )
+        simulation_gate: dict | None = None
+        if simulation is None and allow_missing_simulation_gate:
+            warnings.append(
+                "No simulation result found; proceeding without simulation gate "
+                "(allow_missing_simulation_gate=True)."
+            )
+        else:
+            simulation_gate = build_recommendation_gate_from_simulation(simulation)
+
+        # Pick game (replay fallback when allow_replay is set)
+        game = script._pick_game(run_date)
+        is_replay = False
+        if game is None:
+            if allow_replay:
+                game = {
+                    "gamePk": 0,
+                    "gameDate": f"{run_date}T18:00:00Z",
+                    "status": {"detailedState": "Scheduled"},
+                    "teams": {
+                        "home": {"team": {"name": "Home Team", "abbreviation": "HOM"}},
+                        "away": {"team": {"name": "Away Team", "abbreviation": "AWY"}},
+                    },
+                }
+                is_replay = True
+                warnings.append(
+                    f"No live MLB games found for {run_date}; "
+                    "using synthetic replay fixture (allow_replay=True)."
+                )
+            else:
+                finished_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+                return DailyJobResult(
+                    job_name="paper_recommendation",
+                    status=JOB_STATUS_DATA_LIMITED,
+                    started_at=started_at,
+                    finished_at=finished_at,
+                    duration_seconds=round(time.monotonic() - t0, 3),
+                    output_paths=[],
+                    errors=[f"No MLB games found for {run_date}; pass allow_replay=True to use replay fixture."],
+                    warnings=warnings,
+                    safety_flags=_safety_flags,
+                )
+
+        # TSL probe
+        tsl_live, tsl_note = script._probe_tsl()
+
+        # Build recommendation row
+        row = script.build_recommendation(
+            game=game,
+            date_str=run_date,
+            tsl_live=tsl_live,
+            tsl_note=tsl_note,
+            simulation_gate=simulation_gate,
+        )
+
+        # Write row (honour output_base_dir override)
+        if output_base_dir:
+            # Temporarily override ROOT for write_row
+            original_root = script.ROOT
+            script.ROOT = Path(output_base_dir)
+            try:
+                out_path = script.write_row(row, run_date, is_replay=is_replay)
+            finally:
+                script.ROOT = original_root
+        else:
+            out_path = script.write_row(row, run_date, is_replay=is_replay)
+
+        output_paths.append(str(out_path))
+        if row.gate_status not in ("PASS",):
+            warnings.append(
+                f"Paper row written with gate_status={row.gate_status!r} — "
+                "stake_units_paper=0 (expected for paper-only mode)."
+            )
+
+    except Exception as exc:
+        errors.append(f"run_paper_recommendation_job failed: {exc}")
+        finished_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        return DailyJobResult(
+            job_name="paper_recommendation",
+            status=JOB_STATUS_FAILED,
+            started_at=started_at,
+            finished_at=finished_at,
+            duration_seconds=round(time.monotonic() - t0, 3),
+            output_paths=[],
+            errors=errors,
+            warnings=warnings,
+            safety_flags=_safety_flags,
+        )
+
+    finished_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    return DailyJobResult(
+        job_name="paper_recommendation",
+        status=JOB_STATUS_SUCCESS,
+        started_at=started_at,
+        finished_at=finished_at,
+        duration_seconds=round(time.monotonic() - t0, 3),
+        output_paths=output_paths,
+        errors=errors,
+        warnings=warnings,
+        safety_flags=_safety_flags,
+    )
+
+
 def run_postgame_review_job(
     run_date: str,
     source: str = "fixture",
