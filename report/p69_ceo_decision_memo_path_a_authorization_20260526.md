@@ -350,7 +350,7 @@ The memo is complete, the evidence trail is verified, all CEO decision options a
 
 ## §12 Commit Hash
 
-P69 commit: `[see whitelist commit after this report]`
+P69 commit: `981228f`
 
 Whitelist files (6):
 - `scripts/_p69_ceo_decision_memo_path_a_authorization.py`

@@ -1,180 +1,255 @@
-# CEO Decision — Context Hygiene Clean + 回到 P26K 二次審查與今日方向裁決
+# CEO Decision — 2026-05-28 Second-Level Review (Post-P93, P94 Gate)
 
-## PROJECT_CONTEXT_LOCK
+> ⚠️ **STALE / 歷史文件（2026-06-03 校註）**：本 CEO 裁決凍結於 **P93**（HEAD `2221f0f`, 2026-05-28）。目前實際 HEAD 已推進至 **P140**（`9a0ddc2`，PR #4 merged）。**P101–P140 尚無對應的 CEO 裁決**（CTO-Analysis 亦標記此為缺口）。當前可信的執行狀態請以 `roadmap.md` §0K ＋ `active_task.md` ＋ `git HEAD` 為準；本文僅作歷史紀錄。需要新的 CEO 裁決時由使用者（CEO）拍板，AI 不代為產生裁決。
 
-```text
-Project          = Betting-pool
-Canonical Repo   = /Users/kelvin/Kelvin-WorkSpace/Betting-pool
-Canonical Branch = main
-Cross-Project Rule:
-  若任何任務、檔案、commit 或 roadmap 屬於其他專案 (Stock-Prediction-System / P48 / P49 /
-  golden fixture / paper simulation dry-run / Lottery)：
-    STOP immediately
-    Do NOT summarize as current project work
-    Do NOT create artifacts for it
-```
+**CEO review date**: 2026-05-28 Asia/Taipei
+**Reviewer role**: CEO / Technical Decision Reviewer
+**Canonical repo**: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`
+**Observed branch**: `main`
+**HEAD**: `2221f0f` (P93 committed)
+**Mode**: `paper_only=true`, `production_ready=false`, `NO_REAL_BET=true`
+**Final Classification**: `CEO_DECISION_PARTIALLY_APPROVED`
+**Supersedes**: CEO Decision 2026-05-27 (P84G/P84H-era). All prior CEO P0/P1 已被執行流程超越（P84H/P85–P93 均已完成 commit）。
 
-## 1. CEO Review Date
+---
 
-2026-05-23 Asia/Taipei
+## 1. Reviewed Inputs
 
-備註：
-- [Confirmed] CTO 採用 2026-05-23 作為本輪 review date；CEO 沿用以保持一致。
-- [Confirmed] 本輪 CEO 審查在 CTO 提交 Context Hygiene Clean roadmap 更新 (0D 章節) 後執行。
-- [Confirmed] 前一輪 CEO-Decision (P26J 後置 PM session, 2026-05-21) 因跨專案對話混線事件後**部分過期**；本輪覆寫並整合 context hygiene。
+- [Confirmed] `00-Plan/roadmap/roadmap.md` — CTO 2026-05-28 已加入 Section 0I（supersedes 0H）。
+- [Confirmed] `00-Plan/roadmap/CTO-Analysis.md` — CTO 2026-05-28 重寫為 post-P93 評估。
+- [Confirmed] `00-Plan/roadmap/active_task.md` — 已被先前流程改成 P93 done / P94 next 標題，含完整 historical classification log（P82–P93）。
+- [Confirmed] `00-Plan/roadmap/CEO-Decision.md` 前一版（2026-05-27 P84G/P84H-era）。
+- [Confirmed] git log -15：HEAD `2221f0f` P93，predecessors P92 `fdd341e`、P91 `f0816ba`、P90 `a0c6b21`、P89 `b6fc542`、P88 `faf8284`、P87 `1ebcb71`、P86 `e864c8b`、P85 `a209c3f`、P84H `f8360a2`、P84G `021a8a8`。
+- [Confirmed] `git status --short | wc -l` = 94（86 tracked dirty + 8 untracked）。
+- [Confirmed] CTO 重跑：P93 dedicated `65 passed`；P83A–P93 targeted `1669 passed / 4 skipped / 2 warnings`。
+- [Confirmed] `data/mlb_2026/derived/p93_prediction_only_coverage_feature_bias_audit_summary.json` 完整讀取，五步驟證據確認：
+  - Step5 Q4 hit_rate `0.658416`（vs Q1 `0.524752`、Q2 `0.559406`、Q3 `0.534653`）
+  - Step6 high bucket (|delta|≥1.5) n=287 hit_rate `0.641115`，model_vs_home_delta `+0.114983`；mid bucket n=343 hit_rate `0.530612`，delta `−0.008746`；low bucket n=178 hit_rate `0.52809`，delta `+0.033708`
+  - Step7 monthly high-FIP：Mar `0.7353`、Apr `0.6014`、May `0.6636`；low-FIP April collapse `0.4868`
+  - Step8 assessment：`SIGNAL_CONCENTRATED_IN_HIGH_FIP`，delta 0.1130 > threshold 0.08
+- [Confirmed] 用戶核心 directive：「聚焦 MLB 賽事依台灣運彩可投注市場產生賽前預測策略和投注建議；系統支援對既有預測策略進行回測、模擬勝敗比分等。」
 
-## 2. Reviewed Inputs
+Not performed:
 
-- [Confirmed] `00-Plan/roadmap/roadmap.md` (CTO 更新版，含新 0D 章節，active marker = `CTO_CANONICAL_ROADMAP_CONTEXT_CLEAN_RETURN_TO_P26K_20260523`)
-- [Confirmed] `00-Plan/roadmap/CTO-Analysis.md` (CTO 更新版，2026-05-23)
-- [Confirmed] `data/paper_recommendations/p26j_*_rerun_20260521.json` (2 個)
-- [Confirmed] `report/p26j_*_rerun_20260521.md` (2 個)
-- [Confirmed] `00-BettingPlan/20260521/p26j_*.md`
-- [Confirmed] `git log --oneline -10`：HEAD 仍 `0ccd06d`，無 P48/P49/Stock-Prediction 字樣
-- [Confirmed] `git status --short`：64 dirty files (比 2026-05-21 PM 的 30+ 又多)；4 個 untracked `scripts/p26j_*.py`
-- [Confirmed] grep contamination scan：未在 source content 找到 Stock/P48/P49 污染（除 roadmap governance guard 自身文字，屬 non-positive hit）
-- [Confirmed] 用戶交接報告 + PROJECT_CONTEXT_LOCK 補充 + 兩大主軸補充
+- [Confirmed] 無 code 變更、無 live/paid API 呼叫、無 champion replacement、無 production write、無新 repo/branch/worktree。
+- [Confirmed] 無 staging dirty files。
+- [Confirmed] 無 write `CTO-Analysis.md`（CEO scope 外）。
 
-未執行：
-- [Confirmed] 本輪未 rerun pytest。
-- [Confirmed] 本輪未修改 CTO-Analysis.md 與 roadmap.md。
-- [Confirmed] 本輪未 commit 任何檔案。
-- [Confirmed] 本輪未對 untracked scripts 做任何 stage / remove 動作。
+---
 
-## 3. Yesterday Work Value Assessment
+## 2. Yesterday → Today Work Value Assessment
 
-| 項目 | 評估 | 標記 |
-|---|---|---|
-| Context hygiene check 完成 (BETTING_CONTEXT_CLEAN) | **真實治理價值**：對話混線不等於 repo 污染，正式釐清避免錯誤救火 | [Confirmed] 治理推進 |
-| `git log` 最近 10 筆 + grep `00-Plan/00-BettingPlan/report/data/paper_recommendations` | 結構化檢查，未發現 Stock 字樣 | [Confirmed] 證據級檢查 |
-| CTO 新增 roadmap 0D 章節 + active marker 更新 | 把 context-lock 固化為 roadmap 一部分 | [Confirmed] 防複發機制建立 |
-| HEAD 仍 `0ccd06d`，P26K 未執行 | 前一輪 CEO active_task 已寫好，但無 worker 進場執行 | [Confirmed] 任務未推進 |
-| 4 個 untracked `scripts/p26j_*.py` 被列出 | 新風險面，**前輪未抓到** | [Risk][Confirmed] |
-| 64 個 dirty files | 比 2026-05-21 多 30+，commit scope 風險升級 | [Risk][Confirmed] |
-| CTO 將 Context-Lock 提到 P1、Untracked Scripts 提到 P2 | 方向正確但 CEO 需重新整合既有 P1 (COMPLETE_PAIR -1) | [Inferred] 需 CEO 整合 |
-| 本輪未跑 tests | 不能宣稱 P26K 或 regression PASS | [Confirmed] |
-| 對話層級混線真實發生 | 流程風險 [Confirmed]，repo 風險 [Refuted] | [Risk] |
+| Item | Value | Status |
+|------|-------|--------|
+| [Confirmed] P84H 完成（CEO 2026-05-27 P0）→ `P84H_CORRECTED_SIGNAL_PROMISING_BUT_COVERAGE_LIMITED` | **HIGH** — coverage guard 已落地 | DONE |
+| [Confirmed] P85 完成 → `P85_PREDICTION_CONVENTION_INVARIANT_GATE_READY`（CEO 2026-05-27 P1，covention invariant gate）| **HIGH** — 修補 silent inversion 風險 | DONE |
+| [Confirmed] P86 / P87 / P88 / P89 / P90 完成 → artifact regeneration dependency contract、stale recovery、authorization gate、recovery executor、closure report（CEO 2026-05-27 P2 lightweight 版被擴展成完整 recovery cycle）| **MEDIUM–HIGH** — 但 5 個 phase 處理同一件事屬 scope 膨脹 | DONE with note |
+| [Confirmed] P91 → `P91_TRACKING_ACTIVE_SIGNAL_STABLE`（prediction-only tracking gate，808 outcome rows，hit_rate `0.569307`，AUC `0.594315`，coverage_rate `0.975845`）| **HIGH** — 進入 stable tracking | DONE |
+| [Confirmed] P92 → `P92_SIGNAL_NOT_EXPLAINED_BY_SIMPLE_SIDE_BASELINE`（model `0.569307` vs home `0.524752` vs away `0.475248`）| **HIGH** — 排除最簡單 confound | DONE |
+| [Confirmed] P93 → `P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP`（high `|delta|≥1.5` n=287 hit_rate `0.641115` / Q4 `0.658416` / low-Apr collapse `0.4868`）| **CRITICAL** — 改變問題形狀，發現 aggregate 56.9% 主要由 high-FIP 驅動 | DONE |
+| [Risk] **P86–P90 連續 5 phase 處理同一件 artifact recovery 議題，呈 monitoring meta-layer 漂移風險的鏡像** | **MEDIUM NEGATIVE** — 提醒 P94 不可走相同路 | FLAGGED |
+| [Risk] **active_task.md history log 同時包含 `P93_SIGNAL_BROADLY_DISTRIBUTED` 與 `P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP` 兩個矛盾 classification** | **MEDIUM** — 表示中途修正過，需以 final classification 為準 | NOTED |
+| [Confirmed] Dirty tree = 86 tracked dirty + 8 untracked，未 commit | **WORKFLOW RISK** | NEEDS DECISION TODAY |
+| [Unknown] Full-repo regression status | **MEDIUM** — P83A–P93 targeted 已通過 | TRACK IN P3 |
 
-結論：昨日成果為**治理成熟度真實推進**——把跨專案污染從「不確定的恐慌」變成「證據級的 clean classification」，並把 context-lock 固化進 roadmap。但**技術主線 (P26K) 仍未動**，且新增了 untracked scripts 風險與 dirty worktree 規模上升的次級風險。
+**結論**：過去一輪實際上推進 9 個 phase（P84H/P85/P86/P87/P88/P89/P90/P91/P92/P93），這比正常一日節奏快很多——其中 P86–P90 的「artifact regeneration → recovery → authorization → executor → closure」5-phase 序列看起來像為了補救一個應該一次完成的契約而被拆得太細。**但 P91–P93 三步是高價值的結構性發現**：P93 的「高 FIP 集中」是過去整條 prediction-only 線上最重要的單一情報。**今天的任務必須以這個情報為核心**，不能讓 dirty-tree 行政決定吃掉今日的全部產出。
 
-## 4. CTO Judgment Review
+---
 
-完全採納項：
-- [Confirmed] `BETTING_CONTEXT_CLEAN` classification 證據充分。
-- [Confirmed] P0 維持 P26K Closing Fetch Trigger Root Cause Diagnostic。
-- [Confirmed] 加入 PROJECT_CONTEXT_LOCK 機制（roadmap 0D + 每個 task prompt 必含）。
-- [Confirmed] Untracked scripts 不可在 P26K artifact-only commit 中被誤 stage。
-- [Confirmed] 不重啟 daemon、不改 scheduler/dedup/crawler、不 call live API、不手動補 snapshots。
-- [Confirmed] champion `fixed_edge_5pct` 保留、promotion/production/champion replacement 全部 frozen。
-- [Confirmed] 不直接修改 CEO-Decision.md / active_task.md (CTO scope 限制)。
+## 3. CTO Judgment Review
 
-部分採納 / 修正項：
-- [Inferred] CTO 將 Context-Lock Preflight 排為**獨立 P1**，CEO 修正為**併入 P0 任務 Phase 0** (每個任務必跑 contamination grep)。理由：context-lock 是**橫向治理屬性**，每個任務都該帶，而不是一個獨立的優先項；獨立列會分散注意力。
-- [Inferred] CTO 將 Untracked P26J Scripts 排為**獨立 P2**，CEO 修正為**併入 P0 任務 Phase 1** (untracked scripts inventory + classification + 不 stage)。理由：scripts 是 P26K commit scope 一定會碰到的，必須在同一輪內處理。
-- [Risk] 我前一輪 PM session 將 COMPLETE_PAIR 220→219 下降 root cause 排為 P1；CTO 0D 沒明確處理。CEO **整合**：將 COMPLETE_PAIR -1 root cause 保留為 P26K 任務內 Phase 7 強制階段，不獨立列 P1。
-- [Inferred] CEO 第一假設 (startup-only fetch architecture) 仍維持為 P26K Phase 3 第一驗證目標，CTO 未提但前輪已寫入。
-- [Risk] CTO 將 paper recommendation 隱性壓在 P8，CEO 維持前輪上拉至 **P4** (主軸一契約設計併行，無釋出)。
-- [Risk] dirty worktree 從 30+ 增至 64，**CEO 加上強制 `git status --short | wc -l` 數字 check**，若 >100 則需另行 CEO 授權才能繼續 commit。
+### Decisions CEO accepts (完全採納)
 
-不採納項：
-- 無。CTO 整體方向正確，僅優先序層級需 CEO 重新整合避免分散。
+- [Confirmed] P92、P93 已完成、HEAD 在 `2221f0f`、P93 signal 集中於 high `|abs_sp_fip_delta|≥1.5` rows — **採納**。
+- [Confirmed] CTO P1 = **P94 High-FIP Subset Diagnostic / FIP-Stratified Tracking Gate** — **採納**，這是下一步唯一有實質產品意義的方向。
+- [Confirmed] CTO P1 = **Agent Entry / Branch Governance Guard**（canonical repo + main + `.git`；`claude/*`/`codex/*` worktree = STOP）— **採納為硬規則**。
+- [Confirmed] CTO P2 = **Segment Qualification Contract**（high-FIP 可診斷追蹤、low/mid-FIP 不得繼承同等信心）— **採納**。
+- [Confirmed] CTO P3 = Targeted + Broader Regression Policy；P7 Market-edge Reentry blocked；P10 Production Proposal Gate — **採納**。
+- [Confirmed] Governance 全保：no odds, no EV/CLV/Kelly, no champion replacement, no production, no Taiwan lottery recommendation — **採納**。
 
-最終判定：**CEO_DECISION_PARTIALLY_APPROVED**
+### Decisions CEO overrides (部分採納 / reframe)
+
+- [Override] **CTO P0 = Dirty-Tree Decision Gate 作為「獨立 phase」** → **CEO 拒絕作為獨立 phase，直接 inline 進今日 P94 的 pre-flight gate**。理由：dirty tree 內容分類很清楚（runtime/data state + roadmap governance + 舊報告 + repo-root 診斷 probe），不需要消耗一個 phase 來討論，只要 P94 worker 任務嚴格白名單即可。讓 dirty-tree 變獨立 P0 = 重蹈 P86–P90 過度拆解的覆轍。
+- [Override] **CTO 「P94 必須等 dirty-tree 決策後才能開始」** → **CEO 允許 P94 今日進行**，但必須遵守下列 CEO Dirty-Tree Policy（見第 4 節）。
+- [Override] **CTO 未對 P86–P90 5-phase 拆解作 retrospective 警告** → **CEO 加上 anti-drift 規則**：未來任何「contract → recovery → authorization → executor → closure」5-step 流程必須在 phase plan 階段先過 CEO gate，禁止 worker 自行拆 5 個 phase。
+- [Augment] CEO 把 calibration / refit 仍排在 P94 之後（CTO 已是 P6，CEO 維持），並強化禁令：**任何 Platt / isotonic / score transform 在 P94 GO/NO-GO 結案前一律 BLOCKED**。
+- [Augment] CEO 將「FIP-stratified shadow tracker」（CTO P5）門檻明確為「**P94 結果為 `HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY` 才允許接入**」；其他 4 個 P94 classification 都不開放接入。
+
+### Decisions CEO does not adopt (不採納)
+
+- [Not adopt] 任何把 P93 high-FIP hit_rate `0.641` 直接導入 Taiwan 運彩 paper recommendation 或產品建議 — **不採納**。即便高 FIP 子集呈現有意義，仍缺 odds、無 EV/CLV、partial coverage、單季 March–May 樣本，距 product 至少還有 P94 + P82 unlock + odds dataset 三道門。
+- [Not adopt] 任何把 P82 market-edge 提前重啟的提議 — **不採納**（仍 `BLOCKED_NO_REAL_DATASET`）。
+- [Not adopt] 把今天 8 小時花在「整理 86 個 dirty files 並 commit」上 — **不採納**。runtime/data dirty 是設計上會 drift 的，正確策略是 *永不 commit*，不是 *清乾淨*。
+
+### Adoption Summary
+
+- **完全採納**：P94（升為今日 P0）、Agent Entry Governance、Segment Qualification Contract、Regression Policy、Market-Edge BLOCKED、Production Gate、Governance Freeze。
+- **部分採納**：CTO 「先 dirty-tree 後 P94」被 CEO 改為「dirty-tree 政策 inline 進 P94 pre-flight」。
+- **不採納**：CTO 把 dirty-tree 升為獨立 P0 phase；任何向 product / market-edge 提前推進的暗示。
+- **新增**：CEO Dirty-Tree Policy（見第 4 節）、anti-drift 5-phase 拆解禁令、P94 五分類 GO/NO-GO 結案門檻。
+
+**Overall: CEO_DECISION_PARTIALLY_APPROVED**
+
+---
+
+## 4. CEO Dirty-Tree Policy（今日生效，永久規則）
+
+針對目前 86 tracked dirty + 8 untracked，CEO 直接在本決策中分類，避免另開 phase：
+
+| 類別 | 範例 | CEO 政策 |
+|------|------|---------|
+| **A. Roadmap governance** | `00-Plan/roadmap/CEO-Decision.md`, `CTO-Analysis.md`, `roadmap.md` | CEO/CTO 授權變更；可 stage / commit。**今日 P94 worker 不得修改這三檔。** |
+| **B. Runtime / live state** | `data/.live_cache/*`, `data/tsl_*`, `data/learning_state.json`, `data/derived/tsl_market_availability_state.json`, `data/mlb_context/*`, `logs/daemon_heartbeat.jsonl`, `data/wbc_backend/artifacts/*`, `data/wbc_backend/reports/*` | **永不 commit**；視為設計上的 drift。今日 P94 不得 stage 任何此類檔。 |
+| **C. P50–P82 derived artifacts** | `data/mlb_2025/derived/p63_*`, `p77_*`, `p81_*`, `p82b_*`，`outputs/predictions/PAPER/*` | 舊期工件，**今日不重產、不 stage**；如需保留歷史可由獨立 hygiene 任務處理（未排程）。 |
+| **D. P84–P86 derived summaries（已被 P84G/P85/P86 regeneration 觸及）** | `data/mlb_2026/derived/p84[c-h]_*`, `p85_*`, `p86_*` | 若內容代表 P84G–P86 commit 後合法狀態，由 CTO 認可；今日 P94 worker **不得寫入或覆蓋**此區（P94 只能讀）。 |
+| **E. 舊 phase plan reports** | `00-BettingPlan/20260510/*`, `20260526/*` 中已修改檔 | 歷史報告，**今日 P94 不修改**。 |
+| **F. 舊診斷 markdown** | `docs/orchestration/phase28_real_clv_activation_readiness_report_2026-05-2{3,4,5,7}.md` | 不 stage；未來若要保留可獨立 hygiene 任務歸檔。 |
+| **G. Untracked repo-root probe scripts** | `_p50_extract.py`, `_p50_extract3.py`, `_p51_probe3.py`, `scripts/_p30b_analysis.py` | **歸類為 quarantine**；今日 P94 worker 不得 import、不得 stage、不得執行。建議後續以獨立 hygiene 任務移至 `quarantine/` 或加入 `.gitignore`，但今日不做。 |
+| **H. Untracked 舊 phase report** | `report/p30b_feature_candidate_summary_20260524.md`, `docs/orchestration/phase28_*_2026-05-{24,25,27}.md` | 同 G：**今日不處理**，未來獨立 hygiene 任務再決定。 |
+
+**P94 commit 白名單（嚴格）**：
+- `scripts/_p94_high_fip_subset_diagnostic.py`（新增）
+- `tests/test_p94_high_fip_subset_diagnostic.py`（新增）
+- `data/mlb_2026/derived/p94_high_fip_subset_diagnostic_summary.json`（新增）
+- `report/p94_high_fip_subset_diagnostic_20260528.md`（新增）
+- `00-Plan/roadmap/active_task.md`（任務完成後僅更新狀態欄與 historical log）
+- Optional: `00-BettingPlan/20260528/p94_high_fip_subset_diagnostic_20260528.md`（新增）
+
+任何其他檔案**禁止** stage（CEO 強制條款）。
+
+---
 
 ## 5. Roadmap Gap Assessment
 
-| Gap | 處理方式 |
-|---|---|
-| CTO 把 Context-Lock 排為獨立 P1 → 與技術主線分散 | CEO 改為「每個任務 Phase 0 必跑」橫向治理屬性 |
-| CTO 把 Untracked Scripts 排為獨立 P2 → 與 P26K commit scope 衝突 | CEO 改為 P26K Phase 1 內處理，不獨立列 |
-| CTO 未把前輪 CEO 補強的 COMPLETE_PAIR -1 root cause 顯式接入 | CEO 維持為 P26K Phase 7 強制階段 |
-| CTO 未提 startup-only fetch hypothesis | CEO 維持為 P26K Phase 3 第一驗證 |
-| CTO 0D 沒處理 dirty worktree 規模上升 (30+ → 64) | CEO 加入 `wc -l` 警戒線 (>100 需另行授權) |
-| 兩大主軸 (paper rec + 策略優化) 在 CTO 未顯式排序 | CEO 維持 P4/P6 並行軌道 |
-| 環境日期從 2026-05-21 跳到 2026-05-23 | CEO 接受 CTO 日期；artifact filename 仍用 20260521 (與 P26J chain 一致) 或新建 20260523 由 worker 判斷 |
+| Gap | CEO Decision |
+|-----|--------------|
+| CTO 把 dirty-tree 升獨立 P0 | CEO inline 進 P94 pre-flight；單獨 phase 浪費預算 |
+| CTO 對 P86–P90 5-phase 拆解未作 retrospective | CEO 加 anti-drift 規則禁止未來自動拆 5 phase |
+| active_task.md history log 含矛盾 P93 classification | CEO 在新 active_task.md 中只保留 final `P93_SIGNAL_CONCENTRATED_IN_HIGH_FIP` 一條 |
+| 用戶兩條核心 directive（運彩可投注市場前預測 + 既有策略回測學習）未在 roadmap 顯式對映 | CEO 在第 6 節 today focus 中明確映射 |
+| Full-repo regression unknown | 仍在 P3；今日 P94 強制跑 P83A–P94 targeted regression |
+| Calibration refit 仍是技術誘惑 | CEO 強化禁令：P94 GO 前一律 BLOCKED |
 
-## 6. CEO Priority Decision
+---
 
-| Priority | Phase | Track | Done condition | 對齊主軸 |
-|---:|---|---|---|---|
-| **P0** | P26K Closing Fetch Trigger Root Cause Diagnostic (read-only) + Context Hygiene + Untracked Scripts Inventory | Data QA + Observability + Governance | 一個明確 root cause classification (primary + secondary)；context-lock pre-flight PASS；4 個 untracked scripts 分類為 temporary/reusable/unknown 且**不 stage**；COMPLETE_PAIR -1 root cause 記錄；startup-only fetch hypothesis 驗證；P26J source-unavailable label retire；recommended_next_action enum 寫入 | 主軸二前置 |
-| **P1** | Heartbeat-vs-Fetch Watchdog Design (design-only) | Observability design | 告警條件：`closing_window_active=true AND heartbeat=true AND fetched=false AND api_calls_today 未增加`；設計檔，無實作 | 治理 |
-| **P2** | Scheduler/Quota/Next Trigger Decision Gate (post-P26K) | Ops governance | 依 P26K root cause + recommended_next_action 決定下一步；尚未啟動 | 主軸二 |
-| **P3** | Bootstrap Gate Discipline (COMPLETE_PAIR >=300) | Validation | P25C bootstrap 維持 NOT RUN (219<300) | 主軸二 |
-| **P4** | MLB → 台彩 Paper Recommendation 證據契約 (設計併行) | Product | moneyline / 讓分 / 大小分 / 單雙 / 局數市場契約設計；**僅契約，無釋出**；每筆 paper_only=true；不搶 P0 資源 | 主軸一 |
-| **P5** | P26 Artifact SSOT Compression + P26 終結硬規則 | Governance | P26K 為 P26 階段終點；P26K 後不開 P26L 除非 root cause 明確要求 | 治理 |
-| **P6** | P29/P30A Real Orchestrator Validation (並行非搶占) | Prediction | 在 P0 完成且不消耗 P0 資源情況下推進；diagnostic-only | 主軸二 |
-| **P7** | P26 Runtime Validation Hygiene | QA | targeted tests + forbidden scan (含 Stock 字樣) 結果均記錄為實測值 | 治理 |
-| **P8** | TSL CLV Data SSOT | Data governance | raw feed、daemon state、artifact 三者嚴格分離 | 治理 |
-| **P9** | Repo / PR Governance Gate + Cross-Project Context Lock | Engineering governance | canonical branch=main；context-lock 每任務 Phase 0 必跑；commit 白名單 | 治理 |
-| **P10** | Production Proposal Gate | Governance | 永久 blocked | 治理 |
+## 6. CEO Priority Decision (P0 / P1 / P2 / P3–P10)
+
+| Priority | Phase | Track | Why Now (CEO Rationale) |
+|---:|---|---|---|
+| **P0** | **P94 High-FIP Subset Diagnostic / FIP-Stratified Tracking Gate**（含 inline dirty-tree pre-flight + whitelist commit）| Prediction validation | P93 已證實 aggregate 56.9% 主要由 `|abs_fip_delta|≥1.5` 子集（n=287 hit_rate 64.1%）驅動，下一步必須做 segment-level qualification，否則無法區分「真實局部訊號」與「均值膨脹」。 |
+| **P1** | **Segment Qualification Contract** | Model governance | P94 結果出來後立即固化 high/mid/low FIP 報告契約，明示哪些子集允許 diagnostic tracking、哪些必須 watch-only。 |
+| **P1** | **Agent Entry / Branch Governance Guard** | Workflow orchestration | 強制 future task header：repo=`Betting-pool`，branch=`main`，git-dir=`.git`；GUI/desktop `claude/*`/`codex/*` worktree = STOP。已併入 P94 task prompt 第一步 pre-flight。 |
+| **P2** | **Repo Hygiene Sweep（quarantine + .gitignore）** | Repo governance | 處理 G/H 類 untracked probe scripts/reports，移至 `quarantine/` 或加 `.gitignore`；獨立 hygiene 任務，不今天做。 |
+| **P3** | **Targeted + Broader Regression Evidence Policy** | Test governance | P83A–P93 targeted 已 PASS；今日 P94 強制擴 P83A–P94；full-repo 另行授權。 |
+| **P4** | **P84D / 2026 Coverage Watch** | Data quality | 等 probable pitcher availability 增加；P94 不依賴此項。 |
+| **P5** | **FIP-Stratified Shadow Tracker**（gated by `P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY`）| Monitoring | 只有 P94 五分類落在 QUALIFIED 才開放接入；其他四種一律 BLOCKED。 |
+| **P6** | **Calibration / Refit Gate** | Model reliability | P94 GO 前一律 BLOCKED；refit 必須 OOS、diagnostic-only。 |
+| **P7** | **Market-Edge Reentry (P80–P82)** | Odds-dependent validation | 仍 `BLOCKED_NO_REAL_DATASET`。 |
+| **P8** | **Paid / Raw Data Governance** | Data rights | 維持 P82B/P82C raw paid data + staging guard。 |
+| **P9** | **Roadmap / Handoff Hygiene** | Agent governance | 任何 commit 維持白名單；歷史 handoff 標 outdated。 |
+| **P10** | **Production Proposal Gate** | Governance | `production_ready=false` 永久維持。 |
+
+**Anti-Drift Rules（CEO 強制）**：
+- 任何 contract → recovery → authorization → executor → closure 多 phase 序列須先過 CEO gate；禁止 worker 自動拆解。
+- 任何 new monitoring meta-layer 或 FIP-stratified tracker 須先過 CEO gate。
+- 任何 Platt/isotonic/score-transform calibration refit 在 P94 GO 前一律 BLOCKED。
+- 任何 champion replacement / production claim / Kelly / EV / CLV 在 P94 GO + real legal odds 同時達成前一律 BLOCKED。
+- 任何 P94 commit 必須 whitelist-only（見第 4 節）。
+
+---
 
 ## 7. Today Focus Direction
 
-**唯一執行方向**：**P0 — P26K Closing Fetch Trigger Root Cause Diagnostic (read-only) + Context Hygiene + Untracked Scripts Inventory**（合一任務）
+### Direction 1 — P94 High-FIP Subset Diagnostic / FIP-Stratified Tracking Gate (P0)
 
-- 對應 phase：P0
-- 重要性：
-  1. P26J 證實 daemon 8 個 cycle 全 `fetched=false`，根因未知 → CLV 樣本永遠無法累積。
-  2. `api_calls_today=2` 整天不變 + last 2 calls 在 02:07Z/02:09Z (P26G daemon restart 後)，**暗示 fetch 只在 startup 觸發**。
-  3. COMPLETE_PAIR 220→**219** (-1) 必須在新 evidence 累積前釐清。
-  4. P26J `TSL_SOURCE_UNAVAILABLE` 命名誤導，必須正式 retire。
-  5. 跨專案污染風險真實發生於對話層，雖 repo clean，但每個 task 必須 context-lock pre-flight 防複發。
-  6. 4 個 untracked `scripts/p26j_*.py` 與 64 個 dirty files 是 commit scope 高風險。
-- 系統成熟度推進：
-  1. 將「source unavailable」vacuous claim 拆成具體 root cause。
-  2. 把 220→219 下降從 mystery 變成 documented。
-  3. 把 context-lock 從事後救火變成事前防護。
-  4. 把 untracked scripts boundary 明確化，避免被誤 stage 或誤刪。
-  5. P26 階段收斂為單一 root cause chain。
-- 預期收益：
-  1. primary root cause + `recommended_next_action` enum → 下一輪可直接 CEO 授權對應動作。
-  2. context-lock 機制成為跨任務不變式，降低多專案並行污染風險。
-  3. 4 個 scripts 與 64 個 dirty files 都有明確處置決定。
-- 風險：
-  1. read-only，無模型/收益改變。
-  2. dirty worktree 規模上升（30+→64），白名單 commit 風險升級 → CEO 加 `wc -l >100` 警戒線。
-  3. untracked scripts 若被誤 stage 會污染 P26K 純診斷 commit。
-- 驗收標準：見 active_task.md。
-- 是否採納 CTO：採納大方向 + CEO 修正 (Context-Lock 與 Untracked Scripts 併入 P0 任務內處理，不獨立列 P1/P2)。
+- Roadmap phase: P0（含 inline dirty-tree pre-flight）
+- Why important:
+  - P93 顯示 aggregate 56.9% 是「high-FIP 64.1% + low-FIP 52.8%」的混合，**不是均勻 56.9%**。
+  - 若不做 segment qualification，後續任何 shadow tracker / paper recommendation 都會把不存在於 low/mid-FIP 的信心錯誤泛化。
+  - 用戶 directive 「賽前預測策略 + 投注建議」前提就是要知道**哪些 game 子集模型能贏**，P94 正是把這個問題從 aggregate 化為 segment-aware。
+- Maturity gain:
+  - 從「aggregate signal stable」（P91）→「signal not from side bias」（P92）→「signal concentrated in high-FIP」（P93）→「segment qualification with stability boundary」（P94）。
+  - 結束 P91–P94 四步診斷鏈，下一階段可進入 P5 shadow tracker（若 P94 = QUALIFIED）或進入 P4 coverage watch（若 P94 = SAMPLE_LIMITED）。
+- Expected benefit:
+  - **明確輸出**：high-FIP n=287 的 stability（bootstrap CI、temporal split、side breakdown）、low-FIP 是否應該被排除、mid-FIP 是否須 watch-only。
+  - **明確輸出**：五分類 final classification（見下）。
+- Risk:
+  - n=287 可能不足以證明 stability → 合理結論是 `HIGH_FIP_PROMISING_BUT_SAMPLE_LIMITED`，不是失敗。
+  - 若 P94 = `HIGH_FIP_UNSTABLE`，須回退到等更多 outcome 累積。
+- Five-class final classification:
+  - `P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY`
+  - `P94_HIGH_FIP_PROMISING_BUT_SAMPLE_LIMITED`
+  - `P94_HIGH_FIP_UNSTABLE_REQUIRES_REVIEW`
+  - `P94_HIGH_FIP_NOT_SEPARABLE_FROM_NOISE`
+  - `P94_FAILED_VALIDATION`
+- Acceptance criteria:
+  - Pre-flight：canonical repo + main + `.git`；若為 worktree branch 立即 STOP。
+  - Dirty-tree pre-flight：紀錄 86+8 但**不修改、不 stage**；P94 commit 嚴格遵守第 4 節白名單。
+  - 重算 high-FIP / mid-FIP / low-FIP metrics（含 hit_rate, AUC, Brier, ECE, bootstrap 95% CI）。
+  - Monthly split within high-FIP（Mar/Apr/May）+ side split within high-FIP（home vs away）。
+  - 與 P93 step6/step7 metrics 在 tolerance（1e-4）內一致，否則 STOP。
+  - Governance 全保：no odds, no EV/CLV/Kelly, no production, no champion, no canonical/outcome row rewrite, no P83E mapping change。
+  - 報告明確標 diagnostic-only、partial coverage、March–May only。
+- Adopt CTO suggestion: **PARTIAL** — 採納 CTO P1 方向，但把 dirty-tree 從獨立 phase 改為 inline pre-flight；加上五分類 GO/NO-GO 結案門檻；加上 anti-drift 條款。
+
+### Direction 2 — Anti-Drift Enforcement (continuous)
+
+- 禁止 P86–P90 式 5-phase 拆解。
+- 禁止任何新 monitoring meta-layer / FIP-stratified tracker / calibration refit 在 P94 GO 前出現。
+- 禁止把 P93 / P94 結果包裝成 Taiwan 運彩 paper recommendation。
+
+### Direction 3 — Governance Preservation (continuous)
+
+- 不修改 canonical prediction rows / outcome-attached rows / P83E mapping / champion / runtime recommendation logic / odds files。
+- 不啟動 odds API / TSL crawler / live API。
+- worktree dirty files 不可 stage（依第 4 節分類嚴格執行）。
+
+---
 
 ## 8. Risks / Blind Spots
 
-- [Risk] 跨專案對話混線真實發生；雖 repo clean，但若下一輪 prompt 沒帶 PROJECT_CONTEXT_LOCK，agent 仍可能再混入 Stock 內容。
-- [Risk] 4 個 untracked `scripts/p26j_*.py` 用途未知；若是 worker 自製分析工具，不該被誤 stage；若是必要工具，不該被忽略；CEO 強制 P26K 任務內**分類但不處置**（除非顯式授權）。
-- [Risk] dirty worktree 從 30+ 升至 64；commit scope 越大越容易誤 stage；CEO 加 `wc -l >100` 警戒線。
-- [Risk] CEO 第一假設「fetch 只在 daemon startup 觸發」若 confirmed，整個 daemon scheduler 架構需重設計，非小修。
-- [Risk] COMPLETE_PAIR -1 若是新 evidence 反向 invalidate prior pair，CLV 樣本可信度需重評估。
-- [Unknown] `api_calls_today=2` 是 hard quota / dedup / startup-only side effect，三選一。
-- [Unknown] `next_trigger_minutes=null` 是 expected / bug / 配置缺失。
-- [Unknown] `markets=[]` 真因 (source 真沒給 vs fetch 沒執行 client 自填空)。
-- [Unknown] 環境日期跳到 2026-05-23 是 CTO review 日期還是真實環境日期；artifact filename 約定需 worker 自行決定。
-- [Risk] 主軸一/二易被治理工作遮蔽；CEO 顯式 P4/P6 並行軌道但禁止搶占 P0。
-- [Confirmed] `production_ready=false`，promotion/champion replacement/production proposal/live API/TSL crawler modification/profitability claim 全部 frozen。
-- [Confirmed] P25C bootstrap NOT RUN (219<300)。
-- [Inferred from report] 75 PASS / 0 FAIL 為 P26J 報告值未實測，P26K validation phase 必須 rerun。
+1. [Risk] 過去 9 phase 高速進行可能掩蓋驗證疏漏；P94 完成後應排 retrospective 確認 P85–P90 真實 maturity gain。
+2. [Risk] high-FIP n=287 在 bootstrap CI 下可能 95% CI 觸及 baseline，需誠實接受 SAMPLE_LIMITED 結論。
+3. [Risk] 86 dirty + 8 untracked 不處理會持續累積；今天不做整理但已在 P2 排程獨立 hygiene 任務。
+4. [Risk] active_task.md history log 含矛盾 P93 classification，本決策已在新 active_task.md 中只保留 final 條。
+5. [Blind spot] 用戶 directive「對既有預測策略進行回測、模擬勝敗比分」目前只在 prediction-only 線進行；模擬比分 / 運彩盤口模擬仍受 P82 odds-blocked 限制 — 必須誠實寫進 P94 報告。
+6. [Blind spot] 若 P94 顯示 high-FIP 季節分布不均（Mar 73.5% vs Apr 60.1%），可能是賽季初 probable pitcher 樣本偏差，需在報告中標註。
+7. [Risk] GUI/desktop worktree 入口問題未解決；P94 task header 已強制 canonical 入口檢查。
+8. [Risk] CTO 把 P86–P90 拆 5 phase 而 CTO 自身未自查，CEO 在本決策中補上 anti-drift 規則。
+
+---
 
 ## 9. CEO Final Decision
 
-**CEO_DECISION_PARTIALLY_APPROVED**
+| Decision | Value |
+|----------|-------|
+| Adopt CTO P0 (Dirty-Tree Decision Gate) 作為獨立 phase? | **NO** — inline 進 P94 pre-flight |
+| Adopt CTO P1 (P94 High-FIP Subset Diagnostic) 為今日 P0? | **YES** — full adopt + 五分類 GO/NO-GO + anti-drift |
+| Adopt CTO P1 (Agent Entry / Branch Governance Guard)? | **YES** — 併入 P94 task header pre-flight |
+| Adopt CTO P2 (Segment Qualification Contract)? | **YES** — sequenced after P94 GO/NO-GO |
+| Adopt CTO P3 (Regression Policy)? | **YES** — 今日 P94 強制擴 P83A–P94 targeted regression |
+| Adopt CTO P5 (FIP-Stratified Shadow Tracker)? | **YES — but gated**：只有 P94 = QUALIFIED 才開放接入 |
+| Calibration / Platt / isotonic refit allowed today? | **NO** — blocked until P94 GO |
+| Champion replacement / runtime logic mutation? | **NO** |
+| Production / betting recommendation? | **NO** |
+| Real / paid / live odds API call? | **NO** |
+| New repo / branch / worktree? | **NO** |
+| New monitoring meta-layer / 5-phase contract-recovery 拆解 without CEO gate? | **NO** — anti-drift explicit |
+| Allow overwrite of canonical / outcome rows / P83E mapping / P84–P86 summaries? | **NO** — P94 read-only on these |
+| Allow today's worker to stage anything outside第 4 節 white list? | **NO** |
+| Final classification | **CEO_DECISION_PARTIALLY_APPROVED** |
 
-- 採納 CTO Context Hygiene Clean 大方向 + P0 = P26K。
-- 修正 CTO 把 Context-Lock 排為獨立 P1 → CEO 改為「每任務 Phase 0 必跑」橫向治理屬性，併入 P26K Phase 0。
-- 修正 CTO 把 Untracked Scripts 排為獨立 P2 → CEO 改為 P26K Phase 1 內分類處理，不獨立列。
-- 維持前輪 CEO 補強：startup-only hypothesis 為 P26K Phase 3 第一驗證；COMPLETE_PAIR -1 root cause 為 P26K Phase 7 強制階段；P26 終結硬規則；即使發現 bug 只記錄不修。
-- 新增本輪：`PROJECT_CONTEXT_LOCK` 區塊強制；contamination grep 含 `P48|P49|Stock-Prediction|golden fixture|paper simulation dry-run`；dirty worktree `wc -l >100` 警戒線；untracked scripts 不 stage 不刪只分類；commit 白名單 forbidden pattern 加入 `scripts/p26j_`。
-- 明令禁止：optimizer promotion、champion replacement、production proposal、live odds API、TSL crawler modification、daemon restart、scheduler/dedup/crawler code change、profitability claim、PR merge (除非顯式批准)、手動補造 snapshots、新增 repo/worktree/branch、開新 P26L (除非 root cause 明確要求)、納入 Stock-Prediction/P48/P49 內容、stage `scripts/p26j_*.py`、stage raw feed/daemon state/runtime output。
-- `paper_only=true`、`diagnostic_only=true`、`read_only=true`、`context_hygiene=BETTING_CONTEXT_CLEAN` 為 P26K 所有產出強制 invariant。
+---
 
-## 10. 10 行內 CEO 摘要
+## 10. CEO Summary (10 lines)
 
-1. Context Hygiene Check 完成：`BETTING_CONTEXT_CLEAN`，對話混線但 repo 無污染。
-2. HEAD 仍 `0ccd06d`，P26K 仍未執行；前輪 active_task.md 仍 canonical (本輪僅補強)。
-3. 4 個 untracked `scripts/p26j_*.py` + 64 個 dirty files (前輪 30+，已升級風險)。
-4. 採納 CTO 0D Context Hygiene 大方向 + P0 = P26K。
-5. 修正：Context-Lock 與 Untracked Scripts 併入 P0 任務內 (Phase 0/1)，不獨立列 P1/P2。
-6. CEO 補強：PROJECT_CONTEXT_LOCK 區塊、contamination grep、dirty `wc -l >100` 警戒線、scripts 不 stage 不刪只分類。
-7. 維持前輪：startup-only fetch hypothesis、COMPLETE_PAIR -1 必查、P26 終結硬規則、bug 只記錄不修。
-8. 主軸一 paper rec 維持 P4 (設計併行)；主軸二後置 (bootstrap/optimizer) 今日不啟動。
-9. 強制 read-only/白名單 commit/不准開 P26L/不准納入 Stock 內容/不准 stage scripts。
-10. Final classification = `CEO_DECISION_PARTIALLY_APPROVED`。
+1. 過去一輪實際推進 9 phase（P84H–P93），其中 P86–P90 屬過度拆解，但 P91/P92/P93 是高價值結構性發現。
+2. **P93 關鍵情報**：aggregate 56.9% 是「high-FIP n=287 hit_rate 64.1% + low-FIP n=178 52.8%」的混合，**不均勻**。
+3. CEO 採納 CTO P1=P94 升為今日 P0，並要求以五分類 GO/NO-GO 結案。
+4. CEO **拒絕** CTO 把 dirty-tree 升為獨立 phase，改為 inline 進 P94 pre-flight，並在本決策中發布 8 類 Dirty-Tree Policy 與 P94 commit 白名單。
+5. CEO 採納 Agent Entry Governance + Segment Qualification Contract + Regression Policy + FIP-Stratified Shadow Tracker（gated by `P94_HIGH_FIP_QUALIFIED_DIAGNOSTIC_ONLY`）。
+6. **CEO 強制 anti-drift**：禁止 P86–P90 式 5-phase 拆解、禁止 calibration refit 直到 P94 GO、禁止 product / market-edge / Kelly / EV / CLV 提前推進。
+7. Market-edge / Taiwan lottery 仍 `BLOCKED_NO_REAL_DATASET`；2024/2026 odds gap 仍是 product lane 阻塞。
+8. Governance 全維持：no odds, no EV, no CLV, no Kelly, no champion, no production, no live API, no canonical row rewrite, no P83E mapping change。
+9. active_task.md 由 CEO 在本輪覆寫為 P94 task prompt（含 dirty-tree pre-flight + 五分類 GO/NO-GO + 嚴格白名單）。
+10. Final: **CEO_DECISION_PARTIALLY_APPROVED**；今日唯一可派出之 worker task = P94 High-FIP Subset Diagnostic / FIP-Stratified Tracking Gate。
