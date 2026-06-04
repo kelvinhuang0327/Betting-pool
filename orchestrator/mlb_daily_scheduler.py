@@ -629,6 +629,127 @@ def run_postgame_review_job(
     )
 
 
+def run_paper_evaluation_job(
+    run_date: str,
+    *,
+    paper_dir: str | None = None,
+    outcome_path: str | None = None,
+    output_path: str | None = None,
+) -> DailyJobResult:
+    """Run the offline paper evaluation job for a given date (dry-run/paper-only).
+
+    Connects P141 PAPER recommendation outputs to the P142 evaluator.
+    Reads paper rows from ``outputs/recommendations/PAPER/<run_date>/``,
+    evaluates them against the outcome corpus, and writes a JSON summary.
+
+    Safety invariants (permanently enforced):
+    - Offline execution only — no live API calls.
+    - No DB writes.
+    - No production betting / no real stake / no EV/CLV/Kelly unlock.
+    - paper_only = True.
+
+    Parameters
+    ----------
+    run_date : str
+        Date string in YYYY-MM-DD format to evaluate.
+    paper_dir : str | None
+        Override the paper recommendation directory for this date.
+        Defaults to ``outputs/recommendations/PAPER/<run_date>/``.
+    outcome_path : str | None
+        Override the outcome JSONL path.
+        Defaults to ``data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl``.
+    output_path : str | None
+        Override the output artifact path.
+        Defaults to ``data/mlb_2026/derived/p143_paper_eval_<run_date_nodash>.json``.
+    """
+    from pathlib import Path
+
+    started_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    t0 = time.monotonic()
+    output_paths: list[str] = []
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    _safety_flags = {
+        "paper_only": True,
+        "no_real_bet": True,
+        "no_profit_claim": True,
+        "production_modified": False,
+        "no_auto_execution": True,
+        "scheduler_dry_run_only": True,
+        "no_ev_clv_kelly_unlock": True,
+        "no_db_writes": True,
+        "no_live_api_calls": True,
+        "no_provider_unlock": True,
+    }
+
+    resolved_paper_dir = paper_dir or f"outputs/recommendations/PAPER/{run_date}"
+    resolved_outcome_path = (
+        outcome_path
+        or "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl"
+    )
+    resolved_output_path = (
+        output_path
+        or f"data/mlb_2026/derived/p143_paper_eval_{_date_nodash(run_date)}.json"
+    )
+
+    try:
+        from orchestrator.mlb_paper_evaluator import execute_evaluation
+
+        result = execute_evaluation(
+            paper_dir=resolved_paper_dir,
+            outcome_path=resolved_outcome_path,
+            summary_output_path=resolved_output_path,
+        )
+
+        evaluated = result.get("metrics", {}).get("evaluated_count", 0)
+        matched = result.get("metrics", {}).get("matched_outcome_count", 0)
+
+        if evaluated == 0:
+            warnings.append(
+                f"No paper rows found in {resolved_paper_dir} — "
+                "evaluation produced empty metrics (expected for dates with no recommendations)."
+            )
+            status = JOB_STATUS_DATA_LIMITED
+        else:
+            output_paths.append(resolved_output_path)
+            if matched == 0:
+                warnings.append(
+                    f"evaluated_count={evaluated} but matched_outcome_count=0 — "
+                    "no outcomes could be matched (coverage_rate=0.0)."
+                )
+            status = JOB_STATUS_SUCCESS
+
+    except Exception as exc:
+        errors.append(f"run_paper_evaluation_job failed: {exc}")
+        errors.append(traceback.format_exc())
+        finished_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        return DailyJobResult(
+            job_name="paper_evaluation",
+            status=JOB_STATUS_FAILED,
+            started_at=started_at,
+            finished_at=finished_at,
+            duration_seconds=round(time.monotonic() - t0, 3),
+            output_paths=[],
+            errors=errors,
+            warnings=warnings,
+            safety_flags=_safety_flags,
+        )
+
+    finished_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    return DailyJobResult(
+        job_name="paper_evaluation",
+        status=status,
+        started_at=started_at,
+        finished_at=finished_at,
+        duration_seconds=round(time.monotonic() - t0, 3),
+        output_paths=output_paths,
+        errors=errors,
+        warnings=warnings,
+        safety_flags=_safety_flags,
+    )
+
+
 # ════════════════════════════════════════════════════════════════════════════
 # SECTION C — Gate
 # ════════════════════════════════════════════════════════════════════════════
