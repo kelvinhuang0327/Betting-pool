@@ -431,3 +431,85 @@ def test_cli_no_mode_specified_returns_error_code():
         except SystemExit as exc:
             exit_code = exc.code
     assert exit_code == 2
+
+
+# ─── P144: runner DATA_LIMITED / idempotency contract ─────────────────────────
+
+from orchestrator.mlb_daily_scheduler import (  # noqa: E402
+    JOB_STATUS_DATA_LIMITED,
+    JOB_STATUS_SUCCESS,
+    PAPER_EVAL_STATUS_OUTCOMES_UNAVAILABLE,
+    run_paper_evaluation_job,
+)
+
+
+def test_evaluator_metrics_are_deterministic(tmp_path, sample_recommendations, sample_outcomes):
+    """execute_evaluation metrics are a pure function of inputs (idempotent)."""
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text(
+        "\n".join(json.dumps(o) for o in sample_outcomes) + "\n", encoding="utf-8"
+    )
+    date_dir = tmp_path / "PAPER" / "2026-05-11"
+    date_dir.mkdir(parents=True)
+    for i, rec in enumerate(sample_recommendations):
+        (date_dir / f"rec_{i}.jsonl").write_text(json.dumps(rec) + "\n", encoding="utf-8")
+
+    r1 = execute_evaluation(paper_dir=date_dir, outcome_path=outcome_file)
+    r2 = execute_evaluation(paper_dir=date_dir, outcome_path=outcome_file)
+    assert r1["metrics"] == r2["metrics"]  # timestamp may differ; metrics may not
+
+
+def test_runner_outcomes_unavailable_data_limited(tmp_path):
+    """run_paper_evaluation_job: rows present, no matching outcomes → DATA_LIMITED."""
+    date_dir = tmp_path / "PAPER" / "2026-05-11"
+    date_dir.mkdir(parents=True)
+    (date_dir / "rec.jsonl").write_text(
+        json.dumps({
+            "game_id": "2026-05-11-LAA-CLE-824441",
+            "model_prob_home": 0.6, "model_prob_away": 0.4,
+            "tsl_side": "home", "tsl_decimal_odds": 1.9,
+            "stake_units_paper": 0.0, "gate_status": "BLOCKED_TSL_SOURCE",
+            "paper_only": True,
+        }) + "\n",
+        encoding="utf-8",
+    )
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")  # no outcomes yet
+
+    result = run_paper_evaluation_job(
+        run_date="2026-05-11", paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(tmp_path / "out.json"),
+    )
+    assert result.status == JOB_STATUS_DATA_LIMITED
+    assert result.details["data_status"] == PAPER_EVAL_STATUS_OUTCOMES_UNAVAILABLE
+
+
+def test_runner_idempotent_artifact_metrics(tmp_path):
+    """Re-running the runner before outcomes arrive yields identical artifact metrics."""
+    date_dir = tmp_path / "PAPER" / "2026-05-11"
+    date_dir.mkdir(parents=True)
+    (date_dir / "rec.jsonl").write_text(
+        json.dumps({
+            "game_id": "2026-05-11-LAA-CLE-824441",
+            "model_prob_home": 0.6, "model_prob_away": 0.4,
+            "tsl_side": "home", "tsl_decimal_odds": 1.9,
+            "stake_units_paper": 0.0, "gate_status": "BLOCKED_TSL_SOURCE",
+            "paper_only": True,
+        }) + "\n",
+        encoding="utf-8",
+    )
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+    out_path = tmp_path / "out.json"
+
+    run_paper_evaluation_job(
+        run_date="2026-05-11", paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(out_path),
+    )
+    m1 = json.loads(out_path.read_text(encoding="utf-8"))["metrics"]
+    run_paper_evaluation_job(
+        run_date="2026-05-11", paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(out_path),
+    )
+    m2 = json.loads(out_path.read_text(encoding="utf-8"))["metrics"]
+    assert m1 == m2

@@ -1,0 +1,156 @@
+{
+  "task": "P144_DAILY_PAPER_EVALUATION_AUTOMATION_HARDENING",
+  "date": "2026-06-04",
+  "final_classification": "P144_DAILY_PAPER_EVAL_AUTOMATION_HARDENING_COMMITTED_ON_RELEASE_BRANCH",
+
+  "changed_files": [
+    "orchestrator/mlb_daily_scheduler.py",
+    "tests/test_mlb_daily_scheduler.py",
+    "tests/test_mlb_paper_evaluation_runner.py",
+    "data/mlb_2026/derived/p144_daily_paper_evaluation_automation_hardening_summary.json",
+    "report/p144_daily_paper_evaluation_automation_hardening_20260604.md"
+  ],
+  "not_changed_within_whitelist": [
+    "orchestrator/mlb_paper_evaluator.py"
+  ],
+  "not_changed_reason": "Outcome-unavailable / idempotency hardening was implemented entirely in run_paper_evaluation_job (scheduler). The evaluator metric math is already a pure function of (paper rows, outcome corpus) and required no change, so it was left untouched to keep the diff minimal.",
+
+  "scheduler_sequence_before": [
+    "pregame_advisory",
+    "postgame_review"
+  ],
+  "scheduler_sequence_after": [
+    "pregame_advisory",
+    "paper_recommendation",
+    "paper_evaluation",
+    "postgame_review"
+  ],
+  "sequence_note": "run_daily_mlb_scheduler now exposes all four jobs in payload['jobs'] and a payload['scheduler_sequence'] list. The two paper steps default OFF (status NOT_RUN) and do not affect the scheduler gate or manifest, which remain derived from pregame + postgame only. Existing pregame/postgame behavior is preserved.",
+
+  "paper_recommendation_job_contract": {
+    "function": "run_paper_recommendation_job",
+    "wired_into": "run_daily_mlb_scheduler (step 1b, between pregame and paper evaluation)",
+    "default_enabled": false,
+    "default_off_reason": "The recommendation job performs live TSL + MLB schedule probes (_pick_game / _probe_tsl). It defaults OFF so that run_daily_mlb_scheduler() with default args (existing tests, the scripts/run_mlb_daily_scheduler.py CLI, any naive caller) never triggers a live fetch. The daily daemon enables it explicitly via run_paper_recommendation=True for live paper generation.",
+    "enable_param": "run_paper_recommendation=True",
+    "supporting_params": [
+      "paper_allow_replay (default True)",
+      "paper_allow_missing_simulation_gate (default True)",
+      "paper_output_base_dir (default None)"
+    ],
+    "not_run_status": "NOT_RUN with details.reason explaining the opt-in"
+  },
+
+  "paper_evaluation_job_contract": {
+    "function": "run_paper_evaluation_job",
+    "wired_into": "run_daily_mlb_scheduler (step 1c, after paper recommendation, before postgame)",
+    "default_enabled": false,
+    "execution": "fully offline — reads local PAPER rows + local outcome corpus, no network, no DB",
+    "enable_param": "run_paper_evaluation=True",
+    "new_param": "write_output (default True); the orchestrator passes write_output=write_reports so the dry-run/no-write path writes nothing",
+    "supporting_params": [
+      "paper_eval_paper_dir (default outputs/recommendations/PAPER/<date>/)",
+      "paper_eval_outcome_path (default p84e outcome corpus)",
+      "paper_eval_output_path (default data/mlb_2026/derived/p143_paper_eval_<date_nodash>.json)"
+    ],
+    "structured_details_emitted": [
+      "data_status",
+      "evaluated_count",
+      "matched_outcome_count",
+      "missing_outcome_count",
+      "coverage_rate",
+      "hit_rate",
+      "brier_score",
+      "artifact_written"
+    ]
+  },
+
+  "outcome_unavailable_contract": {
+    "summary": "The normal pregame case is 'paper rows exist but their outcomes have not happened yet'. This is now classified as DATA_LIMITED (was previously SUCCESS), so the daily chain never implies a meaningful evaluation before outcomes arrive.",
+    "data_status_tokens": {
+      "NO_PAPER_ROWS": "evaluated_count == 0 -> DATA_LIMITED (no recommendations for the date)",
+      "OUTCOMES_UNAVAILABLE": "evaluated_count > 0 and matched_outcome_count == 0 -> DATA_LIMITED (rows present, outcomes not yet available)",
+      "OUTCOMES_MATCHED": "evaluated_count > 0 and matched_outcome_count > 0 -> SUCCESS (meaningful evaluation)"
+    },
+    "small_sample_warning": "When 0 < matched_outcome_count < 30 (PAPER_EVAL_SMALL_SAMPLE_THRESHOLD), a small-sample warning is emitted; metrics are not statistically significant.",
+    "no_crash_guarantee": "All branches return a DailyJobResult; exceptions are caught and reported as FAILED with details.data_status = EXCEPTION."
+  },
+
+  "idempotency_contract": {
+    "summary": "Evaluation metrics are a pure function of (paper rows, outcome corpus). Re-running the same date before outcomes arrive is deterministic / idempotent; once outcomes land, the same output path is overwritten with updated metrics.",
+    "before_outcomes": "Re-run -> identical metrics + identical DailyJobResult.details (timestamp_utc in the artifact may differ; the metrics block does not).",
+    "after_outcomes": "Re-run with outcomes present -> SUCCESS, matched_outcome_count > 0, same output_path overwritten deterministically.",
+    "tests": [
+      "test_33_paper_eval_idempotent_before_outcomes",
+      "test_34_paper_eval_overwrites_deterministically_after_outcomes",
+      "test_runner_idempotent_artifact_metrics",
+      "test_evaluator_metrics_are_deterministic"
+    ]
+  },
+
+  "tests_run": [
+    {"suite": "tests/test_mlb_daily_scheduler.py", "command": ".venv/bin/python -m pytest tests/test_mlb_daily_scheduler.py -q", "result": "PASS", "count": 41, "new_tests_added": 10, "new_tests": ["test_32", "test_33", "test_34", "test_35", "test_36", "test_37", "test_38", "test_39", "test_40", "test_41"]},
+    {"suite": "tests/test_mlb_paper_evaluation_runner.py", "command": ".venv/bin/python -m pytest tests/test_mlb_paper_evaluation_runner.py -q", "result": "PASS", "count": 21, "new_tests_added": 3, "new_tests": ["test_evaluator_metrics_are_deterministic", "test_runner_outcomes_unavailable_data_limited", "test_runner_idempotent_artifact_metrics"]},
+    {"suite": "tests/test_mlb_paper_evaluator.py", "command": ".venv/bin/python -m pytest tests/test_mlb_paper_evaluator.py -q", "result": "PASS", "count": 5, "new_tests_added": 0},
+    {"suite": "tests/test_run_mlb_tsl_paper_recommendation_smoke.py", "command": ".venv/bin/python -m pytest tests/test_run_mlb_tsl_paper_recommendation_smoke.py -q", "result": "PASS", "count": 13, "new_tests_added": 0},
+    {"suite": "tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py", "command": ".venv/bin/python -m pytest tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py -q", "result": "PASS", "count": 21, "new_tests_added": 0},
+    {"suite": "tests/test_mlb_advisory_api.py", "command": ".venv/bin/python -m pytest tests/test_mlb_advisory_api.py -q", "result": "PASS", "count": 41, "new_tests_added": 0}
+  ],
+  "total_tests_run": 142,
+  "total_tests_passed": 142,
+  "total_tests_failed": 0,
+  "new_tests_added": 13,
+
+  "observed_run_2026_05_11": {
+    "command": "run_paper_evaluation_job(run_date='2026-05-11', paper_dir='outputs/recommendations/PAPER/2026-05-11', outcome_path=p84e, write_output=False)",
+    "status": "SUCCESS",
+    "data_status": "OUTCOMES_MATCHED",
+    "evaluated_count": 2,
+    "matched_outcome_count": 2,
+    "coverage_rate": 1.0,
+    "hit_rate": 1.0,
+    "brier_score": 0.211325,
+    "small_sample_warning": true,
+    "artifact_written": false,
+    "note": "Run with write_output=False to avoid writing the out-of-whitelist p143_paper_eval artifact. Sample size = 2; not statistically significant."
+  },
+
+  "paper_only_guardrails": {
+    "paper_only": true,
+    "dry_run": true,
+    "no_db_writes": true,
+    "no_live_api_calls": true,
+    "no_provider_unlock": true,
+    "no_production_betting_unlock": true,
+    "no_ev_clv_kelly_unlock": true,
+    "no_real_stake": true,
+    "no_auto_execution": true,
+    "scheduler_dry_run_only": true,
+    "default_no_live_fetch": "run_daily_mlb_scheduler() with default args runs no paper step and triggers no live fetch (proven by test_38)."
+  },
+
+  "no_db_writes": true,
+  "no_live_api_calls": true,
+  "no_provider_unlock": true,
+  "no_production_betting_unlock": true,
+  "no_ev_clv_kelly_unlock": true,
+  "service_py_not_modified": true,
+  "gitignore_not_modified": true,
+
+  "remaining_blockers": [
+    {"id": "B1", "description": "TSL live feed 403 Forbidden", "classification": "BLOCKS_ONLY_LIVE_ODDS", "impact": "Paper rows written with stake=0; evaluator handles via shadow_unit_roi.", "resolution": "Awaiting TSL access or alternative source."},
+    {"id": "B2", "description": "Simulation gate BLOCKED_NEGATIVE_BSS (BSS = -14.1%)", "classification": "BLOCKS_PAPER_MLB_OUTPUT_WITH_STAKE", "impact": "Stake blocked; paper audit trail still written.", "resolution": "Requires model improvement for positive BSS."},
+    {"id": "B3", "description": "True P0: no legal authorized pregame odds for live execution", "classification": "BLOCKS_ONLY_PRODUCTION_RECOMMENDATION", "impact": "Paper-only tracking continues; no EV/CLV/Kelly unlock.", "resolution": "Requires formal provider authorization."},
+    {"id": "B4", "description": "Background daemon regenerates runtime/data/log noise files (training_memory.json, tsl_*.json, odds_*, daemon_heartbeat.jsonl)", "classification": "COSMETIC_DIRTY_TREE_NOISE", "impact": "Persistent git dirty state; tolerated for this task, not staged/committed.", "resolution": "Dedicated .gitignore / runtime-isolation hygiene task (deferred by user 2026-06-03; now blocks every task preflight)."},
+    {"id": "B5", "description": "Paper corpus is tiny (2 rows / 1 date). Daily accumulation requires the daemon to enable run_paper_recommendation=True + run_paper_evaluation=True.", "classification": "REQUIRES_DAEMON_ENABLEMENT", "impact": "The wiring exists; corpus growth depends on the daemon opting in to the (live-probe) recommendation step.", "resolution": "Daemon/operator enables paper steps in the daily run; a future task may add a daemon-side enablement + scheduling decision."}
+  ],
+
+  "worker_needs_strong_model": "YES",
+
+  "commit_status": "COMMITTED_ON_RELEASE_BRANCH",
+  "push_status": "NOT_PUSHED",
+  "pr_status": "NOT_OPENED",
+  "branch": "release/p144-daily-paper-evaluation-automation-hardening",
+  "p145_started": false,
+  "next_round_allowed": true
+}
