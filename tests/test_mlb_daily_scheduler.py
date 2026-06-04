@@ -49,6 +49,7 @@ from orchestrator.mlb_daily_scheduler import (
     run_postgame_review_job,
     run_pregame_advisory_job,
     run_paper_recommendation_job,
+    run_paper_evaluation_job,
     validate_daily_manifest,
     write_daily_manifest,
     DEFAULT_FIXTURE_PATH,
@@ -889,3 +890,113 @@ def test_27_run_paper_recommendation_job_replay_when_no_games(tmp_path, monkeypa
     assert result.status == JOB_STATUS_SUCCESS
     assert result.safety_flags.get("paper_only") is True
     assert any("replay" in w.lower() for w in result.warnings)
+
+
+# ─── P143: run_paper_evaluation_job tests ─────────────────────────────────────
+
+P143_DATE = "2026-05-11"
+
+
+def test_28_run_paper_evaluation_job_returns_daily_job_result(tmp_path):
+    """run_paper_evaluation_job returns a DailyJobResult instance."""
+    # Point at an empty paper dir — graceful DATA_LIMITED path
+    empty_paper = tmp_path / "PAPER" / P143_DATE
+    empty_paper.mkdir(parents=True)
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+
+    result = run_paper_evaluation_job(
+        run_date=P143_DATE,
+        paper_dir=str(empty_paper),
+        outcome_path=str(outcome_file),
+        output_path=str(tmp_path / "eval_out.json"),
+    )
+
+    assert isinstance(result, DailyJobResult)
+    assert result.job_name == "paper_evaluation"
+    assert result.status in {JOB_STATUS_SUCCESS, JOB_STATUS_DATA_LIMITED, JOB_STATUS_FAILED}
+
+
+def test_29_run_paper_evaluation_job_paper_safety_flags(tmp_path):
+    """run_paper_evaluation_job DailyJobResult must carry all paper-only safety flags."""
+    empty_paper = tmp_path / "PAPER" / P143_DATE
+    empty_paper.mkdir(parents=True)
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+
+    result = run_paper_evaluation_job(
+        run_date=P143_DATE,
+        paper_dir=str(empty_paper),
+        outcome_path=str(outcome_file),
+        output_path=str(tmp_path / "eval_out.json"),
+    )
+
+    flags = result.safety_flags
+    assert flags.get("paper_only") is True
+    assert flags.get("no_real_bet") is True
+    assert flags.get("production_modified") is False
+    assert flags.get("no_auto_execution") is True
+    assert flags.get("no_ev_clv_kelly_unlock") is True
+    assert flags.get("no_db_writes") is True
+    assert flags.get("no_live_api_calls") is True
+    assert flags.get("no_provider_unlock") is True
+
+
+def test_30_run_paper_evaluation_job_with_fixture_rows_success(tmp_path):
+    """run_paper_evaluation_job succeeds and writes artifact when paper rows exist."""
+    import json as _json
+
+    # Build fixture paper dir
+    date_dir = tmp_path / "PAPER" / P143_DATE
+    date_dir.mkdir(parents=True)
+    rec = {
+        "game_id": f"{P143_DATE}-LAA-CLE-824441",
+        "model_prob_home": 0.62,
+        "model_prob_away": 0.38,
+        "tsl_side": "home",
+        "tsl_decimal_odds": 1.90,
+        "stake_units_paper": 0.0,
+        "gate_status": "BLOCKED_TSL_SOURCE",
+        "paper_only": True,
+    }
+    (date_dir / "rec.jsonl").write_text(_json.dumps(rec) + "\n", encoding="utf-8")
+
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text(
+        _json.dumps(
+            {"game_id": "mlb_2026_824441", "outcome_available": True, "actual_winner": "home"}
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    out_path = tmp_path / "eval_out.json"
+
+    result = run_paper_evaluation_job(
+        run_date=P143_DATE,
+        paper_dir=str(date_dir),
+        outcome_path=str(outcome_file),
+        output_path=str(out_path),
+    )
+
+    assert result.status == JOB_STATUS_SUCCESS
+    assert out_path.exists()
+    artifact = _json.loads(out_path.read_text(encoding="utf-8"))
+    assert artifact["metrics"]["evaluated_count"] == 1
+
+
+def test_31_run_paper_evaluation_job_empty_dir_data_limited(tmp_path):
+    """run_paper_evaluation_job returns DATA_LIMITED when no paper rows are found."""
+    empty_dir = tmp_path / "PAPER" / P143_DATE
+    empty_dir.mkdir(parents=True)
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+
+    result = run_paper_evaluation_job(
+        run_date=P143_DATE,
+        paper_dir=str(empty_dir),
+        outcome_path=str(outcome_file),
+        output_path=str(tmp_path / "eval_out.json"),
+    )
+
+    assert result.status == JOB_STATUS_DATA_LIMITED
+    assert any("no paper rows" in w.lower() for w in result.warnings)

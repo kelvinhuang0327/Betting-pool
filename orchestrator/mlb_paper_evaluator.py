@@ -13,6 +13,7 @@ Safety Invariants:
 
 from __future__ import annotations
 
+import datetime
 import json
 import math
 import os
@@ -307,8 +308,74 @@ def execute_evaluation(
 
     result = {
         "evaluator_version": "p142_evaluator_v1",
-        "timestamp_utc": getattr(metrics, "generated_at_utc", None) or "",
+        "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "metrics": asdict(metrics),
+    }
+
+    if summary_output_path:
+        out_p = Path(summary_output_path)
+        try:
+            out_p.parent.mkdir(parents=True, exist_ok=True)
+            with open(out_p, "w", encoding="utf-8") as f:
+                json.dump(result, f, indent=2)
+        except OSError:
+            pass
+
+    return result
+
+
+def discover_paper_dates(paper_root: str | Path) -> list[str]:
+    """Return sorted list of YYYY-MM-DD date strings found under paper_root."""
+    root = Path(paper_root)
+    if not root.exists():
+        return []
+    dates: list[str] = []
+    for entry in root.iterdir():
+        if entry.is_dir() and len(entry.name) == 10 and entry.name.count("-") == 2:
+            dates.append(entry.name)
+    return sorted(dates)
+
+
+def execute_batch_evaluation(
+    paper_root: str | Path,
+    outcome_path: str | Path,
+    summary_output_path: str | Path | None = None,
+) -> dict[str, Any]:
+    """Evaluate all date folders under paper_root and return per-date + aggregate summary."""
+    dates = discover_paper_dates(paper_root)
+    outcomes = load_outcome_records(outcome_path)
+
+    per_date: dict[str, Any] = {}
+    all_recs: list[dict] = []
+
+    for date_str in dates:
+        date_dir = Path(paper_root) / date_str
+        recs = load_paper_recommendations(date_dir)
+        metrics = evaluate_paper_recommendations(recs, outcomes)
+        per_date[date_str] = {
+            "evaluated_count": metrics.evaluated_count,
+            "matched_outcome_count": metrics.matched_outcome_count,
+            "missing_outcome_count": metrics.missing_outcome_count,
+            "coverage_rate": metrics.coverage_rate,
+            "hit_rate": metrics.hit_rate,
+            "brier_score": metrics.brier_score,
+            "actual_paper_roi": metrics.actual_paper_roi,
+            "shadow_unit_roi": metrics.shadow_unit_roi,
+            "binomial_p_value": metrics.binomial_p_value,
+        }
+        all_recs.extend(recs)
+
+    aggregate_metrics = evaluate_paper_recommendations(all_recs, outcomes)
+
+    result: dict[str, Any] = {
+        "evaluator_version": "p142_evaluator_v1",
+        "mode": "batch",
+        "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "dates_found": dates,
+        "dates_evaluated": len(dates),
+        "total_rows": len(all_recs),
+        "per_date": per_date,
+        "aggregate": asdict(aggregate_metrics),
     }
 
     if summary_output_path:
