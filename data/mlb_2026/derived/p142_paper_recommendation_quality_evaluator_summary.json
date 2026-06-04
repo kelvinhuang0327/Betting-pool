@@ -1,0 +1,63 @@
+{
+  "evaluator_version": "p142_evaluator_v1",
+  "timestamp_utc": "",
+  "metrics": {
+    "evaluated_count": 2,
+    "matched_outcome_count": 2,
+    "missing_outcome_count": 0,
+    "coverage_rate": 1.0,
+    "hit_rate": 1.0,
+    "brier_score": 0.211325,
+    "actual_paper_pnl": 0.0,
+    "actual_paper_stake": 0.0,
+    "actual_paper_roi": 0.0,
+    "shadow_unit_pnl": 1.7772,
+    "shadow_unit_stake": 2.0,
+    "shadow_unit_roi": 0.8886,
+    "binomial_p_value": 0.25,
+    "gate_segmentation": {
+      "BLOCKED_SIMULATION_GATE": {
+        "count": 1,
+        "correct_count": 1,
+        "hit_rate": 1.0,
+        "brier_score": 0.211325,
+        "actual_paper_roi": 0.0,
+        "shadow_unit_roi": 0.8886
+      },
+      "BLOCKED_TSL_SOURCE": {
+        "count": 1,
+        "correct_count": 1,
+        "hit_rate": 1.0,
+        "brier_score": 0.211325,
+        "actual_paper_roi": 0.0,
+        "shadow_unit_roi": 0.8886
+      }
+    },
+    "confidence_segmentation": {
+      "low (0.50-0.55)": {
+        "count": 2,
+        "correct_count": 2,
+        "hit_rate": 1.0,
+        "brier_score": 0.211325,
+        "actual_paper_roi": 0.0,
+        "shadow_unit_roi": 0.8886
+      },
+      "mid (0.55-0.65)": {
+        "count": 0,
+        "correct_count": 0,
+        "hit_rate": 0.0,
+        "brier_score": null,
+        "actual_paper_roi": 0.0,
+        "shadow_unit_roi": 0.0
+      },
+      "high (0.65-1.00)": {
+        "count": 0,
+        "correct_count": 0,
+        "hit_rate": 0.0,
+        "brier_score": null,
+        "actual_paper_roi": 0.0,
+        "shadow_unit_roi": 0.0
+      }
+    }
+  }
+}
