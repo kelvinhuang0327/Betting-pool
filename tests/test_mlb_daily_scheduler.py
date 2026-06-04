@@ -41,6 +41,10 @@ from orchestrator.mlb_daily_scheduler import (
     JOB_STATUS_NOT_RUN,
     JOB_STATUS_SKIPPED,
     JOB_STATUS_SUCCESS,
+    PAPER_EVAL_STATUS_NO_PAPER_ROWS,
+    PAPER_EVAL_STATUS_OUTCOMES_MATCHED,
+    PAPER_EVAL_STATUS_OUTCOMES_UNAVAILABLE,
+    PAPER_EVAL_SMALL_SAMPLE_THRESHOLD,
     build_daily_manifest,
     build_scheduler_gate,
     generate_scheduler_markdown,
@@ -1000,3 +1004,305 @@ def test_31_run_paper_evaluation_job_empty_dir_data_limited(tmp_path):
 
     assert result.status == JOB_STATUS_DATA_LIMITED
     assert any("no paper rows" in w.lower() for w in result.warnings)
+
+
+# ─── P144: outcome-unavailable hardening + idempotency (tests 32–36) ──────────
+
+
+def _write_paper_row(date_dir, game_pk: str, *, gate_status: str = "BLOCKED_TSL_SOURCE"):
+    """Write a single paper recommendation row whose game PK is *game_pk*."""
+    import json as _json
+
+    rec = {
+        "game_id": f"{P143_DATE}-LAA-CLE-{game_pk}",
+        "model_prob_home": 0.62,
+        "model_prob_away": 0.38,
+        "tsl_side": "home",
+        "tsl_decimal_odds": 1.90,
+        "stake_units_paper": 0.0,
+        "gate_status": gate_status,
+        "paper_only": True,
+    }
+    (date_dir / "rec.jsonl").write_text(_json.dumps(rec) + "\n", encoding="utf-8")
+
+
+def test_32_paper_eval_outcomes_unavailable_is_data_limited(tmp_path):
+    """Paper rows present but no matching outcomes yet → DATA_LIMITED (not SUCCESS).
+
+    This is the normal pregame case (P144 hardening). It must not crash.
+    """
+    date_dir = tmp_path / "PAPER" / P143_DATE
+    date_dir.mkdir(parents=True)
+    _write_paper_row(date_dir, "824441")
+
+    # Outcome corpus has a *different* PK → no match.
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text(
+        json.dumps({"game_id": "mlb_2026_999999", "outcome_available": True,
+                    "actual_winner": "home"}) + "\n",
+        encoding="utf-8",
+    )
+
+    result = run_paper_evaluation_job(
+        run_date=P143_DATE,
+        paper_dir=str(date_dir),
+        outcome_path=str(outcome_file),
+        output_path=str(tmp_path / "eval_out.json"),
+    )
+
+    assert result.status == JOB_STATUS_DATA_LIMITED
+    assert result.details["data_status"] == PAPER_EVAL_STATUS_OUTCOMES_UNAVAILABLE
+    assert result.details["evaluated_count"] == 1
+    assert result.details["matched_outcome_count"] == 0
+    assert any("not yet available" in w.lower() for w in result.warnings)
+
+
+def test_33_paper_eval_idempotent_before_outcomes(tmp_path):
+    """Re-running the same date before outcomes arrive is deterministic/idempotent."""
+    date_dir = tmp_path / "PAPER" / P143_DATE
+    date_dir.mkdir(parents=True)
+    _write_paper_row(date_dir, "824441")
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")  # no outcomes yet
+    out_path = tmp_path / "eval_out.json"
+
+    r1 = run_paper_evaluation_job(
+        run_date=P143_DATE, paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(out_path),
+    )
+    artifact1 = json.loads(out_path.read_text(encoding="utf-8"))
+    r2 = run_paper_evaluation_job(
+        run_date=P143_DATE, paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(out_path),
+    )
+    artifact2 = json.loads(out_path.read_text(encoding="utf-8"))
+
+    # Status + structured details are stable across runs.
+    assert r1.status == r2.status == JOB_STATUS_DATA_LIMITED
+    assert r1.details == r2.details
+    # Metrics are a pure function of inputs → identical (timestamp may differ).
+    assert artifact1["metrics"] == artifact2["metrics"]
+
+
+def test_34_paper_eval_overwrites_deterministically_after_outcomes(tmp_path):
+    """Once outcomes arrive, the same output path is overwritten with updated metrics."""
+    date_dir = tmp_path / "PAPER" / P143_DATE
+    date_dir.mkdir(parents=True)
+    _write_paper_row(date_dir, "824441")
+    outcome_file = tmp_path / "outcomes.jsonl"
+    out_path = tmp_path / "eval_out.json"
+
+    # Phase 1: no outcomes → DATA_LIMITED
+    outcome_file.write_text("", encoding="utf-8")
+    r_before = run_paper_evaluation_job(
+        run_date=P143_DATE, paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(out_path),
+    )
+    assert r_before.status == JOB_STATUS_DATA_LIMITED
+
+    # Phase 2: outcome lands → SUCCESS, same path overwritten
+    outcome_file.write_text(
+        json.dumps({"game_id": "mlb_2026_824441", "outcome_available": True,
+                    "actual_winner": "home"}) + "\n",
+        encoding="utf-8",
+    )
+    r_after = run_paper_evaluation_job(
+        run_date=P143_DATE, paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(out_path),
+    )
+    assert r_after.status == JOB_STATUS_SUCCESS
+    assert r_after.details["data_status"] == PAPER_EVAL_STATUS_OUTCOMES_MATCHED
+    assert r_after.details["matched_outcome_count"] == 1
+    artifact = json.loads(out_path.read_text(encoding="utf-8"))
+    assert artifact["metrics"]["matched_outcome_count"] == 1
+
+
+def test_35_paper_eval_write_output_false_writes_nothing(tmp_path):
+    """write_output=False evaluates in-memory only; no artifact, no output_paths."""
+    date_dir = tmp_path / "PAPER" / P143_DATE
+    date_dir.mkdir(parents=True)
+    _write_paper_row(date_dir, "824441")
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+    out_path = tmp_path / "eval_out.json"
+
+    result = run_paper_evaluation_job(
+        run_date=P143_DATE, paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(out_path),
+        write_output=False,
+    )
+
+    assert result.status == JOB_STATUS_DATA_LIMITED
+    assert result.output_paths == []
+    assert not out_path.exists()
+    assert result.details["artifact_written"] is False
+
+
+def test_36_paper_eval_small_sample_warning(tmp_path):
+    """A matched sample below the small-sample threshold raises a warning."""
+    date_dir = tmp_path / "PAPER" / P143_DATE
+    date_dir.mkdir(parents=True)
+    _write_paper_row(date_dir, "824441")
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text(
+        json.dumps({"game_id": "mlb_2026_824441", "outcome_available": True,
+                    "actual_winner": "home"}) + "\n",
+        encoding="utf-8",
+    )
+
+    result = run_paper_evaluation_job(
+        run_date=P143_DATE, paper_dir=str(date_dir),
+        outcome_path=str(outcome_file), output_path=str(tmp_path / "eval_out.json"),
+    )
+
+    assert result.status == JOB_STATUS_SUCCESS
+    assert result.details["matched_outcome_count"] < PAPER_EVAL_SMALL_SAMPLE_THRESHOLD
+    assert any("small sample" in w.lower() for w in result.warnings)
+
+
+# ─── P144: daily orchestrator wiring (tests 37–41) ───────────────────────────
+
+
+def test_37_daily_scheduler_includes_paper_jobs_in_sequence(tmp_path):
+    """run_daily_mlb_scheduler exposes paper_recommendation + paper_evaluation jobs.
+
+    Defaults are off, so paper steps are NOT_RUN, but they are wired into the
+    chain in the correct sequence and the pre-existing jobs remain intact.
+    """
+    payload = run_daily_mlb_scheduler(
+        run_date=RUN_DATE_FIXTURE, mode="today", source="fixture",
+        limit=3, write_reports=False,
+    )
+    jobs = payload["jobs"]
+    # Pre-existing jobs intact.
+    assert "pregame_advisory" in jobs
+    assert "postgame_review" in jobs
+    # New paper jobs wired in.
+    assert jobs["paper_recommendation"]["status"] == JOB_STATUS_NOT_RUN
+    assert jobs["paper_evaluation"]["status"] == JOB_STATUS_NOT_RUN
+    # Sequence documents the daily ordering.
+    assert payload["scheduler_sequence"] == [
+        "pregame_advisory", "paper_recommendation",
+        "paper_evaluation", "postgame_review",
+    ]
+    # Gate still derived from pregame/postgame only → valid.
+    assert payload["gate"] in VALID_GATES
+
+
+def test_38_daily_scheduler_default_does_not_trigger_live_paper_recommendation(monkeypatch):
+    """Default daily run must NOT invoke the live-probe recommendation job."""
+    import orchestrator.mlb_daily_scheduler as sched
+
+    def _boom(*a, **kw):
+        raise AssertionError("run_paper_recommendation_job must not be called by default")
+
+    monkeypatch.setattr(sched, "run_paper_recommendation_job", _boom)
+
+    payload = sched.run_daily_mlb_scheduler(
+        run_date=RUN_DATE_FIXTURE, mode="today", source="fixture",
+        limit=3, write_reports=False,
+    )
+    assert payload["jobs"]["paper_recommendation"]["status"] == JOB_STATUS_NOT_RUN
+
+
+def test_39_daily_scheduler_runs_paper_steps_when_enabled(tmp_path, monkeypatch):
+    """When enabled, both paper steps run in sequence with no live fetch (rec mocked)."""
+    import orchestrator.mlb_daily_scheduler as sched
+
+    started = "2026-05-07T00:00:00+00:00"
+    stub_rec = DailyJobResult(
+        job_name="paper_recommendation",
+        status=JOB_STATUS_SUCCESS,
+        started_at=started, finished_at=started, duration_seconds=0.0,
+        output_paths=[str(tmp_path / "PAPER" / RUN_DATE_FIXTURE / "rec.jsonl")],
+        safety_flags={"paper_only": True, "no_real_bet": True,
+                      "no_ev_clv_kelly_unlock": True, "no_live_api_calls": True},
+    )
+    # Mock the live-probe recommendation job → no network.
+    monkeypatch.setattr(sched, "run_paper_recommendation_job", lambda *a, **kw: stub_rec)
+
+    # Offline evaluation against an empty paper dir (DATA_LIMITED, no crash).
+    empty_paper = tmp_path / "PAPER" / RUN_DATE_FIXTURE
+    empty_paper.mkdir(parents=True)
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+
+    payload = sched.run_daily_mlb_scheduler(
+        run_date=RUN_DATE_FIXTURE, mode="today", source="fixture",
+        limit=3, write_reports=False,
+        run_paper_recommendation=True,
+        run_paper_evaluation=True,
+        paper_eval_paper_dir=str(empty_paper),
+        paper_eval_outcome_path=str(outcome_file),
+        paper_eval_output_path=str(tmp_path / "eval_out.json"),
+    )
+    jobs = payload["jobs"]
+    assert jobs["paper_recommendation"]["status"] == JOB_STATUS_SUCCESS
+    assert jobs["paper_evaluation"]["status"] == JOB_STATUS_DATA_LIMITED
+    # Pre-existing jobs still present and gate valid.
+    assert jobs["pregame_advisory"]["status"] in {
+        JOB_STATUS_SUCCESS, JOB_STATUS_DATA_LIMITED, JOB_STATUS_FAILED, JOB_STATUS_NOT_RUN,
+    }
+    assert payload["gate"] in VALID_GATES
+
+
+def test_40_daily_scheduler_paper_jobs_are_paper_only_no_unlock(tmp_path, monkeypatch):
+    """Paper steps surfaced in payload carry paper-only flags and no production unlock."""
+    import orchestrator.mlb_daily_scheduler as sched
+
+    empty_paper = tmp_path / "PAPER" / RUN_DATE_FIXTURE
+    empty_paper.mkdir(parents=True)
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+
+    payload = sched.run_daily_mlb_scheduler(
+        run_date=RUN_DATE_FIXTURE, mode="today", source="fixture",
+        limit=3, write_reports=False,
+        run_paper_evaluation=True,
+        paper_eval_paper_dir=str(empty_paper),
+        paper_eval_outcome_path=str(outcome_file),
+        paper_eval_output_path=str(tmp_path / "eval_out.json"),
+    )
+    flags = payload["jobs"]["paper_evaluation"]["safety_flags"]
+    assert flags["paper_only"] is True
+    assert flags["no_db_writes"] is True
+    assert flags["no_live_api_calls"] is True
+    assert flags["no_provider_unlock"] is True
+    assert flags["no_ev_clv_kelly_unlock"] is True
+    assert flags["production_modified"] is False
+
+
+def test_41_daily_scheduler_preserves_pregame_postgame_behavior(tmp_path, monkeypatch):
+    """Enabling paper steps must not alter pregame/postgame results or the gate."""
+    import orchestrator.mlb_daily_scheduler as sched
+
+    baseline = sched.run_daily_mlb_scheduler(
+        run_date=RUN_DATE_FIXTURE, mode="today", source="fixture",
+        limit=3, write_reports=False,
+    )
+
+    empty_paper = tmp_path / "PAPER" / RUN_DATE_FIXTURE
+    empty_paper.mkdir(parents=True)
+    outcome_file = tmp_path / "outcomes.jsonl"
+    outcome_file.write_text("", encoding="utf-8")
+    monkeypatch.setattr(
+        sched, "run_paper_recommendation_job",
+        lambda *a, **kw: DailyJobResult(
+            job_name="paper_recommendation", status=JOB_STATUS_SUCCESS,
+            started_at="t", finished_at="t", duration_seconds=0.0,
+        ),
+    )
+    with_paper = sched.run_daily_mlb_scheduler(
+        run_date=RUN_DATE_FIXTURE, mode="today", source="fixture",
+        limit=3, write_reports=False,
+        run_paper_recommendation=True, run_paper_evaluation=True,
+        paper_eval_paper_dir=str(empty_paper),
+        paper_eval_outcome_path=str(outcome_file),
+        paper_eval_output_path=str(tmp_path / "eval_out.json"),
+    )
+
+    assert baseline["gate"] == with_paper["gate"]
+    assert (baseline["jobs"]["pregame_advisory"]["status"]
+            == with_paper["jobs"]["pregame_advisory"]["status"])
+    assert (baseline["jobs"]["postgame_review"]["status"]
+            == with_paper["jobs"]["postgame_review"]["status"])

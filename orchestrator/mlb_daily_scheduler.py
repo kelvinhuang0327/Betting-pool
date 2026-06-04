@@ -73,6 +73,18 @@ JOB_STATUS_FAILED: str = "FAILED"
 JOB_STATUS_DATA_LIMITED: str = "DATA_LIMITED"
 JOB_STATUS_NOT_RUN: str = "NOT_RUN"
 
+# ─── Paper evaluation data-status tokens (P144) ───────────────────────────────
+# These classify *why* a paper-evaluation step is DATA_LIMITED vs SUCCESS, so the
+# daily chain can accumulate deterministic per-date artifacts even when outcomes
+# are not yet available (the normal pregame case).
+PAPER_EVAL_STATUS_NO_PAPER_ROWS: str = "NO_PAPER_ROWS"
+PAPER_EVAL_STATUS_OUTCOMES_UNAVAILABLE: str = "OUTCOMES_UNAVAILABLE"
+PAPER_EVAL_STATUS_OUTCOMES_MATCHED: str = "OUTCOMES_MATCHED"
+
+# Below this many matched outcomes, hit_rate / Brier are not statistically
+# meaningful — surface a small-sample warning instead of implying significance.
+PAPER_EVAL_SMALL_SAMPLE_THRESHOLD: int = 30
+
 # ─── Default paths ────────────────────────────────────────────────────────────
 
 DEFAULT_LEDGER_PATH: str = "reports/mlb_paper_betting_ledger.jsonl"
@@ -165,6 +177,7 @@ class DailyJobResult:
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     safety_flags: dict[str, Any] = field(default_factory=dict)
+    details: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -635,12 +648,23 @@ def run_paper_evaluation_job(
     paper_dir: str | None = None,
     outcome_path: str | None = None,
     output_path: str | None = None,
+    write_output: bool = True,
 ) -> DailyJobResult:
     """Run the offline paper evaluation job for a given date (dry-run/paper-only).
 
     Connects P141 PAPER recommendation outputs to the P142 evaluator.
     Reads paper rows from ``outputs/recommendations/PAPER/<run_date>/``,
-    evaluates them against the outcome corpus, and writes a JSON summary.
+    evaluates them against the outcome corpus, and (optionally) writes a JSON
+    summary artifact.
+
+    Outcome-unavailable hardening (P144):
+    The normal pregame case is "paper rows exist, but their game outcomes have
+    not happened yet". Such a date is reported as ``DATA_LIMITED`` with
+    ``data_status = OUTCOMES_UNAVAILABLE`` (not SUCCESS), so the daily chain
+    never implies a meaningful evaluation before outcomes arrive. The evaluation
+    metrics are a pure function of (paper rows, outcome corpus), so re-running
+    the same date before outcomes arrive is deterministic / idempotent; once
+    outcomes arrive the same output path is overwritten with updated metrics.
 
     Safety invariants (permanently enforced):
     - Offline execution only — no live API calls.
@@ -661,6 +685,9 @@ def run_paper_evaluation_job(
     output_path : str | None
         Override the output artifact path.
         Defaults to ``data/mlb_2026/derived/p143_paper_eval_<run_date_nodash>.json``.
+    write_output : bool
+        If False, evaluate in-memory only and do not write any artifact to disk.
+        Used by the daily orchestrator's dry-run / no-write test path.
     """
     from pathlib import Path
 
@@ -699,26 +726,58 @@ def run_paper_evaluation_job(
         result = execute_evaluation(
             paper_dir=resolved_paper_dir,
             outcome_path=resolved_outcome_path,
-            summary_output_path=resolved_output_path,
+            summary_output_path=resolved_output_path if write_output else None,
         )
 
-        evaluated = result.get("metrics", {}).get("evaluated_count", 0)
-        matched = result.get("metrics", {}).get("matched_outcome_count", 0)
+        metrics = result.get("metrics", {})
+        evaluated = metrics.get("evaluated_count", 0)
+        matched = metrics.get("matched_outcome_count", 0)
+        missing = metrics.get("missing_outcome_count", 0)
+        coverage = metrics.get("coverage_rate", 0.0)
 
         if evaluated == 0:
+            # No paper rows for this date at all.
+            data_status = PAPER_EVAL_STATUS_NO_PAPER_ROWS
+            status = JOB_STATUS_DATA_LIMITED
             warnings.append(
                 f"No paper rows found in {resolved_paper_dir} — "
                 "evaluation produced empty metrics (expected for dates with no recommendations)."
             )
+        elif matched == 0:
+            # Paper rows exist but no outcomes are available yet — the normal
+            # pregame case. Treat as DATA_LIMITED, not SUCCESS.
+            data_status = PAPER_EVAL_STATUS_OUTCOMES_UNAVAILABLE
             status = JOB_STATUS_DATA_LIMITED
+            warnings.append(
+                f"evaluated_count={evaluated} but matched_outcome_count=0 — "
+                "paper rows are present but their outcomes are not yet available "
+                "(coverage_rate=0.0). Re-run after outcomes land to refresh metrics."
+            )
+            if write_output:
+                output_paths.append(resolved_output_path)
         else:
-            output_paths.append(resolved_output_path)
-            if matched == 0:
-                warnings.append(
-                    f"evaluated_count={evaluated} but matched_outcome_count=0 — "
-                    "no outcomes could be matched (coverage_rate=0.0)."
-                )
+            # Outcomes matched — a meaningful evaluation.
+            data_status = PAPER_EVAL_STATUS_OUTCOMES_MATCHED
             status = JOB_STATUS_SUCCESS
+            if write_output:
+                output_paths.append(resolved_output_path)
+            if matched < PAPER_EVAL_SMALL_SAMPLE_THRESHOLD:
+                warnings.append(
+                    f"matched_outcome_count={matched} < "
+                    f"{PAPER_EVAL_SMALL_SAMPLE_THRESHOLD} — small sample; "
+                    "metrics are not statistically significant."
+                )
+
+        details = {
+            "data_status": data_status,
+            "evaluated_count": evaluated,
+            "matched_outcome_count": matched,
+            "missing_outcome_count": missing,
+            "coverage_rate": coverage,
+            "hit_rate": metrics.get("hit_rate", 0.0),
+            "brier_score": metrics.get("brier_score"),
+            "artifact_written": bool(write_output),
+        }
 
     except Exception as exc:
         errors.append(f"run_paper_evaluation_job failed: {exc}")
@@ -734,6 +793,7 @@ def run_paper_evaluation_job(
             errors=errors,
             warnings=warnings,
             safety_flags=_safety_flags,
+            details={"data_status": "EXCEPTION"},
         )
 
     finished_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -747,6 +807,7 @@ def run_paper_evaluation_job(
         errors=errors,
         warnings=warnings,
         safety_flags=_safety_flags,
+        details=details,
     )
 
 
@@ -1230,9 +1291,41 @@ def run_daily_mlb_scheduler(
     run_postgame: bool = True,
     skip_postgame_if_pregame_fails: bool = True,
     write_reports: bool = True,
+    run_paper_recommendation: bool = False,
+    run_paper_evaluation: bool = False,
+    paper_allow_replay: bool = True,
+    paper_allow_missing_simulation_gate: bool = True,
+    paper_output_base_dir: str | None = None,
+    paper_eval_paper_dir: str | None = None,
+    paper_eval_outcome_path: str | None = None,
+    paper_eval_output_path: str | None = None,
 ) -> dict:
     """
     Main daily MLB scheduler orchestration function.
+
+    Runs, in order:
+      1. pregame advisory
+      2. paper recommendation   (P141, opt-in — see below)
+      3. paper evaluation       (P143, opt-in — offline)
+      4. postgame review
+    then builds manifest and writes reports.
+
+    Paper-step wiring (P144):
+    The paper recommendation + paper evaluation jobs are wired into the daily
+    chain so the paper corpus and per-date evaluation artifacts can accumulate
+    deterministically every day. Both are **off by default** and surface as
+    ``NOT_RUN`` in ``payload["jobs"]`` unless explicitly enabled:
+
+    - ``run_paper_recommendation`` defaults to False because the recommendation
+      job performs live TSL / MLB schedule probes; the daily daemon enables it
+      explicitly for live paper generation. Keeping it off by default preserves
+      the no-live-fetch-by-default contract for all other callers.
+    - ``run_paper_evaluation`` is fully offline (reads local PAPER rows + local
+      outcome corpus) and also defaults to False so existing default callers see
+      no behavior change; it is enabled alongside the recommendation step.
+
+    Neither paper step affects the scheduler gate or manifest (which remain
+    derived from pregame + postgame), so existing behavior is preserved.
 
     Runs pregame advisory + postgame review, builds manifest, writes reports.
 
@@ -1332,6 +1425,57 @@ def run_daily_mlb_scheduler(
                 "production_modified": PRODUCTION_MODIFIED,
                 "no_auto_execution": NO_AUTO_EXECUTION,
             },
+        )
+
+    # ── 1b. Paper recommendation job (P141, opt-in) ──────────────────────────
+    _paper_safety_flags = {
+        "paper_only": True,
+        "no_real_bet": True,
+        "no_profit_claim": True,
+        "production_modified": False,
+        "no_auto_execution": True,
+        "scheduler_dry_run_only": True,
+        "no_ev_clv_kelly_unlock": True,
+        "no_db_writes": True,
+        "no_live_api_calls": True,
+        "no_provider_unlock": True,
+    }
+    if run_paper_recommendation:
+        paper_recommendation_result = run_paper_recommendation_job(
+            run_date=run_date,
+            allow_replay=paper_allow_replay,
+            allow_missing_simulation_gate=paper_allow_missing_simulation_gate,
+            output_base_dir=paper_output_base_dir,
+        )
+    else:
+        paper_recommendation_result = DailyJobResult(
+            job_name="paper_recommendation",
+            status=JOB_STATUS_NOT_RUN,
+            started_at=run_ts,
+            finished_at=run_ts,
+            duration_seconds=0.0,
+            safety_flags=_paper_safety_flags,
+            details={"reason": "run_paper_recommendation=False (default; live-probe step is opt-in)"},
+        )
+
+    # ── 1c. Paper evaluation job (P143, opt-in, offline) ─────────────────────
+    if run_paper_evaluation:
+        paper_evaluation_result = run_paper_evaluation_job(
+            run_date=run_date,
+            paper_dir=paper_eval_paper_dir,
+            outcome_path=paper_eval_outcome_path,
+            output_path=paper_eval_output_path,
+            write_output=write_reports,
+        )
+    else:
+        paper_evaluation_result = DailyJobResult(
+            job_name="paper_evaluation",
+            status=JOB_STATUS_NOT_RUN,
+            started_at=run_ts,
+            finished_at=run_ts,
+            duration_seconds=0.0,
+            safety_flags=_paper_safety_flags,
+            details={"reason": "run_paper_evaluation=False (default)"},
         )
 
     # ── 2. Postgame review job ───────────────────────────────────────────────
@@ -1472,6 +1616,24 @@ def run_daily_mlb_scheduler(
                 "warnings": pregame_result.warnings,
                 "output_paths": pregame_result.output_paths,
             },
+            "paper_recommendation": {
+                "status": paper_recommendation_result.status,
+                "duration_seconds": paper_recommendation_result.duration_seconds,
+                "errors": paper_recommendation_result.errors,
+                "warnings": paper_recommendation_result.warnings,
+                "output_paths": paper_recommendation_result.output_paths,
+                "safety_flags": paper_recommendation_result.safety_flags,
+                "details": paper_recommendation_result.details,
+            },
+            "paper_evaluation": {
+                "status": paper_evaluation_result.status,
+                "duration_seconds": paper_evaluation_result.duration_seconds,
+                "errors": paper_evaluation_result.errors,
+                "warnings": paper_evaluation_result.warnings,
+                "output_paths": paper_evaluation_result.output_paths,
+                "safety_flags": paper_evaluation_result.safety_flags,
+                "details": paper_evaluation_result.details,
+            },
             "postgame_review": {
                 "status": postgame_result.status,
                 "duration_seconds": postgame_result.duration_seconds,
@@ -1480,6 +1642,12 @@ def run_daily_mlb_scheduler(
                 "output_paths": postgame_result.output_paths,
             },
         },
+        "scheduler_sequence": [
+            "pregame_advisory",
+            "paper_recommendation",
+            "paper_evaluation",
+            "postgame_review",
+        ],
         "manifest": {
             "run_id": manifest.run_id,
             "run_date": manifest.run_date,
