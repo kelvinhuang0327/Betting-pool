@@ -1306,3 +1306,106 @@ def test_41_daily_scheduler_preserves_pregame_postgame_behavior(tmp_path, monkey
             == with_paper["jobs"]["pregame_advisory"]["status"])
     assert (baseline["jobs"]["postgame_review"]["status"]
             == with_paper["jobs"]["postgame_review"]["status"])
+
+
+# ─── P145: CLI paper-flag wiring tests (tests 42–45) ──────────────────────────
+
+
+def _invoke_scheduler_cli(monkeypatch, argv_tail: list[str]) -> dict[str, Any]:
+    """Invoke scripts.run_mlb_daily_scheduler.main() with a mocked orchestrator.
+
+    Captures the kwargs the CLI passes to run_daily_mlb_scheduler so tests can
+    assert flag wiring without running any pipeline or touching disk/network.
+    """
+    import importlib
+    import sys as _sys
+
+    mod_name = "scripts.run_mlb_daily_scheduler"
+    cli = _sys.modules.get(mod_name) or importlib.import_module(mod_name)
+
+    captured: dict[str, Any] = {}
+
+    def _fake_run_daily_mlb_scheduler(**kwargs: Any) -> dict[str, Any]:
+        captured.update(kwargs)
+        return {
+            "run_id": "p145_stub",
+            "run_date": kwargs.get("run_date", ""),
+            "mode": kwargs.get("mode", ""),
+            "source": kwargs.get("source", ""),
+            "manifest": {},
+            "jobs": {},
+            "gate": sorted(VALID_GATES)[0],
+            "gate_rationale": "p145 cli wiring stub",
+            "manifest_path": "p145_stub_manifest.json",
+            "markdown_path": "p145_stub.md",
+        }
+
+    monkeypatch.setattr(cli, "run_daily_mlb_scheduler", _fake_run_daily_mlb_scheduler)
+    monkeypatch.setattr(
+        _sys, "argv",
+        ["run_mlb_daily_scheduler.py", "--date", RUN_DATE_FIXTURE, "--no-write"]
+        + argv_tail,
+    )
+    rc = cli.main()
+    assert rc == 0
+    return captured
+
+
+def test_42_cli_paper_flags_default_off(monkeypatch):
+    """Naive CLI invocation must keep both paper steps OFF (default-off invariant)."""
+    captured = _invoke_scheduler_cli(monkeypatch, [])
+    assert captured["run_paper_recommendation"] is False
+    assert captured["run_paper_evaluation"] is False
+
+
+def test_43_cli_paper_flags_explicit_opt_in(monkeypatch):
+    """Explicit true flags must be passed as True to the scheduler invocation."""
+    captured = _invoke_scheduler_cli(monkeypatch, [
+        "--run-paper-recommendation", "true",
+        "--run-paper-evaluation", "true",
+    ])
+    assert captured["run_paper_recommendation"] is True
+    assert captured["run_paper_evaluation"] is True
+
+
+def test_44_cli_paper_flags_are_independent(monkeypatch):
+    """Each paper flag is independent; enabling one must not enable the other."""
+    captured = _invoke_scheduler_cli(monkeypatch, [
+        "--run-paper-recommendation", "true",
+    ])
+    assert captured["run_paper_recommendation"] is True
+    assert captured["run_paper_evaluation"] is False
+
+    captured = _invoke_scheduler_cli(monkeypatch, [
+        "--run-paper-recommendation", "false",
+        "--run-paper-evaluation", "false",
+    ])
+    assert captured["run_paper_recommendation"] is False
+    assert captured["run_paper_evaluation"] is False
+
+
+def test_45_cli_default_invocation_never_calls_live_paper_job(monkeypatch):
+    """Real CLI run with defaults must never reach the live-probe recommendation job."""
+    import importlib
+    import sys as _sys
+
+    import orchestrator.mlb_daily_scheduler as sched
+
+    def _boom(*a: Any, **kw: Any) -> None:
+        raise AssertionError(
+            "run_paper_recommendation_job must not be called by default CLI invocation"
+        )
+
+    monkeypatch.setattr(sched, "run_paper_recommendation_job", _boom)
+
+    mod_name = "scripts.run_mlb_daily_scheduler"
+    cli = _sys.modules.get(mod_name) or importlib.import_module(mod_name)
+    monkeypatch.setattr(
+        _sys, "argv",
+        ["run_mlb_daily_scheduler.py",
+         "--date", RUN_DATE_FIXTURE,
+         "--mode", "today", "--source", "fixture",
+         "--limit", "3", "--no-write"],
+    )
+    rc = cli.main()
+    assert rc == 0

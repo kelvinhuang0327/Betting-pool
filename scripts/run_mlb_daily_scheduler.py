@@ -10,6 +10,13 @@ Usage:
         --date 2025-07-01 --mode replay --source replay --limit 15 \\
         --run-pregame true --run-postgame true
 
+    # Daemon-only opt-in: enable daily paper tracking steps explicitly.
+    # Both flags default to false so naive CLI callers and offline tests
+    # never trigger the live-probe recommendation path.
+    .venv/bin/python scripts/run_mlb_daily_scheduler.py \\
+        --date 2026-06-05 --mode today --source fixture --limit 15 \\
+        --run-paper-recommendation true --run-paper-evaluation true
+
 All output is paper-only / no-real-bet / no-profit-claim.
 """
 from __future__ import annotations
@@ -144,6 +151,20 @@ def main() -> int:
         help="Run postgame review job (true/false)"
     )
     parser.add_argument(
+        "--run-paper-recommendation", default="false",
+        help=(
+            "Run daily paper recommendation job (true/false; default false). "
+            "Explicit opt-in only — may probe live sources when enabled."
+        )
+    )
+    parser.add_argument(
+        "--run-paper-evaluation", default="false",
+        help=(
+            "Run daily paper evaluation job (true/false; default false). "
+            "Explicit opt-in only — fully offline (local PAPER rows + local outcomes)."
+        )
+    )
+    parser.add_argument(
         "--ledger-path", default=DEFAULT_LEDGER_PATH,
         help="Path to paper betting ledger JSONL"
     )
@@ -164,6 +185,8 @@ def main() -> int:
 
     run_pregame = _bool_arg(args.run_pregame)
     run_postgame = _bool_arg(args.run_postgame)
+    run_paper_recommendation = _bool_arg(args.run_paper_recommendation)
+    run_paper_evaluation = _bool_arg(args.run_paper_evaluation)
     write_reports = not args.no_write
 
     print(f"\n[run_mlb_daily_scheduler] date={args.date} mode={args.mode} source={args.source}")
@@ -171,6 +194,8 @@ def main() -> int:
     print(f"  fixture_path   : {args.fixture_path}")
     print(f"  run_pregame    : {run_pregame}")
     print(f"  run_postgame   : {run_postgame}")
+    print(f"  run_paper_recommendation : {run_paper_recommendation}")
+    print(f"  run_paper_evaluation     : {run_paper_evaluation}")
     print(f"  limit          : {args.limit}")
     print(f"  write_reports  : {write_reports}")
     print()
@@ -185,6 +210,8 @@ def main() -> int:
         manifest_path=args.manifest_path,
         run_pregame=run_pregame,
         run_postgame=run_postgame,
+        run_paper_recommendation=run_paper_recommendation,
+        run_paper_evaluation=run_paper_evaluation,
         write_reports=write_reports,
     )
 
