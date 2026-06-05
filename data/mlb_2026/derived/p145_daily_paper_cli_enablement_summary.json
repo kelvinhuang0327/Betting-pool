@@ -1,0 +1,51 @@
+{
+  "task": "P145_DAILY_PAPER_CLI_ENABLEMENT",
+  "version": "v2",
+  "completed_at": "2026-06-05",
+  "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+  "branch": "main",
+  "base_head": "24d2c038a6f8dd86a30f2ddb6bca7538df0301e5",
+  "changes": {
+    "scripts/run_mlb_daily_scheduler.py": [
+      "added --run-paper-recommendation CLI argument (default 'false')",
+      "added --run-paper-evaluation CLI argument (default 'false')",
+      "parsed via existing _bool_arg helper",
+      "passed run_paper_recommendation/run_paper_evaluation kwargs to run_daily_mlb_scheduler",
+      "added echo lines for both flags",
+      "added daemon opt-in usage example to docstring"
+    ],
+    "tests/test_mlb_daily_scheduler.py": [
+      "test_42_cli_paper_flags_default_off",
+      "test_43_cli_paper_flags_explicit_opt_in",
+      "test_44_cli_paper_flags_are_independent",
+      "test_45_cli_default_invocation_never_calls_live_paper_job"
+    ],
+    "core_scheduler_defaults_changed": false
+  },
+  "invariants": {
+    "default_off": true,
+    "explicit_opt_in_only": true,
+    "dual_layer_default_off": "CLI default 'false' + python function default False",
+    "offline_tests_safe": true,
+    "no_db_writes": true,
+    "no_live_api_calls": true,
+    "no_provider_unlock": true,
+    "no_production_betting_unlock": true,
+    "no_ev_clv_kelly_unlock": true,
+    "no_registry_mutation": true,
+    "no_controlled_apply": true,
+    "no_daemon_started": true,
+    "runtime_dirty_files_untouched": true
+  },
+  "tests": {
+    "tests/test_mlb_daily_scheduler.py": {"result": "PASS", "passed": 45, "failed": 0},
+    "tests/test_mlb_paper_evaluation_runner.py": {"result": "PASS", "passed": 21, "failed": 0},
+    "cli_help_smoke_test": "PASS"
+  },
+  "opt_in_invocation": ".venv/bin/python scripts/run_mlb_daily_scheduler.py --date <YYYY-MM-DD> --mode today --source fixture --limit 15 --run-paper-recommendation true --run-paper-evaluation true",
+  "rollback": "remove the two flags from the daemon invoker; system reverts to offline/dry-run defaults instantly",
+  "remaining_next_step": "P146 candidate: update daemon startup script (cron/GitHub Action) to pass --run-paper-recommendation true --run-paper-evaluation true; invoker file is outside P145 whitelist",
+  "commit_status": "UNCOMMITTED (commit not explicitly authorized by active_task.md/governance)",
+  "push_status": "NOT_PUSHED",
+  "final_classification": "P145_DAILY_PAPER_CLI_ENABLEMENT_READY_UNCOMMITTED"
+}

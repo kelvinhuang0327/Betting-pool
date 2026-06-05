@@ -1,0 +1,62 @@
+{
+  "task": "P146_DAEMON_INVOKER_PAPER_FLAG_ENABLEMENT",
+  "version": "v1",
+  "completed_at": "2026-06-05",
+  "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+  "branch": "main",
+  "base_head_p145": "23e974a275542ecf9086cf7a1d359b89c39d8b31",
+  "origin_main": "24d2c038a6f8dd86a30f2ddb6bca7538df0301e5",
+  "target_file": ".github/workflows/daily_update.yml",
+  "target_selection_reason": "Only existing automated cron entrypoint (UTC 00:00 daily). No other shell/yaml/launchd/cron file invokes run_mlb_daily_scheduler.py.",
+  "changes": {
+    ".github/workflows/daily_update.yml": {
+      "step_added": "Run MLB Daily Scheduler (Paper Mode)",
+      "inserted_between": ["Install dependencies", "Run Data Update"],
+      "flags_enabled": {
+        "--run-paper-recommendation": "true",
+        "--run-paper-evaluation": "true"
+      },
+      "other_args": {
+        "--date": "$(date -u +'%Y-%m-%d')",
+        "--mode": "today",
+        "--source": "fixture",
+        "--limit": 15
+      },
+      "non_fatal": true,
+      "python_auto_detection": ".venv/bin/python fallback to python3",
+      "existing_wbc_step_modified": false,
+      "existing_commit_push_step_modified": false
+    }
+  },
+  "invariants": {
+    "no_db_writes": true,
+    "no_live_api_calls_manually": true,
+    "no_production_betting_unlock": true,
+    "no_ev_clv_kelly_unlock": true,
+    "no_provider_unlock": true,
+    "no_registry_mutation": true,
+    "no_controlled_apply": true,
+    "paper_only_semantics_preserved": true,
+    "existing_wbc_workflow_unaffected": true,
+    "runtime_dirty_files_untouched": true
+  },
+  "validation": {
+    "yaml_parser": "PyYAML unavailable (not installed, not installed as per policy)",
+    "manual_structure_checks": "15/15 PASS",
+    "paper_rec_flag_grep": "PASS (line 38)",
+    "paper_eval_flag_grep": "PASS (line 39)",
+    "non_blocking_grep": "PASS (line 40)",
+    "step_order_correct": true,
+    "no_tabs": true
+  },
+  "pytest": "NOT_RUN (YAML-only change; P145 tests 45+21 remain valid from prior run)",
+  "commit_status": "COMMITTED",
+  "push_status": "NOT_PUSHED",
+  "next_steps": [
+    "Open PR for main [ahead 2] (P145 + P146) to origin/main",
+    "Verify first CI run via workflow_dispatch or UTC 00:00 cron",
+    "Expect paper_recommendation=DATA_LIMITED (TSL 403 in CI) until TSL auth",
+    "Expect paper_evaluation=DATA_LIMITED / small_sample initially — accumulates daily"
+  ],
+  "final_classification": "P146_DAEMON_INVOKER_PAPER_FLAG_ENABLEMENT_COMMITTED"
+}
