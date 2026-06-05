@@ -1,0 +1,43 @@
+{
+  "task": "P158",
+  "title": "Daily Workflow Commit Push Permission Fix",
+  "date": "2026-06-05",
+  "status": "COMMITTED_LOCAL_NOT_PUSHED",
+  "root_cause": "GITHUB_TOKEN default contents permission is read-only; workflow missing top-level permissions: contents: write",
+  "workflow_run_id": 26994316105,
+  "workflow_name": "Daily WBC Data Sync",
+  "run_event": "schedule",
+  "run_head_sha": "dda5739442215eeb3c0cea96102083575478ebeb",
+  "run_conclusion": "failure",
+  "failed_step": "Commit and Push changes",
+  "failed_step_number": 7,
+  "failure_message_summary": "remote: Permission to kelvinhuang0327/Betting-pool.git denied to github-actions[bot]. fatal: unable to access: HTTP 403",
+  "file_fixed": ".github/workflows/daily_update.yml",
+  "permission_added": "contents: write",
+  "permission_block": "permissions:\n  contents: write",
+  "diff_description": "Inserted top-level permissions block (2 lines) before jobs: section. No other changes.",
+  "paper_step_preserved": true,
+  "wbc_update_step_preserved": true,
+  "commit_push_step_preserved": true,
+  "cron_schedule_unchanged": "0 0 * * *",
+  "safety_invariants": {
+    "no_push": true,
+    "no_workflow_dispatch_trigger": true,
+    "no_rerun": true,
+    "no_db_write": true,
+    "no_manual_live_api_call": true,
+    "no_provider_production_ev_clv_kelly_unlock": true,
+    "no_registry_mutation": true,
+    "no_controlled_apply": true,
+    "runtime_dirty_files_untouched": true,
+    "no_files_outside_whitelist_modified": true
+  },
+  "validation": {
+    "yaml_ok": true,
+    "permissions_grep_found": true,
+    "p158_workflow_text_ok": true
+  },
+  "next_recommended_step": "Create PR release/p158 -> main, merge, verify next scheduled run Commit and Push step concludes success",
+  "pr_11_merge_sha": "dda5739442215eeb3c0cea96102083575478ebeb",
+  "pr_11_state": "MERGED"
+}
