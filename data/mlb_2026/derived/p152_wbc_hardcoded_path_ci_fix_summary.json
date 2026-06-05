@@ -1,0 +1,58 @@
+{
+  "task": "P152_WBC_HARDCODED_PATH_CI_FIX",
+  "version": "v1",
+  "completed_at": "2026-06-05",
+  "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+  "branch": "main",
+  "base_head": "06c62171c5f0ad7bf7f2fd2558623f6803d9a55d",
+  "root_cause": {
+    "file": "scripts/legacy_entrypoints/fetch_wbc_all_players.py",
+    "line_before": 93,
+    "old_value": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_all_players_realtime.json",
+    "error_in_ci": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_all_players_realtime.json'",
+    "ci_failure_since": "2026-05-26",
+    "days_failing": 10
+  },
+  "changes": {
+    "scripts/legacy_entrypoints/fetch_wbc_all_players.py": [
+      "added: from pathlib import Path",
+      "added: _REPO_ROOT = Path(__file__).resolve().parents[2] at module top",
+      "replaced hardcoded absolute path with: _REPO_ROOT / 'data' / 'wbc_all_players_realtime.json'",
+      "added: output_file.parent.mkdir(parents=True, exist_ok=True)",
+      "updated: print uses output_file.resolve() for human-readable path"
+    ],
+    "tests/test_fetch_wbc_all_players.py": [
+      "new file: 5 tests covering path invariants and run() with monkeypatched _REPO_ROOT"
+    ]
+  },
+  "invariants": {
+    "output_filename_unchanged": "data/wbc_all_players_realtime.json",
+    "no_db_writes": true,
+    "no_manual_live_api_calls": true,
+    "no_production_betting_unlock": true,
+    "no_ev_clv_kelly_unlock": true,
+    "no_provider_unlock": true,
+    "workflow_yaml_not_modified": true,
+    "paper_job_logic_not_modified": true,
+    "runtime_dirty_files_untouched": true
+  },
+  "validation": {
+    "grep_hardcoded_path": "NOT_FOUND (exit code 1 = no match)",
+    "py_compile": "PASS",
+    "targeted_tests": "5/5 PASS (0.07s)"
+  },
+  "ci_fix_expected_outcome": {
+    "run_data_update_step": "SUCCESS (FileNotFoundError resolved)",
+    "commit_push_step": "will execute (was skipped before)",
+    "paper_artifacts_auto_committed": "YES (git add data/*.json will include paper output)"
+  },
+  "commit_status": "COMMITTED",
+  "push_status": "NOT_PUSHED",
+  "next_steps": [
+    "Open PR release/p152-wbc-hardcoded-path-ci-fix -> main",
+    "Merge PR to push fix to origin/main",
+    "Verify next scheduled or workflow_dispatch run: Run Data Update SUCCESS",
+    "Confirm Commit and Push step executes and commits paper artifacts"
+  ],
+  "final_classification": "P152_WBC_HARDCODED_PATH_CI_FIX_COMMITTED"
+}

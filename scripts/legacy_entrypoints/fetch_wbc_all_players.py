@@ -2,7 +2,11 @@
 import urllib.request
 import json
 import time
+from pathlib import Path
 from typing import List, Dict
+
+# Repo root resolved relative to this file so the script works in any environment.
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 
 class WBCCrawler:
     def __init__(self, season=2026, timeout=20):
@@ -90,10 +94,11 @@ class WBCCrawler:
                 "players": team_players
             })
             
-        output_file = f"/Users/kelvin/Kelvin-WorkSpace/Betting-pool/data/wbc_all_players_realtime.json"
+        output_file = _REPO_ROOT / "data" / "wbc_all_players_realtime.json"
+        output_file.parent.mkdir(parents=True, exist_ok=True)
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(all_data, f, indent=4, ensure_ascii=False)
-        print(f"Finished! Total data saved to {output_file}")
+        print(f"Finished! Total data saved to {output_file.resolve()}")
 
 if __name__ == "__main__":
     crawler = WBCCrawler()
