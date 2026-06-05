@@ -23,6 +23,22 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Run MLB Daily Scheduler (Paper Mode)
+        run: |
+          if [ -f .venv/bin/python ]; then
+            PYTHON=.venv/bin/python
+          else
+            PYTHON=python3
+          fi
+          $PYTHON scripts/run_mlb_daily_scheduler.py \
+            --date "$(date -u +'%Y-%m-%d')" \
+            --mode today \
+            --source fixture \
+            --limit 15 \
+            --run-paper-recommendation true \
+            --run-paper-evaluation true \
+            || echo "MLB daily scheduler step failed (non-blocking)"
+
       - name: Run Data Update
         run: |
           # 執行資料更新與賠率爬取
