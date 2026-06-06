@@ -48,9 +48,89 @@ jobs:
           python scripts/legacy_entrypoints/fetch_wbc_all_players.py
           python data/live_updater.py
 
-      - name: Commit and Push changes
+      - name: Persist generated outputs to bot branch
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/*.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto: Daily data update $(date +'%Y-%m-%d')" && git push)
+          set -euo pipefail
+
+          BOT_BRANCH="bot/daily-wbc-data"
+          SOURCE_SHA="$(git rev-parse HEAD)"
+          GENERATED_PATHS=()
+
+          for path in \
+            data/*.json \
+            data/mlb_2026/derived/p143_paper_eval_*.json \
+            reports/mlb_*; do
+            if [ -f "$path" ]; then
+              GENERATED_PATHS+=("$path")
+            fi
+          done
+
+          if [ -d outputs/recommendations/PAPER ]; then
+            while IFS= read -r -d '' path; do
+              GENERATED_PATHS+=("$path")
+            done < <(find outputs/recommendations/PAPER -type f -name '*.jsonl' -print0)
+          fi
+
+          if [ -d 00-BettingPlan ]; then
+            while IFS= read -r -d '' path; do
+              GENERATED_PATHS+=("$path")
+            done < <(find 00-BettingPlan -mindepth 2 -maxdepth 2 -type f \
+              -name 'mlb_daily_scheduler_report_*.md' -print0)
+          fi
+
+          if [ "${#GENERATED_PATHS[@]}" -eq 0 ]; then
+            echo "No generated output paths found; nothing to persist."
+            exit 0
+          fi
+
+          git add -- "${GENERATED_PATHS[@]}"
+          if git diff --cached --quiet; then
+            echo "No generated output changes to persist."
+            exit 0
+          fi
+
+          if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            echo "Unexpected generated paths remain outside the persistence allowlist."
+            git status --short
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git stash push --include-untracked \
+            -m "daily-generated-outputs-${GITHUB_RUN_ID}"
+
+          if git ls-remote --exit-code --heads origin "$BOT_BRANCH" >/dev/null 2>&1; then
+            git fetch --no-tags origin \
+              "$BOT_BRANCH:refs/remotes/origin/$BOT_BRANCH"
+            git switch --create "$BOT_BRANCH" --track "origin/$BOT_BRANCH"
+            echo "Checked out existing bot branch $BOT_BRANCH."
+
+            if ! git merge --no-edit "$SOURCE_SHA"; then
+              echo "Failed to update $BOT_BRANCH with source commit $SOURCE_SHA."
+              exit 1
+            fi
+            echo "Updated $BOT_BRANCH with source commit $SOURCE_SHA."
+          else
+            git switch --create "$BOT_BRANCH" "$SOURCE_SHA"
+            echo "Created bot branch $BOT_BRANCH from $SOURCE_SHA."
+          fi
+
+          if ! git stash pop --index; then
+            echo "Failed to apply generated outputs on $BOT_BRANCH."
+            exit 1
+          fi
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto: Daily data update $(date -u +'%Y-%m-%d')"
+            echo "Created daily output commit on $BOT_BRANCH."
+          else
+            echo "Generated outputs are already present on $BOT_BRANCH."
+          fi
+
+          if git push origin "HEAD:refs/heads/$BOT_BRANCH"; then
+            echo "Successfully pushed daily outputs to $BOT_BRANCH."
+          else
+            echo "Failed to push daily outputs to $BOT_BRANCH."
+            exit 1
+          fi
