@@ -1,0 +1,60 @@
+{
+  "phase": "P172",
+  "title": "Bot-Branch Daily Workflow Persistence",
+  "date": "2026-06-06",
+  "base_local_head": "41e44d9838ef1f955bcb56a37eae9805d937f7f4",
+  "base_origin_main": "10c586d5764a241e165c6b37af001896164c31f2",
+  "root_cause_chain": {
+    "p167": "Scheduled run reached persistence but direct main push failed with GH006.",
+    "p168": "Branch-based persistence selected to preserve branch protection.",
+    "p169r": "Automatic PR creation blocked by repository Actions settings.",
+    "p171": "Governance revised to authorize bot-branch-only persistence."
+  },
+  "actions_settings_observed": {
+    "default_workflow_permissions": "read",
+    "can_approve_pull_request_reviews": false
+  },
+  "implementation": {
+    "workflow": ".github/workflows/daily_update.yml",
+    "branch": "bot/daily-wbc-data",
+    "direct_main_push": false,
+    "automatic_pr_creation": false,
+    "force_push": false,
+    "contents_write": true,
+    "pull_requests_write": false,
+    "preserves_existing_bot_history": true,
+    "unexpected_path_guard": true,
+    "explicit_noop_logging": true,
+    "explicit_push_failure_logging": true
+  },
+  "safety": {
+    "branch_protection_changed": false,
+    "required_check_bypassed": false,
+    "github_settings_changed": false,
+    "pat_used": false,
+    "github_app_used": false,
+    "secret_added": false,
+    "workflow_dispatch_triggered": false,
+    "workflow_rerun": false,
+    "manual_db_write": false,
+    "manual_live_api_call": false,
+    "provider_unlocked": false,
+    "production_betting_unlocked": false,
+    "ev_clv_kelly_unlocked": false,
+    "registry_mutated": false,
+    "controlled_apply_run": false,
+    "runtime_dirty_files_touched": false
+  },
+  "validation": {
+    "pyyaml": "UNAVAILABLE_NOT_INSTALLED",
+    "yaml_parse": "PASS_RUBY_YAML",
+    "bash_syntax": "PASS",
+    "workflow_text_assertions": "PASS",
+    "workflow_structure_assertions": "PASS",
+    "json_parse": "PASS",
+    "staged_file_scope": "PASS_EXACT_THREE_FILE_WHITELIST",
+    "pytest": "NOT_RUN"
+  },
+  "next_step": "Create a human PR containing P170, P171, and P172; merge after CI; wait for the next scheduled run and verify bot branch persistence.",
+  "final_classification": "P172_BOT_BRANCH_DAILY_WORKFLOW_PERSISTENCE_READY_FOR_COMMIT"
+}
