@@ -101,6 +101,13 @@ class MlbTslRecommendationRow:
     # ── Safety ────────────────────────────────────────────────────────────────
     paper_only: bool = True       # MUST remain True until P38 cleared
 
+    # ── Strategy Attribution (P180) ───────────────────────────────────────────
+    strategy_id: Optional[str] = None
+    # Populated only from the loaded simulation's exact ``strategy_name``.
+    # MUST NOT be inferred from filenames, model_ensemble_version, simulation
+    # IDs, or any other indirect metadata.  Rows without an explicit identity
+    # evaluate as ``"UNATTRIBUTED"`` in the strategy leaderboard.
+
     # ── Metadata ─────────────────────────────────────────────────────────────
     generated_at_utc: datetime = field(
         default_factory=lambda: datetime.now(timezone.utc)

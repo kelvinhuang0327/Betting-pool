@@ -22,6 +22,11 @@ from pathlib import Path
 from typing import Any
 
 
+# Minimum sample count for a strategy to be considered statistically meaningful.
+# Strategies with fewer samples are marked DATA_LIMITED in the leaderboard.
+SMALL_SAMPLE_THRESHOLD: int = 10
+
+
 @dataclass
 class PaperEvaluationMetrics:
     evaluated_count: int = 0
@@ -39,6 +44,9 @@ class PaperEvaluationMetrics:
     binomial_p_value: float | None = None
     gate_segmentation: dict[str, Any] = field(default_factory=dict)
     confidence_segmentation: dict[str, Any] = field(default_factory=dict)
+    # P180: strategy segmentation and deterministic leaderboard
+    strategy_segmentation: dict[str, Any] = field(default_factory=dict)
+    strategy_leaderboard: list[dict] = field(default_factory=list)
 
 
 def calculate_binomial_p_value(hits: int, trials: int, p_null: float = 0.5) -> float:
@@ -55,6 +63,61 @@ def calculate_binomial_p_value(hits: int, trials: int, p_null: float = 0.5) -> f
         except (ValueError, OverflowError):
             continue
     return min(1.0, max(0.0, pval))
+
+
+def build_strategy_leaderboard(
+    strategy_segmentation: dict[str, Any],
+    threshold: int = SMALL_SAMPLE_THRESHOLD,
+) -> list[dict]:
+    """Build a deterministic strategy performance leaderboard.
+
+    Each entry contains:
+      - strategy_id
+      - sample_count
+      - hit_rate
+      - brier_score
+      - shadow_unit_roi
+      - binomial_p_value
+      - data_limited (True when sample_count < threshold)
+      - rank (1-indexed)
+
+    Ranking rules applied in order:
+      1. hit_rate descending (higher is better)
+      2. shadow_unit_roi descending (higher is better)
+      3. strategy_id ascending (alphabetic; deterministic tie-breaker)
+
+    Strategies below ``threshold`` are marked ``data_limited=True`` but are
+    still ranked by the same rules.
+
+    Safety: pure function — no DB writes, no live calls, no weight changes.
+    """
+    entries = []
+    for sid, seg in strategy_segmentation.items():
+        count = seg.get("count", 0)
+        correct = seg.get("correct_count", 0)
+        entries.append(
+            {
+                "strategy_id": sid,
+                "sample_count": count,
+                "hit_rate": seg.get("hit_rate", 0.0),
+                "brier_score": seg.get("brier_score"),
+                "shadow_unit_roi": seg.get("shadow_unit_roi", 0.0),
+                "binomial_p_value": round(
+                    calculate_binomial_p_value(correct, count), 6
+                ),
+                "data_limited": count < threshold,
+            }
+        )
+
+    # Deterministic sort: hit_rate desc, shadow_unit_roi desc, strategy_id asc
+    entries.sort(
+        key=lambda e: (-e["hit_rate"], -e["shadow_unit_roi"], e["strategy_id"])
+    )
+
+    for i, entry in enumerate(entries, start=1):
+        entry["rank"] = i
+
+    return entries
 
 
 def _extract_pk(game_id: str) -> str:
@@ -240,6 +303,22 @@ def evaluate_paper_recommendations(
     for conf_band, items in conf_data.items():
         metrics.confidence_segmentation[conf_band] = _evaluate_subset(items)
 
+    # P180: strategy segmentation — keyed by explicit strategy_id only.
+    # strategy_id is read directly from the recommendation row; it MUST NOT be
+    # inferred from filenames, model_ensemble_version, or indirect metadata.
+    # Rows missing strategy_id (or with None/empty) are bucketed as UNATTRIBUTED.
+    strategy_data: dict[str, list[tuple[dict, dict]]] = {}
+    for r, o in matched_recs:
+        sid = r.get("strategy_id") or "UNATTRIBUTED"
+        strategy_data.setdefault(sid, []).append((r, o))
+
+    for sid, items in strategy_data.items():
+        metrics.strategy_segmentation[sid] = _evaluate_subset(items)
+
+    metrics.strategy_leaderboard = build_strategy_leaderboard(
+        metrics.strategy_segmentation
+    )
+
     return metrics
 
 
@@ -307,7 +386,7 @@ def execute_evaluation(
     metrics = evaluate_paper_recommendations(recs, outcomes)
 
     result = {
-        "evaluator_version": "p142_evaluator_v1",
+        "evaluator_version": "p180_evaluator_v2",
         "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "metrics": asdict(metrics),
     }
@@ -368,7 +447,7 @@ def execute_batch_evaluation(
     aggregate_metrics = evaluate_paper_recommendations(all_recs, outcomes)
 
     result: dict[str, Any] = {
-        "evaluator_version": "p142_evaluator_v1",
+        "evaluator_version": "p180_evaluator_v2",
         "mode": "batch",
         "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "dates_found": dates,
