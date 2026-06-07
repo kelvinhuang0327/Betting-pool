@@ -1,115 +1,130 @@
-# Active Task: P172 Bot-Branch Daily Workflow Persistence
+# Active Task: P180 Offline Paper Strategy Attribution and Performance Leaderboard
 
 ## Governance Status
 
-P169R automatic PR creation is blocked by the repository's actual GitHub
-Actions settings:
+P172 bot-branch daily workflow persistence is merged and is no longer the
+active implementation task.
 
-- `default_workflow_permissions`: `read`
-- `can_approve_pull_request_reviews`: `false`
+- PR #13 is merged.
+- P172 bot-branch persistence is on `main`.
+- P176/P177 are `WAITING` for the first post-P172 scheduled run.
+- Do not start more Git polling or Git architecture work unless scheduled
+  persistence later fails.
 
-Under the current repository policy, GitHub Actions is not allowed to create
-pull requests with the workflow `GITHUB_TOKEN`. Automatic PR creation with
-`GITHUB_TOKEN` is not authorized and must not be implemented.
-
-The previous P169 requirement to create or update a pull request automatically
-is superseded. P172 is the active next implementation task and is limited to
-bot-branch persistence only. This governance update does not authorize any
-later GitHub settings, PAT, GitHub App, secret, or automatic PR task.
+P179 supersedes the stale P172 active-task authorization and authorizes P180
+only after the P179 governance update is committed locally. P180 is limited to
+an offline, paper-only, diagnostic-only strategy attribution and performance
+leaderboard implementation.
 
 ## Purpose
 
-Implement interim persistence for the Daily WBC Data Sync workflow:
+Implement one offline vertical slice that connects MLB paper recommendations
+to strategy-level performance evaluation:
 
-1. Stop direct pushes from the daily workflow to protected `main`.
-2. Persist generated changes to the deterministic branch
-   `bot/daily-wbc-data`.
-3. Push only `bot/daily-wbc-data`.
-4. Perform no automatic PR creation.
-5. Leave manual PR creation, or a future GitHub App, PAT, or repository-setting
-   decision, to a separately authorized task.
+1. Add an explicit, backward-compatible `strategy_id` to MLB paper
+   recommendation rows.
+2. Populate `strategy_id` only from the loaded simulation `strategy_name`.
+3. Classify legacy or missing strategy identities as `UNATTRIBUTED`.
+4. Extend `mlb_paper_evaluator` with strategy segmentation and a deterministic
+   performance leaderboard.
+5. Include sample count, hit rate, Brier score, shadow-unit ROI, and binomial
+   p-value for each attributed strategy.
+6. Mark strategies below the existing small-sample threshold as
+   `DATA_LIMITED`.
+7. Add fixture-only tests for attribution, legacy rows, deterministic ranking,
+   and safety invariants.
 
-When a human later opens or updates a PR from `bot/daily-wbc-data` into `main`,
-the existing `replay-default-validation` required check must run normally
-before merge.
+P180 must not infer a missing `strategy_id` from filenames, model versions, or
+other indirect metadata.
 
-## Allowed File Whitelist
+## Allowed File Categories
 
-P172 may modify, stage, and commit only:
+P180 may modify only files in these offline categories, with exact paths
+adapted to the repository's actual code structure:
 
-- `.github/workflows/daily_update.yml`
-- `report/p172_bot_branch_daily_workflow_persistence_20260606.md`
-- `data/mlb_2026/derived/p172_bot_branch_daily_workflow_persistence_summary.json`
+- Recommendation row and paper recommendation producer files required to add
+  and populate `strategy_id`.
+- `mlb_paper_evaluator` files required to implement strategy segmentation and
+  the deterministic leaderboard.
+- Fixture-only tests for the P180 behavior and safety invariants.
+- P180 report and summary artifacts.
 
-Any required change outside this whitelist must stop the task.
+P180 must not modify workflow files, DB migrations, registries, provider
+integrations, production betting code, deployment files, or
+`controlled_apply` files.
 
-## Required Workflow Behavior
+## Required Behavior
 
-- Preserve the workflow name and existing cron schedule.
-- Preserve the existing Paper Mode step and paper flags.
-- Preserve the existing WBC fetch and update commands.
-- Keep `contents: write`.
-- Do not add `pull-requests: write`; P172 performs no automatic PR operation.
-- Exit successfully with explicit logging when there are no generated changes.
-- When generated changes exist, commit them to `bot/daily-wbc-data`.
-- Push only `bot/daily-wbc-data`, with clear success and failure logging.
-- Reuse the single deterministic bot branch and preserve any unmerged daily
-  data already present on that branch.
-- Never push generated changes directly to `main`.
-- Do not create, update, approve, or merge a pull request automatically.
+### Strategy Attribution
+
+- The recommendation row contract remains backward-compatible.
+- New paper rows use the loaded simulation's exact `strategy_name` as
+  `strategy_id`.
+- Rows without an explicit strategy identity evaluate as `UNATTRIBUTED`.
+- Legacy rows remain readable without migration or backfill.
+- Missing identities are never guessed from filenames,
+  `model_ensemble_version`, simulation IDs, or other indirect fields.
+
+### Strategy Performance Leaderboard
+
+- Evaluation remains deterministic for identical recommendation and outcome
+  fixtures.
+- Results are segmented by explicit `strategy_id`, including
+  `UNATTRIBUTED`.
+- Each leaderboard entry includes:
+  - sample count
+  - hit rate
+  - Brier score
+  - shadow-unit ROI
+  - binomial p-value
+- Strategies below the existing small-sample threshold are marked
+  `DATA_LIMITED`.
+- Ranking rules and tie-breakers are explicit and covered by fixture-only
+  tests.
+- The leaderboard is diagnostic evidence only and must not mutate strategy
+  weights or select a production champion.
 
 ## Safety Invariants
 
-- No branch protection weakening, required-check bypass, or bot bypass.
-- No `workflow_dispatch`, manual workflow trigger, or workflow rerun.
-- No branch creation or deletion manually during local P172 implementation.
-- No GitHub Actions repository settings changes.
-- Do not enable Actions-created pull requests.
-- No PAT creation or usage.
-- No GitHub App provisioning or credentials.
-- No secret creation or usage beyond the existing workflow `GITHUB_TOKEN`.
-- No auto-merge.
-- No DB writes outside existing workflow-generated outputs.
-- No manual live or paid API calls.
+- Offline only.
+- `paper_only=true`.
+- `diagnostic_only=true`.
+- No live API calls.
+- No DB writes.
 - No provider access unlock.
 - No production betting unlock.
-- No EV, CLV, or Kelly recommendation unlock.
+- No EV, CLV, or Kelly unlock.
+- No strategy weight changes.
+- No production champion replacement.
+- No workflow trigger, workflow rerun, or `workflow_dispatch`.
+- No GitHub Actions settings or branch-protection changes.
 - No registry mutation.
 - No `controlled_apply`.
+- No branch creation or deletion unless separately authorized.
+- No push unless separately authorized.
 - No modification, cleanup, restore, reset, move, deletion, staging, or commit
   of tolerated runtime files.
-- No modifications outside the P172 Allowed File Whitelist.
 
-## Expected P172 Phase 0
+## Expected P180 Phase 0
 
-Before P172 edits begin, verify:
+Before P180 edits begin, verify:
 
 - Canonical repo:
   `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`
-- Current branch: `main`
+- Current branch is `main`.
 - HEAD is attached.
-- Local HEAD equals the new P171 commit produced by this governance task. The
-  next P172 prompt must use that exact commit SHA.
-- `origin/main` remains
-  `10c586d5764a241e165c6b37af001896164c31f2` unless a separate task explicitly
-  authorizes a push.
-- Local `main` contains the P170 and P171 governance commits above
-  `origin/main`.
-- PR #12 remains merged.
-- Workflow run `27051506120` exists with head SHA
-  `10c586d5764a241e165c6b37af001896164c31f2`.
+- Local HEAD contains the committed P179 governance update.
 - No files are staged.
 - No untracked files exist.
 - The dirty tree is clean or contains only the tolerated runtime files below.
-- `.github/workflows/daily_update.yml` exists.
-- `.github/workflows/replay_default_validation.yml` exists.
-- Repository Actions settings remain compatible with branch push via explicit
-  `contents: write`; no automatic PR capability is assumed.
+- P179 is the immediately preceding authorization for P180.
+- P172 remains merged and Git polling remains paused while P176/P177 wait for
+  the first post-P172 scheduled run.
 
 ## Tolerated Runtime Dirty Files
 
 These pre-existing files may be modified but must not be staged, committed,
-restored, cleaned, deleted, moved, reset, or changed by P172:
+restored, cleaned, deleted, moved, reset, or changed by P180:
 
 - `data/.live_cache/tsl_dedup_state.json`
 - `data/derived/tsl_market_availability_state.json`
@@ -124,44 +139,47 @@ restored, cleaned, deleted, moved, reset, or changed by P172:
 
 ## STOP Conditions
 
-Stop P172 immediately if:
+Stop P180 immediately if:
 
 - The repo is not the canonical repo.
 - The current branch is not `main`.
 - HEAD is detached.
-- Local HEAD does not equal the P171 commit specified by the next task.
-- `origin/main` differs from the expected SHA without separate authorization.
+- The P179 governance update is not committed.
 - Any files are staged before implementation.
 - Any untracked files exist before implementation.
 - The dirty tree contains files outside the tolerated runtime list.
-- Either required workflow file is missing.
-- Implementation requires modifying or staging a file outside the P172
-  whitelist.
-- Implementation requires weakening branch protection or bypassing
-  `replay-default-validation`.
-- Implementation requires automatic PR creation, `pull-requests: write`,
-  `workflow_dispatch`, a manual trigger, or a rerun.
-- Implementation requires changing GitHub settings, creating or using a PAT,
-  provisioning a GitHub App, or adding a secret.
-- Implementation requires a direct push to `main`, a local push during the
-  implementation task, or manual branch creation or deletion.
-- Implementation requires DB writes beyond existing workflow outputs, manual
-  API calls, provider or production unlock, EV/CLV/Kelly unlock,
-  `controlled_apply`, or registry mutation.
+- Implementation requires live API calls or DB writes.
+- Implementation requires provider access, production betting, or EV/CLV/Kelly
+  unlock.
+- Implementation requires a workflow trigger, workflow rerun, GitHub settings
+  change, or Git architecture change.
+- Implementation requires strategy weight mutation or production champion
+  replacement.
+- Implementation requires inferring a missing `strategy_id` from filenames,
+  model versions, simulation IDs, or indirect metadata.
+- Implementation requires modifying files outside the offline recommendation,
+  evaluator, fixture-only tests, and P180 artifact scope.
+- Implementation requires registry mutation, deployment changes, or
+  `controlled_apply`.
 
 ## Commit Authorization
 
-After P172 validation passes, staging and one local commit are authorized only
-for the three whitelisted P172 files. P172 must not push the local commit,
-create a branch manually, trigger or rerun a workflow, create a PR, or modify
-GitHub settings, tokens, apps, or secrets.
+P180 implementation, validation, staging, and commit are authorized only after
+the P179 governance update commit exists. P180 may stage and commit only the
+exact offline recommendation, evaluator, fixture-only test, and P180 artifact
+files authorized by its task prompt. P180 is not authorized to push, trigger
+or rerun workflows, change GitHub settings, or modify tolerated runtime files.
 
-## Expected P172 Outcome
+## Expected P180 Outcome
 
-- Direct protected-main push behavior is removed.
-- Daily generated changes persist on `bot/daily-wbc-data`.
-- No automatic PR is created.
-- Main branch protection and `replay-default-validation` remain unchanged.
-- P172 report and JSON summary artifacts are committed with the workflow
-  change.
-- Runtime dirty files remain untouched.
+- New MLB paper recommendation rows carry an explicit simulation-derived
+  `strategy_id`.
+- Legacy and missing identities are safely represented as `UNATTRIBUTED`.
+- The offline evaluator emits deterministic strategy segmentation and a
+  performance leaderboard.
+- Each strategy reports sample count, hit rate, Brier score, shadow-unit ROI,
+  binomial p-value, and `DATA_LIMITED` status when applicable.
+- Fixture-only tests prove attribution, legacy compatibility, ranking
+  determinism, and safety invariants.
+- No live, DB, provider, production, betting, EV/CLV/Kelly, strategy-weight,
+  workflow, or GitHub-settings behavior is changed.

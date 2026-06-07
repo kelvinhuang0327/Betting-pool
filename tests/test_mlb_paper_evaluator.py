@@ -206,7 +206,7 @@ def test_evaluator_file_loading_and_execute(tmp_path, mock_recommendation_data, 
         summary_output_path=summary_file,
     )
 
-    assert res["evaluator_version"] == "p142_evaluator_v1"
+    assert res["evaluator_version"] == "p180_evaluator_v2"
     assert res["metrics"]["evaluated_count"] == 3
     assert res["metrics"]["matched_outcome_count"] == 3
 
