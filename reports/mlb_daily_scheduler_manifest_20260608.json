@@ -1,0 +1,42 @@
+{
+  "run_id": "SCHED_20260608_FIXTURE_20260608T0407449",
+  "run_date": "2026-06-08",
+  "mode": "today",
+  "source": "fixture",
+  "scheduler_mode": "dry_run",
+  "pregame_advisory_status": "SUCCESS",
+  "postgame_review_status": "DATA_LIMITED",
+  "advisory_report_path": "reports/mlb_daily_advisory_dry_run_20260608.json",
+  "ledger_path": "reports/mlb_paper_betting_ledger.jsonl",
+  "review_report_path": "reports/mlb_postgame_review_20260608.json",
+  "reviewed_snapshot_path": "reports/mlb_paper_betting_reviewed_snapshot_20260608.jsonl",
+  "total_advisories": 4,
+  "total_ledger_entries": 0,
+  "reviewed_count": 0,
+  "pending_count": 6,
+  "failure_notes_count": 7,
+  "gate": "MLB_SCHEDULER_DATA_LIMITED",
+  "paper_only": true,
+  "no_real_bet": true,
+  "no_profit_claim": true,
+  "no_auto_execution": true,
+  "scheduler_dry_run_only": true,
+  "ledger_overwrite_blocked": true,
+  "pregame_failure_reason": null,
+  "postgame_failure_reason": null,
+  "pregame_warnings": [
+    "fixture source: loaded 4 games from data/fixtures/mlb_current_source_sample_20260507.json"
+  ],
+  "postgame_warnings": [
+    "pending_results=6: result source did not cover all entries",
+    "reviewed_count=0 \u2014 all entries still pending"
+  ],
+  "source_mode_advisory": "fixture",
+  "source_mode_review": "fixture",
+  "brier_score": null,
+  "recommendation_accuracy": null,
+  "gate_rationale": "pipeline runs but pending_count=6 \u2014 source (fixture/replay) lacks live results",
+  "created_at": "2026-06-08T04:07:46.530104+00:00",
+  "module_version": "mlb_daily_scheduler_v1",
+  "completion_marker": "MLB_DAILY_SCHEDULER_API_MVP_VERIFIED"
+}

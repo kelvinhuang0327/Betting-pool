@@ -1,8 +1,8 @@
 {
-  "source": "TSL_BLOB3RD",
-  "success": true,
-  "games_count": 15,
-  "error": "",
-  "note": "modern_live=2; modern_live_baseball=0; modern_baseball_sport_id=34731.1; modern_pre_zh=15",
-  "fetched_at": "2026-05-23T13:10:45.819285Z"
+  "source": "TSL_MULTI_SOURCE",
+  "success": false,
+  "games_count": 0,
+  "error": "modern_fetch_failed=non-json response from https://blob3rd.sportslottery.com.tw/apidata/Live/Games.zh.json: <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"> <HTML><HEAD><META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text; frontend_bundle=index-BdUxg0Y3.js; frontend_baseball_markets=0; legacy_fetch_failed=non-json response from https://www.sportslottery.com.tw/api/v1/game/list: <!doctype html> <html lang=\"zh\"> <head>     <meta charset=\"utf-8\">     <meta name=\"viewport\" content=\"width=device-width,initial-scale=1,minimum-scale=1,maximum",
+  "note": "modern_fetch_failed=non-json response from https://blob3rd.sportslottery.com.tw/apidata/Live/Games.zh.json: <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"> <HTML><HEAD><META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text; frontend_bundle=index-BdUxg0Y3.js; frontend_baseball_markets=0; legacy_fetch_failed=non-json response from https://www.sportslottery.com.tw/api/v1/game/list: <!doctype html> <html lang=\"zh\"> <head>     <meta charset=\"utf-8\">     <meta name=\"viewport\" content=\"width=device-width,initial-scale=1,minimum-scale=1,maximum",
+  "fetched_at": "2026-06-08T04:07:46.112836Z"
 }

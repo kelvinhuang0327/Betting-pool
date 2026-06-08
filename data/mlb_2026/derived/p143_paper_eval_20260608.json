@@ -1,0 +1,23 @@
+{
+  "evaluator_version": "p180_evaluator_v2",
+  "timestamp_utc": "2026-06-08T04:07:46.518047+00:00",
+  "metrics": {
+    "evaluated_count": 1,
+    "matched_outcome_count": 0,
+    "missing_outcome_count": 1,
+    "coverage_rate": 0.0,
+    "hit_rate": 0.0,
+    "brier_score": null,
+    "actual_paper_pnl": 0.0,
+    "actual_paper_stake": 0.0,
+    "actual_paper_roi": 0.0,
+    "shadow_unit_pnl": 0.0,
+    "shadow_unit_stake": 0.0,
+    "shadow_unit_roi": 0.0,
+    "binomial_p_value": null,
+    "gate_segmentation": {},
+    "confidence_segmentation": {},
+    "strategy_segmentation": {},
+    "strategy_leaderboard": []
+  }
+}

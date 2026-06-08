@@ -646,12 +646,6 @@
                 "stats": []
             },
             {
-                "id": 570482,
-                "name": "Gio Urshela",
-                "position": "3B",
-                "stats": []
-            },
-            {
                 "id": 670871,
                 "name": "Guillo Zuñiga",
                 "position": "P",
@@ -1618,12 +1612,6 @@
                 "stats": []
             },
             {
-                "id": 702331,
-                "name": "Noah Mendlinger",
-                "position": "3B",
-                "stats": []
-            },
-            {
                 "id": 702302,
                 "name": "RJ Schreck",
                 "position": "LF",
@@ -2236,6 +2224,11 @@
                 "stats": []
             }
         ]
+    },
+    {
+        "team": "USA Collegiate National Team Stars",
+        "team_id": 3178,
+        "players": []
     },
     {
         "team": "Kingdom of the Netherlands",
@@ -3543,6 +3536,11 @@
                 "stats": []
             }
         ]
+    },
+    {
+        "team": "USA Collegiate National Team Stripes",
+        "team_id": 2491,
+        "players": []
     },
     {
         "team": "Australia",
