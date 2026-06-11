@@ -1,9 +1,8 @@
-# Active Task: NEXT_TASK_NOT_DEFINED_AFTER_P180_MERGE
+# Active Task: P193_STRATEGY_ATTRIBUTION_DIFF_VERIFICATION_AND_PR_PACKAGING_IN_PROGRESS
 
 ## Governance Status
 
-P180 Offline Paper Strategy Attribution and Performance Leaderboard is
-**COMPLETE and MERGED**.
+P192 Strategy Leaderboard Attribution Enhancement is **COMPLETE**.
 
 - PR #14 is merged.
   URL: https://github.com/kelvinhuang0327/Betting-pool/pull/14
@@ -27,12 +26,9 @@ Prior completed tasks still on `main`:
 
 ## Current State
 
-No new implementation task is authorized.
+P193 Strategy Attribution Enhancement Diff Verification and PR Packaging is **IN PROGRESS**.
 
-Next task state: **NEXT_TASK_NOT_DEFINED_AFTER_P180_MERGE**
-
-Do not begin any new product, strategy, or diagnostic implementation until the
-next task is explicitly authorized by the user.
+Next task state: **P193_STRATEGY_ATTRIBUTION_DIFF_VERIFICATION_AND_PR_PACKAGING_IN_PROGRESS**
 
 ## Standing Governance Rules
 

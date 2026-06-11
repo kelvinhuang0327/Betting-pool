@@ -210,6 +210,16 @@ class TestBuildRecommendationSimulationGate:
         )
         assert row.gate_status == "BLOCKED_TSL_SOURCE"
 
+    def test_build_recommendation_populates_strategy_id(self):
+        script = _import_script()
+        row = script.build_recommendation(
+            FIXTURE_GAME, FIXTURE_DATE,
+            tsl_live=False, tsl_note="TSL 403",
+            simulation_gate=_pass_gate(),
+            strategy_id="test_sim_strat_name",
+        )
+        assert row.strategy_id == "test_sim_strat_name"
+
 
 # ── Tests: blocked simulation gate reasons in row ────────────────────────────
 
@@ -391,3 +401,52 @@ class TestMainCLISimulationGate:
             _, row = self._run_main(tmp_path, monkeypatch, simulation_gate=gate)
             if row is not None:
                 assert row["paper_only"] is True, f"paper_only must be True, got {row}"
+
+    def test_main_cli_populates_strategy_id(self, tmp_path, monkeypatch):
+        script = _import_script()
+        class MockSimulation:
+            strategy_name = "my_awesome_strategy"
+            
+        monkeypatch.setattr(
+            "data.mlb_live_pipeline.fetch_schedule",
+            lambda *a, **kw: [FIXTURE_GAME],
+        )
+        monkeypatch.setattr(
+            script, "_probe_tsl",
+            lambda: (False, "TSL probe monkeypatched to blocked"),
+        )
+        monkeypatch.setattr(
+            script, "load_latest_simulation_result",
+            lambda *a, **kw: MockSimulation(),
+        )
+        monkeypatch.setattr(
+            script, "build_recommendation_gate_from_simulation",
+            lambda sim: _pass_gate(),
+        )
+        
+        def patched_write_row(row, date_str, is_replay):
+            paper_dir = tmp_path / "outputs" / "recommendations" / "PAPER" / date_str
+            paper_dir.mkdir(parents=True, exist_ok=True)
+            out_path = paper_dir / f"{row.game_id}.jsonl"
+            out_path.write_text(row.to_jsonl_line() + "\n", encoding="utf-8")
+            return out_path
+
+        monkeypatch.setattr(script, "write_row", patched_write_row)
+
+        monkeypatch.setattr(
+            sys, "argv",
+            [
+                "run_mlb_tsl_paper_recommendation.py",
+                "--date", FIXTURE_DATE,
+                "--allow-replay-paper",
+            ],
+        )
+        rc = script.main()
+        assert rc == 0
+        
+        # Read written row and check strategy_id
+        paper_dir = tmp_path / "outputs" / "recommendations" / "PAPER" / FIXTURE_DATE
+        files = list(paper_dir.glob("*.jsonl"))
+        assert len(files) == 1
+        row_dict = json.loads(files[0].read_text(encoding="utf-8").strip())
+        assert row_dict["strategy_id"] == "my_awesome_strategy"

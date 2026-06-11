@@ -160,6 +160,7 @@ def build_recommendation(
     tsl_live: bool,
     tsl_note: str,
     simulation_gate: dict | None = None,
+    strategy_id: str | None = None,
 ) -> MlbTslRecommendationRow:
     """Build one MlbTslRecommendationRow for a given game dict.
 
@@ -399,6 +400,7 @@ def build_recommendation(
         gate_status=gate_status,
         gate_reasons=gate_reasons,
         paper_only=True,
+        strategy_id=strategy_id,
         generated_at_utc=datetime.now(timezone.utc),
         source_trace=source_trace,
     )
@@ -557,7 +559,15 @@ def main() -> int:
     tsl_live, tsl_note = _probe_tsl()
 
     # ── Build recommendation row ──────────────────────────────────────────
-    row = build_recommendation(game, date_str, tsl_live, tsl_note, simulation_gate)
+    strategy_id = simulation.strategy_name if simulation is not None else None
+    row = build_recommendation(
+        game,
+        date_str,
+        tsl_live,
+        tsl_note,
+        simulation_gate=simulation_gate,
+        strategy_id=strategy_id,
+    )
 
     # ── Write output ──────────────────────────────────────────────────────
     out_path = write_row(row, date_str, is_replay_fallback)
