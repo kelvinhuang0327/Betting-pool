@@ -1,34 +1,35 @@
-# Active Task: P193_STRATEGY_ATTRIBUTION_DIFF_VERIFICATION_AND_PR_PACKAGING_IN_PROGRESS
+# Active Task: NEXT_TASK_NOT_DEFINED_AFTER_P192_MERGE
 
 ## Governance Status
 
-P192 Strategy Leaderboard Attribution Enhancement is **COMPLETE**.
+P192 Strategy Leaderboard Attribution Enhancement is
+**COMPLETE and MERGED**.
 
-- PR #14 is merged.
-  URL: https://github.com/kelvinhuang0327/Betting-pool/pull/14
-  Merge commit: `d01fa79d64f3afcf240f1fc9fab66b543f53cb49`
-- P179 + P180 are on `main`.
-- P180 local test validation:
-  `python3 -m pytest tests/test_p180_strategy_leaderboard.py tests/test_mlb_paper_evaluator.py tests/test_mlb_paper_evaluation_runner.py -q`
-  Result: **56/56 PASS**
-- Merge path used: branch-protection PR path (direct push to main was blocked
-  by GH006; PR #14 was the correct route).
+- PR #16 is merged.
+  URL: https://github.com/kelvinhuang0327/Betting-pool/pull/16
+  Merge commit: `aa5c5cc947c66cb1e8b28cf9717d8db5dc30a210`
+- P192 is on `main`.
+- P192 local test validation:
+  `python3 -m pytest tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py -q`
+  Result: **23/23 PASS**
+- Merge path used: branch-protection PR path (PR #16).
 - No DB writes were performed.
 - No live API calls were made.
 - No registry mutation occurred.
 - No `controlled_apply` was executed.
 
 Prior completed tasks still on `main`:
+- PR #14 merged: P180 strategy leaderboard.
 - PR #13 merged: P172 bot-branch daily workflow persistence.
-- P176/P177 are `WAITING` for the first post-P172 scheduled run.
-  Do not start more Git polling or Git architecture work unless scheduled
-  persistence later fails.
 
 ## Current State
 
-P193 Strategy Attribution Enhancement Diff Verification and PR Packaging is **IN PROGRESS**.
+No new implementation task is authorized.
 
-Next task state: **P193_STRATEGY_ATTRIBUTION_DIFF_VERIFICATION_AND_PR_PACKAGING_IN_PROGRESS**
+Next task state: **NEXT_TASK_NOT_DEFINED_AFTER_P192_MERGE**
+
+Do not begin any new product, strategy, or diagnostic implementation until the
+next task is explicitly authorized by the user.
 
 ## Standing Governance Rules
 
