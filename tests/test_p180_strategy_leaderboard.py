@@ -63,6 +63,51 @@ def _outcome(game_pk: str, winner: str) -> dict:
     }
 
 
+# ── P200: learning-eligibility safety (uses existing evaluator behavior) ──────
+
+
+class TestP200LearningIneligibleRowsNotPromoted:
+    """A neutral/fixed-prior row (P200 learning_eligible=False) carries no
+    strategy_id, so it buckets as UNATTRIBUTED + data_limited and can never be
+    surfaced as a promotable, attributed strategy by the existing leaderboard.
+
+    NB: the evaluator source is outside the P200 whitelist, so this test asserts
+    the *existing* safety nets (UNATTRIBUTED bucketing + data_limited) already
+    prevent over-claiming learning-ineligible rows. Direct evaluator-side
+    enforcement of ``learning_eligible`` is left as a follow-up.
+    """
+
+    def test_learning_ineligible_neutral_row_is_unattributed_and_data_limited(self):
+        rec = _rec("900001", "home", strategy_id=None, prob_home=0.54)
+        rec["source_trace"] = {
+            "prediction_input_mode": "neutral_fixed_prior",
+            "learning_eligible": False,
+        }
+        metrics = evaluate_paper_recommendations([rec], [_outcome("900001", "home")])
+        lb = metrics.strategy_leaderboard
+        assert len(lb) == 1
+        entry = lb[0]
+        assert entry["strategy_id"] == "UNATTRIBUTED"
+        assert entry["data_limited"] is True
+
+    def test_no_learning_ineligible_row_appears_as_promotable_strategy(self):
+        # A handful of learning-ineligible neutral rows must not yield any
+        # promotable (attributed AND non-data-limited) leaderboard entry.
+        recs = []
+        for i in range(5):
+            r = _rec(f"90010{i}", "home", strategy_id=None, prob_home=0.54)
+            r["source_trace"] = {"learning_eligible": False}
+            recs.append(r)
+        outcomes = [_outcome(f"90010{i}", "home") for i in range(5)]
+        metrics = evaluate_paper_recommendations(recs, outcomes)
+        promotable = [
+            e
+            for e in metrics.strategy_leaderboard
+            if e["strategy_id"] != "UNATTRIBUTED" and not e["data_limited"]
+        ]
+        assert promotable == []
+
+
 # ── 1. MlbTslRecommendationRow: strategy_id field contract ────────────────────
 
 
