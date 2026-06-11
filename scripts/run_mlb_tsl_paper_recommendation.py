@@ -154,6 +154,94 @@ def _estimate_moneyline_odds(model_prob_home: float) -> float:
     return round(1.0 / implied, 4)
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# P200: Prediction provenance + selected-side hardening
+# ─────────────────────────────────────────────────────────────────────────────
+
+_VALID_PREDICTION_INPUT_MODES = ("game_specific", "neutral_fixed_prior", "unknown")
+_VALID_SELECTED_SIDE_METHODS = (
+    "argmax_model_probability",
+    "hardcoded_home",
+    "fallback_blocked",
+    "unknown",
+)
+
+
+def determine_selected_side(
+    model_prob_home: float,
+    model_prob_away: float | None = None,
+) -> tuple[str, str, str]:
+    """Select the bet side from model probabilities by argmax.
+
+    Returns ``(side, method, reason)`` where *side* is ``"home"`` when
+    ``model_prob_home >= model_prob_away`` (equivalently ``>= 0.5`` when the two
+    probabilities sum to 1) and ``"away"`` otherwise.  *method* is always
+    ``"argmax_model_probability"``.
+
+    This replaces the previous hard-coded ``tsl_side="home"`` selection
+    (P199 finding).  The method describes only *how* the side was chosen and
+    makes no game-specific claim — prediction trustworthiness is conveyed
+    separately via ``prediction_input_mode`` / ``learning_eligible``.
+    """
+    if model_prob_away is None:
+        model_prob_away = 1.0 - model_prob_home
+    if model_prob_home >= model_prob_away:
+        return (
+            "home",
+            "argmax_model_probability",
+            f"model_prob_home={model_prob_home:.4f} >= model_prob_away={model_prob_away:.4f}",
+        )
+    return (
+        "away",
+        "argmax_model_probability",
+        f"model_prob_away={model_prob_away:.4f} > model_prob_home={model_prob_home:.4f}",
+    )
+
+
+def classify_prediction_provenance(
+    model_version: str,
+    *,
+    game_specific: bool = False,
+    prediction_source_id: str | None = None,
+) -> dict:
+    """Classify a prediction's provenance for honest paper-row labelling.
+
+    The current ``build_recommendation`` path always feeds a hard-coded neutral
+    feature vector (P199 finding), so every recommendation it produces is
+    classified ``neutral_fixed_prior`` with ``learning_eligible=False``: such a
+    row must not silently look like game-specific predictive evidence.
+
+    The ``game_specific=True`` branch exists for a future per-game feature path
+    and is exercised by tests; it is never reached by the current neutral path.
+    """
+    if game_specific:
+        return {
+            "prediction_input_mode": "game_specific",
+            "prediction_source": "game_specific_features",
+            "prediction_source_id": prediction_source_id,
+            "prediction_model_version": model_version,
+            "learning_eligible": True,
+            "learning_block_reason": None,
+        }
+    if model_version == "v1-mlb-moneyline-trained":
+        source = "neutral_feature_fallback"
+    elif model_version == "v1-home-prior-baseline":
+        source = "fixed_prior_fallback"
+    else:
+        source = "unknown"
+    return {
+        "prediction_input_mode": "neutral_fixed_prior",
+        "prediction_source": source,
+        "prediction_source_id": prediction_source_id,
+        "prediction_model_version": model_version,
+        "learning_eligible": False,
+        "learning_block_reason": (
+            "prediction generated from neutral/fixed-prior features (not "
+            "game-specific); excluded from strategy-improvement learning evidence"
+        ),
+    }
+
+
 def build_recommendation(
     game: dict,
     date_str: str,
@@ -249,6 +337,17 @@ def build_recommendation(
     model_prob_home = adjusted["home_win_prob"]
     model_prob_away = adjusted["away_win_prob"]
 
+    # ── 3b. Prediction provenance + selected side (P200) ──────────────────
+    # The current path uses a hard-coded neutral feature vector, so provenance
+    # is classified neutral_fixed_prior and the row is NOT learning-eligible.
+    # The bet side is chosen by argmax of the model probabilities (no longer
+    # hard-coded "home").
+    provenance = classify_prediction_provenance(model_version)
+    selected_side, selected_side_method, selected_side_reason = determine_selected_side(
+        model_prob_home, model_prob_away
+    )
+    selected_prob = model_prob_home if selected_side == "home" else model_prob_away
+
     # ── 4. TSL odds ───────────────────────────────────────────────────────
     gate_reasons: list[str] = []
     source_trace: dict = {
@@ -310,19 +409,30 @@ def build_recommendation(
         source_trace["simulation_ml_feature_policy"] = []
         source_trace["simulation_ml_features_used"] = []
 
+    # ── P200: prediction provenance + selected-side evidence ──────────────
+    source_trace["prediction_input_mode"] = provenance["prediction_input_mode"]
+    source_trace["prediction_source"] = provenance["prediction_source"]
+    source_trace["prediction_source_id"] = provenance["prediction_source_id"]
+    source_trace["prediction_model_version"] = provenance["prediction_model_version"]
+    source_trace["selected_side_method"] = selected_side_method
+    source_trace["selected_side_reason"] = selected_side_reason
+    source_trace["learning_eligible"] = provenance["learning_eligible"]
+    source_trace["learning_block_reason"] = provenance["learning_block_reason"]
+
     if tsl_live:
-        # TSL has data — use model probability to estimate edge vs TSL
-        tsl_decimal_odds = _estimate_moneyline_odds(model_prob_home)
+        # TSL has data — use the SELECTED side's model probability to estimate
+        # edge vs TSL (still a proxy: no team-name join / observed odds yet).
+        tsl_decimal_odds = _estimate_moneyline_odds(selected_prob)
         gate_reasons.append("TSL live odds estimate used (no team-name join yet)")
     else:
         # TSL is blocked — use estimated odds, mark as BLOCKED_TSL_SOURCE
-        tsl_decimal_odds = _estimate_moneyline_odds(model_prob_home)
+        tsl_decimal_odds = _estimate_moneyline_odds(selected_prob)
         gate_reasons.append(tsl_note)
         gate_reasons.append("TSL live source unavailable — estimated odds used")
 
     # ── 5. Edge & Kelly ───────────────────────────────────────────────────
     implied = _compute_implied_prob(tsl_decimal_odds)
-    edge_pct = model_prob_home - implied   # positive = model thinks home is underpriced
+    edge_pct = selected_prob - implied   # positive = selected side is underpriced (proxy)
     kelly = _kelly_fraction(edge_pct, tsl_decimal_odds)
     stake_units = round(kelly * _PAPER_BANKROLL_UNITS, 2)
 
@@ -392,7 +502,7 @@ def build_recommendation(
         model_ensemble_version=model_version,
         tsl_market="moneyline",
         tsl_line=None,
-        tsl_side="home",
+        tsl_side=selected_side,
         tsl_decimal_odds=tsl_decimal_odds,
         edge_pct=round(edge_pct, 6),
         kelly_fraction=round(kelly, 6),

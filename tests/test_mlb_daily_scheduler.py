@@ -896,6 +896,35 @@ def test_27_run_paper_recommendation_job_replay_when_no_games(tmp_path, monkeypa
     assert any("replay" in w.lower() for w in result.warnings)
 
 
+def test_27b_paper_recommendation_job_propagates_p200_provenance(tmp_path, monkeypatch):
+    """P200: prediction provenance + selected-side metadata propagate through
+    the scheduler recommendation path into the written row's source_trace."""
+    import importlib
+    import sys
+    import json
+
+    mod_name = "scripts.run_mlb_tsl_paper_recommendation"
+    script = sys.modules.get(mod_name) or importlib.import_module(mod_name)
+    monkeypatch.setattr(script, "_pick_game", lambda *a, **kw: _FIXTURE_GAME_P141)
+    monkeypatch.setattr(script, "_probe_tsl", lambda: (False, "mocked 403"))
+
+    result = run_paper_recommendation_job(
+        run_date=P141_DATE,
+        allow_replay=False,
+        allow_missing_simulation_gate=True,
+        output_base_dir=str(tmp_path),
+    )
+
+    if result.status == JOB_STATUS_SUCCESS and result.output_paths:
+        payload = json.loads(open(result.output_paths[0], encoding="utf-8").read())
+        st = payload.get("source_trace", {})
+        assert st.get("prediction_input_mode") in {"neutral_fixed_prior", "game_specific"}
+        assert st.get("selected_side_method") == "argmax_model_probability"
+        assert st.get("selected_side_method") != "hardcoded_home"
+        assert "learning_eligible" in st
+        assert payload.get("tsl_side") in {"home", "away"}
+
+
 # ─── P143: run_paper_evaluation_job tests ─────────────────────────────────────
 
 P143_DATE = "2026-05-11"
