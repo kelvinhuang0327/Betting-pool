@@ -108,6 +108,87 @@ class TestP200LearningIneligibleRowsNotPromoted:
         assert promotable == []
 
 
+# ── P201: evaluator-side learning_eligible enforcement on the leaderboard ─────
+
+
+class TestP201LeaderboardLearningStatus:
+    """build_strategy_leaderboard classifies learning evidence (P201)."""
+
+    def test_strategy_with_only_ineligible_rows_is_learning_ineligible(self):
+        """A strategy whose rows are all learning-ineligible is never promotable (D4)."""
+        seg = {"s_neutral": {"count": 20, "correct_count": 14, "hit_rate": 0.70,
+                             "brier_score": 0.21, "shadow_unit_roi": 0.40}}
+        learning = {"s_neutral": {"eligible": 0, "ineligible": 20}}
+        lb = build_strategy_leaderboard(seg, strategy_learning=learning)
+        entry = lb[0]
+        # High hit_rate and not data_limited, yet must NOT be promotable.
+        assert entry["data_limited"] is False
+        assert entry["learning_status"] == "LEARNING_INELIGIBLE"
+        assert entry["promotable_learning_evidence"] is False
+        assert entry["learning_eligible_count"] == 0
+        assert entry["learning_ineligible_count"] == 20
+
+    def test_strategy_with_enough_eligible_rows_is_promotable(self):
+        seg = {"s_game": {"count": 20, "correct_count": 14, "hit_rate": 0.70,
+                          "brier_score": 0.21, "shadow_unit_roi": 0.40}}
+        learning = {"s_game": {"eligible": 20, "ineligible": 0}}
+        lb = build_strategy_leaderboard(seg, strategy_learning=learning)
+        entry = lb[0]
+        assert entry["learning_status"] == "LEARNING_ELIGIBLE"
+        assert entry["promotable_learning_evidence"] is True
+
+    def test_some_eligible_below_threshold_is_data_limited(self):
+        seg = {"s_few": {"count": 20, "correct_count": 14, "hit_rate": 0.70,
+                         "brier_score": 0.21, "shadow_unit_roi": 0.40}}
+        learning = {"s_few": {"eligible": 3, "ineligible": 17}}
+        lb = build_strategy_leaderboard(seg, strategy_learning=learning, threshold=10)
+        entry = lb[0]
+        assert entry["learning_status"] == "DATA_LIMITED"
+        assert entry["promotable_learning_evidence"] is False
+
+    def test_omitted_learning_defaults_to_unknown_not_promotable(self):
+        """Legacy direct callers (no strategy_learning) get UNKNOWN, never promotable."""
+        seg = {"s_legacy": {"count": 20, "correct_count": 14, "hit_rate": 0.70,
+                            "brier_score": 0.21, "shadow_unit_roi": 0.40}}
+        lb = build_strategy_leaderboard(seg)
+        entry = lb[0]
+        assert entry["learning_status"] == "UNKNOWN"
+        assert entry["promotable_learning_evidence"] is False
+        assert entry["learning_eligible_count"] is None
+
+    def test_end_to_end_ineligible_strategy_not_promotable(self):
+        """Through evaluate_paper_recommendations: an attributed strategy whose
+        rows are all learning-ineligible is not promotable learning evidence (D4)."""
+        recs = []
+        for i in range(12):
+            r = _rec(f"94000{i:02d}", "home", strategy_id="neutral_strat", prob_home=0.54)
+            r["source_trace"] = {"learning_eligible": False,
+                                 "learning_block_reason": "neutral_fixed_prior"}
+            recs.append(r)
+        outcomes = [_outcome(f"94000{i:02d}", "home") for i in range(12)]
+        m = evaluate_paper_recommendations(recs, outcomes)
+        entry = next(e for e in m.strategy_leaderboard if e["strategy_id"] == "neutral_strat")
+        # 12 rows ≥ threshold so NOT data_limited, but still not promotable.
+        assert entry["data_limited"] is False
+        assert entry["learning_status"] == "LEARNING_INELIGIBLE"
+        assert entry["promotable_learning_evidence"] is False
+        assert m.learning_eligible_count == 0
+        assert m.learning_ineligible_count == 12
+
+    def test_end_to_end_eligible_strategy_is_promotable(self):
+        recs = []
+        for i in range(12):
+            r = _rec(f"94100{i:02d}", "home", strategy_id="game_strat", prob_home=0.54)
+            r["source_trace"] = {"learning_eligible": True}
+            recs.append(r)
+        outcomes = [_outcome(f"94100{i:02d}", "home") for i in range(12)]
+        m = evaluate_paper_recommendations(recs, outcomes)
+        entry = next(e for e in m.strategy_leaderboard if e["strategy_id"] == "game_strat")
+        assert entry["learning_status"] == "LEARNING_ELIGIBLE"
+        assert entry["promotable_learning_evidence"] is True
+        assert m.learning_eligible_count == 12
+
+
 # ── 1. MlbTslRecommendationRow: strategy_id field contract ────────────────────
 
 
