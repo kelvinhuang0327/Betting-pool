@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from orchestrator.mlb_paper_evaluator import (
+    _row_learning_eligibility,
     calculate_binomial_p_value,
     evaluate_paper_recommendations,
     execute_evaluation,
@@ -215,3 +216,143 @@ def test_evaluator_file_loading_and_execute(tmp_path, mock_recommendation_data, 
     with open(summary_file, encoding="utf-8") as f:
         loaded_res = json.load(f)
     assert loaded_res["metrics"]["evaluated_count"] == 3
+
+
+# ── P201: evaluator-side learning_eligible enforcement ────────────────────────
+
+
+def _p201_rec(game_pk: str, side: str, *, source_trace=None, strategy_id=None) -> dict:
+    r = {
+        "game_id": f"2026-05-11-LAA-CLE-{game_pk}",
+        "model_prob_home": 0.55,
+        "model_prob_away": 0.45,
+        "tsl_market": "moneyline",
+        "tsl_side": side,
+        "tsl_decimal_odds": 1.90,
+        "stake_units_paper": 1.0,
+        "gate_status": "PASS",
+        "paper_only": True,
+    }
+    if source_trace is not None:
+        r["source_trace"] = source_trace
+    if strategy_id is not None:
+        r["strategy_id"] = strategy_id
+    return r
+
+
+def _p201_outcome(game_pk: str, winner: str) -> dict:
+    return {
+        "game_id": f"mlb_2026_{game_pk}",
+        "outcome_available": True,
+        "actual_winner": winner,
+    }
+
+
+class TestP201RowLearningEligibilityHelper:
+    """_row_learning_eligibility is conservative: eligible only on explicit True."""
+
+    def test_explicit_true_is_eligible(self):
+        ok, reason = _row_learning_eligibility(
+            {"source_trace": {"learning_eligible": True}}
+        )
+        assert ok is True
+        assert reason is None
+
+    def test_explicit_false_is_ineligible_with_reason(self):
+        ok, reason = _row_learning_eligibility(
+            {"source_trace": {"learning_eligible": False, "learning_block_reason": "neutral"}}
+        )
+        assert ok is False
+        assert reason == "neutral"
+
+    def test_false_without_reason_gets_default_reason(self):
+        ok, reason = _row_learning_eligibility(
+            {"source_trace": {"learning_eligible": False}}
+        )
+        assert ok is False
+        assert reason == "learning_eligible=false"
+
+    def test_missing_source_trace_is_ineligible(self):
+        ok, reason = _row_learning_eligibility({})
+        assert ok is False
+        assert reason == "missing_source_trace_provenance"
+
+    def test_malformed_source_trace_is_ineligible(self):
+        ok, reason = _row_learning_eligibility({"source_trace": "not-a-dict"})
+        assert ok is False
+        assert reason == "missing_source_trace_provenance"
+
+    def test_flag_absent_is_ineligible(self):
+        ok, reason = _row_learning_eligibility(
+            {"source_trace": {"prediction_input_mode": "neutral_fixed_prior"}}
+        )
+        assert ok is False
+        assert reason == "learning_eligible_not_declared"
+
+
+class TestP201EvaluatorLearningCounts:
+    """Evaluator counts eligible/ineligible rows separately (D1, D3)."""
+
+    def test_ineligible_row_is_scored_but_counted_ineligible(self):
+        rec = _p201_rec("930001", "home", source_trace={"learning_eligible": False})
+        m = evaluate_paper_recommendations([rec], [_p201_outcome("930001", "home")])
+        # Still scored for auditability
+        assert m.matched_outcome_count == 1
+        assert m.hit_rate == 1.0
+        # But counted as learning-ineligible
+        assert m.learning_eligible_count == 0
+        assert m.learning_ineligible_count == 1
+
+    def test_eligible_and_ineligible_counted_separately(self):
+        recs = [
+            _p201_rec("930010", "home", source_trace={"learning_eligible": True}),
+            _p201_rec("930011", "home", source_trace={"learning_eligible": False}),
+            _p201_rec("930012", "home"),  # no source_trace → ineligible
+        ]
+        outcomes = [_p201_outcome(f"93001{i}", "home") for i in range(3)]
+        m = evaluate_paper_recommendations(recs, outcomes)
+        assert m.learning_eligible_count == 1
+        assert m.learning_ineligible_count == 2
+
+    def test_block_reasons_surfaced_in_segmentation(self):
+        """learning_block_reason is preserved/surfaced in segmentation (D2)."""
+        recs = [
+            _p201_rec(
+                "930020", "home",
+                source_trace={"learning_eligible": False, "learning_block_reason": "neutral_fixed_prior"},
+            ),
+            _p201_rec("930021", "home"),  # missing source_trace
+        ]
+        outcomes = [_p201_outcome("930020", "home"), _p201_outcome("930021", "home")]
+        m = evaluate_paper_recommendations(recs, outcomes)
+        seg = m.learning_eligibility_segmentation
+        assert seg["eligible_count"] == 0
+        assert seg["ineligible_count"] == 2
+        assert seg["block_reasons"]["neutral_fixed_prior"] == 1
+        assert seg["block_reasons"]["missing_source_trace_provenance"] == 1
+
+    def test_legacy_rows_missing_source_trace_do_not_crash(self):
+        """Historical rows without provenance evaluate and classify conservatively (D5)."""
+        recs = [_p201_rec("930030", "home"), _p201_rec("930031", "away")]
+        outcomes = [_p201_outcome("930030", "home"), _p201_outcome("930031", "away")]
+        m = evaluate_paper_recommendations(recs, outcomes)
+        assert m.matched_outcome_count == 2
+        assert m.learning_eligible_count == 0
+        assert m.learning_ineligible_count == 2
+
+    def test_eligible_rows_remain_eligible(self):
+        """Explicit non-fallback eligible rows remain eligible (D6)."""
+        recs = [
+            _p201_rec("930040", "home", source_trace={"learning_eligible": True}, strategy_id="game_specific_v1"),
+        ]
+        m = evaluate_paper_recommendations(recs, [_p201_outcome("930040", "home")])
+        assert m.learning_eligible_count == 1
+        assert m.learning_ineligible_count == 0
+
+    def test_learning_counts_are_json_serializable_and_deterministic(self):
+        recs = [_p201_rec("930050", "home", source_trace={"learning_eligible": False})]
+        outcomes = [_p201_outcome("930050", "home")]
+        m1 = evaluate_paper_recommendations(recs, outcomes)
+        m2 = evaluate_paper_recommendations(recs, outcomes)
+        assert m1.learning_eligibility_segmentation == m2.learning_eligibility_segmentation
+        json.dumps(m1.learning_eligibility_segmentation)  # must not raise

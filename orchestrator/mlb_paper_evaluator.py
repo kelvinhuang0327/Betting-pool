@@ -27,6 +27,17 @@ from typing import Any
 SMALL_SAMPLE_THRESHOLD: int = 10
 
 
+# P201: per-strategy learning-evidence status labels.
+#   LEARNING_ELIGIBLE   — has >= threshold game-specific, non-fallback rows.
+#   DATA_LIMITED        — has some eligible rows but below threshold.
+#   LEARNING_INELIGIBLE — zero learning-eligible rows (only fallback/neutral/proxy).
+#   UNKNOWN             — eligibility could not be determined (legacy direct call).
+LEARNING_STATUS_ELIGIBLE: str = "LEARNING_ELIGIBLE"
+LEARNING_STATUS_DATA_LIMITED: str = "DATA_LIMITED"
+LEARNING_STATUS_INELIGIBLE: str = "LEARNING_INELIGIBLE"
+LEARNING_STATUS_UNKNOWN: str = "UNKNOWN"
+
+
 @dataclass
 class PaperEvaluationMetrics:
     evaluated_count: int = 0
@@ -47,6 +58,13 @@ class PaperEvaluationMetrics:
     # P180: strategy segmentation and deterministic leaderboard
     strategy_segmentation: dict[str, Any] = field(default_factory=dict)
     strategy_leaderboard: list[dict] = field(default_factory=list)
+    # P201: learning-eligibility enforcement (counted over matched/scored rows).
+    # Rows remain scored for auditability, but learning-ineligible rows
+    # (neutral_fixed_prior / fallback / missing provenance) are counted
+    # separately and must never be treated as strategy-improvement evidence.
+    learning_eligible_count: int = 0
+    learning_ineligible_count: int = 0
+    learning_eligibility_segmentation: dict[str, Any] = field(default_factory=dict)
 
 
 def calculate_binomial_p_value(hits: int, trials: int, p_null: float = 0.5) -> float:
@@ -65,9 +83,38 @@ def calculate_binomial_p_value(hits: int, trials: int, p_null: float = 0.5) -> f
     return min(1.0, max(0.0, pval))
 
 
+def _row_learning_eligibility(rec: dict) -> tuple[bool, str | None]:
+    """Read P200 learning-eligibility provenance from a recommendation row.
+
+    Conservative P201 contract: a row is learning-eligible ONLY when its
+    ``source_trace`` explicitly sets ``learning_eligible=True``.  Rows that are
+    missing ``source_trace``, have a malformed ``source_trace``, omit the
+    ``learning_eligible`` flag, or set it falsey (the current
+    ``neutral_fixed_prior`` / fallback path) are treated as NOT learning-eligible.
+
+    Such rows may still be scored for auditability, but they must never be
+    silently counted as strategy-improvement / promotion evidence.
+
+    Returns ``(is_eligible, block_reason)``.  ``block_reason`` is ``None`` only
+    when the row is eligible.
+    """
+    source_trace = rec.get("source_trace")
+    if not isinstance(source_trace, dict):
+        # Legacy / pre-P200 rows have no provenance — classify conservatively.
+        return False, "missing_source_trace_provenance"
+    eligible = source_trace.get("learning_eligible")
+    if eligible is True:
+        return True, None
+    if eligible is False:
+        return False, source_trace.get("learning_block_reason") or "learning_eligible=false"
+    # Flag absent or non-boolean → conservative (do not overclaim).
+    return False, "learning_eligible_not_declared"
+
+
 def build_strategy_leaderboard(
     strategy_segmentation: dict[str, Any],
     threshold: int = SMALL_SAMPLE_THRESHOLD,
+    strategy_learning: dict[str, dict[str, int]] | None = None,
 ) -> list[dict]:
     """Build a deterministic strategy performance leaderboard.
 
@@ -80,6 +127,12 @@ def build_strategy_leaderboard(
       - binomial_p_value
       - data_limited (True when sample_count < threshold)
       - rank (1-indexed)
+      - learning_eligible_count / learning_ineligible_count (P201; None when
+        eligibility was not supplied)
+      - learning_status (P201; one of LEARNING_ELIGIBLE / DATA_LIMITED /
+        LEARNING_INELIGIBLE / UNKNOWN)
+      - promotable_learning_evidence (P201; True only when learning_status is
+        LEARNING_ELIGIBLE)
 
     Ranking rules applied in order:
       1. hit_rate descending (higher is better)
@@ -89,12 +142,22 @@ def build_strategy_leaderboard(
     Strategies below ``threshold`` are marked ``data_limited=True`` but are
     still ranked by the same rules.
 
+    P201: when ``strategy_learning`` is supplied (mapping strategy_id →
+    {"eligible": n, "ineligible": m}), each entry is classified for learning
+    evidence.  A strategy with zero eligible rows is ``LEARNING_INELIGIBLE`` and
+    is never ``promotable_learning_evidence``, regardless of its hit_rate.  When
+    ``strategy_learning`` is omitted (legacy direct callers), eligibility is
+    ``UNKNOWN`` and the entry is conservatively non-promotable.
+
     Safety: pure function — no DB writes, no live calls, no weight changes.
     """
     entries = []
     for sid, seg in strategy_segmentation.items():
         count = seg.get("count", 0)
         correct = seg.get("correct_count", 0)
+        elig_n, inelig_n, learning_status, promotable = _classify_strategy_learning(
+            sid, strategy_learning, threshold
+        )
         entries.append(
             {
                 "strategy_id": sid,
@@ -106,6 +169,10 @@ def build_strategy_leaderboard(
                     calculate_binomial_p_value(correct, count), 6
                 ),
                 "data_limited": count < threshold,
+                "learning_eligible_count": elig_n,
+                "learning_ineligible_count": inelig_n,
+                "learning_status": learning_status,
+                "promotable_learning_evidence": promotable,
             }
         )
 
@@ -118,6 +185,30 @@ def build_strategy_leaderboard(
         entry["rank"] = i
 
     return entries
+
+
+def _classify_strategy_learning(
+    sid: str,
+    strategy_learning: dict[str, dict[str, int]] | None,
+    threshold: int,
+) -> tuple[int | None, int | None, str, bool]:
+    """Classify one strategy's learning-evidence status (P201).
+
+    Returns ``(eligible_count, ineligible_count, learning_status, promotable)``.
+    """
+    learning = (strategy_learning or {}).get(sid)
+    if learning is None:
+        # Eligibility was not supplied — do not overclaim.
+        return None, None, LEARNING_STATUS_UNKNOWN, False
+    elig_n = int(learning.get("eligible", 0))
+    inelig_n = int(learning.get("ineligible", 0))
+    if elig_n <= 0:
+        learning_status = LEARNING_STATUS_INELIGIBLE
+    elif elig_n < threshold:
+        learning_status = LEARNING_STATUS_DATA_LIMITED
+    else:
+        learning_status = LEARNING_STATUS_ELIGIBLE
+    return elig_n, inelig_n, learning_status, learning_status == LEARNING_STATUS_ELIGIBLE
 
 
 def _extract_pk(game_id: str) -> str:
@@ -240,6 +331,12 @@ def evaluate_paper_recommendations(
         "high (0.65-1.00)": [],
     }
 
+    # P201: learning-eligibility accumulators (over matched/scored rows).
+    learning_eligible_count = 0
+    learning_ineligible_count = 0
+    block_reason_counts: dict[str, int] = {}
+    strategy_learning: dict[str, dict[str, int]] = {}
+
     for r, o in matched_recs:
         side = r.get("tsl_side", "").lower()
         winner = o.get("actual_winner", "").lower()
@@ -247,6 +344,23 @@ def evaluate_paper_recommendations(
 
         if is_hit:
             correct_count += 1
+
+        # P201: classify learning eligibility from P200 source_trace provenance.
+        sid_for_learning = r.get("strategy_id") or "UNATTRIBUTED"
+        learn_bucket = strategy_learning.setdefault(
+            sid_for_learning, {"eligible": 0, "ineligible": 0}
+        )
+        is_learning_eligible, block_reason = _row_learning_eligibility(r)
+        if is_learning_eligible:
+            learning_eligible_count += 1
+            learn_bucket["eligible"] += 1
+        else:
+            learning_ineligible_count += 1
+            learn_bucket["ineligible"] += 1
+            if block_reason:
+                block_reason_counts[block_reason] = (
+                    block_reason_counts.get(block_reason, 0) + 1
+                )
 
         # Brier Score calculation: using model_prob_home
         prob_home = r.get("model_prob_home")
@@ -315,8 +429,19 @@ def evaluate_paper_recommendations(
     for sid, items in strategy_data.items():
         metrics.strategy_segmentation[sid] = _evaluate_subset(items)
 
+    # P201: surface learning-eligibility counts and pass per-strategy
+    # eligibility into the leaderboard so fallback/neutral/proxy-only strategies
+    # cannot be classified as promotable learning evidence.
+    metrics.learning_eligible_count = learning_eligible_count
+    metrics.learning_ineligible_count = learning_ineligible_count
+    metrics.learning_eligibility_segmentation = {
+        "eligible_count": learning_eligible_count,
+        "ineligible_count": learning_ineligible_count,
+        "block_reasons": block_reason_counts,
+    }
+
     metrics.strategy_leaderboard = build_strategy_leaderboard(
-        metrics.strategy_segmentation
+        metrics.strategy_segmentation, strategy_learning=strategy_learning
     )
 
     return metrics
@@ -441,6 +566,9 @@ def execute_batch_evaluation(
             "actual_paper_roi": metrics.actual_paper_roi,
             "shadow_unit_roi": metrics.shadow_unit_roi,
             "binomial_p_value": metrics.binomial_p_value,
+            # P201: learning-eligibility counts per date.
+            "learning_eligible_count": metrics.learning_eligible_count,
+            "learning_ineligible_count": metrics.learning_ineligible_count,
         }
         all_recs.extend(recs)
 
