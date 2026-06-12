@@ -1,0 +1,229 @@
+{
+  "description": "P202E synthetic MLB-like schedule source payloads for the probable-starter collector adapter. SYNTHETIC / TEST-ONLY — NOT copied from any real MLB StatsAPI response. No live payload, no credentials/secrets, no real player identifiers presented as sourced data, no official/legal authorization claim. Shape mirrors schedule?hydrate=probablePitcher (dates[].games[].teams.{home,away}.{team.id, probablePitcher.{id,fullName}}). The transport-exception scenario is represented in the test via a fake transport callable, not as payload data. collected_at_utc / information_cutoff_utc are supplied by the caller (tests), never read from payload postgame timestamps.",
+  "schema_version": "p202e_source_payload_fixture_v1",
+  "context": {
+    "collected_at_utc": "2099-04-01T19:30:00+00:00",
+    "information_cutoff_utc": "2099-04-01T20:00:00+00:00",
+    "source_provider": "fixture_synthetic_schedule",
+    "source_endpoint_or_feed_id": "fixture://schedule?hydrate=probablePitcher"
+  },
+  "fixtures": {
+    "valid_scheduled_both": {
+      "scenario": "One scheduled game, both probable starters -> accepted (valid).",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-04-01", "games": [
+        {"gamePk": 990001, "gameDate": "2099-04-01T23:05:00Z", "officialDate": "2099-04-01",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9001, "name": "Synthetic Home"}, "probablePitcher": {"id": 800001, "fullName": "Synthetic Ace Home"}},
+                   "away": {"team": {"id": 9002, "name": "Synthetic Away"}, "probablePitcher": {"id": 800002, "fullName": "Synthetic Ace Away"}}}}
+      ]}]}
+    },
+    "starter_change": {
+      "scenario": "Same gamePk, home starter changed (probableStatus changed) -> accepted; revision on append.",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-04-01", "games": [
+        {"gamePk": 990001, "gameDate": "2099-04-01T23:05:00Z", "officialDate": "2099-04-01",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9001}, "probablePitcher": {"id": 800003, "fullName": "Synthetic Replacement Home"}, "probableStatus": "changed"},
+                   "away": {"team": {"id": 9002}, "probablePitcher": {"id": 800002, "fullName": "Synthetic Ace Away"}}}}
+      ]}]}
+    },
+    "scratched_starter": {
+      "scenario": "Home starter scratched (both ids present) -> accepted; surfaced at selection.",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-04-02", "games": [
+        {"gamePk": 990002, "gameDate": "2099-04-02T23:05:00Z", "officialDate": "2099-04-02",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9003}, "probablePitcher": {"id": 800010, "fullName": "Synthetic Scratched Home"}, "probableStatus": "scratched"},
+                   "away": {"team": {"id": 9004}, "probablePitcher": {"id": 800011, "fullName": "Synthetic Ace Away2"}}}}
+      ]}]}
+    },
+    "one_side_missing": {
+      "scenario": "Away probable absent -> accepted partial.",
+      "expect": "partial",
+      "payload": {"dates": [{"date": "2099-04-03", "games": [
+        {"gamePk": 990003, "gameDate": "2099-04-03T23:05:00Z", "officialDate": "2099-04-03",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9015}, "probablePitcher": {"id": 800020, "fullName": "Synthetic Ace Home3"}},
+                   "away": {"team": {"id": 9016}}}}
+      ]}]}
+    },
+    "both_sides_tbd": {
+      "scenario": "Neither side announced -> accepted partial.",
+      "expect": "partial",
+      "payload": {"dates": [{"date": "2099-04-04", "games": [
+        {"gamePk": 990004, "gameDate": "2099-04-04T23:05:00Z", "officialDate": "2099-04-04",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9017}}, "away": {"team": {"id": 9018}}}}
+      ]}]}
+    },
+    "doubleheader_game_1": {
+      "scenario": "Doubleheader game 1 (doubleHeader S, gameNumber 1).",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-04-05", "games": [
+        {"gamePk": 990021, "gameDate": "2099-04-05T20:05:00Z", "officialDate": "2099-04-05",
+         "doubleHeader": "S", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9005}, "probablePitcher": {"id": 800030, "fullName": "Synthetic DH1 Home"}},
+                   "away": {"team": {"id": 9006}, "probablePitcher": {"id": 800031, "fullName": "Synthetic DH1 Away"}}}}
+      ]}]}
+    },
+    "doubleheader_game_2": {
+      "scenario": "Doubleheader game 2 (same teams/date, distinct gamePk, gameNumber 2).",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-04-05", "games": [
+        {"gamePk": 990022, "gameDate": "2099-04-05T23:35:00Z", "officialDate": "2099-04-05",
+         "doubleHeader": "S", "gameNumber": 2,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9005}, "probablePitcher": {"id": 800032, "fullName": "Synthetic DH2 Home"}},
+                   "away": {"team": {"id": 9006}, "probablePitcher": {"id": 800033, "fullName": "Synthetic DH2 Away"}}}}
+      ]}]}
+    },
+    "delayed_game": {
+      "scenario": "Delayed start -> accepted with game_status delayed.",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-04-06", "games": [
+        {"gamePk": 990005, "gameDate": "2099-04-06T23:05:00Z", "officialDate": "2099-04-06",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Delayed Start: Rain"},
+         "teams": {"home": {"team": {"id": 9019}, "probablePitcher": {"id": 800040, "fullName": "Synthetic Delay Home"}},
+                   "away": {"team": {"id": 9020}, "probablePitcher": {"id": 800041, "fullName": "Synthetic Delay Away"}}}}
+      ]}]}
+    },
+    "postponed_game": {
+      "scenario": "Postponed -> accepted with snapshot_status postponed.",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-05-01", "games": [
+        {"gamePk": 990030, "gameDate": "2099-05-01T23:00:00Z", "officialDate": "2099-05-01",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Postponed"},
+         "teams": {"home": {"team": {"id": 9007}, "probablePitcher": {"id": 800050, "fullName": "Synthetic Post Home"}},
+                   "away": {"team": {"id": 9008}, "probablePitcher": {"id": 800051, "fullName": "Synthetic Post Away"}}}}
+      ]}]}
+    },
+    "cancelled_game": {
+      "scenario": "Cancelled -> accepted with snapshot_status cancelled.",
+      "expect": "accept",
+      "payload": {"dates": [{"date": "2099-05-03", "games": [
+        {"gamePk": 990031, "gameDate": "2099-05-03T23:00:00Z", "officialDate": "2099-05-03",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Cancelled"},
+         "teams": {"home": {"team": {"id": 9009}, "probablePitcher": {"id": 800060, "fullName": "Synthetic Cancel Home"}},
+                   "away": {"team": {"id": 9010}, "probablePitcher": {"id": 800061, "fullName": "Synthetic Cancel Away"}}}}
+      ]}]}
+    },
+    "source_unavailable": {
+      "scenario": "Explicit source-unavailable payload representation.",
+      "expect": "source_unavailable",
+      "payload": {"source_unavailable": true}
+    },
+    "malformed_top_level": {
+      "scenario": "Top-level payload missing 'dates' list -> malformed_payload.",
+      "expect": "malformed_payload",
+      "payload": {"unexpected": "shape"}
+    },
+    "malformed_game_record": {
+      "scenario": "A non-dict game record -> rejected, others preserved.",
+      "expect": "mixed_reject",
+      "payload": {"dates": [{"date": "2099-04-07", "games": [
+        "not-a-game-object",
+        {"gamePk": 990006, "gameDate": "2099-04-07T23:05:00Z", "officialDate": "2099-04-07",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9021}, "probablePitcher": {"id": 800070, "fullName": "Synthetic Home6"}},
+                   "away": {"team": {"id": 9022}, "probablePitcher": {"id": 800071, "fullName": "Synthetic Away6"}}}}
+      ]}]}
+    },
+    "missing_game_pk": {
+      "scenario": "Game without gamePk -> rejected.",
+      "expect": "reject",
+      "payload": {"dates": [{"date": "2099-04-08", "games": [
+        {"gameDate": "2099-04-08T23:05:00Z", "officialDate": "2099-04-08",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9023}, "probablePitcher": {"id": 800080, "fullName": "Synthetic Home7"}},
+                   "away": {"team": {"id": 9024}, "probablePitcher": {"id": 800081, "fullName": "Synthetic Away7"}}}}
+      ]}]}
+    },
+    "missing_scheduled_start": {
+      "scenario": "Game without gameDate -> rejected.",
+      "expect": "reject",
+      "payload": {"dates": [{"date": "2099-04-09", "games": [
+        {"gamePk": 990007, "officialDate": "2099-04-09",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9025}, "probablePitcher": {"id": 800090, "fullName": "Synthetic Home8"}},
+                   "away": {"team": {"id": 9026}, "probablePitcher": {"id": 800091, "fullName": "Synthetic Away8"}}}}
+      ]}]}
+    },
+    "duplicate_game_record": {
+      "scenario": "Two byte-equivalent games in one payload -> both normalize; append dedupes second.",
+      "expect": "duplicate_in_payload",
+      "payload": {"dates": [{"date": "2099-04-10", "games": [
+        {"gamePk": 990008, "gameDate": "2099-04-10T23:05:00Z", "officialDate": "2099-04-10",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9027}, "probablePitcher": {"id": 800100, "fullName": "Synthetic Home9"}},
+                   "away": {"team": {"id": 9028}, "probablePitcher": {"id": 800101, "fullName": "Synthetic Away9"}}}},
+        {"gamePk": 990008, "gameDate": "2099-04-10T23:05:00Z", "officialDate": "2099-04-10",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9027}, "probablePitcher": {"id": 800100, "fullName": "Synthetic Home9"}},
+                   "away": {"team": {"id": 9028}, "probablePitcher": {"id": 800101, "fullName": "Synthetic Away9"}}}}
+      ]}]}
+    },
+    "completed_final_game": {
+      "scenario": "Final/completed game with result fields -> rejected (not a pregame candidate).",
+      "expect": "reject",
+      "payload": {"dates": [{"date": "2099-03-30", "games": [
+        {"gamePk": 990009, "gameDate": "2099-03-30T23:05:00Z", "officialDate": "2099-03-30",
+         "doubleHeader": "N", "gameNumber": 1, "isFinal": true,
+         "status": {"abstractGameState": "Final", "detailedState": "Final"},
+         "teams": {"home": {"team": {"id": 9029}, "score": 5, "isWinner": true, "probablePitcher": {"id": 800110, "fullName": "Synthetic Final Home"}},
+                   "away": {"team": {"id": 9030}, "score": 3, "isWinner": false, "probablePitcher": {"id": 800111, "fullName": "Synthetic Final Away"}}}}
+      ]}]}
+    },
+    "actual_starter_markers": {
+      "scenario": "Scheduled game carrying an as-played/actual-starter field -> rejected (leakage).",
+      "expect": "reject",
+      "payload": {"dates": [{"date": "2099-04-11", "games": [
+        {"gamePk": 990010, "gameDate": "2099-04-11T23:05:00Z", "officialDate": "2099-04-11",
+         "doubleHeader": "N", "gameNumber": 1, "home_actual_starter_id": 800999,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9031}, "probablePitcher": {"id": 800120, "fullName": "Synthetic Home10"}},
+                   "away": {"team": {"id": 9032}, "probablePitcher": {"id": 800121, "fullName": "Synthetic Away10"}}}}
+      ]}]}
+    },
+    "multi_game_mixed": {
+      "scenario": "Multiple games in one payload: valid + partial + postponed + one malformed -> deterministic order.",
+      "expect": "mixed",
+      "payload": {"dates": [{"date": "2099-04-12", "games": [
+        {"gamePk": 990101, "gameDate": "2099-04-12T23:05:00Z", "officialDate": "2099-04-12",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9101}, "probablePitcher": {"id": 800201, "fullName": "Synthetic MHome1"}},
+                   "away": {"team": {"id": 9102}, "probablePitcher": {"id": 800202, "fullName": "Synthetic MAway1"}}}},
+        {"gamePk": 990102, "gameDate": "2099-04-12T23:10:00Z", "officialDate": "2099-04-12",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9103}, "probablePitcher": {"id": 800203, "fullName": "Synthetic MHome2"}},
+                   "away": {"team": {"id": 9104}}}},
+        {"gamePk": 990103, "gameDate": "2099-04-12T23:15:00Z", "officialDate": "2099-04-12",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Postponed"},
+         "teams": {"home": {"team": {"id": 9105}, "probablePitcher": {"id": 800205, "fullName": "Synthetic MHome3"}},
+                   "away": {"team": {"id": 9106}, "probablePitcher": {"id": 800206, "fullName": "Synthetic MAway3"}}}},
+        {"gamePk": 990104, "officialDate": "2099-04-12",
+         "doubleHeader": "N", "gameNumber": 1,
+         "status": {"abstractGameState": "Preview", "detailedState": "Scheduled"},
+         "teams": {"home": {"team": {"id": 9107}, "probablePitcher": {"id": 800207, "fullName": "Synthetic MHome4"}},
+                   "away": {"team": {"id": 9108}, "probablePitcher": {"id": 800208, "fullName": "Synthetic MAway4"}}}}
+      ]}]}
+    }
+  }
+}
