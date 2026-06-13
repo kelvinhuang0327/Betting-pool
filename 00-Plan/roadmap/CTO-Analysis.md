@@ -2,7 +2,216 @@
 
 ## 1. CTO Review Date
 
-2026-06-03 Asia/Taipei
+2026-06-13 Asia/Taipei
+
+## 0C. Latest CTO Review — P202G-A Evidence Policy Complete, Governance Alignment, Packaging Next
+
+This section supersedes section `0B` (P202G-B merge closeout + P202G-A-next, 2026-06-13) for current execution priority. HEAD remains `cac2a748dff5077dd3b947fbacdc01dbdeec5607`; this round is policy/report/governance only — no source, test, or runtime changes.
+
+### Completed (verified)
+
+- [Confirmed] **P202G-A evidence packet complete** (`report/p202g_a_source_policy_clarification_evidence_packet_20260614.md`): official MLB.com Terms of Use (2025-03-11) contains an explicit automated-scripts prohibition: "use automated scripts to collect information from or otherwise interact with the MLB Digital Properties." Final classification: `P202G_A_EXPLICIT_AUTOMATED_ACCESS_RESTRICTION_FOUND`. 0 MLB data endpoint calls; 0 non-official evidence sources.
+- [Confirmed] **Independent adversarial review complete** (`report/p202g_a_source_policy_clarification_independent_review_20260614.md`): historical classification `P202G_A_POLICY_REREVIEW_NEEDS_REPORT_FIX`. Identified two report-level precision defects: (1) §1 scope clause misattributed as the formal "MLB Digital Properties definition"; (2) `legaldepartment@mlb.com` overstated as a licensing entry. All decisions verified correct and conservative. Independent review preserved as historical evidence of the original defect finding.
+- [Confirmed] **Evidence-packet narrow fix complete** (`P202G_A_EVIDENCE_PACKET_NARROW_FIX_COMPLETE`): applicability updated to `STRONGLY_SUPPORTED_INFERENCE`; `legaldepartment@mlb.com` reclassified as DMCA/fallback (Terms §2 "Copyright Agent"). No decisions changed. Independent review preserved as-is.
+- [Confirmed] **P202G-A governance alignment complete** (this round): exactly four governance files updated; HEAD / staged files / open PR count unchanged.
+
+### Not Completed (must not be claimed as done)
+
+- [Confirmed] **Written permission from MLB** — no applicable written permission obtained; no licensing agreement established.
+- [Confirmed] **Purpose-matched authorization path** — `NOT_ESTABLISHED`; `legaldepartment@mlb.com` is DMCA/fallback only (Terms §2 "Copyright Agent"), not a licensing office; `registrationsupport@mlb.com` is technical registration support only; StatsAPI self-registration is account entry, not usage license.
+- [Confirmed] **StatsAPI automated-use authorization** — NOT AUTHORIZED; Terms does not directly name `statsapi.mlb.com` (direct hostname naming = `NOT_ESTABLISHED`); applicability is `STRONGLY_SUPPORTED_INFERENCE` only (§1 scope clause + formal definition + openapi "Official API for MLB" identity — sufficient to maintain HOLD, not a direct contractual citation).
+- [Confirmed] **Live one-shot dry run** — NOT AUTHORIZED.
+- [Confirmed] **Recurring collector** — NOT AUTHORIZED.
+- [Confirmed] **Real historical backfill** — NOT AUTHORIZED.
+- [Confirmed] **Live provider unlock** — NOT AUTHORIZED.
+- [Confirmed] **Model/feature integration based on live MLB data** — not unlocked; `diagnostic_only=true`, `production_ready=false` maintained.
+
+### Live-Transport Blocker Status
+
+- [Confirmed] Single remaining blocker for live-transport axis = **official written authorization from a purpose-matched MLB data/API licensing channel** (none identified as of this evidence round). Live transport (P202G) remains **HOLD**.
+- [Confirmed] The minimum allowed technical boundary is **fixture-only** (consistent with P202D/P202E/P202G-B).
+
+### Next Recommended Direction
+
+1. **P202G-A-PACKAGE**: Package exactly 6 files (4 governance + 2 P202G-A reports) into a commit/PR. Requires a separate explicit task prompt with branch/stage/commit/push/PR authorization. P202F is excluded from this package. The 6-file list: `00-Plan/roadmap/roadmap.md`, `00-Plan/roadmap/CTO-Analysis.md`, `00-Plan/roadmap/active_task.md`, `00-Plan/roadmap/agent_bootstrap/CURRENT_STATE.md`, `report/p202g_a_source_policy_clarification_evidence_packet_20260614.md`, `report/p202g_a_source_policy_clarification_independent_review_20260614.md`.
+2. The prediction-provenance-axis P0 (game-specific prediction inputs / selected-side hardening) remains open and is a separate axis from the legal/live-transport axis.
+
+---
+
+## 0B. Latest CTO Review - P202G-B Merge Closeout, Live Transport HOLD, P202G-A Next
+
+> **Historical (superseded by `0C`, 2026-06-13).** P202G-A evidence packet, independent adversarial review, evidence-packet narrow fix, and governance alignment have since been completed. See section `0C` for current execution priority.
+
+This section supersedes section `0A` (and the older P140/P121 analysis below it) for current execution priority. Section `0A` reflected the post-P192 state at HEAD `9a0ddc2`/`539bca2`; HEAD has since advanced through P200 (PR #18), P201 (PR #19), P202D (PR #20), P202E (PR #21), a P202F live-transport audit, and P202G-B (PR #22, merged) to `cac2a748dff5077dd3b947fbacdc01dbdeec5607`.
+
+### Input Sources
+
+- [Confirmed] Actual git state: local `main` = `origin/main` = `cac2a748dff5077dd3b947fbacdc01dbdeec5607`; PR #22 state = MERGED (merge commit `cac2a74...`, head `73d32c489a915a37e59c305cabb87be1ffd3d367`, base `6de072b25dcdea722df7f4b6ebe5299cc4cd34b9`); open PR count = 0.
+- [Confirmed] `report/p202f_live_transport_authorization_and_dry_run_design_audit_20260613.md` (final classification `P202F_SOURCE_POLICY_CLARIFICATION_REQUIRED`).
+- [Confirmed] `report/p202g_b_pitcher_event_backfill_skeleton_20260614.md`, `report/p202g_b_post_implementation_review_20260614.md`, `report/p202g_b_stable_revision_identity_fix_review_20260614.md`, `report/p202g_b_cross_provider_identity_fix_review_20260614.md` (final classification `P202G_B_CROSS_PROVIDER_REREVIEW_READY_FOR_COMMIT_PACKAGING`, now packaged and merged).
+- [Confirmed] `data/mlb_pitcher_game_events.py` and `tests/test_mlb_pitcher_game_events.py` (119 tests).
+
+### Completed (verified)
+
+- [Confirmed] **P202E merged** (PR #21, baseline `6de072b`): fixture-only probable-starter collector adapter; no live transport, no runtime path.
+- [Confirmed] **P202F audit complete**: live-transport (P202G) authorization and source-policy audit finished; classification `P202F_SOURCE_POLICY_CLARIFICATION_REQUIRED`; the MLB StatsAPI schedule endpoint is technically suitable but lacks written legal authorization for automated/derived use.
+- [Confirmed] **P202G-B merged** (PR #22, merge commit `cac2a748dff5077dd3b947fbacdc01dbdeec5607`): fixture-only, no-network pitcher-game event backfill skeleton. Resolved two structural blockers during review iterations:
+  1. Reordered-pitcher-list revision identity - fixed by making logical identity `(game_pk, pitcher_id)` and `source_record_id = "<game_pk>:pitcher:<pitcher_id>"` stable across reorder; `appearance_sequence` is observed-order metadata only and no longer splits revision history.
+  2. Cross-provider/feed silent overwrite - fixed by introducing `source_lineage_key = (source_provider, source_endpoint_or_feed_id)`; any logical event observed across more than one eligible lineage fails closed as `ambiguous_cross_source_lineage` (no latest-wins/precedence/voting/silent-dedup, even for identical content).
+- [Confirmed] Post-merge guardrails: P202G-B direct 119 / P202E 49 / P202D 89 / workflow 157 / combined 414 all passed; `py_compile` and `git diff --check` PASS. **Full repository regression: NOT RUN.**
+- [Confirmed] Release branch `release/p202g-b-pitcher-event-backfill-skeleton` retained (local + remote).
+
+### Not Completed (must not be claimed as done)
+
+- [Confirmed] **Live transport authorization** - still HOLD. No written official MLB source-policy clarification exists yet.
+- [Confirmed] **Actual MLB endpoint collection** - no automated collection, transport code, or runtime data write has been implemented or authorized.
+- [Confirmed] **Real historical pitcher-event backfill** - P202G-B operates on local JSON fixtures only; no real historical pitcher-game event data has been collected or backfilled. Any post-hoc row is observational only and is not historical-PIT evidence before its actual `collected_at`.
+- [Confirmed] **Model/feature integration** - P202G-B is not wired into the scheduler, evaluator, recommendation pipeline, or any model/feature set.
+- [Confirmed] **Production recommendation use** - `diagnostic_only=true`, `production_ready=false` remain enforced; P202G-B must not be described as live-ready, production-ready, or historical-PIT-ready.
+
+### Remaining Live-Transport Blocker
+
+- [Confirmed] Single remaining blocker for the live-transport axis = **official written source-policy clarification** (authorization, retention, derived-use, redistribution, and contact mechanism for the MLB StatsAPI schedule source). The next step, **P202G-A**, is a **read-only evidence-gathering task** (not an implementation task) that must not call any MLB endpoint. Live transport (P202G) remains **HOLD** until P202G-A evidence is gathered and separately reviewed.
+
+### Next Recommended Direction
+
+1. P202G-A: Source Policy Clarification Evidence Packet - read-only, no endpoint calls, produces a future evidence report (not created in this round).
+2. The prediction-provenance-axis P0 (game-specific prediction inputs / selected-side hardening, carried from prior CTO updates) remains open and is a separate axis from the legal/live-transport axis; P202G-A does not change its priority.
+
+---
+
+## 0A. Latest CTO Review - P192 Post-Merge Closed-Loop Realignment
+
+> **Historical (superseded by `0B`, 2026-06-13).** HEAD has since advanced through P200/P201/P202D/P202E/P202G-B to `cac2a74`. The section below is retained as historical context only.
+
+This section supersedes the older P140/P121 analysis below for current execution priority.
+
+### Input Sources
+
+- [Confirmed] User-provided P192-P198 engineering handoff.
+- [Confirmed] User product direction: MLB pregame TSL-market predictions/recommendations, strategy backtesting/score simulation/learning, and one prediction + betting + result workflow.
+- [Confirmed] `roadmap.md`, `active_task.md`, `CEO-Decision.md`, root bootstrap files, current git state, recent commit history, and P141/P142/P143/P180/P192 source/tests/artifacts.
+- [Confirmed] `scripts/run_mlb_tsl_paper_recommendation.py`, `orchestrator/mlb_paper_evaluator.py`, `orchestrator/mlb_daily_scheduler.py`, `orchestrator/mlb_result_review.py`, and related tests.
+- [Confirmed] P102/P103/P106 outcome-only backtest, learning, score-simulation, and adjustment artifacts.
+- [Confirmed] Targeted guard run: 124 tests passed across recommendation, evaluator, scheduler, and strategy leaderboard suites.
+
+### Completed Work Assessment
+
+- [Confirmed] P141-P144 established opt-in daily paper recommendation and offline result evaluation with idempotent pending/final behavior.
+- [Confirmed] P180 added explicit `strategy_id` segmentation and deterministic strategy leaderboard metrics.
+- [Confirmed] P192 propagated loaded simulation `strategy_name` into recommendation `strategy_id`.
+- [Confirmed] PR #16 and PR #17 merged; local `main` equals `origin/main`; open PR count is 0.
+- [Confirmed] Active implementation state is idle: `NEXT_TASK_NOT_DEFINED_AFTER_P192_MERGE`.
+- [Confirmed] At Phase 0 preflight, no staged or untracked files existed and the 10 dirty files exactly matched the tolerated daemon/runtime/data list. This CTO update subsequently added only the six authorized governance-file changes.
+
+### Roadmap Alignment Assessment
+
+| Tag | Finding |
+|---|---|
+| [Aligned] | Strategy attribution now supports measuring which simulation strategy produced a recommendation. |
+| [Aligned] | The scheduler/evaluator spine supports the user's desired paper-only workflow shape. |
+| [Drift] | Existing roadmap priority was still P140 dirty-tree policy even though the project reached P192 and the dirty list is now governed. |
+| [Drift] | Attribution/governance maturity is ahead of prediction quality and market provenance. |
+| [Missing] | There is no single lineage contract linking game-specific prediction inputs, selected side, observed market row, recommendation, final outcome, strategy metrics, and an adjustment proposal. |
+| [Missing] | No daily learning contract consumes P180 leaderboard evidence to propose prediction-method changes under review. |
+| [Outdated] | More leaderboard continuation is not the highest-value next task after P192. |
+| [Blocked] | Real betting, production recommendations, and trustworthy market-edge claims remain blocked by legal provider authorization and observed odds evidence. |
+
+### Unfinished Work Assessment
+
+| Item | Status |
+|---|---|
+| Game-specific prediction provenance | [Risk] Runner may use a fixed 0.535 prior or neutral feature row and writes the inspected recommendation side as home. |
+| TSL observed market provenance | [Blocked] Current sample rows use estimated odds because TSL was unavailable; team-name join is noted as incomplete. |
+| End-to-end lineage | [Missing] IDs and source fingerprints across prediction, recommendation, outcome, and learning are not proven in one contract. |
+| Outcome freshness | [Risk] Evaluation reads a local outcome corpus; freshness and automated pending-to-final lifecycle need explicit audit. |
+| Strategy learning integration | [Missing] Leaderboard is descriptive and intentionally does not mutate weights; no human-reviewed adjustment proposal contract is connected. |
+| Statistical evidence | [Data limited] Local paper recommendation corpus has two rows from one date; historical strategy attribution is absent. |
+| Full regression | [Unknown] Targeted workflow tests pass; full repository regression was not run. |
+
+### P0 / P1 / P2 / P3-P10 Reprioritization
+
+| Priority | Direction | CTO judgment |
+|---:|---|---|
+| **P0** | P199 Paper Workflow Lineage and Gap Audit | Select one smallest implementation gap based on actual data lineage, not another broad phase burst. |
+| **P0 blocker** | Prediction Provenance Truth | Prediction optimization cannot learn honestly if recommendation rows are generated from fallback/neutral inputs without explicit provenance. |
+| **P1** | Result-to-Strategy Learning Contract | Convert evaluation evidence into reviewable adjustment proposals with sample/stability/calibration gates and no automatic mutation. |
+| **P1** | TSL Market Mapping and Settlement Contract | Required to turn model outputs into valid market-specific paper decisions. |
+| **P1** | Outcome Freshness and Join Integrity | Required for correct feedback and deterministic re-evaluation. |
+| **P2** | Multi-strategy OOS Backtest and Score Simulation | Compare methods only after lineage and common evaluation contracts are stable. |
+| **P2** | Targeted + Full Regression Policy | Broaden tests when the selected implementation crosses prediction/recommendation/outcome modules. |
+| **P3** | Legal Provider / Observed Odds Evidence | True blocker for real market-edge and production use, but not for offline paper workflow design. |
+| **P4-P6** | Prediction model optimization | Features/calibration/ensemble/score simulation candidates must enter through OOS gates and the feedback loop. |
+| **P7-P10** | Production proposal | Remains blocked until all product, legal, risk, monitoring, and approval gates pass. |
+
+### Critical Blockers
+
+1. **Prediction provenance ambiguity**
+   Impact: prediction correctness, strategy attribution, learning validity.
+   Risk: the system could optimize strategy labels around recommendations that were not produced by game-specific model evidence.
+   Acceptance: recommendation rows carry prediction/model/input identity and explicit side-selection rationale; fallback rows fail closed or remain clearly blocked.
+
+2. **Observed market data and mapping gap**
+   Impact: TSL recommendations, market comparison, settlement.
+   Risk: estimated odds may be mistaken for observed market evidence.
+   Acceptance: observed/estimated values are structurally distinct; supported markets and joins are deterministic; missing data blocks edge/stake.
+
+3. **Result-to-learning disconnect**
+   Impact: the user's final closed-loop goal.
+   Risk: leaderboard metrics remain reporting-only and never produce a disciplined model-improvement decision.
+   Acceptance: an offline proposal contract uses sample size, hit rate, Brier/ECE, temporal stability, and rollback criteria; no automatic weight changes.
+
+4. **Sample limitation**
+   Impact: strategy comparison confidence.
+   Risk: two paper rows can produce impressive but meaningless leaderboard metrics.
+   Acceptance: all rankings preserve `DATA_LIMITED` and promotion gates require a predefined sample/stability threshold.
+
+### Recommended System Optimization Directions
+
+1. **P199 workflow lineage audit (P0)**
+   Build the source-to-artifact matrix and select one implementation gap. This prevents a large multi-module rewrite.
+
+2. **Prediction provenance hardening (P0/P1 candidate)**
+   Replace ambiguous fallback/neutral prediction lineage with explicit game-specific prediction evidence or a blocked fallback state.
+
+3. **Result-to-learning proposal contract (P1)**
+   Produce human-reviewable strategy adjustments without automatically changing weights or champion state.
+
+4. **TSL market and settlement mapping (P1)**
+   Separate observed odds from estimates and define supported market semantics.
+
+5. **OOS strategy comparison cadence (P2)**
+   Compare prediction methods on identical games and outcomes using calibration and temporal stability, not hit rate alone.
+
+### Roadmap Changes Applied
+
+- Added roadmap section `0L` for post-P192 closed-loop realignment.
+- Replaced the idle active task with a single P199 audit task.
+- Added canonical bootstrap files under `00-Plan/roadmap/agent_bootstrap/`.
+- Made prediction optimization an explicit requirement inside the feedback workflow.
+- Deferred further leaderboard enhancement until prediction/market/outcome lineage is verified.
+
+### Risks / Unknowns
+
+- [Unknown] Whether the daily prediction runner has another game-specific source not visible in the inspected path.
+- [Unknown] Whether current daemon jobs refresh the P84E outcome corpus frequently enough for daily evaluation.
+- [Risk] Existing paper recommendation rows predate P192 and remain unattributed.
+- [Risk] The repository contains multiple legacy learning systems; P199 must not merge them without proving ownership and schema compatibility.
+- [Confirmed] Full repository regression remains NOT RUN.
+
+### CTO Final Recommendation
+
+Authorize P199 as a read-only/plan-only audit. Its output must choose exactly one next implementation. Based on current evidence, prediction provenance hardening is the leading candidate because no downstream learning system can improve prediction methods reliably until each recommendation proves which game-specific prediction and side-selection logic produced it.
+
+### CTO Summary
+
+1. P141-P144 built the paper recommendation/evaluation spine.
+2. P180/P192 completed explicit strategy attribution.
+3. The main gap is now closed-loop lineage and prediction provenance, not leaderboard features.
+4. Real betting remains blocked; paper-only workflow improvement can continue offline.
+5. Execute P199, then implement only its single selected gap.
+
+Final classification: `CTO_ROADMAP_UPDATED_WITH_RISKS`
 
 ## 0. Latest CTO Addendum - P140 Post-Merge Product Intent
 
