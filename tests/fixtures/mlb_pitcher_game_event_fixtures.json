@@ -1,0 +1,466 @@
+{
+  "fixture_notice": "All games, teams, pitchers, names, timestamps, and statistics in this file are synthetic test data.",
+  "scenario_catalog": [
+    "valid_starter",
+    "valid_reliever",
+    "valid_opener",
+    "zero_out_appearance",
+    "malformed_innings_suffix",
+    "negative_stat",
+    "missing_fip_component",
+    "earned_runs_greater_than_runs",
+    "strikes_greater_than_pitches",
+    "team_aggregate_without_pitcher_games",
+    "estimated_proxy_rejected",
+    "live_provisional_rejected",
+    "cancelled_game_rejected",
+    "suspended_then_finalized_accepted",
+    "missing_game_pk",
+    "missing_pitcher_id",
+    "missing_team_or_opponent_identity",
+    "innings_display_outs_mismatch",
+    "duplicate_exact_record",
+    "later_correction_replaces_earlier",
+    "ambiguous_same_time_correction",
+    "future_game_excluded",
+    "same_game_excluded",
+    "doubleheader_distinct_game_pk",
+    "overnight_game_date_compatible",
+    "late_collection_excluded",
+    "unknown_availability_rejected",
+    "non_utc_timestamp_rejected",
+    "official_date_mismatch_rejected",
+    "missing_explicit_starter_flag",
+    "repeated_appearance_unsupported_fails_closed",
+    "corrected_pitcher_list_reorder_single_revision",
+    "stable_source_record_id_across_reorder",
+    "same_pitcher_both_sides_rejected",
+    "post_hoc_backfill_excluded_before_collection",
+    "cross_provider_later_row_fails_closed",
+    "cross_provider_same_time_fails_closed",
+    "cross_provider_identical_content_no_silent_dedup",
+    "cross_provider_after_cutoff_no_historical_ambiguity",
+    "same_provider_different_feed_fails_closed",
+    "cross_source_ambiguity_blocks_whole_selection",
+    "outcome_leakage_rejected",
+    "synthetic_identifiers_only",
+    "stake_independence"
+  ],
+  "payloads": {
+    "multi_pitcher_final": {
+      "collectedAtUtc": "2099-06-02T04:30:00Z",
+      "games": [
+        {
+          "gamePk": 9901001,
+          "gameDate": "2099-06-01T23:30:00Z",
+          "officialDate": "2099-06-01",
+          "gameStatus": "Final",
+          "gameFinalizedAtUtc": "2099-06-02T03:55:00Z",
+          "recordStatus": "final",
+          "teams": {
+            "home": {
+              "team": {
+                "id": 99101,
+                "name": "Synthetic Harbor Club"
+              },
+              "pitchers": [
+                880101,
+                880102,
+                880103
+              ],
+              "players": {
+                "ID880101": {
+                  "person": {
+                    "id": 880101,
+                    "fullName": "Synthetic Starter Alpha"
+                  },
+                  "starterFlag": true,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "6.2",
+                      "battersFaced": 26,
+                      "strikeOuts": 8,
+                      "baseOnBalls": 2,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 1,
+                      "homeRuns": 1,
+                      "hits": 5,
+                      "earnedRuns": 2,
+                      "runs": 2,
+                      "numberOfPitches": 101,
+                      "strikes": 66
+                    }
+                  }
+                },
+                "ID880102": {
+                  "person": {
+                    "id": 880102,
+                    "fullName": "Synthetic Reliever Beta"
+                  },
+                  "starterFlag": false,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "1.1",
+                      "battersFaced": 5,
+                      "strikeOuts": 2,
+                      "baseOnBalls": 0,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 0,
+                      "homeRuns": 0,
+                      "hits": 1,
+                      "earnedRuns": 0,
+                      "runs": 0,
+                      "numberOfPitches": 18,
+                      "strikes": 13
+                    }
+                  }
+                },
+                "ID880103": {
+                  "person": {
+                    "id": 880103,
+                    "fullName": "Synthetic Zero Out Gamma"
+                  },
+                  "starterFlag": false,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "0.0",
+                      "battersFaced": 2,
+                      "strikeOuts": 0,
+                      "baseOnBalls": 1,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 0,
+                      "homeRuns": 0,
+                      "hits": 1,
+                      "earnedRuns": 1,
+                      "runs": 1,
+                      "numberOfPitches": 9,
+                      "strikes": 4
+                    }
+                  }
+                }
+              }
+            },
+            "away": {
+              "team": {
+                "id": 99102,
+                "name": "Synthetic Summit Club"
+              },
+              "pitchers": [
+                880201,
+                880202
+              ],
+              "players": {
+                "ID880201": {
+                  "person": {
+                    "id": 880201,
+                    "fullName": "Synthetic Opener Delta"
+                  },
+                  "starterFlag": true,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "1.0",
+                      "battersFaced": 4,
+                      "strikeOuts": 1,
+                      "baseOnBalls": 0,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 0,
+                      "homeRuns": 0,
+                      "hits": 1,
+                      "earnedRuns": 0,
+                      "runs": 0,
+                      "numberOfPitches": 14,
+                      "strikes": 10
+                    }
+                  }
+                },
+                "ID880202": {
+                  "person": {
+                    "id": 880202,
+                    "fullName": "Synthetic Bulk Epsilon"
+                  },
+                  "starterFlag": false,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "7.0",
+                      "battersFaced": 29,
+                      "strikeOuts": 7,
+                      "baseOnBalls": 3,
+                      "intentionalWalks": 1,
+                      "hitBatsmen": 0,
+                      "homeRuns": 2,
+                      "hits": 7,
+                      "earnedRuns": 4,
+                      "runs": 5,
+                      "numberOfPitches": 105,
+                      "strikes": 67
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "corrected_final": {
+      "collectedAtUtc": "2099-06-03T12:00:00Z",
+      "games": [
+        {
+          "gamePk": 9901001,
+          "gameDate": "2099-06-01T23:30:00Z",
+          "officialDate": "2099-06-01",
+          "gameStatus": "Final",
+          "gameFinalizedAtUtc": "2099-06-02T03:55:00Z",
+          "recordStatus": "corrected",
+          "teams": {
+            "home": {
+              "team": {
+                "id": 99101
+              },
+              "pitchers": [
+                880101
+              ],
+              "players": {
+                "ID880101": {
+                  "person": {
+                    "id": 880101,
+                    "fullName": "Synthetic Starter Alpha"
+                  },
+                  "starterFlag": true,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "6.2",
+                      "battersFaced": 26,
+                      "strikeOuts": 9,
+                      "baseOnBalls": 2,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 1,
+                      "homeRuns": 1,
+                      "hits": 5,
+                      "earnedRuns": 2,
+                      "runs": 2,
+                      "numberOfPitches": 101,
+                      "strikes": 66
+                    }
+                  }
+                }
+              }
+            },
+            "away": {
+              "team": {
+                "id": 99102
+              },
+              "pitchers": [],
+              "players": {}
+            }
+          }
+        }
+      ]
+    },
+    "doubleheader_final": {
+      "collectedAtUtc": "2099-07-10T23:30:00Z",
+      "games": [
+        {
+          "gamePk": 9902001,
+          "gameDate": "2099-07-10T16:00:00Z",
+          "officialDate": "2099-07-10",
+          "gameStatus": "Final",
+          "gameFinalizedAtUtc": "2099-07-10T19:05:00Z",
+          "recordStatus": "final",
+          "teams": {
+            "home": {
+              "team": {
+                "id": 99201
+              },
+              "pitchers": [
+                881001
+              ],
+              "players": {
+                "ID881001": {
+                  "person": {
+                    "id": 881001,
+                    "fullName": "Synthetic Twinbill Pitcher"
+                  },
+                  "starterFlag": true,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "5.0",
+                      "battersFaced": 20,
+                      "strikeOuts": 5,
+                      "baseOnBalls": 1,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 0,
+                      "homeRuns": 1,
+                      "hits": 4,
+                      "earnedRuns": 2,
+                      "runs": 2,
+                      "numberOfPitches": 78,
+                      "strikes": 51
+                    }
+                  }
+                }
+              }
+            },
+            "away": {
+              "team": {
+                "id": 99202
+              },
+              "pitchers": [],
+              "players": {}
+            }
+          }
+        },
+        {
+          "gamePk": 9902002,
+          "gameDate": "2099-07-10T20:30:00Z",
+          "officialDate": "2099-07-10",
+          "gameStatus": "Final",
+          "gameFinalizedAtUtc": "2099-07-10T23:15:00Z",
+          "recordStatus": "final",
+          "teams": {
+            "home": {
+              "team": {
+                "id": 99201
+              },
+              "pitchers": [
+                881001
+              ],
+              "players": {
+                "ID881001": {
+                  "person": {
+                    "id": 881001,
+                    "fullName": "Synthetic Twinbill Pitcher"
+                  },
+                  "starterFlag": false,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "1.0",
+                      "battersFaced": 4,
+                      "strikeOuts": 2,
+                      "baseOnBalls": 0,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 0,
+                      "homeRuns": 0,
+                      "hits": 0,
+                      "earnedRuns": 0,
+                      "runs": 0,
+                      "numberOfPitches": 13,
+                      "strikes": 10
+                    }
+                  }
+                }
+              }
+            },
+            "away": {
+              "team": {
+                "id": 99202
+              },
+              "pitchers": [],
+              "players": {}
+            }
+          }
+        }
+      ]
+    },
+    "suspended_then_finalized": {
+      "collectedAtUtc": "2099-08-12T03:00:00Z",
+      "games": [
+        {
+          "gamePk": 9903001,
+          "gameDate": "2099-08-10T23:50:00Z",
+          "officialDate": "2099-08-10",
+          "gameStatus": "Final",
+          "gameFinalizedAtUtc": "2099-08-12T02:30:00Z",
+          "recordStatus": "final",
+          "resumeHistory": [
+            "Suspended on synthetic day one",
+            "Resumed and finalized on synthetic day two"
+          ],
+          "teams": {
+            "home": {
+              "team": {
+                "id": 99301
+              },
+              "pitchers": [
+                882001
+              ],
+              "players": {
+                "ID882001": {
+                  "person": {
+                    "id": 882001,
+                    "fullName": "Synthetic Resumed Pitcher"
+                  },
+                  "starterFlag": true,
+                  "stats": {
+                    "pitching": {
+                      "inningsPitched": "4.2",
+                      "battersFaced": 19,
+                      "strikeOuts": 4,
+                      "baseOnBalls": 2,
+                      "intentionalWalks": 0,
+                      "hitBatsmen": 0,
+                      "homeRuns": 0,
+                      "hits": 4,
+                      "earnedRuns": 1,
+                      "runs": 1,
+                      "numberOfPitches": 72,
+                      "strikes": 45
+                    }
+                  }
+                }
+              }
+            },
+            "away": {
+              "team": {
+                "id": 99302
+              },
+              "pitchers": [],
+              "players": {}
+            }
+          }
+        }
+      ]
+    },
+    "live_game": {
+      "collectedAtUtc": "2099-09-01T18:30:00Z",
+      "games": [
+        {
+          "gamePk": 9904001,
+          "gameDate": "2099-09-01T18:00:00Z",
+          "officialDate": "2099-09-01",
+          "gameStatus": "Live",
+          "recordStatus": "final",
+          "teams": {}
+        }
+      ]
+    },
+    "cancelled_game": {
+      "collectedAtUtc": "2099-09-02T18:30:00Z",
+      "games": [
+        {
+          "gamePk": 9904002,
+          "gameDate": "2099-09-02T18:00:00Z",
+          "officialDate": "2099-09-02",
+          "gameStatus": "Cancelled",
+          "recordStatus": "final",
+          "teams": {}
+        }
+      ]
+    },
+    "team_aggregate_only": {
+      "collectedAtUtc": "2099-10-01T12:00:00Z",
+      "teamAggregates": [
+        {
+          "teamId": 99401,
+          "reliefInnings": "9.0",
+          "pitcherCount": 3
+        }
+      ]
+    },
+    "source_unavailable": {
+      "sourceUnavailable": true,
+      "collectedAtUtc": "2099-10-02T12:00:00Z",
+      "games": []
+    }
+  }
+}
