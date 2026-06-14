@@ -1,0 +1,497 @@
+{
+  "schema_version": "p203_pred_evidence_v1",
+  "task_id": "P203-PRED-EVIDENCE",
+  "task_type": "IMPLEMENTATION_RESEARCH",
+  "generated_at": "2026-06-14T00:00:00Z",
+  "final_classification": "P203_PRED_EVIDENCE_INCONCLUSIVE",
+  "verdict": "INCONCLUSIVE",
+  "non_actions": [
+    "research evidence only; NOT production model promotion",
+    "no model/champion/registry/controlled_apply mutation",
+    "no recommendation/evaluator mutation",
+    "no MLB/StatsAPI endpoint or network call",
+    "no live/historical data acquisition",
+    "no provider unlock; live transport remains HOLD"
+  ],
+  "environment": {
+    "repo": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool",
+    "branch": "main",
+    "head": "122ba7895958157fc650b7d108676c13324fa91d",
+    "python": "3.13.8",
+    "numpy": "2.4.4",
+    "random_seed": 20260614
+  },
+  "data_contract": {
+    "input_loader": "data.mlb_data_loader.load_mlb_records()",
+    "scores_csv": "data/mlb_2025/mlb-2025-asplayed.csv",
+    "odds_csv": "data/mlb_2025/mlb_odds_2025_real.csv",
+    "scores_csv_sha256": "614341bf6a6e7f77f2c2ff2f0433b29fb56b51d8eed223c22ea1ff9705ee903c",
+    "odds_csv_sha256": "56ee44889c3cb9430c60dbbba5bab6f692dc32620eadfa9cc062cda4d2078c6c",
+    "data_source_tag": "mlb_2025_retrosheet",
+    "raw_row_count": 2430,
+    "eligible_row_count": 2430,
+    "unique_game_ids": 2430,
+    "duplicate_date_team_key_rows": 56,
+    "duplicate_handling": "canonical unit = game_id; rows sharing (date,away,home) are doubleheaders kept as distinct games (no dedup)",
+    "date_range": [
+      "2025-03-18",
+      "2025-09-28"
+    ],
+    "unique_dates": 184,
+    "target_field": "actual_home_win",
+    "target_meaning": "1 if home team final score > away team final score, else 0",
+    "home_win_base_rate": 0.542798,
+    "frozen_baseline_source": "pre-game Elo win probability 1/(1+10^((away_elo-home_elo)/400))",
+    "prediction_time_evidence": "all features are pre-game rolling state computed by the loader with strict look-ahead isolation (Elo/rolling stats updated only after each game); features for a game use only prior-game outcomes",
+    "available_pregame_features": [
+      "home_elo",
+      "away_elo",
+      "home_woba",
+      "away_woba",
+      "home_fip",
+      "away_fip",
+      "home_rsi",
+      "away_rsi",
+      "home_rest_days",
+      "away_rest_days"
+    ],
+    "excluded_predictive_fields": {
+      "market_home_prob": "closing-line/post-season scrape provenance mixed with Elo fallback; point-in-time pregame semantics NOT clear -> leakage risk, excluded as predictor",
+      "ou_line": "over/under total line, same closing/post-game provenance concern -> excluded as predictor",
+      "actual_home_score": "post-game outcome",
+      "actual_away_score": "post-game outcome",
+      "actual_home_win": "prediction target (post-game outcome), never an input",
+      "actual_total_runs": "post-game outcome"
+    },
+    "missing_value_handling": "rows with any non-finite feature, non-binary target, or unparseable date are excluded and counted",
+    "excluded_row_count": 0,
+    "excluded_rows_sample": [],
+    "random_seed": 20260614
+  },
+  "walk_forward_design": {
+    "scheme": "expanding-window chronological, date-disjoint segments",
+    "n_segments": 6,
+    "n_oos_folds": 5,
+    "primary_metric": "out-of-sample Brier score",
+    "secondary_metrics": [
+      "log_loss",
+      "ECE(10 fixed bins)",
+      "calibration intercept/slope",
+      "coverage"
+    ],
+    "folds": [
+      {
+        "fold": 0,
+        "train_n": 420,
+        "test_n": 400,
+        "train_date_range": [
+          "2025-03-18",
+          "2025-04-27"
+        ],
+        "test_date_range": [
+          "2025-04-28",
+          "2025-05-27"
+        ]
+      },
+      {
+        "fold": 1,
+        "train_n": 820,
+        "test_n": 408,
+        "train_date_range": [
+          "2025-03-18",
+          "2025-05-27"
+        ],
+        "test_date_range": [
+          "2025-05-28",
+          "2025-06-27"
+        ]
+      },
+      {
+        "fold": 2,
+        "train_n": 1228,
+        "test_n": 404,
+        "train_date_range": [
+          "2025-03-18",
+          "2025-06-27"
+        ],
+        "test_date_range": [
+          "2025-06-28",
+          "2025-07-30"
+        ]
+      },
+      {
+        "fold": 3,
+        "train_n": 1632,
+        "test_n": 394,
+        "train_date_range": [
+          "2025-03-18",
+          "2025-07-30"
+        ],
+        "test_date_range": [
+          "2025-07-31",
+          "2025-08-29"
+        ]
+      },
+      {
+        "fold": 4,
+        "train_n": 2026,
+        "test_n": 404,
+        "train_date_range": [
+          "2025-03-18",
+          "2025-08-29"
+        ],
+        "test_date_range": [
+          "2025-08-30",
+          "2025-09-28"
+        ]
+      }
+    ],
+    "pooled_oos_n": 2010
+  },
+  "leakage_controls": {
+    "n_folds": 5,
+    "all_train_before_test": true,
+    "no_index_overlap": true,
+    "test_folds_disjoint": true,
+    "violations": [],
+    "leakage_free": true
+  },
+  "feature_groups": {
+    "elo": [
+      "home_elo",
+      "away_elo"
+    ],
+    "offense": [
+      "home_woba",
+      "away_woba"
+    ],
+    "pitching": [
+      "home_fip",
+      "away_fip"
+    ],
+    "form": [
+      "home_rsi",
+      "away_rsi"
+    ],
+    "schedule": [
+      "home_rest_days",
+      "away_rest_days"
+    ]
+  },
+  "calibration": {
+    "primary_method": "Platt/logistic calibration (sigmoid(a+b*logit(p)))",
+    "fit_rule": "calibrator fitted only on past (training-fold) rows; candidate uses an inner past-only date split (last 20% of training dates) for calibration",
+    "hyperparameters": {
+      "lr_l2": 1.0,
+      "platt_l2": 1e-06,
+      "irls_max_iter": 100,
+      "inner_calib_fraction": 0.2
+    }
+  },
+  "model_metrics_pooled_oos": {
+    "frozen_baseline": {
+      "brier": 0.249811,
+      "log_loss": 0.692915,
+      "ece": 0.053463,
+      "calibration_intercept": 0.121462,
+      "calibration_slope": 0.501987,
+      "mean_pred": 0.498992,
+      "n": 2010
+    },
+    "calibrated_baseline": {
+      "brier": 0.248346,
+      "log_loss": 0.689895,
+      "ece": 0.035953,
+      "calibration_intercept": -0.0587,
+      "calibration_slope": 0.698048,
+      "mean_pred": 0.562039,
+      "n": 2010
+    },
+    "simple_reference": {
+      "brier": 0.251192,
+      "log_loss": 0.695626,
+      "ece": 0.03304,
+      "calibration_intercept": 0.213829,
+      "calibration_slope": -0.382642,
+      "mean_pred": 0.562394,
+      "n": 2010
+    },
+    "candidate_full": {
+      "brier": 0.252568,
+      "log_loss": 0.698642,
+      "ece": 0.035802,
+      "calibration_intercept": 0.098096,
+      "calibration_slope": 0.098531,
+      "mean_pred": 0.548341,
+      "n": 2010
+    },
+    "ablation_minus_elo": {
+      "brier": 0.250886,
+      "log_loss": 0.695006,
+      "ece": 0.031559,
+      "calibration_intercept": 0.078034,
+      "calibration_slope": 0.214802,
+      "mean_pred": 0.545394,
+      "n": 2010
+    },
+    "ablation_minus_offense": {
+      "brier": 0.252061,
+      "log_loss": 0.697557,
+      "ece": 0.032816,
+      "calibration_intercept": 0.090844,
+      "calibration_slope": 0.138627,
+      "mean_pred": 0.547277,
+      "n": 2010
+    },
+    "ablation_minus_pitching": {
+      "brier": 0.251298,
+      "log_loss": 0.69595,
+      "ece": 0.034607,
+      "calibration_intercept": 0.076896,
+      "calibration_slope": 0.21532,
+      "mean_pred": 0.54644,
+      "n": 2010
+    },
+    "ablation_minus_form": {
+      "brier": 0.251929,
+      "log_loss": 0.697308,
+      "ece": 0.034685,
+      "calibration_intercept": 0.082157,
+      "calibration_slope": 0.181115,
+      "mean_pred": 0.547951,
+      "n": 2010
+    },
+    "ablation_minus_schedule": {
+      "brier": 0.25777,
+      "log_loss": 0.711174,
+      "ece": 0.048119,
+      "calibration_intercept": 0.130618,
+      "calibration_slope": -0.057706,
+      "mean_pred": 0.553627,
+      "n": 2010
+    }
+  },
+  "comparisons": {
+    "candidate_full_vs_frozen_baseline": {
+      "brier_improvement_point": -0.002757,
+      "brier_improvement_mean": -0.002775,
+      "ci95_low": -0.007517,
+      "ci95_high": 0.001864,
+      "ci_excludes_zero": false,
+      "ci_lower_above_zero": false,
+      "n_resamples": 2000,
+      "n_blocks": 150,
+      "definition": "brier_improvement = brier_baseline - brier_candidate (positive => candidate better)"
+    },
+    "calibrated_baseline_vs_frozen_baseline": {
+      "brier_improvement_point": 0.001465,
+      "brier_improvement_mean": 0.001471,
+      "ci95_low": -0.00197,
+      "ci95_high": 0.004735,
+      "ci_excludes_zero": false,
+      "ci_lower_above_zero": false,
+      "n_resamples": 2000,
+      "n_blocks": 150,
+      "definition": "brier_improvement = brier_baseline - brier_candidate (positive => candidate better)"
+    },
+    "candidate_full_vs_simple_reference": {
+      "brier_improvement_point": -0.001376,
+      "brier_improvement_mean": -0.001404,
+      "ci95_low": -0.003558,
+      "ci95_high": 0.000882,
+      "ci_excludes_zero": false,
+      "ci_lower_above_zero": false,
+      "n_resamples": 2000,
+      "n_blocks": 150,
+      "definition": "brier_improvement = brier_baseline - brier_candidate (positive => candidate better)"
+    }
+  },
+  "fold_level": {
+    "frozen_baseline_brier": [
+      0.242311,
+      0.253432,
+      0.255609,
+      0.253025,
+      0.244647
+    ],
+    "candidate_full_brier": [
+      0.263011,
+      0.255059,
+      0.249507,
+      0.24878,
+      0.246468
+    ],
+    "candidate_improved_fold": [
+      false,
+      false,
+      true,
+      true,
+      false
+    ],
+    "n_folds_candidate_improved": 2
+  },
+  "ablation_results": {
+    "elo": {
+      "ablation_brier": 0.250886,
+      "delta_vs_candidate": -0.001682,
+      "group_adds_value": false
+    },
+    "offense": {
+      "ablation_brier": 0.252061,
+      "delta_vs_candidate": -0.000507,
+      "group_adds_value": false
+    },
+    "pitching": {
+      "ablation_brier": 0.251298,
+      "delta_vs_candidate": -0.00127,
+      "group_adds_value": false
+    },
+    "form": {
+      "ablation_brier": 0.251929,
+      "delta_vs_candidate": -0.000639,
+      "group_adds_value": false
+    },
+    "schedule": {
+      "ablation_brier": 0.25777,
+      "delta_vs_candidate": 0.005202,
+      "group_adds_value": true
+    }
+  },
+  "segment_stability": {
+    "by_fold": {
+      "fold_0": {
+        "n": 400,
+        "baseline_brier": 0.242311,
+        "candidate_brier": 0.263011,
+        "brier_improvement": -0.0207,
+        "insufficient": false
+      },
+      "fold_1": {
+        "n": 408,
+        "baseline_brier": 0.253432,
+        "candidate_brier": 0.255059,
+        "brier_improvement": -0.001628,
+        "insufficient": false
+      },
+      "fold_2": {
+        "n": 404,
+        "baseline_brier": 0.255609,
+        "candidate_brier": 0.249507,
+        "brier_improvement": 0.006103,
+        "insufficient": false
+      },
+      "fold_3": {
+        "n": 394,
+        "baseline_brier": 0.253025,
+        "candidate_brier": 0.24878,
+        "brier_improvement": 0.004245,
+        "insufficient": false
+      },
+      "fold_4": {
+        "n": 404,
+        "baseline_brier": 0.244647,
+        "candidate_brier": 0.246468,
+        "brier_improvement": -0.001821,
+        "insufficient": false
+      }
+    },
+    "by_month": {
+      "2025-04": {
+        "n": 38,
+        "baseline_brier": 0.241346,
+        "candidate_brier": 0.259053,
+        "brier_improvement": -0.017707,
+        "insufficient": true
+      },
+      "2025-05": {
+        "n": 411,
+        "baseline_brier": 0.242995,
+        "candidate_brier": 0.260781,
+        "brier_improvement": -0.017786,
+        "insufficient": false
+      },
+      "2025-06": {
+        "n": 397,
+        "baseline_brier": 0.256016,
+        "candidate_brier": 0.256205,
+        "brier_improvement": -0.000189,
+        "insufficient": false
+      },
+      "2025-07": {
+        "n": 369,
+        "baseline_brier": 0.254277,
+        "candidate_brier": 0.249422,
+        "brier_improvement": 0.004855,
+        "insufficient": false
+      },
+      "2025-08": {
+        "n": 421,
+        "baseline_brier": 0.254046,
+        "candidate_brier": 0.250022,
+        "brier_improvement": 0.004024,
+        "insufficient": false
+      },
+      "2025-09": {
+        "n": 374,
+        "baseline_brier": 0.2424,
+        "candidate_brier": 0.244993,
+        "brier_improvement": -0.002593,
+        "insufficient": false
+      }
+    },
+    "by_prob_band": {
+      "p_lt_0.45": {
+        "n": 670,
+        "baseline_brier": 0.255596,
+        "candidate_brier": 0.257783,
+        "brier_improvement": -0.002186,
+        "insufficient": false
+      },
+      "p_0.45_0.55": {
+        "n": 669,
+        "baseline_brier": 0.251764,
+        "candidate_brier": 0.253368,
+        "brier_improvement": -0.001604,
+        "insufficient": false
+      },
+      "p_gt_0.55": {
+        "n": 671,
+        "baseline_brier": 0.242087,
+        "candidate_brier": 0.246564,
+        "brier_improvement": -0.004477,
+        "insufficient": false
+      }
+    }
+  },
+  "decision_gate": {
+    "classification": "INCONCLUSIVE",
+    "criteria": {
+      "brier_point_improves": false,
+      "ci95_lower_above_zero": false,
+      "log_loss_not_materially_worse": true,
+      "log_loss_delta": 0.005727,
+      "leakage_free": true,
+      "majority_folds_improved": false,
+      "folds_improved": "2/5",
+      "not_single_segment_driven": false,
+      "coverage_equal": true
+    },
+    "thresholds": {
+      "logloss_material_abs": 0.01,
+      "majority_folds": 3,
+      "segment_min_n": 100
+    }
+  },
+  "limitations": [
+    "Features are crude proxies (rolling run-rate-based wOBA/FIP, win-rate RSI), not true game-specific point-in-time pitcher/lineup data.",
+    "market_home_prob (closing line) is excluded as a predictor due to post-season scrape provenance; this study cannot speak to market-informed models.",
+    "A null/inconclusive result reflects the proxy-feature ceiling, not necessarily a model implementation limit; it cannot by itself distinguish model limitation from data limitation.",
+    "Single 2025 season; no cross-season generalisation tested.",
+    "Calibration uses a single primary method (Platt); other calibrators not adopted as primary."
+  ],
+  "next_step_options": {
+    "if_positive": "package evidence (separate authorization); NO model/recommendation promotion; NO live implementation",
+    "if_negative": "package evidence; do not promote candidate; next task should diagnose the binding data/model constraint; NO live implementation",
+    "if_inconclusive": "package evidence; do not promote candidate; next task must narrow uncertainty without relaxing leakage controls; NO live implementation"
+  }
+}

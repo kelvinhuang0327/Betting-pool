@@ -4,6 +4,160 @@
 
 2026-06-14 Asia/Taipei
 
+## 0H. Latest CTO Review — Post-P203 Strategic Direction (Proxy-Feature Ceiling Confirmed; Close the Offline Loop)
+
+This section supersedes section `0G` (P203-PRED-EVIDENCE INCONCLUSIVE, P203-PACKAGE Next) for current execution priority. Section `0G` completed the P203 governance alignment; this round is a **strategic-direction review** layered on top of it, answering "given P203 is INCONCLUSIVE, what is the highest-value next direction?". HEAD remains `122ba7895958157fc650b7d108676c13324fa91d`; no commit, branch, stage, source, data, or runtime mutation was performed this round.
+
+### Review Date
+
+2026-06-14 Asia/Taipei.
+
+### Input Sources
+
+- [Updated] Actual git Phase 0 at P203-GOVERNANCE-PACKAGE round: canonical repo `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`; `origin/main` = `122ba7895958157fc650b7d108676c13324fa91d`; open PR = 1 (PR #26 `release/p203-prediction-evidence-study` → `main`, OPEN; evidence commit `e3416f6` = 4 P203 evidence files; CI SUCCESS; governance commit pending as second commit).
+- [Updated] Working tree: 4 governance files modified-but-uncommitted (staged for second commit to PR #26); 10 tolerated daemon/runtime/data files; P203 evidence artifacts now committed at `e3416f6`; untracked = 2 bootstrap files + 5 prior-superseded reports.
+- [Confirmed] `report/p203_prediction_evidence_study_20260614.json` re-read; every cited metric independently verified (below).
+- [Confirmed] `roadmap.md` §0R, `CTO-Analysis.md` §0G, `active_task.md` (P203-PACKAGE), `agent_bootstrap/CURRENT_STATE.md`, `SHARED_AGENT_BOOTSTRAP.md`, `TASK_TEMPLATES.md`.
+- [Confirmed] User product intent (restated): (1) MLB pregame TSL-market prediction/recommendation; (2) backtest/score-simulation/strategy learning from prediction success; (3) one end-to-end prediction → bet → result workflow, with prediction-method optimization as a core priority.
+
+### Evidence Re-Verification (this round, read-only)
+
+- [Confirmed] Sample: raw = eligible = unique_game_ids = 2,430; excluded = 0; pooled OOS n = 2,010 over 5 chronological folds; `leakage_free = true`; `data_source = mlb_2025_retrosheet`.
+- [Confirmed] frozen_baseline Brier 0.249811 / candidate_full Brier 0.252568; improvement (baseline − candidate) point −0.002757, 95% CI [−0.007517, 0.001864], `ci_lower_above_zero = false`; folds improved 2/5; decision gate `INCONCLUSIVE`.
+- [Confirmed] ECE: frozen_baseline 0.053463 → calibrated_baseline 0.035953 (Platt calibration; not a Brier gate); candidate_full ECE 0.035802 (separate from calibrated_baseline ECE).
+- [Confirmed] `tests/test_p203_prediction_evidence_study.py` re-run this round with repo `.venv` (Python 3.13.8 / numpy 2.4.4, matching the JSON environment): **34 passed** (1.48s). No other suite re-run this round.
+
+### New Strategic Finding (elevated from the JSON, not previously emphasized)
+
+- [Confirmed] **`calibrated_baseline` (frozen Elo + Platt calibration, NO added features) is the single best model on Brier (0.248346)** — better than both frozen (0.249811) and candidate_full (0.252568). Yet calibrated-vs-frozen improvement (+0.001465, 95% CI [−0.00197, 0.004735]) still includes zero → not statistically supported.
+- [Confirmed] **Adding the proxy feature stack net-hurts**: candidate_full (Elo + wOBA + FIP + RSI + rest) is *worse* than calibration-only, and its calibration slope collapses to 0.0985 (near-zero discrimination). Ablation: only the `schedule` (rest-days) group "adds value" (Δ +0.005202); `elo` / `offense` / `pitching` / `form` all fail to add value.
+- [Inferred] Net reading: on the authorized 2025 proxy-feature dataset, **calibration is the only offline lever that even nudges accuracy, and it is not statistically significant**. The proxy-feature ceiling is now *empirically confirmed*, not merely inferred. The binding constraint on accuracy is game-specific point-in-time pitcher/lineup data, which remains blocked by the live/legal HOLD.
+
+### Roadmap Alignment Assessment
+
+| Tag | Finding |
+|---|---|
+| [Aligned] | §0R / §0G / active_task / CURRENT_STATE already consistently record P203 INCONCLUSIVE and queue P203-PACKAGE; governance state needs no correction. |
+| [Aligned] | Live-transport HOLD, no-promotion of candidate_full, and Track-B-unsent are correctly and consistently recorded across all four governance files. |
+| [Drift] | The roadmap still frames the next *substantive* axis around prediction-optimization research (P4–P6), but P203 has now empirically shown further proxy-feature research on the 2025 set has low expected value. The highest-value *unblocked* axis — closing the offline workflow loop (user goal #3) — is under-weighted relative to its value. |
+| [Missing] | No section yet states the "calibrated frozen-Elo" floor as the mandatory comparison baseline for future candidates, nor a pre-registration / fresh-holdout rule to prevent adaptive overfitting of the single 2025 season. |
+| [Blocked] | Prediction-accuracy improvement remains blocked by game-specific data (legal HOLD). Real betting / market-edge remains blocked by provider authorization + observed odds. |
+
+### Completed Work Assessment
+
+- [Confirmed] P203-PRED-EVIDENCE executed and complete; INCONCLUSIVE; governance aligned (§0G). 34 P203 tests pass at HEAD this round.
+- [Confirmed] Prior axes closed: P199 audit; P200/P201 provenance + learning-eligibility; P202/B/C audits; P202D/E/G-B fixture-only skeletons; P202F + P202G-A legal evidence (explicit automated-scripts prohibition; HOLD); P202G Track-A decision (Track A primary) merged via PR #24/#25.
+
+### Unfinished Work Assessment
+
+| Item | Status |
+|---|---|
+| P203 evidence packaging | [Updated] 4 evidence files committed at `e3416f6` in PR #26 (OPEN). Governance files being added as second commit this round. PR #26 merge needs separate authorization. |
+| Prediction provenance hardening | [Open] From P199: runner may use fixed 0.535 prior / neutral feature row / hard-coded `home` side in inspected path. Unblocked; offline-doable. |
+| Result-to-strategy learning contract | [Missing] Leaderboard is descriptive only; no human-reviewed adjustment-proposal contract. |
+| TSL market mapping + outcome join integrity | [Open] Supported markets/settlement + correct result joins not yet a verified contract; estimated odds still substituted when TSL unavailable. |
+| Full repository regression | [Confirmed] NOT RUN. |
+| Live game-specific data | [Blocked] Legal HOLD; needs human-established licensing channel (currently `NOT_ESTABLISHED`). |
+
+### P0 / P1 / P2 / P3–P10 Reprioritization
+
+| Priority | Direction | CTO judgment |
+|---:|---|---|
+| **P0 (immediate / hygiene)** | **P203-PACKAGE** | Commit the 4 at-risk untracked P203 evidence files + 4 aligned governance files in one PR before opening new work. Already queued in `active_task.md`; needs a separate git-authorizing prompt (CTO cannot self-authorize commit/push/PR). |
+| **P0 (substantive, unblocked)** | **Prediction Provenance Truth** | Now the lead coding P0. Replace fixed-prior / neutral / hard-coded-side fallback with explicit game-specific provenance or a fail-closed blocked row. Directly serves user goal #3 and is not blocked by live data. |
+| **P0 (legal axis, parallel/blocked)** | Live transport HOLD | Unchanged. Human-only: establish a purpose-matched MLB licensing channel (Track B), then independent review, then separate authorization. Not a coding task. |
+| **P1** | Result-to-Strategy Learning Contract | Convert attributed evaluation evidence into human-reviewed adjustment proposals; sample / stability / calibration gates; no auto weight/champion mutation. |
+| **P1** | TSL Market Mapping + Outcome Freshness / Join Integrity | Supported-market / settlement contracts; deterministic correct result joins; observed vs estimated odds structurally separated. |
+| **P2** | Offline Strategy Comparison + "calibrated-Elo floor" | Lock `calibrated_baseline` (frozen Elo + Platt) as the mandatory comparison floor; future candidates must beat *calibrated* Elo, not raw Elo. |
+| **P2** | Full Regression Policy | Record dedicated / targeted / full PASS/FAIL/NOT RUN on every implementation; P203 full-repo regression remains NOT RUN. |
+| **P3** | Legal Provider / Observed Odds Evidence | Unchanged; real-use blocker, not an offline-loop blocker. |
+| **P4–P6 (downgraded)** | Broad Proxy-Feature Prediction Research | **Downgraded / paused.** P203 confirmed the proxy ceiling. No further broad feature mining on the 2025 set without (a) game-specific data unblocked, or (b) a single pre-registered hypothesis + a reserved fresh holdout, to avoid adaptive overfitting. |
+| **P7–P10** | Production Proposal Gate | Unchanged; remains a late, explicit, fully-gated decision; `production_ready=false`. |
+
+Upgraded: Prediction Provenance Truth → lead substantive P0. Downgraded: broad proxy-feature prediction research (P4–P6) → paused pending data unblock or a pre-registered hypothesis.
+
+### Critical Blockers
+
+1. **Game-specific point-in-time data unavailable (legal HOLD).** Impact: prediction-accuracy ceiling (now empirically confirmed by P203). Risk: further proxy-feature investment yields no significant gain. Priority: P0 (legal axis), human-only. Acceptance: a reviewed, purpose-matched licensing authorization exists before any live call.
+2. **Prediction provenance ambiguity.** Impact: honest learning + attribution. Risk: optimizing strategy labels around fallback/neutral rows. Priority: P0 (coding). Acceptance: rows carry prediction/model/input identity + side-selection rationale; fallback fails closed.
+3. **Result-to-learning disconnect.** Impact: user goal #3. Risk: metrics never become a disciplined improvement decision. Priority: P1. Acceptance: offline proposal contract with sample / Brier / ECE / stability / rollback gates; no auto mutation.
+4. **P203 evidence committed; PR #26 open.** Priority: P0 hygiene. Acceptance: PR #26 merged (governance commit added; merge requires separate authorization).
+5. **Adaptive-overfitting risk on the single 2025 set.** Priority: P2 governance. Acceptance: pre-registration + reserved fresh-holdout rule recorded before further feature research.
+
+### Recommended System Optimization Directions
+
+1. **P203-PACKAGE (P0 hygiene) — in progress.** Evidence commit `e3416f6` (4 files) in PR #26 (OPEN; CI SUCCESS). Governance commit being added as second commit this round. Acceptance: 8-file diff across 2 commits, tests green, clean merge (merge is separate authorization).
+2. **Prediction Provenance Hardening (P0, lead coding).** Phase: P199-derived provenance P0. Why: prerequisite for any honest learning loop; unblocked. Acceptance: every recommendation row records a verifiable prediction source / version / input fingerprint + side rationale; fallback rows fail closed / labeled. Risk: touches recommendation runner — needs targeted + workflow regression.
+3. **Result-to-Strategy Learning Contract (P1).** Why: turns evaluation into reviewable improvement without auto-mutation; the missing link in goal #3. Acceptance: proposal contract with gates + rollback; leaderboard stays descriptive.
+4. **TSL Market Mapping + Outcome Join Integrity (P1).** Why: converts predictions into valid market-specific paper decisions and guarantees correct result feedback. Acceptance: supported-market / settlement contracts; deterministic joins; observed ≠ estimated odds.
+5. **Calibrated-Elo floor + research discipline (P2).** Why: P203 shows calibration-only ≥ feature stack. Acceptance: future candidates compared against calibrated frozen-Elo; pre-registration + fresh-holdout rule recorded.
+
+### Roadmap Changes Applied (this round)
+
+- [Confirmed] Added `roadmap.md` §0S (CTO strategic-direction review): records the empirically-confirmed proxy ceiling, the calibrated-Elo floor, and the reprioritization (Prediction Provenance Truth → lead substantive P0; broad proxy-feature research paused). §0R marked historical.
+- [Confirmed] Added this `CTO-Analysis.md` §0H. §0G marked historical.
+- [Confirmed] `active_task.md` left unchanged — P203-PACKAGE remains today's first executable task (already correct; minimal-change principle). Bootstrap files left unchanged (current and well-formed). No data / source / runtime / git mutation.
+
+### Risks / Unknowns
+
+- [Inferred] The proxy ceiling is dataset-bound; a true game-specific-feature model might exceed it, but that path is blocked by the live/legal HOLD.
+- [Unknown] Whether the daily runner has a game-specific prediction source outside the inspected path (carried open from P199) — provenance hardening must confirm before claiming fallback-only.
+- [Confirmed] Full repository regression NOT RUN; only the 34-test P203 suite was re-run this round.
+- [Inferred] Repeated mining of the single 2025 season risks adaptive overfitting; pre-registration + fresh holdout is the mitigation.
+- [Confirmed] Live axis HOLD is a legal constraint, reversible only by human action; no technical work changes it.
+
+### CTO Final Recommendation
+
+Governance is already aligned (§0G); this round's value is the strategic pivot. Execute **P203-PACKAGE** first (separately authorized git round) to protect the at-risk evidence, then **shift substantive work from proxy-feature prediction research to closing the offline workflow loop, led by Prediction Provenance Hardening (P0)**, followed by the learning contract and TSL market / outcome integrity. Do not pour further effort into broad proxy-feature research on the 2025 set; lock the calibrated-Elo floor and a pre-registration / holdout rule first. Live transport stays HOLD.
+
+### 5-Line CTO Summary
+
+1. Phase 0 clean: HEAD `122ba78` = origin/main, staged 0, dirty tree all known/tolerated; no STOP.
+2. P203 evidence independently re-verified (all numbers match) and 34 P203 tests re-run green.
+3. New finding: calibration-only ≥ proxy-feature stack; proxy ceiling now empirically confirmed — accuracy is data-bound, not model-bound.
+4. Reprioritization: P203-PACKAGE (hygiene) → Prediction Provenance Hardening (lead P0) → learning contract / TSL+outcome integrity; broad proxy-feature research paused; live axis HOLD.
+5. Only `roadmap.md` + `CTO-Analysis.md` changed; `active_task.md` / bootstrap unchanged; no git / data mutation.
+
+Final classification: `CTO_ROADMAP_UPDATED_WITH_RISKS`
+
+---
+
+> **Historical (superseded by `0H`, 2026-06-14).** Section `0G` completed the P203 governance alignment (INCONCLUSIVE recorded, P203-PACKAGE queued). Section `0H` adds the post-P203 strategic-direction review and reprioritization. HEAD remains `122ba7895958157fc650b7d108676c13324fa91d`. See section `0H` for current execution priority.
+
+## 0G. Latest CTO Review — P203-PRED-EVIDENCE INCONCLUSIVE, P203-PACKAGE Next
+
+This section supersedes section `0F` (P202G Track-A Governance Package Merged via PR #24, P203-PRED-EVIDENCE Next) for current execution priority. HEAD remains `122ba7895958157fc650b7d108676c13324fa91d` (merge commit of PR #25, P202G Track-A post-merge governance closeout); this P203 governance-alignment round produced no new commit.
+
+### Completed
+
+- [Confirmed] **P203-PRED-EVIDENCE study complete**: raw/eligible sample 2,430 games (`data_source="mlb_2025_retrosheet"`); pooled OOS n=2,010 over 5 chronological folds; leakage_free=True. Frozen Elo baseline Brier 0.249811; candidate_full Brier 0.252568. Primary Brier improvement (baseline − candidate) point estimate: **−0.002757** (95% CI [−0.007517, 0.001864]). Lower CI bound does not exceed zero. Folds where candidate improved: 2/5. No comparison passed positive gate.
+- [Confirmed] **ECE/calibration reliability**: ECE improved from 0.053463 (frozen) to 0.035802 (candidate_full). This is a calibration reliability improvement, NOT a Brier gate satisfaction. It does not authorize promotion.
+- [Confirmed] **Final classification**: `P203_PRED_EVIDENCE_INCONCLUSIVE`.
+- [Confirmed] **candidate_full NOT promoted**: no model/champion/registry/evaluator/leaderboard/recommendation mutation authorized or performed.
+- [Confirmed] **34 P203 tests passed**: `tests/test_p203_prediction_evidence_study.py`. 347 regression tests passed (same subset as prior rounds). Workflow tests: NOT RUN. Full repository regression: NOT RUN. Live transport test: NOT RUN / not authorized.
+- [Confirmed] **P203 governance alignment complete**: exactly four governance files updated this round (roadmap.md, CTO-Analysis.md, active_task.md, CURRENT_STATE.md).
+- [Confirmed] **Live transport (P202G) HOLD unchanged**; Track B not sent; purpose-matched MLB licensing channel = `NOT_ESTABLISHED`.
+- [Confirmed] **Latest completed phase**: `P203_GOVERNANCE_ALIGNMENT_COMPLETE`.
+
+### Not Completed
+
+- [Confirmed] **P203-PACKAGE** — not staged, not committed, not pushed. Requires separate task-specific authorization.
+- [Confirmed] **Candidate promotion** — not authorized; candidate is INCONCLUSIVE.
+- [Confirmed] **Model/champion/registry promotion** — none.
+- [Confirmed] **Live MLB data acquisition** — none; HOLD unchanged.
+- [Confirmed] **Track B submission** — not drafted, not sent.
+
+### Risks
+
+- [Confirmed] INCONCLUSIVE result documents the proxy-feature ceiling: rolling wOBA/FIP/RSI are crude proxies for game-specific point-in-time pitcher/lineup data. The live game-specific data axis remains the binding constraint on prediction accuracy.
+- [Inferred] ECE improvement shows calibration reliability improved; however, the candidate model does not improve Brier score or log loss in a statistically supported manner. These are separable properties and ECE improvement alone is not sufficient.
+- [Confirmed] Live transport (P202G) remains HOLD; P203 INCONCLUSIVE result does not change this.
+- [Inferred] A future attempt with game-specific, point-in-time features may yield a different outcome, but those features remain blocked by the live-data HOLD.
+
+---
+
+> **Historical (superseded by `0G`, 2026-06-14).** P203-PRED-EVIDENCE study executed; final classification `P203_PRED_EVIDENCE_INCONCLUSIVE`. HEAD remains `122ba7895958157fc650b7d108676c13324fa91d`. See section `0G` for current execution priority.
+
 ## 0F. Latest CTO Review — P202G Track-A Governance Package Merged (PR #24), P203-PRED-EVIDENCE Next
 
 This section supersedes section `0E` (P202G-NEXT-DIRECTION decision packet, read-only) for current execution priority. **HEAD has advanced from `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` to `b32dd47fe325c8dc9de64201b24d5602b53e9ebf` via PR #24 standard merge commit** (head commit `203562c6601db26e0013e63db47dc8e706e97f16`, mergedAt `2026-06-14T04:16:06Z`).
