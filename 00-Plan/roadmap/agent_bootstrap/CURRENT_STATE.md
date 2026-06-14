@@ -8,7 +8,7 @@
 - Repo: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`
 - Branch: `main`
 - Git dir: `.git`
-- HEAD / `origin/main`: `b32dd47fe325c8dc9de64201b24d5602b53e9ebf` (advanced from `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` via PR #24 merge)
+- HEAD / `origin/main`: `122ba7895958157fc650b7d108676c13324fa91d` (advanced from `b32dd47fe325c8dc9de64201b24d5602b53e9ebf` via PR #25 P202G Track-A post-merge governance closeout)
 - Mode: `paper_only=true`, `production_ready=false`, `NO_REAL_BET=true`
 - Forbidden paths: other clones, archives, backups, quarantine, unauthorized worktrees
 - Forbidden writes for governance tasks: `data/`, `runtime/`, `logs/`, `outputs/`, production/registry/DB state
@@ -41,8 +41,12 @@
 - **P202G-NEXT-DIRECTION complete** — read-only decision packet `report/p202g_next_direction_decision_packet_20260614.md` (now tracked, merged via PR #24). Final classification `P202G_NEXT_DIRECTION_TRACK_A_SELECTED`. Primary track = TRACK_A_PRIMARY (weighted score 4.00/5); Track B (draft written-permission request) = deferred / parallel human-legal action (weighted score 2.15/5), not sent. Decision confidence = MEDIUM. Selected candidate = A1 (offline leakage-safe calibration + feature-ablation walk-forward on the 2,430-game 2025 historical dataset, `data_source="mlb_2025_retrosheet"`, independently re-verified via `data/mlb_data_loader.py::load_mlb_records()`). P202D/E/G-B remain unwired capture-format skeletons with no real data — must not be described as populated sources. Reversal trigger = human confirms a reachable, purpose-matched MLB data/API licensing channel exists (currently `NOT_ESTABLISHED`).
 - **P202G Track-A governance package merged — PR #24** at merge commit `b32dd47fe325c8dc9de64201b24d5602b53e9ebf` (head commit `203562c6601db26e0013e63db47dc8e706e97f16`, mergedAt `2026-06-14T04:16:06Z`). Exactly 5 authorized files (4 governance + 1 decision-packet report). P202G-A/P202F excluded. Source/test/config unchanged. CI `replay-default-validation` = SUCCESS. Release branch `release/p202g-track-a-decision-governance` retained locally and remotely (SHA `203562c`).
 - **Post-merge product validation**: 257 passed (fixture-only subset: `tests/test_mlb_pitcher_game_events.py` + `tests/test_mlb_probable_starter_collector.py` + `tests/test_mlb_probable_starter_snapshot_intake.py`) + 90 passed (P200/P201/leaderboard subset: `tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py` + `tests/test_mlb_paper_evaluator.py` + `tests/test_p180_strategy_leaderboard.py`) = **347 passed**. Governance tests: NOT RUN (no applicable direct tests). Workflow tests: NOT RUN. Full repository regression: NOT RUN.
-- **Latest completed phase**: `P202G_TRACK_A_PR24_MERGE_COMPLETE`.
-- Open PR count: 0.
+- **P202G Track-A post-merge governance closeout — PR #25** merged at merge commit `122ba7895958157fc650b7d108676c13324fa91d` (head commit `268f846b9a76df7568c35499d932f5ef6bf3f500`). Exactly 4 governance files. CI SUCCESS.
+- **P203-PRED-EVIDENCE study complete** (2026-06-14): raw/eligible sample 2,430 games (`data_source="mlb_2025_retrosheet"`); pooled OOS n=2,010; 5 chronological folds; leakage_free=True. Frozen Elo baseline Brier 0.249811; candidate_full Brier 0.252568. Primary Brier improvement (baseline − candidate) = −0.002757 (95% CI [−0.007517, 0.001864]); ci95_lower_above_zero=False; folds improved 2/5. ECE 0.053463 → 0.035802 (calibration reliability improved; NOT Brier gate). No comparison passed positive gate. Final classification `P203_PRED_EVIDENCE_INCONCLUSIVE`. candidate_full NOT promoted. Live transport HOLD unchanged. Track B unsent.
+- **P203 governance alignment complete** (2026-06-14): exactly four governance files updated (roadmap.md, CTO-Analysis.md, active_task.md, CURRENT_STATE.md).
+- **P203 evidence files committed** (2026-06-14): 4 P203 evidence artifacts committed at `e3416f6b4716d0ce98ff3298330bac1536becc2c` on branch `release/p203-prediction-evidence-study`; PR #26 OPEN (`release/p203-prediction-evidence-study` → `main`; 1 commit, 4 files; CI `replay-default-validation` = SUCCESS).
+- **Latest completed phase**: `P203_PACKAGE_EVIDENCE_COMMITTED`; governance commit pending as second commit to PR #26.
+- Open PR count: 1 (PR #26 `release/p203-prediction-evidence-study` → `main`, OPEN; evidence commit `e3416f6`; governance commit this round).
 
 ## Current Artifact Baseline
 
@@ -77,10 +81,10 @@ explicitly authorizes it.
 
 ## Authorized Uncommitted Governance Files
 
-This task (P202G Track-A post-merge governance closeout, 2026-06-14) modifies exactly the
-four governance files below. The remaining untracked items are prior-superseded read-only
-reports/governance docs; future read-only tasks may proceed when these are the only
-additional dirty/untracked files, but must not edit or stage them:
+This task (P203-GOVERNANCE-PACKAGE, 2026-06-14) modifies exactly the four governance
+files below as the second commit to PR #26. The remaining untracked/dirty items are
+prior-superseded read-only reports/governance docs (must not be edited or staged without
+explicit authorization):
 
 - `00-Plan/roadmap/roadmap.md`
 - `00-Plan/roadmap/CTO-Analysis.md`
@@ -94,10 +98,15 @@ additional dirty/untracked files, but must not edit or stage them:
 - `report/p202c_point_in_time_pitcher_data_gap_evidence_contract_20260612.md`
 - `report/p202f_live_transport_authorization_and_dry_run_design_audit_20260613.md`
 
-Note: `report/p202g_a_source_policy_clarification_evidence_packet_20260614.md`,
-`report/p202g_a_source_policy_clarification_independent_review_20260614.md` (merged via PR
-#23), and `report/p202g_next_direction_decision_packet_20260614.md` (merged via PR #24) are
-now **tracked and committed**.
+Note (now committed/tracked):
+- `scripts/p203_prediction_evidence_study.py` — committed at `e3416f6` (PR #26 commit 1)
+- `tests/test_p203_prediction_evidence_study.py` — committed at `e3416f6` (PR #26 commit 1)
+- `report/p203_prediction_evidence_study_20260614.json` — committed at `e3416f6` (PR #26 commit 1)
+- `report/p203_prediction_evidence_study_20260614.md` — committed at `e3416f6` (PR #26 commit 1)
+- `report/p202g_a_source_policy_clarification_evidence_packet_20260614.md`,
+  `report/p202g_a_source_policy_clarification_independent_review_20260614.md` (merged via PR
+  #23), and `report/p202g_next_direction_decision_packet_20260614.md` (merged via PR #24) are
+  **tracked and committed**.
 
 Any other dirty/untracked file is a STOP condition unless explicitly authorized.
 
@@ -109,31 +118,26 @@ Any other dirty/untracked file is a STOP condition unless explicitly authorized.
 - Outcome-only learning and leaderboard artifacts are not connected to an approved daily adjustment-proposal contract.
 - Paper sample is too small for strategy promotion.
 - Legal provider authorization and observed odds remain blockers for real use.
-- Live MLB-data transport (P202G) is HOLD (P202F + P202G-A confirmed, PR #23 packaged; P202G-NEXT-DIRECTION Track A selected and packaged via PR #24): P202G-A found explicit automated-scripts prohibition in official MLB.com Terms of Use (2025-03-11); StatsAPI applicability = `STRONGLY_SUPPORTED_INFERENCE`; direct hostname naming = `NOT_ESTABLISHED`; no purpose-matched licensing path established (`legaldepartment@mlb.com` = DMCA/fallback only; `registrationsupport@mlb.com` = technical registration support only); one-shot and recurring both NOT AUTHORIZED. Public/no-auth/robots/rate-limit facts must not be read as automated-use permission. PR #24 merge does not change this status.
+- P203 evidence artifacts (script, test, JSON, Markdown) committed at `e3416f6` in PR #26; governance files being added as second commit this round.
+- candidate_full is INCONCLUSIVE; it is NOT promoted; ECE improvement alone does not satisfy the positive gate.
+- Live MLB-data transport (P202G) is HOLD (P202F + P202G-A confirmed, PR #23 packaged; P202G-NEXT-DIRECTION Track A selected and packaged via PR #24): P202G-A found explicit automated-scripts prohibition in official MLB.com Terms of Use (2025-03-11); StatsAPI applicability = `STRONGLY_SUPPORTED_INFERENCE`; direct hostname naming = `NOT_ESTABLISHED`; no purpose-matched licensing path established (`legaldepartment@mlb.com` = DMCA/fallback only; `registrationsupport@mlb.com` = technical registration support only); one-shot and recurring both NOT AUTHORIZED. Public/no-auth/robots/rate-limit facts must not be read as automated-use permission. P203 INCONCLUSIVE result does not change this status.
 
 ## Current Roadmap Phase
 
-PR #24 merged (merge commit `b32dd47fe325c8dc9de64201b24d5602b53e9ebf`, advanced from `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e`). P202G Track-A decision/governance package (5 files) closed. Latest completed phase: `P202G_TRACK_A_PR24_MERGE_COMPLETE`.
+PR #25 merged (merge commit `122ba7895958157fc650b7d108676c13324fa91d`). P203-PRED-EVIDENCE complete — `P203_PRED_EVIDENCE_INCONCLUSIVE`. P203 governance alignment complete. P203 evidence files committed to PR #26 at `e3416f6` (branch `release/p203-prediction-evidence-study`; CI SUCCESS). Governance files being added as second commit to PR #26 (this round). Latest completed phase: `P203_PACKAGE_EVIDENCE_COMMITTED`. After PR #26 merges (separate authorization): `P203_GOVERNANCE_PACKAGE_ADDED_TO_PR26`.
 
 ## Recommended Next Direction
 
-**P203-PRED-EVIDENCE** (plan-only, `IMPLEMENTATION_RESEARCH`) — Leakage-Safe Calibration and
-Feature-Ablation Walk-Forward Study on the 2,430-game 2025 historical dataset
-(`data_source="mlb_2025_retrosheet"`). Selected as Track A primary candidate A1 from the
-P202G-NEXT-DIRECTION decision packet (weighted score 4.00/5 vs Track B 2.15/5, confidence
-MEDIUM). Requires a separate explicit task prompt with defined file whitelist before any
-implementation, training, calibration, or ablation run. No StatsAPI/MLB live endpoint, no
-live probable-starter/pitcher-event acquisition, no historical backfill, no
-populated-data claim for P202D/E/G-B skeletons, no provider unlock, no model/champion
-promotion.
+**P203-GOVERNANCE-PACKAGE (this round, in progress)** — Add 4 governance files as second
+commit to PR #26 (branch `release/p203-prediction-evidence-study`). candidate_full is NOT
+promoted (INCONCLUSIVE). PR #26 merge requires separate authorization.
 
-Track B (draft written-permission request) remains deferred / parallel human-legal action;
-not sent, not submitted. Live transport (P202G) remains HOLD; no live endpoint, no data
-collection, no provider unlock is authorized.
+**After PR #26 merged**: pivot to **Prediction Provenance Hardening (P0 substantive)** —
+replace fixed-prior / neutral / hard-coded-side fallback with verifiable game-specific
+provenance or fail-closed rows. Serves user goal #3; not blocked by live data.
 
-Prediction-provenance axis (separate from the above):
-prediction provenance and selected-side hardening remains the leading
-candidate carried from the P199 audit, not covered by P203.
+Track B remains deferred / parallel human-legal action; not sent, not submitted. Live
+transport (P202G) remains HOLD; no live endpoint, no data collection, no provider unlock.
 
 ## Persistent Governance
 
