@@ -4,6 +4,39 @@
 
 2026-06-14 Asia/Taipei
 
+## 0F. Latest CTO Review — P202G Track-A Governance Package Merged (PR #24), P203-PRED-EVIDENCE Next
+
+This section supersedes section `0E` (P202G-NEXT-DIRECTION decision packet, read-only) for current execution priority. **HEAD has advanced from `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` to `b32dd47fe325c8dc9de64201b24d5602b53e9ebf` via PR #24 standard merge commit** (head commit `203562c6601db26e0013e63db47dc8e706e97f16`, mergedAt `2026-06-14T04:16:06Z`).
+
+### Completed
+
+- [Confirmed] **PR #24 packaging complete and merged**: exactly 5 authorized files committed via standard merge commit `b32dd47fe325c8dc9de64201b24d5602b53e9ebf` (head `203562c6601db26e0013e63db47dc8e706e97f16`, mergedAt `2026-06-14T04:16:06Z`) — `00-Plan/roadmap/roadmap.md`, `00-Plan/roadmap/CTO-Analysis.md`, `00-Plan/roadmap/active_task.md`, `00-Plan/roadmap/agent_bootstrap/CURRENT_STATE.md`, `report/p202g_next_direction_decision_packet_20260614.md` (now tracked). P202G-A/P202F reports, source, tests, config not included. CI `replay-default-validation` = SUCCESS. Release branch `release/p202g-track-a-decision-governance` retained locally and remotely (SHA `203562c`).
+- [Confirmed] **Post-merge re-validation**: 257 passed (`tests/test_mlb_pitcher_game_events.py` + `tests/test_mlb_probable_starter_collector.py` + `tests/test_mlb_probable_starter_snapshot_intake.py`) + 90 passed (`tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py` + `tests/test_mlb_paper_evaluator.py` + `tests/test_p180_strategy_leaderboard.py`) = **347 passed**, no regression. Governance tests: NOT RUN (no applicable direct tests). Workflow tests: NOT RUN. Full repository regression: NOT RUN.
+- [Confirmed] **Latest completed phase**: `P202G_TRACK_A_PR24_MERGE_COMPLETE`.
+- [Confirmed] **Current HEAD**: `b32dd47fe325c8dc9de64201b24d5602b53e9ebf` = `origin/main`. Open PR count: 0.
+- [Confirmed] Track A primary (score 4.00), Track B deferred / parallel human-legal action (score 2.15), decision confidence MEDIUM, verified 2,430-game `mlb_2025_retrosheet` sample, and live transport HOLD all carried forward unchanged from `0E`.
+
+### Not Completed
+
+- [Confirmed] **P203-PRED-EVIDENCE implementation** — plan-only; requires a separate task-specific authorization round.
+- [Confirmed] **Calibration result** — not produced.
+- [Confirmed] **Feature-ablation result** — not produced.
+- [Confirmed] **Model/champion/registry promotion** — none.
+- [Confirmed] **Live MLB data acquisition** — none; live transport (P202G) remains HOLD.
+- [Confirmed] **Track B submission / written-permission request** — not drafted, not sent. Purpose-matched MLB licensing channel remains `NOT_ESTABLISHED`.
+
+### Risks
+
+- [Confirmed] Decision confidence is **MEDIUM**, not HIGH — must not be upgraded by future tasks without new evidence.
+- [Confirmed] The 2,430-row historical sample is an evaluation dataset, not proof of any prediction-quality improvement; PR #24 merge does not change this.
+- [Inferred] The strongest predictive features (game-specific, point-in-time pitcher/starter data) may remain blocked by the live-data HOLD regardless of P203's outcome; A1 operates on proxy features (rolling wOBA/FIP) whose transferability to a future game-specific feature model is limited.
+- [Inferred] A negative/falsifiable P203 result (no OOS Brier-skill improvement under any tested configuration) is itself valuable: it would document the current research model's ceiling under proxy features and reinforce that the live game-specific data axis is the binding constraint on prediction accuracy — this is an acceptable and complete outcome, not a failure of the task.
+- [Confirmed] Live transport (P202G) remains HOLD; this merge does not change that status.
+
+---
+
+> **Historical (superseded by `0F`, 2026-06-14).** The section below (`0E`) reflects the state before PR #24 merged. HEAD has since advanced from `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` to `b32dd47fe325c8dc9de64201b24d5602b53e9ebf`.
+
 ## 0E. Latest CTO Review — P202G-NEXT-DIRECTION Complete (Track A Selected), P203-PRED-EVIDENCE Next
 
 This section supersedes section `0D` (P202G-A packaging complete, PR #23 merged) for current execution priority. HEAD remains `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` (= `origin/main`); P202G-NEXT-DIRECTION was a read-only decision packet and did not change HEAD.
