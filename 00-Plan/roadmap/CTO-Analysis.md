@@ -2,9 +2,84 @@
 
 ## 1. CTO Review Date
 
-2026-06-13 Asia/Taipei
+2026-06-14 Asia/Taipei
+
+## 0E. Latest CTO Review — P202G-NEXT-DIRECTION Complete (Track A Selected), P203-PRED-EVIDENCE Next
+
+This section supersedes section `0D` (P202G-A packaging complete, PR #23 merged) for current execution priority. HEAD remains `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` (= `origin/main`); P202G-NEXT-DIRECTION was a read-only decision packet and did not change HEAD.
+
+### Completed
+
+- [Confirmed] P202G-NEXT-DIRECTION read-only decision packet (`report/p202g_next_direction_decision_packet_20260614.md`, untracked) produced. Final classification `P202G_NEXT_DIRECTION_TRACK_A_SELECTED`.
+- [Confirmed] Technical capability mapping covering: recommendation path (P200 argmax side-selection; prediction source still `neutral_fixed_prior`), learning-eligibility gating (P201), fixture-only P202D/E/G-B skeletons (unwired, no real data), and offline evaluation capability (walk-forward backtest, calibration, paper evaluator).
+- [Confirmed] Track A vs Track B weighted decision matrix produced (7 criteria, 0-5 scale, weights summing to 100%). Track A (best candidate A1) = 4.00 / 5. Track B (deferred written-permission draft) = 2.15 / 5.
+- [Confirmed] Track A selected as primary; Track B classified as deferred / parallel human-legal action (not rejected).
+- [Confirmed] Best Track A candidate A1 — offline leakage-safe calibration + feature-ablation walk-forward study on the real 2025 historical dataset — selected from 5 candidates (A2/A3 retained as non-predictive runner-ups; A4/A5 rejected as unwired skeleton / data-blocked).
+- [Confirmed] This round independently re-verified `data/mlb_data_loader.py::load_mlb_records()` returns 2,430 records with `data_source="mlb_2025_retrosheet"`.
+- [Confirmed] This round reran `tests/test_mlb_pitcher_game_events.py` + `tests/test_mlb_probable_starter_collector.py` + `tests/test_mlb_probable_starter_snapshot_intake.py` = 257 passed, and `tests/test_run_mlb_tsl_paper_recommendation_simulation_gate.py` + `tests/test_mlb_paper_evaluator.py` + `tests/test_p180_strategy_leaderboard.py` = 90 passed.
+- [Confirmed] Governance alignment for this decision: exactly four governance files updated (`roadmap.md`, `CTO-Analysis.md`, `active_task.md`, `agent_bootstrap/CURRENT_STATE.md`); `active_task.md` replaced with sole task `P203-PRED-EVIDENCE` (plan-only).
+
+### Not Completed
+
+- [Confirmed] **P203-PRED-EVIDENCE implementation** — plan-only; requires a separate task-specific authorization round.
+- [Confirmed] **Calibration result** — not produced.
+- [Confirmed] **Feature-ablation result** — not produced.
+- [Confirmed] **Model/champion/registry promotion** — none.
+- [Confirmed] **Live MLB data acquisition** — none; live transport (P202G) remains HOLD.
+- [Confirmed] **Track B submission / written-permission request** — not drafted, not sent. Purpose-matched MLB licensing channel remains `NOT_ESTABLISHED`.
+
+### Risks
+
+- [Confirmed] Decision confidence is **MEDIUM**, not HIGH — must not be upgraded by future tasks without new evidence.
+- [Inferred] The strongest predictive features (game-specific, point-in-time pitcher/starter data) may remain blocked by the live-data HOLD regardless of P203's outcome; A1 operates on proxy features (rolling wOBA/FIP) whose transferability to a future game-specific feature model is limited.
+- [Inferred] A negative/falsifiable P203 result (no OOS Brier-skill improvement under any tested configuration) is itself valuable: it would document the current research model's ceiling under proxy features and reinforce that the live game-specific data axis is the binding constraint on prediction accuracy — this is an acceptable and complete outcome, not a failure of the task.
+
+---
+
+## 0D. Latest CTO Review — P202G-A Packaging Complete (PR #23 Merged), Direction Gate Next
+
+> **Historical (superseded by `0E`, 2026-06-14).** P202G-NEXT-DIRECTION completed; Track A selected (`P202G_NEXT_DIRECTION_TRACK_A_SELECTED`). Next task is P203-PRED-EVIDENCE (plan-only). See section `0E` for current execution priority.
+
+This section supersedes section `0C` (P202G-A evidence/governance alignment, 2026-06-13) for current execution priority. HEAD has advanced from `cac2a748dff5077dd3b947fbacdc01dbdeec5607` to `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` via PR #23 standard merge commit.
+
+### Completed (verified)
+
+- [Confirmed] **P202G-A evidence packet complete** (`report/p202g_a_source_policy_clarification_evidence_packet_20260614.md`): official MLB.com Terms of Use (2025-03-11) contains explicit automated-scripts prohibition. Final classification: `P202G_A_EXPLICIT_AUTOMATED_ACCESS_RESTRICTION_FOUND`. 0 MLB data endpoint calls; 0 non-official evidence sources.
+- [Confirmed] **Independent adversarial review complete** (`report/p202g_a_source_policy_clarification_independent_review_20260614.md`): historical classification `P202G_A_POLICY_REREVIEW_NEEDS_REPORT_FIX`. Identified two report-level precision defects; all decisions verified correct and conservative. Preserved as historical evidence.
+- [Confirmed] **Evidence-packet narrow fix complete** (`P202G_A_EVIDENCE_PACKET_NARROW_FIX_COMPLETE`): applicability corrected to `STRONGLY_SUPPORTED_INFERENCE`; `legaldepartment@mlb.com` reclassified as DMCA/fallback (Terms §2 "Copyright Agent"). No decisions changed.
+- [Confirmed] **Governance alignment complete** (2026-06-13): exactly four governance files updated.
+- [Confirmed] **PR #23 packaging complete**: exactly 6 files (4 governance + 2 reports) committed and merged via standard merge commit. Merge commit `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e`, head `840b0301c101dc6b9ffb5f49e254b96f96007e1a`, mergedAt `2026-06-13T15:52:48Z`. CI `replay-default-validation` = COMPLETED / SUCCESS. P202F excluded. No source/test/config.
+- [Confirmed] **Post-merge product validation**: 257 passed. Governance tests: NOT RUN (no applicable direct tests). Workflow tests: NOT RUN. Full repository regression: NOT RUN.
+- [Confirmed] **Latest completed phase**: `P202G_A_PR23_MERGE_COMPLETE`.
+- [Confirmed] **Current HEAD**: `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` = `origin/main`.
+
+### Not Completed (must not be claimed as done)
+
+- [Confirmed] **Written permission from MLB** — not obtained; no licensing agreement established.
+- [Confirmed] **Purpose-matched authorization path** — `NOT_ESTABLISHED`; `legaldepartment@mlb.com` = DMCA/fallback only (Terms §2 "Copyright Agent"), not a licensing office; `registrationsupport@mlb.com` = technical registration support only; StatsAPI self-registration = account entry, not usage license.
+- [Confirmed] **StatsAPI automated-use authorization** — NOT AUTHORIZED; Terms does not directly name `statsapi.mlb.com` (direct hostname naming = `NOT_ESTABLISHED`); applicability is `STRONGLY_SUPPORTED_INFERENCE` — sufficient to maintain HOLD, not a direct contractual citation.
+- [Confirmed] **Live one-shot dry run** — NOT AUTHORIZED.
+- [Confirmed] **Recurring collector** — NOT AUTHORIZED.
+- [Confirmed] **Real historical backfill** — NOT AUTHORIZED.
+- [Confirmed] **Live provider unlock** — NOT AUTHORIZED.
+- [Confirmed] **Model/feature integration based on live MLB data** — not unlocked; `diagnostic_only=true`, `production_ready=false` maintained.
+
+### Live-Transport Blocker Status
+
+- [Confirmed] Single remaining blocker for live-transport axis = **official written authorization from a purpose-matched MLB data/API licensing channel** (none identified as of this evidence round). Live transport (P202G) remains **HOLD**.
+- [Confirmed] Minimum allowed technical boundary is **fixture-only** (consistent with P202D/P202E/P202G-B).
+- [Confirmed] Public/no-auth/robots-404 facts and rate-limit information are **not** permission. Must never be read as automated-use authorization.
+
+### Next Recommended Direction
+
+1. **P202G-NEXT-DIRECTION**: Read-only decision memo selecting next project direction — Track A (continue fixture-only/paper prediction work without live transport) or Track B (prepare draft written-permission request without sending). Requires a separate explicit task prompt. P202G remains HOLD.
+2. The prediction-provenance-axis P0 (game-specific prediction inputs / selected-side hardening) remains open and is a separate axis from the legal/live-transport axis.
+
+---
 
 ## 0C. Latest CTO Review — P202G-A Evidence Policy Complete, Governance Alignment, Packaging Next
+
+> **Historical (superseded by `0D`, 2026-06-14).** PR #23 packaging was completed (merge commit `96c67c1`, merged 2026-06-13T15:52:48Z). HEAD has advanced to `96c67c1`. See section `0D` for current execution priority.
 
 This section supersedes section `0B` (P202G-B merge closeout + P202G-A-next, 2026-06-13) for current execution priority. HEAD remains `cac2a748dff5077dd3b947fbacdc01dbdeec5607`; this round is policy/report/governance only — no source, test, or runtime changes.
 
