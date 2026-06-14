@@ -11,7 +11,7 @@ Authorization Decision Gate" (`PLAN_ONLY_REQUIRES_TASK_SPECIFIC_AUTHORIZATION`).
 was fully completed:
 
 - Read-only decision packet `report/p202g_next_direction_decision_packet_20260614.md`
-  produced (untracked).
+  produced.
 - Final classification: `P202G_NEXT_DIRECTION_TRACK_A_SELECTED`.
 - Primary track = `TRACK_A_PRIMARY` (weighted score 4.00/5); Track B (draft
   written-permission request) = deferred / parallel human-legal action (weighted score
@@ -19,10 +19,21 @@ was fully completed:
 - Decision confidence = MEDIUM.
 - Best Track A candidate = A1 (offline leakage-safe calibration + feature-ablation
   walk-forward study on the real 2025 historical dataset).
-- HEAD unchanged at `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` (= `origin/main`).
 - Latest completed phase: `P202G_NEXT_DIRECTION_TRACK_A_SELECTED`.
 
-P202G-NEXT-DIRECTION is fully closed. This is the sole next active task.
+**Since then, the Track-A decision/governance package (5 files, including the above decision
+packet) was committed, pushed, and merged via PR #24** — standard merge commit
+`b32dd47fe325c8dc9de64201b24d5602b53e9ebf` (head commit
+`203562c6601db26e0013e63db47dc8e706e97f16`, mergedAt `2026-06-14T04:16:06Z`). HEAD /
+`origin/main` advanced from `96c67c1bd3a2f4afe96c52a28109c38fabf1b05e` to
+`b32dd47fe325c8dc9de64201b24d5602b53e9ebf`. Post-merge re-validation: 257 + 90 = 347 tests
+passed. Release branch `release/p202g-track-a-decision-governance` retained locally and
+remotely (SHA `203562c`). Latest completed phase: `P202G_TRACK_A_PR24_MERGE_COMPLETE`.
+
+P202G-NEXT-DIRECTION and the Track-A governance package (PR #24) are both fully closed. This
+is the sole next active task. The prior packaging blocker is closed; P203 still requires its
+own separate task-specific authorization before any implementation, training, calibration,
+or ablation run.
 
 ## Background
 
@@ -34,7 +45,7 @@ feature-ablation on the existing real 2025 historical dataset.
 
 - Verified historical artifact: `data/mlb_data_loader.py::load_mlb_records()` returns
   **2,430** records, `data_source="mlb_2025_retrosheet"` (independently re-verified during
-  governance alignment, 2026-06-14).
+  governance alignment, 2026-06-14, and unchanged by the PR #24 merge).
 - Existing offline evaluation infrastructure: `wbc_backend/evaluation/full_backtest.py`,
   `wbc_backend/evaluation/institutional_backtest.py` (walk-forward, isolation boundary,
   `assert_no_synthetic`), `wbc_backend/calibration/probability_calibrator.py`
@@ -107,8 +118,9 @@ data, via chronological walk-forward calibration and feature-group ablation.
 
 | Field | Value |
 |---|---|
-| Decision packet | `report/p202g_next_direction_decision_packet_20260614.md` (untracked) |
-| Final classification | `P202G_NEXT_DIRECTION_TRACK_A_SELECTED` |
+| Decision packet | `report/p202g_next_direction_decision_packet_20260614.md` (tracked, merged via PR #24) |
+| PR #24 merge | merge commit `b32dd47fe325c8dc9de64201b24d5602b53e9ebf`, head `203562c6601db26e0013e63db47dc8e706e97f16`, mergedAt `2026-06-14T04:16:06Z`, 5 files, post-merge 347 tests passed |
+| Final classification | `P202G_NEXT_DIRECTION_TRACK_A_SELECTED` (governance package closed: `P202G_TRACK_A_PR24_MERGE_COMPLETE`) |
 | Primary track | `TRACK_A_PRIMARY` (weighted score 4.00/5) |
 | Deferred track | Track B = deferred / parallel human-legal action (weighted score 2.15/5), not sent |
 | Decision confidence | MEDIUM |
