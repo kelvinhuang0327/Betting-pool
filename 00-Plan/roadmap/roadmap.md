@@ -4,8 +4,53 @@
 **Canonical repo:** `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`
 **Observed branch:** `main`
 **Mode:** `paper_only=true`, `production_ready=false`, `NO_REAL_BET=true`
-**Roadmap status:** canonical roadmap maintained in-place; latest section `0S` supersedes `0R` for current execution priority.
-**Active marker:** `CTO_CANONICAL_ROADMAP_POST_P203_STRATEGIC_DIRECTION_PROVENANCE_LEAD_P0_20260614`
+**Roadmap status:** canonical roadmap maintained in-place; latest section `0T` supersedes `0S` for current execution priority.
+**Active marker:** `CTO_CANONICAL_ROADMAP_P203_MERGED_P204_PROVENANCE_HARDENING_PLANNED_20260614`
+
+---
+
+## 0T. P203 Merge Closeout — PR #26 Merged, Next: Prediction Provenance Hardening (Plan-Only)
+
+This section supersedes section `0S` for current execution priority. PR #26
+(`release/p203-prediction-evidence-study` → `main`, 2 commits, 8 files) is **MERGED**
+at merge commit `e7ac8f7d0672a9501aefca1dd73ad623a2941e38` (mergedAt
+`2026-06-14T13:45:24Z`); CI `replay-default-validation` = SUCCESS. `origin/main` now
+includes this commit. The 8 files (4 P203 evidence artifacts + 4 governance files from
+the prior round) are present on `origin/main`; source branch
+`release/p203-prediction-evidence-study` retained.
+
+P203 final classification remains `P203_PRED_EVIDENCE_INCONCLUSIVE`:
+`calibrated_baseline` (frozen Elo + Platt) Brier 0.248346 is the best point estimate but
+its CI vs frozen includes zero; `candidate_full` (Brier 0.252568) is **NOT promoted**.
+Live transport (P202G) remains HOLD; Track B unsent.
+
+This round is governance closeout only — no model/source/test/data/runtime/registry/
+production mutation. The next direction, **Prediction Provenance Hardening**, is now
+recorded as the active task (`P204-PREDICTION-PROVENANCE-HARDENING`,
+`agent_bootstrap/active_task.md`) but is **plan-only / not started**: it requires a
+read-only inventory of the daily prediction/recommendation pipeline (producer,
+scheduler/runner, recommendation builder, `source_trace`, `learning_eligible`, fixed
+priors / neutral features / hard-coded-side fallback) before any implementation, under a
+separate task-specific authorization.
+
+### 0T.1 Today Focus
+
+1. P203 fully closed: PR #26 merged, evidence + governance on `origin/main`, source
+   branch retained, candidate_full not promoted, live transport HOLD unchanged.
+2. Next active task is plan-only: `P204-PREDICTION-PROVENANCE-HARDENING` — read-only
+   inventory of the prediction → recommendation pipeline's provenance, fixed-prior /
+   neutral-feature / hard-coded-side-fallback usage. No implementation this round.
+3. Live transport remains HOLD; Track B unsent; no endpoint/collector/backfill/
+   provider-unlock.
+
+---
+
+> **Historical (superseded by `0T`, 2026-06-14).** Section `0S` was the post-P203
+> strategic-direction review (proxy ceiling confirmed, Prediction Provenance Truth
+> elevated to lead P0) while PR #26 was still open. Section `0T` records PR #26 merge
+> closeout and formalizes the plan-only next task. HEAD is now
+> `e7ac8f7d0672a9501aefca1dd73ad623a2941e38`. See section `0T` for current execution
+> priority.
 
 ---
 

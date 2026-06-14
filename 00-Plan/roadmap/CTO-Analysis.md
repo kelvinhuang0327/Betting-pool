@@ -4,6 +4,105 @@
 
 2026-06-14 Asia/Taipei
 
+## 0I. P203 Merge Closeout — PR #26 Merged, Next: Prediction Provenance Hardening (Plan-Only)
+
+This section supersedes section `0H` for current execution priority. This round is
+**governance closeout only**, confirming PR #26 merged and recording the plan-only next
+task. No model, source, test, data, runtime, registry, or production mutation was
+performed.
+
+### PR #26 Merge Status (verified this round)
+
+- PR #26 (`release/p203-prediction-evidence-study` → `main`): state = **MERGED**.
+- Merge commit: `e7ac8f7d0672a9501aefca1dd73ad623a2941e38`; mergedAt
+  `2026-06-14T13:45:24Z`.
+- 2 commits, 8 files: 4 P203 evidence artifacts (`scripts/p203_prediction_evidence_study.py`,
+  `tests/test_p203_prediction_evidence_study.py`,
+  `report/p203_prediction_evidence_study_20260614.json`,
+  `report/p203_prediction_evidence_study_20260614.md`) + 4 governance files (`roadmap.md`,
+  `CTO-Analysis.md`, `active_task.md`, `agent_bootstrap/CURRENT_STATE.md`).
+- CI `replay-default-validation` = SUCCESS.
+- `origin/main` fetched and confirmed to contain the merge commit; the 8-file diff range
+  is exactly as expected; P203 evidence files match `origin/main` byte-for-byte (no
+  working-tree drift).
+- Source branch `release/p203-prediction-evidence-study` retained (local + remote).
+- `tests/test_p203_prediction_evidence_study.py`: **34 passed** (prior-round result;
+  not re-run this round). Regression / workflow / full-repository regression: NOT RUN.
+
+### P203 Final State (unchanged, carried forward)
+
+- Final classification: `P203_PRED_EVIDENCE_INCONCLUSIVE`.
+- `calibrated_baseline` (frozen Elo + Platt) Brier 0.248346 is the best point estimate;
+  CI vs frozen includes zero (not statistically significant).
+- `candidate_full` Brier 0.252568, improved 2/5 folds, **NOT promoted**.
+- Live transport (P202G) remains HOLD; Track B unsent; purpose-matched MLB licensing
+  channel = `NOT_ESTABLISHED`.
+- P203 cannot, on its own, separate model limitation from data limitation; the PIT
+  (point-in-time, game-specific pitcher/lineup) data-availability limitation remains
+  `[Inferred]`.
+
+### Next Direction: Prediction Provenance Hardening (Plan-Only)
+
+- Recorded as the sole active task `P204-PREDICTION-PROVENANCE-HARDENING` in
+  `active_task.md`. **Plan-only — not started this round.**
+- Goal of the *next* round: read-only inventory of the daily prediction/recommendation
+  pipeline — prediction producer, scheduler/runner, recommendation builder,
+  `source_trace`, `learning_eligible`, and any fixed-prior / neutral-feature /
+  hard-coded-side fallback — to establish whether each recommendation row carries
+  verifiable game-specific provenance, or must fail closed / be marked
+  learning-ineligible.
+- No code changes for provenance hardening have been made or designed this round.
+
+### Roadmap Changes Applied (this round)
+
+- [Confirmed] Added `roadmap.md` §0T (P203 merge closeout): records PR #26 merged at
+  `e7ac8f7d0672a9501aefca1dd73ad623a2941e38`, 8-file scope, CI SUCCESS, and the plan-only
+  `P204-PREDICTION-PROVENANCE-HARDENING` next task. §0S marked historical.
+- [Confirmed] Added this `CTO-Analysis.md` §0I. §0H marked historical.
+- [Confirmed] `active_task.md` replaced with sole task `P204-PREDICTION-PROVENANCE-HARDENING`
+  (plan-only, read-only-inventory scope).
+- [Confirmed] `agent_bootstrap/CURRENT_STATE.md` updated: HEAD/`origin/main` =
+  `e7ac8f7d0672a9501aefca1dd73ad623a2941e38`; PR #26 = MERGED; open PR count = 0; next
+  active task = `P204-PREDICTION-PROVENANCE-HARDENING` (plan-only).
+
+### Final Classification
+
+`P203_MERGE_CLOSEOUT_PR_OPENED`
+
+### 5-Line CTO Summary
+
+1. PR #26 confirmed MERGED at `e7ac8f7d`, 2 commits / 8 files, CI SUCCESS, `origin/main`
+   verified to contain it; source branch retained.
+2. P203 final classification unchanged: `P203_PRED_EVIDENCE_INCONCLUSIVE`;
+   `candidate_full` NOT promoted; live transport HOLD; Track B unsent.
+3. This round = governance closeout only; exactly 4 governance files changed, no
+   model/source/test/data/runtime/registry/production mutation.
+4. Next active task = `P204-PREDICTION-PROVENANCE-HARDENING`, plan-only read-only
+   inventory of the prediction/recommendation pipeline's provenance.
+5. Regression / workflow / full-repository regression remain NOT RUN; 34 P203 tests
+   passed in the prior round.
+
+### 5-Line CEO Summary
+
+1. P203 (offline prediction-quality study) is fully merged into `main` — inconclusive
+   result, nothing promoted, no risk introduced.
+2. Live odds/data transport remains on hold pending a legal licensing path; unchanged.
+3. The next planned step is a *read-only review* of how today's predictions are
+   sourced — no behavior changes yet.
+4. No betting, database, or production systems were touched this round.
+5. Implementation of the provenance review requires a separate authorization round.
+
+---
+
+> **Historical (superseded by `0I`, 2026-06-14).** Section `0H` was the post-P203
+> strategic-direction review (proxy ceiling confirmed, Prediction Provenance Truth
+> elevated to lead P0) while PR #26 was still open. Section `0I` records PR #26 merge
+> closeout and formalizes the plan-only `P204-PREDICTION-PROVENANCE-HARDENING` next task.
+> HEAD is now `e7ac8f7d0672a9501aefca1dd73ad623a2941e38`. See section `0I` for current
+> execution priority.
+
+---
+
 ## 0H. Latest CTO Review — Post-P203 Strategic Direction (Proxy-Feature Ceiling Confirmed; Close the Offline Loop)
 
 This section supersedes section `0G` (P203-PRED-EVIDENCE INCONCLUSIVE, P203-PACKAGE Next) for current execution priority. Section `0G` completed the P203 governance alignment; this round is a **strategic-direction review** layered on top of it, answering "given P203 is INCONCLUSIVE, what is the highest-value next direction?". HEAD remains `122ba7895958157fc650b7d108676c13324fa91d`; no commit, branch, stage, source, data, or runtime mutation was performed this round.
