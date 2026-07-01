@@ -1,0 +1,66 @@
+{
+  "decisions": [
+    {
+      "duplicate_key": "game=824441|side=home|market=moneyline|strategy=model_ensemble_version=v1-mlb-moneyline-trained|source_trace.model_version=v1-mlb-moneyline-trained",
+      "game_identity": "824441",
+      "group_key": "game=824441|side=home|market=moneyline",
+      "keep_reason": "keep_first_in_duplicate_set",
+      "learning_guard_status": "legacy_contract",
+      "market": "moneyline",
+      "provenance_contract_version": "",
+      "row_index": 0,
+      "selected_side": "home",
+      "status": "kept",
+      "strategy_attribution": "model_ensemble_version=v1-mlb-moneyline-trained|source_trace.model_version=v1-mlb-moneyline-trained",
+      "suppress_reason": "",
+      "ungroupable_reason": ""
+    },
+    {
+      "duplicate_key": "game=824441|side=home|market=moneyline|strategy=model_ensemble_version=v1-mlb-moneyline-trained|source_trace.model_version=v1-mlb-moneyline-trained",
+      "game_identity": "824441",
+      "group_key": "game=824441|side=home|market=moneyline",
+      "keep_reason": "",
+      "learning_guard_status": "legacy_contract",
+      "market": "moneyline",
+      "provenance_contract_version": "",
+      "row_index": 1,
+      "selected_side": "home",
+      "status": "suppressed",
+      "strategy_attribution": "model_ensemble_version=v1-mlb-moneyline-trained|source_trace.model_version=v1-mlb-moneyline-trained",
+      "suppress_reason": "suppress_exact_duplicate_same_identity_side_market_strategy",
+      "ungroupable_reason": ""
+    }
+  ],
+  "group_details": [
+    {
+      "group_key": "game=824441|side=home|market=moneyline",
+      "row_count": 2,
+      "strategy_attribution_count": 1,
+      "suppressed_rows": 1
+    }
+  ],
+  "input_sources": [
+    "outputs/recommendations/PAPER/2026-05-11/2026-05-11-AWY-HOM-824441.jsonl",
+    "outputs/recommendations/PAPER/2026-05-11/2026-05-11-LAA-CLE-824441.jsonl"
+  ],
+  "kept_rows": 1,
+  "non_claims": {
+    "activation_or_live_market": false,
+    "betting_recommendation": false,
+    "ev_roi_payout_kelly": false,
+    "future_prediction": false,
+    "future_ticket_mutation": false,
+    "production_or_db_mutation": false
+  },
+  "policy_scope": "local_historical_replay_only",
+  "policy_version": "p206a.duplicate_ticket_policy.v1",
+  "suppressed_rows": 1,
+  "suppression_rate": 0.5,
+  "total_groups": 1,
+  "total_input_rows": 2,
+  "ungroupable_counts": {
+    "ungroupable_missing_identity": 0,
+    "ungroupable_missing_market": 0,
+    "ungroupable_missing_selected_side": 0
+  }
+}

@@ -1,0 +1,3 @@
+row_index,group_key,status,keep_reason,suppress_reason,ungroupable_reason,game_identity,selected_side,market,strategy_attribution,provenance_contract_version,learning_guard_status
+0,game=824441|side=home|market=moneyline,kept,keep_first_in_duplicate_set,,,824441,home,moneyline,model_ensemble_version=v1-mlb-moneyline-trained|source_trace.model_version=v1-mlb-moneyline-trained,,legacy_contract
+1,game=824441|side=home|market=moneyline,suppressed,,suppress_exact_duplicate_same_identity_side_market_strategy,,824441,home,moneyline,model_ensemble_version=v1-mlb-moneyline-trained|source_trace.model_version=v1-mlb-moneyline-trained,,legacy_contract
