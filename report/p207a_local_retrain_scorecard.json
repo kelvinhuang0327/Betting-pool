@@ -1,0 +1,143 @@
+{
+  "best_by_brier": "calibrated_elo_recent_form",
+  "best_confidence_band_breakdown": {
+    "HIGH": {
+      "correct": 23,
+      "n": 32
+    },
+    "LOW": {
+      "correct": 221,
+      "n": 442
+    },
+    "MEDIUM": {
+      "correct": 285,
+      "n": 498
+    }
+  },
+  "best_selected_side_distribution": {
+    "AWAY": 205,
+    "HOME": 767
+  },
+  "data_inventory": [
+    {
+      "file": "mlb_odds_2025_real.csv",
+      "notes": "tracked; Final games; 0 ties",
+      "outcome_labeled_rows": 2430,
+      "role": "evaluation universe (walk-forward train+test); outcome derived from scores",
+      "rows": 2430,
+      "usable": "YES"
+    },
+    {
+      "file": "mlb-2024-asplayed.csv",
+      "notes": "tracked; prior-season state seeding",
+      "outcome_labeled_rows": 2429,
+      "role": "Elo / rolling warm-up only (not scored)",
+      "rows": 2429,
+      "usable": "YES"
+    },
+    {
+      "file": "mlb_odds_2025_real.csv [Home ML/Away ML]",
+      "notes": "is_verified_real=False; post-game snapshot; NOT a valid pregame predictor",
+      "outcome_labeled_rows": 0,
+      "role": "descriptive market reference (de-vig implied prob)",
+      "rows": 2428,
+      "usable": "REFERENCE_ONLY"
+    }
+  ],
+  "disclaimers": [
+    "LOCAL HISTORICAL / REPLAY BACKTEST ONLY",
+    "descriptive backtest only; NO future prediction / hit-rate claim",
+    "NO betting recommendation; NO EV/ROI/payout/Kelly/CLV claim",
+    "NO live-market claim",
+    "NO production / DB / registry mutation; NO real publication",
+    "NO future-ticket mutation; NO strategy activation; NO leaderboard/evaluator change",
+    "odds fields are post-game unverified snapshot (is_verified_real=False) — reference only"
+  ],
+  "eval_rows": 2430,
+  "market_reference": {
+    "accuracy": 0.5473251028806584,
+    "brier_score": 0.24550290043433953,
+    "calibration_error": 0.031828783262138484,
+    "coverage": 1.0,
+    "log_loss": 0.6838976990981968,
+    "model_name": "market_implied_devig(REFERENCE_UNVERIFIED)",
+    "n": 972,
+    "notes": "post-game unverified snapshot; look-ahead; NOT a valid predictor",
+    "test_rows": 972,
+    "train_rows": 0
+  },
+  "model_comparison": [
+    {
+      "accuracy": 0.5329218106995884,
+      "brier_score": 0.24918711578519534,
+      "calibration_error": 0.016460905349794275,
+      "coverage": 1.0,
+      "log_loss": 0.6915240864642584,
+      "model_name": "baseline_fixed_prior",
+      "n": 972,
+      "notes": "constant = train home-win rate; no discrimination",
+      "test_rows": 972,
+      "train_rows": 1458
+    },
+    {
+      "accuracy": 0.5483539094650206,
+      "brier_score": 0.24857738899391407,
+      "calibration_error": 0.04876857972256982,
+      "coverage": 1.0,
+      "log_loss": 0.6903908145967792,
+      "model_name": "elo_like_rating",
+      "n": 972,
+      "notes": "rolling Elo K=20 + HFA; pregame only",
+      "test_rows": 972,
+      "train_rows": 1458
+    },
+    {
+      "accuracy": 0.5637860082304527,
+      "brier_score": 0.2460629220150913,
+      "calibration_error": 0.024793403851496067,
+      "coverage": 1.0,
+      "log_loss": 0.6852486969950828,
+      "model_name": "retrained_team_history_smooth",
+      "n": 972,
+      "notes": "log5 of smoothed team win-rates + home logit bump; pregame only",
+      "test_rows": 972,
+      "train_rows": 1458
+    },
+    {
+      "accuracy": 0.5442386831275721,
+      "brier_score": 0.24603268444293613,
+      "calibration_error": 0.02023047586153575,
+      "coverage": 1.0,
+      "log_loss": 0.6850800625230818,
+      "model_name": "calibrated_elo_recent_form",
+      "n": 972,
+      "notes": "Elo logit Platt-calibrated on train fold only",
+      "test_rows": 972,
+      "train_rows": 1458
+    }
+  ],
+  "odds_metrics_status": "PRESENT_BUT_TIMING_UNVERIFIED",
+  "outcome_metrics_status": "AVAILABLE",
+  "platt": {
+    "A": 0.5203478355187772,
+    "B": 0.12655715274240825
+  },
+  "provenance_contract_version_ref": "p205a.v1",
+  "scope": "LOCAL_HISTORICAL_REPLAY_ONLY",
+  "split": {
+    "test_period": [
+      "2025-07-18",
+      "2025-09-28"
+    ],
+    "test_rows": 972,
+    "train_frac": 0.6,
+    "train_period": [
+      "2025-03-18",
+      "2025-07-18"
+    ],
+    "train_rows": 1458
+  },
+  "task": "P207-A local MLB retrain + prediction scorecard",
+  "train_home_win_prior": 0.5493827160493827,
+  "warmup_rows": 2429
+}

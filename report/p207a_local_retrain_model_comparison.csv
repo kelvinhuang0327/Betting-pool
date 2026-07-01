@@ -1,0 +1,6 @@
+model_name,train_rows,test_rows,accuracy,log_loss,brier_score,calibration_error,coverage,notes
+baseline_fixed_prior,1458,972,0.5329218106995884,0.6915240864642584,0.24918711578519534,0.016460905349794275,1.0,constant = train home-win rate; no discrimination
+elo_like_rating,1458,972,0.5483539094650206,0.6903908145967792,0.24857738899391407,0.04876857972256982,1.0,rolling Elo K=20 + HFA; pregame only
+retrained_team_history_smooth,1458,972,0.5637860082304527,0.6852486969950828,0.2460629220150913,0.024793403851496067,1.0,log5 of smoothed team win-rates + home logit bump; pregame only
+calibrated_elo_recent_form,1458,972,0.5442386831275721,0.6850800625230818,0.24603268444293613,0.02023047586153575,1.0,Elo logit Platt-calibrated on train fold only
+market_implied_devig(REFERENCE_UNVERIFIED),0,972,0.5473251028806584,0.6838976990981968,0.24550290043433953,0.031828783262138484,1.0,post-game unverified snapshot; look-ahead; NOT a valid predictor

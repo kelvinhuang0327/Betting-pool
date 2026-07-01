@@ -1,0 +1,4 @@
+file,usable,rows,outcome_labeled_rows,role,notes
+mlb_odds_2025_real.csv,YES,2430,2430,evaluation universe (walk-forward train+test); outcome derived from scores,tracked; Final games; 0 ties
+mlb-2024-asplayed.csv,YES,2429,2429,Elo / rolling warm-up only (not scored),tracked; prior-season state seeding
+mlb_odds_2025_real.csv [Home ML/Away ML],REFERENCE_ONLY,2428,0,descriptive market reference (de-vig implied prob),is_verified_real=False; post-game snapshot; NOT a valid pregame predictor
