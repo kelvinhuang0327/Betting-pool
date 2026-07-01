@@ -1,0 +1,129 @@
+{
+  "data_terms_risks": [
+    {
+      "candidate": "pybaseball",
+      "risk": "Medium: it wraps multiple public baseball data sites/APIs. Consumers must respect each upstream source's terms, rate limits, attribution, and cache expectations before production activation."
+    },
+    {
+      "candidate": "MLB-StatsAPI",
+      "risk": "Medium: delegates to MLB Stats API/public MLB endpoints. MLB copyright and acceptable-use language must be reviewed before production use."
+    },
+    {
+      "candidate": "python-mlb-statsapi",
+      "risk": "Medium: also relies on MLB Stats API/public MLB endpoints, so MLB terms, copyright, rate limits, and caching boundaries apply."
+    },
+    {
+      "candidate": "baseballr",
+      "risk": "Medium: wraps public baseball data sources with the same upstream terms and rate-limit concerns."
+    }
+  ],
+  "decision_status": "PASS_NEEDS_SEPARATE_OWNER_AUTHORIZATION",
+  "dependency_files_detected": [
+    "requirements.txt"
+  ],
+  "disclaimer": "Open-source MLB dependency decision gate only. Not live predictions, not betting advice.",
+  "guardrails": [
+    "Open-source MLB dependency decision gate only. Not live predictions, not betting advice.",
+    "Dependency addition requires separate Owner authorization.",
+    "This decision gate is not formal dependency adoption.",
+    "This decision gate does not add, import, or install any candidate MLB package."
+  ],
+  "license_risks": [
+    {
+      "candidate": "pybaseball",
+      "risk": "MIT license appears compatible for initial authorization review, subject to Owner approval."
+    },
+    {
+      "candidate": "MLB-StatsAPI",
+      "risk": "GPL-3.0 license requires explicit Owner/license authorization before any dependency add."
+    },
+    {
+      "candidate": "baseballr",
+      "risk": "MIT license is not sufficient to offset the out-of-scope R runtime dependency."
+    }
+  ],
+  "prohibited_claims": [
+    "future prediction",
+    "betting advice",
+    "production readiness",
+    "edge",
+    "ROI",
+    "EV",
+    "Kelly",
+    "CLV"
+  ],
+  "proposed_next_authorization": {
+    "action": "Request separate Owner authorization to add pybaseball as a pinned optional Python dependency for read-only historical/statcast MLB data work.",
+    "not_authorized_by_this_gate": [
+      "No dependency addition.",
+      "No dependency file mutation.",
+      "No live or paid provider connection.",
+      "No DB write.",
+      "No production activation.",
+      "No model logic change."
+    ],
+    "owner_authorizations_required": [
+      "Owner approval to modify dependency files in a separate task.",
+      "Owner/legal acceptance of upstream public baseball data terms, rate limits, attribution, caching, and MLB notice boundaries before production use.",
+      "CTO review before any production activation, DB write path, live provider call, or model integration."
+    ],
+    "required_notice": "Dependency addition requires separate Owner authorization."
+  },
+  "rejected_candidates": [
+    {
+      "data_terms_mlb_notice_risk": "Medium: delegates to MLB Stats API/public MLB endpoints. MLB copyright and acceptable-use language must be reviewed before production use.",
+      "dependency_risk": "GPL-3.0 license creates a higher authorization burden for this repo.",
+      "license": "GPL-3.0 license.",
+      "maintenance_release_signal": "PyPI shows version 1.9.0 released on 2025-04-04; GitHub repository is public and remains a recognized wrapper for statsapi-style team/schedule/player access as of 2026-07-01.",
+      "name": "MLB-StatsAPI",
+      "p211_adoption_decision": "CANDIDATE_REQUIRES_LICENSE_REVIEW_BEFORE_AUTHORIZATION",
+      "python_runtime_compatibility": "PyPI supports Python 3 and typical modern CPython usage; not currently installed in this repo's system python or .venv.",
+      "recommendation_status": "REJECTED_FOR_INITIAL_DEPENDENCY_GATE_GPL_LICENSE_REVIEW_REQUIRED",
+      "source_package_reference": "https://pypi.org/project/MLB-StatsAPI/, https://github.com/toddrob99/MLB-StatsAPI, https://gdx.mlb.com/components/copyright.txt"
+    },
+    {
+      "data_terms_mlb_notice_risk": "Medium: also relies on MLB Stats API/public MLB endpoints, so MLB terms, copyright, rate limits, and caching boundaries apply.",
+      "dependency_risk": "Python >=3.10 is compatible, but it is a secondary metadata client for this gate.",
+      "license": "MIT license.",
+      "maintenance_release_signal": "PyPI shows version 0.7.2 uploaded on 2026-02-05; GitHub repository is public and should still be reviewed before any dependency add.",
+      "name": "python-mlb-statsapi",
+      "p211_adoption_decision": "SECONDARY_CANDIDATE_NOT_ADOPTED_IN_SPIKE",
+      "python_runtime_compatibility": "PyPI requires Python >=3.10 and classifiers list Python 3.10 through 3.14; not currently installed in this repo's system python or .venv.",
+      "recommendation_status": "REJECTED_FOR_INITIAL_DEPENDENCY_GATE_SECONDARY_METADATA_CLIENT",
+      "source_package_reference": "https://pypi.org/project/python-mlb-statsapi/, https://github.com/zero-sum-seattle/python-mlb-statsapi, https://gdx.mlb.com/components/copyright.txt"
+    },
+    {
+      "data_terms_mlb_notice_risk": "Medium: wraps public baseball data sources with the same upstream terms and rate-limit concerns.",
+      "dependency_risk": "Requires an R runtime dependency that is outside this Python repo gate.",
+      "license": "MIT license.",
+      "maintenance_release_signal": "CRAN/GitHub package is public and known in the baseball analytics ecosystem, but it introduces an R runtime dependency.",
+      "name": "baseballr",
+      "p211_adoption_decision": "NOT_ADOPTED_R_RUNTIME_REQUIRES_SEPARATE_AUTHORIZATION",
+      "python_runtime_compatibility": "Not a Python library. Introducing R runtime is outside this task unless separately authorized by CTO/Owner.",
+      "recommendation_status": "REJECTED_FOR_INITIAL_DEPENDENCY_GATE_R_RUNTIME_OUT_OF_SCOPE",
+      "source_package_reference": "https://github.com/BillPetti/baseballr, https://cran.r-project.org/package=baseballr"
+    }
+  ],
+  "scope": "OPEN_SOURCE_MLB_DEPENDENCY_DECISION_GATE_ONLY",
+  "selected_candidate": {
+    "data_terms_mlb_notice_risk": "Medium: it wraps multiple public baseball data sites/APIs. Consumers must respect each upstream source's terms, rate limits, attribution, and cache expectations before production activation.",
+    "dependency_risk": "Requires a new Python dependency pin and transitive dependency review; no dependency file is changed by this gate.",
+    "license": "MIT license.",
+    "maintenance_release_signal": "PyPI shows pybaseball 2.2.7 uploaded on 2023-09-08; the GitHub repository is public with issue/PR history visible as of 2026-07-01.",
+    "name": "pybaseball",
+    "p211_adoption_decision": "RECOMMENDED_FOR_READ_ONLY_SPIKE_WITH_OPTIONAL_IMPORT",
+    "python_runtime_compatibility": "PyPI classifiers list Python 3.8, 3.9, 3.10, and 3.11. Local .venv import smoke found pybaseball 2.2.7 available on Python 3.13, but this task does not add or pin the dependency.",
+    "recommendation_status": "SELECTED_FOR_SEPARATE_OWNER_AUTHORIZATION",
+    "source_package_reference": "https://pypi.org/project/pybaseball/, https://github.com/jldbc/pybaseball"
+  },
+  "source_evidence": {
+    "p211_json": "report/p211a_open_source_mlb_data_adoption.json",
+    "p211_md": "report/p211a_open_source_mlb_data_adoption.md",
+    "p211_recommended_minimum_path": "Use pybaseball as the first optional read-only adapter for historical/statcast samples; consider MLB-StatsAPI later for team/schedule/player metadata after dependency and MLB terms authorization.",
+    "p211_report_hashes": {
+      "report/p211a_open_source_mlb_data_adoption.json": "ee4bbd8c579efabe6c74f85f76c30d9d26b80bf02bb83443b7220182b79eba09",
+      "report/p211a_open_source_mlb_data_adoption.md": "2f933ded3482ee632a5f64ee494044e3f165d0cbe7ca4abe230c0723c61dfd85"
+    }
+  },
+  "task": "P212-A Open-Source MLB Dependency Decision Gate"
+}
