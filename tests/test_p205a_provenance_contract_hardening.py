@@ -87,6 +87,7 @@ def _outcome(game_pk: str, winner: str = "home") -> dict:
         "game_id": f"mlb_2026_{game_pk}",
         "outcome_available": True,
         "actual_winner": winner,
+        "result_timestamp_utc": "2026-05-12T04:00:00+00:00",
     }
 
 
@@ -136,6 +137,14 @@ class TestP205AContractValidation:
         for odds_source in ("estimated", "historical_no_vig"):
             with pytest.raises(ProvenanceContractError, match="cannot set"):
                 _valid_contract(odds_source=odds_source, edge_is_real_evidence=True)
+
+    def test_learning_true_requires_observed_market_real_edge_evidence(self):
+        with pytest.raises(ProvenanceContractError, match="odds_is_market_observed"):
+            _valid_contract(odds_is_market_observed=False)
+        with pytest.raises(ProvenanceContractError, match="edge_is_real_evidence"):
+            _valid_contract(edge_is_real_evidence=False)
+        with pytest.raises(ProvenanceContractError, match="learning_eligible=True"):
+            _valid_contract(odds_source="estimated")
 
     def test_missing_or_legacy_contract_never_becomes_eligible(self):
         assert legacy_or_missing_contract_is_learning_eligible({}) is False

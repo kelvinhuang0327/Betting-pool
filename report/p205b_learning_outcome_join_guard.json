@@ -1,0 +1,89 @@
+{
+  "task": "P205B-A",
+  "worktree": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p205b",
+  "branch": "task/p205b-learning-outcome-join-guard",
+  "base_origin_main": "2e5f22ac905c663f6b855ebd92a6d649db2dbf34",
+  "scope": "local/replay-only learning outcome join and freshness guard",
+  "guard_module": "wbc_backend.recommendation.learning_outcome_join",
+  "block_reasons": [
+    "missing_contract",
+    "legacy_contract",
+    "malformed_contract",
+    "not_learning_eligible",
+    "missing_game_id",
+    "outcome_not_found",
+    "ambiguous_outcome_join",
+    "missing_prediction_as_of_utc",
+    "stale_or_invalid_as_of",
+    "result_timestamp_missing"
+  ],
+  "provenance_contract_required": "p205a.v1",
+  "provenance_contract_fields": [
+    "provenance_contract_version",
+    "prediction_input_mode",
+    "prediction_source",
+    "prediction_source_id",
+    "model_version",
+    "feature_fingerprint",
+    "prediction_as_of_utc",
+    "game_specific",
+    "selected_side_method",
+    "odds_source",
+    "odds_is_market_observed",
+    "edge_is_real_evidence",
+    "learning_eligible",
+    "learning_block_reason"
+  ],
+  "outcome_join": {
+    "stable_identity_only": true,
+    "fuzzy_team_date_name_match": false,
+    "missing_outcome_fails_closed": true,
+    "ambiguous_outcome_fails_closed": true
+  },
+  "freshness_as_of": {
+    "prediction_as_of_required": true,
+    "result_timestamp_required": true,
+    "prediction_as_of_must_be_before_result_timestamp": true
+  },
+  "evaluator": {
+    "uses_guard_for_learning_acceptance": true,
+    "scoring_changed": false,
+    "leaderboard_ranking_changed": false
+  },
+  "tests": [
+    {
+      "command": "pytest -q tests/test_p205b_learning_outcome_join_guard.py",
+      "status": "PASS",
+      "summary": "13 passed"
+    },
+    {
+      "command": "pytest -q tests/test_p205a_provenance_contract_hardening.py",
+      "status": "PASS",
+      "summary": "15 passed"
+    },
+    {
+      "command": "pytest -q tests/test_mlb_paper_evaluator.py",
+      "status": "PASS",
+      "summary": "17 passed"
+    }
+  ],
+  "full_regression": "NOT_RUN",
+  "non_claims": {
+    "prediction_accuracy_claim": false,
+    "ev_roi_payout_claim": false,
+    "activation_live_market_claim": false,
+    "production_behavior_change": false
+  },
+  "external_effects": {
+    "db_write": false,
+    "registry_mutation": false,
+    "live_odds": false,
+    "production_write": false,
+    "publication": false,
+    "future_ticket_mutation": false
+  },
+  "deferred": {
+    "duplicate_policy": true,
+    "strategy_optimization": true
+  }
+}
