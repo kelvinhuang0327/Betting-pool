@@ -1,0 +1,69 @@
+{
+  "audit_status": "PASS",
+  "checks": [
+    {
+      "detail": "P212-A selected pybaseball and required separate Owner authorization.",
+      "name": "p212a_selected_pybaseball",
+      "status": "PASS"
+    },
+    {
+      "detail": "requirements.txt contains exactly one pybaseball pin and no other MLB package declarations.",
+      "name": "requirements_exact_pin",
+      "status": "PASS"
+    },
+    {
+      "detail": "Import smoke is read-only, does not call remote endpoints, and does not run pybaseball data functions.",
+      "name": "import_smoke_read_only",
+      "status": "PASS"
+    }
+  ],
+  "data_terms_reminder": "pybaseball wraps public baseball data sources. Respect each upstream source's terms, rate limits, attribution, caching expectations, and MLB notice boundaries before production use.",
+  "disclaimer": "pybaseball dependency gate only. Not live predictions, not betting advice.",
+  "guardrails": [
+    "pybaseball dependency gate only. Not live predictions, not betting advice.",
+    "P212-A required separate Owner authorization before dependency mutation. That authorization was provided in the current task thread before this gate ran.",
+    "No live or remote data calls were made by this audit. Import smoke runs with a network guard and does not call pybaseball data functions.",
+    "No production activation, DB write, model integration, or live data pipeline work was performed.",
+    "No other MLB package was added.",
+    "No dependency installation was performed by this audit."
+  ],
+  "import_smoke": {
+    "attempted": false,
+    "importable": false,
+    "installed_version": null,
+    "network_guard": "PASS",
+    "reason": "pybaseball is not installed in the current python3 environment. This dependency gate does not install packages.",
+    "status": "SKIPPED_NOT_INSTALLED_IN_CURRENT_PYTHON"
+  },
+  "license_reminder": "pybaseball is distributed under the MIT license; review broader dependency and redistribution obligations before wider adoption.",
+  "no_live_calls_reminder": "No live or remote data calls were made by this audit. Import smoke runs with a network guard and does not call pybaseball data functions.",
+  "no_production_reminder": "No production activation, DB write, model integration, or live data pipeline work was performed.",
+  "owner_authorization_reminder": "P212-A required separate Owner authorization before dependency mutation. That authorization was provided in the current task thread before this gate ran.",
+  "p212a_reference": {
+    "authorization_status_for_p213a": "EXPLICIT_OWNER_AUTHORIZATION_RECEIVED_IN_CURRENT_THREAD",
+    "decision_status": "PASS_NEEDS_SEPARATE_OWNER_AUTHORIZATION",
+    "required_notice": "Dependency addition requires separate Owner authorization.",
+    "selected_candidate": "pybaseball"
+  },
+  "requirements_audit": {
+    "exact_pin_present": true,
+    "exact_pin_required": "pybaseball==2.2.7",
+    "forbidden_packages_present": [],
+    "mlb_related_lines": [
+      "pybaseball==2.2.7"
+    ],
+    "path": "requirements.txt",
+    "pybaseball_line_count": 1,
+    "pybaseball_lines": [
+      "pybaseball==2.2.7"
+    ],
+    "status": "PASS"
+  },
+  "scope": "PYBASEBALL_DEPENDENCY_GATE_ONLY",
+  "selected_dependency": {
+    "justification": "P212-A selected pybaseball as the only authorized next-step candidate, and repo evidence already references version 2.2.7 as the concrete minimum pin for this gate.",
+    "package": "pybaseball",
+    "pin": "pybaseball==2.2.7"
+  },
+  "task": "P213-A pybaseball Dependency Gate"
+}
