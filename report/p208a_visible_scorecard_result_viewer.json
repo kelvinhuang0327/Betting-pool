@@ -1,0 +1,328 @@
+{
+  "best_accuracy_model": {
+    "accuracy": 0.563786,
+    "brier_score": 0.246063,
+    "calibration_error": 0.024793,
+    "coverage": 1.0,
+    "log_loss": 0.685249,
+    "model_name": "retrained_team_history_smooth",
+    "notes": "log5 of smoothed team win-rates + home logit bump; pregame only",
+    "reference_only": false,
+    "test_rows": 972,
+    "train_rows": 1458
+  },
+  "best_brier_model": {
+    "accuracy": 0.544239,
+    "brier_score": 0.246033,
+    "calibration_error": 0.02023,
+    "coverage": 1.0,
+    "log_loss": 0.68508,
+    "model_name": "calibrated_elo_recent_form",
+    "notes": "Elo logit Platt-calibrated on train fold only",
+    "reference_only": false,
+    "test_rows": 972,
+    "train_rows": 1458
+  },
+  "claim_status": {
+    "db_written": false,
+    "historical_only": true,
+    "production_enabled": false,
+    "provider_called": false,
+    "ticket_mutated": false
+  },
+  "confidence_band_summary": {
+    "HIGH": {
+      "correct": 23,
+      "n": 32
+    },
+    "LOW": {
+      "correct": 221,
+      "n": 442
+    },
+    "MEDIUM": {
+      "correct": 285,
+      "n": 498
+    }
+  },
+  "disclaimer": "Historical replay/backtest only; not for live use and not a future betting claim.",
+  "leaderboard": [
+    {
+      "accuracy": 0.532922,
+      "brier_score": 0.249187,
+      "calibration_error": 0.016461,
+      "coverage": 1.0,
+      "log_loss": 0.691524,
+      "model_name": "baseline_fixed_prior",
+      "notes": "constant = train home-win rate; no discrimination",
+      "reference_only": false,
+      "test_rows": 972,
+      "train_rows": 1458
+    },
+    {
+      "accuracy": 0.548354,
+      "brier_score": 0.248577,
+      "calibration_error": 0.048769,
+      "coverage": 1.0,
+      "log_loss": 0.690391,
+      "model_name": "elo_like_rating",
+      "notes": "rolling Elo K=20 + HFA; pregame only",
+      "reference_only": false,
+      "test_rows": 972,
+      "train_rows": 1458
+    },
+    {
+      "accuracy": 0.563786,
+      "brier_score": 0.246063,
+      "calibration_error": 0.024793,
+      "coverage": 1.0,
+      "log_loss": 0.685249,
+      "model_name": "retrained_team_history_smooth",
+      "notes": "log5 of smoothed team win-rates + home logit bump; pregame only",
+      "reference_only": false,
+      "test_rows": 972,
+      "train_rows": 1458
+    },
+    {
+      "accuracy": 0.544239,
+      "brier_score": 0.246033,
+      "calibration_error": 0.02023,
+      "coverage": 1.0,
+      "log_loss": 0.68508,
+      "model_name": "calibrated_elo_recent_form",
+      "notes": "Elo logit Platt-calibrated on train fold only",
+      "reference_only": false,
+      "test_rows": 972,
+      "train_rows": 1458
+    },
+    {
+      "accuracy": 0.547325,
+      "brier_score": 0.245503,
+      "calibration_error": 0.031829,
+      "coverage": 1.0,
+      "log_loss": 0.683898,
+      "model_name": "market_implied_devig(REFERENCE_UNVERIFIED)",
+      "notes": "post-game unverified snapshot; look-ahead; NOT a valid predictor",
+      "reference_only": true,
+      "test_rows": 972,
+      "train_rows": 0
+    }
+  ],
+  "sample_predictions": [
+    {
+      "actual_home_win": 1,
+      "away_team": "Colorado Rockies",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-09-25",
+      "game_id": "2025-09-25_Colorado Rockies@Seattle Mariners",
+      "home_team": "Seattle Mariners",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.725648,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.725648
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "Colorado Rockies",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-09-24",
+      "game_id": "2025-09-24_Colorado Rockies@Seattle Mariners",
+      "home_team": "Seattle Mariners",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.721579,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.721579
+    },
+    {
+      "actual_home_win": 0,
+      "away_team": "San Francisco Giants",
+      "confidence_band": "HIGH",
+      "correct": 0,
+      "game_date": "2025-08-23",
+      "game_id": "2025-08-23_San Francisco Giants@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.717429,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.717429
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "Colorado Rockies",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-09-23",
+      "game_id": "2025-09-23_Colorado Rockies@Seattle Mariners",
+      "home_team": "Seattle Mariners",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.717333,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.717333
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "San Francisco Giants",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-08-22",
+      "game_id": "2025-08-22_San Francisco Giants@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.712997,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.712997
+    },
+    {
+      "actual_home_win": 0,
+      "away_team": "San Francisco Giants",
+      "confidence_band": "HIGH",
+      "correct": 0,
+      "game_date": "2025-08-24",
+      "game_id": "2025-08-24_San Francisco Giants@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.696978,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.696978
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "Pittsburgh Pirates",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-08-13",
+      "game_id": "2025-08-13_Pittsburgh Pirates@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.694787,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.694787
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "Pittsburgh Pirates",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-08-12",
+      "game_id": "2025-08-12_Pittsburgh Pirates@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.689266,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.689266
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "Pittsburgh Pirates",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-08-11",
+      "game_id": "2025-08-11_Pittsburgh Pirates@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.683459,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.683459
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "New York Mets",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-08-10",
+      "game_id": "2025-08-10_New York Mets@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.683136,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.683136
+    },
+    {
+      "actual_home_win": 0,
+      "away_team": "Minnesota Twins",
+      "confidence_band": "HIGH",
+      "correct": 0,
+      "game_date": "2025-09-27",
+      "game_id": "2025-09-27_Minnesota Twins@Philadelphia Phillies",
+      "home_team": "Philadelphia Phillies",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.679682,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.679682
+    },
+    {
+      "actual_home_win": 1,
+      "away_team": "New York Mets",
+      "confidence_band": "HIGH",
+      "correct": 1,
+      "game_date": "2025-08-09",
+      "game_id": "2025-08-09_New York Mets@Milwaukee Brewers",
+      "home_team": "Milwaukee Brewers",
+      "label": "historical replay / backtest only",
+      "learning_guard_status": "LOCAL_HISTORICAL_BACKTEST_ONLY",
+      "model_name": "calibrated_elo_recent_form",
+      "predicted_home_win_probability": 0.677004,
+      "provenance_contract_version": "p205a.v1",
+      "selected_side": "HOME",
+      "selected_side_probability": 0.677004
+    }
+  ],
+  "scope": "LOCAL_HISTORICAL_REPLAY_ONLY",
+  "selected_side_distribution": {
+    "AWAY": 205,
+    "HOME": 767
+  },
+  "source_artifacts": [
+    "p207a_local_retrain_scorecard.json",
+    "p207a_local_retrain_model_comparison.csv",
+    "p207a_local_retrain_predictions.csv"
+  ],
+  "split": {
+    "test_period": [
+      "2025-07-18",
+      "2025-09-28"
+    ],
+    "test_rows": 972,
+    "train_frac": 0.6,
+    "train_period": [
+      "2025-03-18",
+      "2025-07-18"
+    ],
+    "train_rows": 1458
+  },
+  "task": "P208-A visible scorecard result viewer"
+}
