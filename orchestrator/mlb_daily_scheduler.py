@@ -419,6 +419,9 @@ def run_paper_recommendation_job(
         from wbc_backend.simulation.simulation_result_loader import (
             load_latest_simulation_result,
         )
+        from wbc_backend.recommendation.provenance_contract import (
+            resolve_explicit_strategy_id,
+        )
 
         root = Path(output_base_dir) if output_base_dir else script.ROOT
         sim_dir = root / "outputs" / "simulation" / "PAPER"
@@ -478,6 +481,7 @@ def run_paper_recommendation_job(
             tsl_live=tsl_live,
             tsl_note=tsl_note,
             simulation_gate=simulation_gate,
+            strategy_id=resolve_explicit_strategy_id(simulation),
         )
 
         # Write row (honour output_base_dir override)

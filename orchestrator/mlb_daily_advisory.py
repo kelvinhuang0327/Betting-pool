@@ -35,6 +35,7 @@ from orchestrator.metrics_ssot import (
     NO_PROFIT_CLAIM as _SSOT_NO_PROFIT_CLAIM,
     PRODUCTION_MODIFIED as _SSOT_PROD_MODIFIED,
 )
+from wbc_backend.recommendation.provenance_contract import build_provenance_contract
 
 # ─── Safety constants ─────────────────────────────────────────────────────────
 
@@ -367,6 +368,28 @@ def build_advisory(
 
     advisory_id = _make_advisory_id(game_date, game_id)
     coverage_matrix = build_market_coverage_matrix(row)
+    source_trace = build_provenance_contract(
+        prediction_input_mode="historical_replay",
+        prediction_source="historical_prediction_jsonl",
+        prediction_source_id=str(row.get("prediction_id") or game_id),
+        model_version=str(row.get("model_version") or MODULE_VERSION),
+        feature_fingerprint=str(
+            row.get("feature_fingerprint")
+            or row.get("feature_set_version")
+            or "historical_replay_prediction_jsonl"
+        ),
+        prediction_as_of_utc=row.get("prediction_as_of_utc") or row.get("created_at_utc") or "",
+        game_specific=True,
+        selected_side_method="model_market_gap_threshold",
+        odds_source="historical_no_vig",
+        odds_is_market_observed=False,
+        edge_is_real_evidence=False,
+        learning_eligible=False,
+        learning_block_reason=(
+            "historical_replay_or_proxy_advisory_not_learning_eligible; "
+            "not routed to evaluator or leaderboard"
+        ),
+    )
 
     # Model prediction availability (set by current/fixture source adapter)
     model_prediction_available: bool = row.get("_model_prediction_available", True)
@@ -404,6 +427,7 @@ def build_advisory(
         "risk_flags": risk_flags,
         "unavailable_fields": unavailable_fields,
         "market_coverage_matrix": coverage_matrix,
+        "source_trace": source_trace,
         "model_prediction_available": model_prediction_available,
         "paper_only": True,
         "no_real_bet": True,
@@ -533,6 +557,7 @@ def build_ledger_entry(
         "paper_profit_note": "1_unit_notation_paper_only_no_real_money",
         "clv": None,
         "review_status": review_status,
+        "source_trace": advisory.get("source_trace"),
         "created_at": created_at,
         "paper_only": True,
         "no_real_bet": True,
@@ -1121,6 +1146,7 @@ def run_mlb_daily_advisory(
         "fixture_source_used": fixture_source_used,
         "current_source_reachable": current_source_reachable,
         "model_prediction_available": model_prediction_available,
+        "evaluator_routing": "not_routed_to_paper_evaluator_or_strategy_leaderboard",
         "gate": gate,
         "gate_rationale": gate_rationale,
         "completion_marker": COMPLETION_MARKER,

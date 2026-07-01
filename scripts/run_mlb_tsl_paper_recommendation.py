@@ -43,6 +43,10 @@ from wbc_backend.recommendation.recommendation_row import (
     MlbTslRecommendationRow,
     VALID_GATE_STATUSES,
 )
+from wbc_backend.recommendation.provenance_contract import (
+    build_provenance_contract,
+    resolve_explicit_strategy_id,
+)
 from wbc_backend.recommendation.recommendation_gate_policy import (
     build_recommendation_gate_from_simulation,
 )
@@ -225,15 +229,19 @@ def classify_prediction_provenance(
         }
     if model_version == "v1-mlb-moneyline-trained":
         source = "neutral_feature_fallback"
+        feature_fingerprint = "neutral_features:v1:market=0.535,away=0.465,run_diff=0.07,ou=8.5,starters_known=1"
     elif model_version == "v1-home-prior-baseline":
         source = "fixed_prior_fallback"
+        feature_fingerprint = "fixed_prior:v1:home=0.535"
     else:
         source = "unknown"
+        feature_fingerprint = "unknown"
     return {
         "prediction_input_mode": "neutral_fixed_prior",
         "prediction_source": source,
         "prediction_source_id": prediction_source_id,
         "prediction_model_version": model_version,
+        "feature_fingerprint": feature_fingerprint,
         "learning_eligible": False,
         "learning_block_reason": (
             "prediction generated from neutral/fixed-prior features (not "
@@ -419,11 +427,17 @@ def build_recommendation(
     source_trace["learning_eligible"] = provenance["learning_eligible"]
     source_trace["learning_block_reason"] = provenance["learning_block_reason"]
 
+    odds_source = "estimated"
+    odds_is_market_observed = False
+    edge_is_real_evidence = False
+
     if tsl_live:
         # TSL has data — use the SELECTED side's model probability to estimate
         # edge vs TSL (still a proxy: no team-name join / observed odds yet).
         tsl_decimal_odds = _estimate_moneyline_odds(selected_prob)
-        gate_reasons.append("TSL live odds estimate used (no team-name join yet)")
+        gate_reasons.append(
+            "TSL source reachable but odds remain estimated (no team-name join yet)"
+        )
     else:
         # TSL is blocked — use estimated odds, mark as BLOCKED_TSL_SOURCE
         tsl_decimal_odds = _estimate_moneyline_odds(selected_prob)
@@ -450,6 +464,28 @@ def build_recommendation(
             "WARNING: simulation uses market-proxy probabilities; "
             "no real model edge proven"
         )
+
+    contract = build_provenance_contract(
+        prediction_input_mode=provenance["prediction_input_mode"],
+        prediction_source=provenance["prediction_source"],
+        prediction_source_id=provenance["prediction_source_id"],
+        model_version=model_version,
+        feature_fingerprint=provenance["feature_fingerprint"],
+        prediction_as_of_utc=None,
+        game_specific=False,
+        selected_side_method=selected_side_method,
+        odds_source=odds_source,
+        odds_is_market_observed=odds_is_market_observed,
+        edge_is_real_evidence=edge_is_real_evidence,
+        learning_eligible=False,
+        learning_block_reason=(
+            "paper_only_neutral_or_fixed_prior_prediction_and_estimated_odds; "
+            "not game-specific learning evidence"
+        ),
+    )
+    source_trace.update(contract)
+    source_trace["prediction_model_version"] = model_version
+    source_trace["odds_source_note"] = "estimated odds only; no observed market edge"
 
     # Simulation gate check: highest priority after MLB paper gate
     sim_blocks = (
@@ -493,6 +529,8 @@ def build_recommendation(
     else:
         gate_status = "BLOCKED_PAPER_ONLY"
         gate_reasons.insert(0, "BLOCKED_PAPER_ONLY: MLB P38 gate not cleared")
+        kelly = 0.0
+        stake_units = 0.0
 
     return MlbTslRecommendationRow(
         game_id=game_id,
@@ -669,7 +707,7 @@ def main() -> int:
     tsl_live, tsl_note = _probe_tsl()
 
     # ── Build recommendation row ──────────────────────────────────────────
-    strategy_id = simulation.strategy_name if simulation is not None else None
+    strategy_id = resolve_explicit_strategy_id(simulation)
     row = build_recommendation(
         game,
         date_str,
