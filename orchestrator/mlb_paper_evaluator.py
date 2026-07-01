@@ -21,6 +21,11 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
+from wbc_backend.recommendation.learning_outcome_join import (
+    RESULT_TIMESTAMP_FIELDS,
+    evaluate_learning_outcome_join,
+)
+
 
 # Minimum sample count for a strategy to be considered statistically meaningful.
 # Strategies with fewer samples are marked DATA_LIMITED in the leaderboard.
@@ -83,7 +88,20 @@ def calculate_binomial_p_value(hits: int, trials: int, p_null: float = 0.5) -> f
     return min(1.0, max(0.0, pval))
 
 
-def _row_learning_eligibility(rec: dict) -> tuple[bool, str | None]:
+def _p205b_guard_applies(rec: dict, outcome: dict | None) -> bool:
+    source_trace = rec.get("source_trace")
+    if isinstance(source_trace, dict) and "provenance_contract_version" in source_trace:
+        return True
+    if outcome and any(outcome.get(field) for field in RESULT_TIMESTAMP_FIELDS):
+        return True
+    return False
+
+
+def _row_learning_eligibility(
+    rec: dict,
+    outcome: dict | None = None,
+    outcomes: list[dict] | None = None,
+) -> tuple[bool, str | None]:
     """Read P200 learning-eligibility provenance from a recommendation row.
 
     Conservative P201 contract: a row is learning-eligible ONLY when its
@@ -98,6 +116,10 @@ def _row_learning_eligibility(rec: dict) -> tuple[bool, str | None]:
     Returns ``(is_eligible, block_reason)``.  ``block_reason`` is ``None`` only
     when the row is eligible.
     """
+    if outcome is not None and _p205b_guard_applies(rec, outcome):
+        decision = evaluate_learning_outcome_join(rec, outcomes or [outcome])
+        return decision.learning_eligible, decision.block_reason
+
     source_trace = rec.get("source_trace")
     if not isinstance(source_trace, dict):
         # Legacy / pre-P200 rows have no provenance — classify conservatively.
@@ -350,7 +372,11 @@ def evaluate_paper_recommendations(
         learn_bucket = strategy_learning.setdefault(
             sid_for_learning, {"eligible": 0, "ineligible": 0}
         )
-        is_learning_eligible, block_reason = _row_learning_eligibility(r)
+        is_learning_eligible, block_reason = _row_learning_eligibility(
+            r,
+            outcome=o,
+            outcomes=outcomes,
+        )
         if is_learning_eligible:
             learning_eligible_count += 1
             learn_bucket["eligible"] += 1

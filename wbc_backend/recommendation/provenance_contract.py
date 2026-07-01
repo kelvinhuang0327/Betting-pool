@@ -81,6 +81,14 @@ def validate_provenance_contract(source_trace: dict[str, Any]) -> None:
             raise ProvenanceContractError(
                 "learning_eligible=True requires prediction_as_of_utc"
             )
+        if source_trace["odds_is_market_observed"] is not True:
+            raise ProvenanceContractError(
+                "learning_eligible=True requires odds_is_market_observed=True"
+            )
+        if source_trace["edge_is_real_evidence"] is not True:
+            raise ProvenanceContractError(
+                "learning_eligible=True requires edge_is_real_evidence=True"
+            )
         if source_trace["learning_block_reason"] != "":
             raise ProvenanceContractError(
                 "learning_eligible=True requires empty learning_block_reason"
@@ -93,6 +101,13 @@ def validate_provenance_contract(source_trace: dict[str, Any]) -> None:
             )
 
     odds_source = source_trace["odds_source"]
+    if (
+        source_trace["learning_eligible"] is True
+        and odds_source in NON_REAL_EVIDENCE_ODDS_SOURCES
+    ):
+        raise ProvenanceContractError(
+            f"odds_source={odds_source!r} cannot set learning_eligible=True"
+        )
     if (
         odds_source in NON_REAL_EVIDENCE_ODDS_SOURCES
         and source_trace["edge_is_real_evidence"] is True
