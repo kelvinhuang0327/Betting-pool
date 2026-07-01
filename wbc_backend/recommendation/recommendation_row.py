@@ -34,6 +34,11 @@ from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
 from typing import Literal, Optional
 
+from wbc_backend.recommendation.provenance_contract import (
+    ProvenanceContractError,
+    validate_source_trace_fail_closed,
+)
+
 
 # Valid gate status values — extend only through governance review.
 VALID_GATE_STATUSES = frozenset(
@@ -132,6 +137,10 @@ class MlbTslRecommendationRow:
             raise ValueError(f"model_prob_home out of [0,1]: {self.model_prob_home}")
         if not 0.0 <= self.model_prob_away <= 1.0:
             raise ValueError(f"model_prob_away out of [0,1]: {self.model_prob_away}")
+        try:
+            validate_source_trace_fail_closed(self.source_trace)
+        except ProvenanceContractError as exc:
+            raise ValueError(f"invalid source_trace provenance: {exc}") from exc
 
     # ── Serialisation ─────────────────────────────────────────────────────────
 
