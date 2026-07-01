@@ -1,0 +1,321 @@
+{
+  "column_count": 15,
+  "columns": [
+    "game_date",
+    "game_pk",
+    "home_team",
+    "away_team",
+    "inning",
+    "inning_topbot",
+    "at_bat_number",
+    "pitch_number",
+    "batter",
+    "pitcher",
+    "pitch_type",
+    "events",
+    "description",
+    "release_speed",
+    "zone"
+  ],
+  "disclaimer": "Historical pybaseball sample quality dashboard only. Not live predictions, not betting advice.",
+  "distributions": {
+    "away_team": [
+      {
+        "count": 12,
+        "fraction": 1.0,
+        "value": "CLE"
+      }
+    ],
+    "description": [
+      {
+        "count": 4,
+        "fraction": 0.333333,
+        "value": "called_strike"
+      },
+      {
+        "count": 4,
+        "fraction": 0.333333,
+        "value": "hit_into_play"
+      },
+      {
+        "count": 2,
+        "fraction": 0.166667,
+        "value": "ball"
+      },
+      {
+        "count": 1,
+        "fraction": 0.083333,
+        "value": "foul"
+      },
+      {
+        "count": 1,
+        "fraction": 0.083333,
+        "value": "swinging_strike"
+      }
+    ],
+    "events": [
+      {
+        "count": 7,
+        "fraction": 0.583333,
+        "value": "(missing)"
+      },
+      {
+        "count": 4,
+        "fraction": 0.333333,
+        "value": "field_out"
+      },
+      {
+        "count": 1,
+        "fraction": 0.083333,
+        "value": "strikeout"
+      }
+    ],
+    "home_team": [
+      {
+        "count": 12,
+        "fraction": 1.0,
+        "value": "SEA"
+      }
+    ],
+    "inning_topbot": [
+      {
+        "count": 12,
+        "fraction": 1.0,
+        "value": "Top"
+      }
+    ],
+    "pitch_type": [
+      {
+        "count": 5,
+        "fraction": 0.416667,
+        "value": "CH"
+      },
+      {
+        "count": 4,
+        "fraction": 0.333333,
+        "value": "SI"
+      },
+      {
+        "count": 3,
+        "fraction": 0.25,
+        "value": "FF"
+      }
+    ]
+  },
+  "historical_only_disclaimer": "Historical pybaseball sample quality dashboard only. Not live predictions, not betting advice.",
+  "limitations": [
+    "Dashboard metrics are computed from the fixed P214-A CSV snapshot only, not from a refreshed upstream pull.",
+    "This dashboard reflects a small historical sample and should not be generalized beyond the bounded artifact.",
+    "CSV typing is preserved as artifact text for determinism, so numeric-looking fields are summarized as stored snapshot values.",
+    "One fixed historical date and one team filter only; this is a bounded smoke sample, not a season-wide study.",
+    "Output depends on the public historical pybaseball/statcast upstream response remaining available for the fixed request.",
+    "Snapshot records are normalized to a small deterministic subset for inspection and are not production-ready data contracts."
+  ],
+  "missingness": {
+    "at_bat_number": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "away_team": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "batter": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "description": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "events": {
+      "missing_count": 7,
+      "missing_fraction": 0.583333
+    },
+    "game_date": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "game_pk": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "home_team": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "inning": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "inning_topbot": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "pitch_number": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "pitch_type": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "pitcher": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "release_speed": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "zone": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    }
+  },
+  "prohibited_claims": [
+    "No live prediction claim.",
+    "No wagering recommendation claim.",
+    "No deployable-system claim.",
+    "No season-wide representativeness claim."
+  ],
+  "row_count": 12,
+  "sample_preview": [
+    {
+      "at_bat_number": "1",
+      "away_team": "CLE",
+      "batter": "680757",
+      "description": "called_strike",
+      "events": null,
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "1",
+      "pitch_type": "SI",
+      "pitcher": "676106",
+      "release_speed": "94.2",
+      "zone": "5"
+    },
+    {
+      "at_bat_number": "1",
+      "away_team": "CLE",
+      "batter": "680757",
+      "description": "called_strike",
+      "events": null,
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "2",
+      "pitch_type": "FF",
+      "pitcher": "676106",
+      "release_speed": "94.5",
+      "zone": "8"
+    },
+    {
+      "at_bat_number": "1",
+      "away_team": "CLE",
+      "batter": "680757",
+      "description": "swinging_strike",
+      "events": "strikeout",
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "3",
+      "pitch_type": "CH",
+      "pitcher": "676106",
+      "release_speed": "87.8",
+      "zone": "13"
+    },
+    {
+      "at_bat_number": "2",
+      "away_team": "CLE",
+      "batter": "665926",
+      "description": "called_strike",
+      "events": null,
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "1",
+      "pitch_type": "FF",
+      "pitcher": "676106",
+      "release_speed": "93.7",
+      "zone": "7"
+    },
+    {
+      "at_bat_number": "2",
+      "away_team": "CLE",
+      "batter": "665926",
+      "description": "hit_into_play",
+      "events": "field_out",
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "2",
+      "pitch_type": "FF",
+      "pitcher": "676106",
+      "release_speed": "94.6",
+      "zone": "1"
+    }
+  ],
+  "source_artifacts": [
+    "report/p214a_pybaseball_historical_sample_smoke.md",
+    "report/p214a_pybaseball_historical_sample_smoke.json",
+    "report/p214a_pybaseball_historical_sample_smoke.csv"
+  ],
+  "source_hashes": {
+    "report/p214a_pybaseball_historical_sample_smoke.csv": "0e00a449bb814866b678e8849763f032e522051f6d192b8c5fb5e5b57a623558",
+    "report/p214a_pybaseball_historical_sample_smoke.json": "007e245ca3784c5415aa344ee001a2bf4ebabb8716ef566671780214e1bb0563",
+    "report/p214a_pybaseball_historical_sample_smoke.md": "e91a9a2a8e57db938fa8c433e908aae90276aa4087ec992f19398602e8aa868e"
+  },
+  "source_summary": {
+    "p214_disclaimer": "Historical pybaseball read-only sample smoke only. Not live predictions, not betting advice.",
+    "p214_markdown_mentions_disclaimer": true,
+    "p214_request": {
+      "end_date": "2024-04-01",
+      "parallel": false,
+      "start_date": "2024-04-01",
+      "team": "SEA",
+      "verbose": false
+    },
+    "p214_result_summary": {
+      "fetched_column_count": 119,
+      "fetched_row_count": 121,
+      "observed_date_range": {
+        "end": "2024-04-01",
+        "start": "2024-04-01"
+      },
+      "snapshot_columns": [
+        "game_date",
+        "game_pk",
+        "home_team",
+        "away_team",
+        "inning",
+        "inning_topbot",
+        "at_bat_number",
+        "pitch_number",
+        "batter",
+        "pitcher",
+        "pitch_type",
+        "events",
+        "description",
+        "release_speed",
+        "zone"
+      ],
+      "snapshot_row_count": 12
+    },
+    "p214_status": "PASS_FIXED_HISTORICAL_READ_ONLY_SAMPLE",
+    "p214_task": "P214-A pybaseball Historical Sample Smoke"
+  },
+  "status": "PASS_P214A_ARTIFACT_ONLY_SAMPLE_QUALITY_DASHBOARD",
+  "task": "P215-A pybaseball Historical Sample Quality Dashboard"
+}
