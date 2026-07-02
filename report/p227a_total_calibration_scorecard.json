@@ -1,0 +1,167 @@
+{
+  "beats_coinflip_brier": false,
+  "beats_poisson_brier": true,
+  "best_by_brier": "baseline_coinflip_50pct",
+  "calibration_train_decided_n": 1402,
+  "calibration_train_n": 1458,
+  "disclaimers": [
+    "LOCAL HISTORICAL / REPLAY BACKTEST ONLY",
+    "descriptive backtest only; NO future prediction / hit-rate claim",
+    "NO betting recommendation; NO EV/Kelly claim; NOT a proven edge",
+    "NO live-market claim; NOT production; NOT real betting",
+    "phi_hat and Platt (a,b) are fit on the train fold ONLY; never fit on O/U line, odds, or market-implied probability",
+    "O/U line values are used ONLY as event threshold / settlement / evaluation; American odds prices are never read by this module",
+    "push rows are excluded from accuracy/Brier/ECE denominators and from the Platt fit; push_count/push_rate reported separately"
+  ],
+  "gate0_reproduction": {
+    "home_adv": 1.0115984108834084,
+    "market_comparison": {
+      "run_line": [
+        {
+          "accuracy": 0.4567901234567901,
+          "brier_score": 0.25,
+          "calibration_error": 0.0432098765432099,
+          "decided_count": 972,
+          "log_loss": 0.6931471805599453,
+          "market": "run_line",
+          "model_name": "baseline_coinflip_50pct",
+          "n": 972,
+          "notes": "constant p=0.5 on the primary side; transparent floor, no discrimination",
+          "paper_net_units": -63.612548,
+          "paper_roi": -0.065445,
+          "paper_units_staked": 972.0,
+          "push_count": 0,
+          "push_rate": 0.0,
+          "row_count": 972
+        },
+        {
+          "accuracy": 0.6008230452674898,
+          "brier_score": 0.2395331280899321,
+          "calibration_error": 0.04825990329218105,
+          "decided_count": 972,
+          "log_loss": 0.6730984105389934,
+          "market": "run_line",
+          "model_name": "poisson_team_rate_model",
+          "n": 972,
+          "notes": "rolling shrinkage-smoothed team runs-for/runs-against rate -> Poisson lambda; pregame only; home_adv ratio-calibrated on train fold only",
+          "paper_net_units": -9.817702,
+          "paper_roi": -0.010101,
+          "paper_units_staked": 972.0,
+          "push_count": 0,
+          "push_rate": 0.0,
+          "row_count": 972
+        }
+      ],
+      "total": [
+        {
+          "accuracy": 0.49564270152505446,
+          "brier_score": 0.25,
+          "calibration_error": 0.004357298474945537,
+          "decided_count": 918,
+          "log_loss": 0.6931471805599453,
+          "market": "total",
+          "model_name": "baseline_coinflip_50pct",
+          "n": 918,
+          "notes": "constant p=0.5 on the primary side; transparent floor, no discrimination",
+          "paper_net_units": -47.753868,
+          "paper_roi": -0.052019,
+          "paper_units_staked": 918.0,
+          "push_count": 54,
+          "push_rate": 0.05555555555555555,
+          "row_count": 972
+        },
+        {
+          "accuracy": 0.5021786492374728,
+          "brier_score": 0.2637121374640414,
+          "calibration_error": 0.09586421568627453,
+          "decided_count": 918,
+          "log_loss": 0.7230907216213618,
+          "market": "total",
+          "model_name": "poisson_team_rate_model",
+          "n": 918,
+          "notes": "rolling shrinkage-smoothed team runs-for/runs-against rate -> Poisson lambda; pregame only; home_adv ratio-calibrated on train fold only",
+          "paper_net_units": -35.59233,
+          "paper_roi": -0.038772,
+          "paper_units_staked": 918.0,
+          "push_count": 54,
+          "push_rate": 0.05555555555555555,
+          "row_count": 972
+        }
+      ]
+    },
+    "split": {
+      "test_period": [
+        "2025-07-18",
+        "2025-09-28"
+      ],
+      "test_rows": 972,
+      "train_frac": 0.6,
+      "train_period": [
+        "2025-03-18",
+        "2025-07-18"
+      ],
+      "train_rows": 1458
+    }
+  },
+  "model_comparison": [
+    {
+      "accuracy": 0.49564270152505446,
+      "brier_score": 0.25,
+      "calibration_error": 0.004357298474945537,
+      "decided_count": 918,
+      "log_loss": 0.6931471805599453,
+      "market": "total",
+      "model_name": "baseline_coinflip_50pct",
+      "notes": "reproduced from P226-A Gate 0 (unmodified upstream module)",
+      "push_count": 54,
+      "push_rate": 0.05555555555555555,
+      "row_count": 972
+    },
+    {
+      "accuracy": 0.5021786492374728,
+      "brier_score": 0.2637121374640414,
+      "calibration_error": 0.09586421568627453,
+      "decided_count": 918,
+      "log_loss": 0.7230907216213618,
+      "market": "total",
+      "model_name": "poisson_team_rate_model",
+      "notes": "reproduced from P226-A Gate 0 (unmodified upstream module)",
+      "push_count": 54,
+      "push_rate": 0.05555555555555555,
+      "row_count": 972
+    },
+    {
+      "accuracy": 0.4912854030501089,
+      "brier_score": 0.2561984153119716,
+      "calibration_error": 0.07522408267499073,
+      "decided_count": 918,
+      "log_loss": 0.7059897415936148,
+      "market": "total",
+      "model_name": "variance_inflation_normal",
+      "n": 918,
+      "notes": "P227-A train-fold-only calibration of P226-A raw Poisson total",
+      "push_count": 54,
+      "push_rate": 0.05555555555555555,
+      "row_count": 972
+    },
+    {
+      "accuracy": 0.5043572984749455,
+      "brier_score": 0.25275595005573326,
+      "calibration_error": 0.050951814305151444,
+      "decided_count": 918,
+      "log_loss": 0.6987399101839809,
+      "market": "total",
+      "model_name": "platt_logistic_calibration",
+      "n": 918,
+      "notes": "P227-A train-fold-only calibration of P226-A raw Poisson total",
+      "push_count": 54,
+      "push_rate": 0.05555555555555555,
+      "row_count": 972
+    }
+  ],
+  "phi_hat": 2.366514098786173,
+  "platt_a": -0.02277184906595629,
+  "platt_b": -0.10901377087510244,
+  "scope": "LOCAL_HISTORICAL_REPLAY_ONLY",
+  "task": "P227-A total over-dispersion calibration paper-only MVP"
+}
