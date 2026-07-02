@@ -1,0 +1,388 @@
+{
+  "column_count": 16,
+  "columns": [
+    "game_date",
+    "game_pk",
+    "home_team",
+    "away_team",
+    "inning",
+    "inning_topbot",
+    "at_bat_number",
+    "pitch_number",
+    "player_name",
+    "batter",
+    "pitcher",
+    "pitch_type",
+    "events",
+    "description",
+    "release_speed",
+    "zone"
+  ],
+  "disclaimer": "Historical pybaseball multi-date quality dashboard only. Not live predictions, not betting advice.",
+  "distributions": {
+    "away_team": [
+      {
+        "count": 24,
+        "fraction": 1.0,
+        "value": "CLE"
+      }
+    ],
+    "description": [
+      {
+        "count": 7,
+        "fraction": 0.291667,
+        "value": "called_strike"
+      },
+      {
+        "count": 7,
+        "fraction": 0.291667,
+        "value": "hit_into_play"
+      },
+      {
+        "count": 5,
+        "fraction": 0.208333,
+        "value": "ball"
+      },
+      {
+        "count": 2,
+        "fraction": 0.083333,
+        "value": "swinging_strike"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "blocked_ball"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "foul"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "hit_by_pitch"
+      }
+    ],
+    "events": [
+      {
+        "count": 15,
+        "fraction": 0.625,
+        "value": "(missing)"
+      },
+      {
+        "count": 4,
+        "fraction": 0.166667,
+        "value": "field_out"
+      },
+      {
+        "count": 2,
+        "fraction": 0.083333,
+        "value": "single"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "double"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "hit_by_pitch"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "strikeout"
+      }
+    ],
+    "game_date": [
+      {
+        "count": 8,
+        "fraction": 0.333333,
+        "value": "2024-04-01"
+      },
+      {
+        "count": 8,
+        "fraction": 0.333333,
+        "value": "2024-04-02"
+      },
+      {
+        "count": 8,
+        "fraction": 0.333333,
+        "value": "2024-04-03"
+      }
+    ],
+    "home_team": [
+      {
+        "count": 24,
+        "fraction": 1.0,
+        "value": "SEA"
+      }
+    ],
+    "pitch_type": [
+      {
+        "count": 11,
+        "fraction": 0.458333,
+        "value": "FF"
+      },
+      {
+        "count": 7,
+        "fraction": 0.291667,
+        "value": "SI"
+      },
+      {
+        "count": 3,
+        "fraction": 0.125,
+        "value": "CH"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "FS"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "KC"
+      },
+      {
+        "count": 1,
+        "fraction": 0.041667,
+        "value": "ST"
+      }
+    ],
+    "player_name": [
+      {
+        "count": 8,
+        "fraction": 0.333333,
+        "value": "Castillo, Luis"
+      },
+      {
+        "count": 8,
+        "fraction": 0.333333,
+        "value": "Hancock, Emerson"
+      },
+      {
+        "count": 8,
+        "fraction": 0.333333,
+        "value": "Kirby, George"
+      }
+    ]
+  },
+  "historical_only_disclaimer": "Historical pybaseball multi-date quality dashboard only. Not live predictions, not betting advice.",
+  "limitations": [
+    "Dashboard metrics are computed from the fixed P216-A CSV snapshot only, not from a refreshed upstream pull.",
+    "This dashboard reflects a small bounded multi-date historical sample and should not be generalized beyond the fixed date range and team filter.",
+    "CSV typing is preserved as artifact text for determinism, so numeric-looking fields are summarized as stored snapshot values.",
+    "One fixed three-day historical date range and one team filter only; this is a bounded sample pack, not a season-wide study.",
+    "Output depends on the public historical pybaseball/statcast upstream response remaining available and schema-compatible for the fixed request.",
+    "Sample rows are normalized into a deterministic, bounded CSV artifact for inspection only and are not production-ready data contracts."
+  ],
+  "missingness": {
+    "at_bat_number": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "away_team": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "batter": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "description": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "events": {
+      "missing_count": 15,
+      "missing_fraction": 0.625
+    },
+    "game_date": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "game_pk": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "home_team": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "inning": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "inning_topbot": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "pitch_number": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "pitch_type": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "pitcher": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "player_name": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "release_speed": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    },
+    "zone": {
+      "missing_count": 0,
+      "missing_fraction": 0.0
+    }
+  },
+  "per_date_row_counts": {
+    "2024-04-01": 8,
+    "2024-04-02": 8,
+    "2024-04-03": 8
+  },
+  "prohibited_claims": [
+    "No future prediction claim.",
+    "No betting advice claim.",
+    "No production readiness claim.",
+    "No ROI, EV, Kelly, CLV, or edge claim."
+  ],
+  "row_count": 24,
+  "sample_preview": [
+    {
+      "at_bat_number": "1",
+      "away_team": "CLE",
+      "batter": "680757",
+      "description": "called_strike",
+      "events": null,
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "1",
+      "pitch_type": "SI",
+      "pitcher": "676106",
+      "player_name": "Hancock, Emerson",
+      "release_speed": "94.2",
+      "zone": "5"
+    },
+    {
+      "at_bat_number": "1",
+      "away_team": "CLE",
+      "batter": "680757",
+      "description": "called_strike",
+      "events": null,
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "2",
+      "pitch_type": "FF",
+      "pitcher": "676106",
+      "player_name": "Hancock, Emerson",
+      "release_speed": "94.5",
+      "zone": "8"
+    },
+    {
+      "at_bat_number": "1",
+      "away_team": "CLE",
+      "batter": "680757",
+      "description": "swinging_strike",
+      "events": "strikeout",
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "3",
+      "pitch_type": "CH",
+      "pitcher": "676106",
+      "player_name": "Hancock, Emerson",
+      "release_speed": "87.8",
+      "zone": "13"
+    },
+    {
+      "at_bat_number": "2",
+      "away_team": "CLE",
+      "batter": "665926",
+      "description": "called_strike",
+      "events": null,
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "1",
+      "pitch_type": "FF",
+      "pitcher": "676106",
+      "player_name": "Hancock, Emerson",
+      "release_speed": "93.7",
+      "zone": "7"
+    },
+    {
+      "at_bat_number": "2",
+      "away_team": "CLE",
+      "batter": "665926",
+      "description": "hit_into_play",
+      "events": "field_out",
+      "game_date": "2024-04-01",
+      "game_pk": "745277",
+      "home_team": "SEA",
+      "inning": "1",
+      "inning_topbot": "Top",
+      "pitch_number": "2",
+      "pitch_type": "FF",
+      "pitcher": "676106",
+      "player_name": "Hancock, Emerson",
+      "release_speed": "94.6",
+      "zone": "1"
+    }
+  ],
+  "source_artifacts": [
+    "report/p216a_pybaseball_multidate_sample_pack.md",
+    "report/p216a_pybaseball_multidate_sample_pack.json",
+    "report/p216a_pybaseball_multidate_sample_pack.csv"
+  ],
+  "source_hashes": {
+    "report/p216a_pybaseball_multidate_sample_pack.csv": "e2d2eb233d4cb930ba7a886d7ca3350922aea671343ba23c6979f9dcedcac3c0",
+    "report/p216a_pybaseball_multidate_sample_pack.json": "c4f048a072097378978dbb71b1ba60749f0014157b91affd9a3438f6531e72c8",
+    "report/p216a_pybaseball_multidate_sample_pack.md": "f3ad49921b60df67449c6c846777318b5c4e81d79db393b47a14eac0c1e800b9"
+  },
+  "source_summary": {
+    "p216_disclaimer": "Historical pybaseball multi-date sample pack only. Not live predictions, not betting advice.",
+    "p216_markdown_mentions_disclaimer": true,
+    "p216_observed_dates": [
+      "2024-04-01",
+      "2024-04-02",
+      "2024-04-03"
+    ],
+    "p216_sample_size_limits": {
+      "per_date_row_limit": 8,
+      "preview_row_limit": 5,
+      "requested_date_count": 3,
+      "total_row_limit": 24
+    },
+    "p216_source_request": {
+      "end_date": "2024-04-03",
+      "parallel": false,
+      "start_date": "2024-04-01",
+      "team": "SEA",
+      "verbose": false
+    },
+    "p216_status": "PASS_FIXED_MULTIDATE_HISTORICAL_SAMPLE_PACK",
+    "p216_task": "P216-A pybaseball Multi-Date Historical Sample Pack"
+  },
+  "status": "PASS_P216A_ARTIFACT_ONLY_MULTIDATE_QUALITY_DASHBOARD",
+  "task": "P217-A pybaseball Multi-Date Sample Quality Dashboard"
+}
