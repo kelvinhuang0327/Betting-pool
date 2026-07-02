@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import csv
+import difflib
+import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +19,34 @@ def _load_script_module():
     assert spec.loader is not None
     spec.loader.exec_module(module)
     return module
+
+
+def _capture_markdown_drift(first: str, second: str) -> Path:
+    artifact_root = Path(
+        os.environ.get(
+            "P219C_MARKDOWN_DETERMINISM_FAILURE_DIR",
+            "/tmp/p219c_markdown_determinism_failure_artifacts",
+        )
+    )
+    artifact_dir = artifact_root / f"pid_{os.getpid()}"
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    run1_path = artifact_dir / "p219a_historical_feature_baseline_evaluation_run1.md"
+    run2_path = artifact_dir / "p219a_historical_feature_baseline_evaluation_run2.md"
+    diff_path = artifact_dir / "p219a_historical_feature_baseline_evaluation.diff"
+    run1_path.write_text(first, encoding="utf-8")
+    run2_path.write_text(second, encoding="utf-8")
+    diff_path.write_text(
+        "".join(
+            difflib.unified_diff(
+                first.splitlines(keepends=True),
+                second.splitlines(keepends=True),
+                fromfile=str(run1_path),
+                tofile=str(run2_path),
+            )
+        ),
+        encoding="utf-8",
+    )
+    return artifact_dir
 
 
 def test_build_payload_computes_deterministic_historical_baselines(tmp_path, monkeypatch):
@@ -261,5 +292,28 @@ def test_main_writes_deterministic_outputs(tmp_path, monkeypatch, capsys):
     assert rows[1]["baseline_b_pitch_type_prediction"] == "in_play_hit"
     assert rows[2]["baseline_a_global_prediction"] == "strike_like"
 
+    captured = capsys.readouterr()
+    assert "P219-A HISTORICAL FEATURE BASELINE EVALUATION PROTOTYPE PASS" in captured.out
+
+
+def test_report_markdown_determinism_captures_failure_artifacts(capsys):
+    script = _load_script_module()
+
+    assert script.main() == 0
+    first = script.OUT_MD.read_text(encoding="utf-8")
+    first_hash = hashlib.sha256(first.encode("utf-8")).hexdigest()
+
+    assert script.main() == 0
+    second = script.OUT_MD.read_text(encoding="utf-8")
+    second_hash = hashlib.sha256(second.encode("utf-8")).hexdigest()
+
+    if first_hash != second_hash:
+        artifact_dir = _capture_markdown_drift(first, second)
+        assert first_hash == second_hash, (
+            "P219A Markdown output is nondeterministic; failure artifacts saved to "
+            f"{artifact_dir}"
+        )
+
+    assert first_hash == second_hash
     captured = capsys.readouterr()
     assert "P219-A HISTORICAL FEATURE BASELINE EVALUATION PROTOTYPE PASS" in captured.out
