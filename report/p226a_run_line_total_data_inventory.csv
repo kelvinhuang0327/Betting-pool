@@ -1,0 +1,5 @@
+file,usable,rows,outcome_labeled_rows,role,notes
+mlb_odds_2025_real.csv,YES,2430,2430,evaluation universe (walk-forward train+test); scores + RL/O-U lines same row,tracked; Final games; 0 ties
+mlb-2024-asplayed.csv,YES,2429,2429,team runs-for/runs-against rolling rate warm-up only (not scored),tracked; prior-season state seeding
+mlb_odds_2025_real.csv [Home RL Spread / RL Home / RL Away],SETTLEMENT_AND_REFERENCE_ONLY,972,0,run line settlement + descriptive market reference (de-vig implied prob),is_verified_real=False; post-game snapshot; NOT a pregame predictor; NEVER a model input feature
+mlb_odds_2025_real.csv [O/U / Over / Under],SETTLEMENT_AND_REFERENCE_ONLY,972,0,total settlement + descriptive market reference (de-vig implied prob),is_verified_real=False; post-game snapshot; NOT a pregame predictor; NEVER a model input feature
