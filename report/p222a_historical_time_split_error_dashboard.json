@@ -1,0 +1,1913 @@
+{
+  "confusion_matrices": {
+    "baseline_a_global_majority": {
+      "ball_like": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 3,
+        "strike_like": 2,
+        "strikeout": 0
+      },
+      "hit_by_pitch": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 1,
+        "strikeout": 0
+      },
+      "in_play_hit": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 1,
+        "strike_like": 2,
+        "strikeout": 0
+      },
+      "in_play_out": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 1,
+        "strike_like": 0,
+        "strikeout": 0
+      },
+      "strike_like": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 3,
+        "strike_like": 3,
+        "strikeout": 0
+      },
+      "strikeout": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 0,
+        "strikeout": 0
+      }
+    },
+    "baseline_b_pitch_type_majority_with_global_fallback": {
+      "ball_like": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 5,
+        "strikeout": 0
+      },
+      "hit_by_pitch": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 1,
+        "strikeout": 0
+      },
+      "in_play_hit": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 1,
+        "strike_like": 2,
+        "strikeout": 0
+      },
+      "in_play_out": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 1,
+        "strikeout": 0
+      },
+      "strike_like": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 1,
+        "strike_like": 5,
+        "strikeout": 0
+      },
+      "strikeout": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 0,
+        "strikeout": 0
+      }
+    }
+  },
+  "coverage": {
+    "baseline_a_global_majority": {
+      "fraction": 1.0,
+      "rows": 16
+    },
+    "baseline_b_pitch_type_majority_with_global_fallback": {
+      "fraction": 1.0,
+      "rows": 16
+    },
+    "baseline_b_pitch_type_majority_with_global_fallback_prediction_source_coverage": {
+      "all_global_fallback": {
+        "accuracy": 0.0,
+        "correct_rows": 0,
+        "fraction": 0.3125,
+        "rows": 5
+      },
+      "direct_pitch_type_majority": {
+        "accuracy": 0.454545,
+        "correct_rows": 5,
+        "fraction": 0.6875,
+        "rows": 11
+      },
+      "global_fallback_due_to_tie": {
+        "accuracy": 0.0,
+        "correct_rows": 0,
+        "fraction": 0.125,
+        "rows": 2
+      },
+      "global_fallback_missing_pitch_type": {
+        "accuracy": 0.0,
+        "correct_rows": 0,
+        "fraction": 0.1875,
+        "rows": 3
+      }
+    }
+  },
+  "disclaimer": "Historical time-split error analysis dashboard only. Not live predictions, not betting advice.",
+  "error_rows": {
+    "any_incorrect": [
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "in_play_out",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "eval_date": "2024-04-02",
+        "pitch_type": "SI",
+        "source_row_id": 9,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 10,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 11,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": true,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 12,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 13,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "in_play_out",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "eval_date": "2024-04-02",
+        "pitch_type": "SI",
+        "source_row_id": 14,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": true,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 15,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": true,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 16,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-03",
+        "pitch_type": "SI",
+        "source_row_id": 17,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "hit_by_pitch",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "FS",
+        "source_row_id": 20,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "ST",
+        "source_row_id": 21,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "KC",
+        "source_row_id": 23,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-03",
+        "pitch_type": "SI",
+        "source_row_id": 24,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      }
+    ],
+    "baseline_a_incorrect": [
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "in_play_out",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "eval_date": "2024-04-02",
+        "pitch_type": "SI",
+        "source_row_id": 9,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 10,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 11,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": true,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 12,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 13,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "in_play_out",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "eval_date": "2024-04-02",
+        "pitch_type": "SI",
+        "source_row_id": 14,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": true,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 15,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-03",
+        "pitch_type": "SI",
+        "source_row_id": 17,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "hit_by_pitch",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "FS",
+        "source_row_id": 20,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "ST",
+        "source_row_id": 21,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "KC",
+        "source_row_id": 23,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-03",
+        "pitch_type": "SI",
+        "source_row_id": 24,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      }
+    ],
+    "baseline_b_incorrect": [
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "in_play_out",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "eval_date": "2024-04-02",
+        "pitch_type": "SI",
+        "source_row_id": 9,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 10,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 11,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 13,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "in_play_out",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "eval_date": "2024-04-02",
+        "pitch_type": "SI",
+        "source_row_id": 14,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": true,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 16,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-03",
+        "pitch_type": "SI",
+        "source_row_id": 17,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "hit_by_pitch",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "FS",
+        "source_row_id": 20,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "ST",
+        "source_row_id": 21,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_missing_pitch_type",
+        "eval_date": "2024-04-03",
+        "pitch_type": "KC",
+        "source_row_id": 23,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-03",
+        "pitch_type": "SI",
+        "source_row_id": 24,
+        "split_id": 2,
+        "train_date_range": "2024-04-01 to 2024-04-02"
+      }
+    ],
+    "baseline_b_only_improvements": [
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": true,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 12,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      },
+      {
+        "actual_event_category": "strike_like",
+        "baseline_a_correct": false,
+        "baseline_a_prediction": "in_play_out",
+        "baseline_b_correct": true,
+        "baseline_b_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "eval_date": "2024-04-02",
+        "pitch_type": "FF",
+        "source_row_id": 15,
+        "split_id": 1,
+        "train_date_range": "2024-04-01 to 2024-04-01"
+      }
+    ]
+  },
+  "historical_only_disclaimer": "Historical time-split error analysis dashboard only. Not live predictions, not betting advice.",
+  "label_order": [
+    "strike_like",
+    "ball_like",
+    "in_play_out",
+    "in_play_hit",
+    "hit_by_pitch",
+    "strikeout"
+  ],
+  "limitations": [
+    "This dashboard reads only the fixed P221-A CSV/JSON/Markdown artifacts plus the fixed P220-A JSON artifact.",
+    "All metrics are historical holdout metrics on the bounded 16-row P221 evaluation snapshot.",
+    "The dashboard analyzes deterministic baseline errors only and does not train or score a production model.",
+    "No remote data fetch, no pybaseball call, no DB write, and no production activation occur in this task.",
+    "Evaluation reads only the fixed committed P218, P219, and P220 artifacts and does not refresh any upstream source.",
+    "Each holdout split trains only on earlier historical game_date rows and evaluates later historical rows from the same bounded P218 sample.",
+    "Baseline A uses the prior-date global majority event_category with deterministic alphabetical tie-break on tied counts.",
+    "Baseline B uses the prior-date pitch_type majority event_category and falls back to the prior-date global majority when the pitch_type majority is tied or missing from training history.",
+    "This is a historical-only evaluation prototype for pipeline shape demonstration and does not train a production model.",
+    "Results are bounded historical holdout metrics on a 24-row artifact snapshot and must not be interpreted as future predictive ability.",
+    "This dashboard reads only the fixed P219-A CSV, JSON, and Markdown artifacts and does not refresh upstream data.",
+    "All metrics are historical and in-sample on the bounded 24-row P219 evaluation snapshot.",
+    "The dashboard analyzes deterministic baseline mistakes only and does not train or score a production model.",
+    "This evaluation reuses the fixed 24-row P218 historical feature table only and does not refresh any upstream source.",
+    "Baselines are deterministic heuristics for pipeline demonstration only and do not train or score a production model.",
+    "Pitch-type baseline falls back to the global majority class whenever a pitch type has no unique within-pitch majority class.",
+    "Results are in-sample on a bounded historical snapshot and must not be interpreted as future predictive ability.",
+    "Feature rows are derived only from the fixed P216/P217 artifact snapshots and do not refresh upstream data.",
+    "This prototype is a bounded preprocessing example for one small historical sample and is not a production feature contract.",
+    "Several fields remain heuristic because the source artifacts do not include full context such as batter names, count state, or full plate appearance outcomes.",
+    "One fixed three-day historical date range and one team filter only; this is a bounded sample pack, not a season-wide study.",
+    "Output depends on the public historical pybaseball/statcast upstream response remaining available and schema-compatible for the fixed request.",
+    "Sample rows are normalized into a deterministic, bounded CSV artifact for inspection only and are not production-ready data contracts.",
+    "Dashboard metrics are computed from the fixed P216-A CSV snapshot only, not from a refreshed upstream pull.",
+    "This dashboard reflects a small bounded multi-date historical sample and should not be generalized beyond the fixed date range and team filter.",
+    "CSV typing is preserved as artifact text for determinism, so numeric-looking fields are summarized as stored snapshot values."
+  ],
+  "overall_metrics": {
+    "baseline_a_global_majority": {
+      "accuracy": 0.25,
+      "confusion_matrix": {
+        "ball_like": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 3,
+          "strike_like": 2,
+          "strikeout": 0
+        },
+        "hit_by_pitch": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 1,
+          "strikeout": 0
+        },
+        "in_play_hit": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 1,
+          "strike_like": 2,
+          "strikeout": 0
+        },
+        "in_play_out": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 1,
+          "strike_like": 0,
+          "strikeout": 0
+        },
+        "strike_like": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 3,
+          "strike_like": 3,
+          "strikeout": 0
+        },
+        "strikeout": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 0,
+          "strikeout": 0
+        }
+      },
+      "correct_count": 4,
+      "coverage_fraction": 1.0,
+      "coverage_rows": 16,
+      "predicted_class_distribution": [
+        {
+          "count": 8,
+          "fraction": 0.5,
+          "value": "in_play_out"
+        },
+        {
+          "count": 8,
+          "fraction": 0.5,
+          "value": "strike_like"
+        }
+      ],
+      "row_count": 16
+    },
+    "baseline_b_pitch_type_majority_with_global_fallback": {
+      "accuracy": 0.3125,
+      "confusion_matrix": {
+        "ball_like": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 5,
+          "strikeout": 0
+        },
+        "hit_by_pitch": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 1,
+          "strikeout": 0
+        },
+        "in_play_hit": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 1,
+          "strike_like": 2,
+          "strikeout": 0
+        },
+        "in_play_out": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 1,
+          "strikeout": 0
+        },
+        "strike_like": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 1,
+          "strike_like": 5,
+          "strikeout": 0
+        },
+        "strikeout": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 0,
+          "strikeout": 0
+        }
+      },
+      "correct_count": 5,
+      "coverage_fraction": 1.0,
+      "coverage_rows": 16,
+      "predicted_class_distribution": [
+        {
+          "count": 14,
+          "fraction": 0.875,
+          "value": "strike_like"
+        },
+        {
+          "count": 2,
+          "fraction": 0.125,
+          "value": "in_play_out"
+        }
+      ],
+      "row_count": 16
+    },
+    "comparison": {
+      "accuracy_delta_b_minus_a": 0.0625,
+      "correct_row_delta_b_minus_a": 1
+    },
+    "evaluated_rows": 16,
+    "split_count": 2,
+    "vs_p220_in_sample": {
+      "baseline_a_global_majority": {
+        "accuracy_delta_time_split_minus_p220": -0.125,
+        "p220_accuracy": 0.375,
+        "p222_time_split_accuracy": 0.25
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy_delta_time_split_minus_p220": -0.1875,
+        "p220_accuracy": 0.5,
+        "p222_time_split_accuracy": 0.3125
+      }
+    }
+  },
+  "per_date_metrics": [
+    {
+      "baseline_a_global_majority": {
+        "accuracy": 0.125,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 3,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 3,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 1,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 8,
+            "fraction": 1.0,
+            "value": "in_play_out"
+          }
+        ],
+        "row_count": 8
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy": 0.25,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 3,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 1,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 2,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 6,
+            "fraction": 0.75,
+            "value": "strike_like"
+          },
+          {
+            "count": 2,
+            "fraction": 0.25,
+            "value": "in_play_out"
+          }
+        ],
+        "row_count": 8
+      },
+      "comparison": {
+        "accuracy_delta_b_minus_a": 0.125,
+        "correct_row_delta_b_minus_a": 1
+      },
+      "coverage": {
+        "all_global_fallback": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.25,
+          "rows": 2
+        },
+        "direct_pitch_type_majority": {
+          "accuracy": 0.333333,
+          "correct_rows": 2,
+          "fraction": 0.75,
+          "rows": 6
+        },
+        "global_fallback_due_to_tie": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.25,
+          "rows": 2
+        },
+        "global_fallback_missing_pitch_type": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.0,
+          "rows": 0
+        }
+      },
+      "eval_date": "2024-04-02",
+      "row_count": 8,
+      "split_ids": [
+        1
+      ]
+    },
+    {
+      "baseline_a_global_majority": {
+        "accuracy": 0.375,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 1,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 3,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 3,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 8,
+            "fraction": 1.0,
+            "value": "strike_like"
+          }
+        ],
+        "row_count": 8
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy": 0.375,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 1,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 3,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 3,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 8,
+            "fraction": 1.0,
+            "value": "strike_like"
+          }
+        ],
+        "row_count": 8
+      },
+      "comparison": {
+        "accuracy_delta_b_minus_a": 0.0,
+        "correct_row_delta_b_minus_a": 0
+      },
+      "coverage": {
+        "all_global_fallback": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.375,
+          "rows": 3
+        },
+        "direct_pitch_type_majority": {
+          "accuracy": 0.6,
+          "correct_rows": 3,
+          "fraction": 0.625,
+          "rows": 5
+        },
+        "global_fallback_due_to_tie": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.0,
+          "rows": 0
+        },
+        "global_fallback_missing_pitch_type": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.375,
+          "rows": 3
+        }
+      },
+      "eval_date": "2024-04-03",
+      "row_count": 8,
+      "split_ids": [
+        2
+      ]
+    }
+  ],
+  "per_split_metrics": [
+    {
+      "baseline_a_global_majority": {
+        "accuracy": 0.125,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 3,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 3,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 1,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 8,
+            "fraction": 1.0,
+            "value": "in_play_out"
+          }
+        ],
+        "row_count": 8
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy": 0.25,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 3,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 1,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 1,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 2,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 6,
+            "fraction": 0.75,
+            "value": "strike_like"
+          },
+          {
+            "count": 2,
+            "fraction": 0.25,
+            "value": "in_play_out"
+          }
+        ],
+        "row_count": 8
+      },
+      "comparison": {
+        "accuracy_delta_b_minus_a": 0.125,
+        "correct_row_delta_b_minus_a": 1
+      },
+      "coverage": {
+        "all_global_fallback": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.25,
+          "rows": 2
+        },
+        "direct_pitch_type_majority": {
+          "accuracy": 0.333333,
+          "correct_rows": 2,
+          "fraction": 0.75,
+          "rows": 6
+        },
+        "global_fallback_due_to_tie": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.25,
+          "rows": 2
+        },
+        "global_fallback_missing_pitch_type": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.0,
+          "rows": 0
+        }
+      },
+      "eval_date": "2024-04-02",
+      "eval_row_count": 8,
+      "split_id": 1,
+      "train_date_range": "2024-04-01 to 2024-04-01",
+      "train_row_count": 8
+    },
+    {
+      "baseline_a_global_majority": {
+        "accuracy": 0.375,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 1,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 3,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 3,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 8,
+            "fraction": 1.0,
+            "value": "strike_like"
+          }
+        ],
+        "row_count": 8
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy": 0.375,
+        "confusion_matrix": {
+          "ball_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "hit_by_pitch": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 1,
+            "strikeout": 0
+          },
+          "in_play_hit": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 2,
+            "strikeout": 0
+          },
+          "in_play_out": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          },
+          "strike_like": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 3,
+            "strikeout": 0
+          },
+          "strikeout": {
+            "ball_like": 0,
+            "hit_by_pitch": 0,
+            "in_play_hit": 0,
+            "in_play_out": 0,
+            "strike_like": 0,
+            "strikeout": 0
+          }
+        },
+        "correct_count": 3,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 8,
+        "predicted_class_distribution": [
+          {
+            "count": 8,
+            "fraction": 1.0,
+            "value": "strike_like"
+          }
+        ],
+        "row_count": 8
+      },
+      "comparison": {
+        "accuracy_delta_b_minus_a": 0.0,
+        "correct_row_delta_b_minus_a": 0
+      },
+      "coverage": {
+        "all_global_fallback": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.375,
+          "rows": 3
+        },
+        "direct_pitch_type_majority": {
+          "accuracy": 0.6,
+          "correct_rows": 3,
+          "fraction": 0.625,
+          "rows": 5
+        },
+        "global_fallback_due_to_tie": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.0,
+          "rows": 0
+        },
+        "global_fallback_missing_pitch_type": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.375,
+          "rows": 3
+        }
+      },
+      "eval_date": "2024-04-03",
+      "eval_row_count": 8,
+      "split_id": 2,
+      "train_date_range": "2024-04-01 to 2024-04-02",
+      "train_row_count": 16
+    }
+  ],
+  "prediction_source_breakdown": {
+    "all_global_fallback": {
+      "accuracy": 0.0,
+      "actual_event_category_distribution": [
+        {
+          "count": 2,
+          "fraction": 0.4,
+          "value": "ball_like"
+        },
+        {
+          "count": 1,
+          "fraction": 0.2,
+          "value": "hit_by_pitch"
+        },
+        {
+          "count": 1,
+          "fraction": 0.2,
+          "value": "in_play_hit"
+        },
+        {
+          "count": 1,
+          "fraction": 0.2,
+          "value": "strike_like"
+        }
+      ],
+      "correct_rows": 0,
+      "eval_dates": [
+        "2024-04-02",
+        "2024-04-03"
+      ],
+      "fraction": 0.3125,
+      "predicted_event_category_distribution": [
+        {
+          "count": 3,
+          "fraction": 0.6,
+          "value": "strike_like"
+        },
+        {
+          "count": 2,
+          "fraction": 0.4,
+          "value": "in_play_out"
+        }
+      ],
+      "rows": 5,
+      "split_ids": [
+        1,
+        2
+      ]
+    },
+    "global_fallback_due_to_tie": {
+      "accuracy": 0.0,
+      "actual_event_category_distribution": [
+        {
+          "count": 1,
+          "fraction": 0.5,
+          "value": "in_play_hit"
+        },
+        {
+          "count": 1,
+          "fraction": 0.5,
+          "value": "strike_like"
+        }
+      ],
+      "correct_rows": 0,
+      "eval_dates": [
+        "2024-04-02"
+      ],
+      "fraction": 0.125,
+      "predicted_event_category_distribution": [
+        {
+          "count": 2,
+          "fraction": 1.0,
+          "value": "in_play_out"
+        }
+      ],
+      "rows": 2,
+      "split_ids": [
+        1
+      ]
+    },
+    "global_fallback_missing_pitch_type": {
+      "accuracy": 0.0,
+      "actual_event_category_distribution": [
+        {
+          "count": 2,
+          "fraction": 0.666667,
+          "value": "ball_like"
+        },
+        {
+          "count": 1,
+          "fraction": 0.333333,
+          "value": "hit_by_pitch"
+        }
+      ],
+      "correct_rows": 0,
+      "eval_dates": [
+        "2024-04-03"
+      ],
+      "fraction": 0.1875,
+      "predicted_event_category_distribution": [
+        {
+          "count": 3,
+          "fraction": 1.0,
+          "value": "strike_like"
+        }
+      ],
+      "rows": 3,
+      "split_ids": [
+        2
+      ]
+    },
+    "pitch_type_majority": {
+      "accuracy": 0.454545,
+      "actual_event_category_distribution": [
+        {
+          "count": 5,
+          "fraction": 0.454545,
+          "value": "strike_like"
+        },
+        {
+          "count": 3,
+          "fraction": 0.272727,
+          "value": "ball_like"
+        },
+        {
+          "count": 2,
+          "fraction": 0.181818,
+          "value": "in_play_hit"
+        },
+        {
+          "count": 1,
+          "fraction": 0.090909,
+          "value": "in_play_out"
+        }
+      ],
+      "correct_rows": 5,
+      "eval_dates": [
+        "2024-04-02",
+        "2024-04-03"
+      ],
+      "fraction": 0.6875,
+      "predicted_event_category_distribution": [
+        {
+          "count": 11,
+          "fraction": 1.0,
+          "value": "strike_like"
+        }
+      ],
+      "rows": 11,
+      "split_ids": [
+        1,
+        2
+      ]
+    }
+  },
+  "prohibited_claims": [
+    "No future prediction claim.",
+    "No live prediction claim.",
+    "No betting advice claim.",
+    "No production readiness claim.",
+    "No edge, ROI, EV, Kelly, or CLV claim."
+  ],
+  "source_artifacts": [
+    "report/p221a_historical_time_split_baseline_evaluation.csv",
+    "report/p221a_historical_time_split_baseline_evaluation.json",
+    "report/p221a_historical_time_split_baseline_evaluation.md",
+    "report/p220a_historical_baseline_error_dashboard.json"
+  ],
+  "source_hashes": {
+    "report/p220a_historical_baseline_error_dashboard.json": "abd4a2540ea2109ee77f30a4a836f1800e3218cc003ed92fda0e1043c8f695f3",
+    "report/p221a_historical_time_split_baseline_evaluation.csv": "2d17483e66a11069806f4b0f49bcd905f1d427ab56425edef9f24aba8844d3ae",
+    "report/p221a_historical_time_split_baseline_evaluation.json": "0ccec8bc6b01c5bbdd8a3c082cbbc161d4a5fc0f39cc3cfe51948199e7528982",
+    "report/p221a_historical_time_split_baseline_evaluation.md": "f31c00dbd65a86ae0224cbd147c1e2c39c45a58e13791f702266c54cb5b05617"
+  },
+  "source_summary": {
+    "observed_csv_column_count": 11,
+    "observed_csv_row_count": 16,
+    "p220_status": "PASS_P219A_ARTIFACT_ONLY_HISTORICAL_BASELINE_ERROR_ANALYSIS_DASHBOARD",
+    "p220_task": "P220-A Historical Baseline Error Analysis Dashboard",
+    "p221_column_count": 11,
+    "p221_markdown_mentions_disclaimer": true,
+    "p221_row_count": 16,
+    "p221_status": "PASS_P218A_P219A_P220A_ARTIFACT_ONLY_HISTORICAL_TIME_SPLIT_BASELINE_EVALUATION_PROTOTYPE",
+    "p221_task": "P221-A Historical Time-Split Baseline Evaluation Prototype"
+  },
+  "split_definitions": [
+    {
+      "baseline_a_global_majority_prediction": "in_play_out",
+      "baseline_b_pitch_type_resolution_table": [
+        {
+          "event_category_distribution": [
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "ball_like"
+            },
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "in_play_out"
+            },
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "strikeout"
+            }
+          ],
+          "fallback_to_global_majority": true,
+          "pitch_type": "CH",
+          "prediction_source": "global_fallback_due_to_tie",
+          "resolved_prediction": "in_play_out",
+          "support": 3
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 2,
+              "fraction": 0.666667,
+              "value": "strike_like"
+            },
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "in_play_out"
+            }
+          ],
+          "fallback_to_global_majority": false,
+          "pitch_type": "FF",
+          "prediction_source": "pitch_type_majority",
+          "resolved_prediction": "strike_like",
+          "support": 3
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 1,
+              "fraction": 0.5,
+              "value": "in_play_out"
+            },
+            {
+              "count": 1,
+              "fraction": 0.5,
+              "value": "strike_like"
+            }
+          ],
+          "fallback_to_global_majority": true,
+          "pitch_type": "SI",
+          "prediction_source": "global_fallback_due_to_tie",
+          "resolved_prediction": "in_play_out",
+          "support": 2
+        }
+      ],
+      "eval_date": "2024-04-02",
+      "eval_row_count": 8,
+      "split_id": 1,
+      "train_class_distribution": [
+        {
+          "count": 3,
+          "fraction": 0.375,
+          "value": "in_play_out"
+        },
+        {
+          "count": 3,
+          "fraction": 0.375,
+          "value": "strike_like"
+        },
+        {
+          "count": 1,
+          "fraction": 0.125,
+          "value": "ball_like"
+        },
+        {
+          "count": 1,
+          "fraction": 0.125,
+          "value": "strikeout"
+        }
+      ],
+      "train_date_range": "2024-04-01 to 2024-04-01",
+      "train_dates": [
+        "2024-04-01"
+      ],
+      "train_row_count": 8
+    },
+    {
+      "baseline_a_global_majority_prediction": "strike_like",
+      "baseline_b_pitch_type_resolution_table": [
+        {
+          "event_category_distribution": [
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "ball_like"
+            },
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "in_play_out"
+            },
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "strikeout"
+            }
+          ],
+          "fallback_to_global_majority": true,
+          "pitch_type": "CH",
+          "prediction_source": "global_fallback_due_to_tie",
+          "resolved_prediction": "strike_like",
+          "support": 3
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 4,
+              "fraction": 0.444444,
+              "value": "strike_like"
+            },
+            {
+              "count": 3,
+              "fraction": 0.333333,
+              "value": "ball_like"
+            },
+            {
+              "count": 2,
+              "fraction": 0.222222,
+              "value": "in_play_out"
+            }
+          ],
+          "fallback_to_global_majority": false,
+          "pitch_type": "FF",
+          "prediction_source": "pitch_type_majority",
+          "resolved_prediction": "strike_like",
+          "support": 9
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 2,
+              "fraction": 0.5,
+              "value": "strike_like"
+            },
+            {
+              "count": 1,
+              "fraction": 0.25,
+              "value": "in_play_hit"
+            },
+            {
+              "count": 1,
+              "fraction": 0.25,
+              "value": "in_play_out"
+            }
+          ],
+          "fallback_to_global_majority": false,
+          "pitch_type": "SI",
+          "prediction_source": "pitch_type_majority",
+          "resolved_prediction": "strike_like",
+          "support": 4
+        }
+      ],
+      "eval_date": "2024-04-03",
+      "eval_row_count": 8,
+      "split_id": 2,
+      "train_class_distribution": [
+        {
+          "count": 6,
+          "fraction": 0.375,
+          "value": "strike_like"
+        },
+        {
+          "count": 4,
+          "fraction": 0.25,
+          "value": "ball_like"
+        },
+        {
+          "count": 4,
+          "fraction": 0.25,
+          "value": "in_play_out"
+        },
+        {
+          "count": 1,
+          "fraction": 0.0625,
+          "value": "in_play_hit"
+        },
+        {
+          "count": 1,
+          "fraction": 0.0625,
+          "value": "strikeout"
+        }
+      ],
+      "train_date_range": "2024-04-01 to 2024-04-02",
+      "train_dates": [
+        "2024-04-01",
+        "2024-04-02"
+      ],
+      "train_row_count": 16
+    }
+  ],
+  "status": "PASS_P221A_P220A_ARTIFACT_ONLY_HISTORICAL_TIME_SPLIT_ERROR_ANALYSIS_DASHBOARD",
+  "task": "P222-A Historical Time-Split Error Analysis Dashboard"
+}
