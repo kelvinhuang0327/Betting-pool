@@ -1,0 +1,2 @@
+game_date,away_team,home_team,predicted_side,home_win_probability,selected_side_probability,source_prediction_version,paper_only,production_ready
+2026-05-31,Miami Marlins,New York Mets,HOME,0.571257,0.571257,p84b_diagnostic_baseline_v1,True,False
