@@ -1,0 +1,25 @@
+source_row_id,game_date,game_pk,home_team,away_team,inning,inning_topbot,pitcher,batter,pitch_type,event_category,is_in_play,is_strike_like,is_ball_like,release_speed,release_speed_bucket,zone,zone_bucket
+1,2024-04-01,745277,SEA,CLE,1,Top,"Hancock, Emerson",680757,SI,strike_like,False,True,False,94.2,90_to_94_9,5,in_zone
+2,2024-04-01,745277,SEA,CLE,1,Top,"Hancock, Emerson",680757,FF,strike_like,False,True,False,94.5,90_to_94_9,8,in_zone
+3,2024-04-01,745277,SEA,CLE,1,Top,"Hancock, Emerson",680757,CH,strikeout,False,True,False,87.8,85_to_89_9,13,out_of_zone
+4,2024-04-01,745277,SEA,CLE,1,Top,"Hancock, Emerson",665926,FF,strike_like,False,True,False,93.7,90_to_94_9,7,in_zone
+5,2024-04-01,745277,SEA,CLE,1,Top,"Hancock, Emerson",665926,FF,in_play_out,True,False,False,94.6,90_to_94_9,1,in_zone
+6,2024-04-01,745277,SEA,CLE,1,Top,"Hancock, Emerson",608070,SI,in_play_out,True,False,False,93.4,90_to_94_9,7,in_zone
+7,2024-04-01,745277,SEA,CLE,2,Top,"Hancock, Emerson",647304,CH,ball_like,False,False,True,87.2,85_to_89_9,13,out_of_zone
+8,2024-04-01,745277,SEA,CLE,2,Top,"Hancock, Emerson",647304,CH,in_play_out,True,False,False,87.9,85_to_89_9,4,in_zone
+9,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",680757,SI,strike_like,False,True,False,94.8,90_to_94_9,4,in_zone
+10,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",680757,FF,ball_like,False,False,True,95.9,95_plus,13,out_of_zone
+11,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",680757,FF,ball_like,False,False,True,95.7,95_plus,2,in_zone
+12,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",680757,FF,strike_like,False,True,False,95.2,95_plus,5,in_zone
+13,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",680757,FF,ball_like,False,False,True,95.9,95_plus,11,out_of_zone
+14,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",680757,SI,in_play_hit,True,False,False,94.8,90_to_94_9,4,in_zone
+15,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",665926,FF,strike_like,False,True,False,96.3,95_plus,9,in_zone
+16,2024-04-02,745273,SEA,CLE,1,Top,"Castillo, Luis",665926,FF,in_play_out,True,False,False,93.7,90_to_94_9,3,in_zone
+17,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",680757,SI,in_play_hit,True,False,False,95.8,95_plus,7,in_zone
+18,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",665926,SI,strike_like,False,True,False,94.9,90_to_94_9,13,out_of_zone
+19,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",665926,FF,strike_like,False,True,False,94.8,90_to_94_9,1,in_zone
+20,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",665926,FS,hit_by_pitch,False,False,False,84.3,lt_85,14,out_of_zone
+21,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",608070,ST,ball_like,False,False,True,88.7,85_to_89_9,14,out_of_zone
+22,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",608070,FF,strike_like,False,True,False,95.4,95_plus,1,in_zone
+23,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",608070,KC,ball_like,False,False,True,83.3,lt_85,14,out_of_zone
+24,2024-04-03,745275,SEA,CLE,1,Top,"Kirby, George",608070,SI,in_play_hit,True,False,False,95.0,95_plus,4,in_zone
