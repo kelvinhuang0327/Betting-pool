@@ -1,0 +1,1305 @@
+{
+  "baseline_definitions": {
+    "baseline_a_global_majority": {
+      "prediction_rule": "Predict the most frequent event_category across all P218 rows for every row.",
+      "resolved_prediction": "strike_like"
+    },
+    "baseline_b_pitch_type_majority_with_global_fallback": {
+      "global_fallback_prediction": "strike_like",
+      "pitch_type_resolution_table": [
+        {
+          "event_category_distribution": [
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "ball_like"
+            },
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "in_play_out"
+            },
+            {
+              "count": 1,
+              "fraction": 0.333333,
+              "value": "strikeout"
+            }
+          ],
+          "fallback_to_global_majority": true,
+          "pitch_type": "CH",
+          "prediction_source": "global_fallback_due_to_tie",
+          "resolved_prediction": "strike_like",
+          "support": 3
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 6,
+              "fraction": 0.545455,
+              "value": "strike_like"
+            },
+            {
+              "count": 3,
+              "fraction": 0.272727,
+              "value": "ball_like"
+            },
+            {
+              "count": 2,
+              "fraction": 0.181818,
+              "value": "in_play_out"
+            }
+          ],
+          "fallback_to_global_majority": false,
+          "pitch_type": "FF",
+          "prediction_source": "pitch_type_majority",
+          "resolved_prediction": "strike_like",
+          "support": 11
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 1,
+              "fraction": 1.0,
+              "value": "hit_by_pitch"
+            }
+          ],
+          "fallback_to_global_majority": false,
+          "pitch_type": "FS",
+          "prediction_source": "pitch_type_majority",
+          "resolved_prediction": "hit_by_pitch",
+          "support": 1
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 1,
+              "fraction": 1.0,
+              "value": "ball_like"
+            }
+          ],
+          "fallback_to_global_majority": false,
+          "pitch_type": "KC",
+          "prediction_source": "pitch_type_majority",
+          "resolved_prediction": "ball_like",
+          "support": 1
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 3,
+              "fraction": 0.428571,
+              "value": "in_play_hit"
+            },
+            {
+              "count": 3,
+              "fraction": 0.428571,
+              "value": "strike_like"
+            },
+            {
+              "count": 1,
+              "fraction": 0.142857,
+              "value": "in_play_out"
+            }
+          ],
+          "fallback_to_global_majority": true,
+          "pitch_type": "SI",
+          "prediction_source": "global_fallback_due_to_tie",
+          "resolved_prediction": "strike_like",
+          "support": 7
+        },
+        {
+          "event_category_distribution": [
+            {
+              "count": 1,
+              "fraction": 1.0,
+              "value": "ball_like"
+            }
+          ],
+          "fallback_to_global_majority": false,
+          "pitch_type": "ST",
+          "prediction_source": "pitch_type_majority",
+          "resolved_prediction": "ball_like",
+          "support": 1
+        }
+      ],
+      "prediction_rule": "Predict the most frequent event_category within each pitch_type when the pitch_type has a unique majority; otherwise predict the global majority event_category."
+    }
+  },
+  "class_support": [
+    {
+      "count": 9,
+      "fraction": 0.375,
+      "value": "strike_like"
+    },
+    {
+      "count": 6,
+      "fraction": 0.25,
+      "value": "ball_like"
+    },
+    {
+      "count": 4,
+      "fraction": 0.166667,
+      "value": "in_play_out"
+    },
+    {
+      "count": 3,
+      "fraction": 0.125,
+      "value": "in_play_hit"
+    },
+    {
+      "count": 1,
+      "fraction": 0.041667,
+      "value": "hit_by_pitch"
+    },
+    {
+      "count": 1,
+      "fraction": 0.041667,
+      "value": "strikeout"
+    }
+  ],
+  "confusion_matrices": {
+    "baseline_a_global_majority": {
+      "ball_like": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 6,
+        "strikeout": 0
+      },
+      "hit_by_pitch": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 1,
+        "strikeout": 0
+      },
+      "in_play_hit": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 3,
+        "strikeout": 0
+      },
+      "in_play_out": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 4,
+        "strikeout": 0
+      },
+      "strike_like": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 9,
+        "strikeout": 0
+      },
+      "strikeout": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 1,
+        "strikeout": 0
+      }
+    },
+    "baseline_b_pitch_type_majority_with_global_fallback": {
+      "ball_like": {
+        "ball_like": 2,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 4,
+        "strikeout": 0
+      },
+      "hit_by_pitch": {
+        "ball_like": 0,
+        "hit_by_pitch": 1,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 0,
+        "strikeout": 0
+      },
+      "in_play_hit": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 3,
+        "strikeout": 0
+      },
+      "in_play_out": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 4,
+        "strikeout": 0
+      },
+      "strike_like": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 9,
+        "strikeout": 0
+      },
+      "strikeout": {
+        "ball_like": 0,
+        "hit_by_pitch": 0,
+        "in_play_hit": 0,
+        "in_play_out": 0,
+        "strike_like": 1,
+        "strikeout": 0
+      }
+    }
+  },
+  "disclaimer": "Historical baseline error analysis dashboard only. Not live predictions, not betting advice.",
+  "error_rows": {
+    "any_incorrect": [
+      {
+        "actual_event_category": "strikeout",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 3
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "FF",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 5
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "SI",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 6
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 7
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 8
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 10
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 11
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 13
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "SI",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 14
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 16
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "SI",
+        "pitcher": "Kirby, George",
+        "source_row_id": 17
+      },
+      {
+        "actual_event_category": "hit_by_pitch",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": true,
+        "baseline_b_pitch_type_prediction": "hit_by_pitch",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "FS",
+        "pitcher": "Kirby, George",
+        "source_row_id": 20
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": true,
+        "baseline_b_pitch_type_prediction": "ball_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "ST",
+        "pitcher": "Kirby, George",
+        "source_row_id": 21
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": true,
+        "baseline_b_pitch_type_prediction": "ball_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "KC",
+        "pitcher": "Kirby, George",
+        "source_row_id": 23
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "SI",
+        "pitcher": "Kirby, George",
+        "source_row_id": 24
+      }
+    ],
+    "baseline_a_incorrect": [
+      {
+        "actual_event_category": "strikeout",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 3
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "FF",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 5
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "SI",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 6
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 7
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 8
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 10
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 11
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 13
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "SI",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 14
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 16
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "SI",
+        "pitcher": "Kirby, George",
+        "source_row_id": 17
+      },
+      {
+        "actual_event_category": "hit_by_pitch",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": true,
+        "baseline_b_pitch_type_prediction": "hit_by_pitch",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "FS",
+        "pitcher": "Kirby, George",
+        "source_row_id": 20
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": true,
+        "baseline_b_pitch_type_prediction": "ball_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "ST",
+        "pitcher": "Kirby, George",
+        "source_row_id": 21
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": true,
+        "baseline_b_pitch_type_prediction": "ball_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "KC",
+        "pitcher": "Kirby, George",
+        "source_row_id": 23
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "SI",
+        "pitcher": "Kirby, George",
+        "source_row_id": 24
+      }
+    ],
+    "baseline_b_incorrect": [
+      {
+        "actual_event_category": "strikeout",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 3
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "FF",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 5
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "SI",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 6
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 7
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-01",
+        "game_pk": 745277,
+        "pitch_type": "CH",
+        "pitcher": "Hancock, Emerson",
+        "source_row_id": 8
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 10
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 11
+      },
+      {
+        "actual_event_category": "ball_like",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 13
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "SI",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 14
+      },
+      {
+        "actual_event_category": "in_play_out",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "pitch_type_majority",
+        "game_date": "2024-04-02",
+        "game_pk": 745273,
+        "pitch_type": "FF",
+        "pitcher": "Castillo, Luis",
+        "source_row_id": 16
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "SI",
+        "pitcher": "Kirby, George",
+        "source_row_id": 17
+      },
+      {
+        "actual_event_category": "in_play_hit",
+        "baseline_a_correct": false,
+        "baseline_a_global_prediction": "strike_like",
+        "baseline_b_correct": false,
+        "baseline_b_pitch_type_prediction": "strike_like",
+        "baseline_b_prediction_source": "global_fallback_due_to_tie",
+        "game_date": "2024-04-03",
+        "game_pk": 745275,
+        "pitch_type": "SI",
+        "pitcher": "Kirby, George",
+        "source_row_id": 24
+      }
+    ]
+  },
+  "historical_only_disclaimer": "Historical baseline error analysis dashboard only. Not live predictions, not betting advice.",
+  "label_order": [
+    "ball_like",
+    "hit_by_pitch",
+    "in_play_hit",
+    "in_play_out",
+    "strike_like",
+    "strikeout"
+  ],
+  "limitations": [
+    "This dashboard reads only the fixed P219-A CSV, JSON, and Markdown artifacts and does not refresh upstream data.",
+    "All metrics are historical and in-sample on the bounded 24-row P219 evaluation snapshot.",
+    "The dashboard analyzes deterministic baseline mistakes only and does not train or score a production model.",
+    "This evaluation reuses the fixed 24-row P218 historical feature table only and does not refresh any upstream source.",
+    "Baselines are deterministic heuristics for pipeline demonstration only and do not train or score a production model.",
+    "Pitch-type baseline falls back to the global majority class whenever a pitch type has no unique within-pitch majority class.",
+    "Results are in-sample on a bounded historical snapshot and must not be interpreted as future predictive ability.",
+    "Feature rows are derived only from the fixed P216/P217 artifact snapshots and do not refresh upstream data.",
+    "This prototype is a bounded preprocessing example for one small historical sample and is not a production feature contract.",
+    "Several fields remain heuristic because the source artifacts do not include full context such as batter names, count state, or full plate appearance outcomes.",
+    "One fixed three-day historical date range and one team filter only; this is a bounded sample pack, not a season-wide study.",
+    "Output depends on the public historical pybaseball/statcast upstream response remaining available and schema-compatible for the fixed request.",
+    "Sample rows are normalized into a deterministic, bounded CSV artifact for inspection only and are not production-ready data contracts.",
+    "Dashboard metrics are computed from the fixed P216-A CSV snapshot only, not from a refreshed upstream pull.",
+    "This dashboard reflects a small bounded multi-date historical sample and should not be generalized beyond the fixed date range and team filter.",
+    "CSV typing is preserved as artifact text for determinism, so numeric-looking fields are summarized as stored snapshot values."
+  ],
+  "metrics": {
+    "baseline_a_global_majority": {
+      "accuracy": 0.375,
+      "confusion_matrix": {
+        "ball_like": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 6,
+          "strikeout": 0
+        },
+        "hit_by_pitch": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 1,
+          "strikeout": 0
+        },
+        "in_play_hit": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 3,
+          "strikeout": 0
+        },
+        "in_play_out": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 4,
+          "strikeout": 0
+        },
+        "strike_like": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 9,
+          "strikeout": 0
+        },
+        "strikeout": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 1,
+          "strikeout": 0
+        }
+      },
+      "correct_count": 9,
+      "coverage_fraction": 1.0,
+      "coverage_rows": 24,
+      "per_class_errors": [
+        {
+          "class_label": "ball_like",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 6,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 6
+        },
+        {
+          "class_label": "hit_by_pitch",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 1,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 1
+        },
+        {
+          "class_label": "in_play_hit",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 3,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 3
+        },
+        {
+          "class_label": "in_play_out",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 4,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 4
+        },
+        {
+          "class_label": "strike_like",
+          "correct_count": 9,
+          "false_positive_count": 15,
+          "misclassified_count": 0,
+          "precision": 0.375,
+          "predicted_count": 24,
+          "recall": 1.0,
+          "support": 9
+        },
+        {
+          "class_label": "strikeout",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 1,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 1
+        }
+      ],
+      "predicted_class_distribution": [
+        {
+          "count": 24,
+          "fraction": 1.0,
+          "value": "strike_like"
+        }
+      ],
+      "row_count": 24
+    },
+    "baseline_b_pitch_type_majority_with_global_fallback": {
+      "accuracy": 0.5,
+      "confusion_matrix": {
+        "ball_like": {
+          "ball_like": 2,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 4,
+          "strikeout": 0
+        },
+        "hit_by_pitch": {
+          "ball_like": 0,
+          "hit_by_pitch": 1,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 0,
+          "strikeout": 0
+        },
+        "in_play_hit": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 3,
+          "strikeout": 0
+        },
+        "in_play_out": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 4,
+          "strikeout": 0
+        },
+        "strike_like": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 9,
+          "strikeout": 0
+        },
+        "strikeout": {
+          "ball_like": 0,
+          "hit_by_pitch": 0,
+          "in_play_hit": 0,
+          "in_play_out": 0,
+          "strike_like": 1,
+          "strikeout": 0
+        }
+      },
+      "correct_count": 12,
+      "coverage_fraction": 0.583333,
+      "coverage_rows": 14,
+      "direct_coverage": {
+        "accuracy": 0.642857,
+        "correct_rows": 9,
+        "fraction": 0.583333,
+        "rows": 14
+      },
+      "fallback_coverage": {
+        "accuracy": 0.3,
+        "correct_rows": 3,
+        "fraction": 0.416667,
+        "rows": 10
+      },
+      "per_class_errors": [
+        {
+          "class_label": "ball_like",
+          "correct_count": 2,
+          "false_positive_count": 0,
+          "misclassified_count": 4,
+          "precision": 1.0,
+          "predicted_count": 2,
+          "recall": 0.333333,
+          "support": 6
+        },
+        {
+          "class_label": "hit_by_pitch",
+          "correct_count": 1,
+          "false_positive_count": 0,
+          "misclassified_count": 0,
+          "precision": 1.0,
+          "predicted_count": 1,
+          "recall": 1.0,
+          "support": 1
+        },
+        {
+          "class_label": "in_play_hit",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 3,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 3
+        },
+        {
+          "class_label": "in_play_out",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 4,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 4
+        },
+        {
+          "class_label": "strike_like",
+          "correct_count": 9,
+          "false_positive_count": 12,
+          "misclassified_count": 0,
+          "precision": 0.428571,
+          "predicted_count": 21,
+          "recall": 1.0,
+          "support": 9
+        },
+        {
+          "class_label": "strikeout",
+          "correct_count": 0,
+          "false_positive_count": 0,
+          "misclassified_count": 1,
+          "precision": 0.0,
+          "predicted_count": 0,
+          "recall": 0.0,
+          "support": 1
+        }
+      ],
+      "predicted_class_distribution": [
+        {
+          "count": 21,
+          "fraction": 0.875,
+          "value": "strike_like"
+        },
+        {
+          "count": 2,
+          "fraction": 0.083333,
+          "value": "ball_like"
+        },
+        {
+          "count": 1,
+          "fraction": 0.041667,
+          "value": "hit_by_pitch"
+        }
+      ],
+      "row_count": 24
+    },
+    "comparison": {
+      "accuracy_delta_b_minus_a": 0.125,
+      "correct_row_delta_b_minus_a": 3
+    }
+  },
+  "pitch_type_resolution": {
+    "direct_accuracy": 0.642857,
+    "direct_correct_rows": 9,
+    "direct_coverage_fraction": 0.583333,
+    "direct_coverage_rows": 14,
+    "direct_pitch_type_count": 4,
+    "direct_pitch_types": [
+      "FF",
+      "FS",
+      "KC",
+      "ST"
+    ],
+    "fallback_accuracy": 0.3,
+    "fallback_correct_rows": 3,
+    "fallback_fraction": 0.416667,
+    "fallback_pitch_type_count": 2,
+    "fallback_pitch_types": [
+      "CH",
+      "SI"
+    ],
+    "fallback_rows": 10,
+    "global_fallback_prediction": "strike_like",
+    "pitch_type_table": [
+      {
+        "event_category_distribution": [
+          {
+            "count": 1,
+            "fraction": 0.333333,
+            "value": "ball_like"
+          },
+          {
+            "count": 1,
+            "fraction": 0.333333,
+            "value": "in_play_out"
+          },
+          {
+            "count": 1,
+            "fraction": 0.333333,
+            "value": "strikeout"
+          }
+        ],
+        "fallback_to_global_majority": true,
+        "pitch_type": "CH",
+        "prediction_source": "global_fallback_due_to_tie",
+        "resolved_prediction": "strike_like",
+        "support": 3
+      },
+      {
+        "event_category_distribution": [
+          {
+            "count": 6,
+            "fraction": 0.545455,
+            "value": "strike_like"
+          },
+          {
+            "count": 3,
+            "fraction": 0.272727,
+            "value": "ball_like"
+          },
+          {
+            "count": 2,
+            "fraction": 0.181818,
+            "value": "in_play_out"
+          }
+        ],
+        "fallback_to_global_majority": false,
+        "pitch_type": "FF",
+        "prediction_source": "pitch_type_majority",
+        "resolved_prediction": "strike_like",
+        "support": 11
+      },
+      {
+        "event_category_distribution": [
+          {
+            "count": 1,
+            "fraction": 1.0,
+            "value": "hit_by_pitch"
+          }
+        ],
+        "fallback_to_global_majority": false,
+        "pitch_type": "FS",
+        "prediction_source": "pitch_type_majority",
+        "resolved_prediction": "hit_by_pitch",
+        "support": 1
+      },
+      {
+        "event_category_distribution": [
+          {
+            "count": 1,
+            "fraction": 1.0,
+            "value": "ball_like"
+          }
+        ],
+        "fallback_to_global_majority": false,
+        "pitch_type": "KC",
+        "prediction_source": "pitch_type_majority",
+        "resolved_prediction": "ball_like",
+        "support": 1
+      },
+      {
+        "event_category_distribution": [
+          {
+            "count": 3,
+            "fraction": 0.428571,
+            "value": "in_play_hit"
+          },
+          {
+            "count": 3,
+            "fraction": 0.428571,
+            "value": "strike_like"
+          },
+          {
+            "count": 1,
+            "fraction": 0.142857,
+            "value": "in_play_out"
+          }
+        ],
+        "fallback_to_global_majority": true,
+        "pitch_type": "SI",
+        "prediction_source": "global_fallback_due_to_tie",
+        "resolved_prediction": "strike_like",
+        "support": 7
+      },
+      {
+        "event_category_distribution": [
+          {
+            "count": 1,
+            "fraction": 1.0,
+            "value": "ball_like"
+          }
+        ],
+        "fallback_to_global_majority": false,
+        "pitch_type": "ST",
+        "prediction_source": "pitch_type_majority",
+        "resolved_prediction": "ball_like",
+        "support": 1
+      }
+    ]
+  },
+  "prohibited_claims": [
+    "No future prediction claim.",
+    "No live prediction claim.",
+    "No betting advice claim.",
+    "No production readiness claim.",
+    "No edge, ROI, EV, Kelly, or CLV claim."
+  ],
+  "row_count": 24,
+  "source_artifacts": [
+    "report/p219a_historical_feature_baseline_evaluation.csv",
+    "report/p219a_historical_feature_baseline_evaluation.json",
+    "report/p219a_historical_feature_baseline_evaluation.md"
+  ],
+  "source_hashes": {
+    "report/p219a_historical_feature_baseline_evaluation.csv": "4c447f63e827d6fad4a4fdd6f2f36142cc601d6f622aceeca3a31f21a22075e7",
+    "report/p219a_historical_feature_baseline_evaluation.json": "dc4ac6fce1e0f8f92a87a3bd3ab74d6aa60d8ea4b8205b3c8e822a1cbb370298",
+    "report/p219a_historical_feature_baseline_evaluation.md": "2ba77c284d094a1e34770a1377cd47b25ef076f09c6b8187465ebcd0b970a1c9"
+  },
+  "source_summary": {
+    "observed_csv_column_count": 11,
+    "observed_csv_row_count": 24,
+    "p219_column_count": 11,
+    "p219_markdown_mentions_disclaimer": true,
+    "p219_output_columns": [
+      "source_row_id",
+      "game_date",
+      "game_pk",
+      "pitcher",
+      "pitch_type",
+      "actual_event_category",
+      "baseline_a_global_prediction",
+      "baseline_a_correct",
+      "baseline_b_pitch_type_prediction",
+      "baseline_b_correct",
+      "baseline_b_prediction_source"
+    ],
+    "p219_row_count": 24,
+    "p219_status": "PASS_P218A_ARTIFACT_ONLY_HISTORICAL_FEATURE_BASELINE_EVALUATION_PROTOTYPE",
+    "p219_task": "P219-A Historical Feature Baseline Evaluation Prototype"
+  },
+  "status": "PASS_P219A_ARTIFACT_ONLY_HISTORICAL_BASELINE_ERROR_ANALYSIS_DASHBOARD",
+  "task": "P220-A Historical Baseline Error Analysis Dashboard"
+}
