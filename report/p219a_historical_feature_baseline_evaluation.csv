@@ -1,0 +1,25 @@
+source_row_id,game_date,game_pk,pitcher,pitch_type,actual_event_category,baseline_a_global_prediction,baseline_a_correct,baseline_b_pitch_type_prediction,baseline_b_correct,baseline_b_prediction_source
+1,2024-04-01,745277,"Hancock, Emerson",SI,strike_like,strike_like,True,strike_like,True,global_fallback_due_to_tie
+2,2024-04-01,745277,"Hancock, Emerson",FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+3,2024-04-01,745277,"Hancock, Emerson",CH,strikeout,strike_like,False,strike_like,False,global_fallback_due_to_tie
+4,2024-04-01,745277,"Hancock, Emerson",FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+5,2024-04-01,745277,"Hancock, Emerson",FF,in_play_out,strike_like,False,strike_like,False,pitch_type_majority
+6,2024-04-01,745277,"Hancock, Emerson",SI,in_play_out,strike_like,False,strike_like,False,global_fallback_due_to_tie
+7,2024-04-01,745277,"Hancock, Emerson",CH,ball_like,strike_like,False,strike_like,False,global_fallback_due_to_tie
+8,2024-04-01,745277,"Hancock, Emerson",CH,in_play_out,strike_like,False,strike_like,False,global_fallback_due_to_tie
+9,2024-04-02,745273,"Castillo, Luis",SI,strike_like,strike_like,True,strike_like,True,global_fallback_due_to_tie
+10,2024-04-02,745273,"Castillo, Luis",FF,ball_like,strike_like,False,strike_like,False,pitch_type_majority
+11,2024-04-02,745273,"Castillo, Luis",FF,ball_like,strike_like,False,strike_like,False,pitch_type_majority
+12,2024-04-02,745273,"Castillo, Luis",FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+13,2024-04-02,745273,"Castillo, Luis",FF,ball_like,strike_like,False,strike_like,False,pitch_type_majority
+14,2024-04-02,745273,"Castillo, Luis",SI,in_play_hit,strike_like,False,strike_like,False,global_fallback_due_to_tie
+15,2024-04-02,745273,"Castillo, Luis",FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+16,2024-04-02,745273,"Castillo, Luis",FF,in_play_out,strike_like,False,strike_like,False,pitch_type_majority
+17,2024-04-03,745275,"Kirby, George",SI,in_play_hit,strike_like,False,strike_like,False,global_fallback_due_to_tie
+18,2024-04-03,745275,"Kirby, George",SI,strike_like,strike_like,True,strike_like,True,global_fallback_due_to_tie
+19,2024-04-03,745275,"Kirby, George",FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+20,2024-04-03,745275,"Kirby, George",FS,hit_by_pitch,strike_like,False,hit_by_pitch,True,pitch_type_majority
+21,2024-04-03,745275,"Kirby, George",ST,ball_like,strike_like,False,ball_like,True,pitch_type_majority
+22,2024-04-03,745275,"Kirby, George",FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+23,2024-04-03,745275,"Kirby, George",KC,ball_like,strike_like,False,ball_like,True,pitch_type_majority
+24,2024-04-03,745275,"Kirby, George",SI,in_play_hit,strike_like,False,strike_like,False,global_fallback_due_to_tie
