@@ -1,0 +1,388 @@
+{
+  "calibration": {
+    "calibrated": {
+      "accuracy": 0.6059670781893004,
+      "brier_score": 0.23745885355411792,
+      "calibration_error": 0.017957632592910982,
+      "decided_count": 972
+    },
+    "calibration_beats_raw_brier": true,
+    "calibration_beats_raw_ece": true,
+    "platt_a": 0.6654127605501342,
+    "platt_b": -0.02590397952986237,
+    "raw": {
+      "accuracy": 0.6008230452674898,
+      "brier_score": 0.23953312952306713,
+      "calibration_error": 0.04825989317977066,
+      "decided_count": 972
+    },
+    "reliability_calibrated": [
+      {
+        "bin_hi": 0.1,
+        "bin_lo": 0.0,
+        "empirical_rate": null,
+        "gap": null,
+        "mean_predicted": null,
+        "n": 0
+      },
+      {
+        "bin_hi": 0.2,
+        "bin_lo": 0.1,
+        "empirical_rate": null,
+        "gap": null,
+        "mean_predicted": null,
+        "n": 0
+      },
+      {
+        "bin_hi": 0.3,
+        "bin_lo": 0.2,
+        "empirical_rate": 0.3571,
+        "gap": 0.0814,
+        "mean_predicted": 0.2758,
+        "n": 28
+      },
+      {
+        "bin_hi": 0.4,
+        "bin_lo": 0.3,
+        "empirical_rate": 0.3625,
+        "gap": 0.0023,
+        "mean_predicted": 0.3602,
+        "n": 320
+      },
+      {
+        "bin_hi": 0.5,
+        "bin_lo": 0.4,
+        "empirical_rate": 0.4096,
+        "gap": 0.0386,
+        "mean_predicted": 0.4482,
+        "n": 271
+      },
+      {
+        "bin_hi": 0.6,
+        "bin_lo": 0.5,
+        "empirical_rate": 0.547,
+        "gap": 0.0027,
+        "mean_predicted": 0.5498,
+        "n": 234
+      },
+      {
+        "bin_hi": 0.7,
+        "bin_lo": 0.6,
+        "empirical_rate": 0.6579,
+        "gap": 0.0259,
+        "mean_predicted": 0.632,
+        "n": 114
+      },
+      {
+        "bin_hi": 0.8,
+        "bin_lo": 0.7,
+        "empirical_rate": 0.8,
+        "gap": 0.0786,
+        "mean_predicted": 0.7214,
+        "n": 5
+      },
+      {
+        "bin_hi": 0.9,
+        "bin_lo": 0.8,
+        "empirical_rate": null,
+        "gap": null,
+        "mean_predicted": null,
+        "n": 0
+      },
+      {
+        "bin_hi": 1.0,
+        "bin_lo": 0.9,
+        "empirical_rate": null,
+        "gap": null,
+        "mean_predicted": null,
+        "n": 0
+      }
+    ],
+    "reliability_raw": [
+      {
+        "bin_hi": 0.1,
+        "bin_lo": 0.0,
+        "empirical_rate": null,
+        "gap": null,
+        "mean_predicted": null,
+        "n": 0
+      },
+      {
+        "bin_hi": 0.2,
+        "bin_lo": 0.1,
+        "empirical_rate": 0.3571,
+        "gap": 0.1755,
+        "mean_predicted": 0.1816,
+        "n": 14
+      },
+      {
+        "bin_hi": 0.3,
+        "bin_lo": 0.2,
+        "empirical_rate": 0.3151,
+        "gap": 0.053,
+        "mean_predicted": 0.2621,
+        "n": 146
+      },
+      {
+        "bin_hi": 0.4,
+        "bin_lo": 0.3,
+        "empirical_rate": 0.4015,
+        "gap": 0.0561,
+        "mean_predicted": 0.3454,
+        "n": 264
+      },
+      {
+        "bin_hi": 0.5,
+        "bin_lo": 0.4,
+        "empirical_rate": 0.4167,
+        "gap": 0.0325,
+        "mean_predicted": 0.4492,
+        "n": 180
+      },
+      {
+        "bin_hi": 0.6,
+        "bin_lo": 0.5,
+        "empirical_rate": 0.5217,
+        "gap": 0.0298,
+        "mean_predicted": 0.5515,
+        "n": 161
+      },
+      {
+        "bin_hi": 0.7,
+        "bin_lo": 0.6,
+        "empirical_rate": 0.6111,
+        "gap": 0.0359,
+        "mean_predicted": 0.647,
+        "n": 144
+      },
+      {
+        "bin_hi": 0.8,
+        "bin_lo": 0.7,
+        "empirical_rate": 0.6271,
+        "gap": 0.0984,
+        "mean_predicted": 0.7255,
+        "n": 59
+      },
+      {
+        "bin_hi": 0.9,
+        "bin_lo": 0.8,
+        "empirical_rate": 0.75,
+        "gap": 0.0674,
+        "mean_predicted": 0.8174,
+        "n": 4
+      },
+      {
+        "bin_hi": 1.0,
+        "bin_lo": 0.9,
+        "empirical_rate": null,
+        "gap": null,
+        "mean_predicted": null,
+        "n": 0
+      }
+    ],
+    "train_decided_n": 1458,
+    "train_frac": 0.6,
+    "train_n": 1458
+  },
+  "disclaimers": [
+    "LOCAL HISTORICAL / REPLAY BACKTEST ONLY",
+    "descriptive backtest only; NO future prediction / hit-rate claim",
+    "NO betting recommendation; NO EV/Kelly claim; NOT a proven edge",
+    "NO live-market claim; NOT production; NOT real betting",
+    "chronological split grid and monthly windows are deterministic and no-shuffle; no random search was performed",
+    "Platt calibration (a, b) is fit on the train fold ONLY; never fit on run line price, odds, or market-implied probability",
+    "run line spread is used ONLY as event threshold / settlement; American odds prices are never read by this module",
+    "push rows are excluded from accuracy/Brier/ECE denominators",
+    "this MVP does not compute bootstrap confidence intervals; robustness is assessed via a pre-registered fixed Brier near-tie tolerance only"
+  ],
+  "gate0_reproduction": {
+    "anchor_train_frac": 0.6,
+    "coinflip_accuracy": 0.4567901234567901,
+    "coinflip_brier": 0.25,
+    "poisson_accuracy": 0.6008230452674898,
+    "poisson_brier": 0.2395331280899321,
+    "poisson_ece": 0.04825990329218105,
+    "status": "GATE0_REPRODUCED_P226A_RUN_LINE_METRICS",
+    "test_period": [
+      "2025-07-18",
+      "2025-09-28"
+    ],
+    "test_rows": 972,
+    "train_period": [
+      "2025-03-18",
+      "2025-07-18"
+    ],
+    "train_rows": 1458
+  },
+  "monthly_windows": [
+    {
+      "brier_margin": null,
+      "coinflip_brier": null,
+      "home_adv": null,
+      "poisson_accuracy": null,
+      "poisson_beats_coinflip_brier": null,
+      "poisson_brier": null,
+      "poisson_ece": null,
+      "status": "SKIPPED_INSUFFICIENT_TRAIN",
+      "test_rows": 67,
+      "train_rows": 0,
+      "window_id": "2025-03"
+    },
+    {
+      "brier_margin": null,
+      "coinflip_brier": null,
+      "home_adv": null,
+      "poisson_accuracy": null,
+      "poisson_beats_coinflip_brier": null,
+      "poisson_brier": null,
+      "poisson_ece": null,
+      "status": "SKIPPED_INSUFFICIENT_TRAIN",
+      "test_rows": 391,
+      "train_rows": 67,
+      "window_id": "2025-04"
+    },
+    {
+      "brier_margin": 0.018301,
+      "coinflip_brier": 0.25,
+      "home_adv": 1.044186,
+      "poisson_accuracy": 0.6472019464720195,
+      "poisson_beats_coinflip_brier": true,
+      "poisson_brier": 0.23169907094772502,
+      "poisson_ece": 0.06006302472671471,
+      "status": "EVALUATED",
+      "test_rows": 411,
+      "train_rows": 458,
+      "window_id": "2025-05"
+    },
+    {
+      "brier_margin": -0.000308,
+      "coinflip_brier": 0.25,
+      "home_adv": 1.000614,
+      "poisson_accuracy": 0.5894206549118388,
+      "poisson_beats_coinflip_brier": false,
+      "poisson_brier": 0.2503076683863455,
+      "poisson_ece": 0.10012323785821282,
+      "status": "EVALUATED",
+      "test_rows": 397,
+      "train_rows": 869,
+      "window_id": "2025-06"
+    },
+    {
+      "brier_margin": 0.017767,
+      "coinflip_brier": 0.25,
+      "home_adv": 1.007794,
+      "poisson_accuracy": 0.6314363143631436,
+      "poisson_beats_coinflip_brier": true,
+      "poisson_brier": 0.23223290349624515,
+      "poisson_ece": 0.045406614113901296,
+      "status": "EVALUATED",
+      "test_rows": 369,
+      "train_rows": 1266,
+      "window_id": "2025-07"
+    },
+    {
+      "brier_margin": 0.003633,
+      "coinflip_brier": 0.25,
+      "home_adv": 1.017144,
+      "poisson_accuracy": 0.5748218527315915,
+      "poisson_beats_coinflip_brier": true,
+      "poisson_brier": 0.24636691106664835,
+      "poisson_ece": 0.05962425751436882,
+      "status": "EVALUATED",
+      "test_rows": 421,
+      "train_rows": 1635,
+      "window_id": "2025-08"
+    },
+    {
+      "brier_margin": 0.019197,
+      "coinflip_brier": 0.25,
+      "home_adv": 1.027085,
+      "poisson_accuracy": 0.6310160427807486,
+      "poisson_beats_coinflip_brier": true,
+      "poisson_brier": 0.23080291694126612,
+      "poisson_ece": 0.045533213555274954,
+      "status": "EVALUATED",
+      "test_rows": 374,
+      "train_rows": 2056,
+      "window_id": "2025-09"
+    }
+  ],
+  "robustness_conclusion": {
+    "brier_near_tie_tolerance": 0.005,
+    "label": "ROBUST_ENOUGH_FOR_FURTHER_HISTORICAL_RESEARCH",
+    "monthly_windows_evaluated": 5,
+    "monthly_windows_not_worse_within_tolerance": 5,
+    "monthly_windows_skipped": 2,
+    "monthly_windows_strict_wins": 4,
+    "split_grid_not_worse_within_tolerance": 3,
+    "split_grid_strict_wins": 3,
+    "split_grid_total": 3
+  },
+  "scope": "LOCAL_HISTORICAL_REPLAY_ONLY",
+  "split_grid": [
+    {
+      "brier_margin": 0.011765,
+      "coinflip_accuracy": 0.46584362139917695,
+      "coinflip_brier": 0.25,
+      "poisson_accuracy": 0.6106995884773663,
+      "poisson_beats_coinflip_brier": true,
+      "poisson_brier": 0.23823526354110863,
+      "poisson_decided": 1215,
+      "poisson_ece": 0.041429171193415625,
+      "test_period": [
+        "2025-06-27",
+        "2025-09-28"
+      ],
+      "test_rows": 1215,
+      "train_frac": 0.5,
+      "train_period": [
+        "2025-03-18",
+        "2025-06-27"
+      ],
+      "train_rows": 1215
+    },
+    {
+      "brier_margin": 0.010467,
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "poisson_accuracy": 0.6008230452674898,
+      "poisson_beats_coinflip_brier": true,
+      "poisson_brier": 0.2395331280899321,
+      "poisson_decided": 972,
+      "poisson_ece": 0.04825990329218105,
+      "test_period": [
+        "2025-07-18",
+        "2025-09-28"
+      ],
+      "test_rows": 972,
+      "train_frac": 0.6,
+      "train_period": [
+        "2025-03-18",
+        "2025-07-18"
+      ],
+      "train_rows": 1458
+    },
+    {
+      "brier_margin": 0.011973,
+      "coinflip_accuracy": 0.45953360768175583,
+      "coinflip_brier": 0.25,
+      "poisson_accuracy": 0.6021947873799726,
+      "poisson_beats_coinflip_brier": true,
+      "poisson_brier": 0.23802675393776407,
+      "poisson_decided": 729,
+      "poisson_ece": 0.04123780521262003,
+      "test_period": [
+        "2025-08-05",
+        "2025-09-28"
+      ],
+      "test_rows": 729,
+      "train_frac": 0.7,
+      "train_period": [
+        "2025-03-18",
+        "2025-08-05"
+      ],
+      "train_rows": 1701
+    }
+  ],
+  "task": "P228-A run line robustness & calibration paper-only scorecard"
+}
