@@ -1,0 +1,5 @@
+market,model_name,row_count,decided_count,push_count,push_rate,accuracy,log_loss,brier_score,calibration_error,notes
+total,baseline_coinflip_50pct,972,918,54,0.05555555555555555,0.49564270152505446,0.6931471805599453,0.25,0.004357298474945537,reproduced from P226-A Gate 0 (unmodified upstream module)
+total,poisson_team_rate_model,972,918,54,0.05555555555555555,0.5021786492374728,0.7230907216213618,0.2637121374640414,0.09586421568627453,reproduced from P226-A Gate 0 (unmodified upstream module)
+total,variance_inflation_normal,972,918,54,0.05555555555555555,0.4912854030501089,0.7059897415936148,0.2561984153119716,0.07522408267499073,P227-A train-fold-only calibration of P226-A raw Poisson total
+total,platt_logistic_calibration,972,918,54,0.05555555555555555,0.5043572984749455,0.6987399101839809,0.25275595005573326,0.050951814305151444,P227-A train-fold-only calibration of P226-A raw Poisson total
