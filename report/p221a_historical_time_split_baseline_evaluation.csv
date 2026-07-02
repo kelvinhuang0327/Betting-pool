@@ -1,0 +1,17 @@
+split_id,train_date_range,eval_date,source_row_id,pitch_type,actual_event_category,baseline_a_prediction,baseline_a_correct,baseline_b_prediction,baseline_b_correct,baseline_b_prediction_source
+1,2024-04-01 to 2024-04-01,2024-04-02,9,SI,strike_like,in_play_out,False,in_play_out,False,global_fallback_due_to_tie
+1,2024-04-01 to 2024-04-01,2024-04-02,10,FF,ball_like,in_play_out,False,strike_like,False,pitch_type_majority
+1,2024-04-01 to 2024-04-01,2024-04-02,11,FF,ball_like,in_play_out,False,strike_like,False,pitch_type_majority
+1,2024-04-01 to 2024-04-01,2024-04-02,12,FF,strike_like,in_play_out,False,strike_like,True,pitch_type_majority
+1,2024-04-01 to 2024-04-01,2024-04-02,13,FF,ball_like,in_play_out,False,strike_like,False,pitch_type_majority
+1,2024-04-01 to 2024-04-01,2024-04-02,14,SI,in_play_hit,in_play_out,False,in_play_out,False,global_fallback_due_to_tie
+1,2024-04-01 to 2024-04-01,2024-04-02,15,FF,strike_like,in_play_out,False,strike_like,True,pitch_type_majority
+1,2024-04-01 to 2024-04-01,2024-04-02,16,FF,in_play_out,in_play_out,True,strike_like,False,pitch_type_majority
+2,2024-04-01 to 2024-04-02,2024-04-03,17,SI,in_play_hit,strike_like,False,strike_like,False,pitch_type_majority
+2,2024-04-01 to 2024-04-02,2024-04-03,18,SI,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+2,2024-04-01 to 2024-04-02,2024-04-03,19,FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+2,2024-04-01 to 2024-04-02,2024-04-03,20,FS,hit_by_pitch,strike_like,False,strike_like,False,global_fallback_missing_pitch_type
+2,2024-04-01 to 2024-04-02,2024-04-03,21,ST,ball_like,strike_like,False,strike_like,False,global_fallback_missing_pitch_type
+2,2024-04-01 to 2024-04-02,2024-04-03,22,FF,strike_like,strike_like,True,strike_like,True,pitch_type_majority
+2,2024-04-01 to 2024-04-02,2024-04-03,23,KC,ball_like,strike_like,False,strike_like,False,global_fallback_missing_pitch_type
+2,2024-04-01 to 2024-04-02,2024-04-03,24,SI,in_play_hit,strike_like,False,strike_like,False,pitch_type_majority
