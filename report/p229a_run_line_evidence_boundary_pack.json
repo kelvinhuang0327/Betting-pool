@@ -1,0 +1,122 @@
+{
+  "disclaimers": [
+    "LOCAL HISTORICAL / REPLAY BACKTEST ONLY",
+    "descriptive synthesis of already-published P226-A / P227-A / P228-A results; NOT a new model, NOT a re-run, NOT a re-derivation",
+    "NO betting recommendation; NO EV/Kelly claim; NOT a proven edge",
+    "NO live-market claim; NOT production; NOT real betting",
+    "NO future prediction; NO CLV claim; NO tradable-odds-edge claim",
+    "P226-A / P227-A / P228-A source artifacts are read-only inputs and are not modified by this pack",
+    "recommended next technical step is NOT authorized by this pack; a separate explicit Owner authorization is required before any further work begins"
+  ],
+  "evidence_inventory": {
+    "p226a_run_line_baseline": {
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "poisson_accuracy": 0.6008230452674898,
+      "poisson_brier": 0.2395331280899321,
+      "poisson_ece": 0.04825990329218105,
+      "source": "report/p226a_run_line_total_scorecard.json",
+      "test_period": [
+        "2025-07-18",
+        "2025-09-28"
+      ],
+      "test_rows": 972
+    },
+    "p227a_total_limitation": {
+      "beats_coinflip_brier": false,
+      "beats_poisson_brier": true,
+      "best_by_brier": "baseline_coinflip_50pct",
+      "coinflip_brier": 0.25,
+      "poisson_accuracy": 0.5021786492374728,
+      "poisson_brier": 0.2637121374640414,
+      "source": "report/p227a_total_calibration_scorecard.json"
+    },
+    "p228a_calibration": {
+      "calibrated_brier": 0.23745885355411792,
+      "calibrated_ece": 0.017957632592910982,
+      "calibration_beats_raw_brier": true,
+      "calibration_beats_raw_ece": true,
+      "raw_brier": 0.23953312952306713,
+      "raw_ece": 0.04825989317977066,
+      "source": "report/p228a_run_line_robustness_scorecard.json"
+    },
+    "p228a_monthly_robustness": {
+      "monthly_windows_evaluated": 5,
+      "monthly_windows_not_worse_within_tolerance": 5,
+      "monthly_windows_skipped": 2,
+      "monthly_windows_strict_wins": 4,
+      "robustness_label": "ROBUST_ENOUGH_FOR_FURTHER_HISTORICAL_RESEARCH",
+      "source": "report/p228a_run_line_robustness_scorecard.json"
+    },
+    "p228a_split_robustness": {
+      "source": "report/p228a_run_line_robustness_scorecard.json",
+      "split_grid_not_worse_within_tolerance": 3,
+      "split_grid_strict_wins": 3,
+      "split_grid_total": 3,
+      "splits": [
+        {
+          "beats_coinflip": true,
+          "poisson_accuracy": 0.6106995884773663,
+          "poisson_brier": 0.23823526354110863,
+          "test_period": [
+            "2025-06-27",
+            "2025-09-28"
+          ],
+          "train_frac": 0.5
+        },
+        {
+          "beats_coinflip": true,
+          "poisson_accuracy": 0.6008230452674898,
+          "poisson_brier": 0.2395331280899321,
+          "test_period": [
+            "2025-07-18",
+            "2025-09-28"
+          ],
+          "train_frac": 0.6
+        },
+        {
+          "beats_coinflip": true,
+          "poisson_accuracy": 0.6021947873799726,
+          "poisson_brier": 0.23802675393776407,
+          "test_period": [
+            "2025-08-05",
+            "2025-09-28"
+          ],
+          "train_frac": 0.7
+        }
+      ]
+    }
+  },
+  "missing_evidence_next_gates": [
+    "True point-in-time (PIT) odds with real capture timestamps (current data is a post-game unverified snapshot, not a pregame feed).",
+    "Multi-season data, if locally available, to test cross-season robustness (current evidence is a single season, 2025, plus a 2024 warm-up-only set).",
+    "Stronger data provenance / a verified-real odds source for run line settlement and any future market-reference use.",
+    "Starter / lineup / injury point-in-time features, if made available later, to replace the current team-rate-only inputs.",
+    "Final Owner decision before any future-output, live, or production work is attempted."
+  ],
+  "not_a_new_model_task": true,
+  "recommended_next_technical_step": {
+    "alternatives": [
+      "feature-ablation scorecard for Run Line",
+      "true-PIT odds provenance audit"
+    ],
+    "authorization_status": "NOT_AUTHORIZED_YET",
+    "candidate": "local multi-season data availability audit for Run Line",
+    "note": "This pack recommends but does not authorize the next step; a separate explicit Owner authorization is required before any further work begins."
+  },
+  "scope": "LOCAL_HISTORICAL_REPLAY_ONLY",
+  "supported_claims": [
+    "Run Line signal is robust enough for further historical research (P228-A final label: `ROBUST_ENOUGH_FOR_FURTHER_HISTORICAL_RESEARCH`).",
+    "Run Line is stronger than Total under the current historical, paper-only Poisson team-rate model family (Run Line beats the 0.5 coinflip Brier baseline; Total does not).",
+    "Deterministic, test-covered local artifacts exist for P226-A and P228-A (reports + CSVs + passing pytest suites), so the reported figures are reproducible from tracked repo state."
+  ],
+  "task": "P229-A run line evidence boundary pack",
+  "unsupported_claims": [
+    "NO real betting edge claim — all figures are descriptive historical backtest statistics, not a forward-looking edge claim.",
+    "NO live readiness — no live market data transport exists or has been authorized for this line of work.",
+    "NO production readiness — no DB / registry / production writes have occurred as part of P226-A / P227-A / P228-A / this pack.",
+    "NO future prediction ability — all evaluated games are historical (already-played 2025 season games); no forward-looking game is scored.",
+    "NO proof of tradable odds edge — no verified pregame odds price feed has been used; run line lines/prices are used for settlement and descriptive reference only, never as a model input feature.",
+    "NO CLV evidence — the odds source (`mlb_odds_2025_real.csv`) is a post-game unverified snapshot (`is_verified_real=False`), not a point-in-time pregame capture, so no closing-line-value claim is possible."
+  ]
+}
