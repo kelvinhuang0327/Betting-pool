@@ -1,0 +1,322 @@
+{
+  "artifact_chain": [
+    {
+      "artifact_id": "P216-A",
+      "artifacts": [
+        "report/p216a_pybaseball_multidate_sample_pack.csv",
+        "report/p216a_pybaseball_multidate_sample_pack.json",
+        "report/p216a_pybaseball_multidate_sample_pack.md"
+      ],
+      "status": "PASS_FIXED_MULTIDATE_HISTORICAL_SAMPLE_PACK",
+      "summary": "Fixed 24-row, 16-column historical sample covering 2024-04-01, 2024-04-02, 2024-04-03.",
+      "task": "P216-A pybaseball Multi-Date Historical Sample Pack"
+    },
+    {
+      "artifact_id": "P217-A",
+      "artifacts": [
+        "report/p217a_pybaseball_multidate_quality_dashboard.html",
+        "report/p217a_pybaseball_multidate_quality_dashboard.json"
+      ],
+      "status": "PASS_P216A_ARTIFACT_ONLY_MULTIDATE_QUALITY_DASHBOARD",
+      "summary": "Deterministic quality dashboard over the same 24-row snapshot with per-date row counts {'2024-04-01': 8, '2024-04-02': 8, '2024-04-03': 8}.",
+      "task": "P217-A pybaseball Multi-Date Sample Quality Dashboard"
+    },
+    {
+      "artifact_id": "P218-A",
+      "artifacts": [
+        "report/p218a_historical_sample_feature_table.csv",
+        "report/p218a_historical_sample_feature_table.json",
+        "report/p218a_historical_sample_feature_table.md"
+      ],
+      "status": "PASS_P216A_P217A_ARTIFACT_ONLY_HISTORICAL_SAMPLE_FEATURE_TABLE_PROTOTYPE",
+      "summary": "24-row, 18-column feature table derived only from the fixed P216/P217 artifacts.",
+      "task": "P218-A Historical Sample Feature Table Prototype"
+    },
+    {
+      "artifact_id": "P219-A",
+      "artifacts": [
+        "report/p219a_historical_feature_baseline_evaluation.csv",
+        "report/p219a_historical_feature_baseline_evaluation.json",
+        "report/p219a_historical_feature_baseline_evaluation.md"
+      ],
+      "status": "PASS_P218A_ARTIFACT_ONLY_HISTORICAL_FEATURE_BASELINE_EVALUATION_PROTOTYPE",
+      "summary": "In-sample deterministic baselines on 24 rows: baseline A accuracy 0.375, baseline B accuracy 0.5.",
+      "task": "P219-A Historical Feature Baseline Evaluation Prototype"
+    },
+    {
+      "artifact_id": "P220-A",
+      "artifacts": [
+        "report/p220a_historical_baseline_error_dashboard.html",
+        "report/p220a_historical_baseline_error_dashboard.json"
+      ],
+      "status": "PASS_P219A_ARTIFACT_ONLY_HISTORICAL_BASELINE_ERROR_ANALYSIS_DASHBOARD",
+      "summary": "Error dashboard for P219 in-sample baselines, including pitch-type fallback analysis.",
+      "task": "P220-A Historical Baseline Error Analysis Dashboard"
+    },
+    {
+      "artifact_id": "P221-A",
+      "artifacts": [
+        "report/p221a_historical_time_split_baseline_evaluation.csv",
+        "report/p221a_historical_time_split_baseline_evaluation.json",
+        "report/p221a_historical_time_split_baseline_evaluation.md"
+      ],
+      "status": "PASS_P218A_P219A_P220A_ARTIFACT_ONLY_HISTORICAL_TIME_SPLIT_BASELINE_EVALUATION_PROTOTYPE",
+      "summary": "Time-split holdout baseline evaluation on 16 rows across 2 splits: baseline A accuracy 0.25, baseline B accuracy 0.3125.",
+      "task": "P221-A Historical Time-Split Baseline Evaluation Prototype"
+    },
+    {
+      "artifact_id": "P222-A",
+      "artifacts": [
+        "report/p222a_historical_time_split_error_dashboard.html",
+        "report/p222a_historical_time_split_error_dashboard.json"
+      ],
+      "status": "PASS_P221A_P220A_ARTIFACT_ONLY_HISTORICAL_TIME_SPLIT_ERROR_ANALYSIS_DASHBOARD",
+      "summary": "Time-split error dashboard comparing P221 holdout behavior against P220 in-sample behavior.",
+      "task": "P222-A Historical Time-Split Error Analysis Dashboard"
+    }
+  ],
+  "current_capabilities": [
+    "Verify a fixed P216-P222 evidence chain by SHA256 across 18 committed artifacts.",
+    "Trace deterministic lineage from bounded historical sample collection through quality review, feature construction, in-sample baseline evaluation, and time-split holdout evaluation.",
+    "Quantify current baseline behavior on the fixed sample: P219 baseline A accuracy 0.375, P219 baseline B accuracy 0.5, P221 baseline A accuracy 0.25, and P221 baseline B accuracy 0.3125.",
+    "Compare in-sample versus time-split degradation using the committed P220 and P222 dashboard evidence."
+  ],
+  "disclaimer": "Historical evaluation evidence index only. Not live predictions, not betting advice.",
+  "historical_only_disclaimer": "Historical evaluation evidence index only. Not live predictions, not betting advice.",
+  "limitations": [
+    "Fixed bounded sample only: P216/P218/P219/P220 are based on 24 rows across 3 dates for the committed historical snapshot.",
+    "Feature engineering remains heuristic and source-bounded; the artifacts do not establish full point-in-time pregame context, complete count state, or a production feature contract.",
+    "P219/P220 evidence is in-sample on the same 24 rows used to derive the baseline rules, so it does not establish out-of-sample predictive ability.",
+    "P221/P222 holdout evidence is still small: 16 evaluated rows across 2 time-split holdout dates.",
+    "Baseline A and baseline B are deterministic reference heuristics, not trained production models.",
+    "P221 baseline B fallback coverage remains weak: 5 of 16 rows used global fallback, with fallback accuracy 0.0.",
+    "Current evidence does not establish live data readiness, point-in-time integrity, or production activation readiness.",
+    "This index reads committed artifacts only and does not independently refresh, extend, or relabel the historical sample."
+  ],
+  "metrics": {
+    "p216_sample": {
+      "column_count": 16,
+      "csv_column_count": 16,
+      "csv_row_count": 24,
+      "observed_dates": [
+        "2024-04-01",
+        "2024-04-02",
+        "2024-04-03"
+      ],
+      "per_date_row_counts": {
+        "2024-04-01": 8,
+        "2024-04-02": 8,
+        "2024-04-03": 8
+      },
+      "row_count": 24,
+      "sample_size_limits": {
+        "per_date_row_limit": 8,
+        "preview_row_limit": 5,
+        "requested_date_count": 3,
+        "total_row_limit": 24
+      }
+    },
+    "p218_feature_table": {
+      "column_count": 18,
+      "csv_column_count": 18,
+      "csv_row_count": 24,
+      "feature_columns": [
+        "source_row_id",
+        "game_date",
+        "game_pk",
+        "home_team",
+        "away_team",
+        "inning",
+        "inning_topbot",
+        "pitcher",
+        "batter",
+        "pitch_type",
+        "event_category",
+        "is_in_play",
+        "is_strike_like",
+        "is_ball_like",
+        "release_speed",
+        "release_speed_bucket",
+        "zone",
+        "zone_bucket"
+      ],
+      "row_count": 24
+    },
+    "p219_in_sample": {
+      "baseline_a_global_majority": {
+        "accuracy": 0.375,
+        "correct_count": 9,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 24,
+        "row_count": 24
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy": 0.5,
+        "correct_count": 12,
+        "coverage_fraction": 0.583333,
+        "coverage_rows": 14,
+        "row_count": 24
+      },
+      "column_count": 11,
+      "comparison": {
+        "accuracy_delta_b_minus_a": 0.125,
+        "correct_row_delta_b_minus_a": 3
+      },
+      "row_count": 24
+    },
+    "p220_dashboard_hashes": {
+      "report/p220a_historical_baseline_error_dashboard.html": "b239b2249810b0b9c04551e625ac0c4f70c6298427756ab8e1cd5c2b80991f19",
+      "report/p220a_historical_baseline_error_dashboard.json": "abd4a2540ea2109ee77f30a4a836f1800e3218cc003ed92fda0e1043c8f695f3"
+    },
+    "p221_time_split": {
+      "baseline_a_global_majority": {
+        "accuracy": 0.25,
+        "correct_count": 4,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 16,
+        "row_count": 16
+      },
+      "baseline_b_coverage": {
+        "all_global_fallback": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.3125,
+          "rows": 5
+        },
+        "direct_pitch_type_majority": {
+          "accuracy": 0.454545,
+          "correct_rows": 5,
+          "fraction": 0.6875,
+          "rows": 11
+        },
+        "global_fallback_due_to_tie": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.125,
+          "rows": 2
+        },
+        "global_fallback_missing_pitch_type": {
+          "accuracy": 0.0,
+          "correct_rows": 0,
+          "fraction": 0.1875,
+          "rows": 3
+        }
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy": 0.3125,
+        "correct_count": 5,
+        "coverage_fraction": 1.0,
+        "coverage_rows": 16,
+        "row_count": 16
+      },
+      "column_count": 11,
+      "comparison": {
+        "accuracy_delta_b_minus_a": 0.0625,
+        "correct_row_delta_b_minus_a": 1
+      },
+      "row_count": 16,
+      "split_count": 2
+    },
+    "p222_dashboard_hashes": {
+      "report/p222a_historical_time_split_error_dashboard.html": "620dea39de7464a7d1ae6f46dba9aab0d3687c2bb33b8d496b45a447ba783c94",
+      "report/p222a_historical_time_split_error_dashboard.json": "97a9646e4892d7fcc49c48679760f8a86cff05f8c11565460c2c824d118b016f"
+    },
+    "p222_vs_p220_dashboard": {
+      "baseline_a_global_majority": {
+        "accuracy_delta_time_split_minus_p220": -0.125,
+        "p220_accuracy": 0.375,
+        "p222_time_split_accuracy": 0.25
+      },
+      "baseline_b_pitch_type_majority_with_global_fallback": {
+        "accuracy_delta_time_split_minus_p220": -0.1875,
+        "p220_accuracy": 0.5,
+        "p222_time_split_accuracy": 0.3125
+      }
+    }
+  },
+  "next_step_options": [
+    {
+      "decision_point": "Authorize point-in-time feature and lineage contract design before any model design work.",
+      "option_id": "cto_option_1",
+      "requires_new_artifacts": true,
+      "why_now": "The current evidence chain is historical and deterministic, but it does not prove point-in-time feature integrity."
+    },
+    {
+      "decision_point": "Expand the bounded historical sample and rerun the same artifact chain before interpreting baseline behavior more broadly.",
+      "option_id": "cto_option_2",
+      "requires_new_artifacts": true,
+      "why_now": "The present evidence is limited to 24 in-sample rows and 16 holdout rows."
+    },
+    {
+      "decision_point": "Revisit target and feature design to reduce sparse classes and fallback-heavy baseline behavior before any model experimentation.",
+      "option_id": "cto_option_3",
+      "requires_new_artifacts": true,
+      "why_now": "Baseline B still relies on global fallback for a material share of holdout rows and struggles on minority classes."
+    },
+    {
+      "decision_point": "Defer model design authorization until point-in-time integrity and broader historical coverage are explicitly demonstrated.",
+      "option_id": "cto_option_4",
+      "requires_new_artifacts": false,
+      "why_now": "Nothing in the current evidence chain establishes live or production-readiness."
+    }
+  ],
+  "not_claimed": [
+    "No future predictive ability is established.",
+    "No betting advice or wagering edge is established.",
+    "No ROI, EV, Kelly, or CLV is established.",
+    "No production readiness or live pipeline readiness is established.",
+    "No model training, remote data refresh, or pybaseball invocation occurred in this task.",
+    "No database writes or live provider calls occurred in this task."
+  ],
+  "prohibited_claims": [
+    "Do not claim future prediction ability from this evidence index.",
+    "Do not claim betting advice, wagering edge, or pick quality from this evidence index.",
+    "Do not claim ROI, EV, Kelly, or CLV from this evidence index.",
+    "Do not claim production readiness or live pipeline readiness from this evidence index.",
+    "Do not claim season-wide or league-wide generalization from this bounded historical snapshot.",
+    "Do not claim point-in-time feature integrity beyond what the fixed P216-P222 artifacts explicitly show."
+  ],
+  "source_artifacts": [
+    "report/p216a_pybaseball_multidate_sample_pack.csv",
+    "report/p216a_pybaseball_multidate_sample_pack.json",
+    "report/p216a_pybaseball_multidate_sample_pack.md",
+    "report/p217a_pybaseball_multidate_quality_dashboard.html",
+    "report/p217a_pybaseball_multidate_quality_dashboard.json",
+    "report/p218a_historical_sample_feature_table.csv",
+    "report/p218a_historical_sample_feature_table.json",
+    "report/p218a_historical_sample_feature_table.md",
+    "report/p219a_historical_feature_baseline_evaluation.csv",
+    "report/p219a_historical_feature_baseline_evaluation.json",
+    "report/p219a_historical_feature_baseline_evaluation.md",
+    "report/p220a_historical_baseline_error_dashboard.html",
+    "report/p220a_historical_baseline_error_dashboard.json",
+    "report/p221a_historical_time_split_baseline_evaluation.csv",
+    "report/p221a_historical_time_split_baseline_evaluation.json",
+    "report/p221a_historical_time_split_baseline_evaluation.md",
+    "report/p222a_historical_time_split_error_dashboard.html",
+    "report/p222a_historical_time_split_error_dashboard.json"
+  ],
+  "source_hash_validation": "PASS_ALL_FIXED_P216_P222_SOURCE_HASHES_MATCH",
+  "source_hashes": {
+    "report/p216a_pybaseball_multidate_sample_pack.csv": "e2d2eb233d4cb930ba7a886d7ca3350922aea671343ba23c6979f9dcedcac3c0",
+    "report/p216a_pybaseball_multidate_sample_pack.json": "c4f048a072097378978dbb71b1ba60749f0014157b91affd9a3438f6531e72c8",
+    "report/p216a_pybaseball_multidate_sample_pack.md": "f3ad49921b60df67449c6c846777318b5c4e81d79db393b47a14eac0c1e800b9",
+    "report/p217a_pybaseball_multidate_quality_dashboard.html": "568ebfaca288a0c8dce56117d5f82673e89de074f46598a16067356556c657f0",
+    "report/p217a_pybaseball_multidate_quality_dashboard.json": "850cfc282505df70f5472133d16ec1772df5411bdddb26bf30be6b5c414ac516",
+    "report/p218a_historical_sample_feature_table.csv": "d3d00176e3e40163c8d38a60019e204b0d37ef7efb745b638e797578f197b507",
+    "report/p218a_historical_sample_feature_table.json": "60fde1062e935c7f5d37a693611e6433d765b905fb7e1a499c513bf728e39844",
+    "report/p218a_historical_sample_feature_table.md": "28aa4b4d17bade86fe9c51990cf1798640967ea3a6e7388a81e54d485efbf016",
+    "report/p219a_historical_feature_baseline_evaluation.csv": "4c447f63e827d6fad4a4fdd6f2f36142cc601d6f622aceeca3a31f21a22075e7",
+    "report/p219a_historical_feature_baseline_evaluation.json": "dc4ac6fce1e0f8f92a87a3bd3ab74d6aa60d8ea4b8205b3c8e822a1cbb370298",
+    "report/p219a_historical_feature_baseline_evaluation.md": "2ba77c284d094a1e34770a1377cd47b25ef076f09c6b8187465ebcd0b970a1c9",
+    "report/p220a_historical_baseline_error_dashboard.html": "b239b2249810b0b9c04551e625ac0c4f70c6298427756ab8e1cd5c2b80991f19",
+    "report/p220a_historical_baseline_error_dashboard.json": "abd4a2540ea2109ee77f30a4a836f1800e3218cc003ed92fda0e1043c8f695f3",
+    "report/p221a_historical_time_split_baseline_evaluation.csv": "2d17483e66a11069806f4b0f49bcd905f1d427ab56425edef9f24aba8844d3ae",
+    "report/p221a_historical_time_split_baseline_evaluation.json": "0ccec8bc6b01c5bbdd8a3c082cbbc161d4a5fc0f39cc3cfe51948199e7528982",
+    "report/p221a_historical_time_split_baseline_evaluation.md": "f31c00dbd65a86ae0224cbd147c1e2c39c45a58e13791f702266c54cb5b05617",
+    "report/p222a_historical_time_split_error_dashboard.html": "620dea39de7464a7d1ae6f46dba9aab0d3687c2bb33b8d496b45a447ba783c94",
+    "report/p222a_historical_time_split_error_dashboard.json": "97a9646e4892d7fcc49c48679760f8a86cff05f8c11565460c2c824d118b016f"
+  },
+  "status": "PASS_P216A_P222A_ARTIFACT_ONLY_HISTORICAL_EVALUATION_EVIDENCE_INDEX",
+  "task": "P223-A Historical Evaluation Evidence Index"
+}
