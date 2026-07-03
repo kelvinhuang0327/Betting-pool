@@ -1,0 +1,361 @@
+{
+  "ablation_results": [
+    {
+      "accuracy": 0.6106995884773663,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.23823526354110863,
+      "calibration_error": 0.041429171193415625,
+      "coinflip_accuracy": 0.46584362139917695,
+      "coinflip_brier": 0.25,
+      "decided_count": 1215,
+      "delta_accuracy_vs_full": 0.0,
+      "delta_brier_vs_full": 0.0,
+      "home_adv": 0.998088,
+      "not_worse_within_tolerance": true,
+      "test_rows": 1215,
+      "train_frac": 0.5,
+      "train_rows": 1215,
+      "variant": "full_model"
+    },
+    {
+      "accuracy": 0.6172839506172839,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.23883381967393993,
+      "calibration_error": 0.05297163209876544,
+      "coinflip_accuracy": 0.46584362139917695,
+      "coinflip_brier": 0.25,
+      "decided_count": 1215,
+      "delta_accuracy_vs_full": 0.006584,
+      "delta_brier_vs_full": 0.000599,
+      "home_adv": 0.997383,
+      "not_worse_within_tolerance": true,
+      "test_rows": 1215,
+      "train_frac": 0.5,
+      "train_rows": 1215,
+      "variant": "ablate_offense_rate"
+    },
+    {
+      "accuracy": 0.6131687242798354,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.24145359787444035,
+      "calibration_error": 0.058429661728395095,
+      "coinflip_accuracy": 0.46584362139917695,
+      "coinflip_brier": 0.25,
+      "decided_count": 1215,
+      "delta_accuracy_vs_full": 0.002469,
+      "delta_brier_vs_full": 0.003218,
+      "home_adv": 0.998821,
+      "not_worse_within_tolerance": true,
+      "test_rows": 1215,
+      "train_frac": 0.5,
+      "train_rows": 1215,
+      "variant": "ablate_defense_rate"
+    },
+    {
+      "accuracy": 0.6098765432098765,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.2456464042073317,
+      "calibration_error": 0.08832279341563787,
+      "coinflip_accuracy": 0.46584362139917695,
+      "coinflip_brier": 0.25,
+      "decided_count": 1215,
+      "delta_accuracy_vs_full": -0.000823,
+      "delta_brier_vs_full": 0.007411,
+      "home_adv": 0.997967,
+      "not_worse_within_tolerance": true,
+      "test_rows": 1215,
+      "train_frac": 0.5,
+      "train_rows": 1215,
+      "variant": "ablate_team_strength_both"
+    },
+    {
+      "accuracy": 0.6115226337448559,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.23820656058584608,
+      "calibration_error": 0.040007327572016464,
+      "coinflip_accuracy": 0.46584362139917695,
+      "coinflip_brier": 0.25,
+      "decided_count": 1215,
+      "delta_accuracy_vs_full": 0.000823,
+      "delta_brier_vs_full": -2.9e-05,
+      "home_adv": 1.0,
+      "not_worse_within_tolerance": true,
+      "test_rows": 1215,
+      "train_frac": 0.5,
+      "train_rows": 1215,
+      "variant": "ablate_home_field"
+    },
+    {
+      "accuracy": 0.6008230452674898,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.2395331280899321,
+      "calibration_error": 0.04825990329218105,
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "decided_count": 972,
+      "delta_accuracy_vs_full": 0.0,
+      "delta_brier_vs_full": 0.0,
+      "home_adv": 1.011598,
+      "not_worse_within_tolerance": true,
+      "test_rows": 972,
+      "train_frac": 0.6,
+      "train_rows": 1458,
+      "variant": "full_model"
+    },
+    {
+      "accuracy": 0.6111111111111112,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.24034393866890227,
+      "calibration_error": 0.053654992798353916,
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "decided_count": 972,
+      "delta_accuracy_vs_full": 0.010288,
+      "delta_brier_vs_full": 0.000811,
+      "home_adv": 1.011705,
+      "not_worse_within_tolerance": true,
+      "test_rows": 972,
+      "train_frac": 0.6,
+      "train_rows": 1458,
+      "variant": "ablate_offense_rate"
+    },
+    {
+      "accuracy": 0.602880658436214,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.2440511475553827,
+      "calibration_error": 0.06680353909465019,
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "decided_count": 972,
+      "delta_accuracy_vs_full": 0.002058,
+      "delta_brier_vs_full": 0.004518,
+      "home_adv": 1.012122,
+      "not_worse_within_tolerance": true,
+      "test_rows": 972,
+      "train_frac": 0.6,
+      "train_rows": 1458,
+      "variant": "ablate_defense_rate"
+    },
+    {
+      "accuracy": 0.6008230452674898,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.24880959455757717,
+      "calibration_error": 0.09347497839506175,
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "decided_count": 972,
+      "delta_accuracy_vs_full": 0.0,
+      "delta_brier_vs_full": 0.009276,
+      "home_adv": 1.011978,
+      "not_worse_within_tolerance": true,
+      "test_rows": 972,
+      "train_frac": 0.6,
+      "train_rows": 1458,
+      "variant": "ablate_team_strength_both"
+    },
+    {
+      "accuracy": 0.6059670781893004,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.23958928138834157,
+      "calibration_error": 0.047887862139917664,
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "decided_count": 972,
+      "delta_accuracy_vs_full": 0.005144,
+      "delta_brier_vs_full": 5.6e-05,
+      "home_adv": 1.0,
+      "not_worse_within_tolerance": true,
+      "test_rows": 972,
+      "train_frac": 0.6,
+      "train_rows": 1458,
+      "variant": "ablate_home_field"
+    },
+    {
+      "accuracy": 0.6021947873799726,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.23802675393776407,
+      "calibration_error": 0.04123780521262003,
+      "coinflip_accuracy": 0.45953360768175583,
+      "coinflip_brier": 0.25,
+      "decided_count": 729,
+      "delta_accuracy_vs_full": 0.0,
+      "delta_brier_vs_full": 0.0,
+      "home_adv": 1.020059,
+      "not_worse_within_tolerance": true,
+      "test_rows": 729,
+      "train_frac": 0.7,
+      "train_rows": 1701,
+      "variant": "full_model"
+    },
+    {
+      "accuracy": 0.607681755829904,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.24084261734081344,
+      "calibration_error": 0.050036130315500686,
+      "coinflip_accuracy": 0.45953360768175583,
+      "coinflip_brier": 0.25,
+      "decided_count": 729,
+      "delta_accuracy_vs_full": 0.005487,
+      "delta_brier_vs_full": 0.002816,
+      "home_adv": 1.019707,
+      "not_worse_within_tolerance": true,
+      "test_rows": 729,
+      "train_frac": 0.7,
+      "train_rows": 1701,
+      "variant": "ablate_offense_rate"
+    },
+    {
+      "accuracy": 0.5967078189300411,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.24361130387338956,
+      "calibration_error": 0.0652273978052126,
+      "coinflip_accuracy": 0.45953360768175583,
+      "coinflip_brier": 0.25,
+      "decided_count": 729,
+      "delta_accuracy_vs_full": -0.005487,
+      "delta_brier_vs_full": 0.005585,
+      "home_adv": 1.019606,
+      "not_worse_within_tolerance": true,
+      "test_rows": 729,
+      "train_frac": 0.7,
+      "train_rows": 1701,
+      "variant": "ablate_defense_rate"
+    },
+    {
+      "accuracy": 0.5953360768175583,
+      "beats_coinflip_brier": false,
+      "brier_score": 0.25089058153971194,
+      "calibration_error": 0.09769465294924554,
+      "coinflip_accuracy": 0.45953360768175583,
+      "coinflip_brier": 0.25,
+      "decided_count": 729,
+      "delta_accuracy_vs_full": -0.006859,
+      "delta_brier_vs_full": 0.012864,
+      "home_adv": 1.019043,
+      "not_worse_within_tolerance": true,
+      "test_rows": 729,
+      "train_frac": 0.7,
+      "train_rows": 1701,
+      "variant": "ablate_team_strength_both"
+    },
+    {
+      "accuracy": 0.6035665294924554,
+      "beats_coinflip_brier": true,
+      "brier_score": 0.23802731540809188,
+      "calibration_error": 0.04545266255144031,
+      "coinflip_accuracy": 0.45953360768175583,
+      "coinflip_brier": 0.25,
+      "decided_count": 729,
+      "delta_accuracy_vs_full": 0.001372,
+      "delta_brier_vs_full": 1e-06,
+      "home_adv": 1.0,
+      "not_worse_within_tolerance": true,
+      "test_rows": 729,
+      "train_frac": 0.7,
+      "train_rows": 1701,
+      "variant": "ablate_home_field"
+    }
+  ],
+  "disclaimers": [
+    "SINGLE-SEASON: 2025 only; NOT a multi-season validation (multi-season expansion remains HOLD per P230-A/P231-F5A)",
+    "2025-ONLY: evaluation universe is data/mlb_2025/mlb_odds_2025_real.csv (2025 season) only",
+    "HISTORICAL PAPER-ONLY: local historical / replay descriptive backtest; NO future prediction / hit-rate claim",
+    "PROVENANCE-UNVERIFIED: run line spread/prices are a post-game unverified snapshot (is_verified_real=False); settlement / event-threshold reference only, NEVER a model input feature",
+    "NOT LIVE: NO live-market claim; no real-time provider access",
+    "NOT PRODUCTION: NO production / DB / registry mutation; NO publication",
+    "NOT REAL BETTING: NO betting recommendation; NO EV/Kelly claim",
+    "NOT A PROVEN EDGE: descriptive feature-ablation research artifact only, not a validated betting edge",
+    "this is a feature-ablation study of the EXISTING P226-A/P228-A model architecture; it does not add, retrain, or search over new features"
+  ],
+  "eval_rows": 2430,
+  "feature_groups_not_applicable": [
+    {
+      "group": "rest_days",
+      "note": "P226-A/P228-A poisson_team_rate_model has no rest-day input; there is no rest-day feature in this model to ablate.",
+      "status": "NOT_PRESENT_IN_BASELINE_MODEL"
+    },
+    {
+      "group": "rsi_streak_recent_form",
+      "note": "P226-A/P228-A poisson_team_rate_model uses a shrinkage-smoothed rolling run rate, not an RSI or win/loss streak feature; there is no separate RSI/streak input in this model to ablate.",
+      "status": "NOT_PRESENT_IN_BASELINE_MODEL"
+    }
+  ],
+  "feature_groups_tested": [
+    {
+      "note": "rolling run-scoring (offense) rate replaced by league-average runs for both teams; defense rate and home_adv unchanged",
+      "variant": "ablate_offense_rate"
+    },
+    {
+      "note": "rolling run-allowing (defense) rate replaced by league-average runs for both teams; offense rate and home_adv unchanged",
+      "variant": "ablate_defense_rate"
+    },
+    {
+      "note": "closest local analog to an 'Elo / team strength' ablation: both offense and defense rates replaced by league-average runs for both teams (only home_adv still differentiates home from away lambda)",
+      "variant": "ablate_team_strength_both"
+    },
+    {
+      "note": "home_adv fixed at 1.0 (no home-field calibration applied); offense/defense rates unchanged",
+      "variant": "ablate_home_field"
+    }
+  ],
+  "gate0_reproduction": {
+    "anchor_train_frac": 0.6,
+    "calibrated_brier": 0.23745885355411792,
+    "calibrated_status": "GATE0_REPRODUCED_P228A_CALIBRATED_BRIER",
+    "coinflip_accuracy": 0.4567901234567901,
+    "coinflip_brier": 0.25,
+    "poisson_accuracy": 0.6008230452674898,
+    "poisson_brier": 0.2395331280899321,
+    "poisson_ece": 0.04825990329218105,
+    "status": "GATE0_REPRODUCED_P226A_RUN_LINE_METRICS",
+    "test_period": [
+      "2025-07-18",
+      "2025-09-28"
+    ],
+    "test_rows": 972,
+    "train_period": [
+      "2025-03-18",
+      "2025-07-18"
+    ],
+    "train_rows": 1458
+  },
+  "interpretation": {
+    "fragile_variants": [],
+    "label": "SIGNAL_DEPENDS_ON_FRAGILE_FEATURE_GROUP",
+    "per_variant": {
+      "ablate_defense_rate": {
+        "all_splits_beat_coinflip": true,
+        "all_splits_not_worse_within_tolerance": true,
+        "max_brier_degradation_vs_full": 0.005585
+      },
+      "ablate_home_field": {
+        "all_splits_beat_coinflip": true,
+        "all_splits_not_worse_within_tolerance": true,
+        "max_brier_degradation_vs_full": 5.6e-05
+      },
+      "ablate_offense_rate": {
+        "all_splits_beat_coinflip": true,
+        "all_splits_not_worse_within_tolerance": true,
+        "max_brier_degradation_vs_full": 0.002816
+      },
+      "ablate_team_strength_both": {
+        "all_splits_beat_coinflip": false,
+        "all_splits_not_worse_within_tolerance": true,
+        "max_brier_degradation_vs_full": 0.012864
+      }
+    },
+    "robust_variants": [
+      "ablate_offense_rate",
+      "ablate_defense_rate",
+      "ablate_home_field"
+    ]
+  },
+  "scope": "LOCAL_HISTORICAL_REPLAY_SINGLE_SEASON_2025_ONLY",
+  "split_grid": [
+    0.5,
+    0.6,
+    0.7
+  ],
+  "task": "P232-A 2025 single-season run line feature ablation scorecard",
+  "warmup_rows": 2429
+}
