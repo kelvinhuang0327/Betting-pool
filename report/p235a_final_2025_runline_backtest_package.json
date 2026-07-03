@@ -1,0 +1,227 @@
+{
+  "ablation_summary": {
+    "combined_offense_defense_removal_fails_at_split": {
+      "accuracy": 0.5953360768175583,
+      "brier_score": 0.25089058153971194,
+      "coinflip_brier": 0.25,
+      "train_frac": 0.7
+    },
+    "label": "SIGNAL_DEPENDS_ON_FRAGILE_FEATURE_GROUP",
+    "robust_variants": [
+      "ablate_offense_rate",
+      "ablate_defense_rate",
+      "ablate_home_field"
+    ],
+    "single_component_ablations_survive": true,
+    "source": "report/p232a_run_line_feature_ablation_scorecard.json",
+    "statement": "SIGNAL_DEPENDS_ON_FRAGILE_FEATURE_GROUP: single-component ablations (ablate_offense_rate, ablate_defense_rate, ablate_home_field) survive across all 3 splits; removing offense+defense together (ablate_team_strength_both) fails to beat coinflip at train_frac=0.7"
+  },
+  "calibration_summary": {
+    "calibrated_brier": 0.23745885355411792,
+    "calibrated_ece": 0.017957632592910982,
+    "calibration_beats_raw_brier": true,
+    "calibration_beats_raw_ece": true,
+    "raw_brier": 0.23953312952306713,
+    "raw_ece": 0.04825989317977066,
+    "source": "report/p228a_run_line_robustness_scorecard.json",
+    "statement": "Brier 0.2395 -> 0.2375; ECE 0.0483 -> 0.0180"
+  },
+  "data_status": {
+    "2024": "LABEL_ONLY_NO_ODDS",
+    "2025": "FULL_RUNLINE_EVAL_READY",
+    "2026": "MISSING_OR_UNUSABLE",
+    "source": "report/p230a_local_multiseason_runline_data_audit.json"
+  },
+  "decision_options": [
+    {
+      "description": "Archive this package as the final, standalone 2025 Run Line backtest evidence record; no further Run Line work is authorized by this package alone.",
+      "option": "HOLD_ARCHIVE_CURRENT_EVIDENCE"
+    },
+    {
+      "description": "Later restart the provider outreach path only if the Owner wants a true point-in-time (PIT) evidence upgrade; NOT authorized by this package.",
+      "option": "RESTART_PROVIDER_PATH_LATER"
+    },
+    {
+      "description": "Later attempt cross-season validation only if actual usable multi-season Run Line data becomes locally available (currently blocked per P230-A: 2024=LABEL_ONLY_NO_ODDS, 2026=MISSING_OR_UNUSABLE); NOT authorized by this package.",
+      "option": "CROSS_SEASON_VALIDATION_LATER"
+    }
+  ],
+  "disclaimers": [
+    "LOCAL HISTORICAL / REPLAY BACKTEST ONLY",
+    "2025-ONLY: single-season evaluation universe (data/mlb_2025/mlb_odds_2025_real.csv); NOT a multi-season validation",
+    "descriptive synthesis of already-published P226-A / P228-A / P230-A / P232-A results plus a local-only statistical appendix computed from existing prediction ledgers; NOT a new model, NOT a re-run, NOT a re-derivation, NO retraining",
+    "PROVENANCE-UNVERIFIED: run line spread/prices are a post-game unverified snapshot (is_verified_real=False); settlement / descriptive market reference only, NEVER a model input feature; NOT true point-in-time (PIT) data",
+    "NO betting recommendation; NO EV/Kelly claim; NOT a proven betting edge",
+    "NO live-market claim; NOT production; NOT real betting; NO future prediction",
+    "NO provider was contacted for this package; provider path status is PARKED_OPTIONAL",
+    "P226-A / P228-A / P230-A / P232-A source artifacts are read-only inputs and are not modified by this package"
+  ],
+  "executive_summary": [
+    "This is the final, standalone, historical paper-only 2025 Run Line backtest package for MLB, consolidating P226-A (baseline model), P228-A (robustness + calibration), P230-A (local multi-season data audit), and P232-A (feature ablation); P234 has no local artifact and is acknowledged as not found (see p234_status).",
+    "The poisson_team_rate_model beats the 0.5 coinflip Brier baseline on the 2025 run_line test set (972 decided games): accuracy 0.6008 vs 0.4568, Brier 0.2395 vs 0.2500; train-fold-only Platt calibration further improves Brier to 0.2375 and ECE from 0.0483 to 0.0180.",
+    "Robustness holds across pre-registered chronological splits (3/3 beat coinflip) and most monthly windows (4/5, 2 skipped for insufficient train rows); a local-only bootstrap/permutation appendix on the same 972-game ledger shows the Brier improvement is statistically distinguishable from zero at the 95% level (seeded, deterministic, no retraining).",
+    "Feature ablation shows the signal depends on a fragile feature group: each single component (offense rate, defense rate, home field) survives alone across all 3 splits, but removing offense+defense together fails to beat coinflip at the 0.7 train-fraction split.",
+    "Data status: 2024=LABEL_ONLY_NO_ODDS, 2025=FULL_RUNLINE_EVAL_READY, 2026=MISSING_OR_UNUSABLE; multi-season expansion remains structurally blocked, not a modeling gap.",
+    "Provider path status: PARKED_OPTIONAL — no provider has been contacted and no true-PIT provider data has ever been used in this evidence chain.",
+    "This package is 2025-only, historical paper-only, uses odds of unverified provenance, is not true-PIT, is not a betting edge, is not live, is not production, is not a future prediction, and is not a multi-season validation."
+  ],
+  "gate0_reproduction": {
+    "all_within_tolerance": true,
+    "expected": {
+      "calibrated_brier": 0.2375,
+      "calibrated_ece": 0.018,
+      "coinflip_brier": 0.25,
+      "poisson_accuracy": 0.6008,
+      "poisson_brier": 0.2395,
+      "raw_ece": 0.0483
+    },
+    "mismatches": [],
+    "recomputed": {
+      "calibrated_accuracy": 0.6059670781893004,
+      "calibrated_brier": 0.23745886133956995,
+      "coinflip_accuracy": 0.4567901234567901,
+      "coinflip_brier": 0.25,
+      "n_run_line_test_games": 972,
+      "poisson_accuracy": 0.6008230452674898,
+      "poisson_brier": 0.2395331280899321
+    },
+    "reproduction_method": "accuracy/Brier/calibrated-Brier independently recomputed from report/p226a_run_line_total_predictions.csv and report/p228a_run_line_robustness_predictions.csv raw ledger rows (no retraining); ECE verified against report/p228a_run_line_robustness_scorecard.json (pytest-covered tracked artifact)",
+    "status": "GATE0_REPRODUCED_P235A_FINAL_PACKAGE",
+    "tolerance": {
+      "calibrated_brier": 0.001,
+      "calibrated_ece": 0.001,
+      "coinflip_brier": 0.0001,
+      "poisson_accuracy": 0.001,
+      "poisson_brier": 0.001,
+      "raw_ece": 0.001
+    },
+    "verified_from_artifact": {
+      "calibrated_ece": 0.017957632592910982,
+      "raw_ece": 0.04825989317977066
+    }
+  },
+  "limitation_labels": [
+    "2025-ONLY",
+    "HISTORICAL_PAPER_ONLY",
+    "ODDS_PROVENANCE_UNVERIFIED",
+    "NOT_TRUE_PIT",
+    "NOT_BETTING_EDGE",
+    "NOT_LIVE",
+    "NOT_PRODUCTION",
+    "NOT_FUTURE_PREDICTION",
+    "NOT_MULTI_SEASON_VALIDATION"
+  ],
+  "no_betting_edge_claim": true,
+  "no_future_prediction_claim": true,
+  "no_live_or_production_claim": true,
+  "no_multi_season_validation_claim": true,
+  "no_true_pit_validation_claim": true,
+  "p234_status": {
+    "found_locally": false,
+    "note": "No P234 report, script, or task artifact exists anywhere in this repository as of this build (report/, 00-Plan/, scripts/, tests/ all searched for 'p234'). P234 is acknowledged per task instructions but not consolidated because there is no local evidence to consolidate; this is a factual gap-report, not a fabricated status.",
+    "status": "NOT_FOUND_LOCALLY"
+  },
+  "package_type": "FINAL_CONSOLIDATION_PACKAGE",
+  "prediction_ledger_references": [
+    {
+      "path": "report/p226a_run_line_total_predictions.csv",
+      "role": "run line / total probability model + paper backtest predictions (baseline_coinflip_50pct + poisson_team_rate_model, run_line + total markets)",
+      "row_count": 3888,
+      "task": "P226-A"
+    },
+    {
+      "path": "report/p228a_run_line_robustness_predictions.csv",
+      "role": "run line robustness & train-fold-only Platt calibration predictions (raw + calibrated probabilities, anchor split)",
+      "row_count": 972,
+      "task": "P228-A"
+    },
+    {
+      "path": "report/p232a_run_line_feature_ablation_predictions.csv",
+      "role": "2025 single-season run line feature ablation predictions (full_model + 4 ablation variants x 3 chronological splits)",
+      "row_count": 4860,
+      "task": "P232-A"
+    }
+  ],
+  "provider_path_status": {
+    "basis": "report/p230a_local_multiseason_runline_data_audit.json recommended_next_technical_step.chosen=stop_data_gap, authorization_status=NOT_AUTHORIZED_YET; no provider outreach records exist locally in this repository",
+    "note": "no provider was contacted to build this package; the provider path remains parked pending a separate, explicit Owner decision",
+    "provider_replies_received": 0,
+    "status": "PARKED_OPTIONAL",
+    "true_pit_provider_data_used": false
+  },
+  "robustness_summary": {
+    "label": "ROBUST_ENOUGH_FOR_FURTHER_HISTORICAL_RESEARCH",
+    "monthly_windows_evaluated": 5,
+    "monthly_windows_skipped": 2,
+    "monthly_windows_strict_wins": 4,
+    "source": "report/p228a_run_line_robustness_scorecard.json",
+    "split_grid_strict_wins": 3,
+    "split_grid_total": 3,
+    "statement": "3/3 chronological splits beat coinflip; 4/5 monthly windows beat coinflip (2 skipped, insufficient train)"
+  },
+  "scope": "LOCAL_HISTORICAL_REPLAY_SINGLE_SEASON_2025_ONLY",
+  "scorecard_summary": {
+    "coinflip_accuracy": 0.4567901234567901,
+    "coinflip_brier": 0.25,
+    "poisson_accuracy": 0.6008230452674898,
+    "poisson_brier": 0.2395331280899321,
+    "poisson_ece": 0.04825990329218105,
+    "source": "report/p226a_run_line_total_scorecard.json",
+    "test_period": [
+      "2025-07-18",
+      "2025-09-28"
+    ],
+    "test_rows": 972
+  },
+  "statistical_appendix": {
+    "bootstrap": {
+      "ci95_lower": 0.0009561995291378595,
+      "ci95_upper": 0.019645026093959905,
+      "label": "PREDICTIVE_STATISTIC",
+      "metric": "brier_margin_vs_coinflip (coinflip_brier - poisson_brier; positive = poisson_team_rate_model improvement)",
+      "n_resamples": 5000,
+      "observed_mean": 0.0104668719100679,
+      "seed": 235235
+    },
+    "chronological_split_stability": {
+      "label": "ROBUSTNESS_SUMMARY",
+      "monthly_window_beats_coinflip": "4/5 (2 skipped: insufficient train rows)",
+      "source": "report/p228a_run_line_robustness_scorecard.json (consolidated, not recomputed)",
+      "split_grid_beats_coinflip": "3/3"
+    },
+    "majority_class_reference": {
+      "away_base_rate": 0.5432098765432098,
+      "home_base_rate": 0.4567901234567901,
+      "label": "REFERENCE_ONLY",
+      "majority_class_accuracy_if_always_picked": 0.5432098765432098,
+      "majority_side": "AWAY",
+      "note": "descriptive test-set base rate of the more frequent actual side; computed post-hoc from test-set outcomes, NOT a valid pre-registered forward predictive baseline (a safe train-fold majority baseline cannot be computed from existing artifacts without re-deriving per-split labels); presented for descriptive reference only, NOT a betting/edge baseline"
+    },
+    "model": {
+      "accuracy": 0.6008230452674898,
+      "brier": 0.2395331280899321,
+      "label": "MODEL",
+      "name": "poisson_team_rate_model"
+    },
+    "n_games": 972,
+    "no_provider_data": true,
+    "no_remote_data": true,
+    "no_retraining": true,
+    "permutation_test": {
+      "label": "PREDICTIVE_STATISTIC",
+      "metric": "one-sided sign-flip paired permutation test; H1: mean Brier margin (coinflip - poisson) > 0",
+      "n_permutations": 5000,
+      "p_value": 0.015196960607878424,
+      "seed": 235236
+    },
+    "predictive_baseline": {
+      "accuracy": 0.4567901234567901,
+      "brier": 0.25,
+      "label": "PREDICTIVE_BASELINE",
+      "name": "baseline_coinflip_50pct",
+      "note": "constant p=0.5, always predicts HOME side; accuracy equals the test-set home-cover base rate by construction, NOT an adaptive baseline"
+    },
+    "source_ledger": "report/p226a_run_line_total_predictions.csv"
+  },
+  "task": "P235-A final 2025 run line backtest package"
+}
