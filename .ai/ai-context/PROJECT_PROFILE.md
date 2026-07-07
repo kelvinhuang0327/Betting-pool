@@ -19,7 +19,7 @@ paths:
 stack:
   language: Python 3.10+ per claude.md；ruff target-version = py39；workflow 使用 Python 3.10
   framework: pytest；pandas/numpy/scipy；scikit-learn/xgboost/lightgbm/catboost；FastAPI/orchestrator tooling present
-  runtime_notes: Bootstrap 只做靜態盤點；服務、排程與資料寫入指令不可在 Bootstrap 執行
+  runtime_notes: Bootstrap / RE-ANALYSIS 只做靜態盤點；服務、排程與資料寫入指令不可在知識更新流程執行；production_ready=false；diagnostic_only=true
 commands:
   test: pytest tests/ [未驗證]
   test_single: pytest tests/<file>.py [未驗證]
@@ -27,9 +27,17 @@ commands:
   build: N/A
 freshness:
   last_bootstrap: 2026-07-07
+  last_reanalysis: 2026-07-07
   last_analysis: N/A
   last_verified: 2026-07-07
+  baseline_commit: ff6c5b29c1158e172b265d357eda82003a3b5609
+  bootstrap_commit: 143b2c86daab40c57ae372488a5d511a44bf6332
 research_governance: 研究/回測任務需遵守 wiki/GOVERNANCE.md、wiki/RESEARCH_LAYER.md、wiki/PIPELINES.md 與 docs/MODE_GUIDE.md；工程變更才走 personal-ai-flow 2.5
+operating_mode:
+  paper_only: true
+  no_real_bet: true
+  production_ready: false
+  diagnostic_only: true
 ```
 
 ## 2. 風險域宣告（risk_domains）
@@ -69,6 +77,9 @@ hard_gates:
   - worktree / branch / stash 清理永遠另立 Task：不得在 Bootstrap 或其他任務順手清理。
   - secrets-hygiene：不得把 API key、token、cookie、私人 URL 或 provider secret 寫入 repo、任務文件或報告。
   - task-authorization：資料寫入、排程觸發、服務啟動、外部 API 抓取、root url 處理與真實 provider 使用都需明確任務授權。
+  - persistent governance：no DB write、no live/paid provider call、no production betting、no registry mutation、no controlled apply、no EV/CLV/Kelly unlock、no strategy-weight/champion auto-mutation。
+  - production_ready=false / diagnostic_only=true：任何報告、推薦列、scorecard、runner 或 dashboard 不得被描述為 production-ready；解除需 owner 明確授權與獨立 review。
+  - fail-closed provenance：涉及 recommendation、source_trace、learning_eligible、game-specific provenance、outcome join 或 duplicate-ticket policy 的任務，一律至少 Standard 2.5；命中資料/模型/學習 eligibility 時升級 Full 2.5。
 ```
 
 ## 4. 禁區（do_not_touch）
@@ -114,6 +125,24 @@ do_not_touch:
   - path: url
     reason: root url 檔已完成 secrets triage 且本次限制明確禁止處理。
     exception: secrets-hygiene 任務具名授權。
+  - path: report/
+    reason: 混合 code、Markdown、JSON、CSV、HTML 等研究/評估 artifacts；大量檔案由 runners 生成。
+    exception: 報告產物任務具名授權，需明列輸出檔 allowlist。
+  - path: reports/
+    reason: runtime/research outputs；可能被 daily scheduler 或歷史證據引用。
+    exception: 報告產物任務具名授權，需明列輸出檔 allowlist。
+  - path: research/
+    reason: research registry、settlement ingestion、postmortem、patch snapshots；可能影響研究證據鏈。
+    exception: 研究任務具名授權，需資料來源與可重現證據。
+  - path: .env*
+    reason: secrets-hygiene；不得讀寫或提交本機憑證。
+    exception: 僅可在 secrets-hygiene 任務中檢查是否被追蹤，不輸出內容。
+  - path: .cursor/rules/
+    reason: 既有工具/agent 規則；改動會影響模型行為與任務邊界。
+    exception: agent governance 任務具名授權。
+  - path: .github/skills/
+    reason: skill 內含會抓外部 API、寫 data/report 的流程說明；改動需同步 personal-ai-flow gate。
+    exception: skill governance 任務具名授權。
 ```
 
 ## 5. 已勾選風險域檢查重點

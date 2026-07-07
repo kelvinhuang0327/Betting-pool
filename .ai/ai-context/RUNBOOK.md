@@ -17,6 +17,16 @@
 
 以下指令均為靜態盤點結果，除明確標示已執行的 git/讀檔查詢外，全部視為 `[未驗證]`。
 
+## 0.1 Gate 分類
+
+| 分類 | 可否在一般任務直接執行 | 判定 |
+|---|---|---|
+| read-only git/file inspection | 可在任務範圍內執行 | `git status`, `git log`, `git diff --name-only`, `sed`, `rg`, `find` 等純讀查詢 |
+| report artifact generation | 需具名授權 | 任何會寫 `report/`, `reports/`, `outputs/` 的 runner/build script |
+| data write | 需資料寫入 Gate | 任何會寫 `data/`, `research/`, DB、registry、JSONL/CSV snapshot 的指令 |
+| service / scheduler | 需破壞性操作 Gate | `start_all.sh`, `stop_all.sh`, launchd, daemon, GitHub Actions workflow_dispatch |
+| external API / provider | 需外部存取授權與 secrets-hygiene | MLB/StatsAPI、The Odds API、TSL crawler、Telegram、pybaseball live download、任何 provider key |
+
 ## 1. 啟動 / 停止
 
 ```bash
@@ -88,6 +98,7 @@ python test_orchestrator.py
 - `pytest.ini`：`testpaths = tests`，`pythonpath = .`
 - 排除：`archive quarantine build .git .venv venv node_modules`
 - `ruff.toml`：line-length 100，target-version `py39`
+- `requirements.txt`：含 `pybaseball==2.2.7`；pybaseball 相關指令仍視為 external/data-source sensitive，需任務授權。
 
 ## 3. 建置 / 部署
 
@@ -128,6 +139,53 @@ python scripts/run_mlb_daily_scheduler.py --date YYYY-MM-DD --mode today --sourc
 
 - Bootstrap 尚未深掃至可宣告唯一 canonical DB。
 - 目前 `canonical-db` 未勾選；如後續發現正本 DB 或唯一 production data store，需先更新 Profile。
+
+## 4.1 Research / Scorecard Runner Inventory
+
+以下為 RE-ANALYSIS 靜態盤點到的新增或高風險 runner/build scripts。全部 `[未驗證]`，且多數會寫 `report/`、`reports/`、`outputs/` 或讀取外部/資料來源；不得在 Bootstrap / RE-ANALYSIS 直接執行。
+
+```bash
+# [未驗證] report artifact Gate
+python scripts/run_mlb_prediction_workflow_snapshot.py
+python scripts/run_mlb_local_retrain_scorecard.py
+python scripts/run_mlb_duplicate_ticket_dry_run.py
+python scripts/run_mlb_run_line_total_scorecard.py
+python scripts/run_mlb_total_calibration_scorecard.py
+python scripts/run_mlb_run_line_robustness_scorecard.py
+python scripts/run_mlb_run_line_feature_ablation_scorecard.py
+python scripts/run_mlb_run_line_backtest_explorer.py
+
+# [未驗證] report artifact Gate / historical data Gate
+python scripts/build_historical_sample_feature_table.py
+python scripts/build_historical_feature_baseline_evaluation.py
+python scripts/build_historical_time_split_baseline_evaluation.py
+python scripts/build_historical_time_split_error_dashboard.py
+python scripts/build_historical_baseline_error_dashboard.py
+python scripts/build_historical_evaluation_evidence_index.py
+
+# [未驗證] external/data-source Gate；pybaseball dependency pinned in requirements.txt
+python scripts/audit_pybaseball_dependency.py
+python scripts/build_pybaseball_historical_sample_smoke.py
+python scripts/build_pybaseball_multidate_sample_pack.py
+python scripts/build_pybaseball_sample_quality_dashboard.py
+python scripts/build_pybaseball_multidate_quality_dashboard.py
+
+# [未驗證] governance/report artifact Gate
+python scripts/plan_mlb_open_source_dependency_adoption.py
+python scripts/audit_mlb_open_source_data_libraries.py
+python scripts/build_pit_feature_contract_leakage_audit.py
+python scripts/build_p229a_run_line_evidence_boundary_pack.py
+python scripts/build_p230a_local_multiseason_runline_data_audit.py
+python scripts/build_p235a_final_2025_runline_backtest_package.py
+```
+
+## 4.2 Skill Invocation Boundary
+
+`.github/skills/analyze-wbc-betting/SKILL.md` 與 `.github/skills/update-wbc-data/SKILL.md` 是既有工具說明，不等同 personal-ai-flow 授權。
+
+- `/update-wbc-data` 內含 MLB Stats API、名單/球員統計抓取、權威快照重建、TSL odds 抓取與 `data/` 寫入；需 data write Gate + external API Gate。
+- `/analyze-wbc-betting` 內含 odds 抓取、TSL crawler、`main.py --game/--all`、EV/Kelly/TSL 建議輸出；在本 Profile 下仍是 paper-only，且需 external API Gate / report artifact Gate。
+- 任何 skill 指令若會啟動服務、觸發排程、寫 data/report/output/runtime 或使用 secrets，必須另立任務並明列 allowlist。
 
 ## 5. 排程實況
 
