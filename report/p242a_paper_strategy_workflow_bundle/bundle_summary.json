@@ -1,0 +1,46 @@
+{
+  "artifact_counts": {
+    "bundle": 2,
+    "inspection": 2,
+    "review": 3,
+    "total": 12,
+    "workflow": 5
+  },
+  "artifact_sha256": {
+    "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_checks.csv": "41f3d405059326af0974e64a4d00b5ce6a42e60d3777cf97ef89a4cd975329b1",
+    "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json": "0514919e600c216818c9ef0ed3a57b7f51ee350c8c6929677ac5bef9e44795fc",
+    "report/p242a_paper_strategy_workflow_bundle/review/review_artifacts.csv": "0229238cfd17552a35f311338bb532a83336663493261a6025656bb445e6f4f8",
+    "report/p242a_paper_strategy_workflow_bundle/review/review_report.md": "ad22ad20c9c451b813136d8a016c4635f06da3acbacfa4cca8bb90d7e9be08a6",
+    "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json": "3c3003fb973a6d32d06877c9107023c3f89d001b2f45b2b67051f35a7860de22",
+    "report/p242a_paper_strategy_workflow_bundle/workflow/decisions.csv": "f1762823709d0cb30eacb7567c3ffeabf76232ac766a1c90a669b7aaa1eee1e7",
+    "report/p242a_paper_strategy_workflow_bundle/workflow/learning_segments.csv": "e9914bb6bb7ee73cb2e64590ff8d58e0be57ce822745bb0f78ed638a71f3750f",
+    "report/p242a_paper_strategy_workflow_bundle/workflow/learning_summary.json": "0235422880d4e3b168334b85d98e258d60645addd73480d1bcc1ae451534f58b",
+    "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_manifest.json": "3c19c58b8123df8a4e9a9b51eb9f7bc1a3c61562faefea67b63325b955f86a10",
+    "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_summary.json": "99a11991ec9646241af9c0a32bdcd6943fa9d165fd1bcfd6bb244d3570344ff1"
+  },
+  "bundle_status": "PASS",
+  "decisions_count": 25,
+  "failures": [],
+  "generated_at_utc": "2026-07-08T00:00:00Z",
+  "generates_new_predictions": false,
+  "inspection_overall_status": "PASS",
+  "learning_segments_count": 18,
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "output_dir": "report/p242a_paper_strategy_workflow_bundle",
+  "review_status": "PASS",
+  "roi_status": "ROI_UNAVAILABLE",
+  "source_csv": "report/p236a_run_line_backtest_explorer_filtered_games.csv",
+  "warnings": [],
+  "workflow_status": "RESULT_ONLY_PAPER_WORKFLOW"
+}

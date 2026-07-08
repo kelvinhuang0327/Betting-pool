@@ -1,0 +1,114 @@
+{
+  "bundle_status": "PASS",
+  "generated_at_utc": "2026-07-08T00:00:00Z",
+  "inputs": [
+    {
+      "name": "source_csv",
+      "path": "report/p236a_run_line_backtest_explorer_filtered_games.csv",
+      "sha256": "b3f0748df757a50f6d0bce19f4af55fbe54b05729adafce3bb310c5014ef3ba8"
+    }
+  ],
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "no_side_effects": {
+    "no_db_writes": true,
+    "no_live_output": true,
+    "no_provider_api_calls": true,
+    "no_pybaseball": true,
+    "no_real_betting": true,
+    "no_remote_fetch": true,
+    "no_sports_api_calls": true
+  },
+  "orchestration": {
+    "inspection_dir": "report/p242a_paper_strategy_workflow_bundle/inspection",
+    "review_dir": "report/p242a_paper_strategy_workflow_bundle/review",
+    "workflow_dir": "report/p242a_paper_strategy_workflow_bundle/workflow"
+  },
+  "outputs": [
+    {
+      "name": "bundle_manifest.json",
+      "path": "report/p242a_paper_strategy_workflow_bundle/bundle_manifest.json",
+      "sha256": null,
+      "sha256_status": "SELF_HASH_NOT_EMBEDDED"
+    },
+    {
+      "name": "bundle_summary.json",
+      "path": "report/p242a_paper_strategy_workflow_bundle/bundle_summary.json",
+      "sha256": "f9c31cb5e28f667336bbb3766ed1e938e62285f2f57134ae6b80e6186021a863"
+    },
+    {
+      "name": "inspection/inspection_checks.csv",
+      "path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_checks.csv",
+      "sha256": "41f3d405059326af0974e64a4d00b5ce6a42e60d3777cf97ef89a4cd975329b1"
+    },
+    {
+      "name": "inspection/inspection_summary.json",
+      "path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "sha256": "0514919e600c216818c9ef0ed3a57b7f51ee350c8c6929677ac5bef9e44795fc"
+    },
+    {
+      "name": "review/review_artifacts.csv",
+      "path": "report/p242a_paper_strategy_workflow_bundle/review/review_artifacts.csv",
+      "sha256": "0229238cfd17552a35f311338bb532a83336663493261a6025656bb445e6f4f8"
+    },
+    {
+      "name": "review/review_report.md",
+      "path": "report/p242a_paper_strategy_workflow_bundle/review/review_report.md",
+      "sha256": "ad22ad20c9c451b813136d8a016c4635f06da3acbacfa4cca8bb90d7e9be08a6"
+    },
+    {
+      "name": "review/review_summary.json",
+      "path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "sha256": "3c3003fb973a6d32d06877c9107023c3f89d001b2f45b2b67051f35a7860de22"
+    },
+    {
+      "name": "workflow/decisions.csv",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/decisions.csv",
+      "sha256": "f1762823709d0cb30eacb7567c3ffeabf76232ac766a1c90a669b7aaa1eee1e7"
+    },
+    {
+      "name": "workflow/learning_segments.csv",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_segments.csv",
+      "sha256": "e9914bb6bb7ee73cb2e64590ff8d58e0be57ce822745bb0f78ed638a71f3750f"
+    },
+    {
+      "name": "workflow/learning_summary.json",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_summary.json",
+      "sha256": "0235422880d4e3b168334b85d98e258d60645addd73480d1bcc1ae451534f58b"
+    },
+    {
+      "name": "workflow/workflow_manifest.json",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_manifest.json",
+      "sha256": "3c19c58b8123df8a4e9a9b51eb9f7bc1a3c61562faefea67b63325b955f86a10"
+    },
+    {
+      "name": "workflow/workflow_summary.json",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_summary.json",
+      "sha256": "99a11991ec9646241af9c0a32bdcd6943fa9d165fd1bcfd6bb244d3570344ff1"
+    }
+  ],
+  "parameters": {
+    "min_confidence": 0.5,
+    "output_dir": "report/p242a_paper_strategy_workflow_bundle",
+    "source_csv": "report/p236a_run_line_backtest_explorer_filtered_games.csv",
+    "thresholds": [
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8
+    ]
+  }
+}
