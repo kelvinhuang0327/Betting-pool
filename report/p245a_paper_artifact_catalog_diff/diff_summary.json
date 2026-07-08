@@ -1,0 +1,41 @@
+{
+  "added_count": 0,
+  "baseline_catalog_csv": "report/p243a_paper_artifact_catalog/artifact_catalog.csv",
+  "baseline_catalog_json": "report/p243a_paper_artifact_catalog/artifact_catalog.json",
+  "baseline_entry_count": 26,
+  "changed_count": 0,
+  "current_catalog_csv": "report/p243a_paper_artifact_catalog/artifact_catalog.csv",
+  "current_catalog_json": "report/p243a_paper_artifact_catalog/artifact_catalog.json",
+  "current_entry_count": 26,
+  "diff_status": "PASS",
+  "failure_count": 0,
+  "failures": [],
+  "file_type_changed_count": 0,
+  "generated_at_utc": "2026-07-08T00:00:00Z",
+  "hash_changed_count": 0,
+  "input_hashes": {
+    "baseline_catalog_csv_sha256": "6effe19ce814a6ea0788ebd394cee828d60769456308589abe469b96f5febd0f",
+    "baseline_catalog_json_sha256": "f6a3297ce31b9acaf421dca84dc312399e3270ffe905caa99fd4820e07a74241",
+    "current_catalog_csv_sha256": "6effe19ce814a6ea0788ebd394cee828d60769456308589abe469b96f5febd0f",
+    "current_catalog_json_sha256": "f6a3297ce31b9acaf421dca84dc312399e3270ffe905caa99fd4820e07a74241"
+  },
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "notes_changed_count": 0,
+  "removed_count": 0,
+  "role_changed_count": 0,
+  "status_changed_count": 0,
+  "unchanged_count": 26,
+  "warning_count": 0,
+  "warnings": []
+}
