@@ -1,0 +1,66 @@
+{
+  "decisions_count": 25,
+  "failures": [],
+  "forbidden_field_check_status": "PASS",
+  "generated_at_utc": "2026-07-08T00:00:00Z",
+  "generates_new_predictions": false,
+  "inspection_dir": "report/p242a_paper_strategy_workflow_bundle/inspection",
+  "inspection_overall_status": "PASS",
+  "learning_segments_count": 18,
+  "limitation_label_check_status": "PASS",
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "manifest_hash_check_status": "PASS",
+  "review_status": "PASS",
+  "roi_status": "ROI_UNAVAILABLE",
+  "source_files": [
+    {
+      "artifact_type": "p239_workflow_summary",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_summary.json",
+      "sha256": "99a11991ec9646241af9c0a32bdcd6943fa9d165fd1bcfd6bb244d3570344ff1"
+    },
+    {
+      "artifact_type": "p239_workflow_manifest",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_manifest.json",
+      "sha256": "3c19c58b8123df8a4e9a9b51eb9f7bc1a3c61562faefea67b63325b955f86a10"
+    },
+    {
+      "artifact_type": "p239_decisions",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/decisions.csv",
+      "sha256": "f1762823709d0cb30eacb7567c3ffeabf76232ac766a1c90a669b7aaa1eee1e7"
+    },
+    {
+      "artifact_type": "p239_learning_summary",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_summary.json",
+      "sha256": "0235422880d4e3b168334b85d98e258d60645addd73480d1bcc1ae451534f58b"
+    },
+    {
+      "artifact_type": "p239_learning_segments",
+      "path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_segments.csv",
+      "sha256": "e9914bb6bb7ee73cb2e64590ff8d58e0be57ce822745bb0f78ed638a71f3750f"
+    },
+    {
+      "artifact_type": "p240_inspection_summary",
+      "path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "sha256": "0514919e600c216818c9ef0ed3a57b7f51ee350c8c6929677ac5bef9e44795fc"
+    },
+    {
+      "artifact_type": "p240_inspection_checks",
+      "path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_checks.csv",
+      "sha256": "41f3d405059326af0974e64a4d00b5ce6a42e60d3777cf97ef89a4cd975329b1"
+    }
+  ],
+  "warnings": [],
+  "workflow_dir": "report/p242a_paper_strategy_workflow_bundle/workflow",
+  "workflow_status": "RESULT_ONLY_PAPER_WORKFLOW"
+}
