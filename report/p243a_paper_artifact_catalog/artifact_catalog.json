@@ -1,0 +1,683 @@
+{
+  "catalog_status": "PASS",
+  "detected_manifests": [
+    {
+      "artifact_group": "p239_workflow",
+      "relative_path": "report/p239a_paper_strategy_workflow/workflow_manifest.json",
+      "sha256": "4b13c0e186fdf219032253e1f576f9a56e37d9381148f36c7d4f653492caadcb",
+      "size_bytes": 2150
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_manifest.json",
+      "sha256": "86e906fd5f8c10b19a26d3954b8aa52f0e92541dbba7eae35ffd399b0605c713",
+      "size_bytes": 4126
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_manifest.json",
+      "sha256": "3c19c58b8123df8a4e9a9b51eb9f7bc1a3c61562faefea67b63325b955f86a10",
+      "size_bytes": 2246
+    }
+  ],
+  "detected_statuses": [
+    {
+      "relative_path": "report/p237a_paper_strategy_decisions.csv",
+      "status_field": "settlement_status",
+      "status_value": "RESULT_ONLY_NO_PRICE"
+    },
+    {
+      "relative_path": "report/p237a_paper_strategy_simulator_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p237a_paper_strategy_simulator_summary.json",
+      "status_field": "$.threshold_sweep[0].status",
+      "status_value": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    },
+    {
+      "relative_path": "report/p237a_paper_strategy_simulator_summary.json",
+      "status_field": "$.threshold_sweep[1].status",
+      "status_value": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    },
+    {
+      "relative_path": "report/p237a_paper_strategy_simulator_summary.json",
+      "status_field": "$.threshold_sweep[2].status",
+      "status_value": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    },
+    {
+      "relative_path": "report/p237a_paper_strategy_simulator_summary.json",
+      "status_field": "$.threshold_sweep[3].status",
+      "status_value": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    },
+    {
+      "relative_path": "report/p238a_paper_strategy_learning_segments.csv",
+      "status_field": "roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p238a_paper_strategy_learning_summary.json",
+      "status_field": "$.global_metrics.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p238a_paper_strategy_learning_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/decisions.csv",
+      "status_field": "settlement_status",
+      "status_value": "RESULT_ONLY_NO_PRICE"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/learning_segments.csv",
+      "status_field": "roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/learning_summary.json",
+      "status_field": "$.global_metrics.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/learning_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/workflow_manifest.json",
+      "status_field": "$.outputs[4].sha256_status",
+      "status_value": "SELF_HASH_NOT_EMBEDDED"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/workflow_manifest.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/workflow_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p239a_paper_strategy_workflow/workflow_summary.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_checks.csv",
+      "status_field": "status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "status_field": "$.count_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "status_field": "$.forbidden_field_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "status_field": "$.limitation_label_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "status_field": "$.manifest_hash_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "status_field": "$.overall_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_artifacts.csv",
+      "status_field": "status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "status_field": "$.forbidden_field_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "status_field": "$.inspection_overall_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "status_field": "$.limitation_label_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "status_field": "$.manifest_hash_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "status_field": "$.review_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_manifest.json",
+      "status_field": "$.bundle_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_manifest.json",
+      "status_field": "$.outputs[0].sha256_status",
+      "status_value": "SELF_HASH_NOT_EMBEDDED"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_summary.json",
+      "status_field": "$.bundle_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_summary.json",
+      "status_field": "$.inspection_overall_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_summary.json",
+      "status_field": "$.review_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_summary.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_checks.csv",
+      "status_field": "status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "status_field": "$.count_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "status_field": "$.forbidden_field_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "status_field": "$.limitation_label_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "status_field": "$.manifest_hash_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "status_field": "$.overall_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_artifacts.csv",
+      "status_field": "status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "status_field": "$.forbidden_field_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "status_field": "$.inspection_overall_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "status_field": "$.limitation_label_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "status_field": "$.manifest_hash_check_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "status_field": "$.review_status",
+      "status_value": "PASS"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/decisions.csv",
+      "status_field": "settlement_status",
+      "status_value": "RESULT_ONLY_NO_PRICE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_segments.csv",
+      "status_field": "roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_summary.json",
+      "status_field": "$.global_metrics.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_manifest.json",
+      "status_field": "$.outputs[4].sha256_status",
+      "status_value": "SELF_HASH_NOT_EMBEDDED"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_manifest.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_summary.json",
+      "status_field": "$.roi_status",
+      "status_value": "ROI_UNAVAILABLE"
+    },
+    {
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_summary.json",
+      "status_field": "$.workflow_status",
+      "status_value": "RESULT_ONLY_PAPER_WORKFLOW"
+    }
+  ],
+  "failures": [],
+  "forbidden_field_scan_status": "PASS",
+  "generated_at_utc": "2026-07-08T00:00:00Z",
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "mutation_guard_status": "PASS",
+  "source_file_count": 26,
+  "source_files": [
+    {
+      "artifact_group": "p237_decisions",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "empty forbidden fields: pnl_units",
+      "relative_path": "report/p237a_paper_strategy_decisions.csv",
+      "sha256": "8dcd05ad6a8e75612c74f5695e5287bd1cfa0b7bc0e9691587c0d7001790c2f7",
+      "size_bytes": 4484,
+      "status": "WARN"
+    },
+    {
+      "artifact_group": "p237_simulator_summary",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p237a_paper_strategy_simulator_summary.json",
+      "sha256": "06a804d8a63103f9f9f8ff450aa94640d82f634a0919602964959e84443d6d65",
+      "size_bytes": 2419,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p238_learning_segments",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p238a_paper_strategy_learning_segments.csv",
+      "sha256": "e9914bb6bb7ee73cb2e64590ff8d58e0be57ce822745bb0f78ed638a71f3750f",
+      "size_bytes": 2217,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p238_learning_summary",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p238a_paper_strategy_learning_summary.json",
+      "sha256": "9df7f4446f8182fcdcd69a6f806a2b47bff704e91c88c02125ac41acace6e9d5",
+      "size_bytes": 1336,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p239_workflow",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p239a_paper_strategy_workflow/decisions.csv",
+      "sha256": "f1762823709d0cb30eacb7567c3ffeabf76232ac766a1c90a669b7aaa1eee1e7",
+      "size_bytes": 4449,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p239_workflow",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p239a_paper_strategy_workflow/learning_segments.csv",
+      "sha256": "e9914bb6bb7ee73cb2e64590ff8d58e0be57ce822745bb0f78ed638a71f3750f",
+      "size_bytes": 2217,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p239_workflow",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p239a_paper_strategy_workflow/learning_summary.json",
+      "sha256": "e67c66ee48e93fb636fbc306361ae70d5326e1db388c97453f3ce48818d3fae3",
+      "size_bytes": 1345,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p239_workflow",
+      "detected_role": "manifest",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p239a_paper_strategy_workflow/workflow_manifest.json",
+      "sha256": "4b13c0e186fdf219032253e1f576f9a56e37d9381148f36c7d4f653492caadcb",
+      "size_bytes": 2150,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p239_workflow",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p239a_paper_strategy_workflow/workflow_summary.json",
+      "sha256": "7721cb3fc3654de2d1f3031c27a72afe0b16a243b9f40a232cc23c34d3701939",
+      "size_bytes": 1686,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p240_inspector",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_checks.csv",
+      "sha256": "40914d0f07ec0155a730f051ef0e4930cb937bc9043ca85fc9b5621d4c57bbb4",
+      "size_bytes": 8650,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p240_inspector",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p240a_paper_strategy_workflow_inspector/inspection_summary.json",
+      "sha256": "33101a798e6a0cfcadf55d3024aecb0656ea26ecc6cb7d8ec6148c68f5891076",
+      "size_bytes": 1556,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p241_review_pack",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_artifacts.csv",
+      "sha256": "bdec88d98abae140722f3abdeb9ea8e45b5b946e513df1927385e7678447be5b",
+      "size_bytes": 1339,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p241_review_pack",
+      "detected_role": "markdown_report",
+      "file_type": "md",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_report.md",
+      "sha256": "52096d5b91a0cc2660286507716833246689c2eee3e4bce4f879aaf37b071cf9",
+      "size_bytes": 2234,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p241_review_pack",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p241a_paper_strategy_workflow_review_pack/review_summary.json",
+      "sha256": "afe70214328fa50168d51118ace95d9f1563f3cb327018641661975826ec6574",
+      "size_bytes": 2442,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "manifest",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_manifest.json",
+      "sha256": "86e906fd5f8c10b19a26d3954b8aa52f0e92541dbba7eae35ffd399b0605c713",
+      "size_bytes": 4126,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/bundle_summary.json",
+      "sha256": "f9c31cb5e28f667336bbb3766ed1e938e62285f2f57134ae6b80e6186021a863",
+      "size_bytes": 2410,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_checks.csv",
+      "sha256": "41f3d405059326af0974e64a4d00b5ce6a42e60d3777cf97ef89a4cd975329b1",
+      "size_bytes": 9226,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/inspection/inspection_summary.json",
+      "sha256": "0514919e600c216818c9ef0ed3a57b7f51ee350c8c6929677ac5bef9e44795fc",
+      "size_bytes": 1732,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_artifacts.csv",
+      "sha256": "0229238cfd17552a35f311338bb532a83336663493261a6025656bb445e6f4f8",
+      "size_bytes": 1435,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "markdown_report",
+      "file_type": "md",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_report.md",
+      "sha256": "ad22ad20c9c451b813136d8a016c4635f06da3acbacfa4cca8bb90d7e9be08a6",
+      "size_bytes": 2330,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/review/review_summary.json",
+      "sha256": "3c3003fb973a6d32d06877c9107023c3f89d001b2f45b2b67051f35a7860de22",
+      "size_bytes": 2562,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/decisions.csv",
+      "sha256": "f1762823709d0cb30eacb7567c3ffeabf76232ac766a1c90a669b7aaa1eee1e7",
+      "size_bytes": 4449,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "csv",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_segments.csv",
+      "sha256": "e9914bb6bb7ee73cb2e64590ff8d58e0be57ce822745bb0f78ed638a71f3750f",
+      "size_bytes": 2217,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/learning_summary.json",
+      "sha256": "0235422880d4e3b168334b85d98e258d60645addd73480d1bcc1ae451534f58b",
+      "size_bytes": 1361,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "manifest",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_manifest.json",
+      "sha256": "3c19c58b8123df8a4e9a9b51eb9f7bc1a3c61562faefea67b63325b955f86a10",
+      "size_bytes": 2246,
+      "status": "PASS"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "detected_role": "status",
+      "file_type": "json",
+      "notes": "sha256 recorded",
+      "relative_path": "report/p242a_paper_strategy_workflow_bundle/workflow/workflow_summary.json",
+      "sha256": "99a11991ec9646241af9c0a32bdcd6943fa9d165fd1bcfd6bb244d3570344ff1",
+      "size_bytes": 1782,
+      "status": "PASS"
+    }
+  ],
+  "source_roots": [
+    {
+      "artifact_group": "p237_simulator_summary",
+      "exists": true,
+      "path": "report/p237a_paper_strategy_simulator_summary.json",
+      "root_type": "file"
+    },
+    {
+      "artifact_group": "p237_decisions",
+      "exists": true,
+      "path": "report/p237a_paper_strategy_decisions.csv",
+      "root_type": "file"
+    },
+    {
+      "artifact_group": "p238_learning_summary",
+      "exists": true,
+      "path": "report/p238a_paper_strategy_learning_summary.json",
+      "root_type": "file"
+    },
+    {
+      "artifact_group": "p238_learning_segments",
+      "exists": true,
+      "path": "report/p238a_paper_strategy_learning_segments.csv",
+      "root_type": "file"
+    },
+    {
+      "artifact_group": "p239_workflow",
+      "exists": true,
+      "path": "report/p239a_paper_strategy_workflow",
+      "root_type": "directory"
+    },
+    {
+      "artifact_group": "p240_inspector",
+      "exists": true,
+      "path": "report/p240a_paper_strategy_workflow_inspector",
+      "root_type": "directory"
+    },
+    {
+      "artifact_group": "p241_review_pack",
+      "exists": true,
+      "path": "report/p241a_paper_strategy_workflow_review_pack",
+      "root_type": "directory"
+    },
+    {
+      "artifact_group": "p242_bundle",
+      "exists": true,
+      "path": "report/p242a_paper_strategy_workflow_bundle",
+      "root_type": "directory"
+    }
+  ],
+  "source_total_bytes": 74400,
+  "warnings": [
+    {
+      "check_id": "forbidden_fields.report/p237a_paper_strategy_decisions.csv.empty",
+      "file_path": "report/p237a_paper_strategy_decisions.csv",
+      "message": "source artifact has forbidden field names with empty values",
+      "observed": "[\"pnl_units\"]"
+    }
+  ]
+}
