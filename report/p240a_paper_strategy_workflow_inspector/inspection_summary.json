@@ -1,0 +1,30 @@
+{
+  "count_check_status": "PASS",
+  "decisions_count": 25,
+  "failures": [],
+  "forbidden_field_check_status": "PASS",
+  "generated_at_utc": "2026-07-08T00:00:00Z",
+  "generates_new_predictions": false,
+  "inspected_file_sha256": {
+    "report/p239a_paper_strategy_workflow/decisions.csv": "f1762823709d0cb30eacb7567c3ffeabf76232ac766a1c90a669b7aaa1eee1e7",
+    "report/p239a_paper_strategy_workflow/learning_segments.csv": "e9914bb6bb7ee73cb2e64590ff8d58e0be57ce822745bb0f78ed638a71f3750f",
+    "report/p239a_paper_strategy_workflow/learning_summary.json": "e67c66ee48e93fb636fbc306361ae70d5326e1db388c97453f3ce48818d3fae3",
+    "report/p239a_paper_strategy_workflow/workflow_manifest.json": "4b13c0e186fdf219032253e1f576f9a56e37d9381148f36c7d4f653492caadcb",
+    "report/p239a_paper_strategy_workflow/workflow_summary.json": "7721cb3fc3654de2d1f3031c27a72afe0b16a243b9f40a232cc23c34d3701939"
+  },
+  "inspected_files": [
+    "report/p239a_paper_strategy_workflow/workflow_summary.json",
+    "report/p239a_paper_strategy_workflow/workflow_manifest.json",
+    "report/p239a_paper_strategy_workflow/decisions.csv",
+    "report/p239a_paper_strategy_workflow/learning_summary.json",
+    "report/p239a_paper_strategy_workflow/learning_segments.csv"
+  ],
+  "learning_segments_count": 18,
+  "limitation_label_check_status": "PASS",
+  "manifest_hash_check_status": "PASS",
+  "overall_status": "PASS",
+  "roi_status": "ROI_UNAVAILABLE",
+  "warnings": [],
+  "workflow_dir": "report/p239a_paper_strategy_workflow",
+  "workflow_status": "RESULT_ONLY_PAPER_WORKFLOW"
+}
