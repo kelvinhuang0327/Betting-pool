@@ -1,0 +1,88 @@
+{
+  "average_confidence": 0.81188436,
+  "brier_score": 0.21258674484524,
+  "decisions_count": 25,
+  "filters": {
+    "date_from": null,
+    "date_to": null,
+    "min_confidence": 0.5
+  },
+  "hit_rate": 0.72,
+  "metadata": {
+    "generates_new_predictions": false,
+    "limitation_labels": [
+      "2025-only",
+      "historical paper-only",
+      "odds provenance unverified",
+      "not true-PIT",
+      "not betting edge",
+      "not future prediction",
+      "not live",
+      "not production",
+      "not real betting",
+      "not multi-season validation"
+    ],
+    "source_csv": "report/p236a_run_line_backtest_explorer_filtered_games.csv",
+    "source_package": "report/p235a_final_2025_runline_backtest_package.json",
+    "source_rows_loaded": 25
+  },
+  "roi": null,
+  "roi_status": "ROI_UNAVAILABLE",
+  "roi_unavailable_reason": "NO_PER_BET_PRICE_IN_INPUT_LEDGER; ONLY_LOCAL_PRICE_SOURCE_IS_POST_GAME_UNVERIFIED_SNAPSHOT(is_verified_real=False); FLAT_PRICE_ASSUMPTION_REJECTED_AS_SYSTEMATICALLY_WRONG_FOR_RUN_LINE",
+  "side_distribution": {
+    "AWAY": 20,
+    "HOME": 5
+  },
+  "simulator": "P237-A Result-Only Historical Paper Strategy Simulator",
+  "stake_units_total": 25.0,
+  "threshold_sweep": [
+    {
+      "average_confidence": 0.81188436,
+      "brier_score": 0.21258674484524,
+      "decisions_count": 25,
+      "hit_rate": 0.72,
+      "min_confidence": 0.5,
+      "side_distribution": {
+        "AWAY": 20,
+        "HOME": 5
+      },
+      "status": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    },
+    {
+      "average_confidence": 0.81188436,
+      "brier_score": 0.21258674484524,
+      "decisions_count": 25,
+      "hit_rate": 0.72,
+      "min_confidence": 0.6,
+      "side_distribution": {
+        "AWAY": 20,
+        "HOME": 5
+      },
+      "status": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    },
+    {
+      "average_confidence": 0.81188436,
+      "brier_score": 0.21258674484524,
+      "decisions_count": 25,
+      "hit_rate": 0.72,
+      "min_confidence": 0.7,
+      "side_distribution": {
+        "AWAY": 20,
+        "HOME": 5
+      },
+      "status": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    },
+    {
+      "average_confidence": 0.8181674444444444,
+      "brier_score": 0.2465806300171111,
+      "decisions_count": 18,
+      "hit_rate": 0.6666666666666666,
+      "min_confidence": 0.8,
+      "side_distribution": {
+        "AWAY": 14,
+        "HOME": 4
+      },
+      "status": "IN_SAMPLE_DESCRIPTIVE_ONLY"
+    }
+  ]
+}
