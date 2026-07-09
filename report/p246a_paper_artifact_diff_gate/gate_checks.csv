@@ -1,0 +1,10 @@
+check_id,check_name,severity,expected,observed,result,notes
+threshold.added_count,Added artifacts within policy,FAIL,<= 0,0,PASS,
+threshold.removed_count,Removed artifacts within policy,FAIL,<= 0,0,PASS,
+threshold.changed_count,Changed artifacts within policy,FAIL,<= 0,0,PASS,
+threshold.warning_count,Input diff warnings within policy,FAIL,<= 0,0,PASS,
+input.failure_count,Input diff has no failures,FAIL,0,0,PASS,
+change.status_allowed,Status changes allowed by policy,FAIL,0,0,PASS,
+change.role_allowed,Role changes allowed by policy,FAIL,0,0,PASS,
+change.file_type_allowed,File type changes allowed by policy,FAIL,0,0,PASS,
+change.notes_allowed,Notes changes allowed by policy,FAIL,0,0,PASS,
