@@ -219,6 +219,71 @@ deploy/launchd-orchestrator/status.sh
 3. 用只讀方式收集 `git status`、相關 log 路徑與最後輸出檔 mtime；不要清理。
 4. 另立 Task，寫明要查的路徑、指令、是否允許服務/排程操作。
 
+## 6.1 Post-Merge Isolated Worktree Cleanup Gate
+
+Task-specific isolated Git worktrees and task branches must not accumulate after their PR lifecycle is complete. After a PR is successfully merged and post-merge verification passes, remove only the task-owned isolated worktree and then remove the merged task branch.
+
+Scope:
+
+- Applies only to task-owned isolated worktrees whose path exactly matches the expected task worktree path, for example `/Users/kelvin/Kelvin-WorkSpace/Betting-pool-pXXX...`.
+- Does not apply to `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`.
+- Does not apply to committed repo `report/` artifacts; those are durable evidence, not cleanup targets.
+- Does not apply to `.ai` files.
+- Does not apply to DB, `data/`, `runtime/`, `logs/`, dependency files, source files, tests, unrelated dirty files, unrelated branches, or unrelated worktrees.
+- During the PR-open phase, retain the task worktree when needed for audit, review, fixes, or verification.
+- During the PR-merged phase, clean the task worktree only after the required post-merge checks below pass.
+
+Required preconditions before cleanup:
+
+- PR state is `MERGED`.
+- `origin/main` contains the PR merge commit.
+- Post-merge verification passed, or omitted checks are explicitly marked `NOT RUN` with a reason.
+- Task worktree path exactly matches the expected task-owned isolated worktree path.
+- `git status --short` inside the task worktree is empty.
+- The task branch head is included in `origin/main`.
+- No unrelated dirty files are staged or modified.
+- Cleanup does not require force.
+
+Allowed cleanup commands only:
+
+```bash
+git worktree remove <task-owned-worktree-path>
+git branch -d <task-branch>
+git push origin --delete <task-branch>
+git worktree prune
+```
+
+Command limits:
+
+- `git worktree remove <task-owned-worktree-path>` is allowed only for the exact task-owned isolated worktree path.
+- `git branch -d <task-branch>` is allowed only after confirming the task branch is merged into `origin/main`.
+- `git push origin --delete <task-branch>` is allowed only if the PR is merged and the remote branch still exists.
+- `git worktree prune` is allowed only after successful `git worktree remove`.
+
+Explicitly forbidden:
+
+- `rm -rf`.
+- Force deletion.
+- Deleting or modifying the canonical repo.
+- Deleting committed `report/` artifacts.
+- Deleting `.ai` files.
+- Deleting DB, `data/`, `runtime/`, `logs/`, or dependency files.
+- Cleaning unrelated dirty files.
+- Deleting a dirty worktree.
+- Deleting an unmerged branch.
+- Deleting any path outside the exact task-owned isolated worktree.
+- Broad cleanup under `/Users/kelvin/Kelvin-WorkSpace`.
+
+STOP and report instead of deleting if:
+
+- PR is not merged.
+- Post-merge verification did not pass.
+- Worktree has dirty or staged files.
+- Branch head is not included in `origin/main`.
+- Path does not exactly match the expected task-owned isolated worktree.
+- Deletion would require force.
+- Cleanup would touch unrelated files or directories.
+
 ## 7. 常見錯誤速查
 
 | 症狀 | 原因 | 處置 |
@@ -228,4 +293,4 @@ deploy/launchd-orchestrator/status.sh
 | port 8787/8788/8789 被占用 | local service 已啟動或殘留 pid | 不要直接 kill；維運任務逐項確認 |
 | CLV/odds timeline 對不上 | timestamp/PIT/市場 availability 或 crawler v1/v2 混用 | 依 `wiki/DATA_SOURCES.md` 與 relevant tests 建立專項分析 |
 | backtest 看起來過好 | 可能有 look-ahead、樣本太小、regime 或 calibration drift | 套用 stats-methodology/data-provenance checklist |
-| worktree 很多或 prunable | 既有 agent 殘留債 | 不清理；另立 worktree-debt Task |
+| worktree 很多或 prunable | 既有 agent 殘留債，或 PR merged 後未清 task-owned isolated worktree | 依 `Post-Merge Isolated Worktree Cleanup Gate`；未滿 preconditions 時 STOP，不清理 |
