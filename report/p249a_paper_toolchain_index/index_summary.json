@@ -1,0 +1,90 @@
+{
+  "artifact_roots_present": 12,
+  "artifact_roots_total": 12,
+  "dashboard_section_count": 10,
+  "dashboard_status": "PASS",
+  "failure_count": 0,
+  "failures": [],
+  "generated_at_utc": "2026-07-09T00:00:00Z",
+  "index_status": "PASS",
+  "input_hashes": {
+    "dashboard_html": "03e7a9e5fb9a9d2ae4a0f362bc38d430b511e85a8d5bb2ccbf656c9bfc220cf0",
+    "dashboard_sections_csv": "8ebb2e375d3394f7681892933119e209df76592d179bbb502b8b95087e6fe1d3",
+    "dashboard_summary_json": "5e35c86521fd48be1337ab5d256c29145c9ef39d774b134d1ebdbdff688e0386",
+    "gate_summary_json": "a4a3dc4a972dd2bde38d891f77292d04bf371711211f66eaa7b35e474cb52703",
+    "toolchain_status_json": "5b907a68b2d196bbe25294113cc7975cad8dfa22901d173f2adc1f01ae66eec4"
+  },
+  "input_paths": {
+    "dashboard_html": "report/p248a_paper_toolchain_dashboard/dashboard.html",
+    "dashboard_sections_csv": "report/p248a_paper_toolchain_dashboard/dashboard_sections.csv",
+    "dashboard_summary_json": "report/p248a_paper_toolchain_dashboard/dashboard_summary.json",
+    "gate_summary_json": "report/p246a_paper_artifact_diff_gate/gate_summary.json",
+    "toolchain_status_json": "report/p247a_paper_toolchain_status/toolchain_status.json"
+  },
+  "latest_gate_counts": {
+    "failed": 0,
+    "passed": 9,
+    "total": 9
+  },
+  "latest_gate_observed_counts": {
+    "added_count": 0,
+    "changed_count": 0,
+    "entry_added_count": 0,
+    "entry_changed_count": 0,
+    "entry_file_type_changed_count": 0,
+    "entry_notes_changed_count": 0,
+    "entry_removed_count": 0,
+    "entry_role_changed_count": 0,
+    "entry_row_count": 26,
+    "entry_status_changed_count": 0,
+    "failure_count": 0,
+    "file_type_changed_count": 0,
+    "notes_changed_count": 0,
+    "removed_count": 0,
+    "role_changed_count": 0,
+    "status_changed_count": 0,
+    "warning_count": 0
+  },
+  "latest_gate_status": "PASS",
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "link_count": 32,
+  "local_link_count": 32,
+  "missing_link_count": 0,
+  "no_side_effects": {
+    "computed_roi_pnl_ev_kelly": false,
+    "contacted_providers": false,
+    "created_betting_recommendations": false,
+    "created_live_production_or_real_betting_output": false,
+    "executed_existing_workflows": false,
+    "fetched_remote_sports_data": false,
+    "mutated_p237_to_p248_source_artifacts": false,
+    "read_existing_p246_p247_p248_artifacts_only": true,
+    "regenerated_p237_to_p248_artifacts": false,
+    "used_pybaseball": false,
+    "wrote_data_runtime_logs_or_outputs": false,
+    "wrote_db": false,
+    "wrote_only_p249_index_outputs": true
+  },
+  "output_files": {
+    "index_html": "report/p249a_paper_toolchain_index/index.html",
+    "index_links_csv": "report/p249a_paper_toolchain_index/index_links.csv",
+    "index_summary_json": "report/p249a_paper_toolchain_index/index_summary.json"
+  },
+  "scripts_present": 10,
+  "scripts_total": 10,
+  "toolchain_status": "PASS",
+  "toolchain_step_count": 10,
+  "warning_count": 0,
+  "warnings": []
+}
