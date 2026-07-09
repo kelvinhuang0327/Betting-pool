@@ -1,0 +1,67 @@
+{
+  "cli_help_smoke_status": "PASS",
+  "command_count": 37,
+  "dashboard_status": "PASS",
+  "failure_count": 0,
+  "failures": [],
+  "file_count": 12,
+  "generated_at_utc": "2026-07-09T00:00:00Z",
+  "index_status": "PASS",
+  "input_hashes": {
+    "cli_help_summary_json": "ad7963fb0d398a5a771aa4f232ad673ac9c8c49ffa9903b1e0b5f560e4ac5c2a",
+    "dashboard_summary_json": "5e35c86521fd48be1337ab5d256c29145c9ef39d774b134d1ebdbdff688e0386",
+    "index_links_csv": "426cced6b0cf8b0867b0bd57562755f9592baf465fb72ce439a8cf8eefeabc24",
+    "index_summary_json": "0ff1d869e43072dd2aa92a6e78f4fca65df7c42badf35bb21104cf27d2d01352",
+    "quickstart_commands_csv": "82287676570cdb7cb5e67923af528c364a50e9b513fdf86081f9961ecdcb3c14",
+    "quickstart_md": "7645421b4f0edf16b317b3b165190ae265057a97d31d102c52d25275a5c7f152",
+    "quickstart_summary_json": "e5573e47f422c332325196dcb4b818b28f86422f81612a4a266a7cbcbfe5f28a"
+  },
+  "input_paths": {
+    "cli_help_summary_json": "report/p250a_paper_toolchain_cli_help/cli_help_summary.json",
+    "dashboard_summary_json": "report/p248a_paper_toolchain_dashboard/dashboard_summary.json",
+    "index_links_csv": "report/p249a_paper_toolchain_index/index_links.csv",
+    "index_summary_json": "report/p249a_paper_toolchain_index/index_summary.json",
+    "quickstart_commands_csv": "report/p251a_paper_toolchain_quickstart/quickstart_commands.csv",
+    "quickstart_md": "report/p251a_paper_toolchain_quickstart/quickstart.md",
+    "quickstart_summary_json": "report/p251a_paper_toolchain_quickstart/quickstart_summary.json"
+  },
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "local_link_count": 32,
+  "no_side_effects": {
+    "computed_roi_pnl_ev_kelly": false,
+    "contacted_providers": false,
+    "created_betting_recommendations_or_rankings": false,
+    "created_live_production_or_real_betting_output": false,
+    "executed_p239_to_p251_scripts": false,
+    "executed_workflow_query_diff_gate_status_dashboard_index_help_smoke_quickstart_commands": false,
+    "fetched_remote_sports_data": false,
+    "installed_dependencies": false,
+    "modified_virtualenvs": false,
+    "mutated_p237_to_p251_source_artifacts": false,
+    "read_existing_p248_p249_p250_p251_artifacts_only": true,
+    "regenerated_predictions_or_artifacts": false,
+    "used_pybaseball": false,
+    "wrote_data_runtime_or_log_files": false,
+    "wrote_db": false
+  },
+  "operator_pack_status": "PASS",
+  "output_files": {
+    "operator_pack_files_csv": "report/p252a_paper_toolchain_operator_pack/operator_pack_files.csv",
+    "operator_pack_report_md": "report/p252a_paper_toolchain_operator_pack/operator_pack.md",
+    "operator_pack_summary_json": "report/p252a_paper_toolchain_operator_pack/operator_pack_summary.json"
+  },
+  "quickstart_status": "PASS",
+  "warning_count": 0,
+  "warnings": []
+}
