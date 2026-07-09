@@ -1,0 +1,62 @@
+{
+  "checked_file_count": 12,
+  "cli_help_smoke_status": "PASS",
+  "dashboard_status": "PASS",
+  "failure_count": 0,
+  "failures": [],
+  "file_count": 12,
+  "generated_at_utc": "2026-07-09T00:00:00Z",
+  "hash_match_count": 12,
+  "hash_mismatch_count": 0,
+  "index_status": "PASS",
+  "input_hashes": {
+    "operator_pack_files_csv": "a534e9ff9ac946f7d574d4ef98511dc4a78abff72516c234b463e3c85dc18cf6",
+    "operator_pack_summary_json": "8cdc72b9b3dada96089bc89b6d0f64546c662299d2169ef2d2624b1333529688"
+  },
+  "input_paths": {
+    "operator_pack_files_csv": "report/p252a_paper_toolchain_operator_pack/operator_pack_files.csv",
+    "operator_pack_summary_json": "report/p252a_paper_toolchain_operator_pack/operator_pack_summary.json"
+  },
+  "integrity_status": "PASS",
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "missing_file_count": 0,
+  "no_side_effects": {
+    "computed_roi_pnl_ev_kelly": false,
+    "contacted_providers": false,
+    "created_betting_recommendations_or_rankings": false,
+    "created_live_production_or_real_betting_output": false,
+    "executed_operator_scripts": false,
+    "executed_p239_to_p252_scripts": false,
+    "executed_workflow_query_diff_gate_status_dashboard_index_help_smoke_quickstart_operator_pack_commands": false,
+    "fetched_remote_sports_data": false,
+    "installed_dependencies": false,
+    "modified_virtualenvs": false,
+    "mutated_p237_to_p252_source_artifacts": false,
+    "read_existing_p252_artifacts_only": true,
+    "regenerated_predictions_or_artifacts": false,
+    "used_pybaseball": false,
+    "wrote_data_runtime_or_log_files": false,
+    "wrote_db": false
+  },
+  "operator_pack_status": "PASS",
+  "output_files": {
+    "integrity_checks_csv": "report/p253a_paper_toolchain_pack_integrity/integrity_checks.csv",
+    "integrity_report_md": "report/p253a_paper_toolchain_pack_integrity/integrity_report.md",
+    "integrity_summary_json": "report/p253a_paper_toolchain_pack_integrity/integrity_summary.json"
+  },
+  "quickstart_status": "PASS",
+  "unsafe_path_count": 0,
+  "warning_count": 0,
+  "warnings": []
+}
