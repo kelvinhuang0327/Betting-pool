@@ -284,6 +284,21 @@ STOP and report instead of deleting if:
 - Deletion would require force.
 - Cleanup would touch unrelated files or directories.
 
+Owner Override:
+
+This cleanup gate is the default policy. The Owner may explicitly override it for a specific task by stating:
+
+```text
+Retain this task worktree after merge: <reason>
+```
+
+If this override is present in the current task prompt, the Worker must not remove the task worktree, but must report:
+
+- Retained worktree path.
+- Retained branch.
+- Reason for retention.
+- Cleanup still pending.
+
 ## 7. 常見錯誤速查
 
 | 症狀 | 原因 | 處置 |
