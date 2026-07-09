@@ -1,0 +1,126 @@
+{
+  "configured_scripts": [
+    {
+      "script_id": "run_mlb_paper_strategy_workflow",
+      "script_path": "scripts/run_mlb_paper_strategy_workflow.py",
+      "step_id": "P239"
+    },
+    {
+      "script_id": "inspect_mlb_paper_strategy_workflow",
+      "script_path": "scripts/inspect_mlb_paper_strategy_workflow.py",
+      "step_id": "P240"
+    },
+    {
+      "script_id": "build_mlb_paper_strategy_workflow_review_pack",
+      "script_path": "scripts/build_mlb_paper_strategy_workflow_review_pack.py",
+      "step_id": "P241"
+    },
+    {
+      "script_id": "run_mlb_paper_strategy_workflow_bundle",
+      "script_path": "scripts/run_mlb_paper_strategy_workflow_bundle.py",
+      "step_id": "P242"
+    },
+    {
+      "script_id": "build_mlb_paper_artifact_catalog",
+      "script_path": "scripts/build_mlb_paper_artifact_catalog.py",
+      "step_id": "P243"
+    },
+    {
+      "script_id": "query_mlb_paper_artifact_catalog",
+      "script_path": "scripts/query_mlb_paper_artifact_catalog.py",
+      "step_id": "P244"
+    },
+    {
+      "script_id": "diff_mlb_paper_artifact_catalogs",
+      "script_path": "scripts/diff_mlb_paper_artifact_catalogs.py",
+      "step_id": "P245"
+    },
+    {
+      "script_id": "check_mlb_paper_artifact_diff",
+      "script_path": "scripts/check_mlb_paper_artifact_diff.py",
+      "step_id": "P246"
+    },
+    {
+      "script_id": "build_mlb_paper_toolchain_status",
+      "script_path": "scripts/build_mlb_paper_toolchain_status.py",
+      "step_id": "P247"
+    },
+    {
+      "script_id": "build_mlb_paper_toolchain_dashboard",
+      "script_path": "scripts/build_mlb_paper_toolchain_dashboard.py",
+      "step_id": "P248"
+    },
+    {
+      "script_id": "build_mlb_paper_toolchain_index",
+      "script_path": "scripts/build_mlb_paper_toolchain_index.py",
+      "step_id": "P249"
+    }
+  ],
+  "failure_count": 0,
+  "failures": [],
+  "generated_at_utc": "2026-07-09T00:00:00Z",
+  "help_fail_count": 0,
+  "help_output_hashes": {
+    "build_mlb_paper_artifact_catalog": "f4daa838b7e8c6ce131f2cb3407dff0b448a15ceb8b48e5d606e524ed992f7ae",
+    "build_mlb_paper_strategy_workflow_review_pack": "2fe420bb90af7d3733fe4bba2a4babd8e2232e234b19cf5e4f60a54a34a9ea38",
+    "build_mlb_paper_toolchain_dashboard": "5e8fa1e69337d2e06eb8e4fb263bdc5bc4a0f1472dcc769111b63b240dedd671",
+    "build_mlb_paper_toolchain_index": "798af3a08e1354a5623067be6f19a37d0029f61b400585287d00566f2a2b8d59",
+    "build_mlb_paper_toolchain_status": "065c8f2bdd11d1f2a2d95912848e305d4b7b092fe831edddbac3309b56d39dff",
+    "check_mlb_paper_artifact_diff": "2143da5285fe016c414e9fc8bb3a4a79e498fb18d25ec73a491792946d339367",
+    "diff_mlb_paper_artifact_catalogs": "b3454c3ed3db545f7568322dda83e37e39ed6afbd31b4626f907866b1552dbc2",
+    "inspect_mlb_paper_strategy_workflow": "57c86fbe7c5adb0e9ad4d37fd386df385d4b0d3b1268bfb2acd2b17fc2ebfe80",
+    "query_mlb_paper_artifact_catalog": "b01a60d5670d4a722f35ee9a31821024506b7ebdbfdc42a160be5c5fba3138b2",
+    "run_mlb_paper_strategy_workflow": "9d8f816bde1b8c7a819611000b7a82d89ab82c7838233559b385134e23c3bec6",
+    "run_mlb_paper_strategy_workflow_bundle": "1af7c77db7cfe5aa429cf1dd8fb662fd8d29231c7241b9c19cb6f2e87a7ccf08"
+  },
+  "help_pass_count": 11,
+  "input_script_hashes": {
+    "build_mlb_paper_artifact_catalog": "32625b29e1a79ab0febac84423d5231aec39387b3e848f6e1be6418f56f66392",
+    "build_mlb_paper_strategy_workflow_review_pack": "c8aa4a4a9d416050d6b09f98f64bd759560cc45cb49f97b9a6d743ade3240d63",
+    "build_mlb_paper_toolchain_dashboard": "39456732d5dfdb41460f4417ee2a071ddf763de2f3f4741d6435aff338efccdc",
+    "build_mlb_paper_toolchain_index": "a7cfbafe8371dcae61227711a91e5f3f774f10cc6fae1b5decf444ccd8914f14",
+    "build_mlb_paper_toolchain_status": "a71c915e9ed653ad7626548d9cfe5b6c83a4004674a0aa43ee8687f7a94c4a00",
+    "check_mlb_paper_artifact_diff": "9aee6ba1267e8d27457ceda90b141f0e0015e6d4718cdad4bd48f25f7f766f56",
+    "diff_mlb_paper_artifact_catalogs": "ac285e2fce31453f6adbd9230b57350c005de765666d8a630effc69238c621d4",
+    "inspect_mlb_paper_strategy_workflow": "629b0b76a99a0881ce8887a24e9c25a4e6ab872bf982306b6cd3299892189b44",
+    "query_mlb_paper_artifact_catalog": "12ec156f5a9899b82102716b5d9218aa7bbf6cfba3acedd75e1c3d041466d71d",
+    "run_mlb_paper_strategy_workflow": "463da75b67aec25bc3fde839a20cb8c1b05a033750b160d89063de9b70a79276",
+    "run_mlb_paper_strategy_workflow_bundle": "886efaf736b9d5467de6904a245bbc2e7c513b9917feac8bbd88845ccc28aac2"
+  },
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "missing_script_count": 0,
+  "no_side_effects": {
+    "computed_roi_pnl_ev_kelly": false,
+    "contacted_providers": false,
+    "created_betting_recommendations_or_rankings": false,
+    "created_live_production_or_real_betting_output": false,
+    "executed_only_help_calls": true,
+    "executed_workflow_query_diff_gate_status_dashboard_index_commands": false,
+    "fetched_remote_sports_data": false,
+    "installed_dependencies": false,
+    "modified_virtualenvs": false,
+    "mutated_p237_to_p249_source_artifacts": false,
+    "regenerated_predictions_or_artifacts": false,
+    "used_pybaseball": false,
+    "wrote_data_runtime_or_log_files": false,
+    "wrote_db": false
+  },
+  "python_executable": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python",
+  "script_count": 11,
+  "smoke_status": "PASS",
+  "timeout_count": 0,
+  "timeout_seconds": 10,
+  "warning_count": 0,
+  "warnings": []
+}
