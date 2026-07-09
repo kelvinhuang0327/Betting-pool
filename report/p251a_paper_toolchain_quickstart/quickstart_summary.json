@@ -1,0 +1,64 @@
+{
+  "cli_help_smoke_status": "PASS",
+  "command_count": 37,
+  "dashboard_status": "PASS",
+  "failure_count": 0,
+  "failures": [],
+  "generated_at_utc": "2026-07-09T00:00:00Z",
+  "help_command_count": 11,
+  "index_status": "PASS",
+  "input_hashes": {
+    "cli_help_entries_csv": "b953909d896a905785f7931daf994020887d7fb2637a4ff65a5fb6aff3d3e279",
+    "cli_help_summary_json": "ad7963fb0d398a5a771aa4f232ad673ac9c8c49ffa9903b1e0b5f560e4ac5c2a",
+    "index_links_csv": "426cced6b0cf8b0867b0bd57562755f9592baf465fb72ce439a8cf8eefeabc24",
+    "index_summary_json": "0ff1d869e43072dd2aa92a6e78f4fca65df7c42badf35bb21104cf27d2d01352"
+  },
+  "input_paths": {
+    "cli_help_entries_csv": "report/p250a_paper_toolchain_cli_help/cli_help_entries.csv",
+    "cli_help_summary_json": "report/p250a_paper_toolchain_cli_help/cli_help_summary.json",
+    "index_links_csv": "report/p249a_paper_toolchain_index/index_links.csv",
+    "index_summary_json": "report/p249a_paper_toolchain_index/index_summary.json"
+  },
+  "latest_gate_status": "PASS",
+  "limitation_labels": [
+    "2025-only",
+    "historical paper-only",
+    "odds provenance unverified",
+    "not true-PIT",
+    "not betting edge",
+    "not future prediction",
+    "not live",
+    "not production",
+    "not real betting",
+    "not multi-season validation"
+  ],
+  "local_link_count": 26,
+  "no_side_effects": {
+    "computed_roi_pnl_ev_kelly": false,
+    "contacted_providers": false,
+    "created_betting_recommendations_or_rankings": false,
+    "created_live_production_or_real_betting_output": false,
+    "executed_help_calls": false,
+    "executed_p239_to_p250_scripts": false,
+    "executed_workflow_query_diff_gate_status_dashboard_index_commands": false,
+    "fetched_remote_sports_data": false,
+    "installed_dependencies": false,
+    "modified_virtualenvs": false,
+    "mutated_p237_to_p250_source_artifacts": false,
+    "read_existing_p249_and_p250_artifacts_only": true,
+    "regenerated_predictions_or_artifacts": false,
+    "used_pybaseball": false,
+    "wrote_data_runtime_or_log_files": false,
+    "wrote_db": false
+  },
+  "output_files": {
+    "quickstart_commands_csv": "report/p251a_paper_toolchain_quickstart/quickstart_commands.csv",
+    "quickstart_report_md": "report/p251a_paper_toolchain_quickstart/quickstart.md",
+    "quickstart_summary_json": "report/p251a_paper_toolchain_quickstart/quickstart_summary.json"
+  },
+  "python_executable": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool/.venv/bin/python",
+  "quickstart_status": "PASS",
+  "toolchain_status": "PASS",
+  "warning_count": 0,
+  "warnings": []
+}
