@@ -1,0 +1,11 @@
+section_id,section_title,source,status,item_count,notes
+summary,Summary,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,6,toolchain=PASS
+latest_gate,Latest Gate,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,1,P246 gate status rendered
+toolchain_steps,Toolchain Steps,report/p247a_paper_toolchain_status/toolchain_steps.csv,PASS,10,stable CSV order preserved
+artifact_roots,Artifact Roots,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,12,12 / 12 present
+scripts,Scripts,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,10,10 / 10 present
+hashes,Hashes,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,13,input and module hashes rendered
+warnings_failures,Warnings / Failures,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,0,none
+safety_boundaries,Safety Boundaries,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,15,result-only boundaries rendered
+limitations,Limitations,report/p247a_paper_toolchain_status/toolchain_status.json,PASS,10,required labels rendered
+not_claims,Not Claims,report/p247a_paper_toolchain_status/toolchain_report.md,PASS,4,forbidden claims excluded
