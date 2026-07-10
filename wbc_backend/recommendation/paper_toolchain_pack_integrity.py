@@ -14,6 +14,8 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -24,7 +26,7 @@ DEFAULT_OPERATOR_PACK_FILES_CSV = (
     ROOT / "report" / "p252a_paper_toolchain_operator_pack" / "operator_pack_files.csv"
 )
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p253a_paper_toolchain_pack_integrity"
-DEFAULT_GENERATED_AT_UTC = "2026-07-09T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 SUMMARY_JSON_FILENAME = "integrity_summary.json"
 CHECKS_CSV_FILENAME = "integrity_checks.csv"
@@ -263,13 +265,14 @@ def build_paper_toolchain_pack_integrity(
     operator_pack_summary_json: Path = DEFAULT_OPERATOR_PACK_SUMMARY_JSON,
     operator_pack_files_csv: Path = DEFAULT_OPERATOR_PACK_FILES_CSV,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
     repo_root: Path = ROOT,
 ) -> PaperToolchainPackIntegrityResult:
     repo_root = Path(repo_root)
     operator_pack_summary_json = Path(operator_pack_summary_json)
     operator_pack_files_csv = Path(operator_pack_files_csv)
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     operator_summary = _read_json(operator_pack_summary_json, "operator pack summary JSON", repo_root)
     pack_rows = _read_csv_rows(operator_pack_files_csv, "operator pack files CSV", repo_root)
@@ -430,4 +433,3 @@ def build_paper_toolchain_pack_integrity(
         check_rows=tuple(check_rows),
         output_paths=output_files,
     )
-

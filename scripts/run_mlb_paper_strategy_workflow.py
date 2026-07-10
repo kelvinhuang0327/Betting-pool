@@ -52,7 +52,7 @@ def main(argv: list[str] | None = None) -> int:
             output_dir=args.output_dir,
             min_confidence=args.min_confidence,
             thresholds=thresholds,
-            generated_at_utc=args.generated_at_utc or "2026-07-08T00:00:00Z",
+            generated_at_utc=args.generated_at_utc,
         )
     except ExplorerError as exc:
         parser.error(str(exc))

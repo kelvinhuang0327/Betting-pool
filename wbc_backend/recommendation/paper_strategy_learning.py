@@ -306,7 +306,8 @@ def build_segments(
     return segments
 
 
-def _generated_at_utc(value: str | None) -> str:
+def resolve_generated_at_utc(value: str | None = None) -> str:
+    """Return an explicit timestamp or the current UTC generation time."""
     if value is not None:
         return value
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -332,7 +333,7 @@ def build_output_payload(
     payload = {
         "source_decisions_csv": dataset.source_csv,
         "source_sha256": dataset.source_sha256,
-        "generated_at_utc": _generated_at_utc(generated_at_utc),
+        "generated_at_utc": resolve_generated_at_utc(generated_at_utc),
         "segments_count": len(segments),
         "thresholds": list(parsed_thresholds),
         "global_metrics": global_metrics,

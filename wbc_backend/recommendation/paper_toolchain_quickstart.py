@@ -18,6 +18,8 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -26,7 +28,7 @@ DEFAULT_INDEX_LINKS_CSV = ROOT / "report" / "p249a_paper_toolchain_index" / "ind
 DEFAULT_CLI_HELP_SUMMARY_JSON = ROOT / "report" / "p250a_paper_toolchain_cli_help" / "cli_help_summary.json"
 DEFAULT_CLI_HELP_ENTRIES_CSV = ROOT / "report" / "p250a_paper_toolchain_cli_help" / "cli_help_entries.csv"
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p251a_paper_toolchain_quickstart"
-DEFAULT_GENERATED_AT_UTC = "2026-07-09T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 SUMMARY_JSON_FILENAME = "quickstart_summary.json"
 COMMANDS_CSV_FILENAME = "quickstart_commands.csv"
@@ -334,13 +336,14 @@ def build_paper_toolchain_quickstart(
     cli_help_summary_json: Path = DEFAULT_CLI_HELP_SUMMARY_JSON,
     cli_help_entries_csv: Path = DEFAULT_CLI_HELP_ENTRIES_CSV,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperToolchainQuickstartResult:
     index_summary_json = Path(index_summary_json)
     index_links_csv = Path(index_links_csv)
     cli_help_summary_json = Path(cli_help_summary_json)
     cli_help_entries_csv = Path(cli_help_entries_csv)
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     index_summary, index_links = _load_index(index_summary_json, index_links_csv)
     cli_help_summary, cli_help_entries = _load_cli_help(cli_help_summary_json, cli_help_entries_csv)

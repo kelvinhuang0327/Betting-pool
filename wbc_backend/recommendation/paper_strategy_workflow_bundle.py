@@ -30,7 +30,7 @@ from wbc_backend.recommendation.paper_strategy_workflow_review_pack import (
 
 
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p242a_paper_strategy_workflow_bundle"
-DEFAULT_GENERATED_AT_UTC = "2026-07-08T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 BUNDLE_SUMMARY_FILENAME = "bundle_summary.json"
 BUNDLE_MANIFEST_FILENAME = "bundle_manifest.json"
@@ -318,10 +318,11 @@ def run_paper_strategy_workflow_bundle(
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     min_confidence: float = 0.5,
     thresholds: Iterable[float] = learning.DEFAULT_THRESHOLDS,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperWorkflowBundleResult:
     source_csv = Path(source_csv)
     output_dir = Path(output_dir)
+    generated_at_utc = learning.resolve_generated_at_utc(generated_at_utc)
     parsed_thresholds = tuple(thresholds)
     workflow_dir = output_dir / WORKFLOW_DIRNAME
     inspection_dir = output_dir / INSPECTION_DIRNAME
@@ -449,7 +450,7 @@ def run_bundle_or_raise(
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     min_confidence: float = 0.5,
     thresholds: Iterable[float] = learning.DEFAULT_THRESHOLDS,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperWorkflowBundleResult:
     try:
         return run_paper_strategy_workflow_bundle(

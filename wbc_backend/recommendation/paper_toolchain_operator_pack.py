@@ -18,6 +18,8 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -29,7 +31,7 @@ DEFAULT_QUICKSTART_SUMMARY_JSON = ROOT / "report" / "p251a_paper_toolchain_quick
 DEFAULT_QUICKSTART_COMMANDS_CSV = ROOT / "report" / "p251a_paper_toolchain_quickstart" / "quickstart_commands.csv"
 DEFAULT_QUICKSTART_MD = ROOT / "report" / "p251a_paper_toolchain_quickstart" / "quickstart.md"
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p252a_paper_toolchain_operator_pack"
-DEFAULT_GENERATED_AT_UTC = "2026-07-09T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 SUMMARY_JSON_FILENAME = "operator_pack_summary.json"
 FILES_CSV_FILENAME = "operator_pack_files.csv"
@@ -278,7 +280,7 @@ def build_paper_toolchain_operator_pack(
     quickstart_commands_csv: Path = DEFAULT_QUICKSTART_COMMANDS_CSV,
     quickstart_md: Path = DEFAULT_QUICKSTART_MD,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperToolchainOperatorPackResult:
     dashboard_summary_json = Path(dashboard_summary_json)
     index_summary_json = Path(index_summary_json)
@@ -288,6 +290,7 @@ def build_paper_toolchain_operator_pack(
     quickstart_commands_csv = Path(quickstart_commands_csv)
     quickstart_md = Path(quickstart_md)
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     dashboard_summary = _read_json(dashboard_summary_json, "dashboard summary JSON")
     for field in REQUIRED_DASHBOARD_SUMMARY_FIELDS:
