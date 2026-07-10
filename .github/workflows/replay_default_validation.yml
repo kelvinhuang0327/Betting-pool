@@ -26,6 +26,23 @@ jobs:
           if [ -f requirements.txt ]; then
             python -m pip install -r requirements.txt
           fi
+          python -m pip install -r requirements-test.txt
+
+      - name: Run P242a-P253a targeted pytest gate
+        run: |
+          python -m pytest -p no:cacheprovider -q \
+            tests/test_p242a_paper_strategy_workflow_bundle.py \
+            tests/test_p243a_paper_artifact_catalog.py \
+            tests/test_p244a_paper_artifact_catalog_query.py \
+            tests/test_p245a_paper_artifact_catalog_diff.py \
+            tests/test_p246a_paper_artifact_diff_gate.py \
+            tests/test_p247a_paper_toolchain_status.py \
+            tests/test_p248a_paper_toolchain_dashboard.py \
+            tests/test_p249a_paper_toolchain_index.py \
+            tests/test_p250a_paper_toolchain_cli_help.py \
+            tests/test_p251a_paper_toolchain_quickstart.py \
+            tests/test_p252a_paper_toolchain_operator_pack.py \
+            tests/test_p253a_paper_toolchain_pack_integrity.py
 
       - name: Install Playwright browser tooling
         run: |
