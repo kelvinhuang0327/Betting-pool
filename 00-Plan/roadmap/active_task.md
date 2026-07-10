@@ -1,118 +1,133 @@
-# Active Task: P204-PREDICTION-PROVENANCE-HARDENING — Read-Only Pipeline Inventory (Plan-Only)
+# Active Task: P224-A PR #49 Merge Closeout With Post-Merge Smoke
 
 ## Status
 
-`PLAN_ONLY_REQUIRES_TASK_SPECIFIC_AUTHORIZATION`
+`AUTHORIZED_IN_CEO_THREAD_20260702_PENDING_EXECUTION`
+
+Owner 的明確 merge 授權文字（"I explicitly authorize P224-A PR #49 merge closeout only"）
+已出現在 2026-07-02 CEO 審查串。依「授權不跨任務繼承」規則，worker 執行串必須自帶
+同等授權文字；缺授權 → STOP。
 
 ## Supersedes
 
-This task replaces the prior active task "P203-PACKAGE — P203 Prediction Evidence Study
-Eight-File Packaging" (`IN_PROGRESS_GOVERNANCE_COMMIT_TO_PR26`). That task is now fully
-complete:
+取代 P204-PREDICTION-PROVENANCE-HARDENING（2026-06-14，plan-only）。該任務目標已被
+P205-A provenance fail-closed 實作（已 merge）吸收，standalone inventory 不再是優先。
 
-- PR #26 (`release/p203-prediction-evidence-study` → `main`) is **MERGED** at merge
-  commit `e7ac8f7d0672a9501aefca1dd73ad623a2941e38` (mergedAt `2026-06-14T13:45:24Z`);
-  2 commits, 8 files (4 P203 evidence artifacts + 4 governance files); CI
-  `replay-default-validation` = SUCCESS.
-- `origin/main` confirmed to contain the merge commit; source branch
-  `release/p203-prediction-evidence-study` retained (local + remote).
-- P203 final classification: `P203_PRED_EVIDENCE_INCONCLUSIVE`. `calibrated_baseline`
-  (frozen Elo + Platt) Brier 0.248346 is the best point estimate (CI vs frozen includes
-  zero); `candidate_full` Brier 0.252568, improved 2/5 folds, **NOT promoted**.
-- `tests/test_p203_prediction_evidence_study.py`: 34 passed (prior round). Regression /
-  workflow / full-repository regression: NOT RUN.
-- Live transport (P202G) remains HOLD; Track B unsent; purpose-matched MLB licensing
-  channel = `NOT_ESTABLISHED`.
-- P203 cannot, on its own, separate model limitation from data limitation; the
-  point-in-time (PIT) game-specific pitcher/lineup data-availability limitation remains
-  `[Inferred]`.
-- This closeout round (governance-only): exactly 4 governance files
-  (`roadmap.md`, `CTO-Analysis.md`, `active_task.md`,
-  `agent_bootstrap/CURRENT_STATE.md`) updated to record PR #26 merge and define this
-  next task. No model/source/test/data/runtime/registry/production mutation.
+## Background（2026-07-02 CEO 實測）
 
-## Background
-
-The P202G-NEXT-DIRECTION decision packet selected Track A (offline leakage-safe
-calibration + feature-ablation walk-forward study), executed as P203
-(`P203_PRED_EVIDENCE_INCONCLUSIVE`). The post-P203 CTO strategic review (`roadmap.md`
-§0S / `CTO-Analysis.md` §0H) elevated **Prediction Provenance Hardening** to the lead
-substantive P0: it is unblocked by the live/legal HOLD and directly serves user goal #3
-(one end-to-end prediction → bet → result → learning workflow). From P199, the daily
-prediction runner may use a fixed prior (~0.535), a neutral feature row, and/or a
-hard-coded `home`-side fallback in the inspected path — provenance is not yet proven.
-
-## Task Type
-
-`PLAN_ONLY` (read-only inventory; no implementation)
+- `origin/main` = `59b5aea`：PR #46（P219-C markdown determinism guard，mergedAt
+  2026-07-02T06:29:52Z）在 PR #48（P223-A）之後合併，僅 +54 行
+  `tests/test_p219a_historical_feature_baseline_evaluation.py`。
+- P216–P223 historical artifact chain 已全部在 main。
+- PR #49（P224-A）：OPEN、非 draft、target main、head `1e1b91e`、`MERGEABLE`、
+  CI `replay-default-validation` PASS；因 PR #46 後合而 `BEHIND`
+  （4 behind / 1 ahead，與 main 新 commit 無檔案交集）。
+- P224-A 結論：`NO_DERIVATION_WINDOW_LEAKAGE_DETECTED`；Baseline A/B
+  committed=recomputed（0.250000 / 0.312500）；16/16 row-level match。
+- `git worktree list`：無任何 worktree 佔用 `main`，主目錄 `git checkout main` 可行。
 
 ## Goal
 
-Produce a read-only inventory of the daily prediction/recommendation pipeline's
-provenance, covering at minimum:
+把 PR #49 合併進 main、完成 post-merge smoke、記錄 merge commit 與 P224 artifact
+SHA256。不做任何其他變更。
 
-1. **Prediction producer** — which module(s) generate the per-game prediction actually
-   used by the daily recommendation; whether each prediction can be traced to a
-   verifiable model/version/input fingerprint, or falls back to a fixed prior / neutral
-   feature row.
-2. **Scheduler / runner** — how and when the prediction producer is invoked; whether
-   game-specific inputs (lineups, starters, etc.) are available at that point in time.
-3. **Recommendation builder** — how the prediction is mapped to a side
-   (home/away/over/under) and a recommendation row; whether any hard-coded-side
-   fallback exists and under what conditions it triggers.
-4. **`source_trace`** — what provenance metadata (if any) is currently recorded per
-   recommendation row, and whether it is sufficient to distinguish
-   "verified game-specific" from "fallback/neutral/fixed-prior".
-5. **`learning_eligible`** — how this flag is currently set, and whether fallback rows
-   are correctly excluded from learning per P200/P201.
-6. **Fixed-prior / neutral-feature / hard-coded-side-fallback usage** — enumerate every
-   code path where these occur, with file/line references.
+## Allowed Changes
 
-Output: a single read-only audit report (file path and naming to be defined in the
-next task-specific authorization) describing current state, gaps, and a **proposed**
-fail-closed / learning-ineligible contract for rows lacking verifiable game-specific
-provenance. No implementation in this round.
+- GitHub 標準方式 merge PR #49。
+- 若且唯若 GitHub 因 branch-out-of-date 規則拒絕 merge：允許執行一次 GitHub
+  「Update branch」（merge main into PR branch），等 CI 綠後再 merge。此為唯一允許的
+  額外 commit；不得 rebase / force-push。
+- 本地 `git checkout main` + `git pull --ff-only origin main`（僅同步）。
+- 重跑 P224 builder 覆寫 `report/p224a_*.{json,md}`（determinism 驗證；應與 committed
+  版本 bit-identical，若有 diff → STOP 報告，不得 commit）。
+- `/tmp` 或 scratchpad 下的 SHA 記錄檔。
 
-## Hard Boundaries (this plan-only round)
+## Forbidden Changes
 
-- Read-only inventory and report-writing only; this `active_task.md` entry itself does
-  not authorize any source/test/data/runtime/registry/production write.
-- No model/champion/registry/evaluator/leaderboard/recommendation mutation.
-- No MLB/StatsAPI endpoint call; no live/historical data acquisition; no provider
-  unlock; live transport (P202G) remains HOLD.
-- No production DB write; no deployment; no production promotion.
-- No Track B written-permission request.
-- Implementation of provenance hardening (code changes to the prediction producer,
-  runner, recommendation builder, or `source_trace`/`learning_eligible` logic) requires
-  a **separate, explicit, task-specific authorization** with its own file whitelist,
-  Phase 0 state verification, STOP conditions, and required regression scope.
+- 不得建立 repair commit、不得 revert、不得 push 其他 commit。
+- 不得動 P216–P223 artifacts、依賴檔（requirements / pyproject / CI config）。
+- 不得動 unrelated dirty/untracked files，已知清單（staging 亦禁止）：
+  - `00-Plan/roadmap/roadmap.md`、`CEO-Decision.md`、`active_task.md`（2026-07-02 CEO 已改，未 commit）
+  - `00-Plan/roadmap/SHARED_AGENT_BOOTSTRAP.md`、`TASK_TEMPLATES.md`、`agent_bootstrap/`（untracked）
+  - `report/mlb_prediction_workflow_*`（4 檔）、`scripts/run_mlb_prediction_workflow_snapshot.py`、
+    `tests/test_mlb_product_workflow_snapshot.py`、`wbc_backend/recommendation/mlb_product_workflow_snapshot.py`
+  - `report/p199_*`、`report/p202*`（untracked 歷史 audit）
+  - `data/`、`logs/`、`runtime/` 下所有 dirty 檔
+- 不得 remote data fetch（git/gh 操作除外）、不得 pybaseball、不得 model training、
+  不得產 future predictions、不得 DB writes。
+- 不得繼續 P225 / model / prediction 工作（需另行 Owner 授權）。
 
-## Decision Provenance (carried forward as reference)
+## Phase 0 Verification
 
-| Field | Value |
-|---|---|
-| P203 final classification | `P203_PRED_EVIDENCE_INCONCLUSIVE` |
-| Raw/eligible sample | 2,430 games, `data_source="mlb_2025_retrosheet"` |
-| Pooled OOS n | 2,010 (5 folds) |
-| Brier improvement | −0.002757 (95% CI [−0.007517, 0.001864]) |
-| ci95_lower_above_zero | False |
-| Folds improved (candidate_full) | 2/5 improved; 3/5 did not improve |
-| ECE frozen → calibrated_baseline | 0.053463 → 0.035953 (Platt calibration; NOT Brier gate) |
-| ECE candidate_full | 0.035802 (separate from calibrated_baseline ECE) |
-| calibrated_baseline Brier | 0.248346 (best point estimate; CI [−0.00197, 0.004735] includes zero) |
-| candidate_full promotion | NOT authorized |
-| PR #26 | MERGED, merge commit `e7ac8f7d0672a9501aefca1dd73ad623a2941e38` |
-| Live transport (P202G) | HOLD |
-| Track B | Not sent, not drafted |
-| HEAD / origin/main | `e7ac8f7d0672a9501aefca1dd73ad623a2941e38` |
+1. `cd /Users/kelvin/Kelvin-WorkSpace/Betting-pool`
+2. 確認執行串內含 Owner merge 授權文字。
+3. `git fetch origin --prune`；記錄 `origin/main` SHA（預期 `59b5aea` 或其後；若 main
+   又移動，重驗 PR #49 changed files 仍恰為 4 檔且與新 commit 無檔案交集，否則 STOP）。
+4. `gh pr view 49 --json state,isDraft,mergeable,mergeStateStatus,headRefOid`：
+   OPEN、非 draft、`MERGEABLE`、head `1e1b91e`（或 update-branch 後的新 head）。
+5. `gh pr view 49 --json files`：恰為 4 檔 —
+   `scripts/build_pit_feature_contract_leakage_audit.py`、
+   `tests/test_p224a_pit_feature_contract_leakage_audit.py`、
+   `report/p224a_pit_feature_contract_leakage_audit.json`、
+   `report/p224a_pit_feature_contract_leakage_audit.md`。
+6. `gh pr checks 49` 全 pass。
+7. `git status --short` 記錄 dirty inventory（預期＝Forbidden 清單所列；出現未知項 → STOP）。
+8. `git diff --cached --name-status` 必須為空。
 
-## Worker Guidance
+## STOP Conditions
 
-- Worker model: Sonnet, standard thinking level (read-only inventory does not require
-  Opus).
-- This task is plan-only: no branch/stage/commit/push/PR should be created for the
-  provenance inventory itself unless a separate authorization defines a report-writing
-  scope.
-- After the inventory/report is produced and reviewed, a separate authorization round
-  will define the implementation scope, file whitelist, and regression requirements for
-  actual provenance hardening.
+- 執行串內無 Owner 授權文字。
+- PR checks 非全綠；changed files ≠ 4 檔 whitelist；與 main 新 commit 有檔案交集。
+- Update-branch 之後 CI 未綠。
+- merge / smoke 會觸及 unrelated dirty/untracked files。
+- post-merge smoke 任一步 FAIL（記錄證據後 STOP；不得自行 repair）。
+
+## Post-Merge Smoke（Test Commands）
+
+1. `git checkout main && git pull --ff-only origin main`；記錄 merge commit hash；
+   確認 local main == origin/main。
+2. `export PYTHONPATH="$PWD"; python3 scripts/build_pit_feature_contract_leakage_audit.py`
+3. `shasum -a 256 report/p224a_pit_feature_contract_leakage_audit.json report/p224a_pit_feature_contract_leakage_audit.md > /tmp/p224a_sha_run1.txt`
+4. 重跑 builder → `/tmp/p224a_sha_run2.txt`；`diff -u /tmp/p224a_sha_run1.txt /tmp/p224a_sha_run2.txt` 必須為空。
+5. `git diff -- report/p224a_pit_feature_contract_leakage_audit.json report/p224a_pit_feature_contract_leakage_audit.md` 必須為空（rebuild 與 committed bit-identical）。
+6. `.venv/bin/python -m pytest -q tests/test_p224a_pit_feature_contract_leakage_audit.py tests/test_p223a_historical_evaluation_evidence_index.py tests/test_p221a_historical_time_split_baseline_evaluation.py tests/test_p219a_historical_feature_baseline_evaluation.py`
+7. `git diff --check`
+8. 確認無依賴 diff、無 P216–P223 artifact diff。
+9. `git status --short`（dirty inventory 與 Phase 0 記錄一致）。
+
+## Acceptance Criteria
+
+- PR #49 merged；local main == origin/main；merge commit hash 記錄。
+- P224 JSON/MD SHA256 記錄；two-run determinism diff 空；rebuild 與 committed bit-identical。
+- P224 / P223 / P221 / P219A tests PASS；`git diff --check` PASS。
+- 無依賴變更、無 P216–P223 artifact 修改、無 unrelated files 觸及。
+- 無 remote data fetch（git/gh 除外）、無 pybaseball、無 model training、
+  無 future predictions、無 DB writes。
+- 未繼續 P225 / model / prediction 工作。
+
+## Evidence / Report Output Location
+
+- 回報於任務串本文：merge commit、artifact SHA256、test 輸出、git status 前後對照、
+  final classification。不新增 repo 檔案。
+
+## Required Completion Check
+
+1. Completed: yes/no
+2. Tests: PASS / FAIL / NOT RUN
+3. Only remaining blocker
+4. Modified files
+5. staged / commit / push status
+6. Allowed to proceed next: yes/no
+7. Final Classification
+
+## Final Classification
+
+- 成功：`P224A_MERGED_POST_MERGE_SMOKE_PASS`
+- 失敗 / 中止：`P224A_MERGE_BLOCKED`（附證據）
+
+## Queued Next（不在本任務範圍；各需 Owner 一句話授權）
+
+1. **P225-W**：MLB prediction workflow snapshot 8 檔入版控（新 branch + PR + CI +
+   review；含釐清 2026 快照版本標示 `p84b_diagnostic_baseline_v1` 的語意）。
+2. **P226**：Run line / Total 機率模型 + paper 回測（per-market Brier / acc / ROI 報告，
+   防洩漏 time-split，paper-only 標示）。

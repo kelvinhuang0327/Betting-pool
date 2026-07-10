@@ -1,11 +1,79 @@
 # Betting-pool Canonical Roadmap
 
-**CTO review date:** 2026-06-14 Asia/Taipei
+**CTO review date:** 2026-06-14 Asia/Taipei（§0T 及以下為歷史紀錄）
+**CEO correction date:** 2026-07-02 Asia/Taipei（§0U 為當前執行優先序）
 **Canonical repo:** `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`
-**Observed branch:** `main`
+**Observed branch:** `task/p224a-pit-contract-leakage-audit`（PR #49 open；main 現況見 §0U.1）
 **Mode:** `paper_only=true`, `production_ready=false`, `NO_REAL_BET=true`
-**Roadmap status:** canonical roadmap maintained in-place; latest section `0T` supersedes `0S` for current execution priority.
-**Active marker:** `CTO_CANONICAL_ROADMAP_P203_MERGED_P204_PROVENANCE_HARDENING_PLANNED_20260614`
+**Roadmap status:** canonical roadmap maintained in-place; latest section `0U` supersedes `0T` for current execution priority.
+**Active marker:** `CEO_ROADMAP_CORRECTED_P216_P223_MERGED_P224_PR49_OPEN_WORKFLOW_SNAPSHOT_LANDING_NEXT_20260702`
+
+---
+
+## 0U. CEO 校正 — P205–P223 已合併、P224-A PR #49 待合併、實質預測工作流已跑通（2026-07-02）
+
+本節取代 `0T` 作為當前執行優先序；`0T` 及其下所有章節為歷史紀錄。本次為 CEO 審查
+（CEO Agent Task2.0）：僅校正 roadmap 漂移與重排優先序，未執行 merge/commit/push，
+未動 source/data/runtime。roadmap 自 2026-06-14 起漂移約 2.5 週（P205–P224 未入檔），
+本節補正。
+
+### 0U.1 現況真相（2026-07-02 實測）
+
+- [Confirmed] `origin/main` = `59b5aea`：PR #46（P219-C markdown determinism guard，
+  mergedAt 2026-07-02T06:29:52Z，僅 +54 行 `tests/test_p219a_...py`）在 PR #48 之後合併。
+- [Confirmed] P205A / P205B / P206A / P207A(PR#31) / P208A / P209A 及
+  P216-A → P223-A historical artifact chain 均已 merge（最近：PR #47 P222-A、PR #48 P223-A）。
+- [Confirmed] 工作目錄在 `task/p224a-pit-contract-leakage-audit` @ `1e1b91e`；
+  PR #49（P224-A PIT contract + leakage audit）OPEN、非 draft、`MERGEABLE`、
+  changed files 恰為 4 檔 whitelist、CI `replay-default-validation` PASS；
+  因 PR #46 後合而 `BEHIND`（4 behind / 1 ahead，無檔案交集）。
+- [Confirmed] P224-A 結論 `NO_DERIVATION_WINDOW_LEAKAGE_DETECTED`；A/B baseline
+  committed=recomputed（0.250000 / 0.312500）、16/16 row match、source hash 全 match。
+  18 欄 PIT 分類中 pregame_known 僅 3 欄（game_date/home_team/away_team）——
+  artifact chain 是 pitch-event 級流程骨架，**不是** game-level 預測能力證據。
+- [Confirmed] 實質預測工作流已跑通（**untracked，未入版控**）：
+  `scripts/run_mlb_prediction_workflow_snapshot.py`、
+  `wbc_backend/recommendation/mlb_product_workflow_snapshot.py`、
+  `tests/test_mlb_product_workflow_snapshot.py`、`report/mlb_prediction_workflow_*`（4 檔）。
+  已驗數字：2025 重訓 train 1458 / test 972；best Brier `calibrated_elo_recent_form`
+  0.2460；best acc `retrained_team_history_smooth` 56.38%；Moneyline paper 398 注、
+  hit 51.26%、ROI +4.70%（paper-only，非真實 edge 宣稱）；2026 本地快照 828 筆、
+  已附結果準確率 56.93%；run_line / total_runs 有線有結果但無獨立機率模型；
+  F5 無本地線與結果。
+- [Confirmed] 本輪 read-only smoke：workflow + P224 targeted tests = 6 passed。
+
+### 0U.2 Owner 指令與 Fable5 界線調和（CEO 裁定）
+
+- [Confirmed] Owner（2026-07-01/02 重申）：停止治理文件堆疊，優先產出看得到的
+  預測 / 重訓 / 回測結果；兩大主軸＝台灣運彩市場賽前策略 ＋ 回測學習閉環，
+  最終串成 預測→下注→結果 工作流。
+- [CEO 裁定] Fable5「model training NO-GO」範圍限縮為：live transport / real betting /
+  production activation / 新遠端資料來源（維持 STOP / HOLD）。**本機 historical
+  paper-only 重訓與回測由 Owner 指令解鎖**（P207A 與 workflow snapshot 均屬此類）。
+- [不變] MLB=PAPER_ONLY 硬閘；live transport 永久 HOLD（P202G-A）；Track B deferred；
+  odds 檔為賽後單快照，不可當賽前市場 / CLV。
+
+### 0U.3 最新優先序
+
+- **P0-1（已授權，見 active_task.md）**：PR #49 merge closeout + post-merge smoke。
+- **P0-2（WAITING_FOR_USER_AUTHORIZATION）**：MLB prediction workflow snapshot 8 檔
+  入版控（新 branch + PR）。untracked 有遺失風險，且是核心目標①③第一段實作。
+- **P1-1（WAITING_FOR_USER_AUTHORIZATION）**：Run line / Total 機率模型 + paper 回測
+  數字（Owner 點名下一步；讓台灣運彩主要市場不只停在 Moneyline）。
+- **P1-2**：預測品質強化 — 依 P224 PIT contract 僅用 pregame_known 特徵接真實
+  先發 / 近況（提升準確率是串工作流的關鍵）。
+- **P2**：F5 市場資料缺口盤點；external historical closing odds 評估（授權議題）；
+  進入 model-heavy 階段前的 full-repo regression。
+- **P3–P10（降級 / 凍結）**：P225+ artifact-only audit/dashboard 鏈改為 on-demand；
+  P219 nondeterminism residual 由 PR #46 guard test 監控；P204 provenance inventory
+  retired（已被 P205A 實作吸收）；live / real betting / production / Track B 維持
+  STOP / HOLD / deferred。
+
+### 0U.4 Today Focus
+
+1. 合併 PR #49 並跑 post-merge smoke（active_task.md；`P224A_MERGED_POST_MERGE_SMOKE_PASS`）。
+2. Owner 一句話授權後：workflow snapshot 入版控（P0-2）。
+3. Owner 一句話授權後：Run line / Total 機率模型設計 + 回測（P1-1）。
 
 ---
 
