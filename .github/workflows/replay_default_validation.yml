@@ -26,10 +26,11 @@ jobs:
           if [ -f requirements.txt ]; then
             python -m pip install -r requirements.txt
           fi
+          python -m pip install -r requirements-test.txt
 
       - name: Run P242a-P253a targeted pytest gate
         run: |
-          pytest -p no:cacheprovider -q \
+          python -m pytest -p no:cacheprovider -q \
             tests/test_p242a_paper_strategy_workflow_bundle.py \
             tests/test_p243a_paper_artifact_catalog.py \
             tests/test_p244a_paper_artifact_catalog_query.py \
