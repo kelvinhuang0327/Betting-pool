@@ -12,12 +12,14 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_WORKFLOW_DIR = ROOT / "report" / "p239a_paper_strategy_workflow"
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p240a_paper_strategy_workflow_inspector"
-DEFAULT_GENERATED_AT_UTC = "2026-07-08T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 WORKFLOW_SUMMARY_FILENAME = "workflow_summary.json"
 WORKFLOW_MANIFEST_FILENAME = "workflow_manifest.json"
@@ -551,10 +553,11 @@ def inspect_paper_strategy_workflow(
     *,
     workflow_dir: Path = DEFAULT_WORKFLOW_DIR,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperWorkflowInspectionResult:
     workflow_dir = Path(workflow_dir)
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
     paths = _require_inputs(workflow_dir)
 
     json_payloads = {

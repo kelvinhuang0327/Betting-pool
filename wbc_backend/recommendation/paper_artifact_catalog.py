@@ -14,11 +14,13 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p243a_paper_artifact_catalog"
-DEFAULT_GENERATED_AT_UTC = "2026-07-08T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 CATALOG_JSON_FILENAME = "artifact_catalog.json"
 CATALOG_CSV_FILENAME = "artifact_catalog.csv"
@@ -522,10 +524,11 @@ def _write_markdown(
 def build_paper_artifact_catalog(
     *,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
     source_roots: Iterable[Path] = DEFAULT_SOURCE_ROOTS,
 ) -> PaperArtifactCatalogResult:
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
     source_specs = _source_specs(tuple(Path(path) for path in source_roots))
     output_dir.mkdir(parents=True, exist_ok=True)
     catalog_json_path = output_dir / CATALOG_JSON_FILENAME

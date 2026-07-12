@@ -20,7 +20,7 @@ from wbc_backend.recommendation.paper_strategy_simulator import ExplorerError, R
 
 DEFAULT_SOURCE_CSV = ROOT / "report" / "p236a_run_line_backtest_explorer_filtered_games.csv"
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p239a_paper_strategy_workflow"
-DEFAULT_GENERATED_AT_UTC = "2026-07-08T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 WORKFLOW_STATUS = "RESULT_ONLY_PAPER_WORKFLOW"
 INTERPRETATION = "IN_SAMPLE_DESCRIPTIVE_ONLY"
@@ -129,10 +129,11 @@ def run_paper_strategy_workflow(
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     min_confidence: float = 0.5,
     thresholds: Iterable[float] = learning.DEFAULT_THRESHOLDS,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperStrategyWorkflowResult:
     source_csv = Path(source_csv)
     output_dir = Path(output_dir)
+    generated_at_utc = learning.resolve_generated_at_utc(generated_at_utc)
     min_confidence = _validate_min_confidence(min_confidence)
     parsed_thresholds = _validate_thresholds(thresholds)
     paths = _artifact_paths(output_dir)

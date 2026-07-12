@@ -15,6 +15,8 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -22,7 +24,7 @@ DEFAULT_TOOLCHAIN_STATUS_JSON = ROOT / "report" / "p247a_paper_toolchain_status"
 DEFAULT_TOOLCHAIN_STEPS_CSV = ROOT / "report" / "p247a_paper_toolchain_status" / "toolchain_steps.csv"
 DEFAULT_TOOLCHAIN_REPORT_MD = ROOT / "report" / "p247a_paper_toolchain_status" / "toolchain_report.md"
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p248a_paper_toolchain_dashboard"
-DEFAULT_GENERATED_AT_UTC = "2026-07-09T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 DASHBOARD_SUMMARY_FILENAME = "dashboard_summary.json"
 DASHBOARD_SECTIONS_FILENAME = "dashboard_sections.csv"
@@ -672,12 +674,13 @@ def build_paper_toolchain_dashboard(
     toolchain_steps_csv: Path = DEFAULT_TOOLCHAIN_STEPS_CSV,
     toolchain_report_md: Path = DEFAULT_TOOLCHAIN_REPORT_MD,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperToolchainDashboardResult:
     toolchain_status_json = Path(toolchain_status_json)
     toolchain_steps_csv = Path(toolchain_steps_csv)
     toolchain_report_md = Path(toolchain_report_md)
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     status_payload = _read_json_object(toolchain_status_json, "toolchain status JSON")
     step_rows = _read_steps_csv(toolchain_steps_csv)

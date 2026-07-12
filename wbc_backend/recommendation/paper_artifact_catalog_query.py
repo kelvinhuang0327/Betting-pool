@@ -17,6 +17,7 @@ from wbc_backend.recommendation.paper_artifact_catalog import (
     CSV_FIELDNAMES,
     REQUIRED_LIMITATION_LABELS,
 )
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -24,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CATALOG_JSON = ROOT / "report" / "p243a_paper_artifact_catalog" / "artifact_catalog.json"
 DEFAULT_CATALOG_CSV = ROOT / "report" / "p243a_paper_artifact_catalog" / "artifact_catalog.csv"
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p244a_paper_artifact_catalog_query"
-DEFAULT_GENERATED_AT_UTC = "2026-07-08T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 QUERY_SUMMARY_FILENAME = "query_summary.json"
 QUERY_RESULTS_FILENAME = "query_results.csv"
@@ -309,12 +310,13 @@ def query_paper_artifact_catalog(
     catalog_csv: Path = DEFAULT_CATALOG_CSV,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     filters: PaperArtifactCatalogQueryFilters | None = None,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperArtifactCatalogQueryResult:
     catalog_json = Path(catalog_json)
     catalog_csv = Path(catalog_csv)
     output_dir = Path(output_dir)
     filters = filters or PaperArtifactCatalogQueryFilters()
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     catalog_payload = _load_catalog_json(catalog_json)
     rows = _load_catalog_csv(catalog_csv)

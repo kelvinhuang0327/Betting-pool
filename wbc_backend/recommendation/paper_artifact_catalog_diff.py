@@ -17,6 +17,7 @@ from wbc_backend.recommendation.paper_artifact_catalog import (
     CSV_FIELDNAMES as CATALOG_CSV_FIELDNAMES,
     REQUIRED_LIMITATION_LABELS,
 )
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,7 +31,7 @@ DEFAULT_BASELINE_CATALOG_CSV = (
 DEFAULT_CURRENT_CATALOG_JSON = DEFAULT_BASELINE_CATALOG_JSON
 DEFAULT_CURRENT_CATALOG_CSV = DEFAULT_BASELINE_CATALOG_CSV
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p245a_paper_artifact_catalog_diff"
-DEFAULT_GENERATED_AT_UTC = "2026-07-08T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 DIFF_SUMMARY_FILENAME = "diff_summary.json"
 DIFF_ENTRIES_FILENAME = "diff_entries.csv"
@@ -396,13 +397,14 @@ def diff_paper_artifact_catalogs(
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     fail_on_changes: bool = False,
     include_unchanged: bool = False,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperArtifactCatalogDiffResult:
     baseline_catalog_json = Path(baseline_catalog_json)
     baseline_catalog_csv = Path(baseline_catalog_csv)
     current_catalog_json = Path(current_catalog_json)
     current_catalog_csv = Path(current_catalog_csv)
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     baseline_payload = _load_catalog_json(baseline_catalog_json)
     current_payload = _load_catalog_json(current_catalog_json)

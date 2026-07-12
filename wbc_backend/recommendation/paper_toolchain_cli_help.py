@@ -20,11 +20,13 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p250a_paper_toolchain_cli_help"
-DEFAULT_GENERATED_AT_UTC = "2026-07-09T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 DEFAULT_TIMEOUT_SECONDS = 10
 
 SUMMARY_JSON_FILENAME = "cli_help_summary.json"
@@ -399,7 +401,7 @@ def _write_markdown(path: Path, summary: dict[str, Any], entries: tuple[dict[str
 def build_paper_toolchain_cli_help(
     *,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
     python_executable: str = sys.executable,
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
     script_specs: Iterable[ScriptSpec] = DEFAULT_SCRIPT_SPECS,
@@ -408,6 +410,7 @@ def build_paper_toolchain_cli_help(
         raise PaperToolchainCliHelpError(f"timeout_seconds must be positive, got {timeout_seconds}")
 
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
     script_specs = tuple(script_specs)
 
     entries: list[dict[str, Any]] = []

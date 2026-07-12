@@ -14,11 +14,13 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p247a_paper_toolchain_status"
-DEFAULT_GENERATED_AT_UTC = "2026-07-09T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 STATUS_JSON_FILENAME = "toolchain_status.json"
 STEPS_CSV_FILENAME = "toolchain_steps.csv"
@@ -419,10 +421,11 @@ def _write_markdown(path: Path, status: dict[str, Any]) -> None:
 def build_paper_toolchain_status(
     *,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
     step_specs: Iterable[ToolchainStepSpec] = STEP_SPECS,
 ) -> PaperToolchainStatusResult:
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
     step_specs = tuple(step_specs)
     step_summaries: list[dict[str, Any]] = []
     step_rows: list[dict[str, str]] = []

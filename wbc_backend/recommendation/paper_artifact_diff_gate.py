@@ -15,6 +15,7 @@ from typing import Any, Iterable
 
 from wbc_backend.recommendation.paper_artifact_catalog import REQUIRED_LIMITATION_LABELS
 from wbc_backend.recommendation.paper_artifact_catalog_diff import DIFF_CSV_FIELDNAMES
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -22,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DIFF_SUMMARY = ROOT / "report" / "p245a_paper_artifact_catalog_diff" / "diff_summary.json"
 DEFAULT_DIFF_ENTRIES = ROOT / "report" / "p245a_paper_artifact_catalog_diff" / "diff_entries.csv"
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p246a_paper_artifact_diff_gate"
-DEFAULT_GENERATED_AT_UTC = "2026-07-08T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 GATE_SUMMARY_FILENAME = "gate_summary.json"
 GATE_CHECKS_FILENAME = "gate_checks.csv"
@@ -433,12 +434,13 @@ def gate_paper_artifact_diff(
     diff_entries_path: Path = DEFAULT_DIFF_ENTRIES,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     policy: PaperArtifactDiffGatePolicy | None = None,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
 ) -> PaperArtifactDiffGateResult:
     diff_summary_path = Path(diff_summary_path)
     diff_entries_path = Path(diff_entries_path)
     output_dir = Path(output_dir)
     policy = policy or PaperArtifactDiffGatePolicy()
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     diff_summary = _load_diff_summary(diff_summary_path)
     diff_entries = _load_diff_entries(diff_entries_path)

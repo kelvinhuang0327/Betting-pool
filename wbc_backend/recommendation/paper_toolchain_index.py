@@ -16,6 +16,8 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
+from wbc_backend.recommendation.paper_strategy_learning import resolve_generated_at_utc
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -33,7 +35,7 @@ DEFAULT_GATE_SUMMARY_JSON = (
     ROOT / "report" / "p246a_paper_artifact_diff_gate" / "gate_summary.json"
 )
 DEFAULT_OUTPUT_DIR = ROOT / "report" / "p249a_paper_toolchain_index"
-DEFAULT_GENERATED_AT_UTC = "2026-07-09T00:00:00Z"
+DEFAULT_GENERATED_AT_UTC = None
 
 INDEX_SUMMARY_FILENAME = "index_summary.json"
 INDEX_LINKS_FILENAME = "index_links.csv"
@@ -847,7 +849,7 @@ def build_paper_toolchain_index(
     toolchain_status_json: Path = DEFAULT_TOOLCHAIN_STATUS_JSON,
     gate_summary_json: Path = DEFAULT_GATE_SUMMARY_JSON,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
-    generated_at_utc: str = DEFAULT_GENERATED_AT_UTC,
+    generated_at_utc: str | None = DEFAULT_GENERATED_AT_UTC,
     link_specs: Sequence[LinkSpec] = DEFAULT_LINK_SPECS,
 ) -> PaperToolchainIndexResult:
     dashboard_summary_json = Path(dashboard_summary_json)
@@ -856,6 +858,7 @@ def build_paper_toolchain_index(
     toolchain_status_json = Path(toolchain_status_json)
     gate_summary_json = Path(gate_summary_json)
     output_dir = Path(output_dir)
+    generated_at_utc = resolve_generated_at_utc(generated_at_utc)
 
     dashboard_summary = _read_json_object(dashboard_summary_json, "dashboard summary JSON")
     dashboard_sections = _read_dashboard_sections(dashboard_sections_csv)
