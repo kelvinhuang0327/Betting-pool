@@ -2,50 +2,61 @@
 
 **Scope:** `LOCAL_PAPER_WORKFLOW_SNAPSHOT`
 
-**Disclaimer:** Local historical replay and local prediction snapshot only. Paper-market metrics are for workflow validation, not live betting advice.
+**Disclaimer:** Corrected 2025 date-batched local retraining/evaluation and a separate existing 2026 prediction snapshot. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate the 2026 snapshot.
 
-## Retrain Result
+## Corrected 2025 Local Retrain and Evaluation
 
+- Result context: `CORRECTED_2025_LOCAL_DATE_BATCHED_RETRAIN_EVALUATION`
+- State transition: `PREDICT_FULL_DATE_THEN_UPDATE`
 - Warmup rows: `2429`
 - Evaluation rows: `2430`
-- Train: `2025-03-18` to `2025-07-18` (1458 games)
-- Test: `2025-07-18` to `2025-09-28` (972 games)
-- Best by Brier: `calibrated_elo_recent_form`
+- Train: `2025-03-18` to `2025-07-18` (1461 games)
+- Test: `2025-07-19` to `2025-09-28` (969 games)
+- Complete-date counts: train `112`, test `72`
+- Train fraction: requested `0.600000`, effective `0.601235`
+- Split strategy: `complete_date_boundary_nearest_requested_row_fraction`
+- Tie rule: `earlier boundary (smaller train partition) wins equal-distance ties`
+- Selected boundary: after `2025-07-18`; test starts `2025-07-19`
+- Best by Brier: `retrained_team_history_smooth`
 
 | Model | Accuracy | Brier | Log Loss | ECE |
 |---|---:|---:|---:|---:|
-| `baseline_fixed_prior` | 0.5329 | 0.2492 | 0.6915 | 0.0165 |
-| `elo_like_rating` | 0.5484 | 0.2486 | 0.6904 | 0.0488 |
-| `retrained_team_history_smooth` | 0.5638 | 0.2461 | 0.6852 | 0.0248 |
-| `calibrated_elo_recent_form` | 0.5442 | 0.2460 | 0.6851 | 0.0202 |
+| `baseline_fixed_prior` | 0.5325 | 0.2492 | 0.6916 | 0.0171 |
+| `elo_like_rating` | 0.5470 | 0.2489 | 0.6911 | 0.0503 |
+| `retrained_team_history_smooth` | 0.5635 | 0.2461 | 0.6854 | 0.0251 |
+| `calibrated_elo_recent_form` | 0.5418 | 0.2463 | 0.6855 | 0.0233 |
 
-## Moneyline Paper Workflow
+## Corrected 2025 Historical Moneyline Diagnostic
 
-- Prediction rows scored: `972`
-- Paper candidates: `398` (40.95%)
-- Candidate hit rate: `51.26%`
-- Net result units: `0.254282`
-- ROI on staked units: `4.70%`
-- Avg EV per unit: `0.130176`
-- Avg Kelly used: `1.36%`
-- Backtest CSV: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/mlb_prediction_workflow_moneyline_backtest.csv`
+- Historical odds do not have verified pregame timestamps.
+- Candidate hit rate, EV, Kelly, and ROI below are descriptive workflow diagnostics, not a verified betting edge or live wagering evidence.
+- Odds timing status: `HISTORICAL_ODDS_PREGAME_TIMESTAMP_UNVERIFIED`
+- Claim status: `DESCRIPTIVE_DIAGNOSTIC_NOT_VERIFIED_BETTING_EDGE`
+- Prediction rows scored: `969`
+- Paper candidates: `414` (42.72%)
+- Candidate hit rate: `54.59%`
+- Net result units: `0.210458`
+- ROI on staked units: `3.86%`
+- Avg EV per unit: `0.102107`
+- Avg Kelly used: `1.32%`
+- Backtest CSV: `report/mlb_prediction_workflow_moneyline_backtest.csv`
 
-### Top Paper Moneyline Candidates
+### Top Historical Paper Rows (Diagnostic Only)
 
 | Date | Game | Side | Sel Prob | Odds | EV | Kelly | Result |
 |---|---|---|---:|---:|---:|---:|---:|
-| 2025-09-18 | Cleveland Guardians @ Detroit Tigers | AWAY | 50.95% | +200 | 0.528 | 1.50% | 0.0300 |
-| 2025-07-28 | Atlanta Braves @ Kansas City Royals | HOME | 62.23% | +145 | 0.525 | 1.50% | -0.0150 |
-| 2025-09-23 | Detroit Tigers @ Cleveland Guardians | HOME | 63.98% | +135 | 0.504 | 1.50% | 0.0203 |
-| 2025-09-18 | New York Yankees @ Baltimore Orioles | HOME | 53.70% | +175 | 0.477 | 1.50% | -0.0150 |
-| 2025-08-25 | Detroit Tigers @ Athletics | HOME | 52.39% | +180 | 0.467 | 1.50% | 0.0270 |
-| 2025-09-20 | New York Yankees @ Baltimore Orioles | HOME | 53.73% | +165 | 0.424 | 1.50% | -0.0150 |
-| 2025-08-14 | Detroit Tigers @ Minnesota Twins | HOME | 52.91% | +165 | 0.402 | 1.50% | -0.0150 |
-| 2025-08-19 | New York Mets @ Washington Nationals | HOME | 52.88% | +165 | 0.401 | 1.50% | -0.0150 |
-| 2025-07-20 | Detroit Tigers @ Texas Rangers | HOME | 55.87% | +150 | 0.397 | 1.50% | -0.0150 |
-| 2025-09-12 | Detroit Tigers @ Miami Marlins | HOME | 51.13% | +170 | 0.381 | 1.50% | 0.0255 |
-| 2025-08-31 | Detroit Tigers @ Kansas City Royals | HOME | 56.35% | +145 | 0.380 | 1.50% | -0.0150 |
-| 2025-07-26 | Toronto Blue Jays @ Detroit Tigers | AWAY | 54.82% | +150 | 0.371 | 1.50% | 0.0225 |
+| 2025-08-28 | Boston Red Sox @ Baltimore Orioles | HOME | 52.36% | +175 | 0.440 | 1.50% | -0.0150 |
+| 2025-09-10 | Pittsburgh Pirates @ Baltimore Orioles | HOME | 59.24% | +130 | 0.363 | 1.50% | 0.0195 |
+| 2025-07-28 | Atlanta Braves @ Kansas City Royals | HOME | 54.92% | +145 | 0.346 | 1.50% | -0.0150 |
+| 2025-07-21 | San Diego Padres @ Miami Marlins | AWAY | 60.67% | +120 | 0.335 | 1.50% | 0.0180 |
+| 2025-08-11 | Boston Red Sox @ Houston Astros | HOME | 56.60% | +135 | 0.330 | 1.50% | 0.0203 |
+| 2025-07-26 | Los Angeles Dodgers @ Boston Red Sox | AWAY | 55.11% | +140 | 0.323 | 1.50% | -0.0150 |
+| 2025-08-07 | Miami Marlins @ Atlanta Braves | HOME | 59.73% | +120 | 0.314 | 1.50% | 0.0180 |
+| 2025-08-27 | Tampa Bay Rays @ Cleveland Guardians | HOME | 58.06% | +125 | 0.306 | 1.50% | 0.0187 |
+| 2025-09-17 | Texas Rangers @ Houston Astros | HOME | 57.93% | +125 | 0.304 | 1.50% | 0.0187 |
+| 2025-09-23 | Detroit Tigers @ Cleveland Guardians | HOME | 55.19% | +135 | 0.297 | 1.50% | 0.0203 |
+| 2025-07-22 | San Diego Padres @ Miami Marlins | AWAY | 60.98% | +110 | 0.281 | 1.50% | -0.0150 |
+| 2025-08-29 | Seattle Mariners @ Cleveland Guardians | HOME | 54.35% | +135 | 0.277 | 1.50% | 0.0203 |
 
 ## Taiwan Sports Lottery Market Coverage
 
@@ -56,12 +67,17 @@
 | `total_runs` | `LINES_AND_RESULTS_AVAILABLE_MODEL_PROBABILITY_PENDING` | 2430 | 100.00% |
 | `first_five` | `NO_LOCAL_F5_LINES_OR_F5_RESULTS_IN_SOURCE` | 0 | 0.00% |
 
-## Local 2026 Prediction Snapshot
+## Existing 2026 Prediction Snapshot (Separate and Stale)
 
+- Result context: `EXISTING_2026_PREDICTION_SNAPSHOT`
 - Rows: `828`
 - Date range: `['2026-03-25', '2026-05-31']`
 - Latest local prediction date: `2026-05-31`
-- Latest prediction CSV: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/mlb_prediction_workflow_latest_2026_predictions.csv`
+- Snapshot source model/version: `p84b_diagnostic_baseline_v1`
+- Freshness status: `STALE_EXISTING_LOCAL_SNAPSHOT`
+- Corrected 2025 retrained model generated these 2026 predictions: `False`
+- Corrected-model to 2026 prediction handoff: `NOT_PERFORMED`
+- Latest prediction CSV: `report/mlb_prediction_workflow_latest_2026_predictions.csv`
 - Outcome-attached accuracy: `56.93%` (460/808)
 
 | Date | Game | Side | Sel Prob | Version |
@@ -70,7 +86,7 @@
 
 ## Output Files
 
-- `markdown`: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/mlb_prediction_workflow_snapshot.md`
-- `json`: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/mlb_prediction_workflow_snapshot.json`
-- `moneyline_csv`: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/mlb_prediction_workflow_moneyline_backtest.csv`
-- `latest_predictions_csv`: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool/report/mlb_prediction_workflow_latest_2026_predictions.csv`
+- `markdown`: `report/mlb_prediction_workflow_snapshot.md`
+- `json`: `report/mlb_prediction_workflow_snapshot.json`
+- `moneyline_csv`: `report/mlb_prediction_workflow_moneyline_backtest.csv`
+- `latest_predictions_csv`: `report/mlb_prediction_workflow_latest_2026_predictions.csv`

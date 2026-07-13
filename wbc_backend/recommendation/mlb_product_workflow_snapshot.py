@@ -30,14 +30,36 @@ from wbc_backend.recommendation.local_retrain_scorecard import (
 
 SCOPE = "LOCAL_PAPER_WORKFLOW_SNAPSHOT"
 DISCLAIMER = (
-    "Local historical replay and local prediction snapshot only. Paper-market "
-    "metrics are for workflow validation, not live betting advice."
+    "Corrected 2025 date-batched local retraining/evaluation and a separate existing "
+    "2026 prediction snapshot. Historical odds lack verified pregame timestamps, so "
+    "Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish "
+    "a verified betting edge. The corrected retrained model did not generate the 2026 snapshot."
 )
+REPO_ROOT = Path(__file__).resolve().parents[2]
+CORRECTED_2025_RESULT_CONTEXT = "CORRECTED_2025_LOCAL_DATE_BATCHED_RETRAIN_EVALUATION"
+EXISTING_2026_SNAPSHOT_CONTEXT = "EXISTING_2026_PREDICTION_SNAPSHOT"
+EXPECTED_2026_SOURCE_VERSION = "p84b_diagnostic_baseline_v1"
+ODDS_TIMING_STATUS = "HISTORICAL_ODDS_PREGAME_TIMESTAMP_UNVERIFIED"
 
 DEFAULT_MONEYLINE_MIN_EV = 0.01
 DEFAULT_MONEYLINE_MIN_EDGE = 0.015
 DEFAULT_KELLY_FRACTION = 0.25
 DEFAULT_KELLY_CAP = 0.015
+
+
+def _portable_input_path(path: Path | None) -> str | None:
+    if path is None:
+        return None
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def _portable_output_path(path: Path) -> str:
+    """Keep report references stable across repo and /tmp reproducibility runs."""
+    return str(Path(path.parent.name) / path.name)
 
 
 def _safe_float(value: Any) -> float | None:
@@ -101,24 +123,58 @@ def _first(row: dict[str, Any], *keys: str) -> str:
     return ""
 
 
+def _home_win_from_odds_row(row: dict[str, Any]) -> int | None:
+    try:
+        home_score = int(float(_first(row, "Home Score", "home_score")))
+        away_score = int(float(_first(row, "Away Score", "away_score")))
+    except (TypeError, ValueError):
+        return None
+    if home_score == away_score:
+        return None
+    return int(home_score > away_score)
+
+
+def _odds_row_sort_key(row: dict[str, str]) -> tuple:
+    home_prob, _ = _devig_home_away_probs(row.get("Home ML"), row.get("Away ML"))
+    return (
+        row["_sort_date"],
+        _first(row, "Home", "home_team"),
+        _first(row, "Away", "away_team"),
+        int(row["_home_win"]),
+        home_prob is None,
+        0.0 if home_prob is None else home_prob,
+    )
+
+
 def _load_final_odds_rows(eval_path: Path) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     with eval_path.open(newline="", encoding="utf-8") as fh:
-        for row in csv.DictReader(fh):
+        for line_number, row in enumerate(csv.DictReader(fh), start=2):
             date_s = _first(row, "Date", "date")
             home = _first(row, "Home", "home_team")
             away = _first(row, "Away", "away_team")
             status = _first(row, "Status", "status") or "Final"
-            if not date_s or not home or not away or status.lower() != "final":
+            if status.lower() != "final":
                 continue
+            if not date_s or not home or not away or home.casefold() == away.casefold():
+                raise ValueError(
+                    f"malformed game identifier at {eval_path}:{line_number}: "
+                    f"date={date_s!r}, away={away!r}, home={home!r}"
+                )
             try:
                 dt = datetime.strptime(date_s, "%Y-%m-%d")
-            except ValueError:
+            except ValueError as exc:
+                raise ValueError(
+                    f"malformed game date at {eval_path}:{line_number}: {date_s!r}"
+                ) from exc
+            home_win = _home_win_from_odds_row(row)
+            if home_win is None:
                 continue
             row = dict(row)
             row["_sort_date"] = dt.isoformat()
+            row["_home_win"] = str(home_win)
             rows.append(row)
-    rows.sort(key=lambda r: (r["_sort_date"], _first(r, "Home"), _first(r, "Away")))
+    rows.sort(key=_odds_row_sort_key)
     return rows
 
 
@@ -132,7 +188,10 @@ def _index_odds_rows(eval_path: Path) -> dict[str, dict[str, str]]:
             _first(row, "Home", "home_team"),
         )
         counts[base] = counts.get(base, 0) + 1
-        indexed[_game_occurrence_key(base, counts[base])] = row
+        key = _game_occurrence_key(base, counts[base])
+        if key in indexed:
+            raise ValueError(f"duplicate canonical odds occurrence key: {key}")
+        indexed[key] = row
     return indexed
 
 
@@ -140,9 +199,27 @@ def _index_prediction_rows(predictions: list[dict[str, Any]]) -> dict[str, dict[
     counts: dict[str, int] = {}
     indexed: dict[str, dict[str, Any]] = {}
     for row in predictions:
-        base = _game_base_key(row["game_date"], row["away_team"], row["home_team"])
-        counts[base] = counts.get(base, 0) + 1
-        indexed[_game_occurrence_key(base, counts[base])] = row
+        date_s = str(row.get("game_date") or "").strip()
+        away = str(row.get("away_team") or "").strip()
+        home = str(row.get("home_team") or "").strip()
+        if not date_s or not away or not home or home.casefold() == away.casefold():
+            raise ValueError(f"malformed prediction game identifier: {row!r}")
+        base = _game_base_key(date_s, away, home)
+        occurrence_raw = row.get("game_occurrence")
+        if occurrence_raw is None:
+            counts[base] = counts.get(base, 0) + 1
+            occurrence = counts[base]
+        else:
+            try:
+                occurrence = int(occurrence_raw)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"invalid game_occurrence for {base}: {occurrence_raw!r}") from exc
+            if occurrence < 1:
+                raise ValueError(f"invalid game_occurrence for {base}: {occurrence}")
+        key = _game_occurrence_key(base, occurrence)
+        if key in indexed:
+            raise ValueError(f"duplicate canonical prediction occurrence key: {key}")
+        indexed[key] = row
     return indexed
 
 
@@ -279,6 +356,8 @@ def build_moneyline_backtest(
                 "correct": correct,
                 "paper_result_units": round(result_units, 6),
                 "guard_status": "PAPER_ONLY_LOCAL_REPLAY",
+                "odds_timing_status": ODDS_TIMING_STATUS,
+                "edge_claim_status": "DESCRIPTIVE_DIAGNOSTIC_NOT_VERIFIED_BETTING_EDGE",
             }
         )
 
@@ -346,7 +425,8 @@ def _moneyline_summary(
         "roi_on_staked_units": round(net_units / total_staked, 6) if total_staked else None,
         "max_drawdown_units": round(abs(max_drawdown), 6),
         "selection_distribution": side_counts,
-        "claim_status": "PAPER_ONLY_BACKTEST_NOT_LIVE_BETTING_ADVICE",
+        "odds_timing_status": ODDS_TIMING_STATUS,
+        "claim_status": "DESCRIPTIVE_DIAGNOSTIC_NOT_VERIFIED_BETTING_EDGE",
     }
 
 
@@ -359,12 +439,23 @@ def build_local_2026_prediction_snapshot(
     rows = _read_jsonl(prediction_path)
     if not rows:
         return {
-            "prediction_path": str(prediction_path),
+            "prediction_path": _portable_input_path(prediction_path),
             "rows": 0,
             "status": "NO_LOCAL_2026_PREDICTIONS",
+            "result_context": EXISTING_2026_SNAPSHOT_CONTEXT,
+            "generated_by_corrected_retrained_model": False,
+            "corrected_model_handoff_status": "NOT_PERFORMED",
         }
 
     dates = sorted({str(row.get("game_date")) for row in rows if row.get("game_date")})
+    source_versions = sorted(
+        {
+            str(row.get("source_prediction_version"))
+            for row in rows
+            if row.get("source_prediction_version")
+        }
+    )
+    source_version = source_versions[0] if len(source_versions) == 1 else None
     latest_date = dates[-1] if dates else None
     latest_rows = [row for row in rows if row.get("game_date") == latest_date]
     formatted_latest = [
@@ -388,14 +479,25 @@ def build_local_2026_prediction_snapshot(
         outcome_summary = _outcome_summary(outcome_rows)
 
     return {
-        "prediction_path": str(prediction_path),
-        "outcome_path": str(outcome_path) if outcome_path else None,
+        "prediction_path": _portable_input_path(prediction_path),
+        "outcome_path": _portable_input_path(outcome_path),
         "rows": len(rows),
         "date_range": [dates[0], dates[-1]] if dates else None,
         "latest_local_prediction_date": latest_date,
         "latest_local_rows": len(latest_rows),
         "top_latest_predictions": formatted_latest,
         "outcome_attached_summary": outcome_summary,
+        "result_context": EXISTING_2026_SNAPSHOT_CONTEXT,
+        "source_prediction_version": source_version,
+        "source_prediction_versions": source_versions,
+        "source_version_status": (
+            "EXPECTED_DIAGNOSTIC_BASELINE"
+            if source_version == EXPECTED_2026_SOURCE_VERSION
+            else "OBSERVED_SOURCE_VERSION_REQUIRES_REVIEW"
+        ),
+        "freshness_status": "STALE_EXISTING_LOCAL_SNAPSHOT",
+        "generated_by_corrected_retrained_model": False,
+        "corrected_model_handoff_status": "NOT_PERFORMED",
         "claim_status": "LOCAL_SNAPSHOT_ONLY_NO_LIVE_ODDS",
     }
 
@@ -459,6 +561,10 @@ def run_workflow_snapshot(
         kelly_fraction=kelly_fraction,
         kelly_cap=kelly_cap,
     )
+    snapshot_2026 = build_local_2026_prediction_snapshot(
+        prediction_path=prediction_2026_path,
+        outcome_path=outcome_2026_path,
+    )
 
     return {
         "task": "MLB local prediction workflow snapshot",
@@ -466,12 +572,14 @@ def run_workflow_snapshot(
         "disclaimer": DISCLAIMER,
         "generated_at_utc": datetime.now(tz=timezone.utc).isoformat(),
         "inputs": {
-            "warmup_path": str(warmup_path),
-            "eval_path": str(eval_path),
-            "prediction_2026_path": str(prediction_2026_path),
-            "outcome_2026_path": str(outcome_2026_path) if outcome_2026_path else None,
+            "warmup_path": _portable_input_path(warmup_path),
+            "eval_path": _portable_input_path(eval_path),
+            "prediction_2026_path": _portable_input_path(prediction_2026_path),
+            "outcome_2026_path": _portable_input_path(outcome_2026_path),
         },
         "retrain_scorecard": {
+            "result_context": CORRECTED_2025_RESULT_CONTEXT,
+            "state_transition_contract": "PREDICT_FULL_DATE_THEN_UPDATE",
             "warmup_rows": scorecard.warmup_rows,
             "eval_rows": scorecard.eval_rows,
             "split": scorecard.split,
@@ -497,16 +605,18 @@ def run_workflow_snapshot(
         },
         "market_coverage": build_market_coverage(eval_path),
         "moneyline_strategy": {
+            "result_context": "CORRECTED_2025_HISTORICAL_ODDS_DIAGNOSTIC",
             "summary": moneyline["summary"],
             "top_candidates": moneyline["top_candidates"],
         },
         "moneyline_backtest_rows": moneyline["rows"],
-        "local_2026_prediction_snapshot": build_local_2026_prediction_snapshot(
-            prediction_path=prediction_2026_path,
-            outcome_path=outcome_2026_path,
-        ),
+        "local_2026_prediction_snapshot": snapshot_2026,
         "claim_status": {
             "historical_only": True,
+            "historical_odds_pregame_timestamps_verified": False,
+            "verified_betting_edge_established": False,
+            "corrected_model_generated_2026_snapshot": False,
+            "corrected_model_to_2026_handoff_performed": False,
             "live_provider_called": False,
             "db_written": False,
             "production_enabled": False,
@@ -533,9 +643,11 @@ def write_workflow_reports(payload: dict[str, Any], out_dir: Path) -> dict[str, 
     json_payload = deepcopy(payload)
     json_payload["moneyline_backtest_rows"] = {
         "row_count": len(payload["moneyline_backtest_rows"]),
-        "path": str(paths["moneyline_csv"]),
+        "path": _portable_output_path(paths["moneyline_csv"]),
     }
-    json_payload["output_paths"] = {key: str(path) for key, path in paths.items()}
+    json_payload["output_paths"] = {
+        key: _portable_output_path(path) for key, path in paths.items()
+    }
     paths["json"].write_text(
         json.dumps(json_payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
@@ -556,8 +668,10 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
         "",
         f"**Disclaimer:** {payload['disclaimer']}",
         "",
-        "## Retrain Result",
+        "## Corrected 2025 Local Retrain and Evaluation",
         "",
+        f"- Result context: `{retrain['result_context']}`",
+        f"- State transition: `{retrain['state_transition_contract']}`",
         f"- Warmup rows: `{retrain['warmup_rows']}`",
         f"- Evaluation rows: `{retrain['eval_rows']}`",
         (
@@ -569,6 +683,22 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
             f"- Test: `{retrain['split']['test_period'][0]}` to "
             f"`{retrain['split']['test_period'][1]}` "
             f"({retrain['split']['test_rows']} games)"
+        ),
+        (
+            "- Complete-date counts: "
+            f"train `{retrain['split']['train_date_count']}`, "
+            f"test `{retrain['split']['test_date_count']}`"
+        ),
+        (
+            "- Train fraction: requested "
+            f"`{retrain['split']['requested_train_frac']:.6f}`, effective "
+            f"`{retrain['split']['effective_train_frac']:.6f}`"
+        ),
+        f"- Split strategy: `{retrain['split']['split_strategy']}`",
+        f"- Tie rule: `{retrain['split']['tie_rule']}`",
+        (
+            f"- Selected boundary: after `{retrain['split']['selected_boundary_date']}`; "
+            f"test starts `{retrain['split']['selected_test_start_date']}`"
         ),
         f"- Best by Brier: `{retrain['best_by_brier']}`",
         "",
@@ -585,8 +715,13 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
     lines.extend(
         [
             "",
-            "## Moneyline Paper Workflow",
+            "## Corrected 2025 Historical Moneyline Diagnostic",
             "",
+            "- Historical odds do not have verified pregame timestamps.",
+            "- Candidate hit rate, EV, Kelly, and ROI below are descriptive workflow "
+            "diagnostics, not a verified betting edge or live wagering evidence.",
+            f"- Odds timing status: `{ml['odds_timing_status']}`",
+            f"- Claim status: `{ml['claim_status']}`",
             f"- Prediction rows scored: `{ml['prediction_rows_scored']}`",
             f"- Paper candidates: `{ml['paper_candidate_count']}` "
             f"({ml['paper_candidate_rate']:.2%})",
@@ -595,9 +730,9 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
             f"- ROI on staked units: `{_pct_or_na(ml['roi_on_staked_units'])}`",
             f"- Avg EV per unit: `{_num_or_na(ml['avg_expected_value_per_unit'])}`",
             f"- Avg Kelly used: `{_pct_or_na(ml['avg_used_kelly_fraction'])}`",
-            f"- Backtest CSV: `{paths['moneyline_csv']}`",
+            f"- Backtest CSV: `{_portable_output_path(paths['moneyline_csv'])}`",
             "",
-            "### Top Paper Moneyline Candidates",
+            "### Top Historical Paper Rows (Diagnostic Only)",
             "",
             "| Date | Game | Side | Sel Prob | Odds | EV | Kelly | Result |",
             "|---|---|---|---:|---:|---:|---:|---:|",
@@ -632,12 +767,20 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
     lines.extend(
         [
             "",
-            "## Local 2026 Prediction Snapshot",
+            "## Existing 2026 Prediction Snapshot (Separate and Stale)",
             "",
+            f"- Result context: `{latest.get('result_context')}`",
             f"- Rows: `{latest.get('rows', 0)}`",
             f"- Date range: `{latest.get('date_range')}`",
             f"- Latest local prediction date: `{latest.get('latest_local_prediction_date')}`",
-            f"- Latest prediction CSV: `{paths['latest_predictions_csv']}`",
+            f"- Snapshot source model/version: `{latest.get('source_prediction_version')}`",
+            f"- Freshness status: `{latest.get('freshness_status')}`",
+            "- Corrected 2025 retrained model generated these 2026 predictions: "
+            f"`{latest.get('generated_by_corrected_retrained_model')}`",
+            "- Corrected-model to 2026 prediction handoff: "
+            f"`{latest.get('corrected_model_handoff_status')}`",
+            "- Latest prediction CSV: "
+            f"`{_portable_output_path(paths['latest_predictions_csv'])}`",
         ]
     )
     outcome = latest.get("outcome_attached_summary")
@@ -671,7 +814,7 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
         ]
     )
     for name, path in paths.items():
-        lines.append(f"- `{name}`: `{path}`")
+        lines.append(f"- `{name}`: `{_portable_output_path(path)}`")
     lines.append("")
     return "\n".join(lines)
 
@@ -700,7 +843,9 @@ def _write_csv(rows: list[dict[str, Any]], path: Path) -> None:
                 fields.append(key)
                 seen.add(key)
     with path.open("w", newline="", encoding="utf-8") as fh:
-        writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(
+            fh, fieldnames=fields, extrasaction="ignore", lineterminator="\n"
+        )
         writer.writeheader()
         writer.writerows(rows)
 
@@ -724,4 +869,3 @@ def _num_or_na(value: Any) -> str:
     if value is None:
         return "N/A"
     return f"{float(value):.6f}"
-

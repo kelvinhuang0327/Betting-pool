@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -172,4 +173,107 @@ def test_local_2026_snapshot_includes_outcome_accuracy(tmp_path: Path):
     assert snapshot["latest_local_prediction_date"] == "2026-05-20"
     assert snapshot["outcome_attached_summary"]["all_outcome_attached"]["accuracy"] == pytest.approx(1.0)
     assert snapshot["top_latest_predictions"][0]["selected_side_probability"] == pytest.approx(0.62)
+    assert snapshot["generated_by_corrected_retrained_model"] is False
+    assert snapshot["corrected_model_handoff_status"] == "NOT_PERFORMED"
 
+
+def test_visible_reports_separate_corrected_2025_from_baseline_2026(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    eval_csv = tmp_path / "eval.csv"
+    _write_eval_csv(eval_csv)
+    prediction_path = tmp_path / "predictions_2026.jsonl"
+    prediction_path.write_text(
+        json.dumps(
+            {
+                "game_date": "2026-05-31",
+                "away_team": "Away 2026",
+                "home_team": "Home 2026",
+                "model_probability": 0.57,
+                "predicted_side": "home",
+                "source_prediction_version": "p84b_diagnostic_baseline_v1",
+                "paper_only": True,
+                "production_ready": False,
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    predictions = [
+        {
+            "game_date": "2025-08-01",
+            "away_team": "Away A",
+            "home_team": "Home A",
+            "model_name": "corrected_model",
+            "predicted_home_win_probability": 0.66,
+            "selected_side": "HOME",
+            "confidence_band": "HIGH",
+            "actual_home_win": 1,
+            "correct": 1,
+        },
+        {
+            "game_date": "2025-08-02",
+            "away_team": "Away B",
+            "home_team": "Home B",
+            "model_name": "corrected_model",
+            "predicted_home_win_probability": 0.44,
+            "selected_side": "AWAY",
+            "confidence_band": "MEDIUM",
+            "actual_home_win": 0,
+            "correct": 1,
+        },
+    ]
+    scorecard = SimpleNamespace(
+        warmup_rows=10,
+        eval_rows=20,
+        split={
+            "train_period": ["2025-04-01", "2025-07-31"],
+            "test_period": ["2025-08-01", "2025-09-30"],
+            "train_rows": 12,
+            "test_rows": 8,
+            "train_date_count": 10,
+            "test_date_count": 8,
+            "requested_train_frac": 0.6,
+            "effective_train_frac": 0.6,
+            "split_strategy": "complete_date_boundary_nearest_requested_row_fraction",
+            "tie_rule": "earlier boundary (smaller train partition) wins equal-distance ties",
+            "selected_boundary_date": "2025-07-31",
+            "selected_test_start_date": "2025-08-01",
+        },
+        best_by_brier="corrected_model",
+        train_home_win_prior=0.55,
+        platt={"A": 1.0, "B": 0.0},
+        comparison=[
+            {
+                "model_name": "corrected_model",
+                "accuracy": 0.625,
+                "brier_score": 0.24,
+                "log_loss": 0.68,
+                "calibration_error": 0.04,
+                "coverage": 1.0,
+            }
+        ],
+        confidence_band_breakdown={"MEDIUM": {"n": 8, "correct": 5}},
+        selected_side_distribution={"HOME": 4, "AWAY": 4},
+        predictions=predictions,
+    )
+    monkeypatch.setattr(wf, "run_scorecard", lambda *_args, **_kwargs: scorecard)
+
+    payload = wf.run_workflow_snapshot(
+        warmup_path=tmp_path / "warmup.csv",
+        eval_path=eval_csv,
+        prediction_2026_path=prediction_path,
+    )
+    paths = wf.write_workflow_reports(payload, tmp_path / "report")
+    markdown = paths["markdown"].read_text(encoding="utf-8")
+    json_payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+
+    assert "Corrected 2025 Local Retrain and Evaluation" in markdown
+    assert "Existing 2026 Prediction Snapshot (Separate and Stale)" in markdown
+    assert "p84b_diagnostic_baseline_v1" in markdown
+    assert "Corrected 2025 retrained model generated these 2026 predictions: `False`" in markdown
+    assert "not a verified betting edge" in markdown
+    snapshot = json_payload["local_2026_prediction_snapshot"]
+    assert snapshot["source_prediction_version"] == "p84b_diagnostic_baseline_v1"
+    assert snapshot["generated_by_corrected_retrained_model"] is False
+    assert json_payload["claim_status"]["verified_betting_edge_established"] is False
