@@ -784,6 +784,11 @@ def build_bundle_bytes(raw: bytes, record: Mapping[str, Any]) -> dict[str, bytes
 FilesystemIdentity = tuple[int, int]
 WrittenArtifact = tuple[int, str, FilesystemIdentity]
 
+CLEANUP_NOT_NEEDED = "CLEANUP_NOT_NEEDED"
+CLEANUP_RETAINED_IDENTITY_UNCERTAIN = "CLEANUP_RETAINED_IDENTITY_UNCERTAIN"
+CLEANUP_RETAINED_REPLACED = "CLEANUP_RETAINED_REPLACED"
+CLEANUP_FAILED = "CLEANUP_FAILED"
+
 
 def _filesystem_identity(metadata: os.stat_result) -> FilesystemIdentity:
     return metadata.st_dev, metadata.st_ino
@@ -792,7 +797,7 @@ def _filesystem_identity(metadata: os.stat_result) -> FilesystemIdentity:
 def _require_secure_filesystem_support() -> None:
     required_flags = ("O_NOFOLLOW", "O_DIRECTORY", "O_EXCL")
     missing_flags = [name for name in required_flags if not hasattr(os, name)]
-    required_dir_fd = (os.open, os.stat, os.mkdir, os.unlink, os.rmdir)
+    required_dir_fd = (os.open, os.stat, os.mkdir)
     missing_dir_fd = [
         function.__name__
         for function in required_dir_fd
@@ -1076,15 +1081,11 @@ def _write_regular_file_exclusive_at(
             raise P272Error(f"Staged file identity changed while writing: {name}")
         return identity
     except BaseException:
-        if identity is not None:
-            try:
-                named_metadata = os.stat(
-                    name, dir_fd=directory_fd, follow_symlinks=False
-                )
-                if _filesystem_identity(named_metadata) == identity:
-                    os.unlink(name, dir_fd=directory_fd)
-            except OSError:
-                pass
+        # Never use a pathname to remove this file after a failed write.  The
+        # name can be replaced after its identity is checked, while an open
+        # regular-file descriptor has no portable unlink-by-identity primitive.
+        # The caller retains the hidden staging directory and reports that
+        # outcome rather than risking a replacement entry.
         raise
     finally:
         if file_fd is not None:
@@ -1327,43 +1328,40 @@ def _cleanup_owned_staging(
     raw_fd: int | None,
     raw_identity: FilesystemIdentity | None,
     written_artifacts: Sequence[WrittenArtifact],
-) -> None:
-    """Remove only the exact staging objects created and still owned by this call."""
+) -> str:
+    """Fail closed by retaining a failed staging entry instead of deleting by name.
+
+    POSIX exposes unlink/rmdir only by mutable pathname.  A descriptor and a
+    matching pre-delete stat cannot bind either operation to the originally
+    created object, so no pathname cleanup is safe here.  The unused raw and
+    artifact arguments intentionally preserve the cleanup-call contract and
+    make the retention boundary explicit at every former cleanup site.
+    """
+    del raw_fd, raw_identity, written_artifacts
     try:
-        _assert_named_directory_identity(
-            parent_fd,
-            staging_name,
-            staging_fd,
-            staging_identity,
-            "Staging cleanup directory",
+        _, descriptor_identity = _validate_trusted_directory(
+            staging_fd, "Retained staging directory"
         )
-        if raw_fd is not None and raw_identity is not None:
-            _assert_named_directory_identity(
-                staging_fd,
-                "raw",
-                raw_fd,
-                raw_identity,
-                "Staging cleanup raw directory",
-            )
-        for directory_fd, name, identity in reversed(written_artifacts):
-            metadata = os.stat(name, dir_fd=directory_fd, follow_symlinks=False)
-            if not stat.S_ISREG(metadata.st_mode) or _filesystem_identity(
-                metadata
-            ) != identity:
-                return
-            os.unlink(name, dir_fd=directory_fd)
-        if raw_fd is not None and raw_identity is not None:
-            os.fsync(raw_fd)
-            if os.listdir(raw_fd):
-                return
-            os.rmdir("raw", dir_fd=staging_fd)
-        os.fsync(staging_fd)
-        if os.listdir(staging_fd):
-            return
-        os.rmdir(staging_name, dir_fd=parent_fd)
-        os.fsync(parent_fd)
     except (OSError, P272Error):
-        return
+        return CLEANUP_FAILED
+
+    if descriptor_identity != staging_identity:
+        return CLEANUP_FAILED
+
+    try:
+        named_metadata = _stat_name_no_follow(
+            parent_fd, staging_name, "Retained staging directory"
+        )
+    except P272Error:
+        return CLEANUP_RETAINED_REPLACED
+
+    if (
+        stat.S_ISLNK(named_metadata.st_mode)
+        or not stat.S_ISDIR(named_metadata.st_mode)
+        or _filesystem_identity(named_metadata) != staging_identity
+    ):
+        return CLEANUP_RETAINED_REPLACED
+    return CLEANUP_RETAINED_IDENTITY_UNCERTAIN
 
 
 def write_bundle(output_root: Path, artifacts: Mapping[str, bytes]) -> str:
@@ -1378,85 +1376,91 @@ def write_bundle(output_root: Path, artifacts: Mapping[str, bytes]) -> str:
     staging_name: str | None = None
     written_artifacts: list[WrittenArtifact] = []
     published = False
+    state: str | None = None
+    failure: BaseException | None = None
+    cleanup_outcome = CLEANUP_NOT_NEEDED
     try:
         if _verify_existing_bundle(parent_fd, final_name, expected_artifacts):
-            return "VERIFIED_IDENTICAL"
-
-        staging_name = f".{final_name}.p272-stage-{secrets.token_hex(12)}"
-        try:
-            name_limit = os.fpathconf(parent_fd, "PC_NAME_MAX")
-        except (OSError, ValueError):
-            name_limit = 255
-        if len(os.fsencode(staging_name)) > name_limit:
-            raise P272Error("Output bundle name is too long for safe hidden staging")
-        try:
-            os.mkdir(staging_name, mode=0o700, dir_fd=parent_fd)
-            staging_fd, staging_identity = _open_named_directory(
-                parent_fd, staging_name, "Staging directory"
-            )
-            os.mkdir("raw", mode=0o700, dir_fd=staging_fd)
-            raw_fd, raw_identity = _open_named_directory(
-                staging_fd, "raw", "Staging raw directory"
-            )
-        except OSError as exc:
-            raise P272Error("Unable to create secure hidden bundle staging") from exc
-
-        write_order = sorted(
-            set(expected_artifacts) - {CHECKSUM_FILENAME}
-        ) + [CHECKSUM_FILENAME]
-        for relative_path in write_order:
+            state = "VERIFIED_IDENTICAL"
+        else:
+            staging_name = f".{final_name}.p272-stage-{secrets.token_hex(12)}"
             try:
-                written = _write_bundle_artifact(
-                    staging_fd,
-                    raw_fd,
-                    relative_path,
-                    expected_artifacts[relative_path],
+                name_limit = os.fpathconf(parent_fd, "PC_NAME_MAX")
+            except (OSError, ValueError):
+                name_limit = 255
+            if len(os.fsencode(staging_name)) > name_limit:
+                raise P272Error("Output bundle name is too long for safe hidden staging")
+            try:
+                os.mkdir(staging_name, mode=0o700, dir_fd=parent_fd)
+                staging_fd, staging_identity = _open_named_directory(
+                    parent_fd, staging_name, "Staging directory"
+                )
+                os.mkdir("raw", mode=0o700, dir_fd=staging_fd)
+                raw_fd, raw_identity = _open_named_directory(
+                    staging_fd, "raw", "Staging raw directory"
                 )
             except OSError as exc:
-                raise P272Error(
-                    f"Bundle staging write failed before publication: {relative_path}"
-                ) from exc
-            written_artifacts.append(written)
+                raise P272Error("Unable to create secure hidden bundle staging") from exc
 
-        _verify_staging_before_publish(
-            parent_fd,
-            staging_name,
-            staging_fd,
-            staging_identity,
-            raw_fd,
-            raw_identity,
-            expected_artifacts,
-        )
-        os.fsync(raw_fd)
-        os.fsync(staging_fd)
-        os.fsync(parent_fd)
+            write_order = sorted(
+                set(expected_artifacts) - {CHECKSUM_FILENAME}
+            ) + [CHECKSUM_FILENAME]
+            for relative_path in write_order:
+                try:
+                    written = _write_bundle_artifact(
+                        staging_fd,
+                        raw_fd,
+                        relative_path,
+                        expected_artifacts[relative_path],
+                    )
+                except OSError as exc:
+                    raise P272Error(
+                        f"Bundle staging write failed before publication: {relative_path}"
+                    ) from exc
+                written_artifacts.append(written)
 
-        did_publish = _atomic_publish_noreplace(parent_fd, staging_name, final_name)
-        if not did_publish:
-            if _verify_existing_bundle(parent_fd, final_name, expected_artifacts):
-                return "VERIFIED_IDENTICAL"
-            raise P272Error("Concurrent bundle publication collision failed closed")
+            _verify_staging_before_publish(
+                parent_fd,
+                staging_name,
+                staging_fd,
+                staging_identity,
+                raw_fd,
+                raw_identity,
+                expected_artifacts,
+            )
+            os.fsync(raw_fd)
+            os.fsync(staging_fd)
+            os.fsync(parent_fd)
 
-        published = True
-        _assert_named_directory_identity(
-            parent_fd,
-            final_name,
-            staging_fd,
-            staging_identity,
-            "Published final bundle",
-        )
-        _assert_named_directory_identity(
-            staging_fd,
-            "raw",
-            raw_fd,
-            raw_identity,
-            "Published final raw directory",
-        )
-        _verify_bundle_contents(
-            staging_fd, raw_fd, expected_artifacts, existing=False
-        )
-        os.fsync(parent_fd)
-        return "CREATED"
+            did_publish = _atomic_publish_noreplace(parent_fd, staging_name, final_name)
+            if not did_publish:
+                if _verify_existing_bundle(parent_fd, final_name, expected_artifacts):
+                    state = "VERIFIED_IDENTICAL"
+                else:
+                    raise P272Error("Concurrent bundle publication collision failed closed")
+            else:
+                published = True
+                _assert_named_directory_identity(
+                    parent_fd,
+                    final_name,
+                    staging_fd,
+                    staging_identity,
+                    "Published final bundle",
+                )
+                _assert_named_directory_identity(
+                    staging_fd,
+                    "raw",
+                    raw_fd,
+                    raw_identity,
+                    "Published final raw directory",
+                )
+                _verify_bundle_contents(
+                    staging_fd, raw_fd, expected_artifacts, existing=False
+                )
+                os.fsync(parent_fd)
+                state = "CREATED"
+    except BaseException as exc:
+        failure = exc
     finally:
         if (
             not published
@@ -1464,7 +1468,7 @@ def write_bundle(output_root: Path, artifacts: Mapping[str, bytes]) -> str:
             and staging_fd is not None
             and staging_identity is not None
         ):
-            _cleanup_owned_staging(
+            cleanup_outcome = _cleanup_owned_staging(
                 parent_fd,
                 staging_name,
                 staging_fd,
@@ -1478,6 +1482,23 @@ def write_bundle(output_root: Path, artifacts: Mapping[str, bytes]) -> str:
         if staging_fd is not None:
             os.close(staging_fd)
         os.close(parent_fd)
+
+    if failure is not None:
+        detail = f"Publication failure: {failure}; cleanup={cleanup_outcome}"
+        if staging_name is not None and staging_fd is not None:
+            detail += f"; retained_staging={staging_name}"
+        if isinstance(failure, P272Error):
+            raise P272Error(detail) from failure
+        raise failure
+    if cleanup_outcome != CLEANUP_NOT_NEEDED:
+        raise P272Error(
+            "Publication was not accepted as successful because staging cleanup was retained: "
+            f"bundle_state={state}; cleanup={cleanup_outcome}; "
+            f"retained_staging={staging_name}"
+        )
+    if state is None:
+        raise P272Error("Bundle publication produced no state")
+    return state
 
 
 def validate_official_request(

@@ -605,7 +605,10 @@ def test_hardening_failure_before_final_rename_leaves_bundle_absent(
         raise p272.P272Error("injected failure before final rename")
 
     monkeypatch.setattr(p272, "_atomic_publish_noreplace", fail_publish)
-    with pytest.raises(p272.P272Error, match="before final rename"):
+    with pytest.raises(
+        p272.P272Error,
+        match="before final rename.*cleanup=CLEANUP_RETAINED_IDENTITY_UNCERTAIN",
+    ):
         p272.offline_verify(
             raw_response=FINAL_FIXTURE,
             game_pk=822834,
@@ -614,7 +617,7 @@ def test_hardening_failure_before_final_rename_leaves_bundle_absent(
         )
 
     assert not output_root.exists()
-    assert not list(tmp_path.glob(".bundle.p272-stage-*"))
+    assert len(list(tmp_path.glob(".bundle.p272-stage-*"))) == 1
 
 
 def test_hardening_concurrent_identical_winner_is_verified(
@@ -632,16 +635,20 @@ def test_hardening_concurrent_identical_winner_is_verified(
         return False
 
     monkeypatch.setattr(p272, "_atomic_publish_noreplace", install_winner)
-    _, state = p272.offline_verify(
-        raw_response=FINAL_FIXTURE,
-        game_pk=822834,
-        observed_at_utc=OBSERVED_AT,
-        output_root=output_root,
-    )
+    with pytest.raises(
+        p272.P272Error,
+        match="cleanup=CLEANUP_RETAINED_IDENTITY_UNCERTAIN",
+    ):
+        p272.offline_verify(
+            raw_response=FINAL_FIXTURE,
+            game_pk=822834,
+            observed_at_utc=OBSERVED_AT,
+            output_root=output_root,
+        )
 
     assert collisions == 1
-    assert state == "VERIFIED_IDENTICAL"
     assert bundle_bytes(output_root) == artifacts
+    assert len(list(tmp_path.glob(".bundle.p272-stage-*"))) == 1
 
 
 def test_hardening_existing_partial_bundle_is_rejected(tmp_path: Path) -> None:
@@ -1019,6 +1026,14 @@ def test_offline_cli_has_exact_two_modes_and_is_deterministic(
     )
     result = json.loads(capsys.readouterr().out)
     assert exit_code == 0
+    assert set(result) == {
+        "bundle_state",
+        "game_id",
+        "mode",
+        "official_game_pk",
+        "record_fingerprint",
+        "source_observed_at_utc",
+    }
     assert result["mode"] == "offline-verify"
     assert result["bundle_state"] == "CREATED"
     assert result["source_observed_at_utc"] == OBSERVED_AT
@@ -1036,3 +1051,254 @@ def test_observation_schema_is_exact_and_fingerprints_are_content_sensitive() ->
     tampered["away_score"] += 1
     with pytest.raises(p272.P272Error, match="record_fingerprint"):
         p272.validate_observation_record(tampered)
+
+
+def test_failed_exclusive_stage_write_retains_a_replacement_after_identity_inspection(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    staging_parent = tmp_path / "staging-parent"
+    staging_parent.mkdir()
+    parent_fd = os.open(
+        staging_parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    )
+    try:
+        raced = False
+
+        def replace_after_identity_then_fail(_fd: int) -> None:
+            nonlocal raced
+            assert not raced
+            raced = True
+            os.rename(
+                "artifact.json",
+                "artifact-original.json",
+                src_dir_fd=parent_fd,
+                dst_dir_fd=parent_fd,
+            )
+            replacement_fd = os.open(
+                "artifact.json",
+                os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+                0o600,
+                dir_fd=parent_fd,
+            )
+            try:
+                os.write(replacement_fd, b"replacement")
+            finally:
+                os.close(replacement_fd)
+            raise OSError("injected write failure after identity inspection")
+
+        monkeypatch.setattr(p272.os, "fsync", replace_after_identity_then_fail)
+        with pytest.raises(OSError, match="after identity inspection"):
+            p272._write_regular_file_exclusive_at(
+                parent_fd, "artifact.json", b"original"
+            )
+
+        assert raced
+        assert (staging_parent / "artifact.json").read_bytes() == b"replacement"
+        assert (staging_parent / "artifact-original.json").read_bytes() == b"original"
+    finally:
+        os.close(parent_fd)
+
+
+@pytest.mark.parametrize(
+    "replacement_kind",
+    [
+        "regular-file",
+        "symlink-external-file",
+        "symlink-external-directory",
+        "unrelated-directory",
+        "same-type-empty-directory",
+    ],
+)
+def test_retained_staging_cleanup_never_deletes_a_replaced_pathname(
+    tmp_path: Path, replacement_kind: str
+) -> None:
+    output_parent = tmp_path / "output-parent"
+    output_parent.mkdir()
+    external_file = tmp_path / "external-file"
+    external_file.write_bytes(b"external-file-content")
+    external_directory = tmp_path / "external-directory"
+    external_directory.mkdir()
+    (external_directory / "untouched.txt").write_bytes(b"external-directory-content")
+    parent_fd = os.open(output_parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    staging_fd: int | None = None
+    try:
+        staging_name = ".bundle.p272-stage-test"
+        os.mkdir(staging_name, 0o700, dir_fd=parent_fd)
+        staging_fd = os.open(
+            staging_name,
+            os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+            dir_fd=parent_fd,
+        )
+        staging_identity = p272._filesystem_identity(os.fstat(staging_fd))
+        os.rename(
+            staging_name,
+            f"{staging_name}.original",
+            src_dir_fd=parent_fd,
+            dst_dir_fd=parent_fd,
+        )
+
+        replacement_path = output_parent / staging_name
+        if replacement_kind == "regular-file":
+            replacement_path.write_bytes(b"replacement-file")
+        elif replacement_kind == "symlink-external-file":
+            replacement_path.symlink_to(external_file)
+        elif replacement_kind == "symlink-external-directory":
+            replacement_path.symlink_to(external_directory, target_is_directory=True)
+        elif replacement_kind == "unrelated-directory":
+            replacement_path.mkdir()
+            (replacement_path / "unrelated.txt").write_bytes(b"unrelated-content")
+        else:
+            replacement_path.mkdir()
+
+        replacement_identity = p272._filesystem_identity(os.lstat(replacement_path))
+        replacement_mode = os.lstat(replacement_path).st_mode
+        external_file_before = external_file.read_bytes()
+        external_directory_before = (external_directory / "untouched.txt").read_bytes()
+
+        first_outcome = p272._cleanup_owned_staging(
+            parent_fd,
+            staging_name,
+            staging_fd,
+            staging_identity,
+            None,
+            None,
+            [],
+        )
+        second_outcome = p272._cleanup_owned_staging(
+            parent_fd,
+            staging_name,
+            staging_fd,
+            staging_identity,
+            None,
+            None,
+            [],
+        )
+
+        assert first_outcome == p272.CLEANUP_RETAINED_REPLACED
+        assert second_outcome == p272.CLEANUP_RETAINED_REPLACED
+        assert p272._filesystem_identity(os.lstat(replacement_path)) == replacement_identity
+        assert os.lstat(replacement_path).st_mode == replacement_mode
+        assert external_file.read_bytes() == external_file_before
+        assert (external_directory / "untouched.txt").read_bytes() == external_directory_before
+        if replacement_kind == "regular-file":
+            assert replacement_path.read_bytes() == b"replacement-file"
+        elif replacement_kind == "unrelated-directory":
+            assert (replacement_path / "unrelated.txt").read_bytes() == b"unrelated-content"
+        elif replacement_kind == "same-type-empty-directory":
+            assert list(replacement_path.iterdir()) == []
+        else:
+            assert replacement_path.is_symlink()
+    finally:
+        if staging_fd is not None:
+            os.close(staging_fd)
+        os.close(parent_fd)
+
+
+def test_staging_failure_reports_retention_without_deleting_a_replacement(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    output_root = tmp_path / "bundle"
+    real_write = p272._write_bundle_artifact
+    raced = False
+
+    def replace_then_fail(
+        staging_fd: int,
+        raw_fd: int,
+        relative_path: str,
+        data: bytes,
+    ):
+        nonlocal raced
+        written = real_write(staging_fd, raw_fd, relative_path, data)
+        if not raced:
+            raced = True
+            os.rename(
+                written[1],
+                f"{written[1]}.original",
+                src_dir_fd=written[0],
+                dst_dir_fd=written[0],
+            )
+            replacement_fd = os.open(
+                written[1],
+                os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+                0o600,
+                dir_fd=written[0],
+            )
+            try:
+                os.write(replacement_fd, b"replacement")
+            finally:
+                os.close(replacement_fd)
+            raise OSError("injected failure after staging replacement")
+        return written
+
+    monkeypatch.setattr(p272, "_write_bundle_artifact", replace_then_fail)
+    with pytest.raises(
+        p272.P272Error,
+        match="cleanup=CLEANUP_RETAINED_IDENTITY_UNCERTAIN.*retained_staging=\\.bundle",
+    ):
+        p272.offline_verify(
+            raw_response=FINAL_FIXTURE,
+            game_pk=822834,
+            observed_at_utc=OBSERVED_AT,
+            output_root=output_root,
+        )
+
+    staging_paths = list(tmp_path.glob(".bundle.p272-stage-*"))
+    assert raced
+    assert not output_root.exists()
+    assert len(staging_paths) == 1
+    assert (staging_paths[0] / "observation.json").read_bytes() == b"replacement"
+    assert (staging_paths[0] / "observation.json.original").exists()
+
+
+def test_cleanup_helpers_contain_no_identity_check_then_pathname_deletion() -> None:
+    exclusive_write_source = inspect.getsource(p272._write_regular_file_exclusive_at)
+    retention_cleanup_source = inspect.getsource(p272._cleanup_owned_staging)
+    for source in (exclusive_write_source, retention_cleanup_source):
+        assert "os.unlink" not in source
+        assert "os.rmdir" not in source
+        assert "os.rename" not in source
+
+
+@pytest.mark.parametrize(
+    "cleanup_outcome",
+    [
+        p272.CLEANUP_RETAINED_IDENTITY_UNCERTAIN,
+        p272.CLEANUP_FAILED,
+    ],
+)
+def test_cli_failure_distinguishes_publication_and_cleanup_outcomes(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    cleanup_outcome: str,
+) -> None:
+    def fail_publish(*args, **kwargs):
+        raise p272.P272Error("injected publication failure")
+
+    monkeypatch.setattr(p272, "_atomic_publish_noreplace", fail_publish)
+    monkeypatch.setattr(
+        p272,
+        "_cleanup_owned_staging",
+        lambda *args, **kwargs: cleanup_outcome,
+    )
+
+    exit_code = p272.main(
+        [
+            "offline-verify",
+            "--game-pk",
+            "822834",
+            "--raw-response",
+            str(FINAL_FIXTURE),
+            "--observed-at-utc",
+            OBSERVED_AT,
+            "--output-root",
+            str(tmp_path / "bundle"),
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 2
+    assert captured.out == ""
+    assert "Publication failure: injected publication failure" in captured.err
+    assert f"cleanup={cleanup_outcome}" in captured.err
+    assert "retained_staging=.bundle.p272-stage-" in captured.err
