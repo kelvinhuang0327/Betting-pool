@@ -15,12 +15,15 @@ timestamps in capture mode are deliberately excluded.
 from __future__ import annotations
 
 import argparse
+import ctypes
+import errno
 import hashlib
 import json
 import os
 import re
+import secrets
+import stat
 import sys
-import tempfile
 import unicodedata
 import urllib.error
 import urllib.parse
@@ -778,101 +781,703 @@ def build_bundle_bytes(raw: bytes, record: Mapping[str, Any]) -> dict[str, bytes
     return artifacts
 
 
-def _existing_inventory(output_root: Path) -> tuple[set[str], set[str]]:
-    files: set[str] = set()
-    directories: set[str] = set()
-    if not output_root.exists():
-        return files, directories
-    if output_root.is_symlink() or not output_root.is_dir():
-        raise P272Error("Output root must be a real directory, not a file or symlink")
-    for path in output_root.rglob("*"):
-        relative = path.relative_to(output_root).as_posix()
-        if path.is_symlink():
-            raise P272Error(f"Bundle path may not be a symlink: {relative}")
-        if path.is_file():
-            files.add(relative)
-        elif path.is_dir():
-            directories.add(relative)
-        else:
-            raise P272Error(f"Unsupported bundle filesystem entry: {relative}")
-    return files, directories
+FilesystemIdentity = tuple[int, int]
+WrittenArtifact = tuple[int, str, FilesystemIdentity]
 
 
-def _fsync_directory(path: Path) -> None:
-    descriptor = os.open(path, os.O_RDONLY)
-    try:
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
+def _filesystem_identity(metadata: os.stat_result) -> FilesystemIdentity:
+    return metadata.st_dev, metadata.st_ino
 
 
-def _write_once_atomic(path: Path, data: bytes) -> bool:
-    """Atomically create path without overwrite; return False if identical existed."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    if path.is_symlink():
-        raise P272Error(f"Refusing to write through symlink: {path}")
-    if path.exists():
-        if not path.is_file() or path.read_bytes() != data:
-            raise P272Error(f"Existing bundle path differs; overwrite refused: {path}")
-        return False
+def _require_secure_filesystem_support() -> None:
+    required_flags = ("O_NOFOLLOW", "O_DIRECTORY", "O_EXCL")
+    missing_flags = [name for name in required_flags if not hasattr(os, name)]
+    required_dir_fd = (os.open, os.stat, os.mkdir, os.unlink, os.rmdir)
+    missing_dir_fd = [
+        function.__name__
+        for function in required_dir_fd
+        if function not in os.supports_dir_fd
+    ]
+    if (
+        missing_flags
+        or missing_dir_fd
+        or os.stat not in os.supports_follow_symlinks
+        or os.listdir not in os.supports_fd
+        or not hasattr(os, "geteuid")
+        or sys.platform not in {"darwin", "linux"}
+    ):
+        raise P272Error(
+            "Secure dirfd/no-follow bundle containment is unavailable; "
+            f"missing_flags={missing_flags}, missing_dir_fd={missing_dir_fd}"
+        )
 
-    descriptor, temporary_name = tempfile.mkstemp(
-        prefix=f".{path.name}.", suffix=".tmp", dir=str(path.parent)
+
+def _directory_open_flags() -> int:
+    return (
+        os.O_RDONLY
+        | os.O_DIRECTORY
+        | os.O_NOFOLLOW
+        | getattr(os, "O_CLOEXEC", 0)
     )
-    temporary_path = Path(temporary_name)
+
+
+def _file_read_flags() -> int:
+    return os.O_RDONLY | os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0)
+
+
+def _file_create_flags() -> int:
+    return (
+        os.O_WRONLY
+        | os.O_CREAT
+        | os.O_EXCL
+        | os.O_NOFOLLOW
+        | getattr(os, "O_CLOEXEC", 0)
+    )
+
+
+def _validate_component(name: str, label: str) -> str:
+    if (
+        not isinstance(name, str)
+        or not name
+        or name in {".", ".."}
+        or "/" in name
+        or "\\" in name
+        or "\x00" in name
+    ):
+        raise P272Error(f"{label} must be one safe relative path component")
+    return name
+
+
+def _validate_bundle_relative_path(relative_path: str) -> tuple[str, ...]:
+    if not isinstance(relative_path, str) or not relative_path:
+        raise P272Error("Bundle relative path must be a non-empty string")
+    if relative_path.startswith(("/", "\\")) or "\\" in relative_path:
+        raise P272Error(f"Bundle relative path must not be absolute: {relative_path!r}")
+    parts = tuple(relative_path.split("/"))
+    if any(part in {"", ".", ".."} for part in parts):
+        raise P272Error(f"Bundle relative path traversal is forbidden: {relative_path!r}")
+    for part in parts:
+        _validate_component(part, "Bundle relative path component")
+    return parts
+
+
+def _validated_artifacts(artifacts: Mapping[str, bytes]) -> dict[str, bytes]:
+    copied: dict[str, bytes] = {}
+    for relative_path, data in artifacts.items():
+        _validate_bundle_relative_path(relative_path)
+        if not isinstance(data, bytes):
+            raise P272Error(f"Bundle artifact must be exact bytes: {relative_path}")
+        copied[relative_path] = data
+
+    if set(copied) & {OBSERVATION_FILENAME, SOURCE_INDEX_FILENAME, CHECKSUM_FILENAME} != {
+        OBSERVATION_FILENAME,
+        SOURCE_INDEX_FILENAME,
+        CHECKSUM_FILENAME,
+    }:
+        raise P272Error("Bundle inventory is missing a required root artifact")
+
+    observation_bytes = copied[OBSERVATION_FILENAME]
     try:
-        with os.fdopen(descriptor, "wb") as temporary_file:
-            temporary_file.write(data)
-            temporary_file.flush()
-            os.fsync(temporary_file.fileno())
+        parsed_record = json.loads(observation_bytes.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise P272Error("Bundle observation artifact must be valid UTF-8 JSON") from exc
+    record = _require_mapping(parsed_record, "bundle observation")
+    validate_observation_record(record)
+    if canonical_json_bytes(record, trailing_newline=True) != observation_bytes:
+        raise P272Error("Bundle observation artifact is not canonical JSON")
+
+    raw_relative_path = _raw_relative_path(record)
+    expected_paths = {
+        raw_relative_path,
+        OBSERVATION_FILENAME,
+        SOURCE_INDEX_FILENAME,
+        CHECKSUM_FILENAME,
+    }
+    if set(copied) != expected_paths:
+        raise P272Error(
+            "Bundle inventory must contain exactly the four deterministic artifacts"
+        )
+    rebuilt = build_bundle_bytes(copied[raw_relative_path], record)
+    if copied != rebuilt:
+        raise P272Error("Bundle artifacts are not internally valid and byte-consistent")
+    return copied
+
+
+def _split_output_root(output_root: Path) -> tuple[bool, list[str], str]:
+    raw_path = os.fspath(output_root)
+    if not isinstance(raw_path, str) or not raw_path or "\x00" in raw_path:
+        raise P272Error("Output root must be a non-empty filesystem path")
+    raw_parts = raw_path.split(os.sep)
+    if ".." in raw_parts:
+        raise P272Error("Output root path traversal is forbidden")
+    absolute = os.path.isabs(raw_path)
+    components = [part for part in raw_parts if part not in {"", "."}]
+    if not components:
+        raise P272Error("Output root must name a bundle below an existing parent")
+    for component in components:
+        _validate_component(component, "Output root component")
+    return absolute, components[:-1], components[-1]
+
+
+def _validate_trusted_directory(
+    directory_fd: int, label: str
+) -> tuple[os.stat_result, FilesystemIdentity]:
+    metadata = os.fstat(directory_fd)
+    if not stat.S_ISDIR(metadata.st_mode):
+        raise P272Error(f"{label} must remain a directory")
+    if metadata.st_uid != os.geteuid():
+        raise P272Error(f"{label} must be owned by the effective user")
+    if metadata.st_mode & (stat.S_IWGRP | stat.S_IWOTH):
+        raise P272Error(f"{label} must not be group/world writable")
+    return metadata, _filesystem_identity(metadata)
+
+
+def _open_publication_parent(output_root: Path) -> tuple[int, str]:
+    absolute, parent_components, final_name = _split_output_root(output_root)
+    try:
+        current_fd = os.open("/" if absolute else ".", _directory_open_flags())
+    except OSError as exc:
+        raise P272Error("Unable to securely open the output-root anchor") from exc
+    try:
+        for component in parent_components:
+            try:
+                next_fd = os.open(
+                    component,
+                    _directory_open_flags(),
+                    dir_fd=current_fd,
+                )
+            except OSError as exc:
+                raise P272Error(
+                    "Output-root parent component is a symlink or cannot be securely opened: "
+                    f"{component}"
+                ) from exc
+            os.close(current_fd)
+            current_fd = next_fd
+        _validate_trusted_directory(current_fd, "Publication parent")
+        return current_fd, final_name
+    except BaseException:
+        os.close(current_fd)
+        raise
+
+
+def _stat_name_no_follow(directory_fd: int, name: str, label: str) -> os.stat_result:
+    _validate_component(name, label)
+    try:
+        return os.stat(name, dir_fd=directory_fd, follow_symlinks=False)
+    except FileNotFoundError as exc:
+        raise P272Error(f"{label} disappeared or was replaced") from exc
+    except OSError as exc:
+        raise P272Error(f"Unable to inspect {label} without following links") from exc
+
+
+def _assert_named_directory_identity(
+    parent_fd: int,
+    name: str,
+    directory_fd: int,
+    expected_identity: FilesystemIdentity,
+    label: str,
+) -> None:
+    named_metadata = _stat_name_no_follow(parent_fd, name, label)
+    if stat.S_ISLNK(named_metadata.st_mode):
+        raise P272Error(f"{label} was replaced by a symlink")
+    if not stat.S_ISDIR(named_metadata.st_mode):
+        raise P272Error(f"{label} is no longer a directory")
+    descriptor_metadata, descriptor_identity = _validate_trusted_directory(
+        directory_fd, label
+    )
+    if (
+        _filesystem_identity(named_metadata) != expected_identity
+        or descriptor_identity != expected_identity
+        or named_metadata.st_uid != descriptor_metadata.st_uid
+    ):
+        raise P272Error(f"{label} directory identity changed")
+
+
+def _open_named_directory(
+    parent_fd: int, name: str, label: str
+) -> tuple[int, FilesystemIdentity]:
+    metadata = _stat_name_no_follow(parent_fd, name, label)
+    if stat.S_ISLNK(metadata.st_mode):
+        raise P272Error(f"{label} may not be a symlink")
+    if not stat.S_ISDIR(metadata.st_mode):
+        raise P272Error(f"{label} must be a directory")
+    try:
+        directory_fd = os.open(name, _directory_open_flags(), dir_fd=parent_fd)
+    except OSError as exc:
+        raise P272Error(f"{label} cannot be securely opened without following links") from exc
+    try:
+        _, identity = _validate_trusted_directory(directory_fd, label)
+        _assert_named_directory_identity(parent_fd, name, directory_fd, identity, label)
+        return directory_fd, identity
+    except BaseException:
+        os.close(directory_fd)
+        raise
+
+
+def _read_regular_file_at(directory_fd: int, name: str) -> bytes:
+    _validate_component(name, "Bundle filename")
+    try:
+        file_fd = os.open(name, _file_read_flags(), dir_fd=directory_fd)
+    except OSError as exc:
+        raise P272Error(f"Bundle file is missing, unsafe, or a symlink: {name}") from exc
+    try:
+        metadata = os.fstat(file_fd)
+        identity = _filesystem_identity(metadata)
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
+            raise P272Error(f"Bundle file must be a single-link regular file: {name}")
+        if metadata.st_uid != os.geteuid() or metadata.st_mode & (
+            stat.S_IWGRP | stat.S_IWOTH
+        ):
+            raise P272Error(f"Bundle file has an unsafe owner or write mode: {name}")
+        chunks: list[bytes] = []
+        while True:
+            chunk = os.read(file_fd, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        named_metadata = _stat_name_no_follow(directory_fd, name, f"Bundle file {name}")
+        if stat.S_ISLNK(named_metadata.st_mode) or _filesystem_identity(
+            named_metadata
+        ) != identity:
+            raise P272Error(f"Bundle file identity changed while reading: {name}")
+        return b"".join(chunks)
+    finally:
+        os.close(file_fd)
+
+
+def _write_regular_file_exclusive_at(
+    directory_fd: int, name: str, data: bytes
+) -> FilesystemIdentity:
+    _validate_component(name, "Staged filename")
+    file_fd: int | None = None
+    identity: FilesystemIdentity | None = None
+    try:
+        file_fd = os.open(
+            name,
+            _file_create_flags(),
+            0o600,
+            dir_fd=directory_fd,
+        )
+        metadata = os.fstat(file_fd)
+        identity = _filesystem_identity(metadata)
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
+            raise P272Error(f"Staged artifact is not an exclusive regular file: {name}")
+        remaining = memoryview(data)
+        while remaining:
+            written = os.write(file_fd, remaining)
+            if written <= 0:
+                raise OSError("short staged artifact write")
+            remaining = remaining[written:]
+        os.fsync(file_fd)
+        named_metadata = _stat_name_no_follow(directory_fd, name, f"Staged file {name}")
+        if stat.S_ISLNK(named_metadata.st_mode) or _filesystem_identity(
+            named_metadata
+        ) != identity:
+            raise P272Error(f"Staged file identity changed while writing: {name}")
+        return identity
+    except BaseException:
+        if identity is not None:
+            try:
+                named_metadata = os.stat(
+                    name, dir_fd=directory_fd, follow_symlinks=False
+                )
+                if _filesystem_identity(named_metadata) == identity:
+                    os.unlink(name, dir_fd=directory_fd)
+            except OSError:
+                pass
+        raise
+    finally:
+        if file_fd is not None:
+            os.close(file_fd)
+
+
+def _write_bundle_artifact(
+    staging_fd: int,
+    raw_fd: int,
+    relative_path: str,
+    data: bytes,
+) -> WrittenArtifact:
+    parts = _validate_bundle_relative_path(relative_path)
+    if len(parts) == 1:
+        directory_fd, name = staging_fd, parts[0]
+    elif len(parts) == 2 and parts[0] == "raw":
+        directory_fd, name = raw_fd, parts[1]
+    else:
+        raise P272Error(f"Unsupported staged bundle path: {relative_path}")
+    identity = _write_regular_file_exclusive_at(directory_fd, name, data)
+    return directory_fd, name, identity
+
+
+def _scan_directory(directory_fd: int, label: str) -> set[str]:
+    try:
+        names = set(os.listdir(directory_fd))
+    except OSError as exc:
+        raise P272Error(f"Unable to inventory {label} through its retained descriptor") from exc
+    for name in names:
+        _validate_component(name, f"{label} entry")
+        metadata = _stat_name_no_follow(directory_fd, name, f"{label} entry {name}")
+        if stat.S_ISLNK(metadata.st_mode):
+            raise P272Error(f"{label} entry may not be a symlink: {name}")
+        if not (stat.S_ISREG(metadata.st_mode) or stat.S_ISDIR(metadata.st_mode)):
+            raise P272Error(f"{label} contains an unsupported filesystem entry: {name}")
+    return names
+
+
+def _verify_bundle_contents(
+    bundle_fd: int,
+    raw_fd: int,
+    artifacts: Mapping[str, bytes],
+    *,
+    existing: bool,
+) -> None:
+    raw_relative_path = next(path for path in artifacts if path.startswith("raw/"))
+    raw_name = raw_relative_path.split("/", 1)[1]
+    expected_root = {
+        OBSERVATION_FILENAME,
+        SOURCE_INDEX_FILENAME,
+        CHECKSUM_FILENAME,
+        "raw",
+    }
+    root_names = _scan_directory(bundle_fd, "Bundle")
+    raw_names = _scan_directory(raw_fd, "Bundle raw directory")
+    if root_names != expected_root or raw_names != {raw_name}:
+        raise P272Error(
+            "Existing bundle is partial or invalid; bundle inventory differs from "
+            "the deterministic four-file contract"
+        )
+
+    for relative_path, expected_bytes in artifacts.items():
+        parts = relative_path.split("/")
+        if len(parts) == 1:
+            observed_bytes = _read_regular_file_at(bundle_fd, parts[0])
+        else:
+            observed_bytes = _read_regular_file_at(raw_fd, parts[1])
+        if observed_bytes != expected_bytes:
+            if existing:
+                raise P272Error(
+                    "Existing bundle differs; write-once overwrite refused: "
+                    f"{relative_path}"
+                )
+            raise P272Error(f"Staged bundle verification failed: {relative_path}")
+
+
+def _verify_existing_bundle(
+    parent_fd: int,
+    final_name: str,
+    artifacts: Mapping[str, bytes],
+) -> bool:
+    try:
+        metadata = os.stat(final_name, dir_fd=parent_fd, follow_symlinks=False)
+    except FileNotFoundError:
+        return False
+    except OSError as exc:
+        raise P272Error("Unable to inspect the final bundle path safely") from exc
+    if stat.S_ISLNK(metadata.st_mode):
+        raise P272Error("Final output root may not be a symlink")
+    if not stat.S_ISDIR(metadata.st_mode):
+        raise P272Error("Final output root must be a real directory")
+
+    bundle_fd, bundle_identity = _open_named_directory(
+        parent_fd, final_name, "Final bundle"
+    )
+    raw_fd: int | None = None
+    try:
         try:
-            os.link(temporary_path, path)
-        except FileExistsError:
-            if path.is_symlink() or not path.is_file() or path.read_bytes() != data:
-                raise P272Error(f"Concurrent differing bundle path refused: {path}")
-            return False
-        _fsync_directory(path.parent)
+            raw_fd, raw_identity = _open_named_directory(
+                bundle_fd, "raw", "Final bundle raw directory"
+            )
+        except P272Error as exc:
+            raise P272Error(
+                "Existing bundle is partial, invalid, or contains a raw symlink"
+            ) from exc
+        _verify_bundle_contents(bundle_fd, raw_fd, artifacts, existing=True)
+        _assert_named_directory_identity(
+            bundle_fd,
+            "raw",
+            raw_fd,
+            raw_identity,
+            "Final bundle raw directory",
+        )
+        _assert_named_directory_identity(
+            parent_fd,
+            final_name,
+            bundle_fd,
+            bundle_identity,
+            "Final bundle",
+        )
         return True
     finally:
+        if raw_fd is not None:
+            os.close(raw_fd)
+        os.close(bundle_fd)
+
+
+def _verify_staging_before_publish(
+    parent_fd: int,
+    staging_name: str,
+    staging_fd: int,
+    staging_identity: FilesystemIdentity,
+    raw_fd: int,
+    raw_identity: FilesystemIdentity,
+    artifacts: Mapping[str, bytes],
+) -> None:
+    _assert_named_directory_identity(
+        parent_fd,
+        staging_name,
+        staging_fd,
+        staging_identity,
+        "Staging directory",
+    )
+    _assert_named_directory_identity(
+        staging_fd,
+        "raw",
+        raw_fd,
+        raw_identity,
+        "Staging raw directory",
+    )
+    _verify_bundle_contents(staging_fd, raw_fd, artifacts, existing=False)
+    _assert_named_directory_identity(
+        staging_fd,
+        "raw",
+        raw_fd,
+        raw_identity,
+        "Staging raw directory",
+    )
+    _assert_named_directory_identity(
+        parent_fd,
+        staging_name,
+        staging_fd,
+        staging_identity,
+        "Staging directory",
+    )
+
+
+def _atomic_publish_noreplace(
+    parent_fd: int, staging_name: str, final_name: str
+) -> bool:
+    """Publish one directory atomically; False means the destination already exists."""
+    _validate_component(staging_name, "Staging directory name")
+    _validate_component(final_name, "Final bundle name")
+    library = ctypes.CDLL(None, use_errno=True)
+    if sys.platform == "darwin":
         try:
-            temporary_path.unlink()
-        except FileNotFoundError:
-            pass
+            rename_function = library.renameatx_np
+        except AttributeError as exc:
+            raise P272Error("Atomic no-replace directory publication is unavailable") from exc
+        rename_function.argtypes = [
+            ctypes.c_int,
+            ctypes.c_char_p,
+            ctypes.c_int,
+            ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        rename_function.restype = ctypes.c_int
+        flags = 0x00000004 | 0x00000010  # RENAME_EXCL | RENAME_NOFOLLOW_ANY
+    elif sys.platform == "linux":
+        try:
+            rename_function = library.renameat2
+        except AttributeError as exc:
+            raise P272Error("Atomic no-replace directory publication is unavailable") from exc
+        rename_function.argtypes = [
+            ctypes.c_int,
+            ctypes.c_char_p,
+            ctypes.c_int,
+            ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        rename_function.restype = ctypes.c_int
+        flags = 0x00000001  # RENAME_NOREPLACE
+    else:
+        raise P272Error("Atomic no-replace directory publication is unsupported")
+
+    ctypes.set_errno(0)
+    result = rename_function(
+        parent_fd,
+        os.fsencode(staging_name),
+        parent_fd,
+        os.fsencode(final_name),
+        flags,
+    )
+    if result == 0:
+        return True
+    error_number = ctypes.get_errno()
+    if error_number in {errno.EEXIST, errno.ENOTEMPTY}:
+        return False
+    unsupported_errors = {
+        errno.EINVAL,
+        errno.ENOSYS,
+        getattr(errno, "ENOTSUP", errno.EINVAL),
+        getattr(errno, "EOPNOTSUPP", errno.EINVAL),
+    }
+    if error_number in unsupported_errors:
+        raise P272Error(
+            "Filesystem does not support safe atomic no-replace directory publication"
+        )
+    raise P272Error(
+        "Atomic no-replace directory publication failed: "
+        f"{os.strerror(error_number)}"
+    )
+
+
+def _cleanup_owned_staging(
+    parent_fd: int,
+    staging_name: str,
+    staging_fd: int,
+    staging_identity: FilesystemIdentity,
+    raw_fd: int | None,
+    raw_identity: FilesystemIdentity | None,
+    written_artifacts: Sequence[WrittenArtifact],
+) -> None:
+    """Remove only the exact staging objects created and still owned by this call."""
+    try:
+        _assert_named_directory_identity(
+            parent_fd,
+            staging_name,
+            staging_fd,
+            staging_identity,
+            "Staging cleanup directory",
+        )
+        if raw_fd is not None and raw_identity is not None:
+            _assert_named_directory_identity(
+                staging_fd,
+                "raw",
+                raw_fd,
+                raw_identity,
+                "Staging cleanup raw directory",
+            )
+        for directory_fd, name, identity in reversed(written_artifacts):
+            metadata = os.stat(name, dir_fd=directory_fd, follow_symlinks=False)
+            if not stat.S_ISREG(metadata.st_mode) or _filesystem_identity(
+                metadata
+            ) != identity:
+                return
+            os.unlink(name, dir_fd=directory_fd)
+        if raw_fd is not None and raw_identity is not None:
+            os.fsync(raw_fd)
+            if os.listdir(raw_fd):
+                return
+            os.rmdir("raw", dir_fd=staging_fd)
+        os.fsync(staging_fd)
+        if os.listdir(staging_fd):
+            return
+        os.rmdir(staging_name, dir_fd=parent_fd)
+        os.fsync(parent_fd)
+    except (OSError, P272Error):
+        return
 
 
 def write_bundle(output_root: Path, artifacts: Mapping[str, bytes]) -> str:
-    """Write or idempotently verify an immutable deterministic bundle."""
-    root = Path(output_root)
-    expected_files = set(artifacts)
-    expected_directories = {str(Path(path).parent.as_posix()) for path in artifacts}
-    expected_directories.discard(".")
-    existing_files, existing_directories = _existing_inventory(root)
-    unexpected_files = sorted(existing_files - expected_files)
-    unexpected_directories = sorted(existing_directories - expected_directories)
-    if unexpected_files or unexpected_directories:
-        raise P272Error(
-            "Output root contains paths outside the immutable bundle; "
-            f"files={unexpected_files}, directories={unexpected_directories}"
-        )
-    for relative_path in sorted(existing_files):
-        if (root / relative_path).read_bytes() != artifacts[relative_path]:
-            raise P272Error(
-                f"Existing bundle differs; write-once overwrite refused: {relative_path}"
+    """Stage a complete immutable bundle and expose it with one no-replace rename."""
+    _require_secure_filesystem_support()
+    expected_artifacts = _validated_artifacts(artifacts)
+    parent_fd, final_name = _open_publication_parent(Path(output_root))
+    staging_fd: int | None = None
+    raw_fd: int | None = None
+    staging_identity: FilesystemIdentity | None = None
+    raw_identity: FilesystemIdentity | None = None
+    staging_name: str | None = None
+    written_artifacts: list[WrittenArtifact] = []
+    published = False
+    try:
+        if _verify_existing_bundle(parent_fd, final_name, expected_artifacts):
+            return "VERIFIED_IDENTICAL"
+
+        staging_name = f".{final_name}.p272-stage-{secrets.token_hex(12)}"
+        try:
+            name_limit = os.fpathconf(parent_fd, "PC_NAME_MAX")
+        except (OSError, ValueError):
+            name_limit = 255
+        if len(os.fsencode(staging_name)) > name_limit:
+            raise P272Error("Output bundle name is too long for safe hidden staging")
+        try:
+            os.mkdir(staging_name, mode=0o700, dir_fd=parent_fd)
+            staging_fd, staging_identity = _open_named_directory(
+                parent_fd, staging_name, "Staging directory"
             )
+            os.mkdir("raw", mode=0o700, dir_fd=staging_fd)
+            raw_fd, raw_identity = _open_named_directory(
+                staging_fd, "raw", "Staging raw directory"
+            )
+        except OSError as exc:
+            raise P272Error("Unable to create secure hidden bundle staging") from exc
 
-    already_complete = existing_files == expected_files
-    root.mkdir(parents=True, exist_ok=True)
-    write_order = sorted(expected_files - {CHECKSUM_FILENAME}) + [CHECKSUM_FILENAME]
-    for relative_path in write_order:
-        _write_once_atomic(root / relative_path, artifacts[relative_path])
+        write_order = sorted(
+            set(expected_artifacts) - {CHECKSUM_FILENAME}
+        ) + [CHECKSUM_FILENAME]
+        for relative_path in write_order:
+            try:
+                written = _write_bundle_artifact(
+                    staging_fd,
+                    raw_fd,
+                    relative_path,
+                    expected_artifacts[relative_path],
+                )
+            except OSError as exc:
+                raise P272Error(
+                    f"Bundle staging write failed before publication: {relative_path}"
+                ) from exc
+            written_artifacts.append(written)
 
-    final_files, final_directories = _existing_inventory(root)
-    if final_files != expected_files or final_directories != expected_directories:
-        raise P272Error("Final bundle inventory differs from the deterministic contract")
-    for relative_path, expected_bytes in artifacts.items():
-        if (root / relative_path).read_bytes() != expected_bytes:
-            raise P272Error(f"Final bundle verification failed: {relative_path}")
-    return "VERIFIED_IDENTICAL" if already_complete else "CREATED"
+        _verify_staging_before_publish(
+            parent_fd,
+            staging_name,
+            staging_fd,
+            staging_identity,
+            raw_fd,
+            raw_identity,
+            expected_artifacts,
+        )
+        os.fsync(raw_fd)
+        os.fsync(staging_fd)
+        os.fsync(parent_fd)
+
+        did_publish = _atomic_publish_noreplace(parent_fd, staging_name, final_name)
+        if not did_publish:
+            if _verify_existing_bundle(parent_fd, final_name, expected_artifacts):
+                return "VERIFIED_IDENTICAL"
+            raise P272Error("Concurrent bundle publication collision failed closed")
+
+        published = True
+        _assert_named_directory_identity(
+            parent_fd,
+            final_name,
+            staging_fd,
+            staging_identity,
+            "Published final bundle",
+        )
+        _assert_named_directory_identity(
+            staging_fd,
+            "raw",
+            raw_fd,
+            raw_identity,
+            "Published final raw directory",
+        )
+        _verify_bundle_contents(
+            staging_fd, raw_fd, expected_artifacts, existing=False
+        )
+        os.fsync(parent_fd)
+        return "CREATED"
+    finally:
+        if (
+            not published
+            and staging_name is not None
+            and staging_fd is not None
+            and staging_identity is not None
+        ):
+            _cleanup_owned_staging(
+                parent_fd,
+                staging_name,
+                staging_fd,
+                staging_identity,
+                raw_fd,
+                raw_identity,
+                written_artifacts,
+            )
+        if raw_fd is not None:
+            os.close(raw_fd)
+        if staging_fd is not None:
+            os.close(staging_fd)
+        os.close(parent_fd)
 
 
 def validate_official_request(
@@ -921,24 +1526,75 @@ def build_official_request(
     return urllib.request.Request(endpoint, headers=request_headers, method="GET")
 
 
+class _RejectRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Reject every redirect response before urllib can issue a second request."""
+
+    def _reject_redirect(self, request, response, code, message, headers):
+        try:
+            response.close()
+        finally:
+            raise P272Error(
+                f"Official MLB redirect status {code} rejected; redirects are forbidden"
+            )
+
+    http_error_301 = _reject_redirect
+    http_error_302 = _reject_redirect
+    http_error_303 = _reject_redirect
+    http_error_307 = _reject_redirect
+    http_error_308 = _reject_redirect
+
+
+def _build_official_opener() -> urllib.request.OpenerDirector:
+    """Build a direct, cookie-free, auth-free opener with redirects disabled."""
+    return urllib.request.build_opener(
+        urllib.request.ProxyHandler({}),
+        _RejectRedirectHandler(),
+        urllib.request.HTTPSHandler(),
+    )
+
+
+def _validate_effective_response_url(url: Any, game_pk: int) -> None:
+    if not isinstance(url, str):
+        raise P272Error("Official MLB effective response URL is missing")
+    try:
+        validate_official_request(
+            url,
+            game_pk,
+            {"Accept": "application/json", "User-Agent": USER_AGENT},
+        )
+    except P272Error as exc:
+        raise P272Error(
+            "Official MLB effective response URL escaped the approved boundary"
+        ) from exc
+
+
 def fetch_official_response_once(game_pk: int) -> tuple[bytes, str]:
     """Perform exactly one request and timestamp after the complete body is read."""
     request = build_official_request(game_pk)
+    opener = _build_official_opener()
     try:
-        with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
+        with opener.open(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
             status = int(response.getcode())
+            _validate_effective_response_url(response.geturl(), game_pk)
             content_type = response.headers.get("Content-Type")
+            if status != 200:
+                raise P272Error(
+                    f"Official MLB response status must be 200, observed {status}"
+                )
+            if not content_type or not content_type.lower().startswith("application/json"):
+                raise P272Error(
+                    "Official MLB response Content-Type must be application/json"
+                )
             raw = response.read()
         observed_at = utc_now()
     except urllib.error.HTTPError as exc:
+        if exc.code in {301, 302, 303, 307, 308}:
+            raise P272Error(
+                f"Official MLB redirect status {exc.code} rejected; redirects are forbidden"
+            ) from exc
         raise P272Error(f"Official MLB request failed with HTTP {exc.code}") from exc
     except (urllib.error.URLError, TimeoutError, OSError) as exc:
         raise P272Error("Official MLB request failed; automatic retry is forbidden") from exc
-
-    if status != 200:
-        raise P272Error(f"Official MLB response status must be 200, observed {status}")
-    if not content_type or not content_type.lower().startswith("application/json"):
-        raise P272Error("Official MLB response Content-Type must be application/json")
     return raw, observed_at
 
 
@@ -962,6 +1618,36 @@ def capture(
     return record, state
 
 
+def _read_offline_raw_response(source_path: Path) -> bytes:
+    path_text = os.fspath(source_path)
+    try:
+        source_fd = os.open(path_text, _file_read_flags())
+    except OSError as exc:
+        raise P272Error("--raw-response must be an existing non-symlink regular file") from exc
+    try:
+        metadata = os.fstat(source_fd)
+        identity = _filesystem_identity(metadata)
+        if not stat.S_ISREG(metadata.st_mode):
+            raise P272Error("--raw-response must be an existing regular file")
+        chunks: list[bytes] = []
+        while True:
+            chunk = os.read(source_fd, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        try:
+            named_metadata = os.stat(path_text, follow_symlinks=False)
+        except OSError as exc:
+            raise P272Error("--raw-response identity changed while reading") from exc
+        if stat.S_ISLNK(named_metadata.st_mode) or _filesystem_identity(
+            named_metadata
+        ) != identity:
+            raise P272Error("--raw-response identity changed while reading")
+        return b"".join(chunks)
+    finally:
+        os.close(source_fd)
+
+
 def offline_verify(
     *,
     raw_response: Path,
@@ -973,9 +1659,7 @@ def offline_verify(
 ) -> tuple[dict[str, Any], str]:
     """Build or verify a bundle from already saved bytes without any network call."""
     source_path = Path(raw_response)
-    if source_path.is_symlink() or not source_path.is_file():
-        raise P272Error("--raw-response must be an existing regular file")
-    raw = source_path.read_bytes()
+    raw = _read_offline_raw_response(source_path)
     record = build_observation_record(
         raw,
         game_pk,
