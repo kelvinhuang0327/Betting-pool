@@ -78,7 +78,13 @@
 - Corrected 2025 retrained model generated these 2026 predictions: `False`
 - Corrected-model to 2026 prediction handoff: `NOT_PERFORMED`
 - Latest prediction CSV: `report/mlb_prediction_workflow_latest_2026_predictions.csv`
-- Outcome-attached accuracy: `56.93%` (460/808)
+- Outcome rows: `828`
+- Raw `outcome_available=true` rows: `808`
+- P275 gate-available rows: `0`
+- Unavailable-before-observation rows: `0`
+- Missing/invalid evidence rows: `808`
+- Availability coverage limitation: P274 currently has only one prospective record and does not establish season-wide point-in-time coverage or replay readiness.
+- Outcome-attached accuracy: `N/A` (0/0)
 
 | Date | Game | Side | Sel Prob | Version |
 |---|---|---|---:|---|

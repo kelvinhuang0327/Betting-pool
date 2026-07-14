@@ -11,14 +11,37 @@
     "verified_betting_edge_established": false
   },
   "disclaimer": "Corrected 2025 date-batched local retraining/evaluation and a separate existing 2026 prediction snapshot. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate the 2026 snapshot.",
-  "generated_at_utc": "2026-07-13T13:19:29.581642+00:00",
+  "generated_at_utc": "2026-07-14T06:59:10.505353+00:00",
   "inputs": {
+    "availability_index_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/index.json",
+    "availability_manifest_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/SHA256SUMS",
     "eval_path": "data/mlb_2025/mlb_odds_2025_real.csv",
+    "feature_as_of_utc": "2026-07-13T07:17:10.769880Z",
     "outcome_2026_path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
     "prediction_2026_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
     "warmup_path": "data/mlb_2025/mlb-2024-asplayed.csv"
   },
   "local_2026_prediction_snapshot": {
+    "availability_gate_coverage": {
+      "block_reason_counts": {
+        "missing_availability_evidence": 808
+      },
+      "classification_counts": {
+        "available": 0,
+        "missing_or_invalid_evidence": 808,
+        "unavailable_before_observation": 0
+      },
+      "coverage_limitation": "P274 currently has only one prospective record and does not establish season-wide point-in-time coverage or replay readiness.",
+      "feature_as_of_utc": "2026-07-13T07:17:10.769880Z",
+      "gate_available_rows": 0,
+      "index_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/index.json",
+      "manifest_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/SHA256SUMS",
+      "missing_or_invalid_evidence_rows": 808,
+      "raw_outcome_available_true_rows": 808,
+      "result_metric_rows": 0,
+      "total_outcome_rows": 828,
+      "unavailable_before_observation_rows": 0
+    },
     "claim_status": "LOCAL_SNAPSHOT_ONLY_NO_LIVE_ODDS",
     "corrected_model_handoff_status": "NOT_PERFORMED",
     "date_range": [
@@ -31,29 +54,29 @@
     "latest_local_rows": 1,
     "outcome_attached_summary": {
       "all_outcome_attached": {
-        "accuracy": 0.569307,
-        "correct": 460,
-        "n": 808
+        "accuracy": null,
+        "correct": 0,
+        "n": 0
       },
       "primary_125": {
-        "accuracy": 0.602851,
-        "correct": 296,
-        "n": 491
+        "accuracy": null,
+        "correct": 0,
+        "n": 0
       },
       "shadow_100": {
-        "accuracy": 0.595149,
-        "correct": 319,
-        "n": 536
+        "accuracy": null,
+        "correct": 0,
+        "n": 0
       },
       "tier_a_watchlist": {
-        "accuracy": 0.488095,
-        "correct": 41,
-        "n": 84
+        "accuracy": null,
+        "correct": 0,
+        "n": 0
       },
       "tier_b_candidate": {
-        "accuracy": 0.56383,
-        "correct": 53,
-        "n": 94
+        "accuracy": null,
+        "correct": 0,
+        "n": 0
       }
     },
     "outcome_path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",

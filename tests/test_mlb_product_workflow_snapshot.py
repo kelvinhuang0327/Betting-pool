@@ -7,7 +7,14 @@ from types import SimpleNamespace
 
 import pytest
 
+from scripts import _p275_prospective_availability_consumer_gate as p275
 from wbc_backend.recommendation import mlb_product_workflow_snapshot as wf
+
+
+GAME_ID = "mlb_2026_825108"
+OBSERVED_AT = "2026-07-13T07:17:10.769880Z"
+BEFORE = "2026-07-13T07:17:10.769879Z"
+AFTER = "2026-07-13T07:17:10.769881Z"
 
 
 def _write_eval_csv(path: Path) -> None:
@@ -140,6 +147,7 @@ def test_local_2026_snapshot_includes_outcome_accuracy(tmp_path: Path):
     out = tmp_path / "out.jsonl"
     rows = [
         {
+            "game_id": GAME_ID,
             "game_date": "2026-05-20",
             "away_team": "Away",
             "home_team": "Home",
@@ -167,14 +175,163 @@ def test_local_2026_snapshot_includes_outcome_accuracy(tmp_path: Path):
     snapshot = wf.build_local_2026_prediction_snapshot(
         prediction_path=pred,
         outcome_path=out,
+        feature_as_of_utc=OBSERVED_AT,
     )
 
     assert snapshot["rows"] == 1
     assert snapshot["latest_local_prediction_date"] == "2026-05-20"
     assert snapshot["outcome_attached_summary"]["all_outcome_attached"]["accuracy"] == pytest.approx(1.0)
+    coverage = snapshot["availability_gate_coverage"]
+    assert coverage["total_outcome_rows"] == 1
+    assert coverage["raw_outcome_available_true_rows"] == 1
+    assert coverage["gate_available_rows"] == 1
+    assert coverage["unavailable_before_observation_rows"] == 0
+    assert coverage["missing_or_invalid_evidence_rows"] == 0
     assert snapshot["top_latest_predictions"][0]["selected_side_probability"] == pytest.approx(0.62)
     assert snapshot["generated_by_corrected_retrained_model"] is False
     assert snapshot["corrected_model_handoff_status"] == "NOT_PERFORMED"
+
+
+@pytest.mark.parametrize(
+    ("game_id", "feature_as_of_utc", "unavailable", "missing_invalid", "reason"),
+    [
+        (GAME_ID, BEFORE, 1, 0, p275.RESULT_NOT_YET_AVAILABLE),
+        ("mlb_2026_999999", AFTER, 0, 1, p275.MISSING_AVAILABILITY_EVIDENCE),
+        (GAME_ID, None, 0, 1, p275.INVALID_FEATURE_AS_OF_UTC),
+    ],
+)
+def test_raw_outcome_flag_cannot_bypass_availability_gate(
+    tmp_path: Path,
+    game_id: str,
+    feature_as_of_utc: str | None,
+    unavailable: int,
+    missing_invalid: int,
+    reason: str,
+) -> None:
+    pred = tmp_path / "pred.jsonl"
+    out = tmp_path / "out.jsonl"
+    row = {
+        "game_id": game_id,
+        "game_date": "2026-05-20",
+        "away_team": "Away",
+        "home_team": "Home",
+        "model_probability": 0.62,
+        "predicted_side": "home",
+        "source_prediction_version": "p84b_diagnostic_baseline_v1",
+        "paper_only": True,
+        "production_ready": False,
+    }
+    pred.write_text(json.dumps(row) + "\n", encoding="utf-8")
+    out.write_text(
+        json.dumps({**row, "outcome_available": True, "is_correct": True}) + "\n",
+        encoding="utf-8",
+    )
+
+    snapshot = wf.build_local_2026_prediction_snapshot(
+        prediction_path=pred,
+        outcome_path=out,
+        feature_as_of_utc=feature_as_of_utc,
+    )
+
+    coverage = snapshot["availability_gate_coverage"]
+    assert coverage["raw_outcome_available_true_rows"] == 1
+    assert coverage["gate_available_rows"] == 0
+    assert coverage["result_metric_rows"] == 0
+    assert coverage["unavailable_before_observation_rows"] == unavailable
+    assert coverage["missing_or_invalid_evidence_rows"] == missing_invalid
+    assert coverage["block_reason_counts"] == {reason: 1}
+    assert snapshot["outcome_attached_summary"]["all_outcome_attached"] == {
+        "n": 0,
+        "correct": 0,
+        "accuracy": None,
+    }
+
+
+def test_existing_consumer_invokes_p275_with_explicit_evidence_paths(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    pred = tmp_path / "pred.jsonl"
+    out = tmp_path / "out.jsonl"
+    index_path = tmp_path / "index.json"
+    manifest_path = tmp_path / "SHA256SUMS"
+    row = {
+        "game_id": GAME_ID,
+        "game_date": "2026-05-20",
+        "away_team": "Away",
+        "home_team": "Home",
+        "model_probability": 0.62,
+        "predicted_side": "home",
+        "source_prediction_version": "p84b_diagnostic_baseline_v1",
+    }
+    pred.write_text(json.dumps(row) + "\n", encoding="utf-8")
+    out.write_text(
+        json.dumps({**row, "outcome_available": True, "is_correct": True}) + "\n",
+        encoding="utf-8",
+    )
+    calls = []
+
+    def fake_gate(**kwargs):
+        calls.append(kwargs)
+        return p275.AvailabilityGateDecision(
+            result_usage_allowed=False,
+            block_reason=p275.MISSING_AVAILABILITY_EVIDENCE,
+            game_id=kwargs["game_id"],
+            feature_as_of_utc=kwargs["feature_as_of_utc"],
+            result_available_at_utc=None,
+        )
+
+    monkeypatch.setattr(wf.p275, "evaluate_result_availability", fake_gate)
+
+    snapshot = wf.build_local_2026_prediction_snapshot(
+        prediction_path=pred,
+        outcome_path=out,
+        feature_as_of_utc=AFTER,
+        availability_index_path=index_path,
+        availability_manifest_path=manifest_path,
+    )
+
+    assert calls == [
+        {
+            "game_id": GAME_ID,
+            "feature_as_of_utc": AFTER,
+            "index_path": index_path,
+            "manifest_path": manifest_path,
+        }
+    ]
+    assert snapshot["availability_gate_coverage"]["gate_available_rows"] == 0
+
+
+def test_availability_gated_snapshot_is_deterministic(tmp_path: Path) -> None:
+    pred = tmp_path / "pred.jsonl"
+    out = tmp_path / "out.jsonl"
+    row = {
+        "game_id": GAME_ID,
+        "game_date": "2026-05-20",
+        "away_team": "Away",
+        "home_team": "Home",
+        "model_probability": 0.62,
+        "predicted_side": "home",
+        "source_prediction_version": "p84b_diagnostic_baseline_v1",
+    }
+    pred.write_text(json.dumps(row) + "\n", encoding="utf-8")
+    out.write_text(
+        json.dumps({**row, "outcome_available": True, "is_correct": True}) + "\n",
+        encoding="utf-8",
+    )
+
+    first = wf.build_local_2026_prediction_snapshot(
+        prediction_path=pred,
+        outcome_path=out,
+        feature_as_of_utc=AFTER,
+    )
+    second = wf.build_local_2026_prediction_snapshot(
+        prediction_path=pred,
+        outcome_path=out,
+        feature_as_of_utc=AFTER,
+    )
+
+    assert first == second
 
 
 def test_visible_reports_separate_corrected_2025_from_baseline_2026(

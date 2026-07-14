@@ -22,6 +22,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from scripts import _p275_prospective_availability_consumer_gate as p275
 from wbc_backend.recommendation.local_retrain_scorecard import (
     american_to_prob,
     run_scorecard,
@@ -40,6 +41,15 @@ CORRECTED_2025_RESULT_CONTEXT = "CORRECTED_2025_LOCAL_DATE_BATCHED_RETRAIN_EVALU
 EXISTING_2026_SNAPSHOT_CONTEXT = "EXISTING_2026_PREDICTION_SNAPSHOT"
 EXPECTED_2026_SOURCE_VERSION = "p84b_diagnostic_baseline_v1"
 ODDS_TIMING_STATUS = "HISTORICAL_ODDS_PREGAME_TIMESTAMP_UNVERIFIED"
+P274_PUBLICATION_ROOT = (
+    REPO_ROOT / "data/mlb_2026/derived/p274_prospective_result_availability_index_v1"
+)
+DEFAULT_P274_INDEX_PATH = P274_PUBLICATION_ROOT / "index.json"
+DEFAULT_P274_MANIFEST_PATH = P274_PUBLICATION_ROOT / "SHA256SUMS"
+P274_COVERAGE_LIMITATION = (
+    "P274 currently has only one prospective record and does not establish "
+    "season-wide point-in-time coverage or replay readiness."
+)
 
 DEFAULT_MONEYLINE_MIN_EV = 0.01
 DEFAULT_MONEYLINE_MIN_EDGE = 0.015
@@ -434,6 +444,9 @@ def build_local_2026_prediction_snapshot(
     *,
     prediction_path: Path,
     outcome_path: Path | None = None,
+    feature_as_of_utc: str | None = None,
+    availability_index_path: Path = DEFAULT_P274_INDEX_PATH,
+    availability_manifest_path: Path = DEFAULT_P274_MANIFEST_PATH,
     limit: int = 12,
 ) -> dict[str, Any]:
     rows = _read_jsonl(prediction_path)
@@ -471,12 +484,56 @@ def build_local_2026_prediction_snapshot(
     ]
 
     outcome_summary = None
+    availability_coverage = None
     if outcome_path and outcome_path.exists():
-        outcome_rows = [
-            row for row in _read_jsonl(outcome_path)
-            if row.get("outcome_available") is True and row.get("is_correct") is not None
+        all_outcome_rows = _read_jsonl(outcome_path)
+        raw_available_rows = [
+            row for row in all_outcome_rows if row.get("outcome_available") is True
         ]
-        outcome_summary = _outcome_summary(outcome_rows)
+        gate_available_rows: list[dict[str, Any]] = []
+        block_reason_counts: dict[str, int] = {}
+        unavailable_before_observation = 0
+        missing_or_invalid_evidence = 0
+
+        for row in raw_available_rows:
+            decision = p275.evaluate_result_availability(
+                game_id=row.get("game_id"),
+                feature_as_of_utc=feature_as_of_utc,
+                index_path=availability_index_path,
+                manifest_path=availability_manifest_path,
+            )
+            if decision.result_usage_allowed:
+                gate_available_rows.append(row)
+                continue
+            reason = decision.block_reason or p275.INVALID_AVAILABILITY_EVIDENCE
+            block_reason_counts[reason] = block_reason_counts.get(reason, 0) + 1
+            if reason == p275.RESULT_NOT_YET_AVAILABLE:
+                unavailable_before_observation += 1
+            else:
+                missing_or_invalid_evidence += 1
+
+        result_metric_rows = [
+            row for row in gate_available_rows if row.get("is_correct") is not None
+        ]
+        outcome_summary = _outcome_summary(result_metric_rows)
+        availability_coverage = {
+            "feature_as_of_utc": feature_as_of_utc,
+            "index_path": _portable_input_path(availability_index_path),
+            "manifest_path": _portable_input_path(availability_manifest_path),
+            "total_outcome_rows": len(all_outcome_rows),
+            "raw_outcome_available_true_rows": len(raw_available_rows),
+            "gate_available_rows": len(gate_available_rows),
+            "result_metric_rows": len(result_metric_rows),
+            "unavailable_before_observation_rows": unavailable_before_observation,
+            "missing_or_invalid_evidence_rows": missing_or_invalid_evidence,
+            "classification_counts": {
+                "available": len(gate_available_rows),
+                "unavailable_before_observation": unavailable_before_observation,
+                "missing_or_invalid_evidence": missing_or_invalid_evidence,
+            },
+            "block_reason_counts": dict(sorted(block_reason_counts.items())),
+            "coverage_limitation": P274_COVERAGE_LIMITATION,
+        }
 
     return {
         "prediction_path": _portable_input_path(prediction_path),
@@ -487,6 +544,7 @@ def build_local_2026_prediction_snapshot(
         "latest_local_rows": len(latest_rows),
         "top_latest_predictions": formatted_latest,
         "outcome_attached_summary": outcome_summary,
+        "availability_gate_coverage": availability_coverage,
         "result_context": EXISTING_2026_SNAPSHOT_CONTEXT,
         "source_prediction_version": source_version,
         "source_prediction_versions": source_versions,
@@ -528,7 +586,11 @@ def _outcome_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def summarize(scoped: list[dict[str, Any]]) -> dict[str, Any]:
         n = len(scoped)
         correct = sum(1 for row in scoped if row.get("is_correct") is True)
-        return {"n": n, "correct": correct, "accuracy": _ratio(correct, n)}
+        return {
+            "n": n,
+            "correct": correct,
+            "accuracy": _ratio(correct, n) if n else None,
+        }
 
     return {
         "all_outcome_attached": summarize(rows),
@@ -545,6 +607,9 @@ def run_workflow_snapshot(
     eval_path: Path,
     prediction_2026_path: Path,
     outcome_2026_path: Path | None = None,
+    feature_as_of_utc: str | None = None,
+    availability_index_path: Path = DEFAULT_P274_INDEX_PATH,
+    availability_manifest_path: Path = DEFAULT_P274_MANIFEST_PATH,
     min_ev: float = DEFAULT_MONEYLINE_MIN_EV,
     min_edge: float = DEFAULT_MONEYLINE_MIN_EDGE,
     kelly_fraction: float = DEFAULT_KELLY_FRACTION,
@@ -564,6 +629,9 @@ def run_workflow_snapshot(
     snapshot_2026 = build_local_2026_prediction_snapshot(
         prediction_path=prediction_2026_path,
         outcome_path=outcome_2026_path,
+        feature_as_of_utc=feature_as_of_utc,
+        availability_index_path=availability_index_path,
+        availability_manifest_path=availability_manifest_path,
     )
 
     return {
@@ -576,6 +644,9 @@ def run_workflow_snapshot(
             "eval_path": _portable_input_path(eval_path),
             "prediction_2026_path": _portable_input_path(prediction_2026_path),
             "outcome_2026_path": _portable_input_path(outcome_2026_path),
+            "feature_as_of_utc": feature_as_of_utc,
+            "availability_index_path": _portable_input_path(availability_index_path),
+            "availability_manifest_path": _portable_input_path(availability_manifest_path),
         },
         "retrain_scorecard": {
             "result_context": CORRECTED_2025_RESULT_CONTEXT,
@@ -784,6 +855,21 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
         ]
     )
     outcome = latest.get("outcome_attached_summary")
+    availability = latest.get("availability_gate_coverage")
+    if availability:
+        lines.extend(
+            [
+                f"- Outcome rows: `{availability['total_outcome_rows']}`",
+                "- Raw `outcome_available=true` rows: "
+                f"`{availability['raw_outcome_available_true_rows']}`",
+                f"- P275 gate-available rows: `{availability['gate_available_rows']}`",
+                "- Unavailable-before-observation rows: "
+                f"`{availability['unavailable_before_observation_rows']}`",
+                "- Missing/invalid evidence rows: "
+                f"`{availability['missing_or_invalid_evidence_rows']}`",
+                f"- Availability coverage limitation: {availability['coverage_limitation']}",
+            ]
+        )
     if outcome:
         all_outcomes = outcome["all_outcome_attached"]
         lines.append(
