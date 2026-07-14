@@ -64,19 +64,24 @@ def _read_regular_file(path: Path, label: str) -> bytes:
         raise InvalidAvailabilityEvidenceError(f"Unable to read {label}") from exc
 
 
-def load_verified_availability_index(index_path: str | Path) -> Mapping[str, Any]:
-    """Load a P274 index only when its exact publication checksum verifies."""
+def load_verified_availability_index(
+    index_path: str | Path,
+    manifest_path: str | Path,
+) -> Mapping[str, Any]:
+    """Load a P274 index only when its explicitly supplied manifest verifies."""
     path = Path(index_path)
+    manifest = Path(manifest_path)
     if path.name != p274.INDEX_FILENAME:
         raise InvalidAvailabilityEvidenceError(
             f"P274 index path must end with {p274.INDEX_FILENAME}"
         )
+    if manifest.name != p274.CHECKSUM_FILENAME:
+        raise InvalidAvailabilityEvidenceError(
+            f"P274 manifest path must end with {p274.CHECKSUM_FILENAME}"
+        )
 
     index_bytes = _read_regular_file(path, p274.INDEX_FILENAME)
-    checksum_bytes = _read_regular_file(
-        path.parent / p274.CHECKSUM_FILENAME,
-        p274.CHECKSUM_FILENAME,
-    )
+    checksum_bytes = _read_regular_file(manifest, p274.CHECKSUM_FILENAME)
     expected_checksum = (
         f"{p274.sha256_bytes(index_bytes)}  {p274.INDEX_FILENAME}\n".encode("utf-8")
     )
@@ -96,9 +101,11 @@ def load_verified_availability_index(index_path: str | Path) -> Mapping[str, Any
 
 
 def evaluate_result_availability(
-    index_path: str | Path,
+    *,
     game_id: str,
-    feature_as_of_utc: str,
+    feature_as_of_utc: str | None,
+    index_path: str | Path,
+    manifest_path: str | Path,
 ) -> AvailabilityGateDecision:
     """Decide whether indexed result evidence may be used by a feature consumer.
 
@@ -121,7 +128,7 @@ def evaluate_result_availability(
         )
 
     try:
-        index = load_verified_availability_index(index_path)
+        index = load_verified_availability_index(index_path, manifest_path)
     except MissingAvailabilityEvidenceError:
         return AvailabilityGateDecision(
             result_usage_allowed=False,
