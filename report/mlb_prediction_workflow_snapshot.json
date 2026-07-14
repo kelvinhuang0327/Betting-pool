@@ -4,9 +4,13 @@
     "corrected_model_generated_2026_snapshot": false,
     "corrected_model_to_2026_handoff_performed": true,
     "corrected_shadow_retrospective_only": true,
+    "current_shadow_artifacts_pregame_certified": false,
+    "current_shadow_artifacts_retrospective_only": true,
     "db_written": false,
+    "future_explicit_as_of_capture_runner_available": true,
     "historical_odds_pregame_timestamps_verified": false,
     "historical_only": true,
+    "historical_prospective_cohort_created": false,
     "live_provider_called": false,
     "moneyline_divergence_is_performance_evaluation": false,
     "moneyline_divergence_uses_outcomes_or_odds": false,
@@ -162,8 +166,8 @@
     ],
     "training_input_fingerprint": "56ee44889c3cb9430c60dbbba5bab6f692dc32620eadfa9cc062cda4d2078c6c"
   },
-  "disclaimer": "Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow and a P279-A outcome-free divergence baseline when supplied. The P279-A comparison measures prediction divergence only, uses no outcomes or odds, and does not establish model performance or superiority. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.",
-  "generated_at_utc": "2026-07-14T13:22:00.855948+00:00",
+  "disclaimer": "Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow and a P279-A outcome-free divergence baseline when supplied, plus the P280-A explicit-as-of prospective-capture readiness boundary. The P279-A comparison measures prediction divergence only, uses no outcomes or odds, and does not establish model performance or superiority. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication. P280-A does not retroactively certify either artifact; only a future explicit local observation can become pregame-certified with trusted row-level schedule evidence.",
+  "generated_at_utc": "2026-07-14T14:12:33Z",
   "inputs": {
     "availability_index_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/index.json",
     "availability_manifest_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/SHA256SUMS",
@@ -174,6 +178,7 @@
     "moneyline_divergence_summary_path": "report/mlb_2026_moneyline_shadow_divergence_summary.json",
     "outcome_2026_path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
     "prediction_2026_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "prospective_capture_readiness_path": "report/mlb_moneyline_shadow_prospective_capture_readiness.json",
     "warmup_path": "data/mlb_2025/mlb-2024-asplayed.csv"
   },
   "local_2026_prediction_snapshot": {
@@ -303,6 +308,36 @@
     "shared_game_count": 828,
     "status": "AVAILABLE_OUTCOME_FREE_DIVERGENCE_BASELINE",
     "summary_path": "report/mlb_2026_moneyline_shadow_divergence_summary.json"
+  },
+  "moneyline_shadow_prospective_capture": {
+    "capture_semantics": "LOCAL_OBSERVATION_LOWER_BOUND",
+    "current_artifacts_pregame_certified": false,
+    "current_artifacts_retrospective": true,
+    "explicit_prediction_as_of_row_count": 0,
+    "future_capture_runner_available": true,
+    "future_prospective_cohort_row_count": 0,
+    "historical_prospective_cohort_created": false,
+    "pregame_boundary": "prediction_as_of_utc < scheduled_start_utc",
+    "pregame_eligible_row_count": 0,
+    "production_ready": false,
+    "prospective_registered_row_count": 0,
+    "published": false,
+    "readiness_deterministic_payload_sha256": "d36f919cb22b16218852dc54cce16f8d76957c400a6cce3f3a07ae71b6a9e5a8",
+    "readiness_path": "report/mlb_moneyline_shadow_prospective_capture_readiness.json",
+    "readiness_schema_version": "p280a.moneyline_shadow_capture_readiness.v1",
+    "retrospective_prediction_row_count": 828,
+    "scheduled_start_row_count": 0,
+    "state_boundaries": {
+      "future_local_observation": "LOCAL_OBSERVATION_LOWER_BOUND",
+      "future_prospective_cohort": "EMPTY_UNTIL_FUTURE_CAPTURE",
+      "p278_corrected_shadow": "RETROSPECTIVE_FROZEN_STATE_PAPER_ONLY",
+      "p279_divergence": "OUTCOME_FREE_DIVERGENCE_NOT_PERFORMANCE",
+      "p280_current_readiness": "NO_RETROACTIVE_PROSPECTIVE_CAPTURE",
+      "p84b_baseline": "RETROSPECTIVE_BASELINE",
+      "pregame_certification": "ALL_ROWS_REQUIRE_EXPLICIT_TRUSTED_SCHEDULE_AND_STRICT_BEFORE"
+    },
+    "status": "NO_RETROACTIVE_PROSPECTIVE_CAPTURE",
+    "synthetic_contract_verification_status": "PASSED"
   },
   "moneyline_strategy": {
     "result_context": "CORRECTED_2025_HISTORICAL_ODDS_DIAGNOSTIC",
