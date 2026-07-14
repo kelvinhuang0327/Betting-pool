@@ -1,43 +1,43 @@
 {
-  "best_by_brier": "calibrated_elo_recent_form",
+  "best_by_brier": "retrained_team_history_smooth",
   "best_confidence_band_breakdown": {
     "HIGH": {
-      "correct": 23,
-      "n": 32
+      "correct": 86,
+      "n": 138
     },
     "LOW": {
-      "correct": 221,
-      "n": 442
+      "correct": 208,
+      "n": 385
     },
     "MEDIUM": {
-      "correct": 285,
-      "n": 498
+      "correct": 252,
+      "n": 446
     }
   },
   "best_selected_side_distribution": {
-    "AWAY": 205,
-    "HOME": 767
+    "AWAY": 332,
+    "HOME": 637
   },
   "data_inventory": [
     {
       "file": "mlb_odds_2025_real.csv",
-      "notes": "tracked; Final games; 0 ties",
+      "notes": "tracked; Final games; common pre-date state; 0 ties",
       "outcome_labeled_rows": 2430,
-      "role": "evaluation universe (walk-forward train+test); outcome derived from scores",
+      "role": "evaluation universe (date-batched train+test); outcome derived from scores",
       "rows": 2430,
       "usable": "YES"
     },
     {
       "file": "mlb-2024-asplayed.csv",
-      "notes": "tracked; prior-season state seeding",
+      "notes": "tracked; prior-season state seeding; update after complete date",
       "outcome_labeled_rows": 2429,
-      "role": "Elo / rolling warm-up only (not scored)",
+      "role": "date-batched Elo / rolling warm-up only (not scored)",
       "rows": 2429,
       "usable": "YES"
     },
     {
       "file": "mlb_odds_2025_real.csv [Home ML/Away ML]",
-      "notes": "is_verified_real=False; post-game snapshot; NOT a valid pregame predictor",
+      "notes": "is_verified_real=False; pregame timestamp unverified; diagnostic only; NOT a verified betting edge",
       "outcome_labeled_rows": 0,
       "role": "descriptive market reference (de-vig implied prob)",
       "rows": 2428,
@@ -51,93 +51,103 @@
     "NO live-market claim",
     "NO production / DB / registry mutation; NO real publication",
     "NO future-ticket mutation; NO strategy activation; NO leaderboard/evaluator change",
-    "odds fields are post-game unverified snapshot (is_verified_real=False) — reference only"
+    "historical odds lack verified pregame timestamps (is_verified_real=False) — diagnostic/descriptive reference only; no verified betting edge"
   ],
   "eval_rows": 2430,
   "market_reference": {
-    "accuracy": 0.5473251028806584,
-    "brier_score": 0.24550290043433953,
-    "calibration_error": 0.031828783262138484,
+    "accuracy": 0.5459236326109391,
+    "brier_score": 0.24563122087734063,
+    "calibration_error": 0.033323252026713546,
     "coverage": 1.0,
-    "log_loss": 0.6838976990981968,
+    "log_loss": 0.6841551776587593,
     "model_name": "market_implied_devig(REFERENCE_UNVERIFIED)",
-    "n": 972,
-    "notes": "post-game unverified snapshot; look-ahead; NOT a valid predictor",
-    "test_rows": 972,
+    "n": 969,
+    "notes": "historical odds timestamp unverified; descriptive only; NOT a verified pregame predictor or betting edge",
+    "test_rows": 969,
     "train_rows": 0
   },
   "model_comparison": [
     {
-      "accuracy": 0.5329218106995884,
-      "brier_score": 0.24918711578519534,
-      "calibration_error": 0.016460905349794275,
+      "accuracy": 0.5325077399380805,
+      "brier_score": 0.2492361976447256,
+      "calibration_error": 0.017115805578688748,
       "coverage": 1.0,
-      "log_loss": 0.6915240864642584,
+      "log_loss": 0.6916226797724769,
       "model_name": "baseline_fixed_prior",
-      "n": 972,
+      "n": 969,
       "notes": "constant = train home-win rate; no discrimination",
-      "test_rows": 972,
-      "train_rows": 1458
+      "test_rows": 969,
+      "train_rows": 1461
     },
     {
-      "accuracy": 0.5483539094650206,
-      "brier_score": 0.24857738899391407,
-      "calibration_error": 0.04876857972256982,
+      "accuracy": 0.5469556243550051,
+      "brier_score": 0.2489383875621205,
+      "calibration_error": 0.05029804391732336,
       "coverage": 1.0,
-      "log_loss": 0.6903908145967792,
+      "log_loss": 0.6911459977468924,
       "model_name": "elo_like_rating",
-      "n": 972,
+      "n": 969,
       "notes": "rolling Elo K=20 + HFA; pregame only",
-      "test_rows": 972,
-      "train_rows": 1458
+      "test_rows": 969,
+      "train_rows": 1461
     },
     {
-      "accuracy": 0.5637860082304527,
-      "brier_score": 0.2460629220150913,
-      "calibration_error": 0.024793403851496067,
+      "accuracy": 0.5634674922600619,
+      "brier_score": 0.24614153430535807,
+      "calibration_error": 0.02507581163007237,
       "coverage": 1.0,
-      "log_loss": 0.6852486969950828,
+      "log_loss": 0.6854084481672756,
       "model_name": "retrained_team_history_smooth",
-      "n": 972,
+      "n": 969,
       "notes": "log5 of smoothed team win-rates + home logit bump; pregame only",
-      "test_rows": 972,
-      "train_rows": 1458
+      "test_rows": 969,
+      "train_rows": 1461
     },
     {
-      "accuracy": 0.5442386831275721,
-      "brier_score": 0.24603268444293613,
-      "calibration_error": 0.02023047586153575,
+      "accuracy": 0.541795665634675,
+      "brier_score": 0.2462598825452743,
+      "calibration_error": 0.023289725846769135,
       "coverage": 1.0,
-      "log_loss": 0.6850800625230818,
+      "log_loss": 0.6855365880121091,
       "model_name": "calibrated_elo_recent_form",
-      "n": 972,
+      "n": 969,
       "notes": "Elo logit Platt-calibrated on train fold only",
-      "test_rows": 972,
-      "train_rows": 1458
+      "test_rows": 969,
+      "train_rows": 1461
     }
   ],
   "odds_metrics_status": "PRESENT_BUT_TIMING_UNVERIFIED",
   "outcome_metrics_status": "AVAILABLE",
   "platt": {
-    "A": 0.5203478355187772,
-    "B": 0.12655715274240825
+    "A": 0.5264300061441368,
+    "B": 0.1270080942959574
   },
   "provenance_contract_version_ref": "p205a.v1",
+  "result_context": "CORRECTED_2025_LOCAL_DATE_BATCHED_RETRAIN_EVALUATION",
   "scope": "LOCAL_HISTORICAL_REPLAY_ONLY",
   "split": {
+    "effective_train_frac": 0.6012345679012345,
+    "requested_train_frac": 0.6,
+    "selected_boundary_date": "2025-07-18",
+    "selected_test_start_date": "2025-07-19",
+    "split_strategy": "complete_date_boundary_nearest_requested_row_fraction",
+    "test_date_count": 72,
     "test_period": [
-      "2025-07-18",
+      "2025-07-19",
       "2025-09-28"
     ],
-    "test_rows": 972,
+    "test_rows": 969,
+    "tie_rule": "earlier boundary (smaller train partition) wins equal-distance ties",
+    "train_date_count": 112,
     "train_frac": 0.6,
     "train_period": [
       "2025-03-18",
       "2025-07-18"
     ],
-    "train_rows": 1458
+    "train_rows": 1461
   },
-  "task": "P207-A local MLB retrain + prediction scorecard",
-  "train_home_win_prior": 0.5493827160493827,
+  "state_transition_contract": "PREDICT_FULL_DATE_THEN_UPDATE",
+  "task": "P276-A corrected P207-A local MLB retrain + prediction scorecard",
+  "train_home_win_prior": 0.5496235455167693,
   "warmup_rows": 2429
 }

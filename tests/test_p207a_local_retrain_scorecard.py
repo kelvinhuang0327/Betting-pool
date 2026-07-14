@@ -4,6 +4,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -44,6 +45,46 @@ def _write_odds(path: Path, n_days: int = 60) -> None:
             month, day = 4 + i // 28, 1 + i % 28
             w.writerow([f"2025-{month:02d}-{day:02d}", away, as_, home, hs,
                         "Final", "-120", "+110"])
+
+
+def _write_same_date_eval(
+    path: Path, *, first_same_date_home_win: int = 1, reverse_same_date_rows: bool = False
+) -> None:
+    rows: list[list[object]] = []
+    teams = ["Alpha", "Bravo", "Charlie", "Delta"]
+    for i in range(30):
+        date = f"2025-04-{i + 1:02d}"
+        if i == 25:
+            same_date = [
+                [
+                    date,
+                    "Charlie",
+                    2 if first_same_date_home_win else 5,
+                    "Alpha",
+                    5 if first_same_date_home_win else 2,
+                    "Final",
+                    "-110",
+                    "-110",
+                ],
+                [date, "Alpha", 3, "Bravo", 4, "Final", "-110", "-110"],
+            ]
+            rows.extend(reversed(same_date) if reverse_same_date_rows else same_date)
+        elif i == 26:
+            # Alpha appears again on the next date so the completed prior-date update is visible.
+            rows.append([date, "Delta", 3, "Alpha", 5, "Final", "-110", "-110"])
+        else:
+            home = teams[i % len(teams)]
+            away = teams[(i + 1) % len(teams)]
+            home_score, away_score = (5, 3) if i % 2 == 0 else (2, 4)
+            rows.append(
+                [date, away, away_score, home, home_score, "Final", "-110", "-110"]
+            )
+    with path.open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(
+            ["Date", "Away", "Away Score", "Home", "Home Score", "Status", "Home ML", "Away ML"]
+        )
+        writer.writerows(rows)
 
 
 @pytest.fixture()
@@ -114,7 +155,13 @@ def test_platt_reduces_or_holds_train_logloss():
 def test_leakage_train_strictly_before_test(synthetic):
     wu, ev = synthetic
     r = lrs.run_scorecard(wu, ev)
-    assert r.split["train_period"][1] <= r.split["test_period"][0]
+    assert r.split["train_period"][1] < r.split["test_period"][0]
+    assert r.split["requested_train_frac"] == pytest.approx(0.60)
+    assert r.split["effective_train_frac"] == pytest.approx(
+        r.split["train_rows"] / (r.split["train_rows"] + r.split["test_rows"])
+    )
+    assert r.split["train_date_count"] + r.split["test_date_count"] == 60
+    assert r.split["split_strategy"] == lrs.SPLIT_STRATEGY
     assert r.split["train_rows"] > 0 and r.split["test_rows"] > 0
 
 
@@ -158,6 +205,128 @@ def test_deterministic_reproducible(synthetic):
            [m["brier_score"] for m in r2.comparison]
     assert r1.platt == r2.platt
     assert r1.train_home_win_prior == r2.train_home_win_prior
+    assert r1.split == r2.split
+    assert r1.predictions == r2.predictions
+
+
+def test_complete_date_split_tie_rule_prefers_earlier_boundary():
+    games = [
+        lrs.Game(datetime(2025, 4, 1), "2025-04-01", "H1", "A1", 1),
+        lrs.Game(datetime(2025, 4, 2), "2025-04-02", "H2", "A2", 1),
+        lrs.Game(datetime(2025, 4, 2), "2025-04-02", "H3", "A3", 0),
+        lrs.Game(datetime(2025, 4, 3), "2025-04-03", "H4", "A4", 1),
+    ]
+    rows = [{"game": game} for game in games]
+
+    train, test, split = lrs.select_complete_date_split(rows, 0.5)
+
+    assert len(train) == 1
+    assert len(test) == 3
+    assert split["selected_boundary_date"] == "2025-04-01"
+    assert split["tie_rule"] == lrs.SPLIT_TIE_RULE
+
+
+def test_same_date_predictions_share_pre_date_state_and_update_after_batch(tmp_path):
+    warmup = tmp_path / "warmup.csv"
+    warmup.write_text("date,away_team,home_team,home_win,status\n", encoding="utf-8")
+    base_path = tmp_path / "base.csv"
+    changed_path = tmp_path / "changed.csv"
+    _write_same_date_eval(base_path, first_same_date_home_win=1)
+    _write_same_date_eval(changed_path, first_same_date_home_win=0)
+
+    base = lrs.run_scorecard(warmup, base_path)
+    changed = lrs.run_scorecard(warmup, changed_path)
+
+    def probabilities(result):
+        return {
+            (row["game_id"], row["model_name"]): row["predicted_home_win_probability"]
+            for row in result.predictions
+        }
+
+    base_probs = probabilities(base)
+    changed_probs = probabilities(changed)
+    same_date_second = "2025-04-26_Alpha@Bravo"
+    next_date = "2025-04-27_Delta@Alpha"
+    for model in ("elo_like_rating", "retrained_team_history_smooth"):
+        assert base_probs[(same_date_second, model)] == changed_probs[(same_date_second, model)]
+        assert base_probs[(next_date, model)] != changed_probs[(next_date, model)]
+
+    feature_rows = lrs.build_date_batched_rows([], lrs.load_games(base_path))
+    by_id = {row["game"].game_id: row for row in feature_rows}
+    first = by_id["2025-04-26_Charlie@Alpha"]
+    second = by_id[same_date_second]
+    assert first["pre_date_home_elo"] == second["pre_date_away_elo"]
+    assert first["pre_date_home_games"] == second["pre_date_away_games"]
+
+
+def test_within_date_source_permutation_is_prediction_invariant(tmp_path):
+    warmup = tmp_path / "warmup.csv"
+    warmup.write_text("date,away_team,home_team,home_win,status\n", encoding="utf-8")
+    eval_path = tmp_path / "evaluation.csv"
+    _write_same_date_eval(eval_path)
+
+    base = lrs.run_scorecard(warmup, eval_path)
+    _write_same_date_eval(eval_path, reverse_same_date_rows=True)
+    permuted = lrs.run_scorecard(warmup, eval_path)
+
+    assert base.split == permuted.split
+    assert base.predictions == permuted.predictions
+    assert base.comparison == permuted.comparison
+
+
+def test_metrics_are_recomputed_from_corrected_predictions(synthetic):
+    warmup, evaluation = synthetic
+    result = lrs.run_scorecard(warmup, evaluation)
+    for comparison in result.comparison:
+        predictions = [
+            row for row in result.predictions
+            if row["model_name"] == comparison["model_name"]
+        ]
+        recomputed = lrs.metrics(
+            [float(row["predicted_home_win_probability"]) for row in predictions],
+            [int(row["actual_home_win"]) for row in predictions],
+        )
+        assert comparison["accuracy"] == pytest.approx(recomputed["accuracy"])
+        assert comparison["brier_score"] == pytest.approx(
+            recomputed["brier_score"], abs=1e-6
+        )
+
+
+def test_duplicate_matchups_receive_deterministic_occurrences(tmp_path):
+    first = tmp_path / "first.csv"
+    second = tmp_path / "second.csv"
+    rows = [
+        ["2025-04-01", "Away", 5, "Home", 2, "Final", "+120", "-130"],
+        ["2025-04-01", "Away", 3, "Home", 6, "Final", "-115", "+105"],
+    ]
+    for path, values in ((first, rows), (second, list(reversed(rows)))):
+        with path.open("w", newline="", encoding="utf-8") as fh:
+            writer = csv.writer(fh)
+            writer.writerow(
+                ["Date", "Away", "Away Score", "Home", "Home Score", "Status", "Home ML", "Away ML"]
+            )
+            writer.writerows(values)
+
+    first_games = lrs.load_games(first)
+    second_games = lrs.load_games(second)
+    assert [(game.game_id, game.home_win) for game in first_games] == [
+        (game.game_id, game.home_win) for game in second_games
+    ]
+    assert [game.game_id for game in first_games] == [
+        "2025-04-01_Away@Home#1",
+        "2025-04-01_Away@Home#2",
+    ]
+
+
+def test_malformed_game_identifier_fails_clearly(tmp_path):
+    path = tmp_path / "malformed.csv"
+    path.write_text(
+        "Date,Away,Away Score,Home,Home Score,Status\n"
+        "2025-04-01,Same,2,Same,5,Final\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="malformed game identifier"):
+        lrs.load_games(path)
 
 
 def test_outcome_derived_from_scores_when_no_home_win_column(synthetic):
@@ -211,7 +380,7 @@ def test_real_data_smoke(tmp_path):
     r = lrs.run_scorecard(REAL_WARMUP, REAL_EVAL)
     assert r.eval_rows >= 2000              # 2025 全季量級
     assert r.split["train_rows"] + r.split["test_rows"] == r.eval_rows
-    assert r.split["train_period"][1] <= r.split["test_period"][0]
+    assert r.split["train_period"][1] < r.split["test_period"][0]
     for m in r.comparison:
         assert 0.45 <= m["accuracy"] <= 0.65   # MLB 誠實可信區間
         assert 0.20 <= m["brier_score"] <= 0.30
