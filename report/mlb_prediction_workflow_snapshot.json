@@ -8,6 +8,9 @@
     "historical_odds_pregame_timestamps_verified": false,
     "historical_only": true,
     "live_provider_called": false,
+    "moneyline_divergence_is_performance_evaluation": false,
+    "moneyline_divergence_uses_outcomes_or_odds": false,
+    "moneyline_model_superiority_declared": false,
     "p84b_baseline_replaced": false,
     "production_enabled": false,
     "real_ticket_created": false,
@@ -159,8 +162,8 @@
     ],
     "training_input_fingerprint": "56ee44889c3cb9430c60dbbba5bab6f692dc32620eadfa9cc062cda4d2078c6c"
   },
-  "disclaimer": "Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow when supplied. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.",
-  "generated_at_utc": "2026-07-14T08:54:04.328817+00:00",
+  "disclaimer": "Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow and a P279-A outcome-free divergence baseline when supplied. The P279-A comparison measures prediction divergence only, uses no outcomes or odds, and does not establish model performance or superiority. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.",
+  "generated_at_utc": "2026-07-14T13:22:00.855948+00:00",
   "inputs": {
     "availability_index_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/index.json",
     "availability_manifest_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/SHA256SUMS",
@@ -168,6 +171,7 @@
     "corrected_shadow_prediction_path": "report/mlb_2026_corrected_moneyline_shadow_predictions.csv",
     "eval_path": "data/mlb_2025/mlb_odds_2025_real.csv",
     "feature_as_of_utc": "2026-07-13T07:17:10.769880Z",
+    "moneyline_divergence_summary_path": "report/mlb_2026_moneyline_shadow_divergence_summary.json",
     "outcome_2026_path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
     "prediction_2026_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
     "warmup_path": "data/mlb_2025/mlb-2024-asplayed.csv"
@@ -277,11 +281,28 @@
         "status": "LINES_AND_RESULTS_AVAILABLE_MODEL_PROBABILITY_PENDING"
       }
     },
-    "source_file": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p278a-corrected-moneyline-pit-safe-shadow-handoff/data/mlb_2025/mlb_odds_2025_real.csv"
+    "source_file": "data/mlb_2025/mlb_odds_2025_real.csv"
   },
   "moneyline_backtest_rows": {
     "path": "report/mlb_prediction_workflow_moneyline_backtest.csv",
     "row_count": 969
+  },
+  "moneyline_shadow_divergence": {
+    "champion_activated": false,
+    "comparison_version": "p279a.moneyline_shadow_divergence.v1",
+    "divergence_not_performance": true,
+    "evaluation_denominator": 0,
+    "future_outcome_evaluation_requires_prospective_availability": true,
+    "ledger_path": "report/mlb_2026_moneyline_shadow_divergence.csv",
+    "model_winner_declared": false,
+    "odds_fields_used": "NONE",
+    "outcome_fields_used": "NONE",
+    "p278_model_version": "p278a_corrected_moneyline_shadow_v1",
+    "p84b_model_version": "p84b_diagnostic_baseline_v1",
+    "production_ready": false,
+    "shared_game_count": 828,
+    "status": "AVAILABLE_OUTCOME_FREE_DIVERGENCE_BASELINE",
+    "summary_path": "report/mlb_2026_moneyline_shadow_divergence_summary.json"
   },
   "moneyline_strategy": {
     "result_context": "CORRECTED_2025_HISTORICAL_ODDS_DIAGNOSTIC",

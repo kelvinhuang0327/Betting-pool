@@ -2,7 +2,7 @@
 
 **Scope:** `LOCAL_PAPER_WORKFLOW_SNAPSHOT`
 
-**Disclaimer:** Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow when supplied. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.
+**Disclaimer:** Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow and a P279-A outcome-free divergence baseline when supplied. The P279-A comparison measures prediction divergence only, uses no outcomes or odds, and does not establish model performance or superiority. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.
 
 ## Corrected 2025 Local Retrain and Evaluation
 
@@ -106,6 +106,21 @@
 - Brier: `N/A`
 - ROI / EV / Kelly: `N/A` / `N/A` / `N/A`
 - No outcome-based comparative winner or betting edge is declared.
+
+## P279-A Outcome-Free Moneyline Prediction Divergence
+
+- Status: `AVAILABLE_OUTCOME_FREE_DIVERGENCE_BASELINE`
+- Comparison: existing P84-B baseline versus P278 corrected shadow.
+- Comparison version: `p279a.moneyline_shadow_divergence.v1`
+- Shared games: `828`
+- Outcome fields used: `NONE`
+- Odds fields used: `NONE`
+- Evaluation denominator: `0`
+- This measures prediction divergence, not model performance.
+- Neither model is activated or declared superior.
+- Future performance evaluation requires prospectively available outcomes.
+- Ledger: `report/mlb_2026_moneyline_shadow_divergence.csv`
+- Summary: `report/mlb_2026_moneyline_shadow_divergence_summary.json`
 
 ## Output Files
 
