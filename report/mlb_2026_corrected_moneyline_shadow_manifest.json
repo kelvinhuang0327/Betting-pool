@@ -1,0 +1,127 @@
+{
+  "artifact_version": "p278a_corrected_moneyline_shadow_v1",
+  "artifacts": {
+    "manifest_json": "report/mlb_2026_corrected_moneyline_shadow_manifest.json",
+    "prediction_row_count": 828,
+    "predictions_csv": "report/mlb_2026_corrected_moneyline_shadow_predictions.csv",
+    "predictions_csv_sha256": "e1bf3315c4ea9807bdc19a32999053cbe64f5ed635bea4076d5c1aef76009c1f",
+    "summary_markdown": "report/mlb_2026_corrected_moneyline_shadow_summary.md"
+  },
+  "availability_evidence": {
+    "coverage_limitation": "P274 currently contains one prospective availability record; it does not establish season-wide PIT coverage or replay readiness.",
+    "index_fingerprint": "cdfdbac0a307a6a9373746627a1bf31ab569a95287b77356698a9a99ab6241b4",
+    "index_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/index.json",
+    "manifest_fingerprint": "1f038249bc9b5b30d4717c87ed3f0512039291a5f944d232d73a27eae96cbf94",
+    "manifest_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/SHA256SUMS",
+    "record_count": 1,
+    "verification_status": "VERIFIED"
+  },
+  "baseline_separation": {
+    "baseline_byte_unchanged": true,
+    "baseline_prediction_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "baseline_replaced": false,
+    "baseline_sha256_after": "74c4a5498f80b2e7335b472d742bffac4313922aa4d0f35f89f2c9c220df73bb",
+    "baseline_sha256_before": "74c4a5498f80b2e7335b472d742bffac4313922aa4d0f35f89f2c9c220df73bb",
+    "baseline_source_version": "p84b_diagnostic_baseline_v1",
+    "champion_activated": false
+  },
+  "diagnostic_only": true,
+  "generation": {
+    "generator_version": "p278a.moneyline_shadow_prediction.v1",
+    "runtime_metadata": {
+      "execution_command": "python3 -m wbc_backend.recommendation.moneyline_shadow_prediction --source-git-commit 77bca9d939cc361b6a1b3ef586d1417071f46a28 --out-dir report",
+      "execution_output_root": "report",
+      "generated_at_utc": "2026-07-14T08:54:03.347569Z"
+    }
+  },
+  "limitations": [
+    "P274 currently contains one prospective availability record; it does not establish season-wide PIT coverage or replay readiness.",
+    "No committed prediction row has a trustworthy explicit row-level as-of.",
+    "Frozen-state predictions are retrospective local diagnostics, not live evidence.",
+    "Corrected historical performance does not establish future predictive ability."
+  ],
+  "live_publication": false,
+  "model": {
+    "algorithm": "retrained_team_history_smooth",
+    "config": {
+      "algorithm": "retrained_team_history_smooth",
+      "home_logit_bump": 0.14,
+      "smooth_k": 10.0,
+      "state_transition_contract": "PREDICT_FULL_DATE_THEN_UPDATE",
+      "state_update_policy": "P275_EXACT_GAME_ID_AND_CANONICAL_ROW_AS_OF_COMPLETE_DATE_BATCH_ONLY"
+    },
+    "model_code_config_fingerprint": "7776f2f303289430f41fcb7a18940caab79ee6b9875a9140859a45962c088700",
+    "model_id": "corrected_moneyline_shadow",
+    "model_version": "p278a_corrected_moneyline_shadow_v1",
+    "source_file_fingerprints": {
+      "wbc_backend/recommendation/local_retrain_scorecard.py": "0dfd5cf69b19573f4f33376dd416828e321de29c8e4571c8f487d242a2c077bf",
+      "wbc_backend/recommendation/moneyline_shadow_prediction.py": "f6223852db7ecee2d9e2f9dae02b1a6cbf31c45f840bebfd50b1a87c19f22093"
+    }
+  },
+  "outcome_evaluation": {
+    "accuracy": null,
+    "brier_score": null,
+    "expected_value": null,
+    "kelly": null,
+    "outcome_evaluation_denominator": 0,
+    "roi": null,
+    "zero_denominator_metrics_display": "N/A"
+  },
+  "outcome_evaluation_gate": {
+    "allowed": 0,
+    "attempted": 0,
+    "denial_counts_by_reason": {},
+    "denied": 0
+  },
+  "outcome_input": {
+    "outcome_input_fingerprint": "dde0ecda797f9b68c682aa54058240ededd2ba9c8826f22a4cee178d9b7b3a59",
+    "outcome_path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
+    "raw_outcome_available_true_rows": 808,
+    "row_count": 828
+  },
+  "p275_policy": "P275_EXACT_GAME_ID_AND_CANONICAL_ROW_AS_OF_COMPLETE_DATE_BATCH_ONLY",
+  "p275_state_updates": {
+    "allowed": 0,
+    "applied": 0,
+    "attempted": 0,
+    "candidate_rows_not_attempted": 808,
+    "denial_counts_by_reason": {},
+    "denied": 0,
+    "missing_as_of_policy": "FREEZE_AND_DO_NOT_INVOKE_OUTCOME_UPDATE",
+    "raw_outcome_available_candidate_rows": 808,
+    "raw_outcome_flag_alone_can_update_state": false
+  },
+  "paper_only": true,
+  "prediction_input": {
+    "date_count": 68,
+    "eligible_rows_fingerprint": "a4ac502f106c36379bad17afb472128fca3f24a64d1c93197722c43caf74527a",
+    "explicit_canonical_as_of_rows": 0,
+    "first_game_date": "2026-03-25",
+    "invalid_as_of_rows": 0,
+    "last_game_date": "2026-05-31",
+    "missing_as_of_rows": 828,
+    "prediction_input_fingerprint": "74c4a5498f80b2e7335b472d742bffac4313922aa4d0f35f89f2c9c220df73bb",
+    "prediction_input_path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+    "row_count": 828
+  },
+  "pregame_publication_verified": false,
+  "production_ready": false,
+  "scope": "RETROSPECTIVE_LOCAL_PAPER_DIAGNOSTIC_ONLY",
+  "source_git_commit": "77bca9d939cc361b6a1b3ef586d1417071f46a28",
+  "state_mode": "frozen_final_2025_state",
+  "task": "P278-A corrected Moneyline PIT-safe local shadow handoff",
+  "training": {
+    "algorithm": "retrained_team_history_smooth",
+    "eligible_date_count": 184,
+    "eligible_row_count": 2430,
+    "eligible_training_rows_fingerprint": "15e41be725353eba9136c57940c4a9920157af10fdc908fd116cf7d81db5c1da",
+    "final_state_fingerprint": "03e03dae83bbda5e3b8101f1a139b7155c021bfd78b8ec5357c58cf4b6524f1d",
+    "first_training_date": "2025-03-18",
+    "last_training_date": "2025-09-28",
+    "state_transition_contract": "PREDICT_FULL_DATE_THEN_UPDATE",
+    "team_count": 30,
+    "training_cutoff": "after_complete_date_2025-09-28",
+    "training_input_fingerprint": "56ee44889c3cb9430c60dbbba5bab6f692dc32620eadfa9cc062cda4d2078c6c",
+    "training_path": "data/mlb_2025/mlb_odds_2025_real.csv"
+  }
+}

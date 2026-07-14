@@ -333,6 +333,35 @@ class DateBatchedTeamState:
         games = self.history_games.get(team, 0)
         return (wins + SMOOTH_K * 0.5) / (games + SMOOTH_K)
 
+    def team_history_smooth_probability(self, home: str, away: str) -> float:
+        """Return the selected P276 model probability from the current state.
+
+        This is intentionally outcome-free: callers must advance the state through
+        ``advance_date`` before invoking it.  Keeping the formula on the shared state
+        object prevents the P278 shadow handoff from drifting from the corrected P276
+        implementation.
+        """
+        if not home or not away or home.casefold() == away.casefold():
+            raise ValueError(f"invalid matchup: away={away!r}, home={home!r}")
+        home_rate, away_rate = self.win_rate(home), self.win_rate(away)
+        denom = home_rate + away_rate - 2 * home_rate * away_rate
+        p_log5 = (
+            0.5
+            if denom <= 0
+            else (home_rate - home_rate * away_rate) / denom
+        )
+        return sigmoid(
+            math.log(clip(p_log5) / clip(1 - p_log5)) + HOME_LOGIT_BUMP
+        )
+
+    def selected_model_state(self) -> dict[str, dict[str, int]]:
+        """Canonical state used by ``retrained_team_history_smooth`` only."""
+        teams = sorted(set(self.history_wins) | set(self.history_games))
+        return {
+            "history_wins": {team: self.history_wins.get(team, 0) for team in teams},
+            "history_games": {team: self.history_games.get(team, 0) for team in teams},
+        }
+
     def advance_date(self, games: list[Game], *, collect: bool) -> list[dict]:
         """Build a full date's features first, then apply its aggregate outcomes."""
         if not games:
@@ -355,16 +384,7 @@ class DateBatchedTeamState:
             f_elo = ((eh + HFA_ELO) - ea) * LN10_400
             expected_home = sigmoid(f_elo)
             if collect:
-                home_rate, away_rate = self.win_rate(game.home), self.win_rate(game.away)
-                denom = home_rate + away_rate - 2 * home_rate * away_rate
-                p_log5 = (
-                    0.5
-                    if denom <= 0
-                    else (home_rate - home_rate * away_rate) / denom
-                )
-                p_hist = sigmoid(
-                    math.log(clip(p_log5) / clip(1 - p_log5)) + HOME_LOGIT_BUMP
-                )
+                p_hist = self.team_history_smooth_probability(game.home, game.away)
                 rows.append(
                     {
                         "game": game,

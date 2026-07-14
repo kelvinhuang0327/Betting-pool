@@ -1,20 +1,171 @@
 {
   "claim_status": {
+    "champion_activated": false,
     "corrected_model_generated_2026_snapshot": false,
-    "corrected_model_to_2026_handoff_performed": false,
+    "corrected_model_to_2026_handoff_performed": true,
+    "corrected_shadow_retrospective_only": true,
     "db_written": false,
     "historical_odds_pregame_timestamps_verified": false,
     "historical_only": true,
     "live_provider_called": false,
+    "p84b_baseline_replaced": false,
     "production_enabled": false,
     "real_ticket_created": false,
     "verified_betting_edge_established": false
   },
-  "disclaimer": "Corrected 2025 date-batched local retraining/evaluation and a separate existing 2026 prediction snapshot. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate the 2026 snapshot.",
-  "generated_at_utc": "2026-07-14T06:59:10.505353+00:00",
+  "corrected_moneyline_shadow": {
+    "algorithm": "retrained_team_history_smooth",
+    "artifact_version": "p278a_corrected_moneyline_shadow_v1",
+    "champion_activated": false,
+    "diagnostic_only": true,
+    "live_publication": false,
+    "manifest_path": "report/mlb_2026_corrected_moneyline_shadow_manifest.json",
+    "model_code_config_fingerprint": "7776f2f303289430f41fcb7a18940caab79ee6b9875a9140859a45962c088700",
+    "outcome_evaluation": {
+      "accuracy": null,
+      "brier_score": null,
+      "denominator": 0,
+      "expected_value": null,
+      "kelly": null,
+      "roi": null
+    },
+    "p84b_replaced": false,
+    "paper_only": true,
+    "prediction_input_fingerprint": "74c4a5498f80b2e7335b472d742bffac4313922aa4d0f35f89f2c9c220df73bb",
+    "prediction_path": "report/mlb_2026_corrected_moneyline_shadow_predictions.csv",
+    "pregame_publication_verified": false,
+    "production_ready": false,
+    "retrospective": true,
+    "row_count": 828,
+    "separate_from_p84b": true,
+    "source_git_commit": "77bca9d939cc361b6a1b3ef586d1417071f46a28",
+    "state_mode": "frozen_final_2025_state",
+    "state_updates": {
+      "allowed": 0,
+      "applied": 0,
+      "attempted": 0,
+      "denied": 0
+    },
+    "status": "AVAILABLE_RETROSPECTIVE_PAPER_ONLY",
+    "top_predictions": [
+      {
+        "away_team": "New York Yankees",
+        "game_date": "2026-03-25",
+        "game_id": "mlb_2026_823244",
+        "home_team": "San Francisco Giants",
+        "predicted_side": "AWAY",
+        "shadow_home_win_probability": 0.458928,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Tampa Bay Rays",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_823081",
+        "home_team": "St. Louis Cardinals",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.540733,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Cleveland Guardians",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_823163",
+        "home_team": "Seattle Mariners",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.546594,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Detroit Tigers",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_823325",
+        "home_team": "San Diego Padres",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.552384,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Texas Rangers",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_823486",
+        "home_team": "Philadelphia Phillies",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.620681,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Pittsburgh Pirates",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_823649",
+        "home_team": "New York Mets",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.603516,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Chicago White Sox",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_823812",
+        "home_team": "Milwaukee Brewers",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.733982,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Arizona Diamondbacks",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_823974",
+        "home_team": "Los Angeles Dodgers",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.60925,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Los Angeles Angels",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_824218",
+        "home_team": "Houston Astros",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.620067,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Boston Red Sox",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_824541",
+        "home_team": "Cincinnati Reds",
+        "predicted_side": "AWAY",
+        "shadow_home_win_probability": 0.499984,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Washington Nationals",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_824704",
+        "home_team": "Chicago Cubs",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.679105,
+        "state_mode": "frozen_final_2025_state"
+      },
+      {
+        "away_team": "Minnesota Twins",
+        "game_date": "2026-03-26",
+        "game_id": "mlb_2026_824865",
+        "home_team": "Baltimore Orioles",
+        "predicted_side": "HOME",
+        "shadow_home_win_probability": 0.564012,
+        "state_mode": "frozen_final_2025_state"
+      }
+    ],
+    "training_input_fingerprint": "56ee44889c3cb9430c60dbbba5bab6f692dc32620eadfa9cc062cda4d2078c6c"
+  },
+  "disclaimer": "Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow when supplied. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.",
+  "generated_at_utc": "2026-07-14T08:54:04.328817+00:00",
   "inputs": {
     "availability_index_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/index.json",
     "availability_manifest_path": "data/mlb_2026/derived/p274_prospective_result_availability_index_v1/SHA256SUMS",
+    "corrected_shadow_manifest_path": "report/mlb_2026_corrected_moneyline_shadow_manifest.json",
+    "corrected_shadow_prediction_path": "report/mlb_2026_corrected_moneyline_shadow_predictions.csv",
     "eval_path": "data/mlb_2025/mlb_odds_2025_real.csv",
     "feature_as_of_utc": "2026-07-13T07:17:10.769880Z",
     "outcome_2026_path": "data/mlb_2026/derived/p84e_2026_outcome_attached_prediction_rows.jsonl",
@@ -126,7 +277,7 @@
         "status": "LINES_AND_RESULTS_AVAILABLE_MODEL_PROBABILITY_PENDING"
       }
     },
-    "source_file": "data/mlb_2025/mlb_odds_2025_real.csv"
+    "source_file": "/Users/kelvin/Kelvin-WorkSpace/Betting-pool-p278a-corrected-moneyline-pit-safe-shadow-handoff/data/mlb_2025/mlb_odds_2025_real.csv"
   },
   "moneyline_backtest_rows": {
     "path": "report/mlb_prediction_workflow_moneyline_backtest.csv",

@@ -134,6 +134,22 @@ def test_selected_side():
     assert lrs.selected_side(0.49) == "AWAY"
 
 
+def test_selected_team_history_probability_is_shared_with_date_batched_rows():
+    state = lrs.DateBatchedTeamState(
+        history_wins={"Home": 8, "Away": 3},
+        history_games={"Home": 10, "Away": 10},
+    )
+    probability = state.team_history_smooth_probability("Home", "Away")
+
+    assert 0.5 < probability < 1.0
+    assert state.selected_model_state() == {
+        "history_wins": {"Away": 3, "Home": 8},
+        "history_games": {"Away": 10, "Home": 10},
+    }
+    with pytest.raises(ValueError, match="invalid matchup"):
+        state.team_history_smooth_probability("Same", "Same")
+
+
 def test_american_to_prob():
     assert lrs.american_to_prob("-120") == pytest.approx(120 / 220)
     assert lrs.american_to_prob("+110") == pytest.approx(100 / 210)
