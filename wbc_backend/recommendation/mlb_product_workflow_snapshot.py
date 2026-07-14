@@ -7,7 +7,8 @@ workflow artifact:
 2. choose the current best local model,
 3. connect its holdout predictions to Moneyline odds,
 4. compute paper-only EV/Kelly/result metrics, and
-5. show the latest local 2026 prediction snapshot.
+5. show the latest local 2026 prediction snapshot, and
+6. distinguish retrospective artifacts from the P280 future capture boundary.
 
 It does not fetch live data, write a database, mutate production state, or
 create real betting advice.
@@ -24,6 +25,7 @@ from pathlib import Path
 from typing import Any
 
 from scripts import _p275_prospective_availability_consumer_gate as p275
+from wbc_backend.recommendation import moneyline_shadow_capture as shadow_capture
 from wbc_backend.recommendation.local_retrain_scorecard import (
     american_to_prob,
     run_scorecard,
@@ -35,13 +37,17 @@ DISCLAIMER = (
     "Corrected 2025 date-batched local retraining/evaluation and a separate existing "
     "P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A "
     "paper-only corrected-model shadow and a P279-A outcome-free divergence baseline "
-    "when supplied. The P279-A comparison measures prediction divergence only, uses no "
+    "when supplied, plus the P280-A explicit-as-of prospective-capture readiness "
+    "boundary. The P279-A comparison measures prediction divergence only, uses no "
     "outcomes or odds, and does not establish model performance or superiority. "
     "Historical odds lack verified "
     "pregame timestamps, so "
     "Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish "
     "a verified betting edge. The corrected retrained model did not generate or replace the "
-    "P84-B snapshot, and the P278-A shadow is not a live or pregame publication."
+    "P84-B snapshot, and the P278-A shadow is not a live or pregame publication. "
+    "P280-A does not retroactively certify either artifact; only a future explicit "
+    "local observation can become pregame-certified with trusted row-level schedule "
+    "evidence."
 )
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CORRECTED_2025_RESULT_CONTEXT = "CORRECTED_2025_LOCAL_DATE_BATCHED_RETRAIN_EVALUATION"
@@ -56,6 +62,9 @@ DEFAULT_P274_INDEX_PATH = P274_PUBLICATION_ROOT / "index.json"
 DEFAULT_P274_MANIFEST_PATH = P274_PUBLICATION_ROOT / "SHA256SUMS"
 DEFAULT_MONEYLINE_DIVERGENCE_SUMMARY_PATH = (
     REPO_ROOT / "report/mlb_2026_moneyline_shadow_divergence_summary.json"
+)
+DEFAULT_PROSPECTIVE_CAPTURE_READINESS_PATH = (
+    REPO_ROOT / "report/mlb_moneyline_shadow_prospective_capture_readiness.json"
 )
 P274_COVERAGE_LIMITATION = (
     "P274 currently has only one prospective record and does not establish "
@@ -777,6 +786,75 @@ def build_moneyline_divergence_snapshot(summary_path: Path | None) -> dict[str, 
     }
 
 
+def build_prospective_capture_snapshot(
+    readiness_path: Path | None,
+) -> dict[str, Any]:
+    """Load the P280 readiness boundary without treating it as a cohort."""
+    if readiness_path is None:
+        return {
+            "status": "NOT_SUPPLIED",
+            "current_artifacts_retrospective": True,
+            "historical_prospective_cohort_created": False,
+            "current_artifacts_pregame_certified": False,
+        }
+    readiness_path = Path(readiness_path)
+    if not readiness_path.exists():
+        return {
+            "status": "MISSING",
+            "readiness_path": _portable_input_path(readiness_path),
+            "current_artifacts_retrospective": True,
+            "historical_prospective_cohort_created": False,
+            "current_artifacts_pregame_certified": False,
+        }
+    payload = json.loads(readiness_path.read_text(encoding="utf-8"))
+    shadow_capture.validate_readiness_payload(payload)
+    coverage = payload["current_coverage"]
+    future = payload["future_capture_contract"]
+    synthetic = payload["synthetic_contract_verification"]
+    return {
+        "status": payload["status"],
+        "readiness_path": _portable_input_path(readiness_path),
+        "readiness_schema_version": payload["readiness_schema_version"],
+        "readiness_deterministic_payload_sha256": payload[
+            "deterministic_payload_sha256"
+        ],
+        "retrospective_prediction_row_count": coverage[
+            "retrospective_prediction_row_count"
+        ],
+        "prospective_registered_row_count": coverage[
+            "prospective_registered_row_count"
+        ],
+        "explicit_prediction_as_of_row_count": coverage[
+            "explicit_prediction_as_of_row_count"
+        ],
+        "scheduled_start_row_count": coverage["scheduled_start_row_count"],
+        "pregame_eligible_row_count": coverage["pregame_eligible_row_count"],
+        "future_prospective_cohort_row_count": coverage[
+            "future_prospective_cohort_row_count"
+        ],
+        "future_capture_runner_available": future["runner_available"],
+        "capture_semantics": future["capture_semantics"],
+        "pregame_boundary": future["pregame_boundary"],
+        "synthetic_contract_verification_status": synthetic["status"],
+        "current_artifacts_retrospective": True,
+        "historical_prospective_cohort_created": False,
+        "current_artifacts_pregame_certified": False,
+        "state_boundaries": {
+            "p84b_baseline": "RETROSPECTIVE_BASELINE",
+            "p278_corrected_shadow": "RETROSPECTIVE_FROZEN_STATE_PAPER_ONLY",
+            "p279_divergence": "OUTCOME_FREE_DIVERGENCE_NOT_PERFORMANCE",
+            "p280_current_readiness": shadow_capture.CURRENT_READINESS_STATUS,
+            "future_local_observation": shadow_capture.CAPTURE_SEMANTICS,
+            "pregame_certification": (
+                "ALL_ROWS_REQUIRE_EXPLICIT_TRUSTED_SCHEDULE_AND_STRICT_BEFORE"
+            ),
+            "future_prospective_cohort": "EMPTY_UNTIL_FUTURE_CAPTURE",
+        },
+        "production_ready": False,
+        "published": False,
+    }
+
+
 def run_workflow_snapshot(
     *,
     warmup_path: Path,
@@ -791,6 +869,10 @@ def run_workflow_snapshot(
     moneyline_divergence_summary_path: Path | None = (
         DEFAULT_MONEYLINE_DIVERGENCE_SUMMARY_PATH
     ),
+    prospective_capture_readiness_path: Path | None = (
+        DEFAULT_PROSPECTIVE_CAPTURE_READINESS_PATH
+    ),
+    generated_at_utc: str | None = None,
     min_ev: float = DEFAULT_MONEYLINE_MIN_EV,
     min_edge: float = DEFAULT_MONEYLINE_MIN_EDGE,
     kelly_fraction: float = DEFAULT_KELLY_FRACTION,
@@ -824,12 +906,19 @@ def run_workflow_snapshot(
     moneyline_divergence = build_moneyline_divergence_snapshot(
         moneyline_divergence_summary_path
     )
+    prospective_capture = build_prospective_capture_snapshot(
+        prospective_capture_readiness_path
+    )
 
     return {
         "task": "MLB local prediction workflow snapshot",
         "scope": SCOPE,
         "disclaimer": DISCLAIMER,
-        "generated_at_utc": datetime.now(tz=timezone.utc).isoformat(),
+        "generated_at_utc": (
+            generated_at_utc
+            if generated_at_utc is not None
+            else datetime.now(tz=timezone.utc).isoformat()
+        ),
         "inputs": {
             "warmup_path": _portable_input_path(warmup_path),
             "eval_path": _portable_input_path(eval_path),
@@ -846,6 +935,9 @@ def run_workflow_snapshot(
             ),
             "moneyline_divergence_summary_path": _portable_input_path(
                 moneyline_divergence_summary_path
+            ),
+            "prospective_capture_readiness_path": _portable_input_path(
+                prospective_capture_readiness_path
             ),
         },
         "retrain_scorecard": {
@@ -884,6 +976,7 @@ def run_workflow_snapshot(
         "local_2026_prediction_snapshot": snapshot_2026,
         "corrected_moneyline_shadow": corrected_shadow,
         "moneyline_shadow_divergence": moneyline_divergence,
+        "moneyline_shadow_prospective_capture": prospective_capture,
         "claim_status": {
             "historical_only": True,
             "historical_odds_pregame_timestamps_verified": False,
@@ -896,6 +989,12 @@ def run_workflow_snapshot(
             "moneyline_divergence_uses_outcomes_or_odds": False,
             "moneyline_divergence_is_performance_evaluation": False,
             "moneyline_model_superiority_declared": False,
+            "current_shadow_artifacts_retrospective_only": True,
+            "historical_prospective_cohort_created": False,
+            "current_shadow_artifacts_pregame_certified": False,
+            "future_explicit_as_of_capture_runner_available": (
+                prospective_capture.get("future_capture_runner_available") is True
+            ),
             "live_provider_called": False,
             "db_written": False,
             "production_enabled": False,
@@ -953,6 +1052,15 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
             "divergence_not_performance": True,
             "model_winner_declared": False,
             "champion_activated": False,
+        },
+    )
+    prospective_capture = payload.get(
+        "moneyline_shadow_prospective_capture",
+        {
+            "status": "NOT_SUPPLIED",
+            "current_artifacts_retrospective": True,
+            "historical_prospective_cohort_created": False,
+            "current_artifacts_pregame_certified": False,
         },
     )
 
@@ -1168,6 +1276,35 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
             "- Future performance evaluation requires prospectively available outcomes.",
             f"- Ledger: `{divergence.get('ledger_path')}`",
             f"- Summary: `{divergence.get('summary_path')}`",
+        ]
+    )
+
+    lines.extend(
+        [
+            "",
+            "## P280-A Explicit-As-Of Prospective Capture Boundary",
+            "",
+            f"- Status: `{prospective_capture.get('status')}`",
+            "- P84-B and P278 remain retrospective prediction artifacts.",
+            "- P279 remains outcome-free divergence evidence, not performance evidence.",
+            "- A local observation lower bound is a future capture state, not "
+            "historical certification.",
+            "- Pregame certification requires every row to satisfy the strict explicit "
+            "schedule boundary.",
+            "- The future prospective cohort remains empty until an authorized future capture.",
+            "- Current prospective registered rows: "
+            f"`{prospective_capture.get('prospective_registered_row_count', 0)}`",
+            "- Current explicit prediction-as-of rows: "
+            f"`{prospective_capture.get('explicit_prediction_as_of_row_count', 0)}`",
+            "- Current trusted scheduled-start rows: "
+            f"`{prospective_capture.get('scheduled_start_row_count', 0)}`",
+            "- Current pregame-eligible rows: "
+            f"`{prospective_capture.get('pregame_eligible_row_count', 0)}`",
+            "- Future capture runner available: "
+            f"`{prospective_capture.get('future_capture_runner_available', False)}`",
+            f"- Capture semantics: `{prospective_capture.get('capture_semantics')}`",
+            f"- Pregame boundary: `{prospective_capture.get('pregame_boundary')}`",
+            "- No model activation, deployment, registry mutation, or publication occurred.",
         ]
     )
 
