@@ -356,6 +356,53 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
         + "\n",
         encoding="utf-8",
     )
+    shadow_prediction_path = tmp_path / "corrected_shadow.csv"
+    shadow_prediction_path.write_text(
+        "game_id,game_date,away_team,home_team,predicted_side,"
+        "shadow_home_win_probability,state_mode\n"
+        "shadow-1,2026-05-31,Away 2026,Home 2026,HOME,0.61,"
+        "frozen_final_2025_state\n",
+        encoding="utf-8",
+    )
+    shadow_manifest_path = tmp_path / "corrected_shadow_manifest.json"
+    shadow_manifest_path.write_text(
+        json.dumps(
+            {
+                "artifact_version": "p278a_corrected_moneyline_shadow_v1",
+                "source_git_commit": "source-commit",
+                "state_mode": "frozen_final_2025_state",
+                "model": {
+                    "algorithm": "retrained_team_history_smooth",
+                    "model_code_config_fingerprint": "model-fingerprint",
+                },
+                "training": {"training_input_fingerprint": "training-fingerprint"},
+                "prediction_input": {
+                    "prediction_input_fingerprint": "input-fingerprint"
+                },
+                "p275_state_updates": {
+                    "attempted": 0,
+                    "allowed": 0,
+                    "denied": 0,
+                    "applied": 0,
+                },
+                "outcome_evaluation": {
+                    "outcome_evaluation_denominator": 0,
+                    "accuracy": None,
+                    "brier_score": None,
+                    "roi": None,
+                    "expected_value": None,
+                    "kelly": None,
+                },
+                "artifacts": {
+                    "prediction_row_count": 1,
+                    "predictions_csv_sha256": wf._sha256_file(shadow_prediction_path),
+                },
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     predictions = [
         {
             "game_date": "2025-08-01",
@@ -420,6 +467,8 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
         warmup_path=tmp_path / "warmup.csv",
         eval_path=eval_csv,
         prediction_2026_path=prediction_path,
+        corrected_shadow_manifest_path=shadow_manifest_path,
+        corrected_shadow_prediction_path=shadow_prediction_path,
     )
     paths = wf.write_workflow_reports(payload, tmp_path / "report")
     markdown = paths["markdown"].read_text(encoding="utf-8")
@@ -427,10 +476,80 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
 
     assert "Corrected 2025 Local Retrain and Evaluation" in markdown
     assert "Existing 2026 Prediction Snapshot (Separate and Stale)" in markdown
+    assert "Corrected 2026 Moneyline Shadow (Separate and Retrospective)" in markdown
     assert "p84b_diagnostic_baseline_v1" in markdown
     assert "Corrected 2025 retrained model generated these 2026 predictions: `False`" in markdown
     assert "not a verified betting edge" in markdown
     snapshot = json_payload["local_2026_prediction_snapshot"]
     assert snapshot["source_prediction_version"] == "p84b_diagnostic_baseline_v1"
     assert snapshot["generated_by_corrected_retrained_model"] is False
+    shadow_snapshot = json_payload["corrected_moneyline_shadow"]
+    assert shadow_snapshot["artifact_version"] == "p278a_corrected_moneyline_shadow_v1"
+    assert shadow_snapshot["algorithm"] == "retrained_team_history_smooth"
+    assert shadow_snapshot["separate_from_p84b"] is True
+    assert shadow_snapshot["p84b_replaced"] is False
+    assert shadow_snapshot["outcome_evaluation"]["denominator"] == 0
     assert json_payload["claim_status"]["verified_betting_edge_established"] is False
+    assert json_payload["claim_status"]["corrected_model_to_2026_handoff_performed"] is True
+    assert json_payload["claim_status"]["p84b_baseline_replaced"] is False
+
+
+def test_snapshot_only_regeneration_does_not_rewrite_tabular_outputs(
+    tmp_path: Path,
+) -> None:
+    out_dir = tmp_path / "report"
+    out_dir.mkdir()
+    moneyline = out_dir / "mlb_prediction_workflow_moneyline_backtest.csv"
+    latest = out_dir / "mlb_prediction_workflow_latest_2026_predictions.csv"
+    moneyline.write_bytes(b"moneyline-sentinel\n")
+    latest.write_bytes(b"p84b-sentinel\n")
+    payload = {
+        "moneyline_backtest_rows": [{"x": 1}],
+        "local_2026_prediction_snapshot": {"top_latest_predictions": []},
+        "corrected_moneyline_shadow": {"status": "NOT_SUPPLIED"},
+        "retrain_scorecard": {
+            "result_context": "x",
+            "state_transition_contract": "x",
+            "warmup_rows": 0,
+            "eval_rows": 0,
+            "split": {
+                "train_period": ["a", "b"],
+                "test_period": ["c", "d"],
+                "train_rows": 0,
+                "test_rows": 0,
+                "train_date_count": 0,
+                "test_date_count": 0,
+                "requested_train_frac": 0.6,
+                "effective_train_frac": 0.6,
+                "split_strategy": "x",
+                "tie_rule": "x",
+                "selected_boundary_date": "b",
+                "selected_test_start_date": "c",
+            },
+            "best_by_brier": "x",
+            "model_comparison": [],
+        },
+        "moneyline_strategy": {
+            "summary": {
+                "odds_timing_status": "x",
+                "claim_status": "x",
+                "prediction_rows_scored": 0,
+                "paper_candidate_count": 0,
+                "paper_candidate_rate": 0.0,
+                "hit_rate": None,
+                "net_result_units": 0,
+                "roi_on_staked_units": None,
+                "avg_expected_value_per_unit": None,
+                "avg_used_kelly_fraction": None,
+            },
+            "top_candidates": [],
+        },
+        "market_coverage": {"markets": {}},
+        "scope": "x",
+        "disclaimer": "x",
+    }
+
+    wf.write_workflow_reports(payload, out_dir, write_tabular_outputs=False)
+
+    assert moneyline.read_bytes() == b"moneyline-sentinel\n"
+    assert latest.read_bytes() == b"p84b-sentinel\n"

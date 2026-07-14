@@ -2,7 +2,7 @@
 
 **Scope:** `LOCAL_PAPER_WORKFLOW_SNAPSHOT`
 
-**Disclaimer:** Corrected 2025 date-batched local retraining/evaluation and a separate existing 2026 prediction snapshot. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate the 2026 snapshot.
+**Disclaimer:** Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow when supplied. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.
 
 ## Corrected 2025 Local Retrain and Evaluation
 
@@ -89,6 +89,23 @@
 | Date | Game | Side | Sel Prob | Version |
 |---|---|---|---:|---|
 | 2026-05-31 | Miami Marlins @ New York Mets | HOME | 57.13% | `p84b_diagnostic_baseline_v1` |
+
+## Corrected 2026 Moneyline Shadow (Separate and Retrospective)
+
+- Status: `AVAILABLE_RETROSPECTIVE_PAPER_ONLY`
+- Artifact version: `p278a_corrected_moneyline_shadow_v1`
+- Selected algorithm: `retrained_team_history_smooth`
+- Rows: `828`
+- State mode: `frozen_final_2025_state`
+- Retrospective paper-only diagnostic; not a live or verified pregame publication.
+- Existing P84-B baseline replaced: `False`
+- Champion activated: `False`
+- P275 update attempted / allowed / denied / applied: `0` / `0` / `0` / `0`
+- Outcome-evaluation denominator: `0`
+- Accuracy: `N/A`
+- Brier: `N/A`
+- ROI / EV / Kelly: `N/A` / `N/A` / `N/A`
+- No outcome-based comparative winner or betting edge is declared.
 
 ## Output Files
 

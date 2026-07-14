@@ -15,6 +15,7 @@ create real betting advice.
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import math
 from copy import deepcopy
@@ -32,14 +33,18 @@ from wbc_backend.recommendation.local_retrain_scorecard import (
 SCOPE = "LOCAL_PAPER_WORKFLOW_SNAPSHOT"
 DISCLAIMER = (
     "Corrected 2025 date-batched local retraining/evaluation and a separate existing "
-    "2026 prediction snapshot. Historical odds lack verified pregame timestamps, so "
+    "P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A "
+    "paper-only corrected-model shadow when supplied. Historical odds lack verified "
+    "pregame timestamps, so "
     "Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish "
-    "a verified betting edge. The corrected retrained model did not generate the 2026 snapshot."
+    "a verified betting edge. The corrected retrained model did not generate or replace the "
+    "P84-B snapshot, and the P278-A shadow is not a live or pregame publication."
 )
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CORRECTED_2025_RESULT_CONTEXT = "CORRECTED_2025_LOCAL_DATE_BATCHED_RETRAIN_EVALUATION"
 EXISTING_2026_SNAPSHOT_CONTEXT = "EXISTING_2026_PREDICTION_SNAPSHOT"
 EXPECTED_2026_SOURCE_VERSION = "p84b_diagnostic_baseline_v1"
+EXPECTED_CORRECTED_SHADOW_VERSION = "p278a_corrected_moneyline_shadow_v1"
 ODDS_TIMING_STATUS = "HISTORICAL_ODDS_PREGAME_TIMESTAMP_UNVERIFIED"
 P274_PUBLICATION_ROOT = (
     REPO_ROOT / "data/mlb_2026/derived/p274_prospective_result_availability_index_v1"
@@ -70,6 +75,10 @@ def _portable_input_path(path: Path | None) -> str | None:
 def _portable_output_path(path: Path) -> str:
     """Keep report references stable across repo and /tmp reproducibility runs."""
     return str(Path(path.parent.name) / path.name)
+
+
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _safe_float(value: Any) -> float | None:
@@ -601,6 +610,109 @@ def _outcome_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def build_corrected_shadow_snapshot(
+    *,
+    manifest_path: Path | None,
+    prediction_path: Path | None,
+    limit: int = 12,
+) -> dict[str, Any]:
+    """Load and verify the separate P278 shadow without touching P84-B rows."""
+    if manifest_path is None or prediction_path is None:
+        return {
+            "status": "NOT_SUPPLIED",
+            "artifact_version": None,
+            "separate_from_p84b": True,
+            "champion_activated": False,
+        }
+    manifest_path = Path(manifest_path)
+    prediction_path = Path(prediction_path)
+    if not manifest_path.exists() or not prediction_path.exists():
+        return {
+            "status": "MISSING",
+            "manifest_path": _portable_input_path(manifest_path),
+            "prediction_path": _portable_input_path(prediction_path),
+            "artifact_version": None,
+            "separate_from_p84b": True,
+            "champion_activated": False,
+        }
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    artifact_version = manifest.get("artifact_version")
+    if artifact_version != EXPECTED_CORRECTED_SHADOW_VERSION:
+        raise ValueError(
+            f"unexpected corrected shadow version: {artifact_version!r}"
+        )
+    expected_hash = manifest.get("artifacts", {}).get("predictions_csv_sha256")
+    actual_hash = _sha256_file(prediction_path)
+    if not expected_hash or actual_hash != expected_hash:
+        raise ValueError("corrected shadow prediction checksum mismatch")
+
+    with prediction_path.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    expected_rows = int(manifest.get("artifacts", {}).get("prediction_row_count", -1))
+    if len(rows) != expected_rows:
+        raise ValueError("corrected shadow prediction row-count mismatch")
+    top_rows = [
+        {
+            "game_id": row.get("game_id"),
+            "game_date": row.get("game_date"),
+            "away_team": row.get("away_team"),
+            "home_team": row.get("home_team"),
+            "predicted_side": row.get("predicted_side"),
+            "shadow_home_win_probability": float(
+                row.get("shadow_home_win_probability") or 0.5
+            ),
+            "state_mode": row.get("state_mode"),
+        }
+        for row in rows[:limit]
+    ]
+    evaluation = manifest.get("outcome_evaluation", {})
+    updates = manifest.get("p275_state_updates", {})
+    return {
+        "status": "AVAILABLE_RETROSPECTIVE_PAPER_ONLY",
+        "manifest_path": _portable_input_path(manifest_path),
+        "prediction_path": _portable_input_path(prediction_path),
+        "artifact_version": artifact_version,
+        "algorithm": manifest.get("model", {}).get("algorithm"),
+        "row_count": len(rows),
+        "state_mode": manifest.get("state_mode"),
+        "source_git_commit": manifest.get("source_git_commit"),
+        "model_code_config_fingerprint": manifest.get("model", {}).get(
+            "model_code_config_fingerprint"
+        ),
+        "training_input_fingerprint": manifest.get("training", {}).get(
+            "training_input_fingerprint"
+        ),
+        "prediction_input_fingerprint": manifest.get("prediction_input", {}).get(
+            "prediction_input_fingerprint"
+        ),
+        "state_updates": {
+            "attempted": updates.get("attempted"),
+            "allowed": updates.get("allowed"),
+            "denied": updates.get("denied"),
+            "applied": updates.get("applied"),
+        },
+        "outcome_evaluation": {
+            "denominator": evaluation.get("outcome_evaluation_denominator"),
+            "accuracy": evaluation.get("accuracy"),
+            "brier_score": evaluation.get("brier_score"),
+            "roi": evaluation.get("roi"),
+            "expected_value": evaluation.get("expected_value"),
+            "kelly": evaluation.get("kelly"),
+        },
+        "top_predictions": top_rows,
+        "retrospective": True,
+        "paper_only": True,
+        "diagnostic_only": True,
+        "live_publication": False,
+        "pregame_publication_verified": False,
+        "production_ready": False,
+        "separate_from_p84b": True,
+        "p84b_replaced": False,
+        "champion_activated": False,
+    }
+
+
 def run_workflow_snapshot(
     *,
     warmup_path: Path,
@@ -610,6 +722,8 @@ def run_workflow_snapshot(
     feature_as_of_utc: str | None = None,
     availability_index_path: Path = DEFAULT_P274_INDEX_PATH,
     availability_manifest_path: Path = DEFAULT_P274_MANIFEST_PATH,
+    corrected_shadow_manifest_path: Path | None = None,
+    corrected_shadow_prediction_path: Path | None = None,
     min_ev: float = DEFAULT_MONEYLINE_MIN_EV,
     min_edge: float = DEFAULT_MONEYLINE_MIN_EDGE,
     kelly_fraction: float = DEFAULT_KELLY_FRACTION,
@@ -633,6 +747,13 @@ def run_workflow_snapshot(
         availability_index_path=availability_index_path,
         availability_manifest_path=availability_manifest_path,
     )
+    corrected_shadow = build_corrected_shadow_snapshot(
+        manifest_path=corrected_shadow_manifest_path,
+        prediction_path=corrected_shadow_prediction_path,
+    )
+    corrected_shadow_available = corrected_shadow.get("status") == (
+        "AVAILABLE_RETROSPECTIVE_PAPER_ONLY"
+    )
 
     return {
         "task": "MLB local prediction workflow snapshot",
@@ -647,6 +768,12 @@ def run_workflow_snapshot(
             "feature_as_of_utc": feature_as_of_utc,
             "availability_index_path": _portable_input_path(availability_index_path),
             "availability_manifest_path": _portable_input_path(availability_manifest_path),
+            "corrected_shadow_manifest_path": _portable_input_path(
+                corrected_shadow_manifest_path
+            ),
+            "corrected_shadow_prediction_path": _portable_input_path(
+                corrected_shadow_prediction_path
+            ),
         },
         "retrain_scorecard": {
             "result_context": CORRECTED_2025_RESULT_CONTEXT,
@@ -682,12 +809,16 @@ def run_workflow_snapshot(
         },
         "moneyline_backtest_rows": moneyline["rows"],
         "local_2026_prediction_snapshot": snapshot_2026,
+        "corrected_moneyline_shadow": corrected_shadow,
         "claim_status": {
             "historical_only": True,
             "historical_odds_pregame_timestamps_verified": False,
             "verified_betting_edge_established": False,
             "corrected_model_generated_2026_snapshot": False,
-            "corrected_model_to_2026_handoff_performed": False,
+            "corrected_model_to_2026_handoff_performed": corrected_shadow_available,
+            "corrected_shadow_retrospective_only": corrected_shadow_available,
+            "p84b_baseline_replaced": False,
+            "champion_activated": False,
             "live_provider_called": False,
             "db_written": False,
             "production_enabled": False,
@@ -696,7 +827,12 @@ def run_workflow_snapshot(
     }
 
 
-def write_workflow_reports(payload: dict[str, Any], out_dir: Path) -> dict[str, Path]:
+def write_workflow_reports(
+    payload: dict[str, Any],
+    out_dir: Path,
+    *,
+    write_tabular_outputs: bool = True,
+) -> dict[str, Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     paths = {
         "markdown": out_dir / "mlb_prediction_workflow_snapshot.md",
@@ -705,11 +841,12 @@ def write_workflow_reports(payload: dict[str, Any], out_dir: Path) -> dict[str, 
         "latest_predictions_csv": out_dir / "mlb_prediction_workflow_latest_2026_predictions.csv",
     }
 
-    _write_csv(payload["moneyline_backtest_rows"], paths["moneyline_csv"])
-    _write_csv(
-        payload["local_2026_prediction_snapshot"].get("top_latest_predictions", []),
-        paths["latest_predictions_csv"],
-    )
+    if write_tabular_outputs:
+        _write_csv(payload["moneyline_backtest_rows"], paths["moneyline_csv"])
+        _write_csv(
+            payload["local_2026_prediction_snapshot"].get("top_latest_predictions", []),
+            paths["latest_predictions_csv"],
+        )
 
     json_payload = deepcopy(payload)
     json_payload["moneyline_backtest_rows"] = {
@@ -731,6 +868,7 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
     retrain = payload["retrain_scorecard"]
     ml = payload["moneyline_strategy"]["summary"]
     latest = payload["local_2026_prediction_snapshot"]
+    shadow = payload.get("corrected_moneyline_shadow", {"status": "NOT_SUPPLIED"})
 
     lines = [
         "# MLB Prediction Workflow Snapshot",
@@ -890,6 +1028,41 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
             f"| {row['game_date']} | {game} | {row['predicted_side']} | "
             f"{float(row['selected_side_probability']):.2%} | "
             f"`{row['source_prediction_version']}` |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Corrected 2026 Moneyline Shadow (Separate and Retrospective)",
+            "",
+            f"- Status: `{shadow.get('status')}`",
+            f"- Artifact version: `{shadow.get('artifact_version')}`",
+            f"- Selected algorithm: `{shadow.get('algorithm')}`",
+            f"- Rows: `{shadow.get('row_count', 0)}`",
+            f"- State mode: `{shadow.get('state_mode')}`",
+            "- Retrospective paper-only diagnostic; not a live or verified pregame "
+            "publication.",
+            "- Existing P84-B baseline replaced: "
+            f"`{shadow.get('p84b_replaced', False)}`",
+            f"- Champion activated: `{shadow.get('champion_activated', False)}`",
+        ]
+    )
+    if shadow.get("status") == "AVAILABLE_RETROSPECTIVE_PAPER_ONLY":
+        updates = shadow["state_updates"]
+        evaluation = shadow["outcome_evaluation"]
+        lines.extend(
+            [
+                f"- P275 update attempted / allowed / denied / applied: "
+                f"`{updates['attempted']}` / `{updates['allowed']}` / "
+                f"`{updates['denied']}` / `{updates['applied']}`",
+                f"- Outcome-evaluation denominator: `{evaluation['denominator']}`",
+                f"- Accuracy: `{_num_or_na(evaluation['accuracy'])}`",
+                f"- Brier: `{_num_or_na(evaluation['brier_score'])}`",
+                f"- ROI / EV / Kelly: `{_num_or_na(evaluation['roi'])}` / "
+                f"`{_num_or_na(evaluation['expected_value'])}` / "
+                f"`{_num_or_na(evaluation['kelly'])}`",
+                "- No outcome-based comparative winner or betting edge is declared.",
+            ]
         )
 
     lines.extend(
