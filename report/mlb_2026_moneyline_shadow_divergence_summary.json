@@ -1,0 +1,242 @@
+{
+  "alignment": {
+    "duplicate_id_count": 0,
+    "identity_mismatch_count": 0,
+    "missing_p278_count": 0,
+    "missing_p278_game_ids": [],
+    "missing_p84b_count": 0,
+    "missing_p84b_game_ids": [],
+    "p278_duplicate_id_count": 0,
+    "p84b_duplicate_id_count": 0,
+    "shared_game_count": 828,
+    "total_p278_rows": 828,
+    "total_p84b_rows": 828
+  },
+  "claims": {
+    "champion_activated": false,
+    "diagnostic_only": true,
+    "divergence_is_accuracy_or_superiority": false,
+    "future_outcome_evaluation_requires_prospective_availability": true,
+    "model_winner_declared": false,
+    "paper_only": true,
+    "production_ready": false
+  },
+  "comparison_contract": {
+    "alignment_key": "exact game_id",
+    "evaluation_denominator": 0,
+    "input_projection": [
+      "game_id",
+      "game_date",
+      "away_team",
+      "home_team",
+      "model provenance",
+      "home-win probability",
+      "predicted side"
+    ],
+    "material_difference_buckets": [
+      "LT_0_02",
+      "GE_0_02_LT_0_05",
+      "GE_0_05_LT_0_10",
+      "GE_0_10"
+    ],
+    "material_difference_thresholds": [
+      0.02,
+      0.05,
+      0.1
+    ],
+    "odds_fields_used": "NONE",
+    "outcome_fields_used": "NONE",
+    "percentile_method": "R-7 linear interpolation: h=(n-1)*q, interpolate between floor(h) and ceil(h)",
+    "probability_orientation": "home_win_probability",
+    "signed_delta": "P278 - P84-B"
+  },
+  "comparison_version": "p279a.moneyline_shadow_divergence.v1",
+  "divergence_metrics": {
+    "confidence_change_counts": {
+      "DECREASED": 628,
+      "INCREASED": 200,
+      "UNCHANGED": 0
+    },
+    "maximum_absolute_delta": 0.501189,
+    "mean_absolute_delta": 0.136676388889,
+    "mean_signed_delta": 0.033631345411,
+    "median_absolute_delta": 0.123973,
+    "p90_absolute_delta": 0.264083,
+    "p95_absolute_delta": 0.31207335,
+    "row_count": 828,
+    "side_agreement_count": 481,
+    "side_agreement_rate": 0.580917874396,
+    "side_disagreement_count": 347,
+    "side_disagreement_rate": 0.419082125604,
+    "thresholds": {
+      "0.02": {
+        "count": 763,
+        "rate": 0.921497584541
+      },
+      "0.05": {
+        "count": 664,
+        "rate": 0.80193236715
+      },
+      "0.10": {
+        "count": 486,
+        "rate": 0.586956521739
+      }
+    }
+  },
+  "limitations": [
+    "Neither P84-B nor P278 is selected, activated, deployed, or declared superior.",
+    "Any future performance evaluation requires prospectively available outcomes.",
+    "Outcome, score, availability, odds, settlement, ROI, EV, Kelly, and betting result fields are outside this comparison contract."
+  ],
+  "monthly_breakdown": [
+    {
+      "confidence_change_counts": {
+        "DECREASED": 55,
+        "INCREASED": 18,
+        "UNCHANGED": 0
+      },
+      "maximum_absolute_delta": 0.501189,
+      "mean_absolute_delta": 0.153366657534,
+      "mean_signed_delta": 0.090869917808,
+      "median_absolute_delta": 0.141516,
+      "month": "2026-03",
+      "p90_absolute_delta": 0.3187272,
+      "p95_absolute_delta": 0.329931,
+      "row_count": 73,
+      "side_agreement_count": 42,
+      "side_agreement_rate": 0.575342465753,
+      "side_disagreement_count": 31,
+      "side_disagreement_rate": 0.424657534247,
+      "thresholds": {
+        "0.02": {
+          "count": 65,
+          "rate": 0.890410958904
+        },
+        "0.05": {
+          "count": 59,
+          "rate": 0.808219178082
+        },
+        "0.10": {
+          "count": 43,
+          "rate": 0.58904109589
+        }
+      }
+    },
+    {
+      "confidence_change_counts": {
+        "DECREASED": 296,
+        "INCREASED": 93,
+        "UNCHANGED": 0
+      },
+      "maximum_absolute_delta": 0.473616,
+      "mean_absolute_delta": 0.141049416452,
+      "mean_signed_delta": 0.020929395887,
+      "median_absolute_delta": 0.124657,
+      "month": "2026-04",
+      "p90_absolute_delta": 0.266677,
+      "p95_absolute_delta": 0.3271794,
+      "row_count": 389,
+      "side_agreement_count": 224,
+      "side_agreement_rate": 0.575835475578,
+      "side_disagreement_count": 165,
+      "side_disagreement_rate": 0.424164524422,
+      "thresholds": {
+        "0.02": {
+          "count": 365,
+          "rate": 0.938303341902
+        },
+        "0.05": {
+          "count": 319,
+          "rate": 0.820051413882
+        },
+        "0.10": {
+          "count": 237,
+          "rate": 0.609254498715
+        }
+      }
+    },
+    {
+      "confidence_change_counts": {
+        "DECREASED": 277,
+        "INCREASED": 89,
+        "UNCHANGED": 0
+      },
+      "maximum_absolute_delta": 0.400255,
+      "mean_absolute_delta": 0.128699620219,
+      "mean_signed_delta": 0.035715068306,
+      "median_absolute_delta": 0.1139615,
+      "month": "2026-05",
+      "p90_absolute_delta": 0.2596395,
+      "p95_absolute_delta": 0.29216475,
+      "row_count": 366,
+      "side_agreement_count": 215,
+      "side_agreement_rate": 0.587431693989,
+      "side_disagreement_count": 151,
+      "side_disagreement_rate": 0.412568306011,
+      "thresholds": {
+        "0.02": {
+          "count": 333,
+          "rate": 0.909836065574
+        },
+        "0.05": {
+          "count": 286,
+          "rate": 0.781420765027
+        },
+        "0.10": {
+          "count": 206,
+          "rate": 0.562841530055
+        }
+      }
+    }
+  ],
+  "output_artifacts": {
+    "ledger_csv": "report/mlb_2026_moneyline_shadow_divergence.csv",
+    "ledger_csv_sha256": "9d20925fd10a2f27c8cf3ed96e7ccfa4005278c60dc6f6978783299d5cfc8f3a",
+    "ledger_row_count": 828,
+    "summary_deterministic_payload_sha256": "f3607ad9984049e2eb539408736dd93310052b884adebde7b2ff6326ff8495b9",
+    "summary_json": "report/mlb_2026_moneyline_shadow_divergence_summary.json",
+    "summary_markdown": "report/mlb_2026_moneyline_shadow_divergence_summary.md"
+  },
+  "runtime_metadata": {
+    "generated_at_utc": "2026-07-14T13:25:32.753895Z",
+    "runtime_metadata_excluded_from_deterministic_fingerprints": true,
+    "source_git_commit": "1716a2db02e4beeeedfd1ddb8776d008110c472f"
+  },
+  "schema_version": "p279a.moneyline_shadow_divergence.schema.v1",
+  "scope": "OUTCOME_FREE_PAPER_DIAGNOSTIC_ONLY",
+  "source_artifacts": {
+    "p278": {
+      "fingerprint": "52f72dae5f89fa537dde425bdffc5de24c080f6b75eee6e6aca43b245563cddb",
+      "fingerprint_type": "sha256_of_canonical_outcome_free_projection",
+      "manifest_path": "report/mlb_2026_corrected_moneyline_shadow_manifest.json",
+      "manifest_provenance": {
+        "comparison_projection": {
+          "artifact_version": "p278a_corrected_moneyline_shadow_v1",
+          "baseline_source_version": "p84b_diagnostic_baseline_v1",
+          "model_id": "corrected_moneyline_shadow",
+          "model_version": "p278a_corrected_moneyline_shadow_v1",
+          "prediction_row_count": 828,
+          "state_mode": "frozen_final_2025_state"
+        },
+        "comparison_projection_sha256": "34684679b5f1a070c200e22556e4a03357de77a329d04ef8d97b38b89b510df8",
+        "p278_protected_byte_sha256": "e1bf3315c4ea9807bdc19a32999053cbe64f5ed635bea4076d5c1aef76009c1f",
+        "p84b_protected_byte_sha256": "74c4a5498f80b2e7335b472d742bffac4313922aa4d0f35f89f2c9c220df73bb"
+      },
+      "model_id": "corrected_moneyline_shadow",
+      "model_version": "p278a_corrected_moneyline_shadow_v1",
+      "path": "report/mlb_2026_corrected_moneyline_shadow_predictions.csv",
+      "protected_byte_sha256_recorded_by_p278_manifest": "e1bf3315c4ea9807bdc19a32999053cbe64f5ed635bea4076d5c1aef76009c1f"
+    },
+    "p84b": {
+      "fingerprint": "5a7b3c9c943de81d918ee9ce5692df1517f69387cc3a25e0bab21bae5e45d59c",
+      "fingerprint_type": "sha256_of_canonical_outcome_free_projection",
+      "model_id": "p84b_moneyline_diagnostic_baseline",
+      "model_version": "p84b_diagnostic_baseline_v1",
+      "path": "data/mlb_2026/predictions/mlb_2026_prediction_rows.jsonl",
+      "protected_byte_sha256_recorded_by_p278_manifest": "74c4a5498f80b2e7335b472d742bffac4313922aa4d0f35f89f2c9c220df73bb"
+    }
+  },
+  "statement": "This report measures prediction divergence only; it is not an accuracy, performance, calibration, profitability, or model-superiority evaluation.",
+  "status": "AVAILABLE_OUTCOME_FREE_DIVERGENCE_BASELINE",
+  "task": "P279-A Moneyline shadow outcome-free divergence baseline"
+}

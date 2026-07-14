@@ -403,6 +403,38 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
         + "\n",
         encoding="utf-8",
     )
+    divergence_summary_path = tmp_path / "moneyline_divergence_summary.json"
+    divergence_summary_path.write_text(
+        json.dumps(
+            {
+                "status": "AVAILABLE_OUTCOME_FREE_DIVERGENCE_BASELINE",
+                "comparison_version": "p279a.moneyline_shadow_divergence.v1",
+                "comparison_contract": {
+                    "outcome_fields_used": "NONE",
+                    "odds_fields_used": "NONE",
+                    "evaluation_denominator": 0,
+                },
+                "alignment": {"shared_game_count": 828},
+                "source_artifacts": {
+                    "p84b": {"model_version": "p84b_diagnostic_baseline_v1"},
+                    "p278": {
+                        "model_version": "p278a_corrected_moneyline_shadow_v1"
+                    },
+                },
+                "output_artifacts": {
+                    "ledger_csv": "report/mlb_2026_moneyline_shadow_divergence.csv"
+                },
+                "claims": {
+                    "model_winner_declared": False,
+                    "champion_activated": False,
+                    "future_outcome_evaluation_requires_prospective_availability": True,
+                },
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     predictions = [
         {
             "game_date": "2025-08-01",
@@ -469,6 +501,7 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
         prediction_2026_path=prediction_path,
         corrected_shadow_manifest_path=shadow_manifest_path,
         corrected_shadow_prediction_path=shadow_prediction_path,
+        moneyline_divergence_summary_path=divergence_summary_path,
     )
     paths = wf.write_workflow_reports(payload, tmp_path / "report")
     markdown = paths["markdown"].read_text(encoding="utf-8")
@@ -477,9 +510,12 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
     assert "Corrected 2025 Local Retrain and Evaluation" in markdown
     assert "Existing 2026 Prediction Snapshot (Separate and Stale)" in markdown
     assert "Corrected 2026 Moneyline Shadow (Separate and Retrospective)" in markdown
+    assert "P279-A Outcome-Free Moneyline Prediction Divergence" in markdown
     assert "p84b_diagnostic_baseline_v1" in markdown
     assert "Corrected 2025 retrained model generated these 2026 predictions: `False`" in markdown
     assert "not a verified betting edge" in markdown
+    assert "This measures prediction divergence, not model performance." in markdown
+    assert "Neither model is activated or declared superior." in markdown
     snapshot = json_payload["local_2026_prediction_snapshot"]
     assert snapshot["source_prediction_version"] == "p84b_diagnostic_baseline_v1"
     assert snapshot["generated_by_corrected_retrained_model"] is False
@@ -489,9 +525,26 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
     assert shadow_snapshot["separate_from_p84b"] is True
     assert shadow_snapshot["p84b_replaced"] is False
     assert shadow_snapshot["outcome_evaluation"]["denominator"] == 0
+    divergence = json_payload["moneyline_shadow_divergence"]
+    assert divergence["shared_game_count"] == 828
+    assert divergence["outcome_fields_used"] == "NONE"
+    assert divergence["odds_fields_used"] == "NONE"
+    assert divergence["evaluation_denominator"] == 0
+    assert divergence["divergence_not_performance"] is True
+    assert divergence["model_winner_declared"] is False
+    assert divergence["champion_activated"] is False
     assert json_payload["claim_status"]["verified_betting_edge_established"] is False
     assert json_payload["claim_status"]["corrected_model_to_2026_handoff_performed"] is True
     assert json_payload["claim_status"]["p84b_baseline_replaced"] is False
+    assert (
+        json_payload["claim_status"]["moneyline_divergence_uses_outcomes_or_odds"]
+        is False
+    )
+    assert (
+        json_payload["claim_status"]["moneyline_divergence_is_performance_evaluation"]
+        is False
+    )
+    assert json_payload["claim_status"]["moneyline_model_superiority_declared"] is False
 
 
 def test_snapshot_only_regeneration_does_not_rewrite_tabular_outputs(

@@ -34,7 +34,10 @@ SCOPE = "LOCAL_PAPER_WORKFLOW_SNAPSHOT"
 DISCLAIMER = (
     "Corrected 2025 date-batched local retraining/evaluation and a separate existing "
     "P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A "
-    "paper-only corrected-model shadow when supplied. Historical odds lack verified "
+    "paper-only corrected-model shadow and a P279-A outcome-free divergence baseline "
+    "when supplied. The P279-A comparison measures prediction divergence only, uses no "
+    "outcomes or odds, and does not establish model performance or superiority. "
+    "Historical odds lack verified "
     "pregame timestamps, so "
     "Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish "
     "a verified betting edge. The corrected retrained model did not generate or replace the "
@@ -51,6 +54,9 @@ P274_PUBLICATION_ROOT = (
 )
 DEFAULT_P274_INDEX_PATH = P274_PUBLICATION_ROOT / "index.json"
 DEFAULT_P274_MANIFEST_PATH = P274_PUBLICATION_ROOT / "SHA256SUMS"
+DEFAULT_MONEYLINE_DIVERGENCE_SUMMARY_PATH = (
+    REPO_ROOT / "report/mlb_2026_moneyline_shadow_divergence_summary.json"
+)
 P274_COVERAGE_LIMITATION = (
     "P274 currently has only one prospective record and does not establish "
     "season-wide point-in-time coverage or replay readiness."
@@ -713,6 +719,64 @@ def build_corrected_shadow_snapshot(
     }
 
 
+def build_moneyline_divergence_snapshot(summary_path: Path | None) -> dict[str, Any]:
+    """Load the outcome-free P279 reference without evaluating either model."""
+    if summary_path is None:
+        return {
+            "status": "NOT_SUPPLIED",
+            "divergence_not_performance": True,
+            "model_winner_declared": False,
+            "champion_activated": False,
+        }
+    summary_path = Path(summary_path)
+    if not summary_path.exists():
+        return {
+            "status": "MISSING",
+            "summary_path": _portable_input_path(summary_path),
+            "divergence_not_performance": True,
+            "model_winner_declared": False,
+            "champion_activated": False,
+        }
+    payload = json.loads(summary_path.read_text(encoding="utf-8"))
+    contract = payload.get("comparison_contract", {})
+    claims = payload.get("claims", {})
+    if payload.get("comparison_version") != "p279a.moneyline_shadow_divergence.v1":
+        raise ValueError("unexpected P279 Moneyline divergence comparison version")
+    if (
+        contract.get("outcome_fields_used") != "NONE"
+        or contract.get("odds_fields_used") != "NONE"
+        or contract.get("evaluation_denominator") != 0
+    ):
+        raise ValueError("P279 workflow reference is not outcome/odds isolated")
+    if claims.get("model_winner_declared") is not False:
+        raise ValueError("P279 workflow reference declares a model winner")
+    if claims.get("champion_activated") is not False:
+        raise ValueError("P279 workflow reference activates a champion")
+
+    artifacts = payload.get("output_artifacts", {})
+    alignment = payload.get("alignment", {})
+    sources = payload.get("source_artifacts", {})
+    return {
+        "status": payload.get("status"),
+        "summary_path": _portable_input_path(summary_path),
+        "ledger_path": artifacts.get("ledger_csv"),
+        "comparison_version": payload.get("comparison_version"),
+        "p84b_model_version": sources.get("p84b", {}).get("model_version"),
+        "p278_model_version": sources.get("p278", {}).get("model_version"),
+        "shared_game_count": alignment.get("shared_game_count"),
+        "outcome_fields_used": contract.get("outcome_fields_used"),
+        "odds_fields_used": contract.get("odds_fields_used"),
+        "evaluation_denominator": contract.get("evaluation_denominator"),
+        "divergence_not_performance": True,
+        "model_winner_declared": False,
+        "champion_activated": False,
+        "production_ready": False,
+        "future_outcome_evaluation_requires_prospective_availability": claims.get(
+            "future_outcome_evaluation_requires_prospective_availability"
+        ),
+    }
+
+
 def run_workflow_snapshot(
     *,
     warmup_path: Path,
@@ -724,6 +788,9 @@ def run_workflow_snapshot(
     availability_manifest_path: Path = DEFAULT_P274_MANIFEST_PATH,
     corrected_shadow_manifest_path: Path | None = None,
     corrected_shadow_prediction_path: Path | None = None,
+    moneyline_divergence_summary_path: Path | None = (
+        DEFAULT_MONEYLINE_DIVERGENCE_SUMMARY_PATH
+    ),
     min_ev: float = DEFAULT_MONEYLINE_MIN_EV,
     min_edge: float = DEFAULT_MONEYLINE_MIN_EDGE,
     kelly_fraction: float = DEFAULT_KELLY_FRACTION,
@@ -754,6 +821,9 @@ def run_workflow_snapshot(
     corrected_shadow_available = corrected_shadow.get("status") == (
         "AVAILABLE_RETROSPECTIVE_PAPER_ONLY"
     )
+    moneyline_divergence = build_moneyline_divergence_snapshot(
+        moneyline_divergence_summary_path
+    )
 
     return {
         "task": "MLB local prediction workflow snapshot",
@@ -773,6 +843,9 @@ def run_workflow_snapshot(
             ),
             "corrected_shadow_prediction_path": _portable_input_path(
                 corrected_shadow_prediction_path
+            ),
+            "moneyline_divergence_summary_path": _portable_input_path(
+                moneyline_divergence_summary_path
             ),
         },
         "retrain_scorecard": {
@@ -810,6 +883,7 @@ def run_workflow_snapshot(
         "moneyline_backtest_rows": moneyline["rows"],
         "local_2026_prediction_snapshot": snapshot_2026,
         "corrected_moneyline_shadow": corrected_shadow,
+        "moneyline_shadow_divergence": moneyline_divergence,
         "claim_status": {
             "historical_only": True,
             "historical_odds_pregame_timestamps_verified": False,
@@ -819,6 +893,9 @@ def run_workflow_snapshot(
             "corrected_shadow_retrospective_only": corrected_shadow_available,
             "p84b_baseline_replaced": False,
             "champion_activated": False,
+            "moneyline_divergence_uses_outcomes_or_odds": False,
+            "moneyline_divergence_is_performance_evaluation": False,
+            "moneyline_model_superiority_declared": False,
             "live_provider_called": False,
             "db_written": False,
             "production_enabled": False,
@@ -869,6 +946,15 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
     ml = payload["moneyline_strategy"]["summary"]
     latest = payload["local_2026_prediction_snapshot"]
     shadow = payload.get("corrected_moneyline_shadow", {"status": "NOT_SUPPLIED"})
+    divergence = payload.get(
+        "moneyline_shadow_divergence",
+        {
+            "status": "NOT_SUPPLIED",
+            "divergence_not_performance": True,
+            "model_winner_declared": False,
+            "champion_activated": False,
+        },
+    )
 
     lines = [
         "# MLB Prediction Workflow Snapshot",
@@ -1064,6 +1150,26 @@ def render_markdown(payload: dict[str, Any], paths: dict[str, Path]) -> str:
                 "- No outcome-based comparative winner or betting edge is declared.",
             ]
         )
+
+    lines.extend(
+        [
+            "",
+            "## P279-A Outcome-Free Moneyline Prediction Divergence",
+            "",
+            f"- Status: `{divergence.get('status')}`",
+            "- Comparison: existing P84-B baseline versus P278 corrected shadow.",
+            f"- Comparison version: `{divergence.get('comparison_version')}`",
+            f"- Shared games: `{divergence.get('shared_game_count', 0)}`",
+            f"- Outcome fields used: `{divergence.get('outcome_fields_used', 'NONE')}`",
+            f"- Odds fields used: `{divergence.get('odds_fields_used', 'NONE')}`",
+            f"- Evaluation denominator: `{divergence.get('evaluation_denominator', 0)}`",
+            "- This measures prediction divergence, not model performance.",
+            "- Neither model is activated or declared superior.",
+            "- Future performance evaluation requires prospectively available outcomes.",
+            f"- Ledger: `{divergence.get('ledger_path')}`",
+            f"- Summary: `{divergence.get('summary_path')}`",
+        ]
+    )
 
     lines.extend(
         [
