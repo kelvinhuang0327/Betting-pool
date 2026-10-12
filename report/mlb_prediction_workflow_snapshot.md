@@ -2,7 +2,7 @@
 
 **Scope:** `LOCAL_PAPER_WORKFLOW_SNAPSHOT`
 
-**Disclaimer:** Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow and a P279-A outcome-free divergence baseline when supplied. The P279-A comparison measures prediction divergence only, uses no outcomes or odds, and does not establish model performance or superiority. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication.
+**Disclaimer:** Corrected 2025 date-batched local retraining/evaluation and a separate existing P84-B 2026 prediction snapshot, plus an explicitly separate retrospective P278-A paper-only corrected-model shadow and a P279-A outcome-free divergence baseline when supplied, plus the P280-A explicit-as-of prospective-capture readiness boundary. The P279-A comparison measures prediction divergence only, uses no outcomes or odds, and does not establish model performance or superiority. Historical odds lack verified pregame timestamps, so Moneyline hit rate, EV, and ROI are diagnostic/descriptive only and do not establish a verified betting edge. The corrected retrained model did not generate or replace the P84-B snapshot, and the P278-A shadow is not a live or pregame publication. P280-A does not retroactively certify either artifact; only a future explicit local observation can become pregame-certified with trusted row-level schedule evidence.
 
 ## Corrected 2025 Local Retrain and Evaluation
 
@@ -121,6 +121,23 @@
 - Future performance evaluation requires prospectively available outcomes.
 - Ledger: `report/mlb_2026_moneyline_shadow_divergence.csv`
 - Summary: `report/mlb_2026_moneyline_shadow_divergence_summary.json`
+
+## P280-A Explicit-As-Of Prospective Capture Boundary
+
+- Status: `NO_RETROACTIVE_PROSPECTIVE_CAPTURE`
+- P84-B and P278 remain retrospective prediction artifacts.
+- P279 remains outcome-free divergence evidence, not performance evidence.
+- A local observation lower bound is a future capture state, not historical certification.
+- Pregame certification requires every row to satisfy the strict explicit schedule boundary.
+- The future prospective cohort remains empty until an authorized future capture.
+- Current prospective registered rows: `0`
+- Current explicit prediction-as-of rows: `0`
+- Current trusted scheduled-start rows: `0`
+- Current pregame-eligible rows: `0`
+- Future capture runner available: `True`
+- Capture semantics: `LOCAL_OBSERVATION_LOWER_BOUND`
+- Pregame boundary: `prediction_as_of_utc < scheduled_start_utc`
+- No model activation, deployment, registry mutation, or publication occurred.
 
 ## Output Files
 

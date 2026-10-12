@@ -76,6 +76,41 @@ def _write_eval_csv(path: Path) -> None:
         )
 
 
+def _write_p280_readiness(path: Path) -> None:
+    payload = {
+        "readiness_schema_version": wf.shadow_capture.READINESS_SCHEMA_VERSION,
+        "status": wf.shadow_capture.CURRENT_READINESS_STATUS,
+        "current_coverage": {
+            "retrospective_prediction_row_count": 828,
+            "prospective_registered_row_count": 0,
+            "explicit_prediction_as_of_row_count": 0,
+            "scheduled_start_row_count": 0,
+            "pregame_eligible_row_count": 0,
+            "future_prospective_cohort_row_count": 0,
+        },
+        "future_capture_contract": {
+            "runner_available": True,
+            "capture_semantics": wf.shadow_capture.CAPTURE_SEMANTICS,
+            "pregame_boundary": "prediction_as_of_utc < scheduled_start_utc",
+        },
+        "synthetic_contract_verification": {"status": "PASSED"},
+        "claims": {
+            "historical_prospective_cohort_created": False,
+            "current_artifacts_pregame_certified": False,
+            "model_performance_claim": False,
+            "betting_claim": False,
+            "model_activated": False,
+            "deployed": False,
+            "registry_mutated": False,
+            "published": False,
+        },
+    }
+    payload["deterministic_payload_sha256"] = (
+        wf.shadow_capture._readiness_payload_hash(payload)
+    )
+    path.write_text(json.dumps(payload, sort_keys=True) + "\n", encoding="utf-8")
+
+
 def test_american_to_decimal_and_ev_kelly():
     assert wf.american_to_decimal("-150") == pytest.approx(1.666667)
     assert wf.american_to_decimal("+125") == pytest.approx(2.25)
@@ -435,6 +470,8 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
         + "\n",
         encoding="utf-8",
     )
+    readiness_path = tmp_path / "prospective_capture_readiness.json"
+    _write_p280_readiness(readiness_path)
     predictions = [
         {
             "game_date": "2025-08-01",
@@ -502,6 +539,8 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
         corrected_shadow_manifest_path=shadow_manifest_path,
         corrected_shadow_prediction_path=shadow_prediction_path,
         moneyline_divergence_summary_path=divergence_summary_path,
+        prospective_capture_readiness_path=readiness_path,
+        generated_at_utc="2026-07-14T14:00:00Z",
     )
     paths = wf.write_workflow_reports(payload, tmp_path / "report")
     markdown = paths["markdown"].read_text(encoding="utf-8")
@@ -511,11 +550,14 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
     assert "Existing 2026 Prediction Snapshot (Separate and Stale)" in markdown
     assert "Corrected 2026 Moneyline Shadow (Separate and Retrospective)" in markdown
     assert "P279-A Outcome-Free Moneyline Prediction Divergence" in markdown
+    assert "P280-A Explicit-As-Of Prospective Capture Boundary" in markdown
     assert "p84b_diagnostic_baseline_v1" in markdown
     assert "Corrected 2025 retrained model generated these 2026 predictions: `False`" in markdown
     assert "not a verified betting edge" in markdown
     assert "This measures prediction divergence, not model performance." in markdown
     assert "Neither model is activated or declared superior." in markdown
+    assert "Current prospective registered rows: `0`" in markdown
+    assert "Future capture runner available: `True`" in markdown
     snapshot = json_payload["local_2026_prediction_snapshot"]
     assert snapshot["source_prediction_version"] == "p84b_diagnostic_baseline_v1"
     assert snapshot["generated_by_corrected_retrained_model"] is False
@@ -533,6 +575,24 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
     assert divergence["divergence_not_performance"] is True
     assert divergence["model_winner_declared"] is False
     assert divergence["champion_activated"] is False
+    prospective = json_payload["moneyline_shadow_prospective_capture"]
+    assert prospective["status"] == "NO_RETROACTIVE_PROSPECTIVE_CAPTURE"
+    assert prospective["prospective_registered_row_count"] == 0
+    assert prospective["explicit_prediction_as_of_row_count"] == 0
+    assert prospective["scheduled_start_row_count"] == 0
+    assert prospective["pregame_eligible_row_count"] == 0
+    assert prospective["future_capture_runner_available"] is True
+    assert prospective["state_boundaries"] == {
+        "p84b_baseline": "RETROSPECTIVE_BASELINE",
+        "p278_corrected_shadow": "RETROSPECTIVE_FROZEN_STATE_PAPER_ONLY",
+        "p279_divergence": "OUTCOME_FREE_DIVERGENCE_NOT_PERFORMANCE",
+        "p280_current_readiness": "NO_RETROACTIVE_PROSPECTIVE_CAPTURE",
+        "future_local_observation": "LOCAL_OBSERVATION_LOWER_BOUND",
+        "pregame_certification": (
+            "ALL_ROWS_REQUIRE_EXPLICIT_TRUSTED_SCHEDULE_AND_STRICT_BEFORE"
+        ),
+        "future_prospective_cohort": "EMPTY_UNTIL_FUTURE_CAPTURE",
+    }
     assert json_payload["claim_status"]["verified_betting_edge_established"] is False
     assert json_payload["claim_status"]["corrected_model_to_2026_handoff_performed"] is True
     assert json_payload["claim_status"]["p84b_baseline_replaced"] is False
@@ -545,6 +605,14 @@ def test_visible_reports_separate_corrected_2025_from_baseline_2026(
         is False
     )
     assert json_payload["claim_status"]["moneyline_model_superiority_declared"] is False
+    assert (
+        json_payload["claim_status"]["historical_prospective_cohort_created"]
+        is False
+    )
+    assert (
+        json_payload["claim_status"]["current_shadow_artifacts_pregame_certified"]
+        is False
+    )
 
 
 def test_snapshot_only_regeneration_does_not_rewrite_tabular_outputs(
