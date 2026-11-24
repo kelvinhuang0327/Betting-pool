@@ -5,7 +5,7 @@
 ## Canonical Project Config
 
 - Project: Betting-pool
-- Repo: `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`
+- Repo: `/Users/kelvin/VibeCoding-WorkSpace/Betting-pool`
 - Branch: `main`
 - Git dir: `.git`
 - HEAD / `origin/main`: `e7ac8f7d0672a9501aefca1dd73ad623a2941e38` (advanced from `122ba7895958157fc650b7d108676c13324fa91d` via PR #26 P203 evidence + governance package merge)

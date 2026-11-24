@@ -1,7 +1,7 @@
 # Betting-pool Canonical Roadmap
 
 **CTO review date:** 2026-06-14 Asia/Taipei
-**Canonical repo:** `/Users/kelvin/Kelvin-WorkSpace/Betting-pool`
+**Canonical repo:** `/Users/kelvin/VibeCoding-WorkSpace/Betting-pool`
 **Observed branch:** `main`
 **Mode:** `paper_only=true`, `production_ready=false`, `NO_REAL_BET=true`
 **Roadmap status:** canonical roadmap maintained in-place; latest section `0T` supersedes `0S` for current execution priority.
