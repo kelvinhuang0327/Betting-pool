@@ -1,5 +1,7 @@
 # CTO Roadmap Alignment and System Optimization Analysis
 
+**Current canonical authority:** `/Users/kelvin/VibeCoding-WorkSpace/Betting-pool` (`main`), as defined in `agent_bootstrap/CURRENT_STATE.md`; dated repository-path observations in this document and `roadmap.md` are historical records, not current execution entry points.
+
 ## 1. CTO Review Date
 
 2026-06-14 Asia/Taipei
