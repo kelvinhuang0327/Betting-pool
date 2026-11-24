@@ -113,9 +113,35 @@ class TestP205AContractValidation:
             "learning_block_reason",
         )
 
-    def test_boolean_fields_are_not_coerced_from_strings(self):
+    @pytest.mark.parametrize(
+        ("field", "invalid_value"),
+        [
+            (field, invalid_value)
+            for field in (
+                "game_specific",
+                "odds_is_market_observed",
+                "edge_is_real_evidence",
+                "learning_eligible",
+            )
+            for invalid_value in ("True", "False", 1, 0)
+        ],
+    )
+    def test_boolean_fields_are_not_coerced(self, field, invalid_value):
+        contract = _valid_contract()
+        contract[field] = invalid_value
         with pytest.raises(ProvenanceContractError, match="literal boolean"):
-            _valid_contract(learning_eligible="true")
+            validate_provenance_contract(contract)
+
+    def test_missing_required_field_and_invalid_version_fail_closed(self):
+        missing_field = _valid_contract()
+        del missing_field["feature_fingerprint"]
+        with pytest.raises(ProvenanceContractError, match="missing provenance"):
+            validate_provenance_contract(missing_field)
+
+        invalid_version = _valid_contract()
+        invalid_version["provenance_contract_version"] = "legacy"
+        with pytest.raises(ProvenanceContractError, match="unsupported"):
+            validate_provenance_contract(invalid_version)
 
     def test_learning_true_requires_game_specific_asof_and_empty_reason(self):
         with pytest.raises(ProvenanceContractError, match="game_specific=True"):
@@ -124,6 +150,18 @@ class TestP205AContractValidation:
             _valid_contract(prediction_as_of_utc="")
         with pytest.raises(ProvenanceContractError, match="empty learning_block_reason"):
             _valid_contract(learning_block_reason="blocked")
+
+    @pytest.mark.parametrize(
+        "prediction_as_of_utc",
+        (
+            "not-a-timestamp",
+            "2026-05-11T10:00:00",
+            "2026-05-11T10:00:00+01:00",
+        ),
+    )
+    def test_learning_true_requires_valid_utc_timestamp(self, prediction_as_of_utc):
+        with pytest.raises(ProvenanceContractError, match="valid UTC"):
+            _valid_contract(prediction_as_of_utc=prediction_as_of_utc)
 
     def test_learning_false_requires_non_empty_block_reason(self):
         with pytest.raises(ProvenanceContractError, match="non-empty"):
@@ -137,6 +175,17 @@ class TestP205AContractValidation:
         for odds_source in ("estimated", "historical_no_vig"):
             with pytest.raises(ProvenanceContractError, match="cannot set"):
                 _valid_contract(odds_source=odds_source, edge_is_real_evidence=True)
+
+    @pytest.mark.parametrize("odds_source", ("estimated", "historical_no_vig"))
+    def test_non_observed_odds_sources_cannot_claim_observed_market_odds(self, odds_source):
+        with pytest.raises(ProvenanceContractError, match="odds_is_market_observed=True"):
+            _valid_contract(
+                odds_source=odds_source,
+                odds_is_market_observed=True,
+                edge_is_real_evidence=False,
+                learning_eligible=False,
+                learning_block_reason="proxy odds",
+            )
 
     def test_learning_true_requires_observed_market_real_edge_evidence(self):
         with pytest.raises(ProvenanceContractError, match="odds_is_market_observed"):
@@ -215,12 +264,29 @@ class TestPath2DailyAdvisoryProvenance:
         assert st["learning_eligible"] is False
         assert "historical_replay" in st["learning_block_reason"]
 
-    def test_daily_advisory_payload_declares_no_evaluator_routing(self):
+    def test_daily_advisory_payload_does_not_route_to_evaluator_or_write(
+        self, tmp_path, monkeypatch
+    ):
+        from orchestrator import mlb_paper_evaluator
+
+        def fail_if_called(*args, **kwargs):
+            raise AssertionError("historical advisory must not enter evaluator/leaderboard")
+
+        monkeypatch.setattr(
+            mlb_paper_evaluator, "evaluate_paper_recommendations", fail_if_called
+        )
+        monkeypatch.setattr(
+            mlb_paper_evaluator, "build_strategy_leaderboard", fail_if_called
+        )
+        monkeypatch.setattr(mlb_paper_evaluator, "execute_evaluation", fail_if_called)
+
         payload = run_mlb_daily_advisory(
             date_str=FIXTURE_DATE,
             mode="replay",
             limit=1,
-            ledger_path="unused-ledger.jsonl",
+            ledger_path=str(tmp_path / "ledger.jsonl"),
+            report_path=str(tmp_path / "advisory.json"),
+            markdown_path=str(tmp_path / "advisory.md"),
             write_reports=False,
             override_games=[
                 {
@@ -238,6 +304,7 @@ class TestPath2DailyAdvisoryProvenance:
         )
         assert payload["evaluator_routing"] == "not_routed_to_paper_evaluator_or_strategy_leaderboard"
         assert payload["advisories"][0]["source_trace"]["learning_eligible"] is False
+        assert list(tmp_path.iterdir()) == []
 
 
 class TestSchedulerStrategyAttribution:

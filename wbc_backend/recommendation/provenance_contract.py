@@ -6,7 +6,7 @@ missing, or legacy provenance is never upgraded into learning eligibility.
 """
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 
 
@@ -51,6 +51,21 @@ def _isoformat_utc(value: datetime | str | None) -> str:
     return str(value)
 
 
+def _is_valid_utc_timestamp(value: Any) -> bool:
+    """Return whether value is an ISO-8601 timestamp with a zero UTC offset."""
+    if not isinstance(value, str) or not value.strip():
+        return False
+
+    normalized = value.strip()
+    if normalized.endswith(("Z", "z")):
+        normalized = normalized[:-1] + "+00:00"
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except (ValueError, OverflowError):
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == timedelta(0)
+
+
 def validate_provenance_contract(source_trace: dict[str, Any]) -> None:
     """Validate a P205A provenance contract and fail closed on ambiguity."""
     if not isinstance(source_trace, dict):
@@ -77,9 +92,9 @@ def validate_provenance_contract(source_trace: dict[str, Any]) -> None:
             raise ProvenanceContractError(
                 "learning_eligible=True requires game_specific=True"
             )
-        if not source_trace["prediction_as_of_utc"]:
+        if not _is_valid_utc_timestamp(source_trace["prediction_as_of_utc"]):
             raise ProvenanceContractError(
-                "learning_eligible=True requires prediction_as_of_utc"
+                "learning_eligible=True requires a valid UTC prediction_as_of_utc"
             )
         if source_trace["odds_is_market_observed"] is not True:
             raise ProvenanceContractError(
@@ -101,15 +116,25 @@ def validate_provenance_contract(source_trace: dict[str, Any]) -> None:
             )
 
     odds_source = source_trace["odds_source"]
+    if not isinstance(odds_source, str) or not odds_source.strip():
+        raise ProvenanceContractError("odds_source must be a non-empty string")
+    normalized_odds_source = odds_source.strip().lower()
     if (
         source_trace["learning_eligible"] is True
-        and odds_source in NON_REAL_EVIDENCE_ODDS_SOURCES
+        and normalized_odds_source in NON_REAL_EVIDENCE_ODDS_SOURCES
     ):
         raise ProvenanceContractError(
             f"odds_source={odds_source!r} cannot set learning_eligible=True"
         )
     if (
-        odds_source in NON_REAL_EVIDENCE_ODDS_SOURCES
+        normalized_odds_source in NON_REAL_EVIDENCE_ODDS_SOURCES
+        and source_trace["odds_is_market_observed"] is True
+    ):
+        raise ProvenanceContractError(
+            f"odds_source={odds_source!r} cannot set odds_is_market_observed=True"
+        )
+    if (
+        normalized_odds_source in NON_REAL_EVIDENCE_ODDS_SOURCES
         and source_trace["edge_is_real_evidence"] is True
     ):
         raise ProvenanceContractError(
